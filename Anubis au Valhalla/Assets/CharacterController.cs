@@ -2,44 +2,103 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour
 {
-  public float speed;
-
+  [Header("Déplacements")]
+  public InputManager controls;
+  private CharacterController instance;
+  public float speedX;
+  public float speedY;
+  
+  [Header("Dash")]
+  public float dashSpeed;
+  private float timerDash;
+  public float dashDuration;
+  private float timerdashCooldown;
+  public float dashCooldown;
   public bool isDashing;
   public bool canDash;
-  public float dashSpeed;
-  public float timerDash;
-  public float timerDashMax;
-  public float dashCooldown;
-  public float dashCooldownMax;
-
-  public Rigidbody2D rb;
-
+  public GhostDash ghost;
+  
+  private Rigidbody2D rb;
   private Vector2 movement;
-  private Vector2 positionActuelle;
 
+
+
+  private void Awake()
+  {
+
+    if (instance == null)
+    {
+      instance = this;
+    }
+
+    rb = gameObject.GetComponent<Rigidbody2D>();
+    
+    controls = new InputManager();
+  }
+
+  private void OnEnable()
+  {
+    controls.Enable();
+  }
+  private void OnDisable()
+  {
+    controls.Disable();
+  }
+  
   private void Update()
   {
-    movement.x = Input.GetAxisRaw("Horizontal");
-    movement.y = Input.GetAxisRaw("Vertical");
-
-    positionActuelle = new Vector2(transform.position.x, transform.position.y);
-
-    if (Input.GetButtonDown("Dash") && isDashing == false && canDash)
+    Keyboard kb = InputSystem.GetDevice<Keyboard>();
+    
+    if (isDashing == false)
     {
+       movement = controls.Player.Movement.ReadValue<Vector2>();
+     // movement.x = Input.GetAxisRaw("Horizontal");
+     // movement.y = Input.GetAxisRaw("Vertical");
+    }
+  
+    if (isDashing == false) 
+    {
+      rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
+    }
+
+    if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
+    {
+      ghost.activerEffet = true;
       isDashing = true;
     }
     
-    if (isDashing)
+    if (isDashing) // Déplacement lors du dash
     {
       timerDash += Time.deltaTime;
-      rb.MovePosition(positionActuelle + movement * (dashSpeed * Time.deltaTime));
-      
+      if (movement.x == 0 && movement.y == 0)
+      {
+        rb.velocity = (new Vector2(1,0) * dashSpeed);
+      }
+      else
+      {
+        rb.velocity = (movement * dashSpeed);
+      }
+
+      if (rb.velocity.x > 0) // Le personnage fait volte face.
+      {
+        float face = transform.localScale.x;
+        face = -1;
+      }
+      else
+      {
+        float face = transform.localScale.x;
+        face = 1;
+      }
+
     }
-    if (timerDash > timerDashMax)
+    if (timerDash > dashDuration)
     {
+      ghost.activerEffet = false;
+      rb.velocity = (Vector2.zero);
       isDashing = false;
       timerDash = 0;
       canDash = false;
@@ -47,22 +106,14 @@ public class CharacterController : MonoBehaviour
 
     if (canDash == false)
     {
-      dashCooldown += Time.deltaTime;
+      timerdashCooldown += Time.deltaTime;
     }
     
-    if (dashCooldown >= dashCooldownMax)
+    if (timerdashCooldown >= dashCooldown) // Cooldown dash
     {
       canDash = true;
-      dashCooldown = 0;
+      timerdashCooldown = 0;
     }
   }
-
-      
-  private void FixedUpdate()
-  {
-    if (isDashing == false)
-    {
-      rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
-    }
-  }
+  
 }

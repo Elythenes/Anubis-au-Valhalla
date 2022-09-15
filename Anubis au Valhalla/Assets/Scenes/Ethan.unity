@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 856706911}
   - component: {fileID: 856706910}
   - component: {fileID: 856706913}
+  - component: {fileID: 856706914}
   m_Layer: 0
   m_Name: Personnage
   m_TagString: Untagged
@@ -238,15 +239,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770a37eb6d8b2c140a2c75f6875aec26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speedX: 9
+  speedY: 6
+  dashSpeed: 27
+  dashDuration: 0.2
+  dashCooldown: 0.5
   isDashing: 0
   canDash: 1
-  dashSpeed: 250
-  timerDash: 0
-  timerDashMax: 0.2
-  dashCooldown: 0
-  dashCooldownMax: 0.5
-  rb: {fileID: 856706913}
+  ghost: {fileID: 856706914}
 --- !u!212 &856706911
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -335,6 +335,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &856706914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856706909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7b8482dbb27274ea7b89120a58e19a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghotsDelay: 0.4
+  ghost: {fileID: 3369172920769216219, guid: 85e75ab8033ebe24c9faf95668b14b43, type: 3}
+  activerEffet: 0
 --- !u!1 &1764997169
 GameObject:
   m_ObjectHideFlags: 0
