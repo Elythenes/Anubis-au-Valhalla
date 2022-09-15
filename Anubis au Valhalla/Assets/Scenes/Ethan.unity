@@ -238,8 +238,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770a37eb6d8b2c140a2c75f6875aec26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  dashSpeed: 10
+  speed: 5
+  isDashing: 0
+  canDash: 1
+  dashSpeed: 250
+  timerDash: 0
+  timerDashMax: 0.2
+  dashCooldown: 0
+  dashCooldownMax: 0.5
   rb: {fileID: 856706913}
 --- !u!212 &856706911
 SpriteRenderer:
