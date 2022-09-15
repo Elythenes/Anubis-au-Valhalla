@@ -6,6 +6,8 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
   public float speed;
+  
+  
 
   public bool isDashing;
   public bool canDash;
