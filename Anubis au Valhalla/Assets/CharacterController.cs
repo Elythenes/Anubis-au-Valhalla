@@ -8,7 +8,7 @@ public class CharacterController : MonoBehaviour
 {
   [Header("Déplacements")]
   public InputManager controls;
-  private CharacterController instance;
+  public static CharacterController instance; //jai besion de l'instance pour bouger le joueur au changements de salles
   public float speedX;
   public float speedY;
   
@@ -22,7 +22,7 @@ public class CharacterController : MonoBehaviour
   public bool canDash;
   public GhostDash ghost;
   
-  private Rigidbody2D rb;
+  [HideInInspector]public Rigidbody2D rb; // ca aussi
   private Vector2 movement;
 
 
@@ -116,4 +116,15 @@ public class CharacterController : MonoBehaviour
     }
   }
   
+  
+  
+  // ---TRUC POUR GENERER LA PROCHAINE SALLE---
+
+  private void OnTriggerEnter2D(Collider2D col)
+  {
+    if (col.gameObject.CompareTag("Door"))
+    {
+      SalleGennerator.instance.GenerateNextRoom(col.gameObject.GetComponent<Door>().doortype);
+    }
+  }
 }
