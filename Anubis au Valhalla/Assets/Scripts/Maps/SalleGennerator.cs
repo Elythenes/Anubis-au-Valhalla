@@ -41,7 +41,8 @@ public class SalleGennerator : MonoBehaviour
         // Start is called before the first frame update
         void Start()
         {
-        
+                GenerateRoom();
+                TransitionToNextRoom(Doortype.West);
         }
 
         // Update is called once per frame
@@ -60,7 +61,7 @@ public class SalleGennerator : MonoBehaviour
                 var roomsToGenerate = 3;
                 for (int i = 0; i < roomsToGenerate; i++)
                 {
-                        var j = Random.Range(0, roomPrefab.Count);
+                        var j = Random.Range(0, maps.Count);
                         roomsQueue.Enqueue(maps[j]);
                         maps.RemoveAt(j);
                 }

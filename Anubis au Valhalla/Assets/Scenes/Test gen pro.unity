@@ -158,6 +158,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &110901266 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2580341452631517689, guid: 0732c7c1859bc4b48ae7f0ca9bf3aad1, type: 3}
+  m_PrefabInstance: {fileID: 1722530047}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &560111967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -455,9 +460,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 7533741234556814338}
   s_doors:
+  - {fileID: 2071961400}
   - {fileID: 1955360551}
+  - {fileID: 110901266}
+  - {fileID: 1948238281}
   fromDoor: 4
-  roomPrefab: []
+  roomPrefab:
+  - {fileID: -3130041957661822193, guid: cfd811be74a6ab54b888fdd952ffacd9, type: 3}
+  - {fileID: -3130041957661822193, guid: a1e3f209ded448a43b8ac3fa3030d1df, type: 3}
+  - {fileID: -3130041957661822193, guid: 07f30167ecabe964cb51e039e975be26, type: 3}
+  - {fileID: -3130041957661822193, guid: f6c09a48cfa4e1849a9332b7526f0255, type: 3}
+  - {fileID: -3130041957661822193, guid: 208a0ec5c659e614d8434c58c933fbbb, type: 3}
   currentRoom: {fileID: 0}
   roomsDone: -1
 --- !u!4 &1241268835
@@ -549,6 +562,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4346509926296021845, guid: 0732c7c1859bc4b48ae7f0ca9bf3aad1, type: 3}
   m_PrefabInstance: {fileID: 1722530047}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1948238281 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2580341452631517689, guid: fd4f24cdccf36284988d7b5f2974e346, type: 3}
+  m_PrefabInstance: {fileID: 560111967}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1955360549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -627,6 +645,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2580341452631517689, guid: e0464c30179b679449264a40c85143a0, type: 3}
   m_PrefabInstance: {fileID: 1955360549}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2071961400 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2580341452631517689, guid: 1a4e57701c2be35418b69af257bb1d56, type: 3}
+  m_PrefabInstance: {fileID: 1051619345}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7533741234556814337
 GameObject:
