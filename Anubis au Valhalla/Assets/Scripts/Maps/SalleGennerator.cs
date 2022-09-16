@@ -12,18 +12,21 @@ public class SalleGennerator : MonoBehaviour
         public GameObject[] s_doors;
         public Doortype fromDoor = Doortype.West;
         public static SalleGennerator instance;
-        
+        public List<Salle> roomPrefab = new List<Salle>();
+
         public readonly Queue<Salle> roomsQueue = new Queue<Salle>();
 
         public Salle currentRoom;
         public int roomsDone = -1;
 
+        public Transform transformCurrentRoom => currentRoom.transform;
+
         public enum Doortype
         {
-                North = 1,
-                East = 2,
-                South = 3,
-                West = 4
+                North = 0,
+                East = 1,
+                South = 2,
+                West = 3
         }
         private void Awake()
         {
@@ -47,7 +50,23 @@ public class SalleGennerator : MonoBehaviour
         
         }
 
-        public void GenerateNextRoom(Doortype door)
+        public void GenerateRoom()
+        {
+                if (currentRoom != null) Destroy(currentRoom.gameObject);
+                roomsDone = -1;
+                var maps = new List<Salle>(roomPrefab);
+                roomsQueue.Clear();
+
+                var roomsToGenerate = 3;
+                for (int i = 0; i < roomsToGenerate; i++)
+                {
+                        var j = Random.Range(0, roomPrefab.Count);
+                        roomsQueue.Enqueue(maps[j]);
+                        maps.RemoveAt(j);
+                }
+        }
+
+        public void TransitionToNextRoom(Doortype door)
         {
                 fromDoor = door switch
                 {
@@ -57,6 +76,8 @@ public class SalleGennerator : MonoBehaviour
                         Doortype.South => Doortype.North,
                         _ => fromDoor
                 };
+                if(currentRoom != null) Destroy(currentRoom.gameObject);
+                currentRoom = GetNextRoom();
                 MovePlayerToDoor(fromDoor);
                 
         }
@@ -74,13 +95,13 @@ public class SalleGennerator : MonoBehaviour
                 switch (doortype)
                 {
                         case Doortype.North:
-                                CharacterController.instance.transform.position = new Vector3(0,7.75f,0);
+                                CharacterController.instance.transform.position = new Vector3(0,4,0);
                                 break;
                         case Doortype.West:
                                 CharacterController.instance.transform.position = new Vector3(-17.5f,-0.5f,0);
                                 break;
                         case Doortype.South:
-                                CharacterController.instance.transform.position = new Vector3(0,-8.8f,0);
+                                CharacterController.instance.transform.position = new Vector3(0,-3.9f,0);
                                 break;
                         case Doortype.East:
                                 CharacterController.instance.transform.position = new Vector3(17.5f,-0.5f,0);

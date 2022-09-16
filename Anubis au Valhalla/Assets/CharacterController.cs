@@ -124,7 +124,7 @@ public class CharacterController : MonoBehaviour
   {
     if (col.gameObject.CompareTag("Door"))
     {
-      SalleGennerator.instance.GenerateNextRoom(col.gameObject.GetComponent<Door>().doortype);
+      SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doortype);
     }
   }
 }
