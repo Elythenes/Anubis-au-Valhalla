@@ -458,21 +458,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51a727d26c9755446adfd3133103eee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dungeonSize: 5
   player: {fileID: 7533741234556814338}
   s_doors:
   - {fileID: 2071961400}
   - {fileID: 1955360551}
   - {fileID: 110901266}
   - {fileID: 1948238281}
-  fromDoor: 4
   roomPrefab:
   - {fileID: -3130041957661822193, guid: cfd811be74a6ab54b888fdd952ffacd9, type: 3}
   - {fileID: -3130041957661822193, guid: a1e3f209ded448a43b8ac3fa3030d1df, type: 3}
   - {fileID: -3130041957661822193, guid: 07f30167ecabe964cb51e039e975be26, type: 3}
   - {fileID: -3130041957661822193, guid: f6c09a48cfa4e1849a9332b7526f0255, type: 3}
   - {fileID: -3130041957661822193, guid: 208a0ec5c659e614d8434c58c933fbbb, type: 3}
-  currentRoom: {fileID: 0}
   roomsDone: -1
+  startRoom: {fileID: -3130041957661822193, guid: 913f88a93df43a2488653131e28a92a6, type: 3}
+  fromDoor: 4
+  currentRoom: {fileID: 0}
 --- !u!4 &1241268835
 Transform:
   m_ObjectHideFlags: 0
@@ -664,6 +666,7 @@ GameObject:
   - component: {fileID: 7533741234556814338}
   - component: {fileID: 7533741234556814397}
   - component: {fileID: 7533741234556814398}
+  - component: {fileID: 7533741234556814399}
   m_Layer: 0
   m_Name: Personnage
   m_TagString: Untagged
@@ -752,7 +755,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7533741234556814337}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.75, y: -1.19, z: 0}
+  m_LocalPosition: {x: -4.86, y: -0.03, z: 0}
   m_LocalScale: {x: 1, y: 2.0906, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -795,3 +798,29 @@ MonoBehaviour:
   ghotsDelay: 0.4
   ghost: {fileID: 3369172920769216219, guid: 85e75ab8033ebe24c9faf95668b14b43, type: 3}
   activerEffet: 0
+--- !u!61 &7533741234556814399
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7533741234556814337}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.24737056}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.50525886}
+  m_EdgeRadius: 0

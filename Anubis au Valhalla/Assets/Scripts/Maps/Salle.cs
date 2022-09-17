@@ -10,7 +10,7 @@ public class Salle : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        
+        StartCoroutine(ExampleRoomCleared());
     }
     
 
@@ -20,7 +20,7 @@ public class Salle : MonoBehaviour
         
     }
 
-    IEnumerator ExampleRoomCleared()
+    public IEnumerator ExampleRoomCleared()
     {
         yield return new WaitForSeconds(1);
         roomDone = true;

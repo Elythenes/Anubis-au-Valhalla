@@ -8,16 +8,25 @@ using Random = UnityEngine.Random;
 
 public class SalleGennerator : MonoBehaviour
 {
+        [Header("CETTE VARIABLE MODIFIE LA TAILLE DU DONJON QU'ON VEUX GENERER")]
+        public int dungeonSize;
+        
+        [Header("REFERENCES")]
         public CharacterController player;
-        public GameObject[] s_doors;
-        public Doortype fromDoor = Doortype.West;
         public static SalleGennerator instance;
+        public GameObject[] s_doors;
+        
+        [Header("CONTENU DU DONJON")]
         public List<Salle> roomPrefab = new List<Salle>();
 
-        public readonly Queue<Salle> roomsQueue = new Queue<Salle>();
 
-        public Salle currentRoom;
-        public int roomsDone = -1;
+ 
+        [Header("VARIABLES INTERNES POUR DEBUG")]
+        [SerializeField] private int roomsDone = -1;
+        [SerializeField] private Salle startRoom;
+        [SerializeField] private Doortype fromDoor = Doortype.West;
+        [SerializeField] private Salle currentRoom;
+        private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
 
         public Transform transformCurrentRoom => currentRoom.transform;
 
@@ -48,7 +57,14 @@ public class SalleGennerator : MonoBehaviour
         // Update is called once per frame
         void Update()
         {
-        
+                if(!currentRoom.roomDone) return;
+
+                for (int i = 0; i < (int)Doortype.West + 1; i++)
+                {
+                        if(fromDoor == (Doortype) i ) continue;
+                        
+                        OpenDoors((Doortype)i,true);
+                }
         }
 
         public void GenerateRoom()
@@ -57,9 +73,8 @@ public class SalleGennerator : MonoBehaviour
                 roomsDone = -1;
                 var maps = new List<Salle>(roomPrefab);
                 roomsQueue.Clear();
-
-                var roomsToGenerate = 3;
-                for (int i = 0; i < roomsToGenerate; i++)
+                
+                for (int i = 0; i < dungeonSize; i++)
                 {
                         var j = Random.Range(0, maps.Count);
                         roomsQueue.Enqueue(maps[j]);
@@ -79,14 +94,25 @@ public class SalleGennerator : MonoBehaviour
                 };
                 if(currentRoom != null) Destroy(currentRoom.gameObject);
                 currentRoom = GetNextRoom();
-                MovePlayerToDoor(fromDoor);
-                
+                if(roomsDone != 0)MovePlayerToDoor(fromDoor);
+
         }
 
         public Salle GetNextRoom()
         {
                 roomsDone++;
+                if (roomsDone == 0)
+                {
+                        EnableDoors(Doortype.East,true);
+                        OpenDoors(Doortype.East, true);
+                        return Instantiate(startRoom);
+                }
+                for (int i = 0; i < (int)Doortype.West + 1; i++)
+                {
+                        EnableDoors((Doortype) i,true);
+                }
                 return Instantiate(roomsQueue.Dequeue());
+                
         }
 
         public void MovePlayerToDoor(Doortype doortype)
@@ -96,20 +122,31 @@ public class SalleGennerator : MonoBehaviour
                 switch (doortype)
                 {
                         case Doortype.North:
-                                CharacterController.instance.transform.position = new Vector3(0,4,0);
+                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) Doortype.North].transform.position.x,s_doors[(int) Doortype.North].transform.position.y -1,s_doors[(int) Doortype.North].transform.position.z);
                                 break;
                         case Doortype.West:
-                                CharacterController.instance.transform.position = new Vector3(-17.5f,-0.5f,0);
+                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) Doortype.West].transform.position.x +1,s_doors[(int) Doortype.West].transform.position.y,s_doors[(int) Doortype.West].transform.position.z);
                                 break;
                         case Doortype.South:
-                                CharacterController.instance.transform.position = new Vector3(0,-3.9f,0);
+                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) Doortype.South].transform.position.x,s_doors[(int) Doortype.South].transform.position.y +1,s_doors[(int) Doortype.South].transform.position.z);
                                 break;
                         case Doortype.East:
-                                CharacterController.instance.transform.position = new Vector3(17.5f,-0.5f,0);
+                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) Doortype.East].transform.position.x-1,s_doors[(int) Doortype.East].transform.position.y,s_doors[(int) Doortype.East].transform.position.z);
                                 break;
                         default:
                                 throw new ArgumentOutOfRangeException(nameof(doortype), doortype, null);
                 }
+        }
+
+        public void EnableDoors(Doortype index, bool state)
+        {
+                s_doors[(int) index].SetActive(state);
+                OpenDoors(index,false);
+        }
+
+        public void OpenDoors(Doortype index, bool state)
+        {
+                s_doors[(int)index].GetComponent<BoxCollider2D>().enabled = state;
         }
 }
 
