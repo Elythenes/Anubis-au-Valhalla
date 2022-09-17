@@ -11,6 +11,8 @@ public class CharacterController : MonoBehaviour
   public static CharacterController instance; //jai besion de l'instance pour bouger le joueur au changements de salles
   public float speedX;
   public float speedY;
+  private int lookingAt; // Variable qui indique la direction dans laquelle regarde le perso (de 1 à 4 avec Nord = 1 / Est = 2 / Sud = 3 / Ouest = 4) 
+  
   
   [Header("Dash")]
   public float dashSpeed;
@@ -55,14 +57,15 @@ public class CharacterController : MonoBehaviour
     
     if (isDashing == false)
     {
-       movement = controls.Player.Movement.ReadValue<Vector2>();
+       movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement 
      // movement.x = Input.GetAxisRaw("Horizontal");
      // movement.y = Input.GetAxisRaw("Vertical");
     }
   
-    if (isDashing == false) 
+    if (isDashing == false) // Déplacments hors dash.
     {
       rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
+     // rb.drag = dragDeceleration * dragMultiplier;  // ligne à étudier je comprhends pas ce que ça fait
     }
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
@@ -71,30 +74,62 @@ public class CharacterController : MonoBehaviour
       isDashing = true;
     }
     
-    if (isDashing) // Déplacement lors du dash
+    if (isDashing) // Déplacement lors du dash selon la direction du regard du perso
     {
       timerDash += Time.deltaTime;
-      if (movement.x == 0 && movement.y == 0)
-      {
-        rb.velocity = (new Vector2(1,0) * dashSpeed);
-      }
-      else
+      if (movement.x != 0 && movement.y != 0)
       {
         rb.velocity = (movement * dashSpeed);
       }
-
-      if (rb.velocity.x > 0) // Le personnage fait volte face.
+      else if(lookingAt == 1)
       {
-        float face = transform.localScale.x;
-        face = -1;
+        rb.velocity = (new Vector2(0,1) * dashSpeed);
       }
-      else
+      else if(lookingAt == 2)
       {
-        float face = transform.localScale.x;
-        face = 1;
+        rb.velocity = (new Vector2(1,0) * dashSpeed);
       }
-
+      else if(lookingAt == 3)
+      {
+        rb.velocity = (new Vector2(0,-1) * dashSpeed);
+      }
+      else if(lookingAt == 4)
+      {
+        rb.velocity = (new Vector2(-1,0) * dashSpeed);
+      }
     }
+    
+    if (movement.x > 0) // Le personnage s'oriente vers la direction où il marche. 
+    {
+      lookingAt = 2;
+      Debug.Log("droite");
+      transform.localScale = new Vector3(1, 2.0906f,1);
+     
+    }
+    Debug.Log(lookingAt);
+    if (movement.x < 0)
+    {
+      lookingAt = 4;
+      Debug.Log("gauche");
+      transform.localScale = new Vector3(-1, 2.0906f,1);
+    }
+    
+    if (movement.y < 0)
+    {
+      lookingAt = 3;
+      Debug.Log("bas");
+      float face = transform.localScale.x;
+      face = 1;
+    }
+    
+    if (movement.y > 0)
+    {
+      lookingAt = 1;
+      Debug.Log("haut");
+      float face = transform.localScale.x;
+      face = 1;
+    }
+    
     if (timerDash > dashDuration)
     {
       ghost.activerEffet = false;
