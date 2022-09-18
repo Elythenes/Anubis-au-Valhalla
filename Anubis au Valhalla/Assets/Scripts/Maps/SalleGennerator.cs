@@ -20,7 +20,7 @@ public class SalleGennerator : MonoBehaviour
         public CharacterController player;
         public static SalleGennerator instance;
         public GameObject[] s_doors;
-        
+
         [Header("CONTENU DU DONJON")]
         public List<Salle> roomPrefab = new List<Salle>();
 
@@ -31,6 +31,7 @@ public class SalleGennerator : MonoBehaviour
         [SerializeField] private Salle startRoom;
         [SerializeField] private Doortype fromDoor = Doortype.West;
         [SerializeField] private Salle currentRoom;
+        
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
 
         public Transform transformCurrentRoom => currentRoom.transform;
@@ -49,8 +50,8 @@ public class SalleGennerator : MonoBehaviour
                         DestroyImmediate(gameObject);
                         return;
                 }
-
                 instance = this;
+                //camera = GameObject.FindWithTag("MainCamera").GetComponent<CameraController>();
         }
         // Start is called before the first frame update
         void Start()
@@ -100,6 +101,7 @@ public class SalleGennerator : MonoBehaviour
                 if(currentRoom != null) Destroy(currentRoom.gameObject);
                 currentRoom = GetNextRoom();
                 if(roomsDone != 0)MovePlayerToDoor(fromDoor);
+                ClearRoom();
 
         }
 
@@ -141,6 +143,7 @@ public class SalleGennerator : MonoBehaviour
                         default:
                                 throw new ArgumentOutOfRangeException(nameof(doortype), doortype, null);
                 }
+                AdjustCameraSettings();
         }
 
         public void EnableDoors(Doortype index, bool state)
@@ -152,6 +155,18 @@ public class SalleGennerator : MonoBehaviour
         public void OpenDoors(Doortype index, bool state)
         {
                 s_doors[(int)index].GetComponent<BoxCollider2D>().enabled = state;
+        }
+        
+        public void AdjustCameraSettings()
+        {
+                var cam = CameraController.cameraInstance;
+                
+                cam.transform.position = new Vector3(cam.cameraTarget.position.x,cam.cameraTarget.position.y,cam.transform.position.z);
+        }
+
+        public void ClearRoom()
+        {
+                
         }
 }
 
