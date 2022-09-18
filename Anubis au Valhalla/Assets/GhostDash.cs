@@ -8,7 +8,8 @@ public class GhostDash : MonoBehaviour
     private float ghotsDelaySeconds;
     public GameObject ghost;
     public bool activerEffet;
-    
+    public List<GameObject> tousLesSprites;
+
     public void Start()
     {
         ghotsDelay = ghotsDelaySeconds;
@@ -25,6 +26,7 @@ public class GhostDash : MonoBehaviour
             else
             {
                 GameObject currentGhost = Instantiate(ghost, transform.position, transform.rotation);
+                tousLesSprites.Add(currentGhost);
                 Sprite currentSprite = GetComponent<SpriteRenderer>().sprite;
                 currentGhost.transform.localScale = this.transform.localScale;
                 currentGhost.GetComponent<SpriteRenderer>().sprite = currentSprite;

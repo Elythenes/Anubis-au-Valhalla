@@ -166,7 +166,12 @@ public class SalleGennerator : MonoBehaviour
 
         public void ClearRoom()
         {
-                
+                List<GameObject> amount = CharacterController.instance.GetComponent<GhostDash>().tousLesSprites;
+                for (int i = 0; i < amount.Count; i++)
+                {
+                        Destroy(CharacterController.instance.GetComponent<GhostDash>().tousLesSprites[i].gameObject);
+                }
+                amount.Clear();
         }
 }
 
