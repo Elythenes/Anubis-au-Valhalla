@@ -59,7 +59,7 @@ public class SalleGennerator : MonoBehaviour
         // Start is called before the first frame update
         void Start()
         {
-                GenerateRoom();
+                GenerateDungeon();
                 TransitionToNextRoom(Doortype.West);
         }
 
@@ -76,16 +76,17 @@ public class SalleGennerator : MonoBehaviour
                 }
         }
 
-        public void GenerateRoom()
+        public void GenerateDungeon() //génération de la map
         {
                 if (currentRoom != null) Destroy(currentRoom.gameObject);
                 roomsDone = -1;
-                var maps = new List<Salle>(roomPrefab);
+                var maps = new List<Salle>(roomPrefab); //ajoute toutes les salles référencées dans la liste
                 roomsQueue.Clear();
                 bool special0 = Random.value > 0.5f;
                 if(special0) maps.Add(specialRooms[0]);
-                        for (int i = 0; i < dungeonSize; i++)
+                for (int i = 0; i < dungeonSize; i++) // la boucle génère autant de salles que la taille du donjon. Pour modifier OU les salles spéciales apparaissent c'est là dedans
                 {
+                        //La boucle prend un membre aléatoire de la liste, l'ajoute à la SpawnQueue, puis le retire de la liste
                         var j = Random.Range(0, maps.Count);
                         roomsQueue.Enqueue(maps[j]);
                         maps.RemoveAt(j);
