@@ -1,33 +1,69 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class SkillManager : MonoBehaviour
 {
-    public KeyCode Spell1;
-    public KeyCode Spell2;
+    public KeyCode spell1;
+    public KeyCode spell2;
     
-    public GameObject TargetUser;
+    public GameObject targetUser;
 
-    public GameObject FlameArea;
-    public GameObject SandstormArea;
+    public GameObject flameArea;
+    public int timerSpell1 = 2;
+    
+    public GameObject sandstormArea;
+    public int timerSpell2 = 2;
 
-    void Start()
-    {
-    }
+    public GameObject fireBall;
+    public float launchVelocity = 100f;
 
     void Update()
     {
-        if (Input.GetKeyDown(Spell1))
+        if (Input.GetKeyDown(spell1))
         {
-            SkillUseTargetBottom(FlameArea);
+            //TimeLimitedSpell(flameArea, timerSpell1);
+            ThrowingSpell(fireBall);
+        }
+        if (Input.GetKeyDown(spell2))
+        {
+            FollowingSpell(sandstormArea, timerSpell2);
         }
     }
-
-    void SkillUseTargetBottom(GameObject gb)
+    
+    IEnumerator TimeLimitedGb(GameObject gbInstance, int timer)
     {
-        Instantiate(gb, new Vector3(TargetUser.transform.position.x, TargetUser.transform.position.y-(TargetUser.transform.localScale.y/2), 0), quaternion.identity);
+        yield return new WaitForSeconds(timer);
+        Destroy(gbInstance);
+        Debug.Log("destroyed");
+    }
+    
+    //Pour un Spell qui apparaît et disparaît après une durée
+    //(ici int déclarée au début "timerSpell1")
+    void TimeLimitedSpell(GameObject gb, int timer) 
+    {
+        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), quaternion.identity);
+        Debug.Log("Spell1 used");
+        StartCoroutine(TimeLimitedGb(gbInstance, timerSpell1));
+    }
+
+    //Spell qui apparaît, disparaît après une durée et qui reste sur du joueur
+    //(ici int déclarée au début "timerSpell2")
+    void FollowingSpell(GameObject gb, int timer)
+    {
+        var gbInstance = Instantiate(gb,new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity, targetUser.transform);
+        Debug.Log("Spell2 used");
+        StartCoroutine(TimeLimitedGb(gbInstance, timerSpell2));
+    }
+    
+    //Pour un Spell qui apparaît (et disparaît après avoir touché qqc (ennemi ou mur))
+    void ThrowingSpell(GameObject gb)
+    {
+        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), quaternion.identity);
+        gbInstance.GetComponent<Rigidbody2D>().AddForce(Camera.main.ScreenToWorldPoint(Input.mousePosition)*launchVelocity);
     }
 }
 

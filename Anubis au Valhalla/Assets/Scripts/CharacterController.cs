@@ -103,7 +103,7 @@ public class CharacterController : MonoBehaviour
     {
       lookingAt = 2;
       Debug.Log("droite");
-      transform.localScale = new Vector3(1, 2.0906f,1);
+      transform.localRotation = new Quaternion(0, 0,0,1);
      
     }
     Debug.Log(lookingAt);
@@ -111,7 +111,7 @@ public class CharacterController : MonoBehaviour
     {
       lookingAt = 4;
       Debug.Log("gauche");
-      transform.localScale = new Vector3(-1, 2.0906f,1);
+      transform.localRotation = new Quaternion(0, 180,0,1);
     }
     
     if (movement.y < 0)
