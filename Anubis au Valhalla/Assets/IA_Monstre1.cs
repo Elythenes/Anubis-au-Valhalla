@@ -30,6 +30,13 @@ public class IA_Monstre1 : MonoBehaviour
     public float dashSpeed;
     public Vector2 targetPerso;
 
+    [Header("Attaque")] 
+    public Transform pointAttaque;
+    public LayerMask HitboxPlayer;
+    public float rangeAttaque;
+    public int puissanceAttaque;
+
+
 
 
 
@@ -71,7 +78,7 @@ public class IA_Monstre1 : MonoBehaviour
             }
         }
 
-        if (isDashing == false)
+        if (isDashing == false) // Reset le dash quand il terminé
         {
             LagDebutDash = 0;
             gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
@@ -79,9 +86,8 @@ public class IA_Monstre1 : MonoBehaviour
             CooldownDash = 0;
         }
 
-        if (isDashing)
+        if (isDashing) // Faire dasher le monstre
         {
-            gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
             LagDebutDash += Time.deltaTime;
             
             if (LagDebutDash >= LagDebutDashMax)
@@ -91,13 +97,14 @@ public class IA_Monstre1 : MonoBehaviour
               
                 if (timerDash > dashDuration)
                 {
+                    CooldownDash += Time.deltaTime;
                     rb.velocity = (Vector2.zero);
                     //timerDash = 0;
                     //CooldownDash = 0;
                     //LagDebutDash = 0;
                     aipath.canMove = true;
-                    CooldownDash += Time.deltaTime;
                     isDashing = false;
+                    
                     if (CooldownDash >= CooldownDashMax) // Cooldown de l'attaque
                     {
                         LagDebutDash = 0;
@@ -108,34 +115,19 @@ public class IA_Monstre1 : MonoBehaviour
                 }
             }
         }
-    }
 
-   /* IEnumerator Dash()
-    {
-        Vector2 targetPerso  = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
-        yield return new WaitForSeconds(LagDebutDash);
-        timerDash += Time.deltaTime;
-        rb.velocity = (targetPerso * dashSpeed);
-              
-        if (timerDash > dashDuration)
-        { 
-           
-            rb.velocity = (Vector2.zero);
-            timerDash = 0;
-            CooldownDash = 0;
-            yield return new WaitForSeconds(LagFinDash);
-            aipath.canMove = true;
-            CooldownDash += Time.deltaTime;
-            isDashing = false;
-            if (CooldownDash >= CooldownDashMax) // Cooldown de l'attaque
+        if (isDashing) // Active la hitbox et fait des dégâts
+        {
+            Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
+
+            foreach (Collider2D joueur in toucheJoueur)
             {
-                timerDash = 0;
-                isDashing = false;
-                CooldownDash = 0;
+                Debug.Log("touché");
+                joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque);
             }
         }
-    }*/
-    
+    }
+
     public void TakeDamage(int damage)
     {
         StartCoroutine(AnimationDamaged());

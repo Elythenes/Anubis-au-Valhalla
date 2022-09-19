@@ -31,7 +31,6 @@ public class CharacterController : MonoBehaviour
 
   private void Awake()
   {
-
     if (instance == null)
     {
       instance = this;
@@ -57,9 +56,11 @@ public class CharacterController : MonoBehaviour
     
     if (isDashing == false)
     {
-       movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement 
-     // movement.x = Input.GetAxisRaw("Horizontal");
-     // movement.y = Input.GetAxisRaw("Vertical");
+      if (DamageManager.instance.stun == false)
+      {
+        movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement 
+      }
+      
     }
   
     if (isDashing == false) // Déplacments hors dash.
