@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 /*
 TRUCS A FAIRE POUR LA GEN PRO:
         INCLURE LA GENERATION DE SALLES SPECIALES(COFFRES, DEFIS ETC...)
-        DIFFERENCIER LES SALLES SPECIALLES POUR POUVOIR CONTROLLER QUAND ELLES APPARAITRE
+        DIFFERENCIER LES SALLES SPECIALLES POUR POUVOIR CONTROLLER QUAND ELLES APPARAISSENT
         INCLURE UNE SALLE DE FIN/BOSS
         INCLURE UNE TRANSITION VERS UN ECRAN DE VICTOIRE QUAND IL N'Y A PLUS DE SALLES A GENERER
 */
@@ -20,15 +20,18 @@ public class SalleGennerator : MonoBehaviour
         public CharacterController player;
         public static SalleGennerator instance;
         public List<GameObject> s_doors;
+        [SerializeField] private Salle startRoom;
+        [SerializeField] private Salle EndRoom;
 
         [Header("CONTENU DU DONJON")]
         public List<Salle> roomPrefab = new List<Salle>();
 
+        public List<Salle> specialRooms;
 
- 
+
+
         [Header("VARIABLES INTERNES POUR DEBUG")]
         [SerializeField] private int roomsDone = -1;
-        [SerializeField] private Salle startRoom;
         [SerializeField] private Doortype fromDoor = Doortype.West;
         [SerializeField] private Salle currentRoom;
 
@@ -79,8 +82,9 @@ public class SalleGennerator : MonoBehaviour
                 roomsDone = -1;
                 var maps = new List<Salle>(roomPrefab);
                 roomsQueue.Clear();
-                
-                for (int i = 0; i < dungeonSize; i++)
+                bool special0 = Random.value > 0.5f;
+                if(special0) maps.Add(specialRooms[0]);
+                        for (int i = 0; i < dungeonSize; i++)
                 {
                         var j = Random.Range(0, maps.Count);
                         roomsQueue.Enqueue(maps[j]);
@@ -118,6 +122,15 @@ public class SalleGennerator : MonoBehaviour
                 {
                         bool enabled = Random.value > 0.4f;
                         EnableDoors((Doortype) i,enabled);
+                }
+                if (roomsDone == dungeonSize)
+                {
+                        for (int i = 0; i < (int)Doortype.West + 1; i++)
+                        {
+                                EnableDoors((Doortype) i ,false);
+                        }
+                        EnableDoors(fromDoor,true);
+                        return Instantiate(EndRoom);
                 }
                 EnableDoors(fromDoor,true);
                 return Instantiate(roomsQueue.Dequeue());
