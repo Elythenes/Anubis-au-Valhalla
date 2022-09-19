@@ -34,6 +34,7 @@ public class SkillManager : MonoBehaviour
         }
     }
     
+    //Coroutine pour les spells qui doivent disparaître
     IEnumerator TimeLimitedGb(GameObject gbInstance, int timer)
     {
         yield return new WaitForSeconds(timer);
@@ -45,7 +46,7 @@ public class SkillManager : MonoBehaviour
     //(ici int déclarée au début "timerSpell1")
     void TimeLimitedSpell(GameObject gb, int timer) 
     {
-        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), quaternion.identity);
+        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity);
         Debug.Log("Spell1 used");
         StartCoroutine(TimeLimitedGb(gbInstance, timerSpell1));
     }
@@ -62,7 +63,7 @@ public class SkillManager : MonoBehaviour
     //Pour un Spell qui apparaît (et disparaît après avoir touché qqc (ennemi ou mur))
     void ThrowingSpell(GameObject gb)
     {
-        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), quaternion.identity);
+        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), Quaternion.identity);
         gbInstance.GetComponent<Rigidbody2D>().AddForce(Camera.main.ScreenToWorldPoint(Input.mousePosition)*launchVelocity);
     }
 }
