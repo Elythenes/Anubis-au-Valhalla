@@ -31,7 +31,7 @@ public class Salle : MonoBehaviour
         for (int i = 0; i < (int)SalleGennerator.Doortype.West; i++)
         {
             SalleGennerator.instance.s_doors[i].transform.position = transformReferences[i].position;
-            SalleGennerator.instance.s_doors[i].SetActive(enableDoors[i]);
+            //SalleGennerator.instance.s_doors[i].SetActive(enableDoors[i]);
         }
     }
 

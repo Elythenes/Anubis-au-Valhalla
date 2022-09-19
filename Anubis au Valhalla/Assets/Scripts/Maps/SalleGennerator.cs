@@ -19,7 +19,7 @@ public class SalleGennerator : MonoBehaviour
         [Header("REFERENCES")]
         public CharacterController player;
         public static SalleGennerator instance;
-        public GameObject[] s_doors;
+        public List<GameObject> s_doors;
 
         [Header("CONTENU DU DONJON")]
         public List<Salle> roomPrefab = new List<Salle>();
@@ -31,7 +31,7 @@ public class SalleGennerator : MonoBehaviour
         [SerializeField] private Salle startRoom;
         [SerializeField] private Doortype fromDoor = Doortype.West;
         [SerializeField] private Salle currentRoom;
-        
+
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
 
         public Transform transformCurrentRoom => currentRoom.transform;
@@ -116,16 +116,18 @@ public class SalleGennerator : MonoBehaviour
                 }
                 for (int i = 0; i < (int)Doortype.West + 1; i++)
                 {
-                        EnableDoors((Doortype) i,true);
+                        bool enabled = Random.value > 0.4f;
+                        EnableDoors((Doortype) i,enabled);
                 }
+                EnableDoors(fromDoor,true);
                 return Instantiate(roomsQueue.Dequeue());
                 
         }
 
         public void MovePlayerToDoor(Doortype doortype)
         {
+                EnableDoors((Doortype)Random.Range(0,4),true);
                 player.rb.velocity = Vector2.zero;
-
                 switch (doortype)
                 {
                         case Doortype.North:
@@ -148,6 +150,7 @@ public class SalleGennerator : MonoBehaviour
 
         public void EnableDoors(Doortype index, bool state)
         {
+                
                 s_doors[(int) index].SetActive(state);
                 OpenDoors(index,false);
         }
