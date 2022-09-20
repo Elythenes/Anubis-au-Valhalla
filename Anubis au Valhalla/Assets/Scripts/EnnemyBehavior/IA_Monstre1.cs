@@ -100,9 +100,6 @@ public class IA_Monstre1 : MonoBehaviour
                 {
                     CooldownDash += Time.deltaTime;
                     rb.velocity = (Vector2.zero);
-                    //timerDash = 0;
-                    //CooldownDash = 0;
-                    //LagDebutDash = 0;
                     aipath.canMove = true;
                     isDashing = false;
                     

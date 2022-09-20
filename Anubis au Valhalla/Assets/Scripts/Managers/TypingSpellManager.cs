@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TypingSpellManager : MonoBehaviour
 {
+    public KeyCode spell1;
+    //public KeyCode spell2;
+    
     public int spellSelection = 0;
 
     public KeyCode select;

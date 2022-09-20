@@ -514,6 +514,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1188255640}
   - component: {fileID: 1188255639}
+  - component: {fileID: 1188255642}
+  - component: {fileID: 1188255641}
   m_Layer: 0
   m_Name: TypingSpellManager
   m_TagString: Untagged
@@ -533,6 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93406e200a315a4989c34621081f870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spell1: 101
   spellSelection: 0
   select: 13
 --- !u!4 &1188255640
@@ -550,6 +553,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1188255641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188255638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a36a20086212e419742deec4cc4f70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetUser: {fileID: 7913538103575225449}
+  sandstormArea: {fileID: 2804067575571280655, guid: ab0d02b22ee5f8d47ba63865fee74e6f, type: 3}
+  timerSpell2: 2
+--- !u!114 &1188255642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188255638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 769e218336375e3438d0baadb7c209e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetUser: {fileID: 7913538103575225449}
+  flameArea: {fileID: 2070572112627775315, guid: 89d34f91fc1dec8488658721c13e624f, type: 3}
+  timerSpell1: 2
 --- !u!1001 &7710912146614491633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -575,6 +608,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1260082541081936063, guid: 262899d8cb7c94843acb78bec50d9427, type: 3}
       propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5719188512462124449, guid: 262899d8cb7c94843acb78bec50d9427, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6083811192852181171, guid: 262899d8cb7c94843acb78bec50d9427, type: 3}
@@ -733,3 +770,22 @@ MonoBehaviour:
   canDash: 1
   ghost: {fileID: 7710912146614491634}
   rb: {fileID: 0}
+--- !u!114 &7913538103575225455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7913538103575225449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bca14d1accf40fb4a9a2bfd5653776d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  vieActuelle: 0
+  vieMax: 100
+  invinsible: 0
+  TempsInvinsbleAfterHit: 2
+  StunAfterHit: 0.5
+  stun: 0
