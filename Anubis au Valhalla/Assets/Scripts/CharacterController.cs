@@ -65,8 +65,9 @@ public class CharacterController : MonoBehaviour
   
     if (isDashing == false) // Déplacments hors dash.
     {
+      //rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
       rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
-     // rb.drag = dragDeceleration * dragMultiplier;  // ligne à étudier je comprhends pas ce que ça fait
+
     }
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)

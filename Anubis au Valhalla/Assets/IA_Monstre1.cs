@@ -26,9 +26,9 @@ public class IA_Monstre1 : MonoBehaviour
     public float LagDebutDashMax;
     public float CooldownDash;
     public float CooldownDashMax;
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     public float dashSpeed;
-    public Vector2 targetPerso;
+    private Vector2 targetPerso;
 
     [Header("Attaque")] 
     public Transform pointAttaque;
@@ -44,6 +44,7 @@ public class IA_Monstre1 : MonoBehaviour
     {
         vieActuelle = vieMax;
         seeker = GetComponent<Seeker>();
+        rb = gameObject.GetComponent<Rigidbody2D>();
     }
     
 
@@ -94,7 +95,7 @@ public class IA_Monstre1 : MonoBehaviour
             {
                 timerDash += Time.deltaTime;
                 rb.velocity = targetPerso*dashSpeed;
-              
+
                 if (timerDash > dashDuration)
                 {
                     CooldownDash += Time.deltaTime;
