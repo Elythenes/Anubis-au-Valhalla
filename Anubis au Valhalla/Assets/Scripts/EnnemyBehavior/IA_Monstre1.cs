@@ -36,6 +36,8 @@ public class IA_Monstre1 : MonoBehaviour
     public float rangeAttaque;
     public int puissanceAttaque;
 
+    public int soulValue = 4;
+
 
 
 
@@ -146,6 +148,7 @@ public class IA_Monstre1 : MonoBehaviour
 
     void Die()
     {
+        Souls.instance.CreateSouls(gameObject.transform.position, soulValue);
         Destroy(gameObject);
     }
 }
