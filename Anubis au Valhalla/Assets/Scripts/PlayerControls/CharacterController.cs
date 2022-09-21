@@ -65,8 +65,8 @@ public class CharacterController : MonoBehaviour
   
     if (isDashing == false) // Déplacments hors dash.
     {
-      //rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
-      rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
+      rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
+      //rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
 
     }
 
@@ -104,22 +104,20 @@ public class CharacterController : MonoBehaviour
     if (movement.x > 0) // Le personnage s'oriente vers la direction où il marche. 
     {
       lookingAt = 2;
-      Debug.Log("droite");
-      transform.localRotation = new Quaternion(0, 0,0,1);
-     
+      //transform.localRotation = new Quaternion(0, 0,0,1);
+      transform.localScale = new Vector3(1, 2.0906f, 0);
     }
-    Debug.Log(lookingAt);
+
     if (movement.x < 0)
     {
       lookingAt = 4;
-      Debug.Log("gauche");
-      transform.localRotation = new Quaternion(0, 180,0,1);
+      //transform.localRotation = new Quaternion(0, 180,0,1);
+      transform.localScale = new Vector3(-1, 2.0906f, 0);
     }
     
     if (movement.y < 0)
     {
       lookingAt = 3;
-      Debug.Log("bas");
       float face = transform.localScale.x;
       face = 1;
     }
@@ -127,7 +125,6 @@ public class CharacterController : MonoBehaviour
     if (movement.y > 0)
     {
       lookingAt = 1;
-      Debug.Log("haut");
       float face = transform.localScale.x;
       face = 1;
     }

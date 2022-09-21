@@ -26,11 +26,6 @@ public class SkillManager : MonoBehaviour
     [Header("SandStorm")]
     public GameObject sandstormArea;
     public int timerSpell2 = 2;
-    public float rangeAttaqueSandstorm;
-    public int puissanceAttaqueSandstorm;
-    public float tempsReloadHitSandstorm;
-    public float tempsReloadHitSandstormMax;
-    public Transform pointAttaque;
 
     [Header("FireBall")]
     public GameObject fireBall;
@@ -64,24 +59,10 @@ public class SkillManager : MonoBehaviour
     void TimeLimitedSpell(GameObject gb, float timerReload) 
     {
         var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity);
-        Collider2D[] toucheMonstre = Physics2D.OverlapCircleAll(sandstormArea.transform.position, rangeAttaqueSandstorm, layerMonstres);
-
-        foreach (Collider2D monstre in toucheMonstre)
-        {
-            timerReload += Time.deltaTime;
-            if (timerReload < tempsReloadHitSandstorm)
-            {
-            Debug.Log("touché");
-            monstre.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaqueSandstorm);
-            timerReload = 0;
-            }
-        }
-        
         Debug.Log("Spell1 used");
         StartCoroutine(TimeLimitedGb(gbInstance, timerSpell1));
     }
 
-    
     
     
     //Spell qui apparaît, disparaît après une durée et qui reste sur du joueur
@@ -89,30 +70,12 @@ public class SkillManager : MonoBehaviour
     void FollowingSpell(GameObject gb)
     {
         var gbInstance = Instantiate(gb,new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity, targetUser.transform);
-        Collider2D[] toucheMonstre = Physics2D.OverlapCircleAll(player.transform.position, rangeAttaqueFlameArea, layerMonstres);
 
-        foreach (Collider2D monstre in toucheMonstre)
-        {
-           // StartCoroutine(CooldownSandStorm(tempsReloadHitSandstorm));
-           tempsReloadHitSandstorm += Time.deltaTime;
-            if (tempsReloadHitSandstorm < tempsReloadHitSandstormMax)
-            {
-                Debug.Log("touché");
-                monstre.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaqueFlameArea);
-                tempsReloadHitSandstorm = 0;
-            }
-        }
         Debug.Log("Spell2 used");
         StartCoroutine(TimeLimitedGb(gbInstance, timerSpell2));
     }
+
     
-
-
-
-
-
-
-
     //Pour un Spell qui apparaît (et disparaît après avoir touché qqc (ennemi ou mur))
     void ThrowingSpell(GameObject gb)
     {
@@ -129,11 +92,6 @@ public class SkillManager : MonoBehaviour
         gbInstance.GetComponent<Rigidbody2D>().AddForce(Camera.main.ScreenToWorldPoint(Input.mousePosition)*launchVelocity);
     }
     
-    private void OnDrawGizmosSelected() // Permet de voir la hitbox du coup dans l'éditeur
-    {
-
-        Gizmos.DrawWireSphere(player.transform.position, rangeAttaqueSandstorm);
-    }
     
 }
 
