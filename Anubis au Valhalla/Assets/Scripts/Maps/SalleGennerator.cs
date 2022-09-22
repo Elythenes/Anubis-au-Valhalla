@@ -19,7 +19,7 @@ public class SalleGennerator : MonoBehaviour
         [Header("REFERENCES")]
         public CharacterController player;
         public static SalleGennerator instance;
-        public List<GameObject> s_doors;
+        public List<Door> s_doors;
         [SerializeField] private Salle startRoom;
         [SerializeField] private Salle EndRoom;
 
@@ -36,8 +36,6 @@ public class SalleGennerator : MonoBehaviour
         [SerializeField] private Salle currentRoom;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
-
-        public Transform transformCurrentRoom => currentRoom.transform;
 
         public enum Doortype
         {
@@ -74,6 +72,26 @@ public class SalleGennerator : MonoBehaviour
                         
                         OpenDoors((Doortype)i,true);
                 }
+        }
+
+        public Salle GenerateDungeon2()
+        {
+                if (currentRoom != null) Destroy(currentRoom.gameObject);
+                roomsDone++;
+                if (roomsDone == 0)
+                {
+                        EnableDoors(Doortype.East,true);
+                        OpenDoors(Doortype.East, true);
+                        return Instantiate(startRoom);
+                }
+                for (int i = 0; i < (int)Doortype.West + 1; i++)
+                {
+                        if (i == (int) fromDoor) continue;
+                        bool enabled = Random.value > 0.4f;
+                        EnableDoors((Doortype) i,enabled);
+                        return s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+                }
+                return s_doors[Random.Range(0,4)].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
         }
 
         public void GenerateDungeon() //génération de la map
@@ -135,7 +153,7 @@ public class SalleGennerator : MonoBehaviour
                 }
                 EnableDoors(fromDoor,true);
                 return Instantiate(roomsQueue.Dequeue());
-                
+
         }
 
         public void MovePlayerToDoor(Doortype doortype)
@@ -165,7 +183,7 @@ public class SalleGennerator : MonoBehaviour
         public void EnableDoors(Doortype index, bool state)
         {
                 
-                s_doors[(int) index].SetActive(state);
+                s_doors[(int) index].gameObject.SetActive(state);
                 OpenDoors(index,false);
         }
 

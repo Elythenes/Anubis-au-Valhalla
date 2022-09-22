@@ -99,8 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3717e5b436191e140979759832641d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireSpeed: 10
-  puissanceAttaqueFireball: 0
+  sOFireball: {fileID: 11400000, guid: e4ec7956ad4048141b771f80356505e2, type: 2}
 --- !u!58 &6587923681567925786
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -135,6 +134,6 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 0
-  m_CollisionDetection: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
   m_Constraints: 0

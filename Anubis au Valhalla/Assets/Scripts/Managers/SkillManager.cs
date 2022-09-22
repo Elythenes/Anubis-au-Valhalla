@@ -17,33 +17,17 @@ public class SkillManager : MonoBehaviour
     public GameObject targetUser;
     public LayerMask layerMonstres;
 
-    [Header("FlameArea")]
+    [Header("SO FlameArea")]
     public GameObject flameArea;
-    public int timerSpell1 = 2;
-    public int puissanceAttaqueFlameArea;
-    public float espacementDoTFlameArea;
-    private float cooldownFlameAreaTimer;
-    public float cooldownFlameArea;
-    public bool canCastFlameArea;
+    public SpellStaticAreaType sOFlameArea;
     
-    [Header("SandStorm")]
+    [Header("SO SandStorm")]
     public GameObject sandstormArea;
-    public int timerSpell2 = 2;
-    public int puissanceAttaqueSandstorm;
-    public float espacementDoTSandstorm;
-    private float tempsReloadHitSandstorm;
-    private float cooldownSandstormTimer;
-    public float cooldownSandstorm;
-    public bool canCastSandstorm;
-
-    [Header("FireBall")] 
+    public SpellFollowingAreaType soSandstorm;
+    
+    [Header("SO Fireball")]
     public GameObject fireBall;
-    public int timerSpell3 = 2;
-    public float bulletSpeed;
-    public int puissanceAttaqueFireBall;
-    private float cooldownFireballTimer;
-    public float cooldownFireball;
-    public bool canCastFireBall;
+    public SpellThrowingType sOFireball;
 
     private void Awake()
     {
@@ -58,12 +42,12 @@ public class SkillManager : MonoBehaviour
         {
             Debug.Log("spell1");
 
-            if (canCastFlameArea)
+            if (sOFlameArea.canCast)
             {
-                TimeLimitedSpell(flameArea, timerSpell1);
+                TimeLimitedSpell(flameArea, sOFlameArea.duration);
             }
             
-            /*if (canCastFireBall)
+            /*if (sOFireball.canCast)
             {
                 ThrowingSpell(fireBall);
             }*/
@@ -71,40 +55,40 @@ public class SkillManager : MonoBehaviour
         
         if (Input.GetKeyDown(spell2))
         {
-            if (canCastSandstorm)
+            if (soSandstorm.canCast)
             {
                 FollowingSpell(sandstormArea);
             }
         }
         
-        if (cooldownFlameAreaTimer < cooldownFlameArea && !canCastFlameArea) //cooldown de la FlameArea
+        if (sOFlameArea.cooldownTimer < sOFlameArea.cooldown && !sOFlameArea.canCast) //cooldown de la FlameArea
         {
-            cooldownFlameAreaTimer += Time.deltaTime;
+            sOFlameArea.cooldownTimer += Time.deltaTime;
         }
-        else if (cooldownFlameAreaTimer > cooldownFlameArea)
+        else if (sOFlameArea.cooldownTimer > sOFlameArea.cooldown)
         {
-            canCastFlameArea = true;
-            cooldownFlameAreaTimer = 0;
-        }
-        
-        if (cooldownSandstormTimer < cooldownSandstorm && !canCastSandstorm) //cooldown du Sandstorm
-        {
-            cooldownSandstormTimer += Time.deltaTime;
-        }
-        else if (cooldownSandstormTimer > cooldownSandstorm)
-        {
-            canCastSandstorm = true;
-            cooldownSandstormTimer = 0;
+            sOFlameArea.canCast = true;
+            sOFlameArea.cooldownTimer = 0;
         }
         
-        if (cooldownFireballTimer < cooldownFireball && !canCastFireBall) //cooldown de la Fireball
+        if (soSandstorm.cooldownTimer < soSandstorm.cooldown && !soSandstorm.canCast) //cooldown du Sandstorm
         {
-            cooldownFireballTimer += Time.deltaTime;
+            soSandstorm.cooldownTimer += Time.deltaTime;
         }
-        else if (cooldownFireballTimer > cooldownFireball)
+        else if (soSandstorm.cooldownTimer > soSandstorm.cooldown)
         {
-            canCastFireBall = true;
-            cooldownFireballTimer = 0;
+            soSandstorm.canCast = true;
+            soSandstorm.cooldownTimer = 0;
+        }
+        
+        if (sOFireball.cooldownTimer < sOFireball.cooldown && !sOFireball.canCast) //cooldown de la Fireball
+        {
+            sOFireball.cooldownTimer += Time.deltaTime;
+        }
+        else if (sOFireball.cooldownTimer > sOFireball.cooldown)
+        {
+            sOFireball.canCast = true;
+            sOFireball.cooldownTimer = 0;
         }
     }
     
@@ -122,10 +106,10 @@ public class SkillManager : MonoBehaviour
     //(ici int déclarée au début "timerSpell1")
     void TimeLimitedSpell(GameObject gb, float timerReload)
     {
-        canCastFlameArea = false;
+        sOFlameArea.canCast = false;
         var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity);
         Debug.Log("Spell1 used");
-        StartCoroutine(TimeLimitedGb(gbInstance, timerSpell1));
+        StartCoroutine(TimeLimitedGb(gbInstance, sOFlameArea.duration));
     }
 
     
@@ -134,25 +118,25 @@ public class SkillManager : MonoBehaviour
     //(ici int déclarée au début "timerSpell2")
     void FollowingSpell(GameObject gb)
     {
-        canCastSandstorm = false;
+        soSandstorm.canCast = false;
         var gbInstance = Instantiate(gb,new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity, targetUser.transform);
 
         Debug.Log("Spell2 used");
-        StartCoroutine(TimeLimitedGb(gbInstance, timerSpell2));
+        StartCoroutine(TimeLimitedGb(gbInstance, soSandstorm.duration));
     }
 
     
     //Pour un Spell qui apparaît (et disparaît après avoir touché qqc (ennemi ou mur))
     void ThrowingSpell(GameObject gb)
     {
-        canCastFireBall = false;
+        sOFireball.canCast = false;
         Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 charaPos = CharacterController.instance.transform.position;
         float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
         
         var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x,
             targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), Quaternion.AngleAxis(angle, Vector3.forward));
-        StartCoroutine(TimeLimitedGb(gbInstance, timerSpell3));
+        StartCoroutine(TimeLimitedGb(gbInstance, sOFireball.duration));
     }
 }
 
