@@ -518,8 +518,8 @@ MonoBehaviour:
   effetVisuel: {fileID: 91477352}
   vitessePersoXC1: 15
   vitessePersoYC1: 10
-  vitessePersoNormaleX: 25
-  vitessePersoNormaleY: 20
+  vitessePersoNormaleX: 23
+  vitessePersoNormaleY: 18
 --- !u!4 &483863853 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8826527345816730603, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
@@ -1230,11 +1230,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8826527345816730581, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
       propertyPath: speedX
-      value: 25
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 8826527345816730581, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
       propertyPath: speedY
-      value: 20
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8826527345816730581, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
+      propertyPath: dashDuration
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8826527345816730582, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
       propertyPath: m_Name
@@ -1485,11 +1489,23 @@ PrefabInstance:
     - target: {fileID: 89795721797022157, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 483863853}
     - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 483863846}
+    - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
+      propertyPath: canDash
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
+      propertyPath: CooldownDash
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
+      propertyPath: CooldownDashMax
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 89795721797022162, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
       propertyPath: m_RootOrder
       value: 3

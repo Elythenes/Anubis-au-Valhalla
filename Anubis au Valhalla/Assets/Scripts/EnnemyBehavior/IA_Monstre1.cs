@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class IA_Monstre1 : MonoBehaviour
 {
@@ -19,13 +20,14 @@ public class IA_Monstre1 : MonoBehaviour
     private Path path;
 
     [Header("Dash")] 
+    public bool canDash;
     public bool isDashing;
     public float timerDash;
     public float dashDuration;
     public float LagDebutDash;
     public float LagDebutDashMax;
+    private float CooldownDashTimer;
     public float CooldownDash;
-    public float CooldownDashMax;
     private Rigidbody2D rb;
     public float dashSpeed;
     private Vector2 targetPerso;
@@ -37,10 +39,6 @@ public class IA_Monstre1 : MonoBehaviour
     public int puissanceAttaque;
 
     public int soulValue = 4;
-
-
-
-
 
     private void Start()
     {
@@ -72,8 +70,9 @@ public class IA_Monstre1 : MonoBehaviour
 
         if (aipath.reachedDestination) // Quand le monstre arrive proche du joueur, il commence le dash
         {
-            if (isDashing == false)
+            if (isDashing == false && canDash)
             { 
+                CooldownDashTimer = 0;
                 targetPerso  = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
                 Debug.Log("commence");
                 aipath.canMove = false;
@@ -83,10 +82,8 @@ public class IA_Monstre1 : MonoBehaviour
 
         if (isDashing == false) // Reset le dash quand il terminé
         {
-            LagDebutDash = 0;
+            CooldownDashTimer += Time.deltaTime;
             gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
-            timerDash = 0;
-            CooldownDash = 0;
         }
 
         if (isDashing) // Faire dasher le monstre
@@ -100,21 +97,22 @@ public class IA_Monstre1 : MonoBehaviour
 
                 if (timerDash > dashDuration)
                 {
-                    CooldownDash += Time.deltaTime;
                     rb.velocity = (Vector2.zero);
                     aipath.canMove = true;
                     isDashing = false;
-                    
-                    if (CooldownDash >= CooldownDashMax) // Cooldown de l'attaque
-                    {
-                        LagDebutDash = 0;
-                        timerDash = 0;
-                        isDashing = false;
-                        CooldownDash = 0;
-                    }
+                    canDash = false;
                 }
             }
         }
+        
+        if (CooldownDashTimer >= CooldownDash) // Cooldown de l'attaque
+        {
+            canDash = true;
+            LagDebutDash = 0;
+            timerDash = 0;
+            isDashing = false;
+        }
+        
 
         if (isDashing) // Active la hitbox et fait des dégâts
         {
