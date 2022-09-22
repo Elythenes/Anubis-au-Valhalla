@@ -20,21 +20,26 @@ public class SkillManager : MonoBehaviour
     [Header("FlameArea")]
     public GameObject flameArea;
     public int timerSpell1 = 2;
-    public float rangeAttaqueFlameArea;
     public int puissanceAttaqueFlameArea;
-    public int tempsReloadHitFlameArea;
+    public float espacementDoTFlameArea;
+    private float cooldownFlameAreaTimer;
+    public float cooldownFlameArea;
+    public bool canCastFlameArea;
     
     [Header("SandStorm")]
-    public int puissanceAttaqueSandstorm;
-    public float espacementDoT;
-    private float tempsReloadHitSandstorm;
     public GameObject sandstormArea;
     public int timerSpell2 = 2;
+    public int puissanceAttaqueSandstorm;
+    public float espacementDoTSandstorm;
+    private float tempsReloadHitSandstorm;
+    private float cooldownSandstormTimer;
+    public float cooldownSandstorm;
+    public bool canCastSandstorm;
 
     [Header("FireBall")] 
     public GameObject fireBall;
-    public float bulletSpeed;
     public int timerSpell3 = 2;
+    public float bulletSpeed;
     public int puissanceAttaqueFireBall;
     private float cooldownFireballTimer;
     public float cooldownFireball;
@@ -52,18 +57,57 @@ public class SkillManager : MonoBehaviour
         if (Input.GetKeyDown(spell1))
         {
             Debug.Log("spell1");
-            //TimeLimitedSpell(flameArea, timerSpell1);
-            if (canCastFireBall)
+
+            if (canCastFlameArea)
+            {
+                TimeLimitedSpell(flameArea, timerSpell1);
+            }
+            
+            /*if (canCastFireBall)
             {
                 ThrowingSpell(fireBall);
-            }
+            }*/
         }
         
         if (Input.GetKeyDown(spell2))
         {
-            FollowingSpell(sandstormArea);
+            if (canCastSandstorm)
+            {
+                FollowingSpell(sandstormArea);
+            }
+        }
+        
+        if (cooldownFlameAreaTimer < cooldownFlameArea && !canCastFlameArea) //cooldown de la FlameArea
+        {
+            cooldownFlameAreaTimer += Time.deltaTime;
+        }
+        else if (cooldownFlameAreaTimer > cooldownFlameArea)
+        {
+            canCastFlameArea = true;
+            cooldownFlameAreaTimer = 0;
+        }
+        
+        if (cooldownSandstormTimer < cooldownSandstorm && !canCastSandstorm) //cooldown du Sandstorm
+        {
+            cooldownSandstormTimer += Time.deltaTime;
+        }
+        else if (cooldownSandstormTimer > cooldownSandstorm)
+        {
+            canCastSandstorm = true;
+            cooldownSandstormTimer = 0;
+        }
+        
+        if (cooldownFireballTimer < cooldownFireball && !canCastFireBall) //cooldown de la Fireball
+        {
+            cooldownFireballTimer += Time.deltaTime;
+        }
+        else if (cooldownFireballTimer > cooldownFireball)
+        {
+            canCastFireBall = true;
+            cooldownFireballTimer = 0;
         }
     }
+    
     
     //Coroutine pour les spells qui doivent disparaître
     IEnumerator TimeLimitedGb(GameObject gbInstance, int timer)
@@ -73,10 +117,12 @@ public class SkillManager : MonoBehaviour
         Debug.Log("destroyed");
     }
     
+    
     //Pour un Spell qui apparaît et disparaît après une durée
     //(ici int déclarée au début "timerSpell1")
-    void TimeLimitedSpell(GameObject gb, float timerReload) 
+    void TimeLimitedSpell(GameObject gb, float timerReload)
     {
+        canCastFlameArea = false;
         var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity);
         Debug.Log("Spell1 used");
         StartCoroutine(TimeLimitedGb(gbInstance, timerSpell1));
@@ -88,6 +134,7 @@ public class SkillManager : MonoBehaviour
     //(ici int déclarée au début "timerSpell2")
     void FollowingSpell(GameObject gb)
     {
+        canCastSandstorm = false;
         var gbInstance = Instantiate(gb,new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity, targetUser.transform);
 
         Debug.Log("Spell2 used");
@@ -99,17 +146,12 @@ public class SkillManager : MonoBehaviour
     void ThrowingSpell(GameObject gb)
     {
         canCastFireBall = false;
-        cooldownFireballTimer += Time.deltaTime;
         Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 charaPos = CharacterController.instance.transform.position;
         float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
         
         var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x,
             targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), Quaternion.AngleAxis(angle, Vector3.forward));
-        if (cooldownFireballTimer > cooldownFireball)
-        {
-            canCastFireBall = true;
-        }
         StartCoroutine(TimeLimitedGb(gbInstance, timerSpell3));
     }
 }

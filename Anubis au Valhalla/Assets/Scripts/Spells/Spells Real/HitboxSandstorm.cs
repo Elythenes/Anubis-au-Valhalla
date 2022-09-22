@@ -16,7 +16,7 @@ public class HitboxSandstorm : MonoBehaviour
    private void Start()
    {
       puissanceAttaqueSandstorm = SkillManager.instance.puissanceAttaqueSandstorm;
-      tempsReloadHitSandstormMax = SkillManager.instance.espacementDoT;
+      tempsReloadHitSandstormMax = SkillManager.instance.espacementDoTSandstorm;
    }
 
    private void OnTriggerStay2D(Collider2D col)
