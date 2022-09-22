@@ -12,7 +12,13 @@ public class HitboxSandstorm : MonoBehaviour
    public float tempsReloadHitSandstormMax;
    public float tempsReloadHitSandstorm;
    public bool stopAttack;
-   
+
+   private void Start()
+   {
+      puissanceAttaqueSandstorm = SkillManager.instance.puissanceAttaqueSandstorm;
+      tempsReloadHitSandstormMax = SkillManager.instance.espacementDoTSandstorm;
+   }
+
    private void OnTriggerStay2D(Collider2D col)
    {
       for (int i = 0; i < 3; i++)

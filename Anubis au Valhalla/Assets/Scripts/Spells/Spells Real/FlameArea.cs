@@ -1,29 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class FlameArea : MonoBehaviour
 {
-    public GameObject targetUser;
+  
+    [Header("FlameArea")]
+    public int puissanceAttaqueFlameArea; 
+    public float tempsReloadHitFlameAreaMax;
+    public float tempsReloadHitFlameAreaTimer;
+    public bool stopAttack;
 
-    public GameObject flameArea;
-    public int timerSpell1 = 2;
-
-    //Pour un Spell qui apparaît et disparaît après une durée
-    //(ici int déclarée au début "timerSpell1")
-    public void TimeLimitedSpell(GameObject gb, int timer) 
+    private void Start()
     {
-        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity);
-        Debug.Log("Spell1 used");
-        StartCoroutine(TimeLimitedGb(gbInstance, timerSpell1));
+        puissanceAttaqueFlameArea = SkillManager.instance.puissanceAttaqueFlameArea;
+        tempsReloadHitFlameAreaMax = SkillManager.instance.espacementDoTFlameArea;
     }
-    
-    //Coroutine pour les spells qui doivent disparaître
-    IEnumerator TimeLimitedGb(GameObject gbInstance, int timer)
+
+    private void OnTriggerStay2D(Collider2D col)
     {
-        yield return new WaitForSeconds(timer);
-        Destroy(gbInstance);
-        Debug.Log("destroyed");
+        for (int i = 0; i < 4; i++)
+        {
+            if (tempsReloadHitFlameAreaTimer <= tempsReloadHitFlameAreaMax && stopAttack == false)
+            {
+                tempsReloadHitFlameAreaTimer += Time.deltaTime;
+            }
+
+            if (tempsReloadHitFlameAreaTimer > tempsReloadHitFlameAreaMax && col.gameObject.tag == "Monstre")
+            {
+                Debug.Log("touché");
+                col.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaqueFlameArea);
+                //yield return new WaitForSeconds(tempsReloadHitSandstormMax);
+                tempsReloadHitFlameAreaTimer = 0;
+            }
+        } 
+    }
+   
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        stopAttack = true;
+        tempsReloadHitFlameAreaTimer = 0;
     }
 }
+
 

@@ -8,7 +8,9 @@ public class Souls : MonoBehaviour
     public GameObject soul;
 
     public static Souls instance;
-    // Start is called before the first frame update
+
+    public int soulBank = 0;
+
     void Awake()
     {
         if (instance == null)
@@ -28,5 +30,11 @@ public class Souls : MonoBehaviour
         {
             Instantiate(soul, ennemyPos, Quaternion.Euler(0,0,0));
         }
+    }
+
+    public void CollectSouls(GameObject collectedSoul, int value)
+    {
+        Destroy(collectedSoul);
+        soulBank += value;
     }
 }
