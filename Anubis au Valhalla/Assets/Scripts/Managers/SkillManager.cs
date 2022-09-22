@@ -10,6 +10,7 @@ public class SkillManager : MonoBehaviour
 {
 
     [Header("Général")] 
+    public static SkillManager instance;
     public GameObject player;
     public KeyCode spell1;
     public KeyCode spell2;
@@ -19,32 +20,94 @@ public class SkillManager : MonoBehaviour
     [Header("FlameArea")]
     public GameObject flameArea;
     public int timerSpell1 = 2;
-    public float rangeAttaqueFlameArea;
     public int puissanceAttaqueFlameArea;
-    public int tempsReloadHitFlameArea;
+    public float espacementDoTFlameArea;
+    private float cooldownFlameAreaTimer;
+    public float cooldownFlameArea;
+    public bool canCastFlameArea;
     
     [Header("SandStorm")]
     public GameObject sandstormArea;
     public int timerSpell2 = 2;
+    public int puissanceAttaqueSandstorm;
+    public float espacementDoTSandstorm;
+    private float tempsReloadHitSandstorm;
+    private float cooldownSandstormTimer;
+    public float cooldownSandstorm;
+    public bool canCastSandstorm;
 
-    [Header("FireBall")]
+    [Header("FireBall")] 
     public GameObject fireBall;
-    public float launchVelocity = 100f;
-    public float rangeAttaqueFireBall;
+    public int timerSpell3 = 2;
+    public float bulletSpeed;
     public int puissanceAttaqueFireBall;
+    private float cooldownFireballTimer;
+    public float cooldownFireball;
+    public bool canCastFireBall;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     void Update()
     {
         if (Input.GetKeyDown(spell1))
         {
-            //TimeLimitedSpell(flameArea, timerSpell1);
-            ThrowingSpell(fireBall);
+            Debug.Log("spell1");
+
+            if (canCastFlameArea)
+            {
+                TimeLimitedSpell(flameArea, timerSpell1);
+            }
+            
+            /*if (canCastFireBall)
+            {
+                ThrowingSpell(fireBall);
+            }*/
         }
+        
         if (Input.GetKeyDown(spell2))
         {
-            FollowingSpell(sandstormArea);
+            if (canCastSandstorm)
+            {
+                FollowingSpell(sandstormArea);
+            }
+        }
+        
+        if (cooldownFlameAreaTimer < cooldownFlameArea && !canCastFlameArea) //cooldown de la FlameArea
+        {
+            cooldownFlameAreaTimer += Time.deltaTime;
+        }
+        else if (cooldownFlameAreaTimer > cooldownFlameArea)
+        {
+            canCastFlameArea = true;
+            cooldownFlameAreaTimer = 0;
+        }
+        
+        if (cooldownSandstormTimer < cooldownSandstorm && !canCastSandstorm) //cooldown du Sandstorm
+        {
+            cooldownSandstormTimer += Time.deltaTime;
+        }
+        else if (cooldownSandstormTimer > cooldownSandstorm)
+        {
+            canCastSandstorm = true;
+            cooldownSandstormTimer = 0;
+        }
+        
+        if (cooldownFireballTimer < cooldownFireball && !canCastFireBall) //cooldown de la Fireball
+        {
+            cooldownFireballTimer += Time.deltaTime;
+        }
+        else if (cooldownFireballTimer > cooldownFireball)
+        {
+            canCastFireBall = true;
+            cooldownFireballTimer = 0;
         }
     }
+    
     
     //Coroutine pour les spells qui doivent disparaître
     IEnumerator TimeLimitedGb(GameObject gbInstance, int timer)
@@ -54,10 +117,12 @@ public class SkillManager : MonoBehaviour
         Debug.Log("destroyed");
     }
     
+    
     //Pour un Spell qui apparaît et disparaît après une durée
     //(ici int déclarée au début "timerSpell1")
-    void TimeLimitedSpell(GameObject gb, float timerReload) 
+    void TimeLimitedSpell(GameObject gb, float timerReload)
     {
+        canCastFlameArea = false;
         var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity);
         Debug.Log("Spell1 used");
         StartCoroutine(TimeLimitedGb(gbInstance, timerSpell1));
@@ -69,6 +134,7 @@ public class SkillManager : MonoBehaviour
     //(ici int déclarée au début "timerSpell2")
     void FollowingSpell(GameObject gb)
     {
+        canCastSandstorm = false;
         var gbInstance = Instantiate(gb,new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity, targetUser.transform);
 
         Debug.Log("Spell2 used");
@@ -79,19 +145,14 @@ public class SkillManager : MonoBehaviour
     //Pour un Spell qui apparaît (et disparaît après avoir touché qqc (ennemi ou mur))
     void ThrowingSpell(GameObject gb)
     {
-        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), Quaternion.identity);
+        canCastFireBall = false;
+        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 charaPos = CharacterController.instance.transform.position;
+        float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
         
-        Collider2D[] toucheMonstre = Physics2D.OverlapCircleAll(player.transform.position, rangeAttaqueFireBall, layerMonstres);
-
-        foreach (Collider2D monstre in toucheMonstre)
-        {
-            Debug.Log("touché");
-            monstre.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaqueFireBall);
-        }
-        
-        gbInstance.GetComponent<Rigidbody2D>().AddForce(Camera.main.ScreenToWorldPoint(Input.mousePosition)*launchVelocity);
+        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x,
+            targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), Quaternion.AngleAxis(angle, Vector3.forward));
+        StartCoroutine(TimeLimitedGb(gbInstance, timerSpell3));
     }
-    
-    
 }
 

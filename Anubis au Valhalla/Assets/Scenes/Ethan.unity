@@ -516,8 +516,10 @@ MonoBehaviour:
   puissanceAttaque: 25
   vitesseAttaque: 1
   effetVisuel: {fileID: 91477352}
-  vitessePersoC1: 5
-  vitessePersoNormale: 9
+  vitessePersoXC1: 15
+  vitessePersoYC1: 10
+  vitessePersoNormaleX: 23
+  vitessePersoNormaleY: 18
 --- !u!4 &483863853 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8826527345816730603, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
@@ -829,15 +831,22 @@ MonoBehaviour:
     m_Bits: 64
   flameArea: {fileID: 2070572112627775315, guid: 89d34f91fc1dec8488658721c13e624f, type: 3}
   timerSpell1: 2
-  rangeAttaqueFlameArea: 0
-  puissanceAttaqueFlameArea: 0
-  tempsReloadHitFlameArea: 0
+  puissanceAttaqueFlameArea: 5
+  espacementDoTFlameArea: 2
+  cooldownFlameArea: 1
+  canCastFlameArea: 1
   sandstormArea: {fileID: 2804067575571280655, guid: ab0d02b22ee5f8d47ba63865fee74e6f, type: 3}
   timerSpell2: 2
+  puissanceAttaqueSandstorm: 5
+  espacementDoTSandstorm: 2
+  cooldownSandstorm: 5
+  canCastSandstorm: 1
   fireBall: {fileID: 3272022552115205699, guid: b89b73c8528437f4583e754e1b240b58, type: 3}
-  launchVelocity: 100
-  rangeAttaqueFireBall: 0
-  puissanceAttaqueFireBall: 0
+  timerSpell3: 2
+  bulletSpeed: 15
+  puissanceAttaqueFireBall: 15
+  cooldownFireball: 2
+  canCastFireBall: 1
 --- !u!4 &985064225
 Transform:
   m_ObjectHideFlags: 0
@@ -1004,8 +1013,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 483863846}
-  vieActuelle: 100
-  vieMax: 0
+  vieActuelle: 0
+  vieMax: 100
   invinsible: 0
   TempsInvinsbleAfterHit: 2
   StunAfterHit: 0.2
@@ -1218,6 +1227,18 @@ PrefabInstance:
     - target: {fileID: 8826527345816730580, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
       propertyPath: m_SortingOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8826527345816730581, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
+      propertyPath: speedX
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8826527345816730581, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
+      propertyPath: speedY
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8826527345816730581, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
+      propertyPath: dashDuration
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8826527345816730582, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
       propertyPath: m_Name
@@ -1468,11 +1489,23 @@ PrefabInstance:
     - target: {fileID: 89795721797022157, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 483863853}
     - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 483863846}
+    - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
+      propertyPath: canDash
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
+      propertyPath: CooldownDash
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
+      propertyPath: CooldownDashMax
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 89795721797022162, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
       propertyPath: m_RootOrder
       value: 3
