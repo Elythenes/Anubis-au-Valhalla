@@ -5,33 +5,24 @@ using UnityEngine;
 
 public class HitboxSandstorm : MonoBehaviour
 {
-   
-
-   [Header("SandStorm")]
-   public int puissanceAttaqueSandstorm;
-   public float tempsReloadHitSandstormMax;
+   [Header("SandStorm")] 
+   public SpellFollowingAreaType sOSandstorm;
    public float tempsReloadHitSandstorm;
    public bool stopAttack;
-
-   private void Start()
-   {
-      puissanceAttaqueSandstorm = SkillManager.instance.puissanceAttaqueSandstorm;
-      tempsReloadHitSandstormMax = SkillManager.instance.espacementDoTSandstorm;
-   }
 
    private void OnTriggerStay2D(Collider2D col)
    {
       for (int i = 0; i < 3; i++)
       {
-         if (tempsReloadHitSandstorm <= tempsReloadHitSandstormMax && stopAttack == false)
+         if (tempsReloadHitSandstorm <= sOSandstorm.espacementDoT && stopAttack == false)
          {
             tempsReloadHitSandstorm += Time.deltaTime;
          }
 
-         if (tempsReloadHitSandstorm > tempsReloadHitSandstormMax && col.gameObject.tag == "Monstre")
+         if (tempsReloadHitSandstorm > sOSandstorm.espacementDoT && col.gameObject.tag == "Monstre")
          {
             Debug.Log("touché");
-            col.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaqueSandstorm);
+            col.GetComponent<IA_Monstre1>().TakeDamage(sOSandstorm.puissanceAttaque);
             //yield return new WaitForSeconds(tempsReloadHitSandstormMax);
             tempsReloadHitSandstorm = 0;
          }
