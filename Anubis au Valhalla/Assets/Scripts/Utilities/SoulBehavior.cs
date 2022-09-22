@@ -8,6 +8,8 @@ public class SoulBehavior : MonoBehaviour
     [SerializeField] private float force = 3f;
     [SerializeField] private float timer = 1;
     [SerializeField] private float deceleration = 0.3f;
+    [SerializeField] private float poofForce = 3f;
+    private bool haspoofed = false;
 
     public Rigidbody2D rb;
     // Start is called before the first frame update
@@ -23,13 +25,27 @@ public class SoulBehavior : MonoBehaviour
         playerPos = CharacterController.instance.transform.position;
         Vector3 dir = playerPos - transform.position;
         Vector3 dirNormalised = dir.normalized;
+
         if (timer >= 0)
         {
+            rb.velocity -= rb.velocity * 0.01f;
             timer -= Time.deltaTime;
         }
         else
         {
-            rb.AddForce(dirNormalised * force,ForceMode2D.Force);
+            if (!haspoofed)
+            {
+                PoofAway(dirNormalised);
+                haspoofed = true;
+            }
+            rb.AddForce(dirNormalised * (force * deceleration),ForceMode2D.Force);
         }
+        
+        if (transform.position.magnitude >= playerPos.magnitude -0.2f)Souls.instance.CollectSouls(gameObject, 1);
+    }
+
+    public void PoofAway(Vector2 dir)
+    {
+        rb.AddForce(-dir*force,ForceMode2D.Impulse);
     }
 }
