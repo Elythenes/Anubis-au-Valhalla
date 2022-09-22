@@ -6,6 +6,7 @@ public class SoulBehavior : MonoBehaviour
 {
     public Vector3 playerPos;
     [SerializeField] private float force = 3f;
+    [SerializeField] private float minForce = 1f;
     [SerializeField] private float timer = 1;
     [SerializeField] private float deceleration = 0.3f;
     [SerializeField] private float poofForce = 3f;
@@ -15,7 +16,8 @@ public class SoulBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        rb.AddForce(new Vector2(Random.Range(-force,force),Random.Range(-force,force)), ForceMode2D.Impulse);
+        Vector2 explode = new Vector2(Random.Range(-force, force), Random.Range(-force, force));
+        rb.AddForce(explode, ForceMode2D.Impulse);
         rb.drag = deceleration;
     }
 
