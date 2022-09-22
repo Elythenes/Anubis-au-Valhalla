@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
+using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -37,6 +39,10 @@ public class IA_Monstre1 : MonoBehaviour
     public LayerMask HitboxPlayer;
     public float rangeAttaque;
     public int puissanceAttaque;
+    
+    [Header("Pop up Dégâts")] 
+    public GameObject damageTextPrefab;
+
 
     public int soulValue = 4;
 
@@ -135,6 +141,13 @@ public class IA_Monstre1 : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void DamageText(string text)
+    {
+        GameObject DamageTextInstance = Instantiate(damageTextPrefab,transform.position,quaternion.identity);
+        DamageTextInstance.transform.position = new Vector3(transform.position.x,transform.position.y,-5);
+        DamageTextInstance.transform.GetComponent<TextMeshPro>().SetText(text);
     }
 
     IEnumerator AnimationDamaged()

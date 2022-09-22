@@ -326,6 +326,74 @@ Transform:
   m_Father: {fileID: 203671915}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &92878251
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 92878254}
+  - component: {fileID: 92878253}
+  - component: {fileID: 92878252}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &92878252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92878251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &92878253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92878251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &92878254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92878251}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &203671914
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,8 +900,8 @@ MonoBehaviour:
   flameArea: {fileID: 2070572112627775315, guid: 89d34f91fc1dec8488658721c13e624f, type: 3}
   timerSpell1: 2
   puissanceAttaqueFlameArea: 5
-  espacementDoTFlameArea: 2
-  cooldownFlameArea: 1
+  espacementDoTFlameArea: 10
+  cooldownFlameArea: 2
   canCastFlameArea: 1
   sandstormArea: {fileID: 2804067575571280655, guid: ab0d02b22ee5f8d47ba63865fee74e6f, type: 3}
   timerSpell2: 2
@@ -1486,6 +1554,10 @@ PrefabInstance:
       propertyPath: m_SleepingMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 89795721797022152, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 89795721797022157, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
       propertyPath: target
       value: 
@@ -1503,9 +1575,21 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
+      propertyPath: enemyInstance
+      value: 
+      objectReference: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
+    - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
+      propertyPath: textToDisplay
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
       propertyPath: CooldownDashMax
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 89795721797022160, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
+      propertyPath: damageTextPrefab
+      value: 
+      objectReference: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
     - target: {fileID: 89795721797022162, guid: fee0d2cd473f5664882109ff28a856de, type: 3}
       propertyPath: m_RootOrder
       value: 3

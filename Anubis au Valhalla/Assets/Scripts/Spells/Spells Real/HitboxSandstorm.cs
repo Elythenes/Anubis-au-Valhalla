@@ -32,6 +32,7 @@ public class HitboxSandstorm : MonoBehaviour
          {
             Debug.Log("touché");
             col.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaqueSandstorm);
+            col.GetComponent<IA_Monstre1>().DamageText(puissanceAttaqueSandstorm.ToString());
             //yield return new WaitForSeconds(tempsReloadHitSandstormMax);
             tempsReloadHitSandstorm = 0;
          }

@@ -31,6 +31,7 @@ public class FlameArea : MonoBehaviour
             {
                 Debug.Log("touché");
                 col.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaqueFlameArea);
+                col.GetComponent<IA_Monstre1>().DamageText(puissanceAttaqueFlameArea.ToString());
                 //yield return new WaitForSeconds(tempsReloadHitSandstormMax);
                 tempsReloadHitFlameAreaTimer = 0;
             }

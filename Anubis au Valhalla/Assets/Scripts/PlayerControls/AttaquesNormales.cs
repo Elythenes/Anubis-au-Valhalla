@@ -66,6 +66,7 @@ public class AttaquesNormales : MonoBehaviour
         {
             Debug.Log("touché");
             monstre.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaque);
+            monstre.GetComponent<IA_Monstre1>().DamageText(puissanceAttaque.ToString());
         }
     }
 
