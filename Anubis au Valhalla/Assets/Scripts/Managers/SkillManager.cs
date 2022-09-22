@@ -10,6 +10,7 @@ public class SkillManager : MonoBehaviour
 {
 
     [Header("Général")] 
+    public static SkillManager instance;
     public GameObject player;
     public KeyCode spell1;
     public KeyCode spell2;
@@ -24,22 +25,40 @@ public class SkillManager : MonoBehaviour
     public int tempsReloadHitFlameArea;
     
     [Header("SandStorm")]
+    public int puissanceAttaqueSandstorm;
+    public float espacementDoT;
+    private float tempsReloadHitSandstorm;
     public GameObject sandstormArea;
     public int timerSpell2 = 2;
 
-    [Header("FireBall")]
+    [Header("FireBall")] 
     public GameObject fireBall;
-    public float launchVelocity = 100f;
-    public float rangeAttaqueFireBall;
+    public float bulletSpeed;
+    public int timerSpell3 = 2;
     public int puissanceAttaqueFireBall;
+    private float cooldownFireballTimer;
+    public float cooldownFireball;
+    public bool canCastFireBall;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     void Update()
     {
         if (Input.GetKeyDown(spell1))
         {
+            Debug.Log("spell1");
             //TimeLimitedSpell(flameArea, timerSpell1);
-            ThrowingSpell(fireBall);
+            if (canCastFireBall)
+            {
+                ThrowingSpell(fireBall);
+            }
         }
+        
         if (Input.GetKeyDown(spell2))
         {
             FollowingSpell(sandstormArea);
@@ -79,19 +98,19 @@ public class SkillManager : MonoBehaviour
     //Pour un Spell qui apparaît (et disparaît après avoir touché qqc (ennemi ou mur))
     void ThrowingSpell(GameObject gb)
     {
-        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), Quaternion.identity);
+        canCastFireBall = false;
+        cooldownFireballTimer += Time.deltaTime;
+        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 charaPos = CharacterController.instance.transform.position;
+        float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
         
-        Collider2D[] toucheMonstre = Physics2D.OverlapCircleAll(player.transform.position, rangeAttaqueFireBall, layerMonstres);
-
-        foreach (Collider2D monstre in toucheMonstre)
+        var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x,
+            targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), Quaternion.AngleAxis(angle, Vector3.forward));
+        if (cooldownFireballTimer > cooldownFireball)
         {
-            Debug.Log("touché");
-            monstre.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaqueFireBall);
+            canCastFireBall = true;
         }
-        
-        gbInstance.GetComponent<Rigidbody2D>().AddForce(Camera.main.ScreenToWorldPoint(Input.mousePosition)*launchVelocity);
+        StartCoroutine(TimeLimitedGb(gbInstance, timerSpell3));
     }
-    
-    
 }
 
