@@ -24,6 +24,7 @@ public class Fireball : MonoBehaviour
         {
             Debug.Log("touché");
             col.GetComponent<IA_Monstre1>().TakeDamage(sOFireball.puissanceAttaque);
+            col.GetComponent<IA_Monstre1>().DamageText(sOFireball.puissanceAttaque);
         }
     }
 }

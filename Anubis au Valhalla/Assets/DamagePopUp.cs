@@ -21,6 +21,7 @@ public class DamagePopUp : MonoBehaviour
     // Update is called once per frame
     public void Setup(int damageAmount)
     {
+        Debug.Log("touchéééé");
         textMesh.SetText(damageAmount.ToString());
     }
     

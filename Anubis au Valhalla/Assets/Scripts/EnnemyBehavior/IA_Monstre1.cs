@@ -33,6 +33,7 @@ public class IA_Monstre1 : MonoBehaviour
     private Rigidbody2D rb;
     public float dashSpeed;
     private Vector2 targetPerso;
+    public bool stopDash;
 
     [Header("Attaque")] 
     public Transform pointAttaque;
@@ -65,7 +66,7 @@ public class IA_Monstre1 : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
         }
 
-        if (aipath.desiredVelocity.x >= 0.01f) // Permet d'orienter le personnage vers la direction dans laquelle il se déplace
+        if (aipath.desiredVelocity.x >= 0.01f) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
         {
             transform.localScale = new Vector3(-1, 2.2909f, 1);
         }
@@ -98,8 +99,8 @@ public class IA_Monstre1 : MonoBehaviour
             
             if (LagDebutDash >= LagDebutDashMax)
             {
+                stopDash = true;
                 timerDash += Time.deltaTime;
-                rb.velocity = targetPerso*dashSpeed;
 
                 if (timerDash > dashDuration)
                 {
@@ -118,7 +119,18 @@ public class IA_Monstre1 : MonoBehaviour
             timerDash = 0;
             isDashing = false;
         }
-        
+
+        if (stopDash)
+        {
+            StartCoroutine(DashImpulse());
+        }
+
+        IEnumerator DashImpulse()
+        {
+            rb.AddForce(targetPerso*dashSpeed,ForceMode2D.Impulse);
+            yield return new WaitForSeconds(0.001f);
+            stopDash = false;
+        }
 
         if (isDashing) // Active la hitbox et fait des dégâts
         {
@@ -147,10 +159,8 @@ public class IA_Monstre1 : MonoBehaviour
     {
         Transform damagePopUpTransform = Instantiate(damageTextPrefab, new Vector3(transform.position.x,transform.position.y,-5), Quaternion.identity);
         DamagePopUp.instance.Setup(damageAmount);
-      
-        /* GameObject DamageTextInstance = Instantiate(damageTextPrefab,transform.position,quaternion.identity);
-         DamageTextInstance.transform.position = new Vector3(transform.position.x,transform.position.y,-5);
-         DamageTextInstance.transform.GetComponent<TextMeshPro>().SetText(text);*/
+        //damagePopUpTransform.GetComponent<TextMeshPro>().SetText(damageAmount.ToString());
+        Debug.Log(damageAmount);
     }
 
     IEnumerator AnimationDamaged()

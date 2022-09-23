@@ -12,26 +12,32 @@ public class HitboxSandstorm : MonoBehaviour
 
    private void OnTriggerStay2D(Collider2D col)
    {
-      for (int i = 0; i < 3; i++)
+      if (col.gameObject.tag == "Monstre")
       {
-         if (tempsReloadHitSandstorm <= sOSandstorm.espacementDoT && stopAttack == false)
+         for (int i = 0; i < 3; i++)
          {
-            tempsReloadHitSandstorm += Time.deltaTime;
-         }
+            if (tempsReloadHitSandstorm <= sOSandstorm.espacementDoT && stopAttack == false)
+            {
+               tempsReloadHitSandstorm += Time.deltaTime;
+            }
 
-         if (tempsReloadHitSandstorm > sOSandstorm.espacementDoT && col.gameObject.tag == "Monstre")
-         {
-            Debug.Log("touché");
-            col.GetComponent<IA_Monstre1>().TakeDamage(sOSandstorm.puissanceAttaque);
-            //yield return new WaitForSeconds(tempsReloadHitSandstormMax);
-            tempsReloadHitSandstorm = 0;
-         }
-      } 
+            if (tempsReloadHitSandstorm > sOSandstorm.espacementDoT)
+            {
+               Debug.Log("touché");
+               col.GetComponent<IA_Monstre1>().TakeDamage(sOSandstorm.puissanceAttaque);
+               col.GetComponent<IA_Monstre1>().DamageText(sOSandstorm.puissanceAttaque);
+               tempsReloadHitSandstorm = 0;
+            }
+         } 
+      }
    }
    
    private void OnTriggerExit2D(Collider2D col)
    {
+      if (col.gameObject.tag == "Monstre")
+      {
       stopAttack = true;
       tempsReloadHitSandstorm = 0;
+      }
    }
 }
