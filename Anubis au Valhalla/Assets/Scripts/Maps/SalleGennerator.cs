@@ -33,6 +33,8 @@ public class SalleGennerator : MonoBehaviour
         [Header("VARIABLES INTERNES POUR DEBUG")]
         [SerializeField] private int roomsDone = -1;
         [SerializeField] private Doortype fromDoor = Doortype.West;
+        [SerializeField] private Doortype toDoor;
+        public Doortype spawnDoor;
         [SerializeField] private Salle currentRoom;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
@@ -52,12 +54,11 @@ public class SalleGennerator : MonoBehaviour
                         return;
                 }
                 instance = this;
-                //camera = GameObject.FindWithTag("MainCamera").GetComponent<CameraController>();
         }
         // Start is called before the first frame update
         void Start()
         {
-                GenerateDungeon();
+                roomsDone = -1;
                 TransitionToNextRoom(Doortype.West);
         }
 
@@ -76,12 +77,11 @@ public class SalleGennerator : MonoBehaviour
 
         public Salle GenerateDungeon2()
         {
-                if (currentRoom != null) Destroy(currentRoom.gameObject);
-                roomsDone++;
                 if (roomsDone == 0)
                 {
                         EnableDoors(Doortype.East,true);
                         OpenDoors(Doortype.East, true);
+                        s_doors[(int) Doortype.East].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
                         return Instantiate(startRoom);
                 }
                 for (int i = 0; i < (int)Doortype.West + 1; i++)
@@ -89,58 +89,14 @@ public class SalleGennerator : MonoBehaviour
                         if (i == (int) fromDoor) continue;
                         bool enabled = Random.value > 0.4f;
                         EnableDoors((Doortype) i,enabled);
-                        return s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+                        s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
                 }
-                return s_doors[Random.Range(0,4)].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
-        }
 
-        public void GenerateDungeon() //génération de la map
-        {
-                if (currentRoom != null) Destroy(currentRoom.gameObject);
-                roomsDone = -1;
-                var maps = new List<Salle>(roomPrefab); //ajoute toutes les salles référencées dans la liste
-                roomsQueue.Clear();
-                bool special0 = Random.value > 0.5f;
-                if(special0) maps.Add(specialRooms[0]);
-                for (int i = 0; i < dungeonSize; i++) // la boucle génère autant de salles que la taille du donjon. Pour modifier OU les salles spéciales apparaissent c'est là dedans
+                if (roomsDone == 4)
                 {
-                        //La boucle prend un membre aléatoire de la liste, l'ajoute à la SpawnQueue, puis le retire de la liste
-                        var j = Random.Range(0, maps.Count);
-                        roomsQueue.Enqueue(maps[j]);
-                        maps.RemoveAt(j);
-                }
-        }
-
-        public void TransitionToNextRoom(Doortype door)
-        {
-                fromDoor = door switch
-                {
-                        Doortype.West => Doortype.East,
-                        Doortype.East => Doortype.West,
-                        Doortype.North => Doortype.South,
-                        Doortype.South => Doortype.North,
-                        _ => fromDoor
-                };
-                if(currentRoom != null) Destroy(currentRoom.gameObject);
-                currentRoom = GetNextRoom();
-                if(roomsDone != 0)MovePlayerToDoor(fromDoor);
-                ClearRoom();
-
-        }
-
-        public Salle GetNextRoom()
-        {
-                roomsDone++;
-                if (roomsDone == 0)
-                {
-                        EnableDoors(Doortype.East,true);
-                        OpenDoors(Doortype.East, true);
-                        return Instantiate(startRoom);
-                }
-                for (int i = 0; i < (int)Doortype.West + 1; i++)
-                {
-                        bool enabled = Random.value > 0.4f;
-                        EnableDoors((Doortype) i,enabled);
+                        Door doorToSpecial = s_doors[Random.Range(0, s_doors.Count)];
+                        if (doorToSpecial.doortype == fromDoor) doorToSpecial.doortype = toDoor;
+                        return Instantiate(specialRooms[0]);
                 }
                 if (roomsDone == dungeonSize)
                 {
@@ -152,7 +108,39 @@ public class SalleGennerator : MonoBehaviour
                         return Instantiate(EndRoom);
                 }
                 EnableDoors(fromDoor,true);
-                return Instantiate(roomsQueue.Dequeue());
+                EnableDoors(toDoor,true);
+                return currentRoom;
+        }
+
+        public Salle BeginGeneration()
+        {
+                if (currentRoom != null) Destroy(currentRoom.gameObject);
+                roomsDone++;
+                if (roomsDone == 0)
+                {
+                        return GenerateDungeon2();
+                }
+                Instantiate(s_doors[(int)spawnDoor].roomToSpawn);
+                return GenerateDungeon2();
+        }
+
+
+
+        public void TransitionToNextRoom(Doortype door)
+        {
+                toDoor = door;
+                fromDoor = door switch
+                {
+                        Doortype.West => Doortype.East,
+                        Doortype.East => Doortype.West,
+                        Doortype.North => Doortype.South,
+                        Doortype.South => Doortype.North,
+                        _ => fromDoor
+                };
+                if(currentRoom != null) Destroy(currentRoom.gameObject);
+                currentRoom = BeginGeneration();
+                if(roomsDone != 0)MovePlayerToDoor(fromDoor);
+                ClearRoom();
 
         }
 
@@ -207,6 +195,51 @@ public class SalleGennerator : MonoBehaviour
                         Destroy(CharacterController.instance.GetComponent<GhostDash>().tousLesSprites[i].gameObject);
                 }
                 amount.Clear();
+        }
+        
+        //------------------------------------------CODE OBSOLETE----------------------------------------//
+        
+        public void GenerateDungeon() //génération de la map
+        {
+                if (currentRoom != null) Destroy(currentRoom.gameObject);
+                roomsDone = -1;
+                var maps = new List<Salle>(roomPrefab);
+                roomsQueue.Clear();
+                bool special0 = Random.value > 0.5f;
+                if(special0) maps.Add(specialRooms[0]);
+                for (int i = 0; i < dungeonSize; i++)
+                {
+                        var j = Random.Range(0, maps.Count);
+                        roomsQueue.Enqueue(maps[j]);
+                        maps.RemoveAt(j);
+                }
+        }
+        public Salle GetNextRoom()
+        {
+                roomsDone++;
+                if (roomsDone == 0)
+                {
+                        EnableDoors(Doortype.East,true);
+                        OpenDoors(Doortype.East, true);
+                        return Instantiate(startRoom);
+                }
+                for (int i = 0; i < (int)Doortype.West + 1; i++)
+                {
+                        bool enabled = Random.value > 0.4f;
+                        EnableDoors((Doortype) i,enabled);
+                }
+                if (roomsDone == dungeonSize)
+                {
+                        for (int i = 0; i < (int)Doortype.West + 1; i++)
+                        {
+                                EnableDoors((Doortype) i ,false);
+                        }
+                        EnableDoors(fromDoor,true);
+                        return Instantiate(EndRoom);
+                }
+                EnableDoors(fromDoor,true);
+                return Instantiate(roomsQueue.Dequeue());
+
         }
 }
 
