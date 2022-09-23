@@ -34,7 +34,7 @@ public class CollectSpell : MonoBehaviour
         CollectingSpell();
     }
 
-    private void OnTriggerStay2D(Collider2D other) //détecte si un spell est sur le joueur
+    private void OnTriggerEnter2D(Collider2D other) //détecte si un spell est sur le joueur
     {
         if (other.gameObject.CompareTag("CollectableSpell"))
         {
@@ -56,12 +56,23 @@ public class CollectSpell : MonoBehaviour
 
     void CollectingSpell() //fonction pour ramasser un spell
     {
-        if (isSpellCollectable == true && Input.GetKey(interaction) && (Input.GetKey(castSpell1) || Input.GetKey(castSpell2) ))
+        if (isSpellCollectable == true && Input.GetKey(interaction))
         {
-            Debug.Log("interaction sur spell");
-            isSpellCollectable = false; // ligne à retirer à la fin car détruit l'objet en soi (une fois tout bien fait)
-            spellCm.spellList.Add(scriptContainSo);
-            Debug.Log("ajout du spell");
+            if (Input.GetKeyDown(castSpell1))
+            {
+                Debug.Log("interaction sur spell");
+                isSpellCollectable = false; // ligne à retirer à la fin car détruit l'objet en soi (une fois tout bien fait)
+                spellCm.spellSlot1.Add(scriptContainSo);
+                Debug.Log("ajout dans le slot 1");
+            }
+
+            if (Input.GetKeyDown(castSpell2))
+            {
+                Debug.Log("interaction sur spell");
+                isSpellCollectable = false; // ligne à retirer à la fin car détruit l'objet en soi (une fois tout bien fait)
+                spellCm.spellSlot2.Add(scriptContainSo);
+                Debug.Log("ajout dans le slot 2");
+            }
         }
     }
 }

@@ -2,20 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SpellCollectManager : MonoBehaviour
 {
-    public List<ScriptableObject> spellList;
-
-    private void Start()
+    public List<ScriptableObject> spellSlot1;
+    public List<ScriptableObject> spellSlot2;
+    
+    void Update()
     {
-        
+        SpellReplacement(spellSlot1);
+        SpellReplacement(spellSlot2);
     }
 
-    /*Détecter si le perso est sur un spell (pas le spell, mais un gameObject qui donne le spell)
-        Si non alors pas d'interaction possible
-        Si oui alors interaction avec A+E/R
-    Remplace le slot E/R le nouveau spell
-
-     */
+    void SpellReplacement(List<ScriptableObject> list)
+    {
+        if (list.Count >= 2)
+        {
+            list.RemoveRange(0,1);
+        }
+    }
 }
