@@ -41,7 +41,7 @@ public class IA_Monstre1 : MonoBehaviour
     public int puissanceAttaque;
     
     [Header("Pop up Dégâts")] 
-    public GameObject damageTextPrefab;
+    public Transform damageTextPrefab;
 
 
     public int soulValue = 4;
@@ -143,11 +143,14 @@ public class IA_Monstre1 : MonoBehaviour
         }
     }
 
-    public void DamageText(string text)
+    public void DamageText(int damageAmount)
     {
-        GameObject DamageTextInstance = Instantiate(damageTextPrefab,transform.position,quaternion.identity);
-        DamageTextInstance.transform.position = new Vector3(transform.position.x,transform.position.y,-5);
-        DamageTextInstance.transform.GetComponent<TextMeshPro>().SetText(text);
+        Transform damagePopUpTransform = Instantiate(damageTextPrefab, new Vector3(transform.position.x,transform.position.y,-5), Quaternion.identity);
+        DamagePopUp.instance.Setup(damageAmount);
+      
+        /* GameObject DamageTextInstance = Instantiate(damageTextPrefab,transform.position,quaternion.identity);
+         DamageTextInstance.transform.position = new Vector3(transform.position.x,transform.position.y,-5);
+         DamageTextInstance.transform.GetComponent<TextMeshPro>().SetText(text);*/
     }
 
     IEnumerator AnimationDamaged()
