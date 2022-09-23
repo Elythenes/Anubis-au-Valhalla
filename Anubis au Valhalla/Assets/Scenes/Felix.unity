@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 291906215}
   - component: {fileID: 291906214}
   - component: {fileID: 291906213}
+  - component: {fileID: 291906216}
   m_Layer: 0
   m_Name: Collectable Spell Template (1)
   m_TagString: CollectableSpell
@@ -234,6 +235,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &291906216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291906212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b17d328e51c88814eb5c6895df9298ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellInside: {fileID: 11400000, guid: e4ec7956ad4048141b771f80356505e2, type: 2}
 --- !u!1 &312036558
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +291,7 @@ GameObject:
   - component: {fileID: 363829005}
   - component: {fileID: 363829004}
   - component: {fileID: 363829006}
+  - component: {fileID: 363829007}
   m_Layer: 0
   m_Name: Collectable Spell Template
   m_TagString: CollectableSpell
@@ -377,6 +392,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &363829007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363829003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b17d328e51c88814eb5c6895df9298ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellInside: {fileID: 11400000, guid: b1c7d5f0800a0334bbde91ee3e4a6f93, type: 2}
 --- !u!1 &375706604
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,10 +588,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbd9337ef53857479aa4e9dd45ba409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  spell1: 97
-  spell2: 101
-  targetUser: {fileID: 0}
+  player: {fileID: 1681521599}
+  spell1: 101
+  spell2: 114
+  targetUser: {fileID: 1681521599}
   layerMonstres:
     serializedVersion: 2
     m_Bits: 64
@@ -1224,7 +1252,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interaction: 97
   isSpellCollectable: 0
-  collectSpellManager: {fileID: 375706604}
+  spellCollectManager: {fileID: 375706604}
+  collectableSpell: {fileID: 0}
+  scriptContainSo: {fileID: 0}
+  skillManager: {fileID: 609353984}
+  castSpell1: 0
+  castSpell2: 0
+  spellCm: {fileID: 375706606}
 --- !u!1001 &1769752277
 PrefabInstance:
   m_ObjectHideFlags: 0

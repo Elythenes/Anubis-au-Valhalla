@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class SpellCollectManager : MonoBehaviour
 {
-    public List<SpellObject> spellList;
+    public List<ScriptableObject> spellList;
 
+    private void Start()
+    {
+        
+    }
 
     /*Détecter si le perso est sur un spell (pas le spell, mais un gameObject qui donne le spell)
         Si non alors pas d'interaction possible

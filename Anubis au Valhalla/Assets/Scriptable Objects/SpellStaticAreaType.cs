@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SpellStaticAreaType : ScriptableObject
 {
-    //public GameObject flameArea;
+    public GameObject flameArea;
     public int duration = 2;
     public int puissanceAttaque = 5;
     public int nombreOfDot = 4;

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SpellFollowingAreaType : ScriptableObject
 {
-    //public GameObject sandstorm;
+    public GameObject sandstorm;
     public int duration = 2;
     public int puissanceAttaque = 5;
     public int numberOfDot = 4;
