@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SpellThrowingType : ScriptableObject
 {
-    //public GameObject fireball;
+    public GameObject fireball;
     public int duration = 2;
     public float bulletSpeed;
     public int puissanceAttaque;
