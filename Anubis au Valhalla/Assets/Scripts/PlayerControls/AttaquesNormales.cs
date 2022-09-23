@@ -19,8 +19,10 @@ public class AttaquesNormales : MonoBehaviour
     public float vitesseAttaque;
     public GameObject effetVisuel;
     private float nextAttaque;
-    public float vitessePersoC1;
-    public float vitessePersoNormale;
+    public float vitessePersoXC1;
+    public float vitessePersoYC1;
+    public float vitessePersoNormaleX;
+    public float vitessePersoNormaleY;
     
     private void Awake()
     {
@@ -64,6 +66,7 @@ public class AttaquesNormales : MonoBehaviour
         {
             Debug.Log("touché");
             monstre.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaque);
+            monstre.GetComponent<IA_Monstre1>().DamageText(puissanceAttaque);
         }
     }
 
@@ -76,11 +79,11 @@ public class AttaquesNormales : MonoBehaviour
     
     IEnumerator ralentirPersoC1()
     {
-        CharacterController.instance.speedX = vitessePersoC1;
-        CharacterController.instance.speedY = vitessePersoC1 - 3;
+        CharacterController.instance.speedX = vitessePersoXC1;
+        CharacterController.instance.speedY = vitessePersoYC1;
         yield return new WaitForSeconds(0.5f);
-        CharacterController.instance.speedX = vitessePersoNormale;
-        CharacterController.instance.speedY = vitessePersoNormale - 3;
+        CharacterController.instance.speedX = vitessePersoNormaleX;
+        CharacterController.instance.speedY = vitessePersoNormaleY;
     }
 
     private void OnDrawGizmosSelected() // Permet de voir la hitbox du coup dans l'éditeur

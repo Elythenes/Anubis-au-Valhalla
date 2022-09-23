@@ -65,8 +65,9 @@ public class CharacterController : MonoBehaviour
   
     if (isDashing == false) // Déplacments hors dash.
     {
-      rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
-     // rb.drag = dragDeceleration * dragMultiplier;  // ligne à étudier je comprhends pas ce que ça fait
+      rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
+      //rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
+
     }
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
@@ -77,10 +78,11 @@ public class CharacterController : MonoBehaviour
     
     if (isDashing) // Déplacement lors du dash selon la direction du regard du perso
     {
+      gameObject.GetComponent<BoxCollider2D>().enabled = false;
       timerDash += Time.deltaTime;
       if (movement.x != 0 && movement.y != 0)
       {
-        rb.velocity = (movement * dashSpeed);
+        rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * 2);
       }
       else if(lookingAt == 1)
       {
@@ -99,26 +101,28 @@ public class CharacterController : MonoBehaviour
         rb.velocity = (new Vector2(-1,0) * dashSpeed);
       }
     }
+    else if (!isDashing)
+    {
+      gameObject.GetComponent<BoxCollider2D>().enabled = true;
+    }
     
     if (movement.x > 0) // Le personnage s'oriente vers la direction où il marche. 
     {
       lookingAt = 2;
-      Debug.Log("droite");
-      transform.localRotation = new Quaternion(0, 0,0,1);
-     
+      //transform.localRotation = new Quaternion(0, 0,0,1);
+      transform.localScale = new Vector3(1, 2.0906f, 0);
     }
-    Debug.Log(lookingAt);
+
     if (movement.x < 0)
     {
       lookingAt = 4;
-      Debug.Log("gauche");
-      transform.localRotation = new Quaternion(0, 180,0,1);
+      //transform.localRotation = new Quaternion(0, 180,0,1);
+      transform.localScale = new Vector3(-1, 2.0906f, 0);
     }
     
     if (movement.y < 0)
     {
       lookingAt = 3;
-      Debug.Log("bas");
       float face = transform.localScale.x;
       face = 1;
     }
@@ -126,15 +130,13 @@ public class CharacterController : MonoBehaviour
     if (movement.y > 0)
     {
       lookingAt = 1;
-      Debug.Log("haut");
       float face = transform.localScale.x;
       face = 1;
     }
     
-    if (timerDash > dashDuration)
+    if (timerDash > dashDuration) // A la fin du dash...
     {
       ghost.activerEffet = false;
-      rb.velocity = (Vector2.zero);
       isDashing = false;
       timerDash = 0;
       canDash = false;

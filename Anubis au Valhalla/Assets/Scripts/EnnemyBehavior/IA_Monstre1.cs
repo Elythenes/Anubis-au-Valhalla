@@ -2,7 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
+using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class IA_Monstre1 : MonoBehaviour
 {
@@ -19,31 +22,35 @@ public class IA_Monstre1 : MonoBehaviour
     private Path path;
 
     [Header("Dash")] 
+    public bool canDash;
     public bool isDashing;
     public float timerDash;
     public float dashDuration;
     public float LagDebutDash;
     public float LagDebutDashMax;
+    private float CooldownDashTimer;
     public float CooldownDash;
-    public float CooldownDashMax;
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     public float dashSpeed;
-    public Vector2 targetPerso;
+    private Vector2 targetPerso;
 
     [Header("Attaque")] 
     public Transform pointAttaque;
     public LayerMask HitboxPlayer;
     public float rangeAttaque;
     public int puissanceAttaque;
+    
+    [Header("Pop up Dégâts")] 
+    public Transform damageTextPrefab;
 
 
-
-
+    public int soulValue = 4;
 
     private void Start()
     {
         vieActuelle = vieMax;
         seeker = GetComponent<Seeker>();
+        rb = gameObject.GetComponent<Rigidbody2D>();
     }
     
 
@@ -69,8 +76,9 @@ public class IA_Monstre1 : MonoBehaviour
 
         if (aipath.reachedDestination) // Quand le monstre arrive proche du joueur, il commence le dash
         {
-            if (isDashing == false)
+            if (isDashing == false && canDash)
             { 
+                CooldownDashTimer = 0;
                 targetPerso  = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
                 Debug.Log("commence");
                 aipath.canMove = false;
@@ -80,10 +88,8 @@ public class IA_Monstre1 : MonoBehaviour
 
         if (isDashing == false) // Reset le dash quand il terminé
         {
-            LagDebutDash = 0;
+            CooldownDashTimer += Time.deltaTime;
             gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
-            timerDash = 0;
-            CooldownDash = 0;
         }
 
         if (isDashing) // Faire dasher le monstre
@@ -94,24 +100,25 @@ public class IA_Monstre1 : MonoBehaviour
             {
                 timerDash += Time.deltaTime;
                 rb.velocity = targetPerso*dashSpeed;
-              
+
                 if (timerDash > dashDuration)
                 {
-                    CooldownDash += Time.deltaTime;
                     rb.velocity = (Vector2.zero);
                     aipath.canMove = true;
                     isDashing = false;
-                    
-                    if (CooldownDash >= CooldownDashMax) // Cooldown de l'attaque
-                    {
-                        LagDebutDash = 0;
-                        timerDash = 0;
-                        isDashing = false;
-                        CooldownDash = 0;
-                    }
+                    canDash = false;
                 }
             }
         }
+        
+        if (CooldownDashTimer >= CooldownDash) // Cooldown de l'attaque
+        {
+            canDash = true;
+            LagDebutDash = 0;
+            timerDash = 0;
+            isDashing = false;
+        }
+        
 
         if (isDashing) // Active la hitbox et fait des dégâts
         {
@@ -136,6 +143,16 @@ public class IA_Monstre1 : MonoBehaviour
         }
     }
 
+    public void DamageText(int damageAmount)
+    {
+        Transform damagePopUpTransform = Instantiate(damageTextPrefab, new Vector3(transform.position.x,transform.position.y,-5), Quaternion.identity);
+        DamagePopUp.instance.Setup(damageAmount);
+      
+        /* GameObject DamageTextInstance = Instantiate(damageTextPrefab,transform.position,quaternion.identity);
+         DamageTextInstance.transform.position = new Vector3(transform.position.x,transform.position.y,-5);
+         DamageTextInstance.transform.GetComponent<TextMeshPro>().SetText(text);*/
+    }
+
     IEnumerator AnimationDamaged()
     {
         animator.SetBool("IsTouched", true);
@@ -145,6 +162,7 @@ public class IA_Monstre1 : MonoBehaviour
 
     void Die()
     {
+        Souls.instance.CreateSouls(gameObject.transform.position, soulValue);
         Destroy(gameObject);
     }
 }
