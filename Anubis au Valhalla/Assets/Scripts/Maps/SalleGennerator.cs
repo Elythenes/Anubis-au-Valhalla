@@ -94,9 +94,13 @@ public class SalleGennerator : MonoBehaviour
 
                 if (roomsDone == 4)
                 {
+                        Door removedDoor = s_doors[(int)fromDoor];
+                        s_doors.RemoveAt((int)fromDoor);
                         Door doorToSpecial = s_doors[Random.Range(0, s_doors.Count)];
-                        if (doorToSpecial.doortype == fromDoor) doorToSpecial.doortype = toDoor;
-                        return Instantiate(specialRooms[0]);
+                        //if (doorToSpecial.doortype == fromDoor) doorToSpecial.doortype = toDoor;
+                        doorToSpecial.ChooseSpecialToSpawn(0);
+                        s_doors.Insert((int)fromDoor, removedDoor);
+                        //return Instantiate(specialRooms[0]);
                 }
                 if (roomsDone == dungeonSize)
                 {
@@ -109,7 +113,7 @@ public class SalleGennerator : MonoBehaviour
                 }
                 EnableDoors(fromDoor,true);
                 EnableDoors(toDoor,true);
-                return currentRoom;
+                return (Salle)FindObjectOfType(typeof(Salle));
         }
 
         public Salle BeginGeneration()

@@ -13,7 +13,10 @@ public class Door : MonoBehaviour
 
     public void ChooseRoomToSpawn(int room)
     {
-        //Debug.Log("ca va spawn"+SalleGennerator.instance.roomPrefab[room]);
         roomToSpawn = SalleGennerator.instance.roomPrefab[room];
+    }
+    public void ChooseSpecialToSpawn(int room)
+    {
+        roomToSpawn = SalleGennerator.instance.specialRooms[room];
     }
 }
