@@ -160,12 +160,15 @@ public class CharacterController : MonoBehaviour
 
   private void OnTriggerEnter2D(Collider2D col)
   {
-    
     Debug.Log("STANNA");
     if (col.gameObject.CompareTag("Door"))
     {
       SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doortype;
       SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doortype);
+      ghost.activerEffet = false;
+      isDashing = false;
+      canDash = true;
+      timerdashCooldown = 0;
     }
   }
 }

@@ -31,8 +31,15 @@ public class GhostDash : MonoBehaviour
                 currentGhost.transform.localScale = this.transform.localScale;
                 currentGhost.GetComponent<SpriteRenderer>().sprite = currentSprite;
                 ghotsDelaySeconds = ghotsDelay;
-                Destroy(currentGhost, 1f);
+                StartCoroutine(Destroyghost(currentGhost));
             } 
         }
+    }
+
+    public IEnumerator Destroyghost(GameObject ghost)
+    {
+        Destroy(ghost, 1f);
+        yield return new WaitForSeconds(1f);
+        tousLesSprites.Remove(ghost);
     }
 }
