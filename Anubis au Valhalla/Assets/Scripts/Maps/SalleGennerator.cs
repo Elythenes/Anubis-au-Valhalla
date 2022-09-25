@@ -6,9 +6,6 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 /*
 TRUCS A FAIRE POUR LA GEN PRO:
-        INCLURE LA GENERATION DE SALLES SPECIALES(COFFRES, DEFIS ETC...)
-        DIFFERENCIER LES SALLES SPECIALLES POUR POUVOIR CONTROLLER QUAND ELLES APPARAISSENT
-        INCLURE UNE SALLE DE FIN/BOSS
         INCLURE UNE TRANSITION VERS UN ECRAN DE VICTOIRE QUAND IL N'Y A PLUS DE SALLES A GENERER
 */
 public class SalleGennerator : MonoBehaviour
@@ -32,14 +29,14 @@ public class SalleGennerator : MonoBehaviour
 
         [Header("VARIABLES INTERNES POUR DEBUG")]
         [SerializeField] private int roomsDone = -1;
-        [SerializeField] private Doortype fromDoor = Doortype.West;
-        [SerializeField] private Doortype toDoor;
-        public Doortype spawnDoor;
+        [SerializeField] private DoorOrientation fromDoor = DoorOrientation.West;
+        [SerializeField] private DoorOrientation toDoor;
+        public DoorOrientation spawnDoor;
         [SerializeField] private Salle currentRoom;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
 
-        public enum Doortype
+        public enum DoorOrientation
         {
                 North = 0,
                 East = 1,
@@ -59,7 +56,7 @@ public class SalleGennerator : MonoBehaviour
         void Start()
         {
                 roomsDone = -1;
-                TransitionToNextRoom(Doortype.West);
+                TransitionToNextRoom(DoorOrientation.West);
         }
 
         // Update is called once per frame
@@ -67,11 +64,11 @@ public class SalleGennerator : MonoBehaviour
         {
                 if(!currentRoom.roomDone) return;
 
-                for (int i = 0; i < (int)Doortype.West + 1; i++)
+                for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                 {
-                        if(fromDoor == (Doortype) i ) continue;
+                        if(fromDoor == (DoorOrientation) i ) continue;
                         
-                        OpenDoors((Doortype)i,true);
+                        OpenDoors((DoorOrientation)i,true);
                 }
         }
 
@@ -79,16 +76,16 @@ public class SalleGennerator : MonoBehaviour
         {
                 if (roomsDone == 0)
                 {
-                        EnableDoors(Doortype.East,true);
-                        OpenDoors(Doortype.East, true);
-                        s_doors[(int) Doortype.East].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+                        EnableDoors(DoorOrientation.East,true);
+                        OpenDoors(DoorOrientation.East, true);
+                        s_doors[(int) DoorOrientation.East].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
                         return Instantiate(startRoom);
                 }
-                for (int i = 0; i < (int)Doortype.West + 1; i++)
+                for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                 {
                         if (i == (int) fromDoor) continue;
                         bool enabled = Random.value > 0.4f;
-                        EnableDoors((Doortype) i,enabled);
+                        EnableDoors((DoorOrientation) i,enabled);
                         s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
                 }
 
@@ -97,16 +94,17 @@ public class SalleGennerator : MonoBehaviour
                         Door removedDoor = s_doors[(int)fromDoor];
                         s_doors.RemoveAt((int)fromDoor);
                         Door doorToSpecial = s_doors[Random.Range(0, s_doors.Count)];
-                        //if (doorToSpecial.doortype == fromDoor) doorToSpecial.doortype = toDoor;
+                        doorToSpecial.currentDoorType = Door.DoorType.ToChallenge1;
+                        //if (doorToSpecial.doorOrientation == fromDoor) doorToSpecial.doorOrientation = toDoor;
                         doorToSpecial.ChooseSpecialToSpawn(0);
                         s_doors.Insert((int)fromDoor, removedDoor);
                         //return Instantiate(specialRooms[0]);
                 }
                 if (roomsDone == dungeonSize)
                 {
-                        for (int i = 0; i < (int)Doortype.West + 1; i++)
+                        for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                         {
-                                EnableDoors((Doortype) i ,false);
+                                EnableDoors((DoorOrientation) i ,false);
                         }
                         EnableDoors(fromDoor,true);
                         return Instantiate(EndRoom);
@@ -124,21 +122,25 @@ public class SalleGennerator : MonoBehaviour
                 {
                         return GenerateDungeon2();
                 }
+                if (roomsDone == dungeonSize)
+                {
+                        return GenerateDungeon2();
+                }
                 Instantiate(s_doors[(int)spawnDoor].roomToSpawn);
                 return GenerateDungeon2();
         }
 
 
 
-        public void TransitionToNextRoom(Doortype door)
+        public void TransitionToNextRoom(DoorOrientation door)
         {
                 toDoor = door;
                 fromDoor = door switch
                 {
-                        Doortype.West => Doortype.East,
-                        Doortype.East => Doortype.West,
-                        Doortype.North => Doortype.South,
-                        Doortype.South => Doortype.North,
+                        DoorOrientation.West => DoorOrientation.East,
+                        DoorOrientation.East => DoorOrientation.West,
+                        DoorOrientation.North => DoorOrientation.South,
+                        DoorOrientation.South => DoorOrientation.North,
                         _ => fromDoor
                 };
                 if(currentRoom != null) Destroy(currentRoom.gameObject);
@@ -148,38 +150,38 @@ public class SalleGennerator : MonoBehaviour
 
         }
 
-        public void MovePlayerToDoor(Doortype doortype)
+        public void MovePlayerToDoor(DoorOrientation doorOrientation)
         {
-                EnableDoors((Doortype)Random.Range(0,4),true);
+                EnableDoors((DoorOrientation)Random.Range(0,4),true);
                 player.rb.velocity = Vector2.zero;
-                switch (doortype)
+                switch (doorOrientation)
                 {
-                        case Doortype.North:
-                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) Doortype.North].transform.position.x,s_doors[(int) Doortype.North].transform.position.y -1,s_doors[(int) Doortype.North].transform.position.z);
+                        case DoorOrientation.North:
+                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) DoorOrientation.North].transform.position.x,s_doors[(int) DoorOrientation.North].transform.position.y -1,s_doors[(int) DoorOrientation.North].transform.position.z);
                                 break;
-                        case Doortype.West:
-                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) Doortype.West].transform.position.x +1,s_doors[(int) Doortype.West].transform.position.y,s_doors[(int) Doortype.West].transform.position.z);
+                        case DoorOrientation.West:
+                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) DoorOrientation.West].transform.position.x +1,s_doors[(int) DoorOrientation.West].transform.position.y,s_doors[(int) DoorOrientation.West].transform.position.z);
                                 break;
-                        case Doortype.South:
-                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) Doortype.South].transform.position.x,s_doors[(int) Doortype.South].transform.position.y +1,s_doors[(int) Doortype.South].transform.position.z);
+                        case DoorOrientation.South:
+                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) DoorOrientation.South].transform.position.x,s_doors[(int) DoorOrientation.South].transform.position.y +1,s_doors[(int) DoorOrientation.South].transform.position.z);
                                 break;
-                        case Doortype.East:
-                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) Doortype.East].transform.position.x-1,s_doors[(int) Doortype.East].transform.position.y,s_doors[(int) Doortype.East].transform.position.z);
+                        case DoorOrientation.East:
+                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) DoorOrientation.East].transform.position.x-1,s_doors[(int) DoorOrientation.East].transform.position.y,s_doors[(int) DoorOrientation.East].transform.position.z);
                                 break;
                         default:
-                                throw new ArgumentOutOfRangeException(nameof(doortype), doortype, null);
+                                throw new ArgumentOutOfRangeException(nameof(doorOrientation), doorOrientation, null);
                 }
                 AdjustCameraSettings();
         }
 
-        public void EnableDoors(Doortype index, bool state)
+        public void EnableDoors(DoorOrientation index, bool state)
         {
                 
                 s_doors[(int) index].gameObject.SetActive(state);
                 OpenDoors(index,false);
         }
 
-        public void OpenDoors(Doortype index, bool state)
+        public void OpenDoors(DoorOrientation index, bool state)
         {
                 s_doors[(int)index].GetComponent<BoxCollider2D>().enabled = state;
         }
@@ -223,20 +225,20 @@ public class SalleGennerator : MonoBehaviour
                 roomsDone++;
                 if (roomsDone == 0)
                 {
-                        EnableDoors(Doortype.East,true);
-                        OpenDoors(Doortype.East, true);
+                        EnableDoors(DoorOrientation.East,true);
+                        OpenDoors(DoorOrientation.East, true);
                         return Instantiate(startRoom);
                 }
-                for (int i = 0; i < (int)Doortype.West + 1; i++)
+                for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                 {
                         bool enabled = Random.value > 0.4f;
-                        EnableDoors((Doortype) i,enabled);
+                        EnableDoors((DoorOrientation) i,enabled);
                 }
                 if (roomsDone == dungeonSize)
                 {
-                        for (int i = 0; i < (int)Doortype.West + 1; i++)
+                        for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                         {
-                                EnableDoors((Doortype) i ,false);
+                                EnableDoors((DoorOrientation) i ,false);
                         }
                         EnableDoors(fromDoor,true);
                         return Instantiate(EndRoom);
