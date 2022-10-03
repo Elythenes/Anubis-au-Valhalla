@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DamageManager : MonoBehaviour
 {
+    [Header("Objects")]
+    public GameObject textDamage;
     public GameObject player;
     public static DamageManager instance;
 
+    [Header("Alterations d'Etat")]
+    public bool stun;
+    public bool invinsible;
+    
+    [Header("Stats")]
     public float vieActuelle;
     public float vieMax;
-    public bool invinsible;
     public float TempsInvinsbleAfterHit;
     public float StunAfterHit;
-    public bool stun;
     
     private void Awake()
     {
@@ -35,6 +41,8 @@ public class DamageManager : MonoBehaviour
             vieActuelle -= damage;
             StartCoroutine(TempsInvinsibilité());
             StartCoroutine(TempsStun());
+            textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
+            Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
         }
 
         if (vieActuelle <= 0)

@@ -65,8 +65,8 @@ public class AttaquesNormales : MonoBehaviour
         foreach (Collider2D monstre in toucheMonstre)
         {
             Debug.Log("touché");
-            monstre.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaque);
-            monstre.GetComponent<IA_Monstre1>().DamageText(puissanceAttaque);
+            monstre.GetComponent<MonsterLifeManager>().TakeDamage(puissanceAttaque);
+            monstre.GetComponent<MonsterLifeManager>().DamageText(puissanceAttaque);
         }
     }
 

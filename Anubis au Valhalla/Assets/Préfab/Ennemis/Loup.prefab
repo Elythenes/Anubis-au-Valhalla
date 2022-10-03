@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 89795721797022162}
   - component: {fileID: 89795721797022161}
   - component: {fileID: 89795721797022160}
+  - component: {fileID: 5542174785646574203}
   - component: {fileID: 89795721797022158}
   - component: {fileID: 89795721797022159}
   - component: {fileID: 89795721797022157}
@@ -18,8 +19,8 @@ GameObject:
   - component: {fileID: 89795721797022152}
   - component: {fileID: 89795721797022156}
   m_Layer: 6
-  m_Name: Monstre
-  m_TagString: Untagged
+  m_Name: Loup
+  m_TagString: Monstre
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 89795721797022167}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 20.25, y: -1.94, z: 0}
-  m_LocalScale: {x: 1, y: 2.2909, z: 1}
+  m_LocalScale: {x: 1, y: 1.316351, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 89795722429124926}
@@ -111,16 +112,20 @@ MonoBehaviour:
   animator: {fileID: 89795721797022156}
   emptyLayers: {fileID: 89795722429124925}
   player: {fileID: 0}
-  seeker: {fileID: 89795721797022159}
   aipath: {fileID: 89795721797022158}
+  playerFollow: {fileID: 89795721797022157}
+  radiusWondering: 5
+  isWondering: 0
+  canDash: 0
   isDashing: 0
   timerDash: 0
-  dashDuration: 1
+  dashDuration: 0.7
   LagDebutDash: 0
   LagDebutDashMax: 0.7
-  CooldownDash: 0
-  CooldownDashMax: 5
-  dashSpeed: 2.83
+  CooldownDashTimer: 0
+  CooldownDash: 3
+  dashSpeed: 0.02
+  stopDash: 0
   pointAttaque: {fileID: 89795721883425385}
   HitboxPlayer:
     serializedVersion: 2
@@ -128,6 +133,23 @@ MonoBehaviour:
   rangeAttaque: 1.33
   puissanceAttaque: 20
   soulValue: 4
+--- !u!114 &5542174785646574203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89795721797022167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vieMax: 100
+  vieActuelle: 0
+  animator: {fileID: 89795721797022156}
+  soulValue: 4
+  textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
 --- !u!114 &89795721797022158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +165,7 @@ MonoBehaviour:
   version: 5
   radius: 1.37
   height: 2
-  canMove: 1
+  canMove: 0
   maxSpeed: 5
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
@@ -222,7 +244,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.25170052}
@@ -256,8 +278,8 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &89795721797022156
 Animator:
@@ -366,8 +388,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89795722878478632}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.52, y: 0.322, z: 0}
-  m_LocalScale: {x: 1, y: 0.3562, z: 1}
+  m_LocalPosition: {x: -0.52, y: 0.249, z: 0}
+  m_LocalScale: {x: 1, y: 0.50213516, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 89795721797022162}

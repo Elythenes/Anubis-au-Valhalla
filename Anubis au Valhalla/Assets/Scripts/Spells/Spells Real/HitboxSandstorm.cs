@@ -9,12 +9,13 @@ public class HitboxSandstorm : MonoBehaviour
    public SpellFollowingAreaType sOSandstorm;
    public float tempsReloadHitSandstorm;
    public bool stopAttack;
+   public int nbDoT;
 
    private void OnTriggerStay2D(Collider2D col)
    {
-      if (col.gameObject.tag == "Monstre")
+      if (col.gameObject.tag == "Monstre" && !stopAttack)
       {
-         for (int i = 0; i < 3; i++)
+         for (int i = 0; i < nbDoT; i++)
          {
             if (tempsReloadHitSandstorm <= sOSandstorm.espacementDoT && stopAttack == false)
             {
@@ -24,8 +25,8 @@ public class HitboxSandstorm : MonoBehaviour
             if (tempsReloadHitSandstorm > sOSandstorm.espacementDoT)
             {
                Debug.Log("touché");
-               col.GetComponent<IA_Monstre1>().TakeDamage(sOSandstorm.puissanceAttaque);
-               col.GetComponent<IA_Monstre1>().DamageText(sOSandstorm.puissanceAttaque);
+               col.GetComponent<MonsterLifeManager>().TakeDamage(sOSandstorm.puissanceAttaque);
+               col.GetComponent<MonsterLifeManager>().DamageText(sOSandstorm.puissanceAttaque);
                tempsReloadHitSandstorm = 0;
             }
          } 
@@ -36,8 +37,8 @@ public class HitboxSandstorm : MonoBehaviour
    {
       if (col.gameObject.tag == "Monstre")
       {
-      stopAttack = true;
-      tempsReloadHitSandstorm = 0;
+         stopAttack = true;
+         tempsReloadHitSandstorm = 0;
       }
    }
 }
