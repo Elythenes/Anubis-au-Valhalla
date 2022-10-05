@@ -29,7 +29,7 @@ public class SalleGennerator : MonoBehaviour
 
         [Header("VARIABLES INTERNES POUR DEBUG")]
         [SerializeField] private int roomsDone = -1;
-        [SerializeField] private DoorOrientation fromDoor = DoorOrientation.West;
+        public DoorOrientation fromDoor = DoorOrientation.West;
         [SerializeField] private DoorOrientation toDoor;
         public DoorOrientation spawnDoor;
         [SerializeField] private Salle currentRoom;

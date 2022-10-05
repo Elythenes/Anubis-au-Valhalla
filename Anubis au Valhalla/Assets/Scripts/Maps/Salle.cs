@@ -29,8 +29,13 @@ public class Salle : MonoBehaviour
         StartCoroutine(ExampleRoomCleared());
         RearrangeDoors();
         AdjustCameraConstraints();
-        GetAvailableTiles();
+
         //GetEnemies(enemySpawnData[chosenSpawnType]);
+    }
+
+    private void Start()
+    {
+        GetAvailableTiles();
     }
 
     public IEnumerator ExampleRoomCleared()
@@ -78,7 +83,10 @@ public class Salle : MonoBehaviour
 
     public void GetAvailableTiles()
     {
-        //availableTile = new List<Vector3Int>();
+        Debug.Log(availableTilePos.Count);
+        var doorRef = SalleGennerator.instance.fromDoor;
+        var doorTransformRef = transformReferences[(int)doorRef];
+        Vector3Int door = new Vector3Int(Mathf.RoundToInt(doorTransformRef.position.x),Mathf.RoundToInt(doorTransformRef.position.y),Mathf.RoundToInt(doorTransformRef.position.z));
         availableTilePos = new List<Vector3>();
         for (int i = tileMap.cellBounds.xMin; i < tileMap.cellBounds.xMax; i++)
         {
@@ -88,22 +96,17 @@ public class Salle : MonoBehaviour
                 Vector3 place = tileMap.CellToWorld(localTile);
                 if (tileMap.HasTile(localTile))
                 {
-                    foreach (Transform door in transformReferences)
+                    if ((localTile.x >= door.x - 2 &&
+                         localTile.x <= door.x + 2)&&
+                        (localTile.y >= door.y - 2 &&
+                         localTile.y <= door.y + 2))
                     {
-                        if (door.gameObject.activeSelf)
-                        {
-                            if ((localTile.x >= door.position.x - 2 &&
-                                 localTile.x <= door.position.x + 2)&&
-                                (localTile.y >= door.position.y - 2 &&
-                                 localTile.y <= door.position.y + 2))
-                            {
-                                tileMap.DeleteCells(localTile,localTile);
-                            }
-                            else
-                            {
-                                availableTilePos.Add(place);
-                            }
-                        }
+                        tileMap.DeleteCells(localTile,localTile);
+                        Debug.Log("ahhh");
+                    }
+                    else
+                    {
+                        availableTilePos.Add(place);
                     }
                 }
             }
@@ -134,4 +137,6 @@ public class Salle : MonoBehaviour
         }
     }
 }
-Debug.Log(availableTile.Count);*/
+Debug.Log(availableTile.Count);
+                    foreach (Door door in SalleGennerator.instance.s_doors)
+*/
