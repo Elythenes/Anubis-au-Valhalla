@@ -18,6 +18,7 @@ public class Salle : MonoBehaviour
     public SalleContent_Ennemies[] enemySpawnData;
     public int spawnBank = 0;
     public Tilemap tileMap;
+    public TilemapRenderer renderer;
     public List<Vector3Int> availableTile;
     public List<Vector3> availableTilePos;
     public GameObject filledTile;
@@ -26,11 +27,11 @@ public class Salle : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        renderer.enabled = false;
         StartCoroutine(ExampleRoomCleared());
         RearrangeDoors();
         AdjustCameraConstraints();
 
-        //GetEnemies(enemySpawnData[chosenSpawnType]);
     }
 
     private void Start()
@@ -59,31 +60,8 @@ public class Salle : MonoBehaviour
         cam.maxPos = maxPos;
     }
 
-    /*public void GetEnemies(SalleContent_Ennemies SpawnData)
-    {
-        SpawnData.totalWeight = 0;
-        foreach (var weight in SpawnData.spawnWeight)
-        {
-            SpawnData.totalWeight += weight;
-        }
-
-        for (int j = 0; j < SpawnData.spawnAmount; j++)
-        {
-            int randomNumber = Random.Range(0,SpawnData.totalWeight);
-            for (int i = 0; i < SpawnData.spawnWeight.Length; i++)
-            {
-                if (randomNumber <= SpawnData.spawnWeight[i])
-                {
-                    Debug.Log("la ca spawn un ennemi");
-                }
-                randomNumber -= SpawnData.spawnWeight[i];
-            }
-        }
-    }*/
-
     public void GetAvailableTiles()
     {
-        Debug.Log(availableTilePos.Count);
         var doorRef = SalleGennerator.instance.fromDoor;
         var doorTransformRef = transformReferences[(int)doorRef];
         Vector3Int door = new Vector3Int(Mathf.RoundToInt(doorTransformRef.position.x),Mathf.RoundToInt(doorTransformRef.position.y),Mathf.RoundToInt(doorTransformRef.position.z));
@@ -96,13 +74,12 @@ public class Salle : MonoBehaviour
                 Vector3 place = tileMap.CellToWorld(localTile);
                 if (tileMap.HasTile(localTile))
                 {
-                    if ((localTile.x >= door.x - 2 &&
-                         localTile.x <= door.x + 2)&&
-                        (localTile.y >= door.y - 2 &&
-                         localTile.y <= door.y + 2))
+                    if ((localTile.x >= door.x - 5 &&
+                         localTile.x <= door.x + 5)&&
+                        (localTile.y >= door.y - 5 &&
+                         localTile.y <= door.y + 5))
                     {
-                        tileMap.DeleteCells(localTile,localTile);
-                        Debug.Log("ahhh");
+                        Debug.Log("true");
                     }
                     else
                     {
@@ -111,7 +88,13 @@ public class Salle : MonoBehaviour
                 }
             }
         }
-        Debug.Log(availableTilePos.Count);
+        SpawnEnemies(100);
+        
+    }
+    
+    public void SpawnEnemies(int ennemyPower)
+    {
+        
     }
 }
 
@@ -122,15 +105,15 @@ public class Salle : MonoBehaviour
     for (int i = 0; i < availableTile.Count; i++)
     {
         if ((localTile.x >= door.position.x - 2 &&
-                             localTile.x <= door.position.x + 2)&&
-                            (localTile.y >= door.position.y - 2 &&
-                             localTile.y <= door.position.y + 2))
+                             localTile.x <= door.x + 2)&&
+                            (localTile.y >= door.y - 2 &&
+                             localTile.y <= door.y + 2))
         {
             availableTile.Remove(availableTile[i]); 
             Instantiate(filledTile, new Vector3(availableTile[i].x +0.5f,availableTile[i].y +0.5f,availableTile[i].z),Quaternion.identity);
         }
-        if (localTile.magnitude >= door.position.magnitude + 1 &&
-                            localTile.magnitude <= door.position.magnitude - 1)
+        if (localTile.magnitude >= door.magnitude + 2 &&
+                            localTile.magnitude <= door.magnitude - 2)
         {
             availableTile.Remove(availableTile[i]); 
             Instantiate(filledTile, new Vector3(availableTile[i].x +0.5f,availableTile[i].y +0.5f,availableTile[i].z),Quaternion.identity);
