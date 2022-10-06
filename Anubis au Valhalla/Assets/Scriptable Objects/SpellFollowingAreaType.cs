@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Spell System/SpellFollowingAreaType")]
 
 public class SpellFollowingAreaType : ScriptableObject
 {
+    public string nom;
+    public Image sprite;
     public GameObject sandstorm;
     public int duration = 2;
     public int puissanceAttaque = 5;

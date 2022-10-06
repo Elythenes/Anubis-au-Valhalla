@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Spell System/SpellStaticAreaType")]
 
 public class SpellStaticAreaType : ScriptableObject
 {
+    public string nom;
+    public Image sprite;
     public GameObject flameArea;
     public int duration = 2;
     public int puissanceAttaque = 5;

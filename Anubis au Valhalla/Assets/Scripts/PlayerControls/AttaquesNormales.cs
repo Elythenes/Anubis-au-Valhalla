@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class AttaquesNormales : MonoBehaviour
 {
-    private InputManager controls;
+    /*private InputManager controls;
     private AttaquesNormales instance;
     
     [Header ("Hitbox Attaque")]
@@ -18,12 +18,18 @@ public class AttaquesNormales : MonoBehaviour
     public int puissanceAttaque;
     public float vitesseAttaque;
     public GameObject effetVisuel;
-    private float nextAttaque;
-    public float vitessePersoXC1;
-    public float vitessePersoYC1;
-    public float vitessePersoNormaleX;
-    public float vitessePersoNormaleY;
+    private int ComboActuel;
     
+    [Header ("Customise Hitboxs")]
+    public LayerMask mask;
+    public bool useSphere = false;
+    public Vector3 hitboxSize = Vector3.one;
+    public float radius = 0.5f;
+    public Color inactiveColor;
+    public Color collisionOpenColor;
+    public Color collidingColor;
+   // private ColliderState _state;
+
     private void Awake()
     {
         if (instance == null)
@@ -56,11 +62,47 @@ public class AttaquesNormales : MonoBehaviour
         }
     }
 
+  public void startCheckingCollision() {
+      _state = ColliderState.Open;
+
+  }
+
+  public void stopCheckingCollision() {
+      _state = ColliderState.Closed;
+
+  }
+  
+  private void checkGizmoColor() {
+      
+      switch(_state) {
+
+          case ColliderState.Closed:
+
+              Gizmos.color = inactiveColor;
+
+              break;
+
+          case ColliderState.Open:
+
+              Gizmos.color = collisionOpenColor;
+
+              break;
+
+          case ColliderState.Colliding:
+
+              Gizmos.color = collidingColor;
+
+              break;
+
+      }
+
+  }
+  
     public void StartCombo() // Crée une hit box devant le perso et touche les ennemis
     {
-        StartCoroutine(ralentirPersoC1());
+        StartCoroutine(MovePersoC1());
         StartCoroutine(montrerEffet());
-        Collider2D[] toucheMonstre = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, layerMonstres);
+        Collider2D[] toucheMonstre = Physics2D.OverlapBoxAll(pointAttaque.position, rangeAttaque, layerMonstres);
 
         foreach (Collider2D monstre in toucheMonstre)
         {
@@ -77,7 +119,7 @@ public class AttaquesNormales : MonoBehaviour
         effetVisuel.SetActive(false);
     }
     
-    IEnumerator ralentirPersoC1()
+    IEnumerator MovePersoC1()
     {
         CharacterController.instance.speedX = vitessePersoXC1;
         CharacterController.instance.speedY = vitessePersoYC1;
@@ -86,11 +128,11 @@ public class AttaquesNormales : MonoBehaviour
         CharacterController.instance.speedY = vitessePersoNormaleY;
     }
 
-    private void OnDrawGizmosSelected() // Permet de voir la hitbox du coup dans l'éditeur
+    private void OnDrawGizmos() // Permet de voir la hitbox du coup dans l'éditeur
     {
         if(pointAttaque == null)
             return;
         
-        Gizmos.DrawWireSphere(pointAttaque.position, rangeAttaque);
+        Gizmos.DrawWireSphere(pointAttaque.position, rangeAttaque);*/
     }
-}
+
