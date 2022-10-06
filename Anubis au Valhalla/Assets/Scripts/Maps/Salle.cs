@@ -16,7 +16,7 @@ public class Salle : MonoBehaviour
     public Vector2 minPos = Vector2.zero;
     public Vector2 maxPos = Vector2.zero;
     public SalleContent_Ennemies[] enemySpawnData;
-    public int chosenSpawnType = 0;
+    public int spawnBank = 0;
     public Tilemap tileMap;
     public List<Vector3Int> availableTile;
     public List<Vector3> availableTilePos;

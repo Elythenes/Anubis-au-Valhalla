@@ -23,6 +23,8 @@ public class SalleGennerator : MonoBehaviour
         [Header("CONTENU DU DONJON")]
         public List<Salle> roomPrefab = new List<Salle>();
 
+        public List<SalleContent_Ennemies> spawnGroups;
+
         public List<Salle> specialRooms;
 
 
