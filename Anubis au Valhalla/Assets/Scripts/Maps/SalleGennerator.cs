@@ -23,13 +23,15 @@ public class SalleGennerator : MonoBehaviour
         [Header("CONTENU DU DONJON")]
         public List<Salle> roomPrefab = new List<Salle>();
 
+        public List<SalleContent_Ennemies> spawnGroups;
+
         public List<Salle> specialRooms;
 
 
 
         [Header("VARIABLES INTERNES POUR DEBUG")]
         [SerializeField] private int roomsDone = -1;
-        [SerializeField] private DoorOrientation fromDoor = DoorOrientation.West;
+        public DoorOrientation fromDoor = DoorOrientation.West;
         [SerializeField] private DoorOrientation toDoor;
         public DoorOrientation spawnDoor;
         [SerializeField] private Salle currentRoom;
