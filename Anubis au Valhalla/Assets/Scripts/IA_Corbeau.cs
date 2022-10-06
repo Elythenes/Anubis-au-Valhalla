@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 public class IA_Corbeau : MonoBehaviour
 {
@@ -19,8 +20,8 @@ public class IA_Corbeau : MonoBehaviour
     private SpriteRenderer sr;
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
-    public float radiusWondering;
-    public bool isWondering;
+    public float distanceMaxPlayer;
+
 
     [Header("Attaque")] 
     public bool isAttacking;
@@ -29,14 +30,17 @@ public class IA_Corbeau : MonoBehaviour
     public float StartUpAttackTime;
     public float StartUpAttackTimeTimer;
     public GameObject projectilPlume;
+    public float plumeSpeed;
 
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
+        playerFollow.target = player.transform;
     }
 
 
@@ -69,14 +73,19 @@ public class IA_Corbeau : MonoBehaviour
             aipath.canMove = false;
             transform.RotateAround(player.transform.position,Vector3.forward,rotationSpeed*Time.deltaTime);
             StartUpAttackTimeTimer += Time.deltaTime;
+
+            if (Vector3.Distance(player.transform.position, transform.position) <= distanceMaxPlayer)
+            {
+                Vector3 distancePlayer = new Vector3(CharacterController.instance.transform.position.x - transform.position.x,
+                    CharacterController.instance.transform.position.y - transform.position.y,0);
+
+                transform.DOMove(transform.position - distancePlayer*2, 5, false);
+            }
             
             if (StartUpAttackTimeTimer >= StartUpAttackTime)
             {
-                GameObject projPlume = Instantiate(projectilPlume, player.transform.position, Quaternion.identity);
-               /* Vector2 dir = new Vector2(CharacterController.instance.transform.position.x - projPlume.transform.position.x,
-                    CharacterController.instance.transform.position.y - projPlume.transform.position.y);
-                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                projPlume.transform.localRotation = Quaternion.AngleAxis(angle, Vector3.forward)*/
+                GameObject projPlume = Instantiate(projectilPlume, transform.position, Quaternion.identity);
+                projPlume.GetComponent<ProjectileCorbeau>().ia = this;
                 StartUpAttackTimeTimer = 0;
             }
         }

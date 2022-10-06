@@ -36,10 +36,12 @@ public class IA_Guerrier : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
+        playerFollow.target = player.transform;
 
         if (isElite)
         {

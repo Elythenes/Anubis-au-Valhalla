@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class MonsterLifeManager : MonoBehaviour
 {
-    public float vieMax;
-    public float vieActuelle;
+    public int vieMax;
+    public int vieActuelle;
     public Animator animator;
     public int soulValue = 4;
     public GameObject textDamage;
@@ -21,6 +21,7 @@ public class MonsterLifeManager : MonoBehaviour
     {
         StartCoroutine(AnimationDamaged());
         vieActuelle -= damage;
+        HealthBarMonstre.instance.SetHealth(vieActuelle);
 
         if (vieActuelle <= 0)
         {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Pathfinding;
 using TMPro;
 using Unity.Mathematics;
@@ -39,6 +40,7 @@ public class IA_Monstre1 : MonoBehaviour
     public float dashSpeed;
     private Vector2 targetPerso;
     public bool stopDash;
+    public bool ShakeEnable;
 
     [Header("Attaque")] 
     public Transform pointAttaque;
@@ -52,11 +54,14 @@ public class IA_Monstre1 : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         playerFollow.enabled = true;
         ai = GetComponent<IAstarAI>();
         vieActuelle = vieMax;
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        playerFollow.target = player.transform;
+        CooldownDashTimer = CooldownDash;
     }
     
 
@@ -75,11 +80,11 @@ public class IA_Monstre1 : MonoBehaviour
         {
             if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
             {
-                transform.localScale = new Vector3(-1, 2.2909f, 1);
+                transform.localScale = new Vector3(-1, 1.316351f, 1);
             }
             else if (transform.position.x > player.transform.position.x)
             {
-                transform.localScale = new Vector3(1, 2.2909f, 1);
+                transform.localScale = new Vector3(1, 1.316351f, 1);
             }
         }
 
@@ -97,14 +102,22 @@ public class IA_Monstre1 : MonoBehaviour
         if (isDashing) // Faire dasher le monstre
         {
             LagDebutDash += Time.deltaTime;
-            
+
+            if (ShakeEnable)
+            {
+                transform.DOShakePosition(0.5f, 0.4f);
+                ShakeEnable = false;
+            }
+
             if (LagDebutDash >= LagDebutDashMax)
             {
+                
                 stopDash = true;
                 timerDash += Time.deltaTime;
 
                 if (timerDash > dashDuration)
                 {
+                    ShakeEnable = true;
                     rb.velocity = (Vector2.zero);
                     isDashing = false;
                     canDash = false;
@@ -135,6 +148,7 @@ public class IA_Monstre1 : MonoBehaviour
             StartCoroutine(DashImpulse());
         }
 
+      
         IEnumerator DashImpulse()
         {
             rb.AddForce(targetPerso*dashSpeed,ForceMode2D.Impulse);
