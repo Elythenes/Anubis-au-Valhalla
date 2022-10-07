@@ -283,14 +283,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6260751544694496, guid: e77da35873d00554dbeb56f615266f80, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6260751544694496, guid: e77da35873d00554dbeb56f615266f80, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.02
-      objectReference: {fileID: 0}
     - target: {fileID: 6327077115469397649, guid: e77da35873d00554dbeb56f615266f80, type: 3}
       propertyPath: m_Name
       value: Personnage Variant
@@ -619,7 +611,9 @@ MonoBehaviour:
   - {fileID: -3130041957661822193, guid: cfd811be74a6ab54b888fdd952ffacd9, type: 3}
   - {fileID: -3130041957661822193, guid: cfd811be74a6ab54b888fdd952ffacd9, type: 3}
   - {fileID: -3130041957661822193, guid: cfd811be74a6ab54b888fdd952ffacd9, type: 3}
-  spawnGroups: []
+  spawnGroups:
+  - {fileID: 11400000, guid: e124d5b72e9e4df46a2eb5e1b3208f68, type: 2}
+  enemySpawnData: []
   specialRooms:
   - {fileID: -3130041957661822193, guid: a50471d91fc94ae4cb62e5ee11bd813c, type: 3}
   roomsDone: -1
@@ -627,6 +621,7 @@ MonoBehaviour:
   toDoor: 0
   spawnDoor: 0
   currentRoom: {fileID: 0}
+  chosenPattern: 0
 --- !u!4 &1241268835
 Transform:
   m_ObjectHideFlags: 0

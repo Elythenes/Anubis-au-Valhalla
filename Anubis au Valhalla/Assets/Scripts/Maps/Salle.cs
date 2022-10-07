@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
@@ -15,13 +16,19 @@ public class Salle : MonoBehaviour
     public Transform[] transformReferences;
     public Vector2 minPos = Vector2.zero;
     public Vector2 maxPos = Vector2.zero;
-    public SalleContent_Ennemies[] enemySpawnData;
-    public int spawnBank = 0;
+    public int spawnBank = 10;
     public Tilemap tileMap;
     public TilemapRenderer renderer;
     public List<Vector3Int> availableTile;
     public List<Vector3> availableTilePos;
     public GameObject filledTile;
+
+    //public int maxSpawnPoints = 10;
+    [Header("POINTS DE SPAWNS")]
+    public List<GameObject> availableSpawnA;
+    public List<GameObject> availableSpawnB;
+    public List<GameObject> availableSpawnC;
+    public List<int> costList = new List<int>();
 
 
     // Start is called before the first frame update
@@ -31,13 +38,15 @@ public class Salle : MonoBehaviour
         StartCoroutine(ExampleRoomCleared());
         RearrangeDoors();
         AdjustCameraConstraints();
-
     }
 
     private void Start()
     {
-        GetAvailableTiles();
+        //GetSpawnPoints(Random.Range(0,3));
     }
+
+
+    
 
     public IEnumerator ExampleRoomCleared()
     {
@@ -58,6 +67,43 @@ public class Salle : MonoBehaviour
         var cam = CameraController.cameraInstance;
         cam.minPos = minPos;
         cam.maxPos = maxPos;
+    }
+
+    public void GetSpawnPoints(int spawnPoints)
+    {
+        if (spawnPoints == 0)
+        {
+         SpawnEnemies(availableSpawnA);   
+        }
+        if (spawnPoints == 1)
+        {
+            SpawnEnemies(availableSpawnB);
+        }
+        if (spawnPoints == 2)
+        {
+            SpawnEnemies(availableSpawnC);
+        }
+    }
+    public void SpawnEnemies(List<GameObject> point)
+    {
+        foreach (EnemyData t in SalleGennerator.instance.spawnGroups[SalleGennerator.instance.chosenPattern].enemiesToSpawn)
+        {
+            int cost = t.cost;
+            costList.Add(cost);
+        }
+        int lowestCost = costList.Min();
+        if (spawnBank > lowestCost)
+        {
+            Debug.Log("oui");
+            var chosenValue = Random.Range(0, SalleGennerator.instance.enemySpawnData.Length);
+            var chosenEnemy = SalleGennerator.instance.spawnGroups[SalleGennerator.instance.chosenPattern].enemiesToSpawn[chosenValue];
+            Debug.Log(chosenEnemy.prefab);
+            spawnBank -= costList[chosenValue];
+            costList[chosenValue] *= 2;
+            var chosenPoint = point[Random.Range(0, point.Count)];
+            Instantiate(chosenEnemy.prefab, chosenPoint.transform);
+            point.Remove(chosenPoint);
+        }
     }
 
     public void GetAvailableTiles()
@@ -88,14 +134,9 @@ public class Salle : MonoBehaviour
                 }
             }
         }
-        SpawnEnemies(100);
-        
     }
     
-    public void SpawnEnemies(int ennemyPower)
-    {
-        
-    }
+
 }
 
 

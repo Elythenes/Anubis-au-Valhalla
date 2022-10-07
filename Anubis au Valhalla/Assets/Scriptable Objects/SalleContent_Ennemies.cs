@@ -5,6 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Room Content/Enemies")]
 public class SalleContent_Ennemies : ScriptableObject
 {
-    public GameObject[] enemiesToSpawn;
+    public EnemyData[] enemiesToSpawn;
     // Start is called before the first frame update
 }
