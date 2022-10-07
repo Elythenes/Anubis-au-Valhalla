@@ -6,29 +6,51 @@ using UnityEngine.InputSystem;
 
 public class AttaquesNormales : MonoBehaviour
 {
-    /*private InputManager controls;
-    private AttaquesNormales instance;
-    
-    [Header ("Hitbox Attaque")]
-    public LayerMask layerMonstres;
-    public Transform pointAttaque;
-    public float rangeAttaque;
 
-    [Header ("Stat Attaque")]
-    public int puissanceAttaque;
-    public float vitesseAttaque;
-    public GameObject effetVisuel;
-    private int ComboActuel;
+    [Header("Customise Hitboxs")] 
+    public LayerMask layerMonstres;
+    private HitboxState ColliderState;
+    private InputManager controls;
+    private AttaquesNormales instance;
+    public enum HitboxState { Opened, Closed, Colliding };
+
+    [Header("Stats Attaque 1")] 
+    public int puissanceAttaqueC1;
+    public float dureeHitbox1;
+    public float dureeHitboxTimer1;
+    public float cooldownAbandonCombo1;
+    public float stunAftercombo1;
+    public Vector2 rangeAttaque1;
     
-    [Header ("Customise Hitboxs")]
-    public LayerMask mask;
-    public bool useSphere = false;
-    public Vector3 hitboxSize = Vector3.one;
-    public float radius = 0.5f;
-    public Color inactiveColor;
-    public Color collisionOpenColor;
-    public Color collidingColor;
-   // private ColliderState _state;
+    [Header("Stats Attaque 2")] 
+    public int puissanceAttaqueC2;
+    public float dureeHitbox2;
+    public float dureeHitboxTimer2;
+    public float cooldownAbandonCombo2;
+    public float stunAftercombo2;
+    public Vector2 rangeAttaque2;
+    
+    [Header("Stats Attaque 3")] 
+    public int puissanceAttaqueC3;
+    public float dureeHitbox3;
+    public float dureeHitboxTimer3;
+    public float cooldownAbandonComb3;
+    public float stunAftercombo3;
+    public Vector2 rangeAttaque3;
+
+    [Header("Général")] 
+    public GameObject attackPoint;
+    public float radius;
+    public Vector2 rotation;
+    public bool canAttack;
+    public GameObject effetVisuel;
+    public int comboActuel;
+    private List<Vector2> rangeAttackList = new List<Vector2>();
+    public Vector2 hitboxPosition;
+
+
+
+
 
     private void Awake()
     {
@@ -36,13 +58,23 @@ public class AttaquesNormales : MonoBehaviour
         {
             instance = this;
         }
+
         controls = new InputManager();
     }
-    
+
+    private void Start()
+    {
+        rangeAttackList.Add(rangeAttaque1);
+        rangeAttackList.Add(rangeAttaque2);
+        rangeAttackList.Add(rangeAttaque3);
+        ColliderState = HitboxState.Closed;
+    }
+
     private void OnEnable()
     {
         controls.Enable();
     }
+
     private void OnDisable()
     {
         controls.Disable();
@@ -52,87 +84,102 @@ public class AttaquesNormales : MonoBehaviour
     {
         Mouse mouse = InputSystem.GetDevice<Mouse>(); // Trouver input de la souris
 
-        if (Time.time >= nextAttaque) // Cooldown de l'attaque
+        if (mouse.leftButton.wasPressedThisFrame && canAttack)
         {
-            if (mouse.leftButton.wasPressedThisFrame)
+            Debug.Log("ouui");
+            switch (comboActuel)
             {
-                StartCombo();
-                nextAttaque = Time.time + vitesseAttaque;
-            } 
+                case 0:
+                   // comboActuel++;
+                    if (canAttack)
+                    {
+                        Combo1();
+                    }
+                    break;
+                
+                case 1:
+                    comboActuel++;
+                    break;
+                
+                case 2:
+                    ;
+                    break;
+                    
+            }
         }
+      
     }
 
-  public void startCheckingCollision() {
-      _state = ColliderState.Open;
-
-  }
-
-  public void stopCheckingCollision() {
-      _state = ColliderState.Closed;
-
-  }
   
-  private void checkGizmoColor() {
-      
-      switch(_state) {
-
-          case ColliderState.Closed:
-
-              Gizmos.color = inactiveColor;
-
-              break;
-
-          case ColliderState.Open:
-
-              Gizmos.color = collisionOpenColor;
-
-              break;
-
-          case ColliderState.Colliding:
-
-              Gizmos.color = collidingColor;
-
-              break;
-
-      }
-
-  }
-  
-    public void StartCombo() // Crée une hit box devant le perso et touche les ennemis
+    private void checkGizmoColor()
     {
-        StartCoroutine(MovePersoC1());
-        StartCoroutine(montrerEffet());
-        Collider2D[] toucheMonstre = Physics2D.OverlapBoxAll(pointAttaque.position, rangeAttaque, layerMonstres);
+
+        switch (ColliderState)
+        {
+
+            case HitboxState.Closed:
+
+                Gizmos.color = Color.red;
+
+                break;
+
+            case HitboxState.Opened:
+
+                Gizmos.color = Color.blue;
+
+                break;
+
+            case HitboxState.Colliding:
+
+                Gizmos.color = Color.green;
+
+                break;
+
+        }
+
+    }
+
+    public void Combo1() // Crée une hit box devant le perso et touche les ennemis
+    {
+        ColliderState = HitboxState.Opened;
+        checkGizmoColor();
+        StartCoroutine(montrerEffet(dureeHitbox1));
+        Collider2D[] toucheMonstre = Physics2D.OverlapBoxAll(new Vector2(attackPoint.transform.position.x,attackPoint.transform.position.y), rangeAttaque1, layerMonstres);
 
         foreach (Collider2D monstre in toucheMonstre)
         {
             Debug.Log("touché");
-            monstre.GetComponent<MonsterLifeManager>().TakeDamage(puissanceAttaque);
-            monstre.GetComponent<MonsterLifeManager>().DamageText(puissanceAttaque);
+           // monstre.GetComponent<MonsterLifeManager>().TakeDamage(puissanceAttaqueC1);
+            //monstre.GetComponent<MonsterLifeManager>().DamageText(puissanceAttaqueC1);
         }
     }
 
-    IEnumerator montrerEffet()
+    IEnumerator montrerEffet(float duréeHitbox)
     {
+        effetVisuel.transform.position = hitboxPosition;
+        effetVisuel.transform.localScale = rangeAttackList[comboActuel];
         effetVisuel.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(duréeHitbox);
         effetVisuel.SetActive(false);
     }
-    
-    IEnumerator MovePersoC1()
-    {
-        CharacterController.instance.speedX = vitessePersoXC1;
-        CharacterController.instance.speedY = vitessePersoYC1;
-        yield return new WaitForSeconds(0.5f);
-        CharacterController.instance.speedX = vitessePersoNormaleX;
-        CharacterController.instance.speedY = vitessePersoNormaleY;
-    }
+
 
     private void OnDrawGizmos() // Permet de voir la hitbox du coup dans l'éditeur
     {
-        if(pointAttaque == null)
-            return;
+        if (rangeAttackList != null)
+        {
+            Gizmos.DrawCube(hitboxPosition, rangeAttaque1);
+        }
         
-        Gizmos.DrawWireSphere(pointAttaque.position, rangeAttaque);*/
+        if (rangeAttackList != null)
+        {
+            Gizmos.DrawCube(hitboxPosition, rangeAttaque2);
+        }
+        
+        if (rangeAttackList != null)
+        {
+            Gizmos.DrawCube(hitboxPosition, rangeAttaque3);
+        }
     }
+}
 

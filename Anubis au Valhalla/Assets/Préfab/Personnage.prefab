@@ -108,12 +108,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91477352}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 0.018, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.0100002, y: -0.152, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 203671915}
+  m_Father: {fileID: 8826527345816730603}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &91477353
@@ -168,38 +168,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &203671914
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 203671915}
-  m_Layer: 8
-  m_Name: Point d'attaque
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &203671915
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 203671914}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.11, y: -0.17, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 91477354}
-  m_Father: {fileID: 8826527345816730603}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8100205029375113240
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,13 +239,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca14d1accf40fb4a9a2bfd5653776d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textDamage: {fileID: 0}
   player: {fileID: 0}
+  stun: 0
+  invinsible: 0
   vieActuelle: 0
   vieMax: 100
-  invinsible: 0
   TempsInvinsbleAfterHit: 2
   StunAfterHit: 0.2
-  stun: 0
 --- !u!1 &8826527345816730582
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +281,7 @@ Transform:
   m_LocalScale: {x: 1, y: 2.0906, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 203671915}
+  - {fileID: 91477354}
   - {fileID: 1616746}
   - {fileID: 3289434057384539047}
   m_Father: {fileID: 0}
@@ -384,6 +353,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedX: 23
   speedY: 18
+  isAttacking: 0
+  facing: 0
   dashSpeed: 27
   dashDuration: 0.3
   dashCooldown: 0.5
@@ -469,12 +440,27 @@ MonoBehaviour:
   layerMonstres:
     serializedVersion: 2
     m_Bits: 64
-  pointAttaque: {fileID: 203671915}
-  rangeAttaque: 1.39
-  puissanceAttaque: 25
-  vitesseAttaque: 1
+  puissanceAttaqueC1: 0
+  dureeHitbox1: 0
+  dureeHitboxTimer1: 0
+  cooldownAbandonCombo1: 0
+  stunAftercombo1: 0
+  rangeAttaque1: {x: 0, y: 0}
+  puissanceAttaqueC2: 0
+  dureeHitbox2: 0
+  dureeHitboxTimer2: 0
+  cooldownAbandonCombo2: 0
+  stunAftercombo2: 0
+  rangeAttaque2: {x: 0, y: 0}
+  puissanceAttaqueC3: 0
+  dureeHitbox3: 0
+  dureeHitboxTimer3: 0
+  cooldownAbandonComb3: 0
+  stunAftercombo3: 0
+  rangeAttaque3: {x: 0, y: 0}
+  radius: 0
+  rotation: {x: 0, y: 0}
+  canAttack: 0
   effetVisuel: {fileID: 91477352}
-  vitessePersoXC1: 15
-  vitessePersoYC1: 10
-  vitessePersoNormaleX: 23
-  vitessePersoNormaleY: 18
+  comboActuel: 0
+  hitboxPosition: {x: 0, y: 0}

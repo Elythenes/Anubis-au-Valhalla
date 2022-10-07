@@ -11,8 +11,10 @@ public class CharacterController : MonoBehaviour
   public static CharacterController instance; //jai besion de l'instance pour bouger le joueur au changements de salles
   public float speedX;
   public float speedY;
-  private int lookingAt; // Variable qui indique la direction dans laquelle regarde le perso (de 1 à 4 avec Nord = 1 / Est = 2 / Sud = 3 / Ouest = 4) 
-  
+  public bool isAttacking;
+  public lookingAt facing;
+
+  public enum lookingAt { Nord,NordEst,Est,SudEst,Sud,SudOuest,Ouest,NordOuest }
   
   [Header("Dash")]
   public float dashSpeed;
@@ -26,6 +28,8 @@ public class CharacterController : MonoBehaviour
   
   [HideInInspector]public Rigidbody2D rb; // ca aussi
   private Vector2 movement;
+  public GameObject AttackPoint;
+  public float radius;
 
 
 
@@ -63,11 +67,10 @@ public class CharacterController : MonoBehaviour
       
     }
   
-    if (isDashing == false) // Déplacments hors dash.
+    if (isDashing == false && !isAttacking) // Déplacments hors dash.
     {
       rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
       //rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
-
     }
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
@@ -84,21 +87,50 @@ public class CharacterController : MonoBehaviour
       {
         rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * 2);
       }
-      else if(lookingAt == 1)
+      else
       {
-        rb.velocity = (new Vector2(0,1) * dashSpeed);
-      }
-      else if(lookingAt == 2)
-      {
-        rb.velocity = (new Vector2(1,0) * dashSpeed);
-      }
-      else if(lookingAt == 3)
-      {
-        rb.velocity = (new Vector2(0,-1) * dashSpeed);
-      }
-      else if(lookingAt == 4)
-      {
-        rb.velocity = (new Vector2(-1,0) * dashSpeed);
+        switch (facing)
+        {
+          case lookingAt.Nord:
+            rb.velocity = (new Vector2(0,1) * dashSpeed);
+            AttackPoint.transform.position = transform.position + new Vector3(0,radius);
+            break;
+          
+          case lookingAt.Sud:
+            rb.velocity = (new Vector2(0,-1) * dashSpeed);
+            AttackPoint.transform.position = transform.position + new Vector3(0,-radius);
+            break;
+          
+          case lookingAt.Est:
+            rb.velocity = (new Vector2(1,0) * dashSpeed);
+            AttackPoint.transform.position = transform.position + new Vector3(radius,0);
+            break;
+          
+          case lookingAt.Ouest:
+            rb.velocity = (new Vector2(-1,0) * dashSpeed);
+            AttackPoint.transform.position = transform.position + new Vector3(-radius,0);
+            break;
+          
+          case lookingAt.NordEst:
+            rb.velocity = (new Vector2(5,5) * dashSpeed);
+            AttackPoint.transform.position = transform.position + new Vector3(radius,radius);
+            break;
+          
+          case lookingAt.NordOuest:
+            rb.velocity = (new Vector2(-5,5) * dashSpeed);
+            AttackPoint.transform.position = transform.position + new Vector3(radius,-radius);
+            break;
+          
+          case lookingAt.SudEst:
+            rb.velocity = (new Vector2(5,-5) * dashSpeed);
+            AttackPoint.transform.position = transform.position + new Vector3(-radius,radius);
+            break;
+          
+          case lookingAt.SudOuest:
+            rb.velocity = (new Vector2(-5,-5) * dashSpeed);
+            AttackPoint.transform.position = transform.position + new Vector3(-radius,-radius);
+            break;
+        }
       }
     }
     else if (!isDashing)
@@ -108,28 +140,28 @@ public class CharacterController : MonoBehaviour
     
     if (movement.x > 0) // Le personnage s'oriente vers la direction où il marche. 
     {
-      lookingAt = 2;
+      facing = lookingAt.Est;
       //transform.localRotation = new Quaternion(0, 0,0,1);
       transform.localScale = new Vector3(1, 2.0906f, 0);
     }
 
     if (movement.x < 0)
     {
-      lookingAt = 4;
+      facing = lookingAt.Ouest;
       //transform.localRotation = new Quaternion(0, 180,0,1);
       transform.localScale = new Vector3(-1, 2.0906f, 0);
     }
     
     if (movement.y < 0)
     {
-      lookingAt = 3;
+      facing = lookingAt.Sud;
       float face = transform.localScale.x;
       face = 1;
     }
     
     if (movement.y > 0)
     {
-      lookingAt = 1;
+      facing = lookingAt.Nord;
       float face = transform.localScale.x;
       face = 1;
     }
