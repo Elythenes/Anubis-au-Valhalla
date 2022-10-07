@@ -611,6 +611,9 @@ MonoBehaviour:
   - {fileID: -3130041957661822193, guid: cfd811be74a6ab54b888fdd952ffacd9, type: 3}
   - {fileID: -3130041957661822193, guid: cfd811be74a6ab54b888fdd952ffacd9, type: 3}
   - {fileID: -3130041957661822193, guid: cfd811be74a6ab54b888fdd952ffacd9, type: 3}
+  spawnGroups:
+  - {fileID: 11400000, guid: e124d5b72e9e4df46a2eb5e1b3208f68, type: 2}
+  enemySpawnData: []
   specialRooms:
   - {fileID: -3130041957661822193, guid: a50471d91fc94ae4cb62e5ee11bd813c, type: 3}
   roomsDone: -1
@@ -618,6 +621,7 @@ MonoBehaviour:
   toDoor: 0
   spawnDoor: 0
   currentRoom: {fileID: 0}
+  chosenPattern: 0
 --- !u!4 &1241268835
 Transform:
   m_ObjectHideFlags: 0
@@ -646,13 +650,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca14d1accf40fb4a9a2bfd5653776d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textDamage: {fileID: 0}
   player: {fileID: 356491707}
+  stun: 0
+  invinsible: 0
   vieActuelle: 0
   vieMax: 0
-  invinsible: 0
   TempsInvinsbleAfterHit: 0
   StunAfterHit: 0
-  stun: 0
 --- !u!1001 &1722530047
 PrefabInstance:
   m_ObjectHideFlags: 0

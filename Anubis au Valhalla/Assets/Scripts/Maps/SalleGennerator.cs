@@ -22,8 +22,9 @@ public class SalleGennerator : MonoBehaviour
 
         [Header("CONTENU DU DONJON")]
         public List<Salle> roomPrefab = new List<Salle>();
-
-        public List<SalleContent_Ennemies> spawnGroups;
+        [Header("PATTERNES")]
+        public List<SalleContent_Ennemies> spawnGroups = new List<SalleContent_Ennemies>();
+        public EnemyData[] enemySpawnData;
 
         public List<Salle> specialRooms;
 
@@ -35,6 +36,7 @@ public class SalleGennerator : MonoBehaviour
         [SerializeField] private DoorOrientation toDoor;
         public DoorOrientation spawnDoor;
         [SerializeField] private Salle currentRoom;
+        public int chosenPattern;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
 
@@ -128,6 +130,7 @@ public class SalleGennerator : MonoBehaviour
                 {
                         return GenerateDungeon2();
                 }
+                chosenPattern = Random.Range(0, spawnGroups.Count);
                 Instantiate(s_doors[(int)spawnDoor].roomToSpawn);
                 return GenerateDungeon2();
         }
@@ -149,6 +152,7 @@ public class SalleGennerator : MonoBehaviour
                 currentRoom = BeginGeneration();
                 if(roomsDone != 0)MovePlayerToDoor(fromDoor);
                 ClearRoom();
+                currentRoom.GetSpawnPoints(0);
 
         }
 
