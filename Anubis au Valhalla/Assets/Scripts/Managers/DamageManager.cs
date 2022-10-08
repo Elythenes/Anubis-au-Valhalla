@@ -54,7 +54,9 @@ public class DamageManager : MonoBehaviour
     IEnumerator TempsStun()
     {
         stun = true;
+        AttaquesNormales.instance.canAttack = false;
         yield return new WaitForSeconds(StunAfterHit);
+        AttaquesNormales.instance.canAttack = true;
         stun = false;
     }
     

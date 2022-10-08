@@ -41,9 +41,13 @@ public class SoulBehavior : MonoBehaviour
                 haspoofed = true;
             }
             rb.AddForce(dirNormalised * (force * deceleration),ForceMode2D.Force);
+            if (transform.position.magnitude >= playerPos.magnitude - 0.2f)
+            {
+                Souls.instance.CollectSouls(gameObject, 1);
+                
+            }
         }
         
-        if (transform.position.magnitude >= playerPos.magnitude -0.2f)Souls.instance.CollectSouls(gameObject, 1);
     }
 
     public void PoofAway(Vector2 dir)

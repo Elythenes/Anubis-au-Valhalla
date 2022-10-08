@@ -28,8 +28,6 @@ public class CharacterController : MonoBehaviour
   
   [HideInInspector]public Rigidbody2D rb; // ca aussi
   private Vector2 movement;
-  public GameObject AttackPoint;
-  public float radius;
 
 
 
@@ -75,11 +73,12 @@ public class CharacterController : MonoBehaviour
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
     {
+      AttaquesNormales.instance.canAttack = false;
       ghost.activerEffet = true;
       isDashing = true;
     }
     
-    if (isDashing) // Déplacement lors du dash selon la direction du regard du perso
+    if (isDashing && !isAttacking) // Déplacement lors du dash selon la direction du regard du perso
     {
       gameObject.GetComponent<BoxCollider2D>().enabled = false;
       timerDash += Time.deltaTime;
@@ -93,42 +92,34 @@ public class CharacterController : MonoBehaviour
         {
           case lookingAt.Nord:
             rb.velocity = (new Vector2(0,1) * dashSpeed);
-            AttackPoint.transform.position = transform.position + new Vector3(0,radius);
             break;
           
           case lookingAt.Sud:
             rb.velocity = (new Vector2(0,-1) * dashSpeed);
-            AttackPoint.transform.position = transform.position + new Vector3(0,-radius);
             break;
           
           case lookingAt.Est:
             rb.velocity = (new Vector2(1,0) * dashSpeed);
-            AttackPoint.transform.position = transform.position + new Vector3(radius,0);
             break;
           
           case lookingAt.Ouest:
             rb.velocity = (new Vector2(-1,0) * dashSpeed);
-            AttackPoint.transform.position = transform.position + new Vector3(-radius,0);
             break;
           
           case lookingAt.NordEst:
-            rb.velocity = (new Vector2(5,5) * dashSpeed);
-            AttackPoint.transform.position = transform.position + new Vector3(radius,radius);
+            rb.velocity = (new Vector2(1,1) * dashSpeed);
             break;
           
           case lookingAt.NordOuest:
-            rb.velocity = (new Vector2(-5,5) * dashSpeed);
-            AttackPoint.transform.position = transform.position + new Vector3(radius,-radius);
+            rb.velocity = (new Vector2(-1,1) * dashSpeed);
             break;
           
           case lookingAt.SudEst:
-            rb.velocity = (new Vector2(5,-5) * dashSpeed);
-            AttackPoint.transform.position = transform.position + new Vector3(-radius,radius);
+            rb.velocity = (new Vector2(1,-1) * dashSpeed);
             break;
           
           case lookingAt.SudOuest:
-            rb.velocity = (new Vector2(-5,-5) * dashSpeed);
-            AttackPoint.transform.position = transform.position + new Vector3(-radius,-radius);
+            rb.velocity = (new Vector2(-1,-1) * dashSpeed);
             break;
         }
       }
@@ -138,28 +129,28 @@ public class CharacterController : MonoBehaviour
       gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
     
-    if (movement.x > 0) // Le personnage s'oriente vers la direction où il marche. 
+    if (movement.x > 0 && !isAttacking) // Le personnage s'oriente vers la direction où il marche. 
     {
       facing = lookingAt.Est;
       //transform.localRotation = new Quaternion(0, 0,0,1);
       transform.localScale = new Vector3(1, 2.0906f, 0);
     }
 
-    if (movement.x < 0)
+    if (movement.x < 0 && !isAttacking)
     {
       facing = lookingAt.Ouest;
       //transform.localRotation = new Quaternion(0, 180,0,1);
       transform.localScale = new Vector3(-1, 2.0906f, 0);
     }
     
-    if (movement.y < 0)
+    if (movement.y < 0 && !isAttacking)
     {
       facing = lookingAt.Sud;
       float face = transform.localScale.x;
       face = 1;
     }
     
-    if (movement.y > 0)
+    if (movement.y > 0 && !isAttacking)
     {
       facing = lookingAt.Nord;
       float face = transform.localScale.x;
@@ -168,6 +159,7 @@ public class CharacterController : MonoBehaviour
     
     if (timerDash > dashDuration) // A la fin du dash...
     {
+      AttaquesNormales.instance.canAttack = true;
       ghost.activerEffet = false;
       isDashing = false;
       timerDash = 0;

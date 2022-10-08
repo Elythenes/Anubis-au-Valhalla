@@ -258,10 +258,10 @@ GameObject:
   - component: {fileID: 8826527345816730603}
   - component: {fileID: 8826527345816730580}
   - component: {fileID: 8826527345816730581}
+  - component: {fileID: 483863847}
   - component: {fileID: 8826527345816730601}
   - component: {fileID: 8826527345816730602}
   - component: {fileID: 6986106001323062850}
-  - component: {fileID: 483863847}
   m_Layer: 8
   m_Name: Personnage
   m_TagString: Untagged
@@ -362,6 +362,41 @@ MonoBehaviour:
   canDash: 1
   ghost: {fileID: 8826527345816730601}
   rb: {fileID: 0}
+  AttackPoint: {fileID: 0}
+  radius: 0
+--- !u!114 &483863847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8826527345816730582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8e0c0b78072424494a1c4476ef16e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageC1: 0
+  dureeHitbox1: 0
+  hitboxC1: {fileID: 0}
+  stunDuringcombo1: 0
+  rangeAttaque1: {x: 0, y: 0}
+  damageC2: 0
+  dureeHitbox2: 0
+  dureeHitboxTimer2: 0
+  stunAftercombo2: 0
+  rangeAttaque2: {x: 0, y: 0}
+  hitboxC2: {fileID: 0}
+  damageC3: 0
+  dureeHitbox3: 0
+  dureeHitboxTimer3: 0
+  stunAftercombo3: 0
+  rangeAttaque3: {x: 0, y: 0}
+  hitboxC3: {fileID: 0}
+  canAttack: 0
+  comboActuel: 0
+  cooldownAbandonCombo: 0
+  cooldownAbandonComboTimer: 0
 --- !u!114 &8826527345816730601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,42 +460,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.50525886}
   m_EdgeRadius: 0
---- !u!114 &483863847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826527345816730582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab8e0c0b78072424494a1c4476ef16e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerMonstres:
-    serializedVersion: 2
-    m_Bits: 64
-  puissanceAttaqueC1: 0
-  dureeHitbox1: 0
-  dureeHitboxTimer1: 0
-  cooldownAbandonCombo1: 0
-  stunAftercombo1: 0
-  rangeAttaque1: {x: 0, y: 0}
-  puissanceAttaqueC2: 0
-  dureeHitbox2: 0
-  dureeHitboxTimer2: 0
-  cooldownAbandonCombo2: 0
-  stunAftercombo2: 0
-  rangeAttaque2: {x: 0, y: 0}
-  puissanceAttaqueC3: 0
-  dureeHitbox3: 0
-  dureeHitboxTimer3: 0
-  cooldownAbandonComb3: 0
-  stunAftercombo3: 0
-  rangeAttaque3: {x: 0, y: 0}
-  radius: 0
-  rotation: {x: 0, y: 0}
-  canAttack: 0
-  effetVisuel: {fileID: 91477352}
-  comboActuel: 0
-  hitboxPosition: {x: 0, y: 0}

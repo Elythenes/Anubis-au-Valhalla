@@ -1,52 +1,54 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class AttaquesNormales : MonoBehaviour
 {
-
-    [Header("Customise Hitboxs")] 
-    public LayerMask layerMonstres;
-    private HitboxState ColliderState;
+    
     private InputManager controls;
-    private AttaquesNormales instance;
-    public enum HitboxState { Opened, Closed, Colliding };
+    public static AttaquesNormales instance;
 
     [Header("Stats Attaque 1")] 
-    public int puissanceAttaqueC1;
-    public float dureeHitbox1;
-    public float dureeHitboxTimer1;
-    public float cooldownAbandonCombo1;
-    public float stunAftercombo1;
+    public GameObject hitboxC1;
     public Vector2 rangeAttaque1;
-    
+    public bool IsC1;
+    public int damageC1;
+    public float dureeHitbox1;
+    public float StunDuration1;
+    public float StunDurationTimer1;
+    public float dashImpulseC1;
+
     [Header("Stats Attaque 2")] 
-    public int puissanceAttaqueC2;
-    public float dureeHitbox2;
-    public float dureeHitboxTimer2;
-    public float cooldownAbandonCombo2;
-    public float stunAftercombo2;
+    public GameObject hitboxC2;
     public Vector2 rangeAttaque2;
+    public bool IsC2;
+    public int damageC2;
+    public float dureeHitbox2;
+    public float StunDuration2;
+    public float StunDurationTimer2;
+    public float dashImpulseC2;
     
     [Header("Stats Attaque 3")] 
-    public int puissanceAttaqueC3;
-    public float dureeHitbox3;
-    public float dureeHitboxTimer3;
-    public float cooldownAbandonComb3;
-    public float stunAftercombo3;
+    public GameObject hitboxC3;
     public Vector2 rangeAttaque3;
-
-    [Header("Général")] 
-    public GameObject attackPoint;
-    public float radius;
-    public Vector2 rotation;
+    public bool IsC3;
+    public int damageC3;
+    public float dureeHitbox3;
+    public float StunDuration3;
+    public float StunDurationTimer3;
+    public float dashImpulseC3;
+    
+    [Header("Général")]
+    public bool abandonOn;
     public bool canAttack;
-    public GameObject effetVisuel;
     public int comboActuel;
-    private List<Vector2> rangeAttackList = new List<Vector2>();
-    public Vector2 hitboxPosition;
+    public float cooldownAbandonCombo;
+    public float cooldownAbandonComboTimer;
+    public bool buffer;
 
 
 
@@ -62,14 +64,6 @@ public class AttaquesNormales : MonoBehaviour
         controls = new InputManager();
     }
 
-    private void Start()
-    {
-        rangeAttackList.Add(rangeAttaque1);
-        rangeAttackList.Add(rangeAttaque2);
-        rangeAttackList.Add(rangeAttaque3);
-        ColliderState = HitboxState.Closed;
-    }
-
     private void OnEnable()
     {
         controls.Enable();
@@ -83,103 +77,200 @@ public class AttaquesNormales : MonoBehaviour
     private void Update()
     {
         Mouse mouse = InputSystem.GetDevice<Mouse>(); // Trouver input de la souris
-
-        if (mouse.leftButton.wasPressedThisFrame && canAttack)
+        if (mouse.leftButton.wasPressedThisFrame && canAttack /*|| buffer*/) // Execute l'attaque selon l'avancement du combo
         {
-            Debug.Log("ouui");
             switch (comboActuel)
             {
                 case 0:
-                   // comboActuel++;
+                    
                     if (canAttack)
                     {
-                        Combo1();
+                        abandonOn = false;
+                        cooldownAbandonComboTimer = 0;
+                        //buffer = false;
+                        comboActuel++;
+                        Combo1();     
                     }
+                    
                     break;
                 
                 case 1:
-                    comboActuel++;
+                    if (canAttack)
+                    {
+                        abandonOn = false;
+                        cooldownAbandonComboTimer = 0;
+                       // buffer = false;
+                        comboActuel++;
+                        Combo2();
+                    }
+                    
                     break;
                 
                 case 2:
-                    ;
+                    if (canAttack)
+                    {
+                        abandonOn = false;
+                        cooldownAbandonComboTimer = 0;
+                        //buffer = false;
+                        comboActuel = 0;
+                        Combo3();
+                    }
                     break;
                     
             }
         }
+
+        
+        
+        // ------------------ Gestion Abandon du Combo ---------------
+        if (abandonOn)
+        {
+            cooldownAbandonComboTimer += Time.deltaTime;
+        }
+        
+        if (cooldownAbandonComboTimer >= cooldownAbandonCombo) // Condition de retour à l'idle
+        {
+            abandonOn = false;
+            comboActuel = 0;
+            cooldownAbandonComboTimer = 0;
+        }
+        
+        // ------------------ Gestion Abandon du Combo ---------------
+        
+        
+        
+        // ------------------ Gestion Combo 1-------------
       
-    }
-
-  
-    private void checkGizmoColor()
-    {
-
-        switch (ColliderState)
+        /*if (IsC1 && !canAttack && StunDurationTimer1 <= StunDuration1 && abandonOn)
         {
-
-            case HitboxState.Closed:
-
-                Gizmos.color = Color.red;
-
-                break;
-
-            case HitboxState.Opened:
-
-                Gizmos.color = Color.blue;
-
-                break;
-
-            case HitboxState.Colliding:
-
-                Gizmos.color = Color.green;
-
-                break;
-
-        }
-
-    }
-
-    public void Combo1() // Crée une hit box devant le perso et touche les ennemis
-    {
-        ColliderState = HitboxState.Opened;
-        checkGizmoColor();
-        StartCoroutine(montrerEffet(dureeHitbox1));
-        Collider2D[] toucheMonstre = Physics2D.OverlapBoxAll(new Vector2(attackPoint.transform.position.x,attackPoint.transform.position.y), rangeAttaque1, layerMonstres);
-
-        foreach (Collider2D monstre in toucheMonstre)
-        {
-            Debug.Log("touché");
-           // monstre.GetComponent<MonsterLifeManager>().TakeDamage(puissanceAttaqueC1);
-            //monstre.GetComponent<MonsterLifeManager>().DamageText(puissanceAttaqueC1);
-        }
-    }
-
-    IEnumerator montrerEffet(float duréeHitbox)
-    {
-        effetVisuel.transform.position = hitboxPosition;
-        effetVisuel.transform.localScale = rangeAttackList[comboActuel];
-        effetVisuel.SetActive(true);
-        yield return new WaitForSeconds(duréeHitbox);
-        effetVisuel.SetActive(false);
-    }
-
-
-    private void OnDrawGizmos() // Permet de voir la hitbox du coup dans l'éditeur
-    {
-        if (rangeAttackList != null)
-        {
-            Gizmos.DrawCube(hitboxPosition, rangeAttaque1);
+            if (mouse.leftButton.wasPressedThisFrame)
+            {
+                buffer = true;
+            }
+        }*/
+        
+        if (StunDurationTimer1 >= StunDuration1)
+        { 
+            canAttack = true;
+            CharacterController.instance.isAttacking = false;
+            IsC1 = false;
+            StunDurationTimer1 = 0;
         }
         
-        if (rangeAttackList != null)
+        if (IsC1)
         {
-            Gizmos.DrawCube(hitboxPosition, rangeAttaque2);
+            StunDurationTimer1 += Time.deltaTime;
+        }
+        // ------------------ Gestion Combo 1-------------
+        
+        
+        // ------------------ Gestion Combo 2-------------
+       /* if (mouse.leftButton.wasPressedThisFrame)
+        {
+            if (IsC2 && !canAttack && StunDurationTimer2 <= StunDuration2) ;
+            {
+                buffer = true;
+            }
+        }*/
+        
+        if (StunDurationTimer2 >= StunDuration2)
+        { 
+            canAttack = true;
+            CharacterController.instance.isAttacking = false;
+            IsC2 = false;
+            StunDurationTimer2 = 0;
         }
         
-        if (rangeAttackList != null)
+        if (IsC2)
         {
-            Gizmos.DrawCube(hitboxPosition, rangeAttaque3);
+            StunDurationTimer2 += Time.deltaTime;
         }
+        // ------------------ Gestion Combo 2-------------
+        
+        
+        // ------------------ Gestion Combo 3-------------
+        /*if (mouse.leftButton.wasPressedThisFrame)
+        {
+            if (IsC3 && !canAttack && StunDurationTimer3 <= StunDuration3) ;
+            {
+                buffer = true;
+            }
+        }*/
+        
+        if (StunDurationTimer3 >= StunDuration3)
+        { 
+            canAttack = true;
+            CharacterController.instance.isAttacking = false;
+            IsC3 = false;
+            StunDurationTimer3 = 0;
+        }
+        
+        if (IsC3)
+        {
+            StunDurationTimer3 += Time.deltaTime;
+        }
+        // ------------------ Gestion Combo 3-------------
+    }
+
+    
+
+    public void Combo1() // Dash légèrement vers l'avant puis crée une hitbox devant le perso et touche les ennemis
+    {
+        abandonOn = true;
+        IsC1 = true;
+        canAttack = false;
+        CharacterController.instance.isAttacking = true;
+        Vector2 charaPos = CharacterController.instance.transform.position;
+        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+        Vector3 moveDirection = (mousePos - charaPos);
+        moveDirection.z = 0;
+        moveDirection.Normalize();
+        CharacterController.instance.rb.AddForce(moveDirection * dashImpulseC1, ForceMode2D.Impulse);
+        
+        GameObject swordObj = Instantiate(hitboxC1, new Vector3(999,99,0),Quaternion.identity);
+        swordObj.transform.position = CharacterController.instance.transform.position;
+        swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+    }
+    
+    public void Combo2() // La même chose mais la hitbox est plus alongée et le dash plus long et rapide
+    {
+        abandonOn = true;
+        IsC2 = true;
+        canAttack = false;
+        CharacterController.instance.isAttacking = true;
+        Vector2 charaPos = CharacterController.instance.transform.position;
+        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+        Vector3 moveDirection = (mousePos - charaPos);
+        moveDirection.z = 0;
+        moveDirection.Normalize();
+        CharacterController.instance.rb.AddForce(moveDirection * dashImpulseC2, ForceMode2D.Impulse);
+        
+        
+        GameObject swordObj = Instantiate(hitboxC2, new Vector3(999,99,0),Quaternion.identity);
+        swordObj.transform.position = CharacterController.instance.transform.position;
+        swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+    }
+    
+    public void Combo3() // La même chose mais la hitbox est plus alongée et le dash plus long et rapide
+    {
+        abandonOn = true;
+        IsC3 = true;
+        canAttack = false;
+        CharacterController.instance.isAttacking = true;
+        Vector2 charaPos = CharacterController.instance.transform.position;
+        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+        Vector3 moveDirection = (mousePos - charaPos);
+        moveDirection.z = 0;
+        moveDirection.Normalize();
+        CharacterController.instance.rb.AddForce(moveDirection * dashImpulseC3, ForceMode2D.Impulse);
+        
+        
+        GameObject swordObj = Instantiate(hitboxC3, new Vector3(999,99,0),Quaternion.identity);
+        swordObj.transform.position = CharacterController.instance.transform.position;
+        swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
     }
 }
 

@@ -17,7 +17,7 @@ public class GhostDash : MonoBehaviour
     
     void Update()
     {
-        if (activerEffet)
+        if (activerEffet && !CharacterController.instance.isAttacking)
         {
             if (ghotsDelaySeconds > 0) // Créer un effet fantôme derrière le player pendant le dash
             {
