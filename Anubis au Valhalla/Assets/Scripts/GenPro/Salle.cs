@@ -22,8 +22,6 @@ public class Salle : MonoBehaviour
     public List<Vector3Int> availableTile;
     public List<Vector3> availableTilePos;
     public GameObject filledTile;
-
-    //public int maxSpawnPoints = 10;
     [Header("POINTS DE SPAWNS")]
     public List<GameObject> availableSpawnA;
     public List<GameObject> availableSpawnB;
@@ -42,7 +40,7 @@ public class Salle : MonoBehaviour
 
     private void Start()
     {
-        //GetSpawnPoints(Random.Range(0,3));
+        
     }
 
 
@@ -104,6 +102,11 @@ public class Salle : MonoBehaviour
             Instantiate(chosenEnemy.prefab, chosenPoint.transform);
             point.Remove(chosenPoint);
         }
+    }
+
+    public void GenerateTiles()
+    {
+ 
     }
 
     public void GetAvailableTiles()
