@@ -271,14 +271,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca14d1accf40fb4a9a2bfd5653776d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textDamage: {fileID: 0}
   player: {fileID: 6327077115469397649}
-  stun: 0
-  invinsible: 0
   vieActuelle: 0
   vieMax: 100
+  invinsible: 0
   TempsInvinsbleAfterHit: 2
   StunAfterHit: 0.2
+  stun: 0
 --- !u!1001 &3292224537418204487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -286,18 +285,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1616746, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 203671915, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3289434057384539047, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 8826527345816730580, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
       propertyPath: m_SortingOrder
       value: 10
@@ -316,7 +303,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8826527345816730582, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
       propertyPath: m_Name
-      value: Personnage Variant
+      value: Personnage
       objectReference: {fileID: 0}
     - target: {fileID: 8826527345816730582, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}
       propertyPath: m_Layer
@@ -397,6 +384,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8e0c0b78072424494a1c4476ef16e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMonstres:
+    serializedVersion: 2
+    m_Bits: 64
+  pointAttaque: {fileID: 203671915}
+  rangeAttaque: 1.39
+  puissanceAttaque: 25
+  vitesseAttaque: 1
+  effetVisuel: {fileID: 91477352}
+  vitessePersoXC1: 15
+  vitessePersoYC1: 10
+  vitessePersoNormaleX: 23
+  vitessePersoNormaleY: 18
 --- !u!4 &6327077115469397676 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8826527345816730603, guid: 38b9a20d76bab264cb1a1adf4a96a77f, type: 3}

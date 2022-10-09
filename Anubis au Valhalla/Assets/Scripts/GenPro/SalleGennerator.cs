@@ -27,8 +27,6 @@ public class SalleGennerator : MonoBehaviour
         public EnemyData[] enemySpawnData;
 
         public List<Salle> specialRooms;
-        
-
 
 
 
@@ -161,6 +159,7 @@ public class SalleGennerator : MonoBehaviour
         public void MovePlayerToDoor(DoorOrientation doorOrientation)
         {
                 EnableDoors((DoorOrientation)Random.Range(0,4),true);
+                player.rb.velocity = Vector2.zero;
                 switch (doorOrientation)
                 {
                         case DoorOrientation.North:
