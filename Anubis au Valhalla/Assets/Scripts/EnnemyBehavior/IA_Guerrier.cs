@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Pathfinding;
 using TMPro;
+using Unity.Mathematics;
+using UnityEditor.Rendering;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class IA_Guerrier : MonoBehaviour
 {
@@ -20,8 +24,9 @@ public class IA_Guerrier : MonoBehaviour
     public AIDestinationSetter playerFollow;
     public float radiusWondering;
     public bool isWondering;
+   
 
-    [Header("Attaque")] 
+    [Header("Attaque")] public GameObject swing;
     public bool isAttacking;
     public Transform pointAttaque;
     public LayerMask HitboxPlayer;
@@ -32,6 +37,7 @@ public class IA_Guerrier : MonoBehaviour
     public float WonderingTime;
     public float WonderingTimeTimer;
     public float rangeElite;
+    private bool hasShaked;
 
 
     private void Start()
@@ -91,6 +97,13 @@ public class IA_Guerrier : MonoBehaviour
         {
             aipath.canMove = false;
             StartUpAttackTimeTimer += Time.deltaTime;
+            hasShaked = false;
+        }
+
+        if (!hasShaked)
+        {
+            transform.DOShakePosition(0.2f, 0.3f);
+            hasShaked = true;
         }
         
         IEnumerator WaitMove()
@@ -103,7 +116,8 @@ public class IA_Guerrier : MonoBehaviour
         if (StartUpAttackTimeTimer >= StartUpAttackTime)
         {
             Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
-
+            GameObject swingOj = Instantiate(swing, pointAttaque.position, Quaternion.identity);
+            swingOj.transform.localScale = new Vector2(rangeAttaque,rangeAttaque);
             foreach (Collider2D joueur in toucheJoueur)
             {
                 Debug.Log("touché");

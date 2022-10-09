@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,6 +14,7 @@ public class DamageManager : MonoBehaviour
     [Header("Alterations d'Etat")]
     public bool stun;
     public bool invinsible;
+    public Animator animPlayer;
     
     [Header("Stats")]
     public float vieActuelle;
@@ -33,7 +35,19 @@ public class DamageManager : MonoBehaviour
     {
         vieActuelle = vieMax;
     }
-    
+
+    private void Update()
+    {
+        if (invinsible)
+        {
+            animPlayer.SetBool("IsInvinsible", true);
+        }
+        else
+        {
+            animPlayer.SetBool("IsInvinsible", false);
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         if (!invinsible)
