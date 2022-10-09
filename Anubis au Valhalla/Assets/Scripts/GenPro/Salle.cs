@@ -111,9 +111,8 @@ public class Salle : MonoBehaviour
 
     public void GetAvailableTiles()
     {
-        var doorRef = SalleGennerator.instance.fromDoor;
-        var doorTransformRef = transformReferences[(int)doorRef];
-        Vector3Int door = new Vector3Int(Mathf.RoundToInt(doorTransformRef.position.x),Mathf.RoundToInt(doorTransformRef.position.y),Mathf.RoundToInt(doorTransformRef.position.z));
+        //var doorRef = SalleGennerator.instance.fromDoor;
+        //var doorTransformRef = transformReferences[(int)doorRef];
         availableTilePos = new List<Vector3>();
         for (int i = tileMap.cellBounds.xMin; i < tileMap.cellBounds.xMax; i++)
         {
@@ -123,16 +122,19 @@ public class Salle : MonoBehaviour
                 Vector3 place = tileMap.CellToWorld(localTile);
                 if (tileMap.HasTile(localTile))
                 {
-                    if ((localTile.x >= door.x - 5 &&
-                         localTile.x <= door.x + 5)&&
-                        (localTile.y >= door.y - 5 &&
-                         localTile.y <= door.y + 5))
+                    availableTilePos.Add(place);
+                    foreach (var doorTransformRef in transformReferences)
                     {
-                        Debug.Log("true");
-                    }
-                    else
-                    {
-                        availableTilePos.Add(place);
+                        Vector3Int door = new Vector3Int(Mathf.RoundToInt(doorTransformRef.position.x),Mathf.RoundToInt(doorTransformRef.position.y),Mathf.RoundToInt(doorTransformRef.position.z));
+                        if ((localTile.x >= door.x - 2 &&
+                             localTile.x <= door.x + 2)&&
+                            (localTile.y >= door.y - 2 &&
+                             localTile.y <= door.y + 2))
+                        {
+                                Debug.Log("true");
+                                //Instantiate(fill, localTile, quaternion.identity);
+                                availableTilePos.Remove(localTile); 
+                        }
                     }
                 }
             }
@@ -167,3 +169,5 @@ public class Salle : MonoBehaviour
 Debug.Log(availableTile.Count);
                     foreach (Door door in SalleGennerator.instance.s_doors)
 */
+
+
