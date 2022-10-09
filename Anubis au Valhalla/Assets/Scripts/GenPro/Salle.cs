@@ -21,18 +21,27 @@ public class Salle : MonoBehaviour
     public TilemapRenderer renderer;
     public List<Vector3Int> availableTile;
     public List<Vector3> availableTilePos;
+<<<<<<< Updated upstream:Anubis au Valhalla/Assets/Scripts/GenPro/Salle.cs
     public GameObject filledTile;
+=======
+
+
+
+
+    //public int maxSpawnPoints = 10;
+>>>>>>> Stashed changes:Anubis au Valhalla/Assets/Scripts/Maps/Salle.cs
     [Header("POINTS DE SPAWNS")]
     public List<GameObject> availableSpawnA;
     public List<GameObject> availableSpawnB;
     public List<GameObject> availableSpawnC;
     public List<int> costList = new List<int>();
+    public List<List<GameObject>> Props  = new List<List<GameObject>>();
 
-
-    // Start is called before the first frame update
+    //public GameObject fill;
+    
     void Awake()
     {
-        renderer.enabled = false;
+        //renderer.enabled = false;
         StartCoroutine(ExampleRoomCleared());
         RearrangeDoors();
         AdjustCameraConstraints();
@@ -40,7 +49,11 @@ public class Salle : MonoBehaviour
 
     private void Start()
     {
+<<<<<<< Updated upstream:Anubis au Valhalla/Assets/Scripts/GenPro/Salle.cs
         
+=======
+        GetAvailableTiles();
+>>>>>>> Stashed changes:Anubis au Valhalla/Assets/Scripts/Maps/Salle.cs
     }
 
 
@@ -99,7 +112,7 @@ public class Salle : MonoBehaviour
             spawnBank -= costList[chosenValue];
             costList[chosenValue] *= 2;
             var chosenPoint = point[Random.Range(0, point.Count)];
-            Instantiate(chosenEnemy.prefab, chosenPoint.transform);
+            Instantiate(chosenEnemy.prefab, chosenPoint.transform.position, quaternion.identity);
             point.Remove(chosenPoint);
         }
     }
@@ -111,9 +124,8 @@ public class Salle : MonoBehaviour
 
     public void GetAvailableTiles()
     {
-        var doorRef = SalleGennerator.instance.fromDoor;
-        var doorTransformRef = transformReferences[(int)doorRef];
-        Vector3Int door = new Vector3Int(Mathf.RoundToInt(doorTransformRef.position.x),Mathf.RoundToInt(doorTransformRef.position.y),Mathf.RoundToInt(doorTransformRef.position.z));
+        //var doorRef = SalleGennerator.instance.fromDoor;
+        //var doorTransformRef = transformReferences[(int)doorRef];
         availableTilePos = new List<Vector3>();
         for (int i = tileMap.cellBounds.xMin; i < tileMap.cellBounds.xMax; i++)
         {
@@ -123,22 +135,36 @@ public class Salle : MonoBehaviour
                 Vector3 place = tileMap.CellToWorld(localTile);
                 if (tileMap.HasTile(localTile))
                 {
-                    if ((localTile.x >= door.x - 5 &&
-                         localTile.x <= door.x + 5)&&
-                        (localTile.y >= door.y - 5 &&
-                         localTile.y <= door.y + 5))
+                    availableTilePos.Add(place);
+                    foreach (var doorTransformRef in transformReferences)
                     {
-                        Debug.Log("true");
+                        
+                        Vector3Int door = new Vector3Int(Mathf.RoundToInt(doorTransformRef.position.x),Mathf.RoundToInt(doorTransformRef.position.y),Mathf.RoundToInt(doorTransformRef.position.z));
+                        if ((localTile.x >= door.x - 2 &&
+                             localTile.x <= door.x + 2)&&
+                            (localTile.y >= door.y - 2 &&
+                             localTile.y <= door.y + 2))
+                        {
+                            Debug.Log("true");
+                            //Instantiate(fill, localTile, quaternion.identity);
+                            availableTilePos.Remove(localTile);
+                        }
+
                     }
-                    else
-                    {
-                        availableTilePos.Add(place);
-                    }
+
                 }
             }
         }
+        GetProps(Random.Range(0,11));
     }
-    
+
+    public void GetProps(int amountOfProps)
+    {
+        for (int i = 0; i < amountOfProps; i++)
+        {
+            
+        }
+    }
 
 }
 
