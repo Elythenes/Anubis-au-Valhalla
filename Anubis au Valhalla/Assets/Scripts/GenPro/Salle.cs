@@ -17,9 +17,10 @@ public class Salle : MonoBehaviour
     public Vector2 minPos = Vector2.zero;
     public Vector2 maxPos = Vector2.zero;
     public int spawnBank = 10;
+    public int propsAmount = 5;
+    public List<GameObject> currentEnemies = new List<GameObject>();
     public Tilemap tileMap;
     public TilemapRenderer renderer;
-    public List<Vector3Int> availableTile;
     public List<Vector3> availableTilePos;
     public GameObject filledTile;
     [Header("POINTS DE SPAWNS")]
@@ -28,14 +29,24 @@ public class Salle : MonoBehaviour
     public List<GameObject> availableSpawnC;
     public List<int> costList = new List<int>();
 
-
-    // Start is called before the first frame update
+    public PropSize propSizes = new PropSize();
+    [Serializable]
+    public class Props
+    {
+        public List<GameObject> props;
+    }
+    
+    [Serializable]
+    public class PropSize
+    {
+        public List<Props> PropsList;
+    }
     void Awake()
     {
         renderer.enabled = false;
-        StartCoroutine(ExampleRoomCleared());
         RearrangeDoors();
         AdjustCameraConstraints();
+        GetAvailableTiles();
     }
 
     private void Start()
@@ -43,13 +54,12 @@ public class Salle : MonoBehaviour
         
     }
 
-
-    
-
-    public IEnumerator ExampleRoomCleared()
+    private void Update()
     {
-        yield return new WaitForSeconds(1);
-        roomDone = true;
+        if (currentEnemies.Count == 0)
+        {
+            roomDone = true;
+        }
     }
 
     public void RearrangeDoors()
@@ -100,13 +110,57 @@ public class Salle : MonoBehaviour
             costList[chosenValue] *= 2;
             var chosenPoint = point[Random.Range(0, point.Count)];
             Instantiate(chosenEnemy.prefab, chosenPoint.transform);
+            currentEnemies.Add(chosenEnemy.prefab);
             point.Remove(chosenPoint);
         }
     }
 
-    public void GenerateTiles()
+    public void GenerateProps()
     {
- 
+        for (int i = 0; i < propsAmount; i++)
+        {
+            int randomSize = Random.Range(0, propSizes.PropsList.Count);
+            var propane = propSizes.PropsList[randomSize];
+            if (randomSize == 0)
+            {
+                BlockTiles(propane,randomSize);
+            }
+            if (randomSize == 1)
+            {
+                BlockTiles(propane,randomSize);
+            }
+            if (randomSize == 2)
+            {
+                BlockTiles(propane,randomSize);
+            }
+            if (randomSize == 3)
+            {
+                BlockTiles(propane,randomSize);
+            }
+        }
+    }
+
+    public void BlockTiles(Props propane, int randomSize)
+    {
+        var chosenTile = availableTilePos[Random.Range(0, availableTilePos.Count)];
+        Instantiate(propane.props[Random.Range(0, propane.props.Count)], chosenTile,quaternion.identity, gameObject.transform);
+        List<Vector3> tilesToRemove = new List<Vector3>();
+        foreach (var tile in availableTilePos)
+        {
+            if (tile.x >= chosenTile.x - (randomSize + 1) &&
+                tile.x <= chosenTile.x + (randomSize + 1) &&
+                tile.y >= chosenTile.y - (randomSize + 1) &&
+                tile.y >= chosenTile.y + (randomSize + 1))
+            {
+                tilesToRemove.Add(tile);
+            }
+        }
+
+        foreach (var tile in tilesToRemove)
+        {
+            availableTilePos.Remove(tile);
+        }
+        tilesToRemove.Clear();
     }
 
     public void GetAvailableTiles()
@@ -139,6 +193,7 @@ public class Salle : MonoBehaviour
                 }
             }
         }
+        GenerateProps();
     }
     
 
