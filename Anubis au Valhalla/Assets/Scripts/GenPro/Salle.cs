@@ -94,7 +94,8 @@ public class Salle : MonoBehaviour
     }
     public void SpawnEnemies(List<GameObject> point)
     {
-        foreach (EnemyData t in SalleGennerator.instance.spawnGroups[SalleGennerator.instance.chosenPattern].enemiesToSpawn)
+        var pattern = SalleGennerator.instance.chosenPattern;
+        foreach (EnemyData t in SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn)
         {
             int cost = t.cost;
             costList.Add(cost);
@@ -102,9 +103,8 @@ public class Salle : MonoBehaviour
         int lowestCost = costList.Min();
         if (spawnBank > lowestCost)
         {
-            Debug.Log("oui");
-            var chosenValue = Random.Range(0, SalleGennerator.instance.enemySpawnData.Length);
-            var chosenEnemy = SalleGennerator.instance.spawnGroups[SalleGennerator.instance.chosenPattern].enemiesToSpawn[chosenValue];
+            var chosenValue = Random.Range(0, SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn.Length);
+            var chosenEnemy = SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn[chosenValue];
             Debug.Log(chosenEnemy.prefab);
             spawnBank -= costList[chosenValue];
             costList[chosenValue] *= 2;
