@@ -54,7 +54,7 @@ public class DamageManager : MonoBehaviour
     {
         if (!invinsible)
         {
-            HitStop(timeHitStop);
+            HitStop(timeHitStop*(damage/10));
             vieActuelle -= damage;
             StartCoroutine(TempsInvinsibilité());
             StartCoroutine(TempsStun());

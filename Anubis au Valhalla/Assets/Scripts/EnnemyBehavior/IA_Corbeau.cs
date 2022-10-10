@@ -11,6 +11,7 @@ public class IA_Corbeau : MonoBehaviour
    [Header("Vie et visuels")]
     public GameObject emptyLayers;
     public bool isElite;
+    private Rigidbody2D rb;
 
     [Header("Déplacements")]
     public GameObject player;
@@ -35,6 +36,7 @@ public class IA_Corbeau : MonoBehaviour
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
@@ -79,7 +81,7 @@ public class IA_Corbeau : MonoBehaviour
                 Vector3 distancePlayer = new Vector3(CharacterController.instance.transform.position.x - transform.position.x,
                     CharacterController.instance.transform.position.y - transform.position.y,0);
 
-                transform.DOMove(transform.position - distancePlayer*2, 5, false);
+                rb.AddForce(transform.position - distancePlayer, ForceMode2D.Force);
             }
             
             if (StartUpAttackTimeTimer >= StartUpAttackTime)

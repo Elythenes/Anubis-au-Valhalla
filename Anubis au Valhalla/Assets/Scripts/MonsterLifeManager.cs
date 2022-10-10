@@ -12,12 +12,15 @@ public class MonsterLifeManager : MonoBehaviour
     public GameObject textDamage;
     public Animator animator;
     public Rigidbody2D rb;
+    public HealthBarMonstre healthBar;
     public int vieMax;
     public int vieActuelle;
     public int soulValue = 4;
     public float delay;
     public float forceKnockBack;
     public UnityEvent OnBegin, OnDone;
+    public float stopHitTime;
+    public bool stopWaiting;
     
     
     private void Start()
@@ -30,7 +33,7 @@ public class MonsterLifeManager : MonoBehaviour
     {
         StartCoroutine(AnimationDamaged());
         vieActuelle -= damage;
-        HealthBarMonstre.instance.SetHealth(vieActuelle);
+       healthBar.SetHealth(vieActuelle);
 
         if (vieActuelle <= 0)
         {
@@ -40,7 +43,6 @@ public class MonsterLifeManager : MonoBehaviour
     
     IEnumerator AnimationDamaged()
     {
-        Debug.Log("oui");
         animator.SetBool("IsTouched", true);
         yield return new WaitForSeconds(0.3f);
         animator.SetBool("IsTouched", false); 
@@ -51,7 +53,7 @@ public class MonsterLifeManager : MonoBehaviour
         textDamage.GetComponentInChildren<TextMeshPro>().SetText(damageAmount.ToString());
         Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
     }
-
+    
     public void OnTriggerEnter2D(Collider2D col)
     {
         Vector2 direction = (transform.position - col.transform.position);
