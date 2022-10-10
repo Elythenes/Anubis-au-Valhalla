@@ -22,7 +22,6 @@ public class Salle : MonoBehaviour
     public Tilemap tileMap;
     public TilemapRenderer renderer;
     public List<Vector3> availableTilePos;
-    public GameObject filledTile;
     [Header("POINTS DE SPAWNS")]
     public List<GameObject> availableSpawnA;
     public List<GameObject> availableSpawnB;
