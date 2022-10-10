@@ -21,6 +21,8 @@ public class DamageManager : MonoBehaviour
     public float vieMax;
     public float TempsInvinsbleAfterHit;
     public float StunAfterHit;
+    public float timeHitStop;
+    private bool stopWaiting;
     
     private void Awake()
     {
@@ -52,6 +54,7 @@ public class DamageManager : MonoBehaviour
     {
         if (!invinsible)
         {
+            HitStop(timeHitStop);
             vieActuelle -= damage;
             StartCoroutine(TempsInvinsibilité());
             StartCoroutine(TempsStun());
@@ -65,6 +68,22 @@ public class DamageManager : MonoBehaviour
         }
     }
 
+    public void HitStop(float duration)
+    {
+        if (stopWaiting)
+            return;
+        Time.timeScale = 0.0f;
+        StartCoroutine(WaitStop(duration));
+    }
+
+    IEnumerator WaitStop(float duration)
+    {
+        stopWaiting = true;
+        yield return new WaitForSecondsRealtime(duration);
+        Time.timeScale = 1.0f;
+        stopWaiting = false;
+    }
+    
     IEnumerator TempsStun()
     {
         stun = true;

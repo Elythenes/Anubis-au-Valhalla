@@ -1,19 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MonsterLifeManager : MonoBehaviour
 {
+    public GameObject textDamage;
+    public Animator animator;
+    public Rigidbody2D rb;
     public int vieMax;
     public int vieActuelle;
-    public Animator animator;
     public int soulValue = 4;
-    public GameObject textDamage;
+    public float delay;
+    public float forceKnockBack;
+    public UnityEvent OnBegin, OnDone;
     
     
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         vieActuelle = vieMax;
     }
     
@@ -31,6 +40,7 @@ public class MonsterLifeManager : MonoBehaviour
     
     IEnumerator AnimationDamaged()
     {
+        Debug.Log("oui");
         animator.SetBool("IsTouched", true);
         yield return new WaitForSeconds(0.3f);
         animator.SetBool("IsTouched", false); 
@@ -41,7 +51,28 @@ public class MonsterLifeManager : MonoBehaviour
         textDamage.GetComponentInChildren<TextMeshPro>().SetText(damageAmount.ToString());
         Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
     }
-    
+
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        Vector2 direction = (transform.position - col.transform.position);
+        direction.Normalize();
+        if (col.CompareTag("AttaqueNormale"))
+        {
+            StopAllCoroutines();
+            OnBegin?.Invoke();
+            Debug.Log(direction);
+            rb.AddForce(direction * forceKnockBack,ForceMode2D.Impulse);
+            StartCoroutine(Reset());
+        }
+    }
+
+    private IEnumerator Reset()
+    {
+        yield return new WaitForSeconds(delay);
+        rb.velocity = Vector3.zero;
+        OnDone?.Invoke();
+    }
+
     void Die()
     {
         Souls.instance.CreateSouls(gameObject.transform.position, soulValue);

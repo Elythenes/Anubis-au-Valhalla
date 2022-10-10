@@ -78,7 +78,7 @@ public class IA_Guerrier : MonoBehaviour
                 transform.localScale = new Vector3(1, 2.2909f, 1);
             }
         }
-       
+        
 
         if (aipath.reachedDestination) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
@@ -118,6 +118,7 @@ public class IA_Guerrier : MonoBehaviour
             Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
             GameObject swingOj = Instantiate(swing, pointAttaque.position, Quaternion.identity);
             swingOj.transform.localScale = new Vector2(rangeAttaque,rangeAttaque);
+            swingOj.transform.localRotation = new Quaternion(player.transform.position.x,player.transform.position.y,player.transform.position.z,0);
             foreach (Collider2D joueur in toucheJoueur)
             {
                 Debug.Log("touché");
@@ -133,8 +134,9 @@ public class IA_Guerrier : MonoBehaviour
         if (isWondering)
         {
             WonderingTimeTimer += Time.deltaTime;
-            if (!ai.pathPending && (ai.reachedEndOfPath || !ai.hasPath)) 
+            if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath) 
             {
+                Debug.Log("wondering");
                 playerFollow.enabled = false;
                 ai.destination = PickRandomPoint();
                 ai.SearchPath();
