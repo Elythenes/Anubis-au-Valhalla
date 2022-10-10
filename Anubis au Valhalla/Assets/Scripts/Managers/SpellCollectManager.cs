@@ -2,13 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+[System.Serializable]
+public class SpellClassTest : ScriptableObject
+{
+}
 
 public class SpellCollectManager : MonoBehaviour
 {
     public List<ScriptableObject> spellSlot1;
     public List<ScriptableObject> spellSlot2;
-    
+
+    public List<SpellClassTest> spellSlot1test;
+
     void Update()
     {
         SpellReplacement(spellSlot1);

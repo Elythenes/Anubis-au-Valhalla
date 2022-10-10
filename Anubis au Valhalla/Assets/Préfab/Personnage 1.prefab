@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 5191402746750135171}
   - component: {fileID: 5191402746750135180}
   - component: {fileID: 5191402746750135173}
+  - component: {fileID: -2151869429893869149}
   m_Layer: 8
   m_Name: Personnage 1
   m_TagString: Untagged
@@ -490,3 +491,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-2151869429893869149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5191402746750135181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5b6460fb1688f48b6bc1521e1578e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interaction: 97
+  isSpellCollectable: 0
+  spellCollectManager: {fileID: 7471664148723569888, guid: 21f86dadeb4c5a548a337e33a40e04af, type: 3}
+  collectableSpell: {fileID: 0}
+  scriptContainSo: {fileID: 0}
+  skillManager: {fileID: 2219252331626062613, guid: 9790027728883f04ea2f969d32c31b74, type: 3}
+  castSpell1: 101
+  castSpell2: 114
+  spellCm: {fileID: 7471664148723569890, guid: 21f86dadeb4c5a548a337e33a40e04af, type: 3}

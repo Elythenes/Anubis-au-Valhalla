@@ -22,11 +22,9 @@ public class SalleGennerator : MonoBehaviour
 
         [Header("CONTENU DU DONJON")]
         public List<Salle> roomPrefab = new List<Salle>();
+        public List<Salle> specialRooms;
         [Header("PATTERNES")]
         public List<SalleContent_Ennemies> spawnGroups = new List<SalleContent_Ennemies>();
-        public EnemyData[] enemySpawnData;
-
-        public List<Salle> specialRooms;
 
 
 
