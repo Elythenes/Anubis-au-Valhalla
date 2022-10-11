@@ -110,11 +110,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emptyLayers: {fileID: 2872344340902715325}
   isElite: 0
-  sr: {fileID: 2872344340607557270}
+  layerPlayer:
+    serializedVersion: 2
+    m_Bits: 512
   radiusWondering: 10
   isWondering: 0
   isFleeing: 0
   distanceMaxPlayer: 10
+  timeFleeing: 2
+  timeFleeingTimer: 0
+  forceRepulse: 10
+  pointToGO: {x: 0, y: 0, z: 0}
   isAttacking: 0
   StartUpSummonTime: 15
   StartUpSummonTimeTimer: 0
@@ -262,7 +268,7 @@ Animator:
   m_GameObject: {fileID: 2872344340607557278}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4db67ce2717ff604d8ba309fe1fecdfd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 061e1e45ad6fb9441a4f1831c5909a0f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -287,6 +293,7 @@ MonoBehaviour:
   textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
   animator: {fileID: 2872344340607557264}
   rb: {fileID: 0}
+  healthBar: {fileID: 7561085344343710162}
   vieMax: 100
   vieActuelle: 0
   soulValue: 4

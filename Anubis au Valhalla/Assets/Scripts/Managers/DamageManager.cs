@@ -2,7 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class DamageManager : MonoBehaviour
 {
@@ -10,18 +13,23 @@ public class DamageManager : MonoBehaviour
     public GameObject textDamage;
     public GameObject player;
     public static DamageManager instance;
+    public Volume gVolume;
+    private ColorAdjustments ca;
 
     [Header("Alterations d'Etat")]
     public bool stun;
     public bool invinsible;
     public Animator animPlayer;
     
+    [Header("Feedbacks")]
+    public float timeHitStop;
+    public float timeRedScreen;
+
     [Header("Stats")]
     public float vieActuelle;
     public float vieMax;
     public float TempsInvinsbleAfterHit;
     public float StunAfterHit;
-    public float timeHitStop;
     private bool stopWaiting;
     
     private void Awake()
@@ -36,6 +44,7 @@ public class DamageManager : MonoBehaviour
     void Start()
     {
         vieActuelle = vieMax;
+        
     }
 
     private void Update()
@@ -54,6 +63,7 @@ public class DamageManager : MonoBehaviour
     {
         if (!invinsible)
         {
+            StartCoroutine(RedScreen(timeRedScreen));
             HitStop(timeHitStop*(damage/10));
             vieActuelle -= damage;
             StartCoroutine(TempsInvinsibilité());
@@ -83,6 +93,18 @@ public class DamageManager : MonoBehaviour
         Time.timeScale = 1.0f;
         stopWaiting = false;
     }
+
+    public IEnumerator RedScreen(float timeRedScreenC)
+    {
+        Color newColor = new Color32(255, 0, 0,0); 
+        Color originalColor = new Color32(255, 255, 255,0);
+        gVolume.profile.TryGet(out ca);
+        ca.colorFilter.value = newColor;
+        yield return new WaitForSeconds(timeRedScreenC);
+        ca.colorFilter.value = originalColor;
+    }
+    
+  
     
     IEnumerator TempsStun()
     {

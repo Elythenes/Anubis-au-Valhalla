@@ -44,8 +44,8 @@ public class MonsterLifeManager : MonoBehaviour
     IEnumerator AnimationDamaged()
     {
         animator.SetBool("IsTouched", true);
-        yield return new WaitForSeconds(0.3f);
-        animator.SetBool("IsTouched", false); 
+        yield return new WaitForSeconds(1);
+        animator.SetBool("IsTouched", false);
     }
     
     public void DamageText(int damageAmount)
@@ -60,7 +60,7 @@ public class MonsterLifeManager : MonoBehaviour
         direction.Normalize();
         if (col.CompareTag("AttaqueNormale"))
         {
-            StopAllCoroutines();
+            //StopAllCoroutines();
             OnBegin?.Invoke();
             Debug.Log(direction);
             rb.AddForce(direction * forceKnockBack,ForceMode2D.Impulse);
