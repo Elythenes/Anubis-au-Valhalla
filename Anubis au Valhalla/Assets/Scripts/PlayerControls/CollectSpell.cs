@@ -12,7 +12,7 @@ public class CollectSpell : MonoBehaviour
 
     public GameObject spellCollectManager;
     public GameObject collectableSpell;
-    public ScriptableObject scriptContainSo;
+    public SpellObject scriptContainSo;
     
     public SkillManager skillManager;
     public KeyCode castSpell1;
@@ -62,7 +62,7 @@ public class CollectSpell : MonoBehaviour
             {
                 Debug.Log("interaction sur spell");
                 isSpellCollectable = false; // ligne à retirer à la fin car détruit l'objet en soi (une fois tout bien fait)
-                spellCm.spellSlot1.Add(scriptContainSo);
+                spellCm.containerSlot1.Add(scriptContainSo);
                 Debug.Log("ajout dans le slot 1");
             }
 
@@ -70,7 +70,7 @@ public class CollectSpell : MonoBehaviour
             {
                 Debug.Log("interaction sur spell");
                 isSpellCollectable = false; // ligne à retirer à la fin car détruit l'objet en soi (une fois tout bien fait)
-                spellCm.spellSlot2.Add(scriptContainSo);
+                spellCm.containerSlot2.Add(scriptContainSo);
                 Debug.Log("ajout dans le slot 2");
             }
         }

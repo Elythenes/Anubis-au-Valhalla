@@ -35,6 +35,7 @@ public class SalleGennerator : MonoBehaviour
         public DoorOrientation spawnDoor;
         [SerializeField] private Salle currentRoom;
         public int chosenPattern;
+        public int GlobalBank = 10;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
 
@@ -150,7 +151,7 @@ public class SalleGennerator : MonoBehaviour
                 currentRoom = BeginGeneration();
                 if(roomsDone != 0)MovePlayerToDoor(fromDoor);
                 ClearRoom();
-                currentRoom.GetSpawnPoints(0);
+                currentRoom.GetSpawnPoints(Random.Range(0,3));
 
         }
 

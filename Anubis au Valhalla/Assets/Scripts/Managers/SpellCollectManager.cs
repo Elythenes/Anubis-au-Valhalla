@@ -3,18 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class SpellClassTest : ScriptableObject
-{
-}
-
 public class SpellCollectManager : MonoBehaviour
 {
-    public List<ScriptableObject> spellSlot1;
+    public List<SpellObject> containerSlot1 = new List<SpellObject>(2);
+    public List<SpellObject> containerSlot2 = new List<SpellObject>(2);
+
+    void Update()
+    {
+        SpellReplacement(containerSlot1);
+        SpellReplacement(containerSlot2);
+    }
+
+    void SpellReplacement(List<SpellObject> list)
+    {
+        if (list.Count >= 2)
+        {
+            list.RemoveRange(0,1);
+        }
+    }
+    
+    /*public List<ScriptableObject> spellSlot1;
     public List<ScriptableObject> spellSlot2;
-
-    public List<SpellClassTest> spellSlot1test;
-
+    
     void Update()
     {
         SpellReplacement(spellSlot1);
@@ -27,5 +37,5 @@ public class SpellCollectManager : MonoBehaviour
         {
             list.RemoveRange(0,1);
         }
-    }
+    }*/
 }

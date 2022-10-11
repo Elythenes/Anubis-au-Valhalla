@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 public class FlameArea : MonoBehaviour
 {
     [Header("FlameArea")] 
-    public SpellStaticAreaType sOFlameArea;
+    public SpellStaticAreaObject sOFlameArea;
     public float tempsReloadHitFlameAreaTimer;
     public bool stopAttack;
     public bool startAttack;

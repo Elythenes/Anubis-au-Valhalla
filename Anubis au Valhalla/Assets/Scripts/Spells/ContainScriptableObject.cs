@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class ContainScriptableObject : MonoBehaviour
 {
-    public ScriptableObject spellInside;
+    public SpellObject spellInside;
 }
