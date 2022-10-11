@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Spell System/SpellThrowingType")]
+[CreateAssetMenu(fileName = "Throwing Spell" ,menuName = "Spell System/SpellObject/Throwing")]
 
-public class SpellThrowingType : ScriptableObject
+public class SpellThrowingObject : SpellObject
 {
-    public string nom;
-    public Image sprite;
-    public GameObject fireball;
     public int duration = 2;
     public float bulletSpeed;
     public int puissanceAttaque;
     [HideInInspector] public float cooldownTimer;
     public float cooldown;
     public bool canCast;
+    
+    public void Awake()
+    {
+        type = SpellType.Throwing;
+    }
 }

@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-[CreateAssetMenu(menuName = "Spell System/SpellObject")]
-
-public class SpellObject : ScriptableObject
+public enum SpellType
 {
-    [Header("Général")] 
-    public GameObject player;
-    public KeyCode spell1;
-    public KeyCode spell2;
-    public GameObject targetUser;
-    public LayerMask layerMonstres;
+    Throwing,
+    FollowingArea,
+    StaticArea
+}
 
-    [Header("FireBall")]
-    public GameObject fireBall;
-    public float launchVelocity = 100f;
-    public float rangeAttaqueFireBall;
-    public int puissanceAttaqueFireBall;
+public abstract class SpellObject : ScriptableObject
+{
+    [Header("GENERAL")]
+    public GameObject prefab;
+    public SpellType type;
+    public string nom;
+    [TextArea(15,20)]
+    public string description;
+    
+    [Header("GRAPH")]
+    public Image sprite;
     
 }

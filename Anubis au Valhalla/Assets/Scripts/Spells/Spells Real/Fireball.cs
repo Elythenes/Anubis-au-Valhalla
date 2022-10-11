@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    public SpellThrowingType sOFireball;
+    public SpellThrowingObject sOFireball;
     private Rigidbody2D rb;
 
     private void Start()

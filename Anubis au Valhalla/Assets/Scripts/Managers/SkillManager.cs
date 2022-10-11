@@ -19,15 +19,15 @@ public class SkillManager : MonoBehaviour
 
     [Header("SO FlameArea")]
     public GameObject flameArea;
-    public SpellStaticAreaType sOFlameArea;
+    public SpellStaticAreaObject sOFlameArea;
     
     [Header("SO SandStorm")]
     public GameObject sandstormArea;
-    public SpellFollowingAreaType soSandstorm;
+    public SpellFollowingAreaObject soSandstorm;
     
     [Header("SO Fireball")]
     public GameObject fireBall;
-    public SpellThrowingType sOFireball;
+    public SpellThrowingObject sOFireball;
 
     private void Awake()
     {

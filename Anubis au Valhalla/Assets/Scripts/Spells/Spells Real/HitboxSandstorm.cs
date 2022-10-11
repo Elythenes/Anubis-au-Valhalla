@@ -6,7 +6,7 @@ using UnityEngine;
 public class HitboxSandstorm : MonoBehaviour
 {
    [Header("SandStorm")] 
-   public SpellFollowingAreaType sOSandstorm;
+   public SpellFollowingAreaObject sOSandstorm;
    public float tempsReloadHitSandstorm;
    public bool stopAttack;
    public int nbDoT;

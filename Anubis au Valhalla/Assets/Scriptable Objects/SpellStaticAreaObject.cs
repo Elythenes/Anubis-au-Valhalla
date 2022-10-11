@@ -1,15 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-[CreateAssetMenu(menuName = "Spell System/SpellStaticAreaType")]
+[CreateAssetMenu(fileName = "StaticArea Spell" ,menuName = "Spell System/SpellObject/StaticArea")]
 
-public class SpellStaticAreaType : ScriptableObject
+public class SpellStaticAreaObject : SpellObject
 {
-    public string nom;
-    public Image sprite;
-    public GameObject flameArea;
     public int duration = 2;
     public int puissanceAttaque = 5;
     public int nombreOfDot = 4;
@@ -17,4 +13,9 @@ public class SpellStaticAreaType : ScriptableObject
     [HideInInspector] public float cooldownTimer;
     public float cooldown = 1f;
     public bool canCast;
+    
+    public void Awake()
+    {
+        type = SpellType.StaticArea;
+    }
 }
