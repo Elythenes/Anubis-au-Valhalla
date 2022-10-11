@@ -16,7 +16,7 @@ public class Salle : MonoBehaviour
     public Transform[] transformReferences;
     public Vector2 minPos = Vector2.zero;
     public Vector2 maxPos = Vector2.zero;
-    public int spawnBank = 10;
+    public int spawnBank = 0;
     public int propsAmount = 5;
     public List<GameObject> currentEnemies = new List<GameObject>();
     public Tilemap tileMap;
@@ -43,6 +43,8 @@ public class Salle : MonoBehaviour
     void Awake()
     {
         renderer.enabled = false;
+        spawnBank = SalleGennerator.instance.GlobalBank;
+        SalleGennerator.instance.GlobalBank = Mathf.RoundToInt(SalleGennerator.instance.GlobalBank * 1.1f);
         RearrangeDoors();
         AdjustCameraConstraints();
         GetAvailableTiles();
@@ -99,21 +101,21 @@ public class Salle : MonoBehaviour
             int cost = t.cost;
             costList.Add(cost);
         }
-        int lowestCost = costList.Min();
-        if (spawnBank > lowestCost)
+        while (spawnBank > costList.Min()) //tries to buy enemies as long as it can afford at least one of them
         {
-            var chosenValue = Random.Range(0, SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn.Length);
+            var chosenValue = Random.Range(0, costList.Count);
+            if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());
+            Debug.Log(chosenValue);
             var chosenEnemy = SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn[chosenValue];
-            Debug.Log(chosenEnemy.prefab);
             spawnBank -= costList[chosenValue];
-            costList[chosenValue] *= 2;
+            costList[chosenValue] += 3;
             var chosenPoint = point[Random.Range(0, point.Count)];
             Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
             currentEnemies.Add(chosenEnemy.prefab);
             point.Remove(chosenPoint);
         }
     }
-
+    
     public void GenerateProps()
     {
         for (int i = 0; i < propsAmount; i++)

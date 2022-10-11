@@ -35,6 +35,7 @@ public class SalleGennerator : MonoBehaviour
         public DoorOrientation spawnDoor;
         [SerializeField] private Salle currentRoom;
         public int chosenPattern;
+        public int GlobalBank = 10;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
 
