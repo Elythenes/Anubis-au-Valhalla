@@ -150,7 +150,7 @@ public class SalleGennerator : MonoBehaviour
                 currentRoom = BeginGeneration();
                 if(roomsDone != 0)MovePlayerToDoor(fromDoor);
                 ClearRoom();
-                currentRoom.GetSpawnPoints(0);
+                currentRoom.GetSpawnPoints(Random.Range(0,3));
 
         }
 

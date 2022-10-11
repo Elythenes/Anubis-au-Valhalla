@@ -108,7 +108,7 @@ public class Salle : MonoBehaviour
             spawnBank -= costList[chosenValue];
             costList[chosenValue] *= 2;
             var chosenPoint = point[Random.Range(0, point.Count)];
-            Instantiate(chosenEnemy.prefab, chosenPoint.transform);
+            Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
             currentEnemies.Add(chosenEnemy.prefab);
             point.Remove(chosenPoint);
         }
