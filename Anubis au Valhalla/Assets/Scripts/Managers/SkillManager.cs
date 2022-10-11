@@ -18,15 +18,12 @@ public class SkillManager : MonoBehaviour
     public LayerMask layerMonstres;
 
     [Header("SO FlameArea")]
-    public GameObject flameArea;
     public SpellStaticAreaObject sOFlameArea;
-    
+
     [Header("SO SandStorm")]
-    public GameObject sandstormArea;
     public SpellFollowingAreaObject soSandstorm;
-    
+
     [Header("SO Fireball")]
-    public GameObject fireBall;
     public SpellThrowingObject sOFireball;
 
     private void Awake()
@@ -44,12 +41,12 @@ public class SkillManager : MonoBehaviour
 
             if (sOFlameArea.canCast)
             {
-                TimeLimitedSpell(flameArea, sOFlameArea.duration);
+                TimeLimitedSpell(sOFlameArea.prefab, sOFlameArea.duration);
             }
             
             /*if (sOFireball.canCast)
             {
-                ThrowingSpell(fireBall);
+                ThrowingSpell(sOFireball.prefab);
             }*/
         }
         
@@ -57,7 +54,7 @@ public class SkillManager : MonoBehaviour
         {
             if (soSandstorm.canCast)
             {
-                FollowingSpell(sandstormArea);
+                FollowingSpell(soSandstorm.prefab);
             }
         }
         
