@@ -58,6 +58,7 @@ public class CollectSpell : MonoBehaviour
     {
         if (isSpellCollectable == true && Input.GetKey(interaction))
         {
+            skillManager.canCastSpells = false;
             if (Input.GetKeyDown(castSpell1))
             {
                 Debug.Log("interaction sur spell");
@@ -73,6 +74,10 @@ public class CollectSpell : MonoBehaviour
                 spellCm.containerSlot2.Add(scriptContainSo);
                 Debug.Log("ajout dans le slot 2");
             }
+        }
+        else
+        {
+            skillManager.canCastSpells = true;
         }
     }
 }

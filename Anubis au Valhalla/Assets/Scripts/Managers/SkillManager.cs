@@ -16,6 +16,7 @@ public class SkillManager : MonoBehaviour
     public KeyCode spell2;
     public GameObject targetUser;
     public LayerMask layerMonstres;
+    public bool canCastSpells;
 
     [Header("SO FlameArea")]
     public SpellStaticAreaObject sOFlameArea;
@@ -32,6 +33,8 @@ public class SkillManager : MonoBehaviour
         {
             instance = this;
         }
+
+        canCastSpells = true;
     }
     void Update()
     {
