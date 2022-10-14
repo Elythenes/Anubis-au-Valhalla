@@ -13,9 +13,10 @@ public enum SpellType
 public abstract class SpellObject : ScriptableObject
 {
     [Header("GENERAL")]
-    public GameObject prefab;
+    //public GameObject prefab;
     public SpellType type;
     public string nom;
+    public int spellIndex;
     [TextArea(15,20)]
     public string description;
     
