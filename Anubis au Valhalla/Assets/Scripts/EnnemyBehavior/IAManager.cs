@@ -106,24 +106,24 @@ public class IAManager : MonoBehaviour
                 if (a.JumpTimeTimer >= a.JumpTime)
                 {
                     a.TriggerJumpTimeTimer = 0;
-                    hasShaked = false;
+                    a.hasShaked = false;
                     sr.enabled = false;
-                    IndicationTimeTimer += Time.deltaTime;
+                    a.IndicationTimeTimer += Time.deltaTime;
             
                 }
         
-                if (IndicationTimeTimer >= IndicationTime)
+                if (a.IndicationTimeTimer >= a.IndicationTime)
                 {
                     indicatorAndFall();
-                    FallTimeTimer += Time.deltaTime;
+                    a.FallTimeTimer += Time.deltaTime;
                 }
         
-                if (a.StartUpJavelotTimeTimer >= StartUpJavelotTime) // Attaque javelot
+                if (a.StartUpJavelotTimeTimer >= a.StartUpJavelotTime) // Attaque javelot
                 {
                     attaqueJavelot();
                 }
         
-                if (!isFleeing) // Déplacements
+                if (!a.isFleeing) // Déplacements
                 {
                     Roam();
                 }
@@ -133,67 +133,67 @@ public class IAManager : MonoBehaviour
         void DetectPlayerRelativePos()
     {
         RaycastHit hitUp;
-        if(Physics2D.Raycast(transform.position, Vector2.up, radiusWonderingShaman,layerPlayer))
+        if(Physics2D.Raycast(transform.position, Vector2.up, a.radiusWonderingShaman,layerPlayer))
         {
-            Debug.DrawRay(transform.position,Vector2.up * radiusWonderingShaman,Color.red);
-            rb.AddForce(Vector2.down * forceRepulseShaman);
-            isWondering = false;
+            Debug.DrawRay(transform.position,Vector2.up * a.radiusWonderingShaman,Color.red);
+            rb.AddForce(Vector2.down * a.forceRepulseShaman);
+            a.isWondering = false;
         }
                         
         RaycastHit2D hitDown;
-        if(Physics2D.Raycast(transform.position, Vector2.down, radiusWonderingShaman,layerPlayer))
+        if(Physics2D.Raycast(transform.position, Vector2.down, a.radiusWonderingShaman,layerPlayer))
         {
-            Debug.DrawRay(transform.position,Vector2.down * radiusWonderingShaman,Color.red);
-            rb.AddForce(Vector2.up * forceRepulseShaman);
-            isWondering = false;
+            Debug.DrawRay(transform.position,Vector2.down * a.radiusWonderingShaman,Color.red);
+            rb.AddForce(Vector2.up * a.forceRepulseShaman);
+            a.isWondering = false;
         }
                         
         RaycastHit hitRight;
-        if(Physics2D.Raycast(transform.position, Vector2.right, radiusWonderingShaman,layerPlayer))
+        if(Physics2D.Raycast(transform.position, Vector2.right, a.radiusWonderingShaman,layerPlayer))
         {
-            Debug.DrawRay(transform.position,Vector2.right * radiusWonderingShaman,Color.red);
-            rb.AddForce(Vector2.left * forceRepulseShaman);
-            isWondering = false;
+            Debug.DrawRay(transform.position,Vector2.right * a.radiusWonderingShaman,Color.red);
+            rb.AddForce(Vector2.left * a.forceRepulseShaman);
+            a.isWondering = false;
         }
                         
         RaycastHit hitLeft;
-        if(Physics2D.Raycast(transform.position, Vector2.left, radiusWonderingShaman,layerPlayer))
+        if(Physics2D.Raycast(transform.position, Vector2.left, a.radiusWonderingShaman,layerPlayer))
         {
-            Debug.DrawRay(transform.position,Vector2.left * radiusWonderingShaman,Color.red);
-            rb.AddForce(Vector2.right * forceRepulseShaman);
-            isWondering = false;
+            Debug.DrawRay(transform.position,Vector2.left * a.radiusWonderingShaman,Color.red);
+            rb.AddForce(Vector2.right * a.forceRepulseShaman);
+            a.isWondering = false;
         }
                         
         RaycastHit hitUpLeft;
-        if(Physics2D.Raycast(transform.position, new Vector2(1,1), radiusWonderingShaman,layerPlayer))
+        if(Physics2D.Raycast(transform.position, new Vector2(1,1), a.radiusWonderingShaman,layerPlayer))
         {
-            Debug.DrawRay(transform.position,new Vector2(1,1) * radiusWonderingShaman,Color.red);
-            rb.AddForce(new Vector2(-1,-1) * forceRepulseShaman);
-            isWondering = false;
+            Debug.DrawRay(transform.position,new Vector2(1,1) * a.radiusWonderingShaman,Color.red);
+            rb.AddForce(new Vector2(-1,-1) * a.forceRepulseShaman);
+            a.isWondering = false;
         }
                         
         RaycastHit hitUpRight;
-        if(Physics2D.Raycast(transform.position, new Vector2(-1,1), radiusWonderingShaman,layerPlayer))
+        if(Physics2D.Raycast(transform.position, new Vector2(-1,1), a.radiusWonderingShaman,layerPlayer))
         {
-            Debug.DrawRay(transform.position,new Vector2(-1,1) * radiusWonderingShaman,Color.red);
-            rb.AddForce(new Vector2(1,-1) * forceRepulseShaman);
-            isWondering = false;
+            Debug.DrawRay(transform.position,new Vector2(-1,1) * a.radiusWonderingShaman,Color.red);
+            rb.AddForce(new Vector2(1,-1) * a.forceRepulseShaman);
+            a.isWondering = false;
         }
                         
         RaycastHit hitDownLeft;
-        if(Physics2D.Raycast(transform.position, new Vector2(1,-1), radiusWonderingShaman,layerPlayer))
+        if(Physics2D.Raycast(transform.position, new Vector2(1,-1), a.radiusWonderingShaman,layerPlayer))
         {
-            Debug.DrawRay(transform.position,new Vector2(1,-1) * radiusWonderingShaman,Color.red);
-            rb.AddForce(new Vector2(-1,1) * forceRepulseShaman);
-            isWondering = false;
+            Debug.DrawRay(transform.position,new Vector2(1,-1) * a.radiusWonderingShaman,Color.red);
+            rb.AddForce(new Vector2(-1,1) * a.forceRepulseShaman);
+            a.isWondering = false;
         }
                         
         RaycastHit hitDownRight;
-        if(Physics2D.Raycast(transform.position, new Vector2(-1,-1), radiusWonderingShaman,layerPlayer))
+        if(Physics2D.Raycast(transform.position, new Vector2(-1,-1), a.radiusWonderingShaman,layerPlayer))
         {
-            Debug.DrawRay(transform.position,new Vector2(-1,-1) * radiusWonderingShaman,Color.red);
-            rb.AddForce(new Vector2(1,1) * forceRepulseShaman);
-            isWondering = false;
+            Debug.DrawRay(transform.position,new Vector2(-1,-1) * a.radiusWonderingShaman,Color.red);
+            rb.AddForce(new Vector2(1,1) * a.forceRepulseShaman);
+            a.isWondering = false;
         }
     }
     void SortEnemies()
@@ -227,7 +227,7 @@ public class IAManager : MonoBehaviour
         {
             playerFollow.enabled = false;
             PickRandomPoint();
-            ai.destination = pointToGOFleeing;
+            ai.destination = a.pointToGOFleeing;
             ai.SearchPath();
         }
     }
@@ -235,58 +235,58 @@ public class IAManager : MonoBehaviour
 
     void CompareOwnPosToPlayer()
     {
-        if(Vector3.Distance(player.transform.position, transform.position) <= distanceMaxPlayerShaman)
+        if(Vector3.Distance(player.transform.position, transform.position) <= a.distanceMaxPlayerShaman)
         {
-            if (!isAttacking)
+            if (!a.isAttacking)
             {
-                isFleeing = true;
-                isWondering = false;
+                a.isFleeing = true;
+                a.isWondering = false;
                 
-                if (isFleeing)
+                if (a.isFleeing)
                 {
-                    timeFleeingShamanTimer += Time.deltaTime;
+                    a.timeFleeingShamanTimer += Time.deltaTime;
                     
-                    if (timeFleeingShamanTimer <= timeFleeingShaman)
+                    if (a.timeFleeingShamanTimer <= a.timeFleeingShaman)
                     {
                         DetectPlayerRelativePos();
                     }
                     else
                     {
-                        timeFleeingShamanTimer = 0;
-                        isFleeing = false;
-                        isWondering = true;
+                        a.timeFleeingShamanTimer = 0;
+                        a.isFleeing = false;
+                        a.isWondering = true;
                     }
                 }
             }
         }
         else
         {
-            isFleeing = false;
-            isWondering = true;
+            a.isFleeing = false;
+            a.isWondering = true;
         }
     }
 
     void Summon()
     {
-        Instantiate(corbeau, transform.position + new Vector3(0,3,0), Quaternion.identity);
-        StartUpSummonTimeTimer = 0;
-        SummoningTimeTimer = 0;
-        isWondering = true;
-        isAttacking = false;
+        Instantiate(a.corbeau, transform.position + new Vector3(0,3,0), Quaternion.identity);
+        a.StartUpSummonTimeTimer = 0;
+        a.SummoningTimeTimer = 0;
+        a.isWondering = true;
+        a.isAttacking = false;
     }
     void PickRandomPoint() 
     {
-        var point = Random.insideUnitCircle * radiusWonderingShaman;
+        var point = Random.insideUnitCircle * a.radiusWonderingShaman;
         point.x += ai.position.x;
         point.y += ai.position.y;
         
-        if (Vector3.Distance((Vector3)player.transform.position, point) !<= radiusWonderingShaman)
+        if (Vector3.Distance((Vector3)player.transform.position, point) !<= a.radiusWonderingShaman)
         {
             PickRandomPoint();
         }
         else
         {
-            pointToGOFleeing =point; 
+            a.pointToGOFleeing =point; 
             return;
         }
     }
@@ -297,33 +297,33 @@ public class IAManager : MonoBehaviour
     
      void TriggerSaut()
     {
-        FallTimeTimer = 0;
-        hasFallen = false;
-        isAttacking = true;
+        a.FallTimeTimer = 0;
+        a.hasFallen = false;
+        a.isAttacking = true;
         ai.canMove = false;
             
-        if (!hasShaked)
+        if (!a.hasShaked)
         {
             transform.DOShakePosition(1f, 1);
-            hasShaked = true;
+            a.hasShaked = true;
         }
     }
     void indicatorAndFall()
     {
-        JumpTimeTimer = 0;
-        if (!hasFallen)
+        a.JumpTimeTimer = 0;
+        if (!a.hasFallen)
         {
-            fallPos = player.transform.position;
-            hasFallen = true;
-            GameObject indicationObj = Instantiate(indicationFall, player.transform.position, Quaternion.identity);
-            Destroy(indicationObj,FallTime);
+            a.fallPos = player.transform.position;
+            a.hasFallen = true;
+            GameObject indicationObj = Instantiate(a.indicationFall, player.transform.position, Quaternion.identity);
+            Destroy(indicationObj,a.FallTime);
         }
         
-        if (FallTimeTimer >= FallTime)
+        if (a.FallTimeTimer >= a.FallTime)
         {
-            IndicationTimeTimer = 0;
-            FallTimeTimer = 0;
-            transform.position = fallPos;
+            a.IndicationTimeTimer = 0;
+            a.FallTimeTimer = 0;
+            transform.position = a.fallPos;
             sr.enabled = true;
             StartCoroutine(LagFall());
         }             
@@ -333,27 +333,27 @@ public class IAManager : MonoBehaviour
     {
         StartCoroutine(StartUpJavelot());
         transform.DOShakePosition(1,1);
-        isAttacking = true;
-        StartUpJavelotTimeTimer = 0;
+        a.isAttacking = true;
+        a.StartUpJavelotTimeTimer = 0;
     }
     IEnumerator StartUpJavelot() // Au début de l'attaque du javelot
     {
         yield return new WaitForSeconds(1f);
-        GameObject projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
+        GameObject projJavelot = Instantiate(a.projectilJavelot, transform.position, Quaternion.identity);
         projJavelot.GetComponent<JavelotValkyrie>().ia = this;
-        isAttacking = false;
+        a.isAttacking = false;
     }
     
     IEnumerator LagFall() // A la fin de l'attaque du saut
     {
         Debug.Log("oui");
-        GameObject hitboxObj = Instantiate(hitboxFall, transform.position, Quaternion.identity);
+        GameObject hitboxObj = Instantiate(a.hitboxFall, transform.position, Quaternion.identity);
         hitboxObj.GetComponent<HitBoxFallValkyrie>().ia = this;
         yield return new WaitForSeconds(1);
         Destroy(hitboxObj);
         ai.canMove = true;
-        IndicationTimeTimer = 0;
-        isAttacking = false;
+        a.IndicationTimeTimer = 0;
+        a.isAttacking = false;
     }
     #endregion
 }
