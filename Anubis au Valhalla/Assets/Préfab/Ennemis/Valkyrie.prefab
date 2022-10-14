@@ -400,7 +400,6 @@ GameObject:
   - component: {fileID: 6525413994912196217}
   - component: {fileID: 407796542610265768}
   - component: {fileID: 2124596671816842015}
-  - component: {fileID: 6381360278373732847}
   - component: {fileID: 6525413994912196216}
   - component: {fileID: 6525413994912196219}
   - component: {fileID: 6525413994912196218}
@@ -569,7 +568,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6525413994912196209}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43d35e3caa064e14abbc5bc9294c10e3, type: 3}
   m_Name: 
@@ -609,37 +608,6 @@ MonoBehaviour:
   IndicationTimeTimer: 0
   FallTime: 1.5
   FallTimeTimer: 0
---- !u!114 &6381360278373732847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6525413994912196209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1587c741f0fbc1f46a4d6e3009de38c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isElite: 0
-  emptyLayers: {fileID: 0}
-  layerPlayer:
-    serializedVersion: 2
-    m_Bits: 512
-  enemyType: 4
-  a: {fileID: 11400000, guid: 058d990f10900274c8b30744cc0ac3c3, type: 2}
-  isFleeing: 0
-  isWondering: 0
-  isAttacking: 0
-  hasShaked: 0
-  StartUpJavelotTimeTimer: 51.94
-  TriggerJumpTimeTimer: 0
-  JumpTimeTimer: 0
-  IndicationTimeTimer: 0
-  FallTimeTimer: 0
-  SummoningTimeTimer: 0
-  StartUpSummonTimeTimer: 0
-  timeFleeingTimer: 0
 --- !u!114 &6525413994912196216
 MonoBehaviour:
   m_ObjectHideFlags: 0
