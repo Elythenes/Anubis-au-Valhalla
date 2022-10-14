@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class JavelotValkyrie : MonoBehaviour
 {
-    public IA_Valkyrie ia;
+    public IAManager ia;
     public Vector2 dir;
     public float angle;
     

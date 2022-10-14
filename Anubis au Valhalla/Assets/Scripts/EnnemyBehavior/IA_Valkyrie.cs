@@ -70,26 +70,11 @@ public class IA_Valkyrie : MonoBehaviour
 
     public void Update()
     {
-
-        if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
-        {
-            sr.sortingOrder = 2;
-        }
-        else
-        {
-            sr.sortingOrder = 1;
-        }
+        SortEnemies();
 
         if (!isAttacking)
         {
-            if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
-            {
-                transform.localScale = new Vector3(-1, 2.2909f, 1);
-            }
-            else if (transform.position.x > player.transform.position.x)
-            {
-                transform.localScale = new Vector3(1, 2.2909f, 1);
-            }
+            Flip();
         }
         
         if(!isAttacking) // Cooldwn des attaques;
@@ -97,22 +82,11 @@ public class IA_Valkyrie : MonoBehaviour
             StartUpJavelotTimeTimer += Time.deltaTime;
             TriggerJumpTimeTimer += Time.deltaTime;
         }
-
-       
+        
         if (TriggerJumpTimeTimer >= TriggerJumpTime) // Attaque saut
         {
-            FallTimeTimer = 0;
-            hasFallen = false;
-            isAttacking = true;
-            ai.canMove = false;
             JumpTimeTimer += Time.deltaTime;
-            
-            if (!hasShaked)
-            {
-                transform.DOShakePosition(1f, 1);
-                hasShaked = true;
-            }
-
+            TriggerSaut();
         }
         
         if (JumpTimeTimer >= JumpTime)
@@ -121,65 +95,117 @@ public class IA_Valkyrie : MonoBehaviour
                 hasShaked = false;
                 sr.enabled = false;
                 IndicationTimeTimer += Time.deltaTime;
-                
+            
         }
         
         if (IndicationTimeTimer >= IndicationTime)
         {
-            JumpTimeTimer = 0;
-                    if (!hasFallen)
-                    {
-                        fallPos = player.transform.position;
-                        hasFallen = true;
-                        GameObject indicationObj = Instantiate(indicationFall, player.transform.position, Quaternion.identity);
-                        Destroy(indicationObj,FallTime);
-                    }
-                    FallTimeTimer += Time.deltaTime;
-                    
-                    if (FallTimeTimer >= FallTime)
-                    {
-                        IndicationTimeTimer = 0;
-                        FallTimeTimer = 0;
-                        transform.position = fallPos;
-                        sr.enabled = true;
-                        StartCoroutine(LagFall());
-                    }             
+            indicatorAndFall();
+            FallTimeTimer += Time.deltaTime;
         }
-       
         
         if (StartUpJavelotTimeTimer >= StartUpJavelotTime) // Attaque javelot
         {
-            StartCoroutine(StartUpJavelot());
-            transform.DOShakePosition(1,1);
-            isAttacking = true;
-            StartUpJavelotTimeTimer = 0;
-            
+            attaqueJavelot();
         }
         
         if (!isFleeing) // Déplacements
         {
-            if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath) 
-            {
-                playerFollow.enabled = false;
-                PickRandomPoint();
-                ai.destination = pointToGo;
-                ai.SearchPath();
-            }
+            deplacement();
         }
     }
 
+    void TriggerSaut()
+    {
+        FallTimeTimer = 0;
+        hasFallen = false;
+        isAttacking = true;
+        ai.canMove = false;
+            
+        if (!hasShaked)
+        {
+            transform.DOShakePosition(1f, 1);
+            hasShaked = true;
+        }
+    }
+    void indicatorAndFall()
+    {
+        JumpTimeTimer = 0;
+        if (!hasFallen)
+        {
+            fallPos = player.transform.position;
+            hasFallen = true;
+            GameObject indicationObj = Instantiate(indicationFall, player.transform.position, Quaternion.identity);
+            Destroy(indicationObj,FallTime);
+        }
+        
+        if (FallTimeTimer >= FallTime)
+        {
+            IndicationTimeTimer = 0;
+            FallTimeTimer = 0;
+            transform.position = fallPos;
+            sr.enabled = true;
+            StartCoroutine(LagFall());
+        }             
+    }
+    
+    void deplacement()
+    {
+        if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath) 
+        {
+            playerFollow.enabled = false;
+            PickRandomPoint();
+            ai.destination = pointToGo;
+            ai.SearchPath();
+        }
+    }
+
+    void attaqueJavelot()
+    {
+        StartCoroutine(StartUpJavelot());
+        transform.DOShakePosition(1,1);
+        isAttacking = true;
+        StartUpJavelotTimeTimer = 0;
+    }
     IEnumerator StartUpJavelot() // Au début de l'attaque du javelot
     {
         yield return new WaitForSeconds(1f);
         GameObject projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
-        projJavelot.GetComponent<JavelotValkyrie>().ia = this;
+        //projJavelot.GetComponent<JavelotValkyrie>().ia = this;
         isAttacking = false;
     }
+
+
+    void Flip()
+    {
+        if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
+        {
+            transform.localScale = new Vector3(-1, 2.2909f, 1);
+        }
+        else if (transform.position.x > player.transform.position.x)
+        {
+            transform.localScale = new Vector3(1, 2.2909f, 1);
+        }
+    }
+    void SortEnemies()
+    {
+        if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
+        {
+            sr.sortingOrder = 2;
+        }
+        else
+        {
+            sr.sortingOrder = 1;
+        }
+    }
+    
+    
+    
     IEnumerator LagFall() // A la fin de l'attaque du saut
     {
         Debug.Log("oui");
         GameObject hitboxObj = Instantiate(hitboxFall, transform.position, Quaternion.identity);
-        hitboxObj.GetComponent<HitBoxFallValkyrie>().ia = this;
+        //hitboxObj.GetComponent<HitBoxFallValkyrie>().ia = this;
         yield return new WaitForSeconds(1);
         Destroy(hitboxObj);
         ai.canMove = true;

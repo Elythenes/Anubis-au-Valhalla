@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HitBoxFallValkyrie : MonoBehaviour
 {
-    public IA_Valkyrie ia;
+    public IAManager ia;
 
     // Update is called once per frame
     void Update()
