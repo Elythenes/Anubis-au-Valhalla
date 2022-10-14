@@ -264,6 +264,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 444935522}
     - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
+      propertyPath: FallTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
       propertyPath: JumpTime
       value: 3
       objectReference: {fileID: 0}
@@ -275,6 +279,18 @@ PrefabInstance:
       propertyPath: Fall2Time
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
+      propertyPath: pushForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
+      propertyPath: FallDamage
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
+      propertyPath: hitboxFall
+      value: 
+      objectReference: {fileID: 861668139924243964, guid: 2abb61bc0238b654d80d231a61b1ea70, type: 3}
     - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
       propertyPath: emptyLayers
       value: 
@@ -296,12 +312,20 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
+      propertyPath: IndicationTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
       propertyPath: indicationFall
       value: 
       objectReference: {fileID: 2229639920476728955, guid: 357fb3723b2763741919521c467ae3ee, type: 3}
     - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
       propertyPath: StartUpJumpTime
-      value: 5
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
+      propertyPath: TriggerJumpTime
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
       propertyPath: radiusWondering
@@ -317,7 +341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
       propertyPath: StartUpJavelotTime
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
       propertyPath: layerPlayer.m_Bits
@@ -374,6 +398,10 @@ PrefabInstance:
     - target: {fileID: 6525413994912196209, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
       propertyPath: m_Name
       value: Valkyrie
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525413994912196217, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
@@ -906,11 +934,9 @@ MonoBehaviour:
   layerMonstres:
     serializedVersion: 2
     m_Bits: 64
-  flameArea: {fileID: 2070572112627775315, guid: 89d34f91fc1dec8488658721c13e624f, type: 3}
+  canCastSpells: 0
   sOFlameArea: {fileID: 11400000, guid: b1c7d5f0800a0334bbde91ee3e4a6f93, type: 2}
-  sandstormArea: {fileID: 2804067575571280655, guid: ab0d02b22ee5f8d47ba63865fee74e6f, type: 3}
   soSandstorm: {fileID: 11400000, guid: c601e1262082c43468b9d1dbb53e9083, type: 2}
-  fireBall: {fileID: 3272022552115205699, guid: b89b73c8528437f4583e754e1b240b58, type: 3}
   sOFireball: {fileID: 11400000, guid: e4ec7956ad4048141b771f80356505e2, type: 2}
 --- !u!4 &985064225
 Transform:
