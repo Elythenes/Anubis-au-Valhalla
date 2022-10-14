@@ -45,7 +45,7 @@ public class SpellManager : MonoBehaviour
         //SpellReplacement(containerSlot2);
         if (isSpell1fill)
         {
-            SpellCooldownCalcul(ConvertSpellIndex(containerA));
+            SpellCooldownCalcul(ConvertSpellIndex(containerA), 1);
             if (Input.GetKeyDown(spell1))
             {
                 UseSpellSlot1(ConvertSpellIndex(containerA),1);
@@ -54,7 +54,7 @@ public class SpellManager : MonoBehaviour
 
         if (isSpell2fill)
         {
-            SpellCooldownCalcul(ConvertSpellIndex(containerB));
+            SpellCooldownCalcul(ConvertSpellIndex(containerB), 2);
             if (Input.GetKeyDown(spell2))
             {
                 Debug.Log("spell 2 inpuuut");
@@ -99,35 +99,66 @@ public class SpellManager : MonoBehaviour
 
     void UseSpellSlot1(SpellNumber spellNumber, int spellSlot)
     {
-        switch (spellNumber)
+        if (spellSlot == 1)
         {
-            case SpellNumber.Fireball:
-                //Debug.Log("FIRE-BAAAAALL");
-                ThrowingSpell(prefabA,spellSlot);
-                break;
+            switch (spellNumber)
+            {
+                case SpellNumber.Fireball:
+                    //Debug.Log("FIRE-BAAAAALL");
+                    ThrowingSpell(prefabA,spellSlot);
+                    break;
             
-            case SpellNumber.FireArea:
-                Debug.Log("FIRE-AREAAAAA");
-                TimeLimitedSpell(prefabA,spellSlot);
-                break;
+                case SpellNumber.FireArea:
+                    Debug.Log("FIRE-AREAAAAA");
+                    TimeLimitedSpell(prefabA,spellSlot);
+                    break;
             
-            case SpellNumber.FuryOfSand:
-                //Debug.Log("FURY OF SAAAAAAND");
-                FollowingSpell(prefabA, spellSlot);
-                break;
-                
+                case SpellNumber.FuryOfSand:
+                    //Debug.Log("FURY OF SAAAAAAND");
+                    FollowingSpell(prefabA, spellSlot);
+                    break;
+            }
+        }
+
+        if (spellSlot == 2)
+        {
+            switch (spellNumber)
+            {
+                case SpellNumber.Fireball:
+                    //Debug.Log("FIRE-BAAAAALL");
+                    ThrowingSpell(prefabB,spellSlot);
+                    break;
+            
+                case SpellNumber.FireArea:
+                    Debug.Log("FIRE-AREAAAAA");
+                    TimeLimitedSpell(prefabB,spellSlot);
+                    break;
+            
+                case SpellNumber.FuryOfSand:
+                    //Debug.Log("FURY OF SAAAAAAND");
+                    FollowingSpell(prefabB, spellSlot);
+                    break;
+            }
         }
     }
     
     
     
-    void SpellCooldownCalcul(SpellNumber spellNumber) //pour calculer les CD de chaque spell (la fonction DEVRAIT se lancer que si on a le spell en question)
+    void SpellCooldownCalcul(SpellNumber spellNumber, int slotNumber) //pour calculer les CD de chaque spell (la fonction DEVRAIT se lancer que si on a le spell en question)
     {
         switch (spellNumber)
         {
             case SpellNumber.Fireball:
                 //Debug.Log("CD Fireball");
-                spellTo = prefabA.GetComponent<Fireball>().sOFireball;
+                if (slotNumber == 1)
+                {
+                    spellTo = prefabA.GetComponent<Fireball>().sOFireball;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellTo = prefabB.GetComponent<Fireball>().sOFireball;
+                }
                 if (spellTo.cooldownTimer < spellTo.cooldown && !spellTo.canCast) //cooldown de la Fireball
                 {
                     spellTo.cooldownTimer += Time.deltaTime;
@@ -141,7 +172,15 @@ public class SpellManager : MonoBehaviour
             
             case SpellNumber.FireArea:
                 //Debug.Log("CD Fire Area");
-                spellSAo = prefabA.GetComponent<FlameArea>().sOFlameArea;
+                if (slotNumber == 1)
+                {
+                    spellSAo = prefabA.GetComponent<FlameArea>().sOFlameArea;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellSAo = prefabB.GetComponent<FlameArea>().sOFlameArea;
+                }
                 if (spellSAo.cooldownTimer < spellSAo.cooldown && !spellSAo.canCast)
                 {
                     spellSAo.cooldownTimer += Time.deltaTime;
@@ -155,7 +194,16 @@ public class SpellManager : MonoBehaviour
             
             case SpellNumber.FuryOfSand:
                 //Debug.Log("CD Fury of Sand");
-                spellFAo = prefabA.GetComponent<HitboxSandstorm>().sOSandstorm;
+                if (slotNumber == 1)
+                {
+                    spellFAo = prefabA.GetComponent<HitboxSandstorm>().sOSandstorm;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellFAo = prefabB.GetComponent<HitboxSandstorm>().sOSandstorm;
+                }
+                
                 if (spellFAo.cooldownTimer < spellFAo.cooldown && !spellFAo.canCast) //cooldown du Sandstorm
                 {
                     spellFAo.cooldownTimer += Time.deltaTime;
