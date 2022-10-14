@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class JavelotValkyrie : MonoBehaviour
 {
-    public IA_Valkyrie ia;
+    public EnemyData ia;
     public Vector2 dir;
     public float angle;
     
@@ -20,7 +20,7 @@ public class JavelotValkyrie : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(transform.position.x + dir.x * ia.javelotSpeed, transform.position.y + dir.y * ia.javelotSpeed, 0);
+        transform.position = new Vector3(transform.position.x + dir.x * ia.projectileSpeed, transform.position.y + dir.y * ia.projectileSpeed, 0);
         Destroy(gameObject,5f);
     }
 
@@ -28,7 +28,7 @@ public class JavelotValkyrie : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            DamageManager.instance.TakeDamage(ia.puissanceAttaqueJavelot);
+            DamageManager.instance.TakeDamage(ia.damage);
             Destroy(gameObject);
         }
     }
