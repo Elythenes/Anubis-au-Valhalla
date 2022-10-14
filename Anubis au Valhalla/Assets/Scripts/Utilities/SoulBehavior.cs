@@ -40,7 +40,7 @@ public class SoulBehavior : MonoBehaviour
                 PoofAway(dirNormalised);
                 haspoofed = true;
             } 
-            rb.AddForce(dirNormalised * (force * deceleration * (1/Vector2.Distance(transform.position,playerPos))) +dirNormalised,ForceMode2D.Force);
+            rb.AddForce(dirNormalised + dirNormalised * (force * deceleration * (1/Vector2.Distance(transform.position,playerPos))),ForceMode2D.Force);
             //transform.position.magnitude >= playerPos.magnitude - 0.2f
             if (Vector3.Distance(playerPos, transform.position) <= 1) 
             {
