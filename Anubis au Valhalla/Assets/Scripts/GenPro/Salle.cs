@@ -52,7 +52,6 @@ public class Salle : MonoBehaviour
 
     private void Start()
     {
-        
     }
 
     private void Update()
