@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7471664148723569889}
   - component: {fileID: 7471664148723569890}
+  - component: {fileID: 2525523222210174273}
   m_Layer: 0
   m_Name: Spell Collect Manager
   m_TagString: Untagged
@@ -39,10 +40,41 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7471664148723569888}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef2db7574125a644caed2ef25651baed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellSlot1: []
-  spellSlot2: []
+  containerSlot1: []
+  containerSlot2: []
+--- !u!114 &2525523222210174273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7471664148723569888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4fd2b52bbbb8346a9ea36d9fae53aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetUser: {fileID: 5191402746750135181, guid: 358d44554d170a749b2bb1f50f2d8f66, type: 3}
+  spell1: 101
+  spell2: 114
+  layerMonstres:
+    serializedVersion: 2
+    m_Bits: 64
+  canCastSpells: 1
+  spellCollectManager: {fileID: 7471664148723569888}
+  containerSlot1: []
+  containerSlot2: []
+  containerA: {fileID: 0}
+  prefabA: {fileID: 0}
+  containerB: {fileID: 0}
+  prefabB: {fileID: 0}
+  spellSAo: {fileID: 0}
+  spellFAo: {fileID: 0}
+  spellTo: {fileID: 0}
+  isSpell1fill: 0
+  isSpell2fill: 0

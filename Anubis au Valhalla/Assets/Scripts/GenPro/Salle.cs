@@ -95,6 +95,10 @@ public class Salle : MonoBehaviour
     }
     public void SpawnEnemies(List<GameObject> point)
     {
+        if (point.Count == 0)
+        {
+            return;
+        }
         var pattern = SalleGennerator.instance.chosenPattern;
         foreach (EnemyData t in SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn)
         {
@@ -118,6 +122,10 @@ public class Salle : MonoBehaviour
     
     public void GenerateProps()
     {
+        if (propSizes.PropsList.Count == 0)
+        {
+            return;
+        }
         for (int i = 0; i < propsAmount; i++)
         {
             int randomSize = Random.Range(0, propSizes.PropsList.Count);

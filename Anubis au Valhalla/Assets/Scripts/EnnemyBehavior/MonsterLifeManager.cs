@@ -62,7 +62,6 @@ public class MonsterLifeManager : MonoBehaviour
         {
             //StopAllCoroutines();
             OnBegin?.Invoke();
-            Debug.Log(direction);
             rb.AddForce(direction * forceKnockBack,ForceMode2D.Impulse);
             StartCoroutine(Reset());
         }

@@ -29,6 +29,7 @@ public class CharacterController : MonoBehaviour
   [HideInInspector]public Rigidbody2D rb; // ca aussi
   private Vector2 movement;
 
+  [Header("Utilitaires")] public KeyCode interaction;
 
 
   private void Awake()

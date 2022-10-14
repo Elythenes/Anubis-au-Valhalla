@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class IA_Valkyrie : MonoBehaviour
 {
-   [Header("Vie et visuels")]
-    public GameObject emptyLayers;
+   [Header("Général")]
     public bool isElite;
-    private Rigidbody2D rb;
-    public LayerMask layerPlayer;
+    public GameObject emptyLayers;
+
 
     [Header("Déplacements")]
     public GameObject player;
@@ -18,13 +18,12 @@ public class IA_Valkyrie : MonoBehaviour
     public AIPath aipath;
     private Path path;
     private SpriteRenderer sr;
+    private Rigidbody2D rb;
+    private Collider2D collider;
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
     public bool isFleeing;
-    public float forceRepulse;
-    public float distanceMinPlayer;
     public float radiusWondering;
-    public float radiusFleeing;
     public Vector2 pointToGo;
     
 
@@ -39,32 +38,165 @@ public class IA_Valkyrie : MonoBehaviour
 
     [Header("Attaque - Jump")]
     public GameObject indicationFall;
-    public float StartUpJumpTime;
-    public float StartUpJumpTimeTimer;
+    public GameObject hitboxFall;
+    private Vector2 fallPos;
+    public int FallDamage;
+    public float pushForce;
+    public bool hasShaked;
+    public bool hasFallen;
+    public float TriggerJumpTime;
+    public float TriggerJumpTimeTimer;     // Le temps que met l'attaque à se tick
     public float JumpTime;
-    public float JumpTimeTimer;
-    public float Fall1Time;
-    public float Fall1TimeTimer;
-    public float Fall2Time;
-    public float Fall2TimeTimer;
+    public float JumpTimeTimer;            // Le temps que met la valkyrie à sauter et disparaitre
+    public float IndicationTime;
+    public float IndicationTimeTimer;           // Le temps que met la valkyrie entre l'indication de l'attaque (zone rouge) et la retombée
+    public float FallTime;
+    public float FallTimeTimer;           // Le temps que met la valkyrie entre la retombée et le retour à son etat normal.
     
     
-   
-
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
+        collider = GetComponent<BoxCollider2D>();
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
+
+
+
+        if (isElite)
+        {
+            puissanceAttaqueJavelot *= 2;
+                FallDamage *= 2;
+        }
     }
 
 
     public void Update()
+    {
+        SortEnemies();
+
+        if (!isAttacking)
+        {
+            Flip();
+        }
+        
+        if(!isAttacking) // Cooldwn des attaques;
+        {
+            StartUpJavelotTimeTimer += Time.deltaTime;
+            TriggerJumpTimeTimer += Time.deltaTime;
+        }
+        
+        if (TriggerJumpTimeTimer >= TriggerJumpTime) // Attaque saut
+        {
+            JumpTimeTimer += Time.deltaTime;
+            TriggerSaut();
+        }
+        
+        if (JumpTimeTimer >= JumpTime)
+        {
+                TriggerJumpTimeTimer = 0;
+                hasShaked = false;
+                sr.enabled = false;
+                collider.enabled = false;
+                IndicationTimeTimer += Time.deltaTime;
+            
+        }
+        
+        if (IndicationTimeTimer >= IndicationTime)
+        {
+            indicatorAndFall();
+            FallTimeTimer += Time.deltaTime;
+        }
+        
+        if (StartUpJavelotTimeTimer >= StartUpJavelotTime) // Attaque javelot
+        {
+            attaqueJavelot();
+        }
+        
+        if (!isFleeing) // Déplacements
+        {
+            deplacement();
+        }
+    }
+
+    void TriggerSaut()
+    {
+        FallTimeTimer = 0;
+        hasFallen = false;
+        isAttacking = true;
+        ai.canMove = false;
+            
+        if (!hasShaked)
+        {
+            transform.DOShakePosition(1f, 1);
+            hasShaked = true;
+        }
+    }
+    void indicatorAndFall()
+    {
+        JumpTimeTimer = 0;
+        if (!hasFallen)
+        {
+            fallPos = player.transform.position;
+            hasFallen = true;
+            GameObject indicationObj = Instantiate(indicationFall, player.transform.position, Quaternion.identity);
+            Destroy(indicationObj,FallTime);
+        }
+        
+        if (FallTimeTimer >= FallTime)
+        {
+            IndicationTimeTimer = 0;
+            FallTimeTimer = 0;
+            transform.position = fallPos;
+            sr.enabled = true;
+            collider.enabled = true;
+            StartCoroutine(LagFall());
+        }             
+    }
+    
+    void deplacement()
+    {
+        if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath) 
+        {
+            playerFollow.enabled = false;
+            PickRandomPoint();
+            ai.destination = pointToGo;
+            ai.SearchPath();
+        }
+    }
+
+    void attaqueJavelot()
+    {
+        StartCoroutine(StartUpJavelot());
+        transform.DOShakePosition(1,1);
+        isAttacking = true;
+        StartUpJavelotTimeTimer = 0;
+    }
+    IEnumerator StartUpJavelot() // Au début de l'attaque du javelot
+    {
+        yield return new WaitForSeconds(1f);
+        GameObject projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
+        projJavelot.GetComponent<JavelotValkyrie>().ia = this;
+        isAttacking = false;
+    }
+
+
+    void Flip()
+    {
+        if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
+        {
+            transform.localScale = new Vector3(-1, transform.localScale.y,transform.localScale.z);
+        }
+        else if (transform.position.x > player.transform.position.x)
+        {
+            transform.localScale = new Vector3(1, transform.localScale.y,transform.localScale.z);
+        }
+    }
+    void SortEnemies()
     {
         if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
         {
@@ -74,145 +206,21 @@ public class IA_Valkyrie : MonoBehaviour
         {
             sr.sortingOrder = 1;
         }
-
-        if (!isAttacking)
-        {
-            if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
-            {
-                transform.localScale = new Vector3(-1, 2.2909f, 1);
-            }
-            else if (transform.position.x > player.transform.position.x)
-            {
-                transform.localScale = new Vector3(1, 2.2909f, 1);
-            }
-        }
-        
-        if(!isAttacking)
-        {
-            StartUpJavelotTimeTimer += Time.deltaTime;
-            StartUpJumpTimeTimer += Time.deltaTime;
-        }
-
-        if (StartUpJumpTimeTimer >= StartUpJumpTime)
-        {
-            isAttacking = true;
-            ai.canMove = false;
-            JumpTimeTimer += Time.deltaTime;
-            
-            if (JumpTimeTimer >= JumpTime)
-            {
-                StartUpJavelotTime = 0;
-                sr.enabled = false;
-                Fall1TimeTimer += Time.deltaTime;
-                
-                if (Fall1TimeTimer >= Fall1Time)
-                {
-                    transform.position = player.transform.position;
-                    GameObject indicationFallObj = Instantiate(indicationFall, player.transform.position, Quaternion.identity);
-                    Fall2TimeTimer += Time.deltaTime;
-                    
-                    if (Fall2TimeTimer >= Fall2Time)
-                    {
-                        Destroy(indicationFallObj);
-                        sr.enabled = true;
-                    }
-                }
-            }
-        }
-        
-        if (StartUpJavelotTimeTimer >= StartUpJavelotTime)
-        {
-            isAttacking = true;
-            GameObject projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
-            projJavelot.GetComponent<JavelotValkyrie>().ia = this;
-            StartUpJavelotTimeTimer = 0;
-            isAttacking = false;
-        }
-        
-        if (!isFleeing)
-        {
-            if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath) 
-            {
-                playerFollow.enabled = false;
-                PickRandomPoint();
-                ai.destination = pointToGo;
-                ai.SearchPath();
-            }
-        }
-        
-        if (Vector3.Distance(player.transform.position, transform.position) <= distanceMinPlayer) // Le monstre fuit quand il est trop proche du personnage.
-        {
-            isFleeing = true;
-            RaycastHit hitUp;
-                            if (Physics2D.Raycast(transform.position, Vector2.up, radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, Vector2.up * radiusFleeing, Color.red);
-                                rb.AddForce(Vector2.down * forceRepulse);
-                                ai.canMove = false;
-                            }
-
-                            RaycastHit hitDown;
-                            if (Physics2D.Raycast(transform.position, Vector2.down, radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, Vector2.down * radiusFleeing, Color.red);
-                                rb.AddForce(Vector2.up * forceRepulse);
-                                ai.canMove = false;
-                            }
-
-                            RaycastHit hitRight;
-                            if (Physics2D.Raycast(transform.position, Vector2.right, radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, Vector2.right * radiusFleeing, Color.red);
-                                rb.AddForce(Vector2.left * forceRepulse);
-                                ai.canMove = false;
-                            }
-
-                            RaycastHit hitLeft;
-                            if (Physics2D.Raycast(transform.position, Vector2.left, radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, Vector2.left * radiusFleeing, Color.red);
-                                rb.AddForce(Vector2.right * forceRepulse);
-                                ai.canMove = false;
-                            }
-
-                            RaycastHit hitUpLeft;
-                            if (Physics2D.Raycast(transform.position, new Vector2(1, 1), radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, new Vector2(1, 1) * radiusFleeing, Color.red);
-                                rb.AddForce(new Vector2(-1, -1) * forceRepulse);
-                                ai.canMove = false;
-                            }
-
-                            RaycastHit hitUpRight;
-                            if (Physics2D.Raycast(transform.position, new Vector2(-1, 1), radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, new Vector2(-1, 1) * radiusFleeing, Color.red);
-                                rb.AddForce(new Vector2(1, -1) * forceRepulse);
-                                ai.canMove = false;
-                            }
-
-                            RaycastHit hitDownLeft;
-                            if (Physics2D.Raycast(transform.position, new Vector2(1, -1), radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, new Vector2(1, -1) * radiusFleeing, Color.red);
-                                rb.AddForce(new Vector2(-1, 1) * forceRepulse);
-                                ai.canMove = false;
-                            }
-
-                            RaycastHit hitDownRight;
-                            if (Physics2D.Raycast(transform.position, new Vector2(-1, -1), radiusFleeing,layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, new Vector2(-1, -1) * radiusFleeing, Color.red);
-                                rb.AddForce(new Vector2(1, 1) * forceRepulse);
-                                ai.canMove = false;
-                            }
-        }
-        else
-        {
-            ai.canMove = true;
-        }
     }
     
+    
+    
+    IEnumerator LagFall() // A la fin de l'attaque du saut
+    {
+        Debug.Log("oui");
+        GameObject hitboxObj = Instantiate(hitboxFall, transform.position, Quaternion.identity);
+        hitboxObj.GetComponent<HitBoxFallValkyrie>().ia = this;
+        yield return new WaitForSeconds(1);
+        Destroy(hitboxObj);
+        ai.canMove = true;
+        IndicationTimeTimer = 0;
+        isAttacking = false;
+    }    
     void PickRandomPoint() 
     {
         var point = Random.insideUnitCircle * radiusWondering;

@@ -502,7 +502,7 @@ MonoBehaviour:
   healthBar: {fileID: 1566179059088105789}
   vieMax: 100
   vieActuelle: 0
-  soulValue: 4
+  soulValue: 15
   delay: 0.15
   forceKnockBack: 30
   OnBegin:
@@ -573,6 +573,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d35e3caa064e14abbc5bc9294c10e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emptyLayers: {fileID: 6525413995355236178}
+  isElite: 0
+  layerPlayer:
+    serializedVersion: 2
+    m_Bits: 512
+  player: {fileID: 0}
+  seeker: {fileID: 6525413994912196219}
+  aipath: {fileID: 6525413994912196216}
+  playerFollow: {fileID: 6525413994912196218}
+  isFleeing: 0
+  forceRepulse: 5
+  distanceMinPlayer: 5
+  radiusWondering: 10
+  radiusFleeing: 50
+  pointToGo: {x: 0, y: 0}
+  isAttacking: 0
+  puissanceAttaqueJavelot: 20
+  javelotSpeed: 0.1
+  StartUpJavelotTime: 5
+  StartUpJavelotTimeTimer: 0
+  projectilJavelot: {fileID: 6246300457462273341, guid: cccc5c7b2ad4e7d4a8102dac28e32fcc, type: 3}
+  indicationFall: {fileID: 2229639920476728955, guid: 357fb3723b2763741919521c467ae3ee, type: 3}
+  hitboxFall: {fileID: 861668139924243964, guid: 2abb61bc0238b654d80d231a61b1ea70, type: 3}
+  FallDamage: 35
+  pushForce: 25
+  hasShaked: 0
+  hasFallen: 0
+  TriggerJumpTime: 6
+  TriggerJumpTimeTimer: 0
+  JumpTime: 3
+  JumpTimeTimer: 0
+  IndicationTime: 2
+  IndicationTimeTimer: 0
+  FallTime: 1.5
+  FallTimeTimer: 0
 --- !u!114 &6525413994912196216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,7 +685,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6525413994912196209}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
   m_Name: 

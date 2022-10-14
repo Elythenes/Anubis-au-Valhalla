@@ -157,14 +157,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textDamage: {fileID: 8409354514928129382, guid: 0fcdc49bb218bbb479b20e4233ce65a3, type: 3}
   player: {fileID: 5191402746750135181}
+  gVolume: {fileID: 0}
   stun: 0
   invinsible: 0
   animPlayer: {fileID: 5191402746750135173}
+  timeHitStop: 0.2
+  timeRedScreen: 0
   vieActuelle: 0
   vieMax: 100
   TempsInvinsbleAfterHit: 2
   StunAfterHit: 0.2
-  timeHitStop: 0.2
 --- !u!1 &5191402746615735439
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +368,7 @@ MonoBehaviour:
   canDash: 1
   ghost: {fileID: 5191402746750135170}
   rb: {fileID: 0}
+  interaction: 97
 --- !u!114 &5191402746750135169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,7 +511,4 @@ MonoBehaviour:
   spellCollectManager: {fileID: 7471664148723569888, guid: 21f86dadeb4c5a548a337e33a40e04af, type: 3}
   collectableSpell: {fileID: 0}
   scriptContainSo: {fileID: 0}
-  skillManager: {fileID: 2219252331626062613, guid: 9790027728883f04ea2f969d32c31b74, type: 3}
-  castSpell1: 101
-  castSpell2: 114
-  spellCm: {fileID: 7471664148723569890, guid: 21f86dadeb4c5a548a337e33a40e04af, type: 3}
+  spellManager: {fileID: 2525523222210174273, guid: 21f86dadeb4c5a548a337e33a40e04af, type: 3}
