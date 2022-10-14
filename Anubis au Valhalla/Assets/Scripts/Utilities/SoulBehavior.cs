@@ -39,10 +39,10 @@ public class SoulBehavior : MonoBehaviour
             {
                 PoofAway(dirNormalised);
                 haspoofed = true;
-            }
-            rb.AddForce(dirNormalised * (force * deceleration),ForceMode2D.Force);
+            } 
+            rb.AddForce(dirNormalised + dirNormalised * (force * deceleration * (1/Vector2.Distance(transform.position,playerPos))),ForceMode2D.Force);
             //transform.position.magnitude >= playerPos.magnitude - 0.2f
-            if (Vector3.Distance(playerPos, transform.position) <= 0.6f) 
+            if (Vector3.Distance(playerPos, transform.position) <= 1) 
             {
                 Souls.instance.CollectSouls(gameObject, 1);
             }
@@ -52,6 +52,6 @@ public class SoulBehavior : MonoBehaviour
 
     public void PoofAway(Vector2 dir)
     {
-        rb.AddForce(-dir*force,ForceMode2D.Impulse);
+        rb.AddForce(-dir * Random.Range(3,poofForce+1),ForceMode2D.Impulse);
     }
 }
