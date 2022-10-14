@@ -5,19 +5,14 @@ using Pathfinding;
 using UnityEngine;
 
 public class IAManager : MonoBehaviour
-{
+{ 
     [Header("Vie et visuels")]
     public bool isElite;
     public GameObject emptyLayers;
     public LayerMask layerPlayer;
     public EnemyType enemyType;
+    public EnemyData a;
 
-    [Header("Déplacements - Général")] 
-    public bool isFleeing;
-    public bool isWondering;
-    public bool isAttacking;
-    public bool hasShaked;
-    public Vector3 pointToGOFleeing;
     
     private Rigidbody2D rb;
     private GameObject player;
@@ -28,42 +23,7 @@ public class IAManager : MonoBehaviour
     private IAstarAI ai;
     private AIDestinationSetter playerFollow;
     
-    [Header("Shaman - Déplacements")]
-    public float radiusWonderingShaman;
-    public float forceRepulseShaman;
-    public float distanceMaxPlayerShaman;
-    public float timeFleeingShaman;
-    public float timeFleeingShamanTimer;
-   
-    [Header("Shaman - Summon")] 
-    public float StartUpSummonTime;
-    public float StartUpSummonTimeTimer;
-    public float SummoningTime;
-    public float SummoningTimeTimer;
-    public GameObject corbeau;
 
-    [Header("Valkyrie - Javalot")]
-    public int puissanceAttaqueJavelot;
-    public float javelotSpeed;
-    public float StartUpJavelotTime;
-    public float StartUpJavelotTimeTimer;
-    public GameObject projectilJavelot;
-
-    [Header("Valkyrie - Jump")]
-    public GameObject indicationFall;
-    public GameObject hitboxFall;
-    private Vector2 fallPos;
-    public int FallDamage;
-    public float pushForce;
-    public bool hasFallen;
-    public float TriggerJumpTime;
-    public float TriggerJumpTimeTimer;     // Le temps que met l'attaque à se tick
-    public float JumpTime;
-    public float JumpTimeTimer;            // Le temps que met la valkyrie à sauter et disparaitre
-    public float IndicationTime;
-    public float IndicationTimeTimer;           // Le temps que met la valkyrie entre l'indication de l'attaque (zone rouge) et la retombée
-    public float FallTime;
-    public float FallTimeTimer;           // Le temps que met la valkyrie entre la retombée et le retour à son etat normal.
     
     
     public enum EnemyType
@@ -95,7 +55,7 @@ public class IAManager : MonoBehaviour
     public void Update()
     {
         SortEnemies();
-        if (!isAttacking)
+        if (!a.isAttacking)
         {
             Flip();
         }
@@ -103,21 +63,21 @@ public class IAManager : MonoBehaviour
         {
             case EnemyType.Shaman:
 
-                if (isWondering && !isFleeing)
+                if (a.isWondering && !a.isFleeing)
                 {
                     Roam();
                 }
                 CompareOwnPosToPlayer();
         
-                StartUpSummonTimeTimer += Time.deltaTime;
-                if (StartUpSummonTimeTimer >= StartUpSummonTime)
+                a.StartUpSummonTimeTimer += Time.deltaTime;
+                if (a.StartUpSummonTimeTimer >= a.StartUpSummonTime)
                 {
-                    isAttacking = true;
-                    isWondering = false;
-                    SummoningTimeTimer += Time.deltaTime;
+                    a.isAttacking = true;
+                    a.isWondering = false;
+                    a.SummoningTimeTimer += Time.deltaTime;
                 }
 
-                if (SummoningTimeTimer >= SummoningTime)
+                if (a.SummoningTimeTimer >= a.SummoningTime)
                 {
                     Summon();
                 }
@@ -126,26 +86,26 @@ public class IAManager : MonoBehaviour
             case EnemyType.Valkyrie:
                 SortEnemies();
 
-                if (!isAttacking)
+                if (!a.isAttacking)
                 {
                     Flip();
                 }
         
-                if(!isAttacking) // Cooldwn des attaques;
+                if(!a.isAttacking) // Cooldwn des attaques;
                 {
-                    StartUpJavelotTimeTimer += Time.deltaTime;
-                    TriggerJumpTimeTimer += Time.deltaTime;
+                    a.StartUpJavelotTimeTimer += Time.deltaTime;
+                    a.TriggerJumpTimeTimer += Time.deltaTime;
                 }
         
-                if (TriggerJumpTimeTimer >= TriggerJumpTime) // Attaque saut
+                if (a.TriggerJumpTimeTimer >= a.TriggerJumpTime) // Attaque saut
                 {
-                    JumpTimeTimer += Time.deltaTime;
+                    a.JumpTimeTimer += Time.deltaTime;
                     TriggerSaut();
                 }
         
-                if (JumpTimeTimer >= JumpTime)
+                if (a.JumpTimeTimer >= a.JumpTime)
                 {
-                    TriggerJumpTimeTimer = 0;
+                    a.TriggerJumpTimeTimer = 0;
                     hasShaked = false;
                     sr.enabled = false;
                     IndicationTimeTimer += Time.deltaTime;
@@ -158,7 +118,7 @@ public class IAManager : MonoBehaviour
                     FallTimeTimer += Time.deltaTime;
                 }
         
-                if (StartUpJavelotTimeTimer >= StartUpJavelotTime) // Attaque javelot
+                if (a.StartUpJavelotTimeTimer >= StartUpJavelotTime) // Attaque javelot
                 {
                     attaqueJavelot();
                 }
