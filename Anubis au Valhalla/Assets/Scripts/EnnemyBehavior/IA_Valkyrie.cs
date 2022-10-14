@@ -7,11 +7,10 @@ using UnityEngine.Serialization;
 
 public class IA_Valkyrie : MonoBehaviour
 {
-   [Header("Vie et visuels")]
-    public GameObject emptyLayers;
+   [Header("Général")]
     public bool isElite;
-    private Rigidbody2D rb;
-    public LayerMask layerPlayer;
+    public GameObject emptyLayers;
+
 
     [Header("Déplacements")]
     public GameObject player;
@@ -19,13 +18,12 @@ public class IA_Valkyrie : MonoBehaviour
     public AIPath aipath;
     private Path path;
     private SpriteRenderer sr;
+    private Rigidbody2D rb;
+    private Collider2D collider;
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
     public bool isFleeing;
-    public float forceRepulse;
-    public float distanceMinPlayer;
     public float radiusWondering;
-    public float radiusFleeing;
     public Vector2 pointToGo;
     
 
@@ -62,9 +60,18 @@ public class IA_Valkyrie : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
+        collider = GetComponent<BoxCollider2D>();
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
+
+
+
+        if (isElite)
+        {
+            puissanceAttaqueJavelot *= 2;
+                FallDamage *= 2;
+        }
     }
 
 
@@ -94,6 +101,7 @@ public class IA_Valkyrie : MonoBehaviour
                 TriggerJumpTimeTimer = 0;
                 hasShaked = false;
                 sr.enabled = false;
+                collider.enabled = false;
                 IndicationTimeTimer += Time.deltaTime;
             
         }
@@ -145,6 +153,7 @@ public class IA_Valkyrie : MonoBehaviour
             FallTimeTimer = 0;
             transform.position = fallPos;
             sr.enabled = true;
+            collider.enabled = true;
             StartCoroutine(LagFall());
         }             
     }
@@ -171,7 +180,7 @@ public class IA_Valkyrie : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         GameObject projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
-        //projJavelot.GetComponent<JavelotValkyrie>().ia = this;
+        projJavelot.GetComponent<JavelotValkyrie>().ia = this;
         isAttacking = false;
     }
 
@@ -180,11 +189,11 @@ public class IA_Valkyrie : MonoBehaviour
     {
         if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
         {
-            transform.localScale = new Vector3(-1, 2.2909f, 1);
+            transform.localScale = new Vector3(-1, transform.localScale.y,transform.localScale.z);
         }
         else if (transform.position.x > player.transform.position.x)
         {
-            transform.localScale = new Vector3(1, 2.2909f, 1);
+            transform.localScale = new Vector3(1, transform.localScale.y,transform.localScale.z);
         }
     }
     void SortEnemies()
@@ -205,7 +214,7 @@ public class IA_Valkyrie : MonoBehaviour
     {
         Debug.Log("oui");
         GameObject hitboxObj = Instantiate(hitboxFall, transform.position, Quaternion.identity);
-        //hitboxObj.GetComponent<HitBoxFallValkyrie>().ia = this;
+        hitboxObj.GetComponent<HitBoxFallValkyrie>().ia = this;
         yield return new WaitForSeconds(1);
         Destroy(hitboxObj);
         ai.canMove = true;
