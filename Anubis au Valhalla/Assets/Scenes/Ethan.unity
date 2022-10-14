@@ -728,6 +728,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   canCastSpells: 0
+  prefab: {fileID: 0}
   sOFlameArea: {fileID: 11400000, guid: b1c7d5f0800a0334bbde91ee3e4a6f93, type: 2}
   soSandstorm: {fileID: 11400000, guid: c601e1262082c43468b9d1dbb53e9083, type: 2}
   sOFireball: {fileID: 11400000, guid: e4ec7956ad4048141b771f80356505e2, type: 2}
@@ -1108,6 +1109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soul: {fileID: 1754770387313819238, guid: e8f7de0302e26e24c93142ceb5872a09, type: 3}
   soulBank: 0
+  soulText: {fileID: 0}
+  shakeIntensity: 0
 --- !u!4 &1391219300
 Transform:
   m_ObjectHideFlags: 0
@@ -1140,7 +1143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2124596671816842015, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6381360278373732847, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
       propertyPath: m_Enabled
@@ -1194,7 +1197,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Valkyrie
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6381360278373732847, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fd5a54b9b9bff1b4cbeb1d329170e9c0, type: 3}
 --- !u!1 &1764997169
 GameObject:
