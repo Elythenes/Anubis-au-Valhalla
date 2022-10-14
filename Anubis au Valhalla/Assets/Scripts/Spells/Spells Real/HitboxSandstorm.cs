@@ -11,6 +11,11 @@ public class HitboxSandstorm : MonoBehaviour
    public bool stopAttack;
    public int nbDoT;
 
+   private void Start()
+   {
+      Debug.Log("n'importe quoi");
+   }
+
    private void OnTriggerStay2D(Collider2D col)
    {
       if (col.gameObject.tag == "Monstre" && !stopAttack)

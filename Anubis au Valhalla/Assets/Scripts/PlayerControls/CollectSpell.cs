@@ -68,6 +68,7 @@ public class CollectSpell : MonoBehaviour
                 spellManager.containerA = scriptContainSo;
                 spellManager.prefabA = prefabContain;
                 Debug.Log("ajout dans le slot A");
+                spellManager.isSpell1fill = true;
             }
 
             if (Input.GetKeyDown(castSpell2))
@@ -79,6 +80,7 @@ public class CollectSpell : MonoBehaviour
                 spellManager.containerB = scriptContainSo;
                 spellManager.prefabB = prefabContain;
                 Debug.Log("ajout dans le slot B");
+                spellManager.isSpell2fill = true;
             }
         }
         else

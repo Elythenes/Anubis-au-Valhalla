@@ -49,7 +49,7 @@ public class SkillManager : MonoBehaviour
             if (sOFlameArea.canCast)
             {
                 TimeLimitedSpell(prefab, sOFlameArea.duration);
-            }
+            }//*
             
             /*if (sOFireball.canCast)
             {
@@ -62,7 +62,7 @@ public class SkillManager : MonoBehaviour
             if (soSandstorm.canCast)
             {
                 FollowingSpell(prefab);
-            }
+            }//*
         }
         
         if (sOFlameArea.cooldownTimer < sOFlameArea.cooldown && !sOFlameArea.canCast) //cooldown de la FlameArea
@@ -73,7 +73,7 @@ public class SkillManager : MonoBehaviour
         {
             sOFlameArea.canCast = true;
             sOFlameArea.cooldownTimer = 0;
-        }
+        }//*
         
         if (soSandstorm.cooldownTimer < soSandstorm.cooldown && !soSandstorm.canCast) //cooldown du Sandstorm
         {
@@ -83,7 +83,7 @@ public class SkillManager : MonoBehaviour
         {
             soSandstorm.canCast = true;
             soSandstorm.cooldownTimer = 0;
-        }
+        }//*
         
         if (sOFireball.cooldownTimer < sOFireball.cooldown && !sOFireball.canCast) //cooldown de la Fireball
         {
@@ -93,7 +93,7 @@ public class SkillManager : MonoBehaviour
         {
             sOFireball.canCast = true;
             sOFireball.cooldownTimer = 0;
-        }
+        }//*
     }
     
     
@@ -127,7 +127,7 @@ public class SkillManager : MonoBehaviour
 
         Debug.Log("Spell2 used");
         StartCoroutine(TimeLimitedGb(gbInstance, soSandstorm.duration));
-    }
+    }//*
 
     
     //Pour un Spell qui apparaît (et disparaît après avoir touché qqc (ennemi ou mur))
@@ -141,6 +141,6 @@ public class SkillManager : MonoBehaviour
         var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x,
             targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), Quaternion.AngleAxis(angle, Vector3.forward));
         StartCoroutine(TimeLimitedGb(gbInstance, sOFireball.duration));
-    }
+    }//*
 }
 
