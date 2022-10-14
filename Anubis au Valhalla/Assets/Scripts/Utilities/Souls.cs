@@ -18,7 +18,7 @@ public class Souls : MonoBehaviour
 
     void Awake()
     {
-        baseTextTransform = soulText.rectTransform;
+        //baseTextTransform = soulText.rectTransform;
         if (instance != null)
         {
             DestroyImmediate(gameObject);

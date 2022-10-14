@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HitBoxFallValkyrie : MonoBehaviour
 {
-    public EnemyData ia;
+    public IA_Valkyrie ia;
 
     // Update is called once per frame
     void Update()
@@ -20,7 +20,7 @@ public class HitBoxFallValkyrie : MonoBehaviour
         {
         Debug.Log(pushForce);
             DamageManager.instance.TakeDamage(ia.FallDamage);
-            col.GetComponentInParent<Rigidbody2D>().AddForce(pushForce*ia.fallPushForce,ForceMode2D.Impulse);
+            col.GetComponentInParent<Rigidbody2D>().AddForce(pushForce*ia.pushForce,ForceMode2D.Impulse);
         }
     }
 }
