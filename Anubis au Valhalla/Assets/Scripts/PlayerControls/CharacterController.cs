@@ -81,7 +81,7 @@ public class CharacterController : MonoBehaviour
     
     if (isDashing && !isAttacking) // Déplacement lors du dash selon la direction du regard du perso
     {
-      gameObject.GetComponent<BoxCollider2D>().enabled = false;
+      //gameObject.GetComponent<BoxCollider2D>().enabled = false;
       timerDash += Time.deltaTime;
       if (movement.x != 0 && movement.y != 0)
       {
@@ -127,7 +127,7 @@ public class CharacterController : MonoBehaviour
     }
     else if (!isDashing)
     {
-      gameObject.GetComponent<BoxCollider2D>().enabled = true;
+      //gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
     
     if (movement.x > 0 && !isAttacking) // Le personnage s'oriente vers la direction où il marche. 
