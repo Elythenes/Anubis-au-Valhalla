@@ -52,19 +52,21 @@ public class Salle : MonoBehaviour
 
     private void Start()
     {
+        if (currentEnemies.Count == 0)
+        {
+            roomDone = true;
+            SalleGennerator.instance.roomsDone++;
+        }
     }
 
     private void Update()
     {
-        if (currentEnemies.Count == 0)
-        {
-            roomDone = true;
-        }
+
     }
 
     public void RearrangeDoors()
     {
-        for (int i = 0; i < (int)SalleGennerator.DoorOrientation.West; i++)
+        for (int i = 0; i < (int)SalleGennerator.DoorOrientation.West + 1; i++)
         {
             SalleGennerator.instance.s_doors[i].transform.position = transformReferences[i].position;
         }
@@ -113,8 +115,7 @@ public class Salle : MonoBehaviour
             spawnBank -= costList[chosenValue];
             costList[chosenValue] += 3;
             var chosenPoint = point[Random.Range(0, point.Count)];
-            Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
-            currentEnemies.Add(chosenEnemy.prefab);
+            currentEnemies.Add(Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform));
             point.Remove(chosenPoint);
         }
     }
@@ -202,6 +203,15 @@ public class Salle : MonoBehaviour
             }
         }
         GenerateProps();
+    }
+
+    public void CheckForEnemies()
+    {
+        if (currentEnemies.Count == 0)
+        {
+            roomDone = true;
+            SalleGennerator.instance.roomsDone++;
+        }
     }
     
 

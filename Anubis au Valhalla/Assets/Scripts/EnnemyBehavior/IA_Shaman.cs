@@ -233,7 +233,7 @@ public class IA_Shaman : MonoBehaviour
 
     void Summon()
     {
-        Instantiate(corbeau, transform.position + new Vector3(0,3,0), Quaternion.identity);
+        SalleGennerator.instance.currentRoom.currentEnemies.Add(Instantiate(corbeau, transform.position + new Vector3(0,3,0), Quaternion.identity));
         StartUpSummonTimeTimer = 0;
         SummoningTimeTimer = 0;
         isWondering = true;

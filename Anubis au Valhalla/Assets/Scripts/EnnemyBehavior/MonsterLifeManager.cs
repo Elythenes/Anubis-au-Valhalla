@@ -77,6 +77,8 @@ public class MonsterLifeManager : MonoBehaviour
     void Die()
     {
         Souls.instance.CreateSouls(gameObject.transform.position, soulValue);
+        SalleGennerator.instance.currentRoom.currentEnemies.Remove(gameObject);
+        SalleGennerator.instance.currentRoom.CheckForEnemies();
         Destroy(gameObject);
     }
 }

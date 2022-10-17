@@ -29,11 +29,11 @@ public class SalleGennerator : MonoBehaviour
 
 
         [Header("VARIABLES INTERNES POUR DEBUG")]
-        [SerializeField] private int roomsDone = -1;
+        [SerializeField] public int roomsDone = -1;
         public DoorOrientation fromDoor = DoorOrientation.West;
         [SerializeField] private DoorOrientation toDoor;
         public DoorOrientation spawnDoor;
-        [SerializeField] private Salle currentRoom;
+        public Salle currentRoom;
         public int chosenPattern;
         public int GlobalBank = 10;
 
@@ -58,7 +58,6 @@ public class SalleGennerator : MonoBehaviour
         // Start is called before the first frame update
         void Start()
         {
-                roomsDone = -1;
                 TransitionToNextRoom(DoorOrientation.West);
         }
 
@@ -120,7 +119,6 @@ public class SalleGennerator : MonoBehaviour
         public Salle BeginGeneration()
         {
                 if (currentRoom != null) Destroy(currentRoom.gameObject);
-                roomsDone++;
                 if (roomsDone == 0)
                 {
                         return GenerateDungeon2();
@@ -158,7 +156,6 @@ public class SalleGennerator : MonoBehaviour
         public void MovePlayerToDoor(DoorOrientation doorOrientation)
         {
                 EnableDoors((DoorOrientation)Random.Range(0,4),true);
-                player.rb.velocity = Vector2.zero;
                 switch (doorOrientation)
                 {
                         case DoorOrientation.North:
