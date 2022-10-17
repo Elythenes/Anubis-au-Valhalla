@@ -118,7 +118,7 @@ public class SalleGennerator : MonoBehaviour
 
         public Salle BeginGeneration()
         {
-                if (currentRoom != null) Destroy(currentRoom.gameObject);
+                //if (currentRoom != null) Destroy(currentRoom.gameObject);
                 if (roomsDone == 0)
                 {
                         return GenerateDungeon2();
@@ -145,7 +145,7 @@ public class SalleGennerator : MonoBehaviour
                         DoorOrientation.South => DoorOrientation.North,
                         _ => fromDoor
                 };
-                if(currentRoom != null) Destroy(currentRoom.gameObject);
+                if(currentRoom != null) currentRoom.gameObject.SetActive(false);
                 currentRoom = BeginGeneration();
                 if(roomsDone != 0)MovePlayerToDoor(fromDoor);
                 ClearRoom();
