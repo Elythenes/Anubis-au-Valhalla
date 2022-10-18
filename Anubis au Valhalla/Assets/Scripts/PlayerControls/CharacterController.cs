@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -43,7 +44,6 @@ public class CharacterController : MonoBehaviour
     }
 
     rb = gameObject.GetComponent<Rigidbody2D>();
-    
     controls = new InputManager();
   }
 
@@ -83,56 +83,80 @@ public class CharacterController : MonoBehaviour
     }
     
     if (isDashing && !isAttacking) // Déplacement lors du dash selon la direction du regard du perso
-    {
-      //gameObject.GetComponent<BoxCollider2D>().enabled = false;
-      timerDash += Time.deltaTime;
-      if (movement.x != 0 && movement.y != 0)
-      {
-        rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * 2);
-      }
-      else
-      {
-        switch (facing)
-        {
-          case lookingAt.Nord:
-            rb.velocity = (new Vector2(0,1) * dashSpeed);
-            break;
-          
-          case lookingAt.Sud:
-            rb.velocity = (new Vector2(0,-1) * dashSpeed);
-            break;
-          
-          case lookingAt.Est:
-            rb.velocity = (new Vector2(1,0) * dashSpeed);
-            break;
-          
-          case lookingAt.Ouest:
-            rb.velocity = (new Vector2(-1,0) * dashSpeed);
-            break;
-          
-          case lookingAt.NordEst:
-            rb.velocity = (new Vector2(1,1) * dashSpeed);
-            break;
-          
-          case lookingAt.NordOuest:
-            rb.velocity = (new Vector2(-1,1) * dashSpeed);
-            break;
-          
-          case lookingAt.SudEst:
-            rb.velocity = (new Vector2(1,-1) * dashSpeed);
-            break;
-          
-          case lookingAt.SudOuest:
-            rb.velocity = (new Vector2(-1,-1) * dashSpeed);
-            break;
-        }
-      }
+    { 
+      Dashing();
     }
-    else if (!isDashing)
+    Flip();
+
+    if (timerDash > dashDuration) // A la fin du dash...
     {
-      //gameObject.GetComponent<BoxCollider2D>().enabled = true;
+      AttaquesNormales.instance.canAttack = true;
+      ghost.activerEffet = false;
+      isDashing = false;
+      timerDash = 0;
+      canDash = false;
+    }
+
+    if (canDash == false)
+    {
+      timerdashCooldown += Time.deltaTime;
     }
     
+    if (timerdashCooldown >= dashCooldown) // Cooldown dash
+    {
+      canDash = true;
+      timerdashCooldown = 0;
+    }
+  }
+
+  void Dashing()
+  {
+    timerDash += Time.deltaTime;
+    if (movement.x != 0 && movement.y != 0)
+    {
+      rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * 2);
+    }
+    else
+    {
+      switch (facing)
+      {
+        case lookingAt.Nord:
+          rb.velocity = (new Vector2(0,1) * dashSpeed);
+          break;
+          
+        case lookingAt.Sud:
+          rb.velocity = (new Vector2(0,-1) * dashSpeed);
+          break;
+          
+        case lookingAt.Est:
+          rb.velocity = (new Vector2(1,0) * dashSpeed);
+          break;
+          
+        case lookingAt.Ouest:
+          rb.velocity = (new Vector2(-1,0) * dashSpeed);
+          break;
+          
+        case lookingAt.NordEst:
+          rb.velocity = (new Vector2(1,1) * dashSpeed);
+          break;
+          
+        case lookingAt.NordOuest:
+          rb.velocity = (new Vector2(-1,1) * dashSpeed);
+          break;
+          
+        case lookingAt.SudEst:
+          rb.velocity = (new Vector2(1,-1) * dashSpeed);
+          break;
+          
+        case lookingAt.SudOuest:
+          rb.velocity = (new Vector2(-1,-1) * dashSpeed);
+          break;
+      }
+    }
+  }
+
+  void Flip()
+  {
     if (movement.x > 0 && !isAttacking) // Le personnage s'oriente vers la direction où il marche. 
     {
       facing = lookingAt.Est;
@@ -160,29 +184,7 @@ public class CharacterController : MonoBehaviour
       float face = transform.localScale.x;
       face = 1;
     }
-    
-    if (timerDash > dashDuration) // A la fin du dash...
-    {
-      AttaquesNormales.instance.canAttack = true;
-      ghost.activerEffet = false;
-      isDashing = false;
-      timerDash = 0;
-      canDash = false;
-    }
-
-    if (canDash == false)
-    {
-      timerdashCooldown += Time.deltaTime;
-    }
-    
-    if (timerdashCooldown >= dashCooldown) // Cooldown dash
-    {
-      canDash = true;
-      timerdashCooldown = 0;
-    }
   }
-  
-  
   
   // ---TRUC POUR GENERER LA PROCHAINE SALLE---
 

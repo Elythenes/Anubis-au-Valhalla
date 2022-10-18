@@ -32,6 +32,7 @@ public class MonsterLifeManager : MonoBehaviour
     public void TakeDamage(int damage)
     {
         StartCoroutine(AnimationDamaged());
+        transform.DOShakePosition(0.2f, 0.5f, 50);
         vieActuelle -= damage;
        healthBar.SetHealth(vieActuelle);
 
