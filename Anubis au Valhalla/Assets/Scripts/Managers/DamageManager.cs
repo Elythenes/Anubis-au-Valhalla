@@ -44,7 +44,6 @@ public class DamageManager : MonoBehaviour
     void Start()
     {
         vieActuelle = vieMax;
-        
     }
 
     private void Update()

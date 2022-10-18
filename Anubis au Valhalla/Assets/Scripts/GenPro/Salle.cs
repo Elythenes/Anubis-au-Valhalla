@@ -14,7 +14,7 @@ public class Salle : MonoBehaviour
 {
     public bool roomDone = false;
     public Transform[] transformReferences;
-    public GameObject coffreSpawnPosition;
+    public GameObject player;
     public GameObject coffre;
     public Vector2 minPos = Vector2.zero;
     public Vector2 maxPos = Vector2.zero;
@@ -44,6 +44,7 @@ public class Salle : MonoBehaviour
     }
     void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         renderer.enabled = false;
         spawnBank = SalleGennerator.instance.GlobalBank;
         SalleGennerator.instance.GlobalBank = Mathf.RoundToInt(SalleGennerator.instance.GlobalBank * 1.1f);
@@ -211,7 +212,7 @@ public class Salle : MonoBehaviour
             int coffreSpawnChance = Random.Range(1, 2);
             if (coffreSpawnChance > 1)
             {
-               Instantiate(coffre,coffreSpawnPosition.transform.position,Quaternion.identity);
+               Instantiate(coffre,player.transform.position,Quaternion.identity);
             }
         }
     }
