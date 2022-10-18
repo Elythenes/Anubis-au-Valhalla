@@ -52,7 +52,7 @@ public class SpellManager : MonoBehaviour
     {
         //SpellReplacement(containerSlot1);
         //SpellReplacement(containerSlot2);
-        if (isSpell1Fill)
+      
         if (isSpell1Fill)
         {
             SpellCooldownCalcul(ConvertSpellIndex(containerA), 1);
@@ -160,7 +160,6 @@ public class SpellManager : MonoBehaviour
         switch (spellNumber)
         {
             case SpellNumber.Fireball:
-                //Debug.Log("CD Fireball");
                 if (slotNumber == 1)
                 {
                     spellTo = prefabA.GetComponent<Fireball>().sOFireball;
@@ -312,7 +311,10 @@ public class SpellManager : MonoBehaviour
         {
             Debug.Log("erreur dans la fonction Throwing Spell");
         }
-        spellTo.canCast = false;
+
+        if (spellTo.canCast)
+        {
+            spellTo.canCast = false;
         Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 charaPos = CharacterController.instance.transform.position;
         float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
@@ -320,5 +322,7 @@ public class SpellManager : MonoBehaviour
         var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x,
             targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), Quaternion.AngleAxis(angle, Vector3.forward));
         StartCoroutine(TimeLimitedGb(gbInstance, spellTo.duration));
+        }
+
     }
 }
