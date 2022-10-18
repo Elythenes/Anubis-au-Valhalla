@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening.Core.Easing;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpellManager : MonoBehaviour
 {
@@ -15,9 +17,9 @@ public class SpellManager : MonoBehaviour
     public bool canCastSpells;
 
     [Header("SPELL SLOTS")] 
-    public GameObject spellCollectManager;
-    public List<SpellObject> containerSlot1 = new List<SpellObject>(2);
-    public List<SpellObject> containerSlot2 = new List<SpellObject>(2);
+    //public GameObject spellCollectManager;
+    //public List<SpellObject> containerSlot1 = new List<SpellObject>(2);
+    //public List<SpellObject> containerSlot2 = new List<SpellObject>(2);
     public SpellObject containerA;
     public GameObject prefabA;
     public SpellObject containerB;
@@ -27,8 +29,17 @@ public class SpellManager : MonoBehaviour
     [SerializeField] public SpellStaticAreaObject spellSAo;
     [SerializeField] public SpellFollowingAreaObject spellFAo;
     [SerializeField] public SpellThrowingObject spellTo;
-    public bool isSpell1fill = false;
-    public bool isSpell2fill = false;
+    public bool isSpell1Fill = false;
+    public bool isSpell2Fill = false;
+
+    [Header("UI")] 
+    public GameObject spriteSpell1;
+    public GameObject spriteSpell2;
+    
+    
+    
+    
+    //Fonctions Système *************************************************************************************************
     
     private void Awake()
     {
@@ -38,21 +49,31 @@ public class SpellManager : MonoBehaviour
         }
         canCastSpells = true;
     }
-    
+
+    private void Start()
+    {
+        containerA = null;
+        prefabA = null;
+        containerB = null;
+        prefabB = null;
+    }
+
     void Update()
     {
         //SpellReplacement(containerSlot1);
         //SpellReplacement(containerSlot2);
-        if (isSpell1fill)
+      
+        if (isSpell1Fill)
         {
             SpellCooldownCalcul(ConvertSpellIndex(containerA), 1);
             if (Input.GetKeyDown(spell1))
             {
+                Debug.Log("spell 1 input");
                 UseSpellSlot1(ConvertSpellIndex(containerA),1);
             }
         }
 
-        if (isSpell2fill)
+        if (isSpell2Fill)
         {
             SpellCooldownCalcul(ConvertSpellIndex(containerB), 2);
             if (Input.GetKeyDown(spell2))
@@ -104,7 +125,7 @@ public class SpellManager : MonoBehaviour
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
-                    //Debug.Log("FIRE-BAAAAALL");
+                    Debug.Log("FIRE-BAAAAALL");
                     ThrowingSpell(prefabA,spellSlot);
                     break;
             
@@ -114,7 +135,7 @@ public class SpellManager : MonoBehaviour
                     break;
             
                 case SpellNumber.FuryOfSand:
-                    //Debug.Log("FURY OF SAAAAAAND");
+                    Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabA, spellSlot);
                     break;
             }
@@ -125,7 +146,7 @@ public class SpellManager : MonoBehaviour
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
-                    //Debug.Log("FIRE-BAAAAALL");
+                    Debug.Log("FIRE-BAAAAALL");
                     ThrowingSpell(prefabB,spellSlot);
                     break;
             
@@ -135,7 +156,7 @@ public class SpellManager : MonoBehaviour
                     break;
             
                 case SpellNumber.FuryOfSand:
-                    //Debug.Log("FURY OF SAAAAAAND");
+                    Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabB, spellSlot);
                     break;
             }
@@ -149,7 +170,6 @@ public class SpellManager : MonoBehaviour
         switch (spellNumber)
         {
             case SpellNumber.Fireball:
-                //Debug.Log("CD Fireball");
                 if (slotNumber == 1)
                 {
                     spellTo = prefabA.GetComponent<Fireball>().sOFireball;
@@ -171,7 +191,7 @@ public class SpellManager : MonoBehaviour
                 break;
             
             case SpellNumber.FireArea:
-                //Debug.Log("CD Fire Area");
+                Debug.Log("CD Fire Area");
                 if (slotNumber == 1)
                 {
                     spellSAo = prefabA.GetComponent<FlameArea>().sOFlameArea;
@@ -215,6 +235,20 @@ public class SpellManager : MonoBehaviour
                 }
                 break;
                 
+        }
+    }
+
+    public void ChangeSprite(SpellObject spellObject, int spellSlot)
+    {
+        if (spellSlot == 1)
+        {
+            Debug.Log("sprite 1 changé");
+            spriteSpell1.GetComponent<RawImage>().texture = spellObject.sprite;
+        }
+        else if (spellSlot == 2)
+        {
+            Debug.Log("sprite 2 changé");
+            spriteSpell2.GetComponent<RawImage>().texture = spellObject.sprite;
         }
     }
     
@@ -301,7 +335,10 @@ public class SpellManager : MonoBehaviour
         {
             Debug.Log("erreur dans la fonction Throwing Spell");
         }
-        spellTo.canCast = false;
+
+        if (spellTo.canCast)
+        {
+            spellTo.canCast = false;
         Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 charaPos = CharacterController.instance.transform.position;
         float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
@@ -309,5 +346,7 @@ public class SpellManager : MonoBehaviour
         var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x,
             targetUser.transform.position.y+targetUser.transform.localScale.y/2, 0), Quaternion.AngleAxis(angle, Vector3.forward));
         StartCoroutine(TimeLimitedGb(gbInstance, spellTo.duration));
+        }
+
     }
 }

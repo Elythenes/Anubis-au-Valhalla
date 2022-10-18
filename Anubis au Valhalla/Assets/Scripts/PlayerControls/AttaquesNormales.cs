@@ -50,6 +50,16 @@ public class AttaquesNormales : MonoBehaviour
     public float cooldownAbandonComboTimer;
     public bool buffer;
 
+    public List<GameObject> hitBoxC = new List<GameObject>();
+    public List<Vector2> rangeAttaque = new List<Vector2>();
+    public List<bool> isC = new List<bool>();
+    public List<int> damage = new List<int>();
+    public List<float> dureeHitbox = new List<float>();
+    public List<float> stunDuration = new List<float>();
+    public List<float> stunDurationMax = new List<float>();
+    public List<float> dashImpulse = new List<float>();
+    public List<float> timeForCanDash = new List<float>();
+
 
 
 
@@ -148,7 +158,18 @@ public class AttaquesNormales : MonoBehaviour
                 buffer = true;
             }
         }*/
-        
+        for (int i = 0; i < hitBoxC.Count; i++)
+        {
+            if (stunDuration[i] >= stunDurationMax[i])
+            {
+                
+            }
+
+            if (isC[i])
+            {
+                
+            }
+        }
         if (StunDurationTimer1 >= StunDuration1)
         { 
             canAttack = true;
@@ -162,54 +183,6 @@ public class AttaquesNormales : MonoBehaviour
             StunDurationTimer1 += Time.deltaTime;
         }
         // ------------------ Gestion Combo 1-------------
-        
-        
-        // ------------------ Gestion Combo 2-------------
-       /* if (mouse.leftButton.wasPressedThisFrame)
-        {
-            if (IsC2 && !canAttack && StunDurationTimer2 <= StunDuration2) ;
-            {
-                buffer = true;
-            }
-        }*/
-        
-        if (StunDurationTimer2 >= StunDuration2)
-        { 
-            canAttack = true;
-            CharacterController.instance.isAttacking = false;
-            IsC2 = false;
-            StunDurationTimer2 = 0;
-        }
-        
-        if (IsC2)
-        {
-            StunDurationTimer2 += Time.deltaTime;
-        }
-        // ------------------ Gestion Combo 2-------------
-        
-        
-        // ------------------ Gestion Combo 3-------------
-        /*if (mouse.leftButton.wasPressedThisFrame)
-        {
-            if (IsC3 && !canAttack && StunDurationTimer3 <= StunDuration3) ;
-            {
-                buffer = true;
-            }
-        }*/
-        
-        if (StunDurationTimer3 >= StunDuration3)
-        { 
-            canAttack = true;
-            CharacterController.instance.isAttacking = false;
-            IsC3 = false;
-            StunDurationTimer3 = 0;
-        }
-        
-        if (IsC3)
-        {
-            StunDurationTimer3 += Time.deltaTime;
-        }
-        // ------------------ Gestion Combo 3-------------
     }
 
     
