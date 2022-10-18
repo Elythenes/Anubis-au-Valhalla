@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening.Core.Easing;
@@ -15,9 +16,9 @@ public class SpellManager : MonoBehaviour
     public bool canCastSpells;
 
     [Header("SPELL SLOTS")] 
-    public GameObject spellCollectManager;
-    public List<SpellObject> containerSlot1 = new List<SpellObject>(2);
-    public List<SpellObject> containerSlot2 = new List<SpellObject>(2);
+    //public GameObject spellCollectManager;
+    //public List<SpellObject> containerSlot1 = new List<SpellObject>(2);
+    //public List<SpellObject> containerSlot2 = new List<SpellObject>(2);
     public SpellObject containerA;
     public GameObject prefabA;
     public SpellObject containerB;
@@ -27,8 +28,8 @@ public class SpellManager : MonoBehaviour
     [SerializeField] public SpellStaticAreaObject spellSAo;
     [SerializeField] public SpellFollowingAreaObject spellFAo;
     [SerializeField] public SpellThrowingObject spellTo;
-    public bool isSpell1fill = false;
-    public bool isSpell2fill = false;
+    public bool isSpell1Fill = false;
+    public bool isSpell2Fill = false;
     
     private void Awake()
     {
@@ -38,21 +39,31 @@ public class SpellManager : MonoBehaviour
         }
         canCastSpells = true;
     }
-    
+
+    private void Start()
+    {
+        containerA = null;
+        prefabA = null;
+        containerB = null;
+        prefabB = null;
+    }
+
     void Update()
     {
         //SpellReplacement(containerSlot1);
         //SpellReplacement(containerSlot2);
-        if (isSpell1fill)
+        if (isSpell1Fill)
+        if (isSpell1Fill)
         {
             SpellCooldownCalcul(ConvertSpellIndex(containerA), 1);
             if (Input.GetKeyDown(spell1))
             {
+                Debug.Log("spell 1 input");
                 UseSpellSlot1(ConvertSpellIndex(containerA),1);
             }
         }
 
-        if (isSpell2fill)
+        if (isSpell2Fill)
         {
             SpellCooldownCalcul(ConvertSpellIndex(containerB), 2);
             if (Input.GetKeyDown(spell2))
@@ -104,7 +115,7 @@ public class SpellManager : MonoBehaviour
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
-                    //Debug.Log("FIRE-BAAAAALL");
+                    Debug.Log("FIRE-BAAAAALL");
                     ThrowingSpell(prefabA,spellSlot);
                     break;
             
@@ -114,7 +125,7 @@ public class SpellManager : MonoBehaviour
                     break;
             
                 case SpellNumber.FuryOfSand:
-                    //Debug.Log("FURY OF SAAAAAAND");
+                    Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabA, spellSlot);
                     break;
             }
@@ -125,7 +136,7 @@ public class SpellManager : MonoBehaviour
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
-                    //Debug.Log("FIRE-BAAAAALL");
+                    Debug.Log("FIRE-BAAAAALL");
                     ThrowingSpell(prefabB,spellSlot);
                     break;
             
@@ -135,7 +146,7 @@ public class SpellManager : MonoBehaviour
                     break;
             
                 case SpellNumber.FuryOfSand:
-                    //Debug.Log("FURY OF SAAAAAAND");
+                    Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabB, spellSlot);
                     break;
             }
@@ -171,7 +182,7 @@ public class SpellManager : MonoBehaviour
                 break;
             
             case SpellNumber.FireArea:
-                //Debug.Log("CD Fire Area");
+                Debug.Log("CD Fire Area");
                 if (slotNumber == 1)
                 {
                     spellSAo = prefabA.GetComponent<FlameArea>().sOFlameArea;
