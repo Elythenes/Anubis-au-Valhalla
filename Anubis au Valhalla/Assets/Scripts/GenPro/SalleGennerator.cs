@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -24,6 +25,7 @@ public class SalleGennerator : MonoBehaviour
         [Header("CONTENU DU DONJON")]
         public List<Salle> roomPrefab = new List<Salle>();
         public List<Salle> specialRooms;
+        private List<GameObject> itemList;
         [Header("PATTERNES")]
         public List<SalleContent_Ennemies> spawnGroups = new List<SalleContent_Ennemies>();
 
@@ -219,11 +221,22 @@ public class SalleGennerator : MonoBehaviour
         /// </summary>
         public void ClearRoom()
         {
+                foreach(GameObject item in GameObject.FindGameObjectsWithTag("Item"))
+                {
+                        Destroy(item);
+                }
+                
+                foreach(GameObject item in GameObject.FindGameObjectsWithTag("CollectableSpell"))
+                {
+                        Destroy(item);
+                }
+
                 List<GameObject> amount = CharacterController.instance.GetComponent<GhostDash>().tousLesSprites;
                 for (int i = 0; i < amount.Count; i++)
                 {
                         Destroy(CharacterController.instance.GetComponent<GhostDash>().tousLesSprites[i].gameObject);
                 }
+                
                 amount.Clear();
         }
         
