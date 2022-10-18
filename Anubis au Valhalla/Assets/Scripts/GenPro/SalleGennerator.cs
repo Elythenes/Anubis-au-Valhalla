@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -38,6 +39,7 @@ public class SalleGennerator : MonoBehaviour
         public int GlobalBank = 10;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
+        [SerializeField] private ProceduralGridMover moveGrid;
 
         public enum DoorOrientation
         {
@@ -54,6 +56,7 @@ public class SalleGennerator : MonoBehaviour
                         return;
                 }
                 instance = this;
+                moveGrid = AstarPath.active.gameObject.GetComponent<ProceduralGridMover>();
         }
         // Start is called before the first frame update
         void Start()
@@ -61,7 +64,9 @@ public class SalleGennerator : MonoBehaviour
                 TransitionToNextRoom(DoorOrientation.West);
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// Check s'il ya des monstres encore présents dans la salle, et ouvre les portes quand yen a plus
+        /// </summary>
         void Update()
         {
                 if(!currentRoom.roomDone) return;
@@ -73,7 +78,28 @@ public class SalleGennerator : MonoBehaviour
                         OpenDoors((DoorOrientation)i,true);
                 }
         }
-
+        
+        /// <summary>
+        /// première partie de la génération, check s'il doit générer le début ou la fin du donjon avant de générer une salle
+        /// </summary>
+        public Salle BeginGeneration()
+        {
+                //if (currentRoom != null) Destroy(currentRoom.gameObject);
+                if (roomsDone == 0)
+                {
+                        return GenerateDungeon2();
+                }
+                if (roomsDone == dungeonSize)
+                {
+                        return GenerateDungeon2();
+                }
+                chosenPattern = Random.Range(0, spawnGroups.Count);
+                Instantiate(s_doors[(int)spawnDoor].roomToSpawn);
+                return GenerateDungeon2();
+        }
+        /// <summary>
+        /// Active X portes puis leurs assigne une salle a spawn
+        /// </summary>
         public Salle GenerateDungeon2()
         {
                 if (roomsDone == 0)
@@ -115,25 +141,10 @@ public class SalleGennerator : MonoBehaviour
                 EnableDoors(toDoor,true);
                 return (Salle)FindObjectOfType(typeof(Salle));
         }
-
-        public Salle BeginGeneration()
-        {
-                //if (currentRoom != null) Destroy(currentRoom.gameObject);
-                if (roomsDone == 0)
-                {
-                        return GenerateDungeon2();
-                }
-                if (roomsDone == dungeonSize)
-                {
-                        return GenerateDungeon2();
-                }
-                chosenPattern = Random.Range(0, spawnGroups.Count);
-                Instantiate(s_doors[(int)spawnDoor].roomToSpawn);
-                return GenerateDungeon2();
-        }
-
-
-
+        
+        /// <summary>
+        /// Méthode qui enclenche le changement de salle
+        /// </summary>
         public void TransitionToNextRoom(DoorOrientation door)
         {
                 toDoor = door;
@@ -150,9 +161,12 @@ public class SalleGennerator : MonoBehaviour
                 if(roomsDone != 0)MovePlayerToDoor(fromDoor);
                 ClearRoom();
                 currentRoom.GetSpawnPoints(Random.Range(0,3));
+                moveGrid.target = currentRoom.AstarRef;
 
         }
-
+        /// <summary>
+        /// Bouge le joueur selon la direction de la porte qu'il a emprunté
+        /// </summary>
         public void MovePlayerToDoor(DoorOrientation doorOrientation)
         {
                 EnableDoors((DoorOrientation)Random.Range(0,4),true);
@@ -175,26 +189,34 @@ public class SalleGennerator : MonoBehaviour
                 }
                 AdjustCameraSettings();
         }
-
+        /// <summary>
+        /// Gère si les portes sont la de base 
+        /// </summary>
         public void EnableDoors(DoorOrientation index, bool state)
         {
                 
                 s_doors[(int) index].gameObject.SetActive(state);
                 OpenDoors(index,false);
         }
-
+        /// <summary>
+        /// Méthode pour ouvrir les portes
+        /// </summary>
         public void OpenDoors(DoorOrientation index, bool state)
         {
                 s_doors[(int)index].GetComponent<BoxCollider2D>().enabled = state;
         }
-        
+        /// <summary>
+        /// TP la caméra au joueur
+        /// </summary>
         public void AdjustCameraSettings()
         {
                 var cam = CameraController.cameraInstance;
                 
                 cam.transform.position = new Vector3(cam.cameraTarget.position.x,cam.cameraTarget.position.y,cam.transform.position.z);
         }
-
+        /// <summary>
+        /// Méthode pour clean la salle(sprites de ghostdash, projectiles, spells etc...) , a utiliser si les objets a destroy ne sont pas en enfant d'une salle
+        /// </summary>
         public void ClearRoom()
         {
                 List<GameObject> amount = CharacterController.instance.GetComponent<GhostDash>().tousLesSprites;

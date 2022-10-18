@@ -14,6 +14,7 @@ public class Salle : MonoBehaviour
 {
     public bool roomDone = false;
     public Transform[] transformReferences;
+    public Transform AstarRef;
     public Vector2 minPos = Vector2.zero;
     public Vector2 maxPos = Vector2.zero;
     public int spawnBank = 0;
@@ -42,9 +43,12 @@ public class Salle : MonoBehaviour
     }
     void Awake()
     {
+        AstarRef = GameObject.Find("A* Ref").GetComponent<Transform>();
         renderer.enabled = false;
         spawnBank = SalleGennerator.instance.GlobalBank;
         SalleGennerator.instance.GlobalBank = Mathf.RoundToInt(SalleGennerator.instance.GlobalBank * 1.1f);
+        
+        AstarPath.active.Scan(AstarPath.active.data.graphs);
         RearrangeDoors();
         AdjustCameraConstraints();
         GetAvailableTiles();

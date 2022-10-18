@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,6 +29,8 @@ public class CharacterController : MonoBehaviour
   
   [HideInInspector]public Rigidbody2D rb; // ca aussi
   private Vector2 movement;
+  public float astarPathTimer = 0f;
+  public float astarPathTimerMax = 1f;
 
   [Header("Utilitaires")] public KeyCode interaction;
 
@@ -65,7 +68,7 @@ public class CharacterController : MonoBehaviour
       }
       
     }
-  
+
     if (isDashing == false && !isAttacking) // Déplacments hors dash.
     {
       rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
