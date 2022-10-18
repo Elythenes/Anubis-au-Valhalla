@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7471664148723569888
+--- !u!1 &7988764363769372766
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7471664148723569889}
-  - component: {fileID: 7471664148723569890}
-  - component: {fileID: 2525523222210174273}
+  - component: {fileID: 7988764363769372767}
+  - component: {fileID: 3053741630380255743}
   m_Layer: 0
-  m_Name: Spell Collect Manager
+  m_Name: Spell Collect Manager 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7471664148723569889
+--- !u!4 &7988764363769372767
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7471664148723569888}
+  m_GameObject: {fileID: 7988764363769372766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,27 +32,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7471664148723569890
+--- !u!114 &3053741630380255743
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7471664148723569888}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2db7574125a644caed2ef25651baed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  containerSlot1: []
-  containerSlot2: []
---- !u!114 &2525523222210174273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7471664148723569888}
+  m_GameObject: {fileID: 7988764363769372766}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c4fd2b52bbbb8346a9ea36d9fae53aa, type: 3}
@@ -66,9 +51,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   canCastSpells: 1
-  spellCollectManager: {fileID: 7471664148723569888}
-  containerSlot1: []
-  containerSlot2: []
   containerA: {fileID: 0}
   prefabA: {fileID: 0}
   containerB: {fileID: 0}
@@ -76,5 +58,7 @@ MonoBehaviour:
   spellSAo: {fileID: 0}
   spellFAo: {fileID: 0}
   spellTo: {fileID: 0}
-  isSpell1fill: 0
-  isSpell2fill: 0
+  isSpell1Fill: 0
+  isSpell2Fill: 0
+  spriteSpell1: {fileID: 0}
+  spriteSpell2: {fileID: 0}

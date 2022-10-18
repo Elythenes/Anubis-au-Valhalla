@@ -26,22 +26,6 @@ public class CollectSpell : MonoBehaviour
         {
             isSpellCollectable = true;
             collectableSpell = other.gameObject;
-            if (Input.GetKey(interaction))
-            {
-                Debug.Log("ajout dans le slot A");
-                SpellManager.instance.containerA = other.gameObject.GetComponent<ContainScriptableObject>().spellInside;
-                SpellManager.instance.prefabA = other.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
-                SpellManager.instance.isSpell1Fill = true;
-                SpellManager.instance.ChangeSprite(other.gameObject.GetComponent<ContainScriptableObject>().spellInside,1);
-            }
-            else if (Input.GetKey(KeyCode.F))
-            {
-                Debug.Log("ajout dans le slot B");
-                SpellManager.instance.containerB = other.gameObject.GetComponent<ContainScriptableObject>().spellInside;
-                SpellManager.instance.prefabB = other.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
-                SpellManager.instance.isSpell2Fill = true;
-                SpellManager.instance.ChangeSprite(other.gameObject.GetComponent<ContainScriptableObject>().spellInside,2);
-            }
         }
     }
 
@@ -51,6 +35,31 @@ public class CollectSpell : MonoBehaviour
         {
             isSpellCollectable = false;
             collectableSpell = null;
+        }
+    }
+
+    private void Update()
+    {
+        if (isSpellCollectable)
+        {
+            if (Input.GetKeyDown(interaction))
+            {
+                Debug.Log("ajout dans le slot A");
+                SpellManager.instance.containerA = collectableSpell.GetComponent<ContainScriptableObject>().spellInside;
+                SpellManager.instance.prefabA = collectableSpell.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
+                SpellManager.instance.isSpell1Fill = true;
+                SpellManager.instance.ChangeSprite(collectableSpell.gameObject.GetComponent<ContainScriptableObject>().spellInside,1);
+                Destroy(collectableSpell.gameObject);
+            }
+            else if (Input.GetKeyDown(KeyCode.F))
+            {
+                Debug.Log("ajout dans le slot B");
+                SpellManager.instance.containerB = collectableSpell.gameObject.GetComponent<ContainScriptableObject>().spellInside;
+                SpellManager.instance.prefabB = collectableSpell.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
+                SpellManager.instance.isSpell2Fill = true;
+                SpellManager.instance.ChangeSprite(collectableSpell.gameObject.GetComponent<ContainScriptableObject>().spellInside,2);
+                Destroy(collectableSpell.gameObject);
+            }
         }
     }
 

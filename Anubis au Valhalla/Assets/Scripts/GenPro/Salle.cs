@@ -15,6 +15,8 @@ public class Salle : MonoBehaviour
     public bool roomDone = false;
     public Transform[] transformReferences;
     public Transform AstarRef;
+    public GameObject player;
+    public GameObject coffre;
     public Vector2 minPos = Vector2.zero;
     public Vector2 maxPos = Vector2.zero;
     public int spawnBank = 0;
@@ -43,6 +45,7 @@ public class Salle : MonoBehaviour
     }
     void Awake()
     {
+        player = GameObject.FindWithTag("Player");
         AstarRef = GameObject.Find("A* Ref").GetComponent<Transform>();
         renderer.enabled = false;
         spawnBank = SalleGennerator.instance.GlobalBank;
@@ -211,10 +214,19 @@ public class Salle : MonoBehaviour
 
     public void CheckForEnemies()
     {
+        
+        Debug.Log("oui");
         if (currentEnemies.Count == 0)
         {
             roomDone = true;
             SalleGennerator.instance.roomsDone++;
+            //int coffreSpawnChance = Random.Range(1, 2);
+            //Debug.Log(coffreSpawnChance);
+           // if (coffreSpawnChance == 2)
+            //{
+                Debug.Log("coffre");
+                Instantiate(coffre,player.transform.position,Quaternion.identity);
+           // }
         }
     }
     
