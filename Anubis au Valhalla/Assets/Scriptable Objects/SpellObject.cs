@@ -21,6 +21,6 @@ public abstract class SpellObject : ScriptableObject
     public string description;
     
     [Header("GRAPH")]
-    public Image sprite;
+    public Texture sprite;
     
 }
