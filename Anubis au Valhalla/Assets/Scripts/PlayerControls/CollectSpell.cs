@@ -7,53 +7,52 @@ using UnityEngine;
 public class CollectSpell : MonoBehaviour
 {
     public KeyCode interaction;
-
-    public bool isSpellCollectable = false;
-
-    public GameObject spellCollectManager;
-    public GameObject collectableSpell;
-    public SpellObject scriptContainSo;
-    public GameObject prefabContain;
-    
-    public SpellManager spellManager;
-    private KeyCode castSpell1;
-    private KeyCode castSpell2;
     //pas oublier de faire la référence avec le skillManager pour pas lancer de spell quand on en ramasse
-
+    
+    [Header("DEBUG")]
+    public bool isSpellCollectable = false;
+    public GameObject collectableSpell;
+    
     void Start()
     {
         isSpellCollectable = false;
         Debug.Log("isSpellCollectable commence à false");
-        castSpell1 = spellManager.spell1;
-        castSpell2 = spellManager.spell2;
+
     }
 
-    void Update()
-    {
-        CollectingSpell();
-    }
-
-    private void OnTriggerEnter2D(Collider2D other) //détecte si un spell est sur le joueur
+    private void OnTriggerStay2D(Collider2D other) //détecte si un spell est sur le joueur
     {
         if (other.gameObject.CompareTag("CollectableSpell"))
         {
             isSpellCollectable = true;
             collectableSpell = other.gameObject;
-            scriptContainSo = other.gameObject.GetComponent<ContainScriptableObject>().spellInside;
-            prefabContain = other.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
+            if (Input.GetKey(interaction))
+            {
+                Debug.Log("ajout dans le slot A");
+                SpellManager.instance.containerA = other.gameObject.GetComponent<ContainScriptableObject>().spellInside;
+                SpellManager.instance.prefabA = other.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
+                SpellManager.instance.isSpell1Fill = true;
+            }
+            else if (Input.GetKey(KeyCode.F))
+            {
+                Debug.Log("ajout dans le slot B");
+                SpellManager.instance.containerB = other.gameObject.GetComponent<ContainScriptableObject>().spellInside;
+                SpellManager.instance.prefabB = other.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
+                SpellManager.instance.isSpell2Fill = true;
+            }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other) 
+    private void OnTriggerExit2D(Collider2D other) //c'est du Debug, ne sert pas vraiment
     {
         if (other.gameObject.CompareTag("CollectableSpell"))
         {
             isSpellCollectable = false;
             collectableSpell = null;
-            scriptContainSo = null;
         }
     }
 
+    /* ancien code de ses morts (je le garde, on sait jamais :D)
     void CollectingSpell() //fonction pour ramasser un spell
     {
         if (isSpellCollectable == true && Input.GetKey(interaction))
@@ -68,7 +67,7 @@ public class CollectSpell : MonoBehaviour
                 spellManager.containerA = scriptContainSo;
                 spellManager.prefabA = prefabContain;
                 Debug.Log("ajout dans le slot A");
-                spellManager.isSpell1fill = true;
+                spellManager.isSpell1Fill = true;
             }
 
             if (Input.GetKeyDown(castSpell2))
@@ -80,12 +79,12 @@ public class CollectSpell : MonoBehaviour
                 spellManager.containerB = scriptContainSo;
                 spellManager.prefabB = prefabContain;
                 Debug.Log("ajout dans le slot B");
-                spellManager.isSpell2fill = true;
+                spellManager.isSpell2Fill = true;
             }
         }
         else
         {
             //skillManager.canCastSpells = true;
         }
-    }
+    }*/
 }
