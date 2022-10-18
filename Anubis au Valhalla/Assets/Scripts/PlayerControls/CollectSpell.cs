@@ -32,6 +32,7 @@ public class CollectSpell : MonoBehaviour
                 SpellManager.instance.containerA = other.gameObject.GetComponent<ContainScriptableObject>().spellInside;
                 SpellManager.instance.prefabA = other.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
                 SpellManager.instance.isSpell1Fill = true;
+                SpellManager.instance.ChangeSprite(other.gameObject.GetComponent<ContainScriptableObject>().spellInside,1);
             }
             else if (Input.GetKey(KeyCode.F))
             {
@@ -39,6 +40,7 @@ public class CollectSpell : MonoBehaviour
                 SpellManager.instance.containerB = other.gameObject.GetComponent<ContainScriptableObject>().spellInside;
                 SpellManager.instance.prefabB = other.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
                 SpellManager.instance.isSpell2Fill = true;
+                SpellManager.instance.ChangeSprite(other.gameObject.GetComponent<ContainScriptableObject>().spellInside,2);
             }
         }
     }
