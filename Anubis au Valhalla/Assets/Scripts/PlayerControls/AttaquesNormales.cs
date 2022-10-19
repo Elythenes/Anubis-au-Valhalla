@@ -99,7 +99,7 @@ public class AttaquesNormales : MonoBehaviour
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
                         comboActuel++;
-                        Combo1();     
+                        Combo(0);     
                     }
                     
                     break;
@@ -111,7 +111,7 @@ public class AttaquesNormales : MonoBehaviour
                         cooldownAbandonComboTimer = 0;
                        // buffer = false;
                         comboActuel++;
-                        Combo2();
+                        Combo(1);
                     }
                     
                     break;
@@ -123,7 +123,7 @@ public class AttaquesNormales : MonoBehaviour
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
                         comboActuel = 0;
-                        Combo3();
+                        Combo(2);
                     }
                     break;
                     
@@ -162,15 +162,20 @@ public class AttaquesNormales : MonoBehaviour
         {
             if (stunDuration[i] >= stunDurationMax[i])
             {
-                
+                Debug.Log("ah");
+                canAttack = true;
+                CharacterController.instance.isAttacking = false;
+                isC[i] = false;
+                stunDuration[i] = 0;
             }
-
-            if (isC[i])
+            if (!isC[i])
             {
-                
+                continue;
             }
+            stunDuration[i] += stunDurationMax[i];
+
         }
-        if (StunDurationTimer1 >= StunDuration1)
+        /*if (StunDurationTimer1 >= StunDuration1)
         { 
             canAttack = true;
             CharacterController.instance.isAttacking = false;
@@ -181,16 +186,16 @@ public class AttaquesNormales : MonoBehaviour
         if (IsC1)
         {
             StunDurationTimer1 += Time.deltaTime;
-        }
+        }*/
         // ------------------ Gestion Combo 1-------------
     }
 
     
 
-    public void Combo1() // Dash légèrement vers l'avant puis crée une hitbox devant le perso et touche les ennemis
+    public void Combo(int index) // Dash légèrement vers l'avant puis crée une hitbox devant le perso et touche les ennemis
     {
         abandonOn = true;
-        IsC1 = true;
+        isC[index] = true;
         canAttack = false;
         CharacterController.instance.isAttacking = true;
         Vector2 charaPos = CharacterController.instance.transform.position;
@@ -199,13 +204,15 @@ public class AttaquesNormales : MonoBehaviour
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
-        CharacterController.instance.rb.AddForce(moveDirection * dashImpulseC1, ForceMode2D.Impulse);
+        CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
         
-        GameObject swordObj = Instantiate(hitboxC1, new Vector3(999,99,0),Quaternion.identity);
+        GameObject swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
         swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
     }
     
+    
+    /*
     public void Combo2() // La même chose mais la hitbox est plus alongée et le dash plus long et rapide
     {
         abandonOn = true;
@@ -244,6 +251,6 @@ public class AttaquesNormales : MonoBehaviour
         GameObject swordObj = Instantiate(hitboxC3, new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
         swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
-    }
+    }*/
 }
 
