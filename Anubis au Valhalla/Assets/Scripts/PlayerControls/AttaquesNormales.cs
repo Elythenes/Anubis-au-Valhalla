@@ -12,43 +12,7 @@ public class AttaquesNormales : MonoBehaviour
     private InputManager controls;
     public static AttaquesNormales instance;
 
-    [Header("Stats Attaque 1")] 
-    public GameObject hitboxC1;
-    public Vector2 rangeAttaque1;
-    public bool IsC1;
-    public int damageC1;
-    public float dureeHitbox1;
-    public float StunDuration1;
-    public float StunDurationTimer1;
-    public float dashImpulseC1;
-
-    [Header("Stats Attaque 2")] 
-    public GameObject hitboxC2;
-    public Vector2 rangeAttaque2;
-    public bool IsC2;
-    public int damageC2;
-    public float dureeHitbox2;
-    public float StunDuration2;
-    public float StunDurationTimer2;
-    public float dashImpulseC2;
-    
-    [Header("Stats Attaque 3")] 
-    public GameObject hitboxC3;
-    public Vector2 rangeAttaque3;
-    public bool IsC3;
-    public int damageC3;
-    public float dureeHitbox3;
-    public float StunDuration3;
-    public float StunDurationTimer3;
-    public float dashImpulseC3;
-    
-    [Header("Général")]
-    public bool abandonOn;
-    public bool canAttack;
-    public int comboActuel;
-    public float cooldownAbandonCombo;
-    public float cooldownAbandonComboTimer;
-    public bool buffer;
+    [Header("Stats Attaques")]
 
     public List<GameObject> hitBoxC = new List<GameObject>();
     public List<Vector2> rangeAttaque = new List<Vector2>();
@@ -59,11 +23,14 @@ public class AttaquesNormales : MonoBehaviour
     public List<float> stunDurationMax = new List<float>();
     public List<float> dashImpulse = new List<float>();
     public List<float> timeForCanDash = new List<float>();
-
-
-
-
-
+    
+    [Header("Général")]
+    public bool abandonOn;
+    public bool canAttack;
+    public int comboActuel;
+    public float cooldownAbandonCombo;
+    public float cooldownAbandonComboTimer;
+    public bool buffer;
     private void Awake()
     {
         if (instance == null)
@@ -99,7 +66,7 @@ public class AttaquesNormales : MonoBehaviour
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
                         comboActuel++;
-                        Combo1();     
+                        Combo(0);     
                     }
                     
                     break;
@@ -111,7 +78,7 @@ public class AttaquesNormales : MonoBehaviour
                         cooldownAbandonComboTimer = 0;
                        // buffer = false;
                         comboActuel++;
-                        Combo2();
+                        Combo(1);
                     }
                     
                     break;
@@ -123,7 +90,7 @@ public class AttaquesNormales : MonoBehaviour
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
                         comboActuel = 0;
-                        Combo3();
+                        Combo(2);
                     }
                     break;
                     
@@ -146,10 +113,7 @@ public class AttaquesNormales : MonoBehaviour
         }
         
         // ------------------ Gestion Abandon du Combo ---------------
-        
-        
-        
-        // ------------------ Gestion Combo 1-------------
+        // ------------------ Gestion Combo -------------
       
         /*if (IsC1 && !canAttack && StunDurationTimer1 <= StunDuration1 && abandonOn)
         {
@@ -158,39 +122,34 @@ public class AttaquesNormales : MonoBehaviour
                 buffer = true;
             }
         }*/
+        //ComboTimers(stunDurationMax,stunDuration);
         for (int i = 0; i < hitBoxC.Count; i++)
         {
+            if (!isC[i])
+            {
+                continue;
+            }
             if (stunDuration[i] >= stunDurationMax[i])
             {
-                
+                Debug.Log(stunDuration[i] >= stunDurationMax[i]);
+                canAttack = true;
+                CharacterController.instance.isAttacking = false;
+                isC[i] = false;
+                stunDuration[i] = 0;
             }
+            stunDuration[i] += Time.deltaTime;
 
-            if (isC[i])
-            {
-                
-            }
         }
-        if (StunDurationTimer1 >= StunDuration1)
-        { 
-            canAttack = true;
-            CharacterController.instance.isAttacking = false;
-            IsC1 = false;
-            StunDurationTimer1 = 0;
-        }
-        
-        if (IsC1)
-        {
-            StunDurationTimer1 += Time.deltaTime;
-        }
-        // ------------------ Gestion Combo 1-------------
+
+        // ------------------ Gestion Combo-------------
     }
-
-    
-
-    public void Combo1() // Dash légèrement vers l'avant puis crée une hitbox devant le perso et touche les ennemis
+    //<Combo 1>/ Dash légèrement vers l'avant puis crée une hitbox devant le perso et touche les ennemis
+    //<Combo 2>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
+    //<Combo 3>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
+    public void Combo(int index) 
     {
         abandonOn = true;
-        IsC1 = true;
+        isC[index] = true;
         canAttack = false;
         CharacterController.instance.isAttacking = true;
         Vector2 charaPos = CharacterController.instance.transform.position;
@@ -199,49 +158,9 @@ public class AttaquesNormales : MonoBehaviour
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
-        CharacterController.instance.rb.AddForce(moveDirection * dashImpulseC1, ForceMode2D.Impulse);
+        CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
         
-        GameObject swordObj = Instantiate(hitboxC1, new Vector3(999,99,0),Quaternion.identity);
-        swordObj.transform.position = CharacterController.instance.transform.position;
-        swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
-    }
-    
-    public void Combo2() // La même chose mais la hitbox est plus alongée et le dash plus long et rapide
-    {
-        abandonOn = true;
-        IsC2 = true;
-        canAttack = false;
-        CharacterController.instance.isAttacking = true;
-        Vector2 charaPos = CharacterController.instance.transform.position;
-        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-        Vector3 moveDirection = (mousePos - charaPos);
-        moveDirection.z = 0;
-        moveDirection.Normalize();
-        CharacterController.instance.rb.AddForce(moveDirection * dashImpulseC2, ForceMode2D.Impulse);
-        
-        
-        GameObject swordObj = Instantiate(hitboxC2, new Vector3(999,99,0),Quaternion.identity);
-        swordObj.transform.position = CharacterController.instance.transform.position;
-        swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
-    }
-    
-    public void Combo3() // La même chose mais la hitbox est plus alongée et le dash plus long et rapide
-    {
-        abandonOn = true;
-        IsC3 = true;
-        canAttack = false;
-        CharacterController.instance.isAttacking = true;
-        Vector2 charaPos = CharacterController.instance.transform.position;
-        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-        Vector3 moveDirection = (mousePos - charaPos);
-        moveDirection.z = 0;
-        moveDirection.Normalize();
-        CharacterController.instance.rb.AddForce(moveDirection * dashImpulseC3, ForceMode2D.Impulse);
-        
-        
-        GameObject swordObj = Instantiate(hitboxC3, new Vector3(999,99,0),Quaternion.identity);
+        GameObject swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
         swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
     }

@@ -26,8 +26,8 @@ public class DamageManager : MonoBehaviour
     public float timeRedScreen;
 
     [Header("Stats")]
-    public float vieActuelle;
-    public float vieMax;
+    public int vieActuelle;
+    public int vieMax;
     public float TempsInvinsbleAfterHit;
     public float StunAfterHit;
     private bool stopWaiting;
@@ -44,6 +44,7 @@ public class DamageManager : MonoBehaviour
     void Start()
     {
         vieActuelle = vieMax;
+        LifeBarManager.instance.SetMaxHealth(vieMax);
     }
 
     private void Update()
@@ -65,6 +66,7 @@ public class DamageManager : MonoBehaviour
             StartCoroutine(RedScreen(timeRedScreen));
             HitStop(timeHitStop*(damage/10));
             vieActuelle -= damage;
+            LifeBarManager.instance.SetHealth(vieActuelle);
             StartCoroutine(TempsInvinsibilité());
             StartCoroutine(TempsStun());
             textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());

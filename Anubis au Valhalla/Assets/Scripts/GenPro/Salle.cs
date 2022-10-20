@@ -116,7 +116,7 @@ public class Salle : MonoBehaviour
         while (spawnBank > costList.Min()) //tries to buy enemies as long as it can afford at least one of them
         {
             var chosenValue = Random.Range(0, costList.Count);
-            if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());
+            if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());//if it cant afford the most expensive enemy, it will buy the cheapest one
             Debug.Log(chosenValue);
             var chosenEnemy = SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn[chosenValue];
             spawnBank -= costList[chosenValue];
