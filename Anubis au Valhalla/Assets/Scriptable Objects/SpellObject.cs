@@ -17,8 +17,8 @@ public abstract class SpellObject : ScriptableObject
     public SpellType type;
     public string nom;
     public int spellIndex;
-    [TextArea(15,20)]
-    public string description;
+    [TextArea(10,20)] public string description;
+    [TextArea(5, 10)] public string citation;
     
     [Header("GRAPH")]
     public Texture sprite;

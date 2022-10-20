@@ -31,14 +31,8 @@ public class SpellManager : MonoBehaviour
     [SerializeField] public SpellThrowingObject spellTo;
     public bool isSpell1Fill = false;
     public bool isSpell2Fill = false;
+    
 
-    [Header("UI")] 
-    public GameObject spriteSpell1;
-    public GameObject spriteSpell2;
-    
-    
-    
-    
     //Fonctions Système *************************************************************************************************
     
     private void Awake()
@@ -237,20 +231,7 @@ public class SpellManager : MonoBehaviour
                 
         }
     }
-
-    public void ChangeSprite(SpellObject spellObject, int spellSlot)
-    {
-        if (spellSlot == 1)
-        {
-            Debug.Log("sprite 1 changé");
-            spriteSpell1.GetComponent<RawImage>().texture = spellObject.sprite;
-        }
-        else if (spellSlot == 2)
-        {
-            Debug.Log("sprite 2 changé");
-            spriteSpell2.GetComponent<RawImage>().texture = spellObject.sprite;
-        }
-    }
+    
     
     //Script des spells ************************************************************************************************
     
