@@ -19,7 +19,7 @@ public class AttaquesNormales : MonoBehaviour
     public List<bool> isC = new List<bool>();
     public List<int> damage = new List<int>();
     public List<float> dureeHitbox = new List<float>();
-    List<float> stunDuration = new List<float>();
+    [HideInInspector] public List<float> stunDuration = new List<float>();
     public List<float> stunDurationMax = new List<float>();
     public List<float> dashImpulse = new List<float>();
     public List<float> timeForCanDash = new List<float>();
