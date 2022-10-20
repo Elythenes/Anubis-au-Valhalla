@@ -215,7 +215,6 @@ public class Salle : MonoBehaviour
     public void CheckForEnemies()
     {
         
-        Debug.Log("oui");
         if (currentEnemies.Count == 0)
         {
             roomDone = true;
@@ -224,8 +223,7 @@ public class Salle : MonoBehaviour
             //Debug.Log(coffreSpawnChance);
            // if (coffreSpawnChance == 2)
             //{
-                Debug.Log("coffre");
-                Instantiate(coffre,player.transform.position,Quaternion.identity);
+            Instantiate(coffre,player.transform.position,Quaternion.identity);
            // }
         }
     }

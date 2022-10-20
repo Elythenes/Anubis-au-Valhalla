@@ -15,7 +15,6 @@ public class GhostDash : MonoBehaviour
     public void OnEnable()
     {
         ghostDelaySeconds = ghostDelay;
-        Debug.Log(ghostDelaySeconds);
     }
     
     void Update()
@@ -37,7 +36,6 @@ public class GhostDash : MonoBehaviour
 
         if (ghostDelaySeconds < 0)
         {
-            Debug.Log("stop");
             enabled = false;
         }
     }

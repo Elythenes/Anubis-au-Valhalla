@@ -23,7 +23,8 @@ public class AttaquesNormales : MonoBehaviour
     public List<float> stunDurationMax = new List<float>();
     public List<float> dashImpulse = new List<float>();
     public List<float> timeForCanDash = new List<float>();
-    
+    public List<float> dashTimers = new List<float>();
+
     [Header("Général")]
     public bool abandonOn;
     public bool canAttack;
@@ -141,8 +142,16 @@ public class AttaquesNormales : MonoBehaviour
                 CharacterController.instance.isAttacking = false;
                 isC[i] = false;
                 stunDuration[i] = 0;
+                dashTimers[i] = 0;
+            }
+
+            if (dashTimers[i] >= timeForCanDash[i])
+            {
+                CharacterController.instance.canDash = true;
             }
             stunDuration[i] += Time.deltaTime;
+            dashTimers[i] += Time.deltaTime;
+            
 
         }
 

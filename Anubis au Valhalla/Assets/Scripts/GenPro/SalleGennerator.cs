@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Pathfinding;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -39,9 +40,10 @@ public class SalleGennerator : MonoBehaviour
         public Salle currentRoom;
         public int chosenPattern;
         public int GlobalBank = 10;
+        public CanvasGroup transitionCanvas;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
-        [SerializeField] private ProceduralGridMover moveGrid;
+        private ProceduralGridMover moveGrid;
 
         public enum DoorOrientation
         {
@@ -71,6 +73,11 @@ public class SalleGennerator : MonoBehaviour
         /// </summary>
         void Update()
         {
+                
+                if (roomsDone == 0)
+                {
+                        return;
+                }
                 if(!currentRoom.roomDone) return;
 
                 for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
@@ -158,13 +165,16 @@ public class SalleGennerator : MonoBehaviour
                         DoorOrientation.South => DoorOrientation.North,
                         _ => fromDoor
                 };
-                if(currentRoom != null) currentRoom.gameObject.SetActive(false);
-                currentRoom = BeginGeneration();
-                if(roomsDone != 0)MovePlayerToDoor(fromDoor);
-                ClearRoom();
-                currentRoom.GetSpawnPoints(Random.Range(0,3));
-                moveGrid.target = currentRoom.AstarRef;
-
+                transitionCanvas.DOFade(1, 0.25f).OnComplete(() =>
+                {
+                        if (currentRoom != null) currentRoom.gameObject.SetActive(false);
+                        currentRoom = BeginGeneration();
+                        if (roomsDone != 0) MovePlayerToDoor(fromDoor);
+                        ClearRoom();
+                        currentRoom.GetSpawnPoints(Random.Range(0, 3));
+                        moveGrid.target = currentRoom.AstarRef;
+                        transitionCanvas.DOFade(0, 0.25f);
+                });
         }
         /// <summary>
         /// Bouge le joueur selon la direction de la porte qu'il a emprunté

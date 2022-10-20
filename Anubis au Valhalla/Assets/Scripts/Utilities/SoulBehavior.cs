@@ -6,7 +6,6 @@ public class SoulBehavior : MonoBehaviour
 {
     public Vector3 playerPos;
     [SerializeField] private float force = 3f;
-    [SerializeField] private float minForce = 1f;
     [SerializeField] private float timer = 1;
     [SerializeField] private float deceleration = 0.3f;
     [SerializeField] private float poofForce = 3f;
@@ -39,7 +38,12 @@ public class SoulBehavior : MonoBehaviour
             {
                 PoofAway(dirNormalised);
                 haspoofed = true;
-            } 
+            }
+
+            if (Vector3.Distance(playerPos, transform.position) <= 3)
+            {
+                
+            }
             rb.AddForce(dirNormalised + dirNormalised * (force * deceleration * (1/Vector2.Distance(transform.position,playerPos))),ForceMode2D.Force);
             if (Vector3.Distance(playerPos, transform.position) <= 1) 
             {

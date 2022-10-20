@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -65,6 +66,7 @@ public class DamageManager : MonoBehaviour
         {
             StartCoroutine(RedScreen(timeRedScreen));
             HitStop(timeHitStop*(damage/10));
+            Time.timeScale = 0.3f;
             vieActuelle -= damage;
             LifeBarManager.instance.SetHealth(vieActuelle);
             StartCoroutine(TempsInvinsibilité());
@@ -83,7 +85,6 @@ public class DamageManager : MonoBehaviour
     {
         if (stopWaiting)
             return;
-        Time.timeScale = 0.0f;
         StartCoroutine(WaitStop(duration));
     }
 
