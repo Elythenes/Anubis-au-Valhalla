@@ -29,12 +29,12 @@ public class MonsterLifeManager : MonoBehaviour
         vieActuelle = vieMax;
     }
     
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, float staggerDuration)
     {
         StartCoroutine(AnimationDamaged());
-        transform.DOShakePosition(0.2f, 0.5f, 50);
-        vieActuelle -= damage;
-       healthBar.SetHealth(vieActuelle);
+        transform.DOShakePosition(staggerDuration, 0.5f, 50);
+        vieActuelle -= damage; 
+        healthBar.SetHealth(vieActuelle);
 
         if (vieActuelle <= 0)
         {

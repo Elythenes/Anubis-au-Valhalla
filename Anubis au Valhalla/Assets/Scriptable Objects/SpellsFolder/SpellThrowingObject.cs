@@ -12,6 +12,7 @@ public class SpellThrowingObject : SpellObject
     [HideInInspector] public float cooldownTimer;
     public float cooldown;
     public bool canCast;
+    public float stagger;
     
     public void Awake()
     {

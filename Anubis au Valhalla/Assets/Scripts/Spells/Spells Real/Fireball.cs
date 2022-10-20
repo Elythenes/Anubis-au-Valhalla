@@ -23,7 +23,7 @@ public class Fireball : MonoBehaviour
         if (col.gameObject.tag == "Monstre")
         {
             Debug.Log("touché");
-            col.GetComponent<MonsterLifeManager>().TakeDamage(sOFireball.puissanceAttaque);
+            col.GetComponent<MonsterLifeManager>().TakeDamage(sOFireball.puissanceAttaque, sOFireball.stagger);
             col.GetComponent<MonsterLifeManager>().DamageText(sOFireball.puissanceAttaque);
         }
     }

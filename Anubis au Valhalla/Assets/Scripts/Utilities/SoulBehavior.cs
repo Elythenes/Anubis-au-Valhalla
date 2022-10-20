@@ -41,7 +41,6 @@ public class SoulBehavior : MonoBehaviour
                 haspoofed = true;
             } 
             rb.AddForce(dirNormalised + dirNormalised * (force * deceleration * (1/Vector2.Distance(transform.position,playerPos))),ForceMode2D.Force);
-            //transform.position.magnitude >= playerPos.magnitude - 0.2f
             if (Vector3.Distance(playerPos, transform.position) <= 1) 
             {
                 Souls.instance.CollectSouls(gameObject, 1);

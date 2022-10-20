@@ -27,7 +27,7 @@ public class FlameArea : MonoBehaviour
             if (tempsReloadHitFlameAreaTimer > sOFlameArea.espacementDoT && col.gameObject.tag == "Monstre")
             {
                 Debug.Log("touché");
-                col.GetComponent<MonsterLifeManager>().TakeDamage(sOFlameArea.puissanceAttaque);
+                col.GetComponent<MonsterLifeManager>().TakeDamage(sOFlameArea.puissanceAttaque,sOFlameArea.stagger);
                 col.GetComponent<MonsterLifeManager>().DamageText(sOFlameArea.puissanceAttaque);
                 tempsReloadHitFlameAreaTimer = 0;
             }

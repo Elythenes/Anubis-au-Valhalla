@@ -8,6 +8,7 @@ using Weapons;
 public class Combo1Hitbox : MonoBehaviour
 {
     [Range(0, 2)] public int comboNumber;
+    public float stagger = 0.2f;
 
     private void Start()
     {
@@ -20,7 +21,7 @@ public class Combo1Hitbox : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Monstre"))
         {
-            col.gameObject.GetComponent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]));
+            col.gameObject.GetComponent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
             col.gameObject.GetComponent<MonsterLifeManager>().DamageText(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]));
         }
     }

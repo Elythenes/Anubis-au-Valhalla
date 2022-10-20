@@ -13,6 +13,7 @@ public class SpellStaticAreaObject : SpellObject
     [HideInInspector] public float cooldownTimer;
     public float cooldown = 1f;
     public bool canCast;
+    public float stagger;
     
     public void Awake()
     {

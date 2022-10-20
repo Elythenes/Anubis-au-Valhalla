@@ -15,6 +15,7 @@ public class SpellFollowingAreaObject : SpellObject
     [HideInInspector] public float cooldownTimer;
     public float cooldown = 5;
     public bool canCast;
+    public float stagger;
     
     public void Awake()
     {
