@@ -30,8 +30,8 @@ public class HitboxSandstorm : MonoBehaviour
             if (tempsReloadHitSandstorm > sOSandstorm.espacementDoT)
             {
                Debug.Log("touché");
-               col.GetComponent<MonsterLifeManager>().TakeDamage(sOSandstorm.puissanceAttaque,sOSandstorm.stagger);
                col.GetComponent<MonsterLifeManager>().DamageText(sOSandstorm.puissanceAttaque);
+               col.GetComponent<MonsterLifeManager>().TakeDamage(sOSandstorm.puissanceAttaque,sOSandstorm.stagger);
                tempsReloadHitSandstorm = 0;
             }
          } 
@@ -42,7 +42,7 @@ public class HitboxSandstorm : MonoBehaviour
    {
       if (col.gameObject.tag == "Monstre")
       {
-         stopAttack = true;
+         //stopAttack = true;
          tempsReloadHitSandstorm = 0;
       }
    }

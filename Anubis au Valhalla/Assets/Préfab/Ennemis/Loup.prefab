@@ -388,6 +388,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 600822625}
   ia: {fileID: 5542174785646574203}
+  monstreassocie: {fileID: 89795721797022167}
 --- !u!1 &89795721797022167
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cadeec02f6d7219429ca0a95c2982387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vieMax: 100
+  vieMax: 75
   vieActuelle: 0
   animator: {fileID: 89795721797022156}
   emptyLayers: {fileID: 89795722429124925}
@@ -516,6 +517,7 @@ MonoBehaviour:
   dashSpeed: 0.02
   stopDash: 0
   ShakeEnable: 1
+  hitboxActive: 0
   pointAttaque: {fileID: 89795721883425385}
   HitboxPlayer:
     serializedVersion: 2
@@ -543,7 +545,7 @@ MonoBehaviour:
   vieActuelle: 0
   soulValue: 4
   delay: 0
-  forceKnockBack: 0
+  forceKnockBack: 0.5
   OnBegin:
     m_PersistentCalls:
       m_Calls:
@@ -598,8 +600,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  stopHitTime: 0
-  stopWaiting: 0
+  InvincibleTime: 0.19
+  InvincibleTimeTimer: 0
+  isInvincible: 0
 --- !u!114 &89795721797022158
 MonoBehaviour:
   m_ObjectHideFlags: 0

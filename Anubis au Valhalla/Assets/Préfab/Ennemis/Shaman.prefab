@@ -113,6 +113,7 @@ MonoBehaviour:
   layerPlayer:
     serializedVersion: 2
     m_Bits: 512
+  enemyType: 0
   radiusWondering: 10
   isWondering: 0
   isFleeing: 0
@@ -294,11 +295,11 @@ MonoBehaviour:
   animator: {fileID: 2872344340607557264}
   rb: {fileID: 0}
   healthBar: {fileID: 7561085344343710162}
-  vieMax: 100
+  vieMax: 80
   vieActuelle: 0
   soulValue: 4
   delay: 0.15
-  forceKnockBack: 30
+  forceKnockBack: 0.5
   OnBegin:
     m_PersistentCalls:
       m_Calls:
@@ -353,8 +354,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  stopHitTime: 0.1
-  stopWaiting: 1
+  InvincibleTime: 0.19
+  InvincibleTimeTimer: 0
+  isInvincible: 0
 --- !u!1 &2872344340902715325
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,3 +891,4 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 7561085344241442062}
   ia: {fileID: 8717482658498883143}
+  monstreassocie: {fileID: 2872344340607557278}

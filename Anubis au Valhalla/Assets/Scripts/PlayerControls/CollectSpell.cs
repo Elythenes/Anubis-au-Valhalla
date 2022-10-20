@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -44,25 +45,13 @@ public class CollectSpell : MonoBehaviour
         {
             if (Input.GetKeyDown(interaction))
             {
-                Debug.Log("ajout dans le slot A");
-                SpellManager.instance.containerA = collectableSpell.GetComponent<ContainScriptableObject>().spellInside;
-                SpellManager.instance.prefabA = collectableSpell.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
-                SpellManager.instance.isSpell1Fill = true;
-                SpellManager.instance.ChangeSprite(collectableSpell.gameObject.GetComponent<ContainScriptableObject>().spellInside,1);
-                Destroy(collectableSpell.gameObject);
-            }
-            else if (Input.GetKeyDown(KeyCode.F))
-            {
-                Debug.Log("ajout dans le slot B");
-                SpellManager.instance.containerB = collectableSpell.gameObject.GetComponent<ContainScriptableObject>().spellInside;
-                SpellManager.instance.prefabB = collectableSpell.gameObject.GetComponent<ContainScriptableObject>().prefabInside;
-                SpellManager.instance.isSpell2Fill = true;
-                SpellManager.instance.ChangeSprite(collectableSpell.gameObject.GetComponent<ContainScriptableObject>().spellInside,2);
-                Destroy(collectableSpell.gameObject);
+                UiManager.instance.ActivateMenu();
             }
         }
     }
 
+    
+    
     /* ancien code de ses morts (je le garde, on sait jamais :D)
     void CollectingSpell() //fonction pour ramasser un spell
     {

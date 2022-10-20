@@ -11,6 +11,7 @@ public class HealthBarMonstre : MonoBehaviour
     public Gradient gradient;
     public Image fill;
     public MonsterLifeManager ia;
+    public GameObject monstreassocie;
 
     private void Awake()
     {
@@ -24,7 +25,12 @@ public class HealthBarMonstre : MonoBehaviour
     {
         SetMaxHealth(ia.vieMax);
     }
-    
+
+    private void Update()
+    {
+        transform.position = monstreassocie.transform.position - new Vector3(0,2,0);
+    }
+
     public void SetMaxHealth(int health)
     {
         slider.maxValue = health;

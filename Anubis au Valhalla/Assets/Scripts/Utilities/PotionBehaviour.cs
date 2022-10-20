@@ -56,7 +56,7 @@ public class PotionBehaviour : MonoBehaviour
    void Potion()
    {
       DamageManager.instance.vieActuelle += vieHealed;
-
+      LifeBarManager.instance.SetHealth(DamageManager.instance.vieActuelle);
       if (DamageManager.instance.vieActuelle >= DamageManager.instance.vieMax)
       {
          DamageManager.instance.vieActuelle =  DamageManager.instance.vieMax;

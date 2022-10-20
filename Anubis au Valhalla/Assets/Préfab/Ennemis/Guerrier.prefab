@@ -312,6 +312,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 1537838478}
   ia: {fileID: 1158805289209822919}
+  monstreassocie: {fileID: 5706838059761372702}
 --- !u!1 &1537838476
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +569,7 @@ MonoBehaviour:
   vieActuelle: 0
   soulValue: 4
   delay: 0.15
-  forceKnockBack: 30
+  forceKnockBack: 0.5
   OnBegin:
     m_PersistentCalls:
       m_Calls:
@@ -623,8 +624,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  stopHitTime: 0.1
-  stopWaiting: 1
+  InvincibleTime: 0.19
+  InvincibleTimeTimer: 0
+  isInvincible: 0
 --- !u!114 &5706838059761372695
 MonoBehaviour:
   m_ObjectHideFlags: 0
