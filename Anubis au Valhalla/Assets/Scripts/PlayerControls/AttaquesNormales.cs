@@ -19,7 +19,7 @@ public class AttaquesNormales : MonoBehaviour
     public List<bool> isC = new List<bool>();
     public List<int> damage = new List<int>();
     public List<float> dureeHitbox = new List<float>();
-    public List<float> stunDuration = new List<float>();
+    [HideInInspector] public List<float> stunDuration = new List<float>();
     public List<float> stunDurationMax = new List<float>();
     public List<float> dashImpulse = new List<float>();
     public List<float> timeForCanDash = new List<float>();
@@ -31,6 +31,7 @@ public class AttaquesNormales : MonoBehaviour
     public float cooldownAbandonCombo;
     public float cooldownAbandonComboTimer;
     public bool buffer;
+    public GameObject swordObj;
     private void Awake()
     {
         if (instance == null)
@@ -97,8 +98,12 @@ public class AttaquesNormales : MonoBehaviour
             }
         }
 
-        
-        
+        if (CharacterController.instance.isDashing)
+        {
+            Destroy(swordObj);
+        }
+
+
         // ------------------ Gestion Abandon du Combo ---------------
         if (abandonOn)
         {
@@ -160,7 +165,7 @@ public class AttaquesNormales : MonoBehaviour
         moveDirection.Normalize();
         CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
         
-        GameObject swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
+        swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
         swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
     }

@@ -77,8 +77,9 @@ public class CharacterController : MonoBehaviour
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
     {
+      ghost.lastPlayerPos = transform.position;
       AttaquesNormales.instance.canAttack = false;
-      ghost.activerEffet = true;
+      ghost.enabled = true;
       isDashing = true;
     }
     
@@ -91,7 +92,6 @@ public class CharacterController : MonoBehaviour
     if (timerDash > dashDuration) // A la fin du dash...
     {
       AttaquesNormales.instance.canAttack = true;
-      ghost.activerEffet = false;
       isDashing = false;
       timerDash = 0;
       canDash = false;
