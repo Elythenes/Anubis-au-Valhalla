@@ -148,6 +148,8 @@ MonoBehaviour:
   canDash: 1
   ghost: {fileID: 2143346890506445680}
   rb: {fileID: 0}
+  astarPathTimer: 0
+  astarPathTimerMax: 1
   interaction: 97
 --- !u!114 &2143346890506445683
 MonoBehaviour:
@@ -161,30 +163,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8e0c0b78072424494a1c4476ef16e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxC1: {fileID: 6343942413881442319, guid: 03106833865738b479b88804e10340cb, type: 3}
-  rangeAttaque1: {x: 1, y: 2}
-  IsC1: 0
-  damageC1: 10
-  dureeHitbox1: 0.2
-  StunDuration1: 0.3
-  StunDurationTimer1: 0
-  dashImpulseC1: 20
-  hitboxC2: {fileID: 6343942413881442319, guid: 5124077cd6419004a8026f259c8f3884, type: 3}
-  rangeAttaque2: {x: 3, y: 0.8}
-  IsC2: 0
-  damageC2: 15
-  dureeHitbox2: 0.5
-  StunDuration2: 0.5
-  StunDurationTimer2: 0
-  dashImpulseC2: 50
-  hitboxC3: {fileID: 6343942413881442319, guid: 9888c393e182e3147a907bacc6e4d405, type: 3}
-  rangeAttaque3: {x: 3, y: 3}
-  IsC3: 0
-  damageC3: 20
-  dureeHitbox3: 0.6
-  StunDuration3: 0.7
-  StunDurationTimer3: 0
-  dashImpulseC3: 30
+  hitBoxC:
+  - {fileID: 6343942413881442319, guid: 03106833865738b479b88804e10340cb, type: 3}
+  - {fileID: 6343942413881442319, guid: 5124077cd6419004a8026f259c8f3884, type: 3}
+  - {fileID: 6343942413881442319, guid: 9888c393e182e3147a907bacc6e4d405, type: 3}
+  rangeAttaque:
+  - {x: 1, y: 2}
+  - {x: 3, y: 0.8}
+  - {x: 3, y: 3}
+  isC: 000000
+  damage: 0a0000000f00000014000000
+  dureeHitbox:
+  - 0.2
+  - 0.5
+  - 0.6
+  stunDuration:
+  - 0
+  - 0
+  - 0
+  stunDurationMax:
+  - 0.2
+  - 0.5
+  - 0.6
+  dashImpulse:
+  - 20
+  - 50
+  - 30
+  timeForCanDash:
+  - 0
+  - 0
+  - 0
   abandonOn: 0
   canAttack: 1
   comboActuel: 0
@@ -288,11 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interaction: 97
   isSpellCollectable: 0
-  spellCollectManager: {fileID: 7471664148723569888, guid: 21f86dadeb4c5a548a337e33a40e04af, type: 3}
   collectableSpell: {fileID: 0}
-  scriptContainSo: {fileID: 0}
-  prefabContain: {fileID: 0}
-  spellManager: {fileID: 2525523222210174273, guid: 21f86dadeb4c5a548a337e33a40e04af, type: 3}
 --- !u!1 &2143346890640518269
 GameObject:
   m_ObjectHideFlags: 0
