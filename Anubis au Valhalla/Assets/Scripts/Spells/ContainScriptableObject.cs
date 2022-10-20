@@ -11,6 +11,7 @@ public class ContainScriptableObject : MonoBehaviour
     public List<GameObject> prefabInsideList;
     public SpellObject spellInside;
     public GameObject prefabInside;
+    public bool isMoving;
     
     [Header("Force Au Spawn")]
     [SerializeField] private float force = 3f;
@@ -29,10 +30,13 @@ public class ContainScriptableObject : MonoBehaviour
         Debug.Log(numberGot);
         spellInside = SpellObjectsList[numberGot];
         prefabInside = prefabInsideList[numberGot];
-        
-        Vector2 explode = new Vector2(Random.Range(-force, force), Random.Range(-force, force));
-        rb.AddForce(explode, ForceMode2D.Impulse);
-        rb.drag = deceleration;
+
+        if (isMoving)
+        {
+            Vector2 explode = new Vector2(Random.Range(-force, force), Random.Range(-force, force));
+            rb.AddForce(explode, ForceMode2D.Impulse);
+            rb.drag = deceleration;
+        }
     }
 
     private void Update()

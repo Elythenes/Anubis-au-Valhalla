@@ -41,6 +41,7 @@ public class IA_Monstre1 : MonoBehaviour
     private Vector2 targetPerso;
     public bool stopDash;
     public bool ShakeEnable;
+    public bool hitboxActive; 
 
     [Header("Attaque")] 
     public Transform pointAttaque;
@@ -113,10 +114,12 @@ public class IA_Monstre1 : MonoBehaviour
             {
                 
                 stopDash = true;
+                hitboxActive = true;
                 timerDash += Time.deltaTime;
 
                 if (timerDash > dashDuration)
                 {
+                    hitboxActive = false;
                     ShakeEnable = true;
                     rb.velocity = (Vector2.zero);
                     isDashing = false;
@@ -156,7 +159,7 @@ public class IA_Monstre1 : MonoBehaviour
             stopDash = false;
         }
 
-        if (stopDash) // Active la hitbox et fait des dégâts
+        if (hitboxActive) // Active la hitbox et fait des dégâts
         {
             Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
 

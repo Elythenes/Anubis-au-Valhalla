@@ -27,8 +27,8 @@ public class FlameArea : MonoBehaviour
             if (tempsReloadHitFlameAreaTimer > sOFlameArea.espacementDoT && col.gameObject.tag == "Monstre")
             {
                 Debug.Log("touché");
-                col.GetComponent<MonsterLifeManager>().TakeDamage(sOFlameArea.puissanceAttaque,sOFlameArea.stagger);
                 col.GetComponent<MonsterLifeManager>().DamageText(sOFlameArea.puissanceAttaque);
+                col.GetComponent<MonsterLifeManager>().TakeDamage(sOFlameArea.puissanceAttaque,sOFlameArea.stagger);
                 tempsReloadHitFlameAreaTimer = 0;
             }
          }
@@ -47,16 +47,9 @@ public class FlameArea : MonoBehaviour
     {
         if (col.gameObject.tag == "Monstre")
         {
-            StartCoroutine(stopAttackTimer());
+            
             tempsReloadHitFlameAreaTimer = 0;
         }
-    }
-
-    IEnumerator stopAttackTimer()
-    {
-        stopAttack = true;
-        yield return new WaitForSeconds(0.1f);
-        stopAttack = false;
     }
 }
 
