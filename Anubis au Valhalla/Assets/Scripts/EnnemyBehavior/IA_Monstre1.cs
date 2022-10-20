@@ -156,7 +156,7 @@ public class IA_Monstre1 : MonoBehaviour
             stopDash = false;
         }
 
-        if (isDashing) // Active la hitbox et fait des dégâts
+        if (stopDash) // Active la hitbox et fait des dégâts
         {
             Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
 
