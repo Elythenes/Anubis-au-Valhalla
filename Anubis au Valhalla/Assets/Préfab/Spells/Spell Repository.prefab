@@ -169,6 +169,7 @@ MonoBehaviour:
   - {fileID: 2070572112627775315, guid: 89d34f91fc1dec8488658721c13e624f, type: 3}
   spellInside: {fileID: 0}
   prefabInside: {fileID: 0}
+  isMoving: 1
   force: 50
   deceleration: 1
   timer: 0.3
@@ -193,7 +194,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &2677063537002841057
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -19,8 +19,9 @@ public class MonsterLifeManager : MonoBehaviour
     public float delay;
     public float forceKnockBack;
     public UnityEvent OnBegin, OnDone;
-    public float stopHitTime;
-    public bool stopWaiting;
+    public float InvincibleTime;
+    public float InvincibleTimeTimer;
+    public bool isInvincible;
     
     
     private void Start()
@@ -28,14 +29,34 @@ public class MonsterLifeManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         vieActuelle = vieMax;
     }
-    
+
+    private void Update()
+    {
+        transform.localRotation = Quaternion.identity;
+        //transform.localScale = 
+        if (isInvincible)
+        {
+            InvincibleTimeTimer += Time.deltaTime;
+
+            if (InvincibleTimeTimer >= InvincibleTime)
+            {
+                isInvincible = false;
+                InvincibleTimeTimer = 0;
+            }
+        }
+    }
+
     public void TakeDamage(int damage, float staggerDuration)
     {
-        StartCoroutine(AnimationDamaged());
-        transform.DOShakePosition(staggerDuration, 0.5f, 50);
-        vieActuelle -= damage; 
-        healthBar.SetHealth(vieActuelle);
-
+        if (!isInvincible)
+        {
+            StartCoroutine(AnimationDamaged());
+            transform.DOShakePosition(staggerDuration, 0.5f, 50);
+            vieActuelle -= damage; 
+            healthBar.SetHealth(vieActuelle);
+            isInvincible = true;
+        }
+        
         if (vieActuelle <= 0)
         {
             Die();
@@ -51,8 +72,11 @@ public class MonsterLifeManager : MonoBehaviour
     
     public void DamageText(int damageAmount)
     {
-        textDamage.GetComponentInChildren<TextMeshPro>().SetText(damageAmount.ToString());
-        Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+        if (!isInvincible)
+        {
+            textDamage.GetComponentInChildren<TextMeshPro>().SetText(damageAmount.ToString());
+            Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+        }
     }
     
     public void OnTriggerEnter2D(Collider2D col)
