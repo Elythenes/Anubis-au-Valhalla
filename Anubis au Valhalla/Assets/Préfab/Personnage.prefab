@@ -141,9 +141,9 @@ MonoBehaviour:
   speedY: 18
   isAttacking: 0
   facing: 0
-  dashSpeed: 30
-  dashDuration: 0.3
-  dashCooldown: 0.5
+  dashSpeed: 50
+  dashDuration: 0.1
+  dashCooldown: 0.3
   isDashing: 0
   canDash: 1
   ghost: {fileID: 2143346890506445680}
@@ -206,15 +206,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2143346890506445695}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f7b8482dbb27274ea7b89120a58e19a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghotsDelay: 0.5
+  ghostDelay: 0.3
+  ghostDelaySeconds: 0
   ghost: {fileID: 3369172920769216219, guid: 85e75ab8033ebe24c9faf95668b14b43, type: 3}
   activerEffet: 0
   tousLesSprites: []
+  lastPlayerPos: {x: 0, y: 0, z: 0}
+  frequency: 0.2
 --- !u!50 &2143346890506445681
 Rigidbody2D:
   serializedVersion: 4
@@ -369,7 +372,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
   m_FlipX: 0
