@@ -160,15 +160,15 @@ public class CharacterController : MonoBehaviour
     if (movement.x > 0 && !isAttacking) // Le personnage s'oriente vers la direction où il marche. 
     {
       facing = lookingAt.Est;
-      //transform.localRotation = new Quaternion(0, 0,0,1);
-      transform.localScale = new Vector3(1, 2.0906f, 0);
+      transform.localRotation = Quaternion.Euler(0, 0,0);
+      //transform.localScale = new Vector3(1, 1, 0);
     }
 
     if (movement.x < 0 && !isAttacking)
     {
       facing = lookingAt.Ouest;
-      //transform.localRotation = new Quaternion(0, 180,0,1);
-      transform.localScale = new Vector3(-1, 2.0906f, 0);
+      transform.localRotation = Quaternion.Euler(0, 180,0);
+      //transform.localScale = new Vector3(-1, 1, 0);
     }
     
     if (movement.y < 0 && !isAttacking)
