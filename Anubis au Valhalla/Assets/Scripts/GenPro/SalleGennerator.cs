@@ -171,7 +171,7 @@ public class SalleGennerator : MonoBehaviour
                         currentRoom = BeginGeneration();
                         if (roomsDone != 0) MovePlayerToDoor(fromDoor);
                         ClearRoom();
-                        currentRoom.GetSpawnPoints(Random.Range(0, 3));
+                        if(currentRoom != startRoom)currentRoom.GetSpawnPoints(Random.Range(0, 3));
                         moveGrid.target = currentRoom.AstarRef;
                         transitionCanvas.DOFade(0, 0.25f);
                 });
@@ -246,7 +246,11 @@ public class SalleGennerator : MonoBehaviour
                 {
                         Destroy(CharacterController.instance.GetComponent<GhostDash>().tousLesSprites[i].gameObject);
                 }
-                
+
+                foreach (var soul in Souls.instance.soulsInScene)
+                {
+                        Souls.instance.CollectSouls(soul,1);
+                }
                 amount.Clear();
         }
         

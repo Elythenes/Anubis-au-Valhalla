@@ -15,6 +15,7 @@ public class Souls : MonoBehaviour
     public TextMeshProUGUI soulText;
     private RectTransform baseTextTransform;
     public float shakeIntensity;
+    public List<GameObject> soulsInScene;
 
     void Awake()
     {
@@ -35,11 +36,11 @@ public class Souls : MonoBehaviour
     {
     }
 
-    public void CreateSouls(Vector3 ennemyPos, int soulAmount)
+    public void CreateSouls(Vector2 ennemyPos, int soulAmount)
     {
         for (int i = 0; i <= soulAmount; i++)
         {
-            Instantiate(soul, ennemyPos, Quaternion.Euler(0,0,0));
+            soulsInScene.Add(Instantiate(soul, ennemyPos, Quaternion.Euler(0,0,0)));
         }
     }
 

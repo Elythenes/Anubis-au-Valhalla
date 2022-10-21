@@ -18,7 +18,7 @@ public class SoulBehavior : MonoBehaviour
     void Awake()
     {
         Vector2 explode = new Vector2(Random.Range(-forceSpawn, forceSpawn), Random.Range(-forceSpawn, forceSpawn));
-        rb.AddForce(explode, ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(explode.x,explode.y), ForceMode2D.Impulse);
         rb.drag = deceleration;
     }
 
@@ -40,11 +40,19 @@ public class SoulBehavior : MonoBehaviour
             {
                 PoofAway(dirNormalised);
                 haspoofed = true;
-            } 
-            rb.AddForce(dirNormalised + dirNormalised * (force * deceleration * (1/Vector2.Distance(transform.position,playerPos))),ForceMode2D.Force);
-            if (Vector3.Distance(playerPos, transform.position) <= 1) 
+            }
+            if (Vector3.Distance(playerPos, transform.position) >= 4)
             {
-                Souls.instance.CollectSouls(gameObject, 1);
+                rb.AddForce(dirNormalised + dirNormalised * (force * deceleration * (1/Vector2.Distance(transform.position,playerPos))),ForceMode2D.Force);
+            }
+            else
+            {
+                rb.velocity = Vector2.zero;
+                rb.AddForce(dirNormalised * forceSpawn,ForceMode2D.Impulse);
+                if (Vector3.Distance(playerPos, transform.position) <= 1) 
+                {
+                    Souls.instance.CollectSouls(gameObject, 1);
+                }
             }
         }
         
