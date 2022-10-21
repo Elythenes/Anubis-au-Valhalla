@@ -40,16 +40,6 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        
-    }
-    
-    void Update()
-    {
-        
-    }
-
     public void CollectSpell(int spellSlot)
     {
         switch (spellSlot)
