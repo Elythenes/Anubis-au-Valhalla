@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    public SpellThrowingType sOFireball;
+    public SpellThrowingObject sOFireball;
     private Rigidbody2D rb;
 
     private void Start()
@@ -23,7 +23,8 @@ public class Fireball : MonoBehaviour
         if (col.gameObject.tag == "Monstre")
         {
             Debug.Log("touché");
-            col.GetComponent<IA_Monstre1>().TakeDamage(sOFireball.puissanceAttaque);
+            col.GetComponent<MonsterLifeManager>().DamageText(sOFireball.puissanceAttaque);
+            col.GetComponent<MonsterLifeManager>().TakeDamage(sOFireball.puissanceAttaque, sOFireball.stagger);
         }
     }
 }

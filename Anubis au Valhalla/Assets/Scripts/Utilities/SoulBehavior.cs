@@ -6,6 +6,7 @@ public class SoulBehavior : MonoBehaviour
 {
     public Vector3 playerPos;
     [SerializeField] private float force = 3f;
+    [SerializeField] private float forceSpawn = 3f;
     [SerializeField] private float minForce = 1f;
     [SerializeField] private float timer = 1;
     [SerializeField] private float deceleration = 0.3f;
@@ -16,8 +17,8 @@ public class SoulBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Vector2 explode = new Vector2(Random.Range(-force, force), Random.Range(-force, force));
-        rb.AddForce(explode, ForceMode2D.Impulse);
+        Vector2 explode = new Vector2(Random.Range(-forceSpawn, forceSpawn), Random.Range(-forceSpawn, forceSpawn));
+        rb.AddForce(new Vector2(explode.x,explode.y), ForceMode2D.Impulse);
         rb.drag = deceleration;
     }
 
@@ -40,14 +41,25 @@ public class SoulBehavior : MonoBehaviour
                 PoofAway(dirNormalised);
                 haspoofed = true;
             }
-            rb.AddForce(dirNormalised * (force * deceleration),ForceMode2D.Force);
+            if (Vector3.Distance(playerPos, transform.position) >= 4)
+            {
+                rb.AddForce(dirNormalised + dirNormalised * (force * deceleration * (1/Vector2.Distance(transform.position,playerPos))),ForceMode2D.Force);
+            }
+            else
+            {
+                rb.velocity = Vector2.zero;
+                rb.AddForce(dirNormalised * forceSpawn,ForceMode2D.Impulse);
+                if (Vector3.Distance(playerPos, transform.position) <= 1) 
+                {
+                    Souls.instance.CollectSouls(gameObject, 1);
+                }
+            }
         }
         
-        if (transform.position.magnitude >= playerPos.magnitude -0.2f)Souls.instance.CollectSouls(gameObject, 1);
     }
 
     public void PoofAway(Vector2 dir)
     {
-        rb.AddForce(-dir*force,ForceMode2D.Impulse);
+        rb.AddForce(-dir * Random.Range(3,poofForce+1),ForceMode2D.Impulse);
     }
 }

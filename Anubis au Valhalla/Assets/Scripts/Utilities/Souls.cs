@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class Souls : MonoBehaviour
@@ -10,13 +12,23 @@ public class Souls : MonoBehaviour
     public static Souls instance;
 
     public int soulBank = 0;
+    public TextMeshProUGUI soulText;
+    private RectTransform baseTextTransform;
+    public float shakeIntensity;
+    public List<GameObject> soulsInScene;
 
     void Awake()
     {
-        if (instance == null)
+        //baseTextTransform = soulText.rectTransform;
+        if (instance != null)
+        {
+            DestroyImmediate(gameObject);
+        }
+        else
         {
             instance = this;
         }
+        soulText.text = "0";
     }
 
     // Update is called once per frame
@@ -24,11 +36,11 @@ public class Souls : MonoBehaviour
     {
     }
 
-    public void CreateSouls(Vector3 ennemyPos, int soulAmount)
+    public void CreateSouls(Vector2 ennemyPos, int soulAmount)
     {
         for (int i = 0; i <= soulAmount; i++)
         {
-            Instantiate(soul, ennemyPos, Quaternion.Euler(0,0,0));
+            soulsInScene.Add(Instantiate(soul, ennemyPos, Quaternion.Euler(0,0,0)));
         }
     }
 
@@ -36,5 +48,7 @@ public class Souls : MonoBehaviour
     {
         Destroy(collectedSoul);
         soulBank += value;
+        soulText.text = soulBank.ToString();
+        
     }
 }

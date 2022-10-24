@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3853524586820882798}
   - component: {fileID: 6001936663652066700}
   - component: {fileID: -9138407822181787847}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Soul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,10 +48,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPos: {x: 0, y: 0, z: 0}
-  force: 6
+  force: 100
+  forceSpawn: 10
+  minForce: 1
   timer: 1
   deceleration: 0.3
-  poofForce: 3
+  poofForce: 6
   rb: {fileID: 6001936663652066700}
 --- !u!50 &6001936663652066700
 Rigidbody2D:
@@ -192,7 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1778361618146903803}
   - component: {fileID: 2523983095509431503}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

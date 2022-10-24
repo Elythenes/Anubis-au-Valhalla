@@ -1,42 +1,53 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class AttaquesNormales : MonoBehaviour
 {
+    
     private InputManager controls;
-    private AttaquesNormales instance;
-    
-    [Header ("Hitbox Attaque")]
-    public LayerMask layerMonstres;
-    public Transform pointAttaque;
-    public float rangeAttaque;
+    public static AttaquesNormales instance;
 
-    [Header ("Stat Attaque")]
-    public int puissanceAttaque;
-    public float vitesseAttaque;
-    public GameObject effetVisuel;
-    private float nextAttaque;
-    public float vitessePersoXC1;
-    public float vitessePersoYC1;
-    public float vitessePersoNormaleX;
-    public float vitessePersoNormaleY;
-    
+    [Header("Stats Attaques")]
+
+    public List<GameObject> hitBoxC = new List<GameObject>();
+    public List<Vector2> rangeAttaque = new List<Vector2>();
+    public List<bool> isC = new List<bool>();
+    public List<int> damage = new List<int>();
+    public List<float> dureeHitbox = new List<float>();
+    [HideInInspector] public List<float> stunDuration = new List<float>();
+    public List<float> stunDurationMax = new List<float>();
+    public List<float> dashImpulse = new List<float>();
+    public List<float> timeForCanDash = new List<float>();
+    public List<float> dashTimers = new List<float>();
+
+    [Header("Général")]
+    public bool abandonOn;
+    public bool canAttack;
+    public int comboActuel;
+    public float cooldownAbandonCombo;
+    public float cooldownAbandonComboTimer;
+    public bool buffer;
+    public GameObject swordObj;
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
+
         controls = new InputManager();
     }
-    
+
     private void OnEnable()
     {
         controls.Enable();
     }
+
     private void OnDisable()
     {
         controls.Disable();
@@ -45,52 +56,127 @@ public class AttaquesNormales : MonoBehaviour
     private void Update()
     {
         Mouse mouse = InputSystem.GetDevice<Mouse>(); // Trouver input de la souris
+        if (mouse.leftButton.wasPressedThisFrame && canAttack /*|| buffer*/) // Execute l'attaque selon l'avancement du combo
+        {
+            switch (comboActuel)
+            {
+                case 0:
+                    
+                    if (canAttack)
+                    {
+                        abandonOn = false;
+                        cooldownAbandonComboTimer = 0;
+                        //buffer = false;
+                        comboActuel++;
+                        Combo(0);     
+                    }
+                    
+                    break;
+                
+                case 1:
+                    if (canAttack)
+                    {
+                        abandonOn = false;
+                        cooldownAbandonComboTimer = 0;
+                       // buffer = false;
+                        comboActuel++;
+                        Combo(1);
+                    }
+                    
+                    break;
+                
+                case 2:
+                    if (canAttack)
+                    {
+                        abandonOn = false;
+                        cooldownAbandonComboTimer = 0;
+                        //buffer = false;
+                        comboActuel = 0;
+                        Combo(2);
+                    }
+                    break;
+                    
+            }
+        }
 
-        if (Time.time >= nextAttaque) // Cooldown de l'attaque
+        if (CharacterController.instance.isDashing)
+        {
+            Destroy(swordObj);
+        }
+
+
+        // ------------------ Gestion Abandon du Combo ---------------
+        if (abandonOn)
+        {
+            cooldownAbandonComboTimer += Time.deltaTime;
+        }
+        
+        if (cooldownAbandonComboTimer >= cooldownAbandonCombo) // Condition de retour à l'idle
+        {
+            abandonOn = false;
+            comboActuel = 0;
+            cooldownAbandonComboTimer = 0;
+        }
+        
+        // ------------------ Gestion Abandon du Combo ---------------
+        // ------------------ Gestion Combo -------------
+      
+        /*if (IsC1 && !canAttack && StunDurationTimer1 <= StunDuration1 && abandonOn)
         {
             if (mouse.leftButton.wasPressedThisFrame)
             {
-                StartCombo();
-                nextAttaque = Time.time + vitesseAttaque;
-            } 
-        }
-    }
-
-    public void StartCombo() // Crée une hit box devant le perso et touche les ennemis
-    {
-        StartCoroutine(ralentirPersoC1());
-        StartCoroutine(montrerEffet());
-        Collider2D[] toucheMonstre = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, layerMonstres);
-
-        foreach (Collider2D monstre in toucheMonstre)
+                buffer = true;
+            }
+        }*/
+        //ComboTimers(stunDurationMax,stunDuration);
+        for (int i = 0; i < hitBoxC.Count; i++)
         {
-            Debug.Log("touché");
-            monstre.GetComponent<IA_Monstre1>().TakeDamage(puissanceAttaque);
-            monstre.GetComponent<IA_Monstre1>().DamageText(puissanceAttaque);
+            if (!isC[i])
+            {
+                continue;
+            }
+            if (stunDuration[i] >= stunDurationMax[i])
+            {
+                Debug.Log(stunDuration[i] >= stunDurationMax[i]);
+                canAttack = true;
+                CharacterController.instance.isAttacking = false;
+                isC[i] = false;
+                stunDuration[i] = 0;
+                dashTimers[i] = 0;
+            }
+
+            if (dashTimers[i] >= timeForCanDash[i])
+            {
+                CharacterController.instance.canDash = true;
+            }
+            stunDuration[i] += Time.deltaTime;
+            dashTimers[i] += Time.deltaTime;
+            
+
         }
-    }
 
-    IEnumerator montrerEffet()
-    {
-        effetVisuel.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        effetVisuel.SetActive(false);
+        // ------------------ Gestion Combo-------------
     }
-    
-    IEnumerator ralentirPersoC1()
+    //<Combo 1>/ Dash légèrement vers l'avant puis crée une hitbox devant le perso et touche les ennemis
+    //<Combo 2>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
+    //<Combo 3>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
+    public void Combo(int index) 
     {
-        CharacterController.instance.speedX = vitessePersoXC1;
-        CharacterController.instance.speedY = vitessePersoYC1;
-        yield return new WaitForSeconds(0.5f);
-        CharacterController.instance.speedX = vitessePersoNormaleX;
-        CharacterController.instance.speedY = vitessePersoNormaleY;
-    }
-
-    private void OnDrawGizmosSelected() // Permet de voir la hitbox du coup dans l'éditeur
-    {
-        if(pointAttaque == null)
-            return;
+        abandonOn = true;
+        isC[index] = true;
+        canAttack = false;
+        CharacterController.instance.isAttacking = true;
+        Vector2 charaPos = CharacterController.instance.transform.position;
+        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+        Vector3 moveDirection = (mousePos - charaPos);
+        moveDirection.z = 0;
+        moveDirection.Normalize();
+        CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
         
-        Gizmos.DrawWireSphere(pointAttaque.position, rangeAttaque);
+        swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
+        swordObj.transform.position = CharacterController.instance.transform.position;
+        swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
     }
 }
+
