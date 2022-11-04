@@ -24,6 +24,10 @@ public class SpellManager : MonoBehaviour
     public GameObject prefabA;
     public SpellObject containerB;
     public GameObject prefabB;
+    public float cooldownSlot1;
+    public float cooldownSlotTimer1;
+    public float cooldownSlot2;
+    public float cooldownSlotTimer2;
 
     [Header("SPELL HIDDEN VAR")] 
     [SerializeField] public SpellStaticAreaObject spellSAo;
@@ -167,20 +171,42 @@ public class SpellManager : MonoBehaviour
                 if (slotNumber == 1)
                 {
                     spellTo = prefabA.GetComponent<Fireball>().sOFireball;
+                    cooldownSlot1 = spellTo.cooldown;
                 }
 
                 if (slotNumber == 2)
                 {
                     spellTo = prefabB.GetComponent<Fireball>().sOFireball;
+                    cooldownSlot2 = spellTo.cooldown;
                 }
                 if (spellTo.cooldownTimer < spellTo.cooldown && !spellTo.canCast) //cooldown de la Fireball
                 {
                     spellTo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellTo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellTo.cooldownTimer;
+                    }
                 }
                 else if (spellTo.cooldownTimer > spellTo.cooldown)
                 {
                     spellTo.canCast = true;
                     spellTo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
                 }
                 break;
             
@@ -189,20 +215,43 @@ public class SpellManager : MonoBehaviour
                 if (slotNumber == 1)
                 {
                     spellSAo = prefabA.GetComponent<FlameArea>().sOFlameArea;
+                    cooldownSlot1 = spellSAo.cooldown;
                 }
 
                 if (slotNumber == 2)
                 {
                     spellSAo = prefabB.GetComponent<FlameArea>().sOFlameArea;
+                    cooldownSlot2 = spellSAo.cooldown;
                 }
                 if (spellSAo.cooldownTimer < spellSAo.cooldown && !spellSAo.canCast)
                 {
                     spellSAo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellSAo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellSAo.cooldownTimer;
+                    }
+                    
                 }
                 else if (spellSAo.cooldownTimer > spellSAo.cooldown)
                 {
                     spellSAo.canCast = true;
                     spellSAo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
                 }
                 break;
             
@@ -211,21 +260,43 @@ public class SpellManager : MonoBehaviour
                 if (slotNumber == 1)
                 {
                     spellFAo = prefabA.GetComponent<HitboxSandstorm>().sOSandstorm;
+                    cooldownSlot1 = spellFAo.cooldown;
                 }
 
                 if (slotNumber == 2)
                 {
                     spellFAo = prefabB.GetComponent<HitboxSandstorm>().sOSandstorm;
+                    cooldownSlot2 = spellFAo.cooldown;
                 }
                 
                 if (spellFAo.cooldownTimer < spellFAo.cooldown && !spellFAo.canCast) //cooldown du Sandstorm
                 {
                     spellFAo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellFAo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellFAo.cooldownTimer;
+                    }
                 }
                 else if (spellFAo.cooldownTimer > spellFAo.cooldown)
                 {
                     spellFAo.canCast = true;
                     spellFAo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
                 }
                 break;
                 

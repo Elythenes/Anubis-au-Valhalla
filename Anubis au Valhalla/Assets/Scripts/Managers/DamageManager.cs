@@ -15,6 +15,7 @@ public class DamageManager : MonoBehaviour
     public GameObject player;
     public static DamageManager instance;
     public Volume gVolume;
+    public Volume gVolumeMiss;
     private ColorAdjustments ca;
 
     [Header("Alterations d'Etat")]
@@ -64,15 +65,27 @@ public class DamageManager : MonoBehaviour
     {
         if (!invinsible)
         {
-            StartCoroutine(RedScreen(timeRedScreen));
-            HitStop(timeHitStop*(damage/10));
-            Time.timeScale = 0.3f;
-            vieActuelle -= damage;
-            LifeBarManager.instance.SetHealth(vieActuelle);
-            StartCoroutine(TempsInvinsibilité());
-            StartCoroutine(TempsStun());
-            textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
-            Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+            if (!CharacterController.instance.isDashing)
+            {
+                Debug.Log("touché");
+                StartCoroutine(RedScreen(timeRedScreen));
+                HitStop(timeHitStop*(damage/10));
+                Time.timeScale = 0.3f;
+                vieActuelle -= damage;
+                LifeBarManager.instance.SetHealth(vieActuelle);
+                StartCoroutine(TempsInvinsibilité());
+                StartCoroutine(TempsStun());
+                textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
+                Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity); 
+            }
+            else
+            {
+                Debug.Log("miss");
+                StartCoroutine(MissScreen(timeRedScreen));
+                HitStop(timeHitStop*(damage/10));
+                Time.timeScale = 0.3f;
+            }
+            
         }
 
         if (vieActuelle <= 0)
@@ -107,6 +120,13 @@ public class DamageManager : MonoBehaviour
         gVolume.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
         yield return new WaitForSeconds(timeRedScreen);
         gVolume.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+    }
+    
+    public IEnumerator MissScreen(float timeRedScreenC)
+    {
+        gVolumeMiss.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
+        yield return new WaitForSeconds(timeRedScreen);
+        gVolumeMiss.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
     }
     
   

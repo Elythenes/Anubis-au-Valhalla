@@ -23,4 +23,5 @@ public abstract class SpellObject : ScriptableObject
     [Header("GRAPH")]
     public Texture sprite;
     
+    
 }
