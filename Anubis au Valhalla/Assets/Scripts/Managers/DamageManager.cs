@@ -59,6 +59,11 @@ public class DamageManager : MonoBehaviour
         {
             animPlayer.SetBool("IsInvinsible", false);
         }
+
+        if (vieActuelle > vieMax)
+        {
+            vieActuelle = vieMax;
+        }
     }
 
     public void TakeDamage(int damage)
@@ -111,22 +116,22 @@ public class DamageManager : MonoBehaviour
 
     public IEnumerator RedScreen(float timeRedScreenC)
     {
-        /*Color newColor = new Color32(255, 0, 0,0); 
-        Color originalColor = new Color32(255, 255, 255,0);
-        gVolume.profile.TryGet(out ca);
-        ca.colorFilter.value = newColor;
-        yield return new WaitForSeconds(timeRedScreenC);
-        ca.colorFilter.value = originalColor;*/
-        gVolume.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
-        yield return new WaitForSeconds(timeRedScreen);
-        gVolume.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+        if (!CharacterController.instance.isDashing)
+        {
+            gVolume.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
+            yield return new WaitForSeconds(timeRedScreen);
+            gVolume.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+        }
     }
     
     public IEnumerator MissScreen(float timeRedScreenC)
     {
-        gVolumeMiss.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
-        yield return new WaitForSeconds(timeRedScreen);
-        gVolumeMiss.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+        if (CharacterController.instance.isDashing)
+        {
+            gVolumeMiss.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
+            yield return new WaitForSeconds(timeRedScreen);
+            gVolumeMiss.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+        }
     }
     
   

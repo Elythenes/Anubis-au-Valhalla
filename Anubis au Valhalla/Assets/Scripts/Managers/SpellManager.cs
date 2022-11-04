@@ -120,6 +120,8 @@ public class SpellManager : MonoBehaviour
     {
         if (spellSlot == 1)
         {
+            cooldownSpellBar.instance.SetCooldownMax1();
+
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
@@ -141,6 +143,8 @@ public class SpellManager : MonoBehaviour
 
         if (spellSlot == 2)
         {
+            cooldownSpellBar2.instance.SetCooldownMax2();
+            
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
