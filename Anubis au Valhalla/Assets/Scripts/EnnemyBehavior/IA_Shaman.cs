@@ -97,7 +97,7 @@ public class IA_Shaman : MonoBehaviour
     }
         void DetectPlayerRelativePos()
     {
-        RaycastHit hitUp;
+        
         if(Physics2D.Raycast(transform.position, Vector2.up, radiusWondering,layerPlayer))
         {
             Debug.DrawRay(transform.position,Vector2.up * radiusWondering,Color.red);
@@ -105,7 +105,7 @@ public class IA_Shaman : MonoBehaviour
             isWondering = false;
         }
                         
-        RaycastHit2D hitDown;
+        
         if(Physics2D.Raycast(transform.position, Vector2.down, radiusWondering,layerPlayer))
         {
             Debug.DrawRay(transform.position,Vector2.down * radiusWondering,Color.red);
@@ -113,7 +113,7 @@ public class IA_Shaman : MonoBehaviour
             isWondering = false;
         }
                         
-        RaycastHit hitRight;
+        
         if(Physics2D.Raycast(transform.position, Vector2.right, radiusWondering,layerPlayer))
         {
             Debug.DrawRay(transform.position,Vector2.right * radiusWondering,Color.red);
@@ -121,7 +121,7 @@ public class IA_Shaman : MonoBehaviour
             isWondering = false;
         }
                         
-        RaycastHit hitLeft;
+       
         if(Physics2D.Raycast(transform.position, Vector2.left, radiusWondering,layerPlayer))
         {
             Debug.DrawRay(transform.position,Vector2.left * radiusWondering,Color.red);
@@ -129,7 +129,6 @@ public class IA_Shaman : MonoBehaviour
             isWondering = false;
         }
                         
-        RaycastHit hitUpLeft;
         if(Physics2D.Raycast(transform.position, new Vector2(1,1), radiusWondering,layerPlayer))
         {
             Debug.DrawRay(transform.position,new Vector2(1,1) * radiusWondering,Color.red);
@@ -137,7 +136,7 @@ public class IA_Shaman : MonoBehaviour
             isWondering = false;
         }
                         
-        RaycastHit hitUpRight;
+        
         if(Physics2D.Raycast(transform.position, new Vector2(-1,1), radiusWondering,layerPlayer))
         {
             Debug.DrawRay(transform.position,new Vector2(-1,1) * radiusWondering,Color.red);
@@ -145,7 +144,7 @@ public class IA_Shaman : MonoBehaviour
             isWondering = false;
         }
                         
-        RaycastHit hitDownLeft;
+        
         if(Physics2D.Raycast(transform.position, new Vector2(1,-1), radiusWondering,layerPlayer))
         {
             Debug.DrawRay(transform.position,new Vector2(1,-1) * radiusWondering,Color.red);
@@ -153,7 +152,7 @@ public class IA_Shaman : MonoBehaviour
             isWondering = false;
         }
                         
-        RaycastHit hitDownRight;
+        
         if(Physics2D.Raycast(transform.position, new Vector2(-1,-1), radiusWondering,layerPlayer))
         {
             Debug.DrawRay(transform.position,new Vector2(-1,-1) * radiusWondering,Color.red);

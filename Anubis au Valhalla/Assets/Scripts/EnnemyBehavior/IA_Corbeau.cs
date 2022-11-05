@@ -81,56 +81,56 @@ public class IA_Corbeau : MonoBehaviour
 
             if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing)
             {
-                RaycastHit hitUp;
+               
                             if (Physics2D.Raycast(transform.position, Vector2.up, radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, Vector2.up * radiusFleeing, Color.red);
                                 rb.AddForce(Vector2.down * forceRepulse);
                             }
 
-                            RaycastHit hitDown;
+                           
                             if (Physics2D.Raycast(transform.position, Vector2.down, radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, Vector2.down * radiusFleeing, Color.red);
                                 rb.AddForce(Vector2.up * forceRepulse);
                             }
 
-                            RaycastHit hitRight;
+                            
                             if (Physics2D.Raycast(transform.position, Vector2.right, radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, Vector2.right * radiusFleeing, Color.red);
                                 rb.AddForce(Vector2.left * forceRepulse);
                             }
 
-                            RaycastHit hitLeft;
+                            
                             if (Physics2D.Raycast(transform.position, Vector2.left, radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, Vector2.left * radiusFleeing, Color.red);
                                 rb.AddForce(Vector2.right * forceRepulse);
                             }
 
-                            RaycastHit hitUpLeft;
+                           
                             if (Physics2D.Raycast(transform.position, new Vector2(1, 1), radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, new Vector2(1, 1) * radiusFleeing, Color.red);
                                 rb.AddForce(new Vector2(-1, -1) * forceRepulse);
                             }
 
-                            RaycastHit hitUpRight;
+                           
                             if (Physics2D.Raycast(transform.position, new Vector2(-1, 1), radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, new Vector2(-1, 1) * radiusFleeing, Color.red);
                                 rb.AddForce(new Vector2(1, -1) * forceRepulse);
                             }
 
-                            RaycastHit hitDownLeft;
+                            
                             if (Physics2D.Raycast(transform.position, new Vector2(1, -1), radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, new Vector2(1, -1) * radiusFleeing, Color.red);
                                 rb.AddForce(new Vector2(-1, 1) * forceRepulse);
                             }
 
-                            RaycastHit hitDownRight;
+                           
                             if (Physics2D.Raycast(transform.position, new Vector2(-1, -1), radiusFleeing,layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, new Vector2(-1, -1) * radiusFleeing, Color.red);

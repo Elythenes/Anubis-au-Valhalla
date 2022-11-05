@@ -22,6 +22,7 @@ public class MonsterLifeManager : MonoBehaviour
     public float InvincibleTime;
     public float InvincibleTimeTimer;
     public bool isInvincible;
+    public GameObject root;
     
     
     private void Start()
@@ -102,8 +103,8 @@ public class MonsterLifeManager : MonoBehaviour
     void Die()
     {
         Souls.instance.CreateSouls(gameObject.transform.position, soulValue);
-        SalleGennerator.instance.currentRoom.currentEnemies.Remove(gameObject);
+        SalleGennerator.instance.currentRoom.currentEnemies.Remove(root);
         SalleGennerator.instance.currentRoom.CheckForEnemies();
-        Destroy(gameObject);
+        Destroy(root);
     }
 }
