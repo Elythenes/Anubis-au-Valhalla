@@ -41,6 +41,7 @@ public class SalleGennerator : MonoBehaviour
         public int chosenPattern;
         public int GlobalBank = 10;
         public CanvasGroup transitionCanvas;
+        public int shopsVisited;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
         private ProceduralGridMover moveGrid;
@@ -126,6 +127,20 @@ public class SalleGennerator : MonoBehaviour
                         s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
                 }
 
+                if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * 0.2f) && roomsDone <= Mathf.RoundToInt(dungeonSize * 0.4f))
+                {
+                        var shopspawn = Random.value;
+                        if (shopspawn >= 0.4f)
+                        {
+                                Door removedDoor = s_doors[(int)fromDoor];
+                                s_doors.RemoveAt((int)fromDoor);
+                                Door doorToShop = s_doors[Random.Range(0, s_doors.Count)];
+                                doorToShop.currentDoorType = Door.DoorType.ToShop;
+                                doorToShop.ChooseSpecialToSpawn(0);
+                                s_doors.Insert((int)fromDoor, removedDoor);
+                        }
+
+                }
                 if (roomsDone == 4)
                 {
                         Door removedDoor = s_doors[(int)fromDoor];
@@ -133,9 +148,19 @@ public class SalleGennerator : MonoBehaviour
                         Door doorToSpecial = s_doors[Random.Range(0, s_doors.Count)];
                         doorToSpecial.currentDoorType = Door.DoorType.ToChallenge1;
                         //if (doorToSpecial.doorOrientation == fromDoor) doorToSpecial.doorOrientation = toDoor;
-                        doorToSpecial.ChooseSpecialToSpawn(0);
+                        doorToSpecial.ChooseSpecialToSpawn(1);
                         s_doors.Insert((int)fromDoor, removedDoor);
                         //return Instantiate(specialRooms[0]);
+                }
+
+                if (roomsDone == dungeonSize - 2)
+                {
+                        Door removedDoor = s_doors[(int)fromDoor];
+                        s_doors.RemoveAt((int)fromDoor);
+                        Door doorToShop = s_doors[Random.Range(0, s_doors.Count)];
+                        doorToShop.currentDoorType = Door.DoorType.ToShop;
+                        doorToShop.ChooseSpecialToSpawn(0);
+                        s_doors.Insert((int)fromDoor, removedDoor);
                 }
                 if (roomsDone == dungeonSize)
                 {
@@ -227,7 +252,9 @@ public class SalleGennerator : MonoBehaviour
                 cam.transform.position = new Vector3(cam.cameraTarget.position.x,cam.cameraTarget.position.y,cam.transform.position.z);
         }
         /// <summary>
-        /// Méthode pour clean la salle(sprites de ghostdash, projectiles, spells etc...) , a utiliser si les objets a destroy ne sont pas en enfant d'une salle
+        /// Méthode pour clean la salle(sprites de ghostdash, projectiles, spells etc...).
+        /// 
+        /// A utiliser si les objets a destroy ne sont pas en enfant d'une salle
         /// </summary>
         public void ClearRoom()
         {
