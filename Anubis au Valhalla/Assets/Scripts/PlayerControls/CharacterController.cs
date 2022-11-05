@@ -192,6 +192,10 @@ public class CharacterController : MonoBehaviour
   {
     if (col.gameObject.CompareTag("Door"))
     {
+      if (col.GetComponent<Door>().currentDoorType == Door.DoorType.ToShop)
+      {
+        SalleGennerator.instance.shopsVisited++;
+      }
       SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
       SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation);
       ghost.activerEffet = false;
