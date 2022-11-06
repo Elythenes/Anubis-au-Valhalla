@@ -18,6 +18,7 @@ public class IA_Valkyrie : MonoBehaviour
     public AIPath aipath;
     private Path path;
     private SpriteRenderer sr;
+    public GameObject canvasLifeBar;
     private Rigidbody2D rb;
     private Collider2D collider;
     IAstarAI ai;
@@ -86,7 +87,9 @@ public class IA_Valkyrie : MonoBehaviour
         
         if(!isAttacking) // Cooldwn des attaques;
         {
+            StartUpJavelotTime = Random.Range(5, 9);
             StartUpJavelotTimeTimer += Time.deltaTime;
+            TriggerJumpTime = Random.Range(8, 13);
             TriggerJumpTimeTimer += Time.deltaTime;
         }
         
@@ -101,6 +104,7 @@ public class IA_Valkyrie : MonoBehaviour
                 TriggerJumpTimeTimer = 0;
                 hasShaked = false;
                 sr.enabled = false;
+                canvasLifeBar.SetActive(false);
                 collider.enabled = false;
                 IndicationTimeTimer += Time.deltaTime;
             
@@ -153,6 +157,7 @@ public class IA_Valkyrie : MonoBehaviour
             FallTimeTimer = 0;
             transform.position = fallPos;
             sr.enabled = true;
+            canvasLifeBar.SetActive(true);
             collider.enabled = true;
             StartCoroutine(LagFall());
         }             
