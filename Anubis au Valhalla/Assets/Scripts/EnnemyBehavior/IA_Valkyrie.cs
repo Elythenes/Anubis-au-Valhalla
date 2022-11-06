@@ -10,6 +10,7 @@ public class IA_Valkyrie : MonoBehaviour
    [Header("Général")]
     public bool isElite;
     public GameObject emptyLayers;
+    public MonsterLifeManager life;
 
 
     [Header("Déplacements")]
@@ -57,6 +58,7 @@ public class IA_Valkyrie : MonoBehaviour
     
     private void Start()
     {
+        life = GetComponent<MonsterLifeManager>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
@@ -80,12 +82,12 @@ public class IA_Valkyrie : MonoBehaviour
     {
         SortEnemies();
 
-        if (!isAttacking)
+        if (!isAttacking&& !life.isMomified)
         {
             Flip();
         }
         
-        if(!isAttacking) // Cooldwn des attaques;
+        if(!isAttacking&& !life.isMomified) // Cooldwn des attaques;
         {
             StartUpJavelotTime = Random.Range(5, 9);
             StartUpJavelotTimeTimer += Time.deltaTime;
@@ -121,7 +123,7 @@ public class IA_Valkyrie : MonoBehaviour
             attaqueJavelot();
         }
         
-        if (!isFleeing) // Déplacements
+        if (!isFleeing&& !life.isMomified) // Déplacements
         {
             deplacement();
         }

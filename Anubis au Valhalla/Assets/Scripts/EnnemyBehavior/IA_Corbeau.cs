@@ -13,6 +13,7 @@ public class IA_Corbeau : MonoBehaviour
     public bool isElite;
     private Rigidbody2D rb;
     public LayerMask layerPlayer;
+    public MonsterLifeManager life;
 
     [Header("Déplacements")] public GameObject player;
     public Seeker seeker;
@@ -36,6 +37,7 @@ public class IA_Corbeau : MonoBehaviour
 
     private void Start()
     {
+        life = GetComponent<MonsterLifeManager>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
@@ -73,7 +75,7 @@ public class IA_Corbeau : MonoBehaviour
         }
 
 
-        if (aipath.reachedDestination) // Quand le monstre arrive proche du joueur, il commence à attaquer
+        if (aipath.reachedDestination && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
             aipath.canMove = false;
             transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
@@ -138,14 +140,14 @@ public class IA_Corbeau : MonoBehaviour
                             }
                 
                         
-                if (StartUpAttackTimeTimer >= StartUpAttackTime)
+                if (StartUpAttackTimeTimer >= StartUpAttackTime && !life.isMomified)
                 {
                     GameObject projPlume = Instantiate(projectilPlume, transform.position, Quaternion.identity);
                     projPlume.GetComponent<ProjectileCorbeau>().ia = this;
                     StartUpAttackTimeTimer = 0;
                 }
             }
-            else
+            else if (!life.isMomified)
             {
                 aipath.canMove = true;
             }

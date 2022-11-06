@@ -12,6 +12,7 @@ public class SpellThrowingObject : SpellObject
     public float cooldownTimer;
     public float cooldown;
     public bool canCast;
+    public float DebuffTime;
     public float stagger;
     
     public void Awake()
