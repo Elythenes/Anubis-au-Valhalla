@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Pathfinding;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,18 +14,27 @@ public class MonsterLifeManager : MonoBehaviour
     public Animator animator;
     public Rigidbody2D rb;
     public HealthBarMonstre healthBar;
+    public AIPath ai;
     public int vieMax;
     public int vieActuelle;
     public int soulValue = 4;
     public float delay;
     public float forceKnockBack;
     public UnityEvent OnBegin, OnDone;
+    
+    public GameObject root;
+
+    [Header("Alterations d'état")] 
     public float InvincibleTime;
     public float InvincibleTimeTimer;
     public bool isInvincible;
-    public GameObject root;
-    
-    
+    public float MomifiedTime;
+    public float MomifiedTimeTimer;
+    public bool isMomified;
+    public GameObject bandelettesMomie;
+    private bool activeBandelettes;
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -34,7 +44,6 @@ public class MonsterLifeManager : MonoBehaviour
     private void Update()
     {
         transform.localRotation = Quaternion.identity;
-        //transform.localScale = 
         if (isInvincible)
         {
             InvincibleTimeTimer += Time.deltaTime;
@@ -43,6 +52,22 @@ public class MonsterLifeManager : MonoBehaviour
             {
                 isInvincible = false;
                 InvincibleTimeTimer = 0;
+            }
+        }
+        
+        if (isMomified)
+        {
+            MomifiedTimeTimer += Time.deltaTime;
+            ai.canMove = false;
+            GameObject bandelettes = Instantiate(bandelettesMomie, transform);
+            
+            if (MomifiedTimeTimer >= MomifiedTime)
+            {
+                activeBandelettes = true;
+                MomifiedTimeTimer = 0;
+                isMomified = false;
+                Destroy(bandelettes);
+                ai.canMove = true;
             }
         }
     }

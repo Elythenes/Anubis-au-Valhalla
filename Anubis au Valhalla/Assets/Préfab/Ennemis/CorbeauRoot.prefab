@@ -336,6 +336,7 @@ MonoBehaviour:
   animator: {fileID: 893181608378371497}
   rb: {fileID: 0}
   healthBar: {fileID: 4587997050939998677}
+  ai: {fileID: 893181608378371502}
   vieMax: 50
   vieActuelle: 0
   soulValue: 4
@@ -395,10 +396,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  root: {fileID: 202783276026614217}
   InvincibleTime: 0.19
   InvincibleTimeTimer: 0
   isInvincible: 0
-  root: {fileID: 202783276026614217}
+  MomifiedTime: 0
+  MomifiedTimeTimer: 0
+  isMomified: 0
+  bandelettesMomie: {fileID: 5105585978381247783, guid: a0ce4c45d1cdc5f468a4f7668414d476, type: 3}
 --- !u!114 &1176065865194384233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +421,7 @@ MonoBehaviour:
   layerPlayer:
     serializedVersion: 2
     m_Bits: 512
+  life: {fileID: 0}
   player: {fileID: 0}
   seeker: {fileID: 893181608378371501}
   aipath: {fileID: 893181608378371502}

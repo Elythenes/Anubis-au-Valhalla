@@ -12,6 +12,7 @@ public class IA_Shaman : MonoBehaviour
     public bool isElite;
     public LayerMask layerPlayer;
     public EnemyType enemyType;
+    public MonsterLifeManager life;
 
     [Header("Déplacements")] 
     private Rigidbody2D rb;
@@ -54,6 +55,7 @@ public class IA_Shaman : MonoBehaviour
 
     private void Start()
     {
+        life = GetComponent<MonsterLifeManager>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
@@ -66,7 +68,7 @@ public class IA_Shaman : MonoBehaviour
     public void Update()
     {
         SortEnemies();
-        if (!isAttacking)
+        if (!isAttacking&& !life.isMomified)
         {
             Flip();
         }
@@ -74,21 +76,21 @@ public class IA_Shaman : MonoBehaviour
         {
             case EnemyType.Shaman:
 
-                if (isWondering && !isFleeing)
+                if (isWondering && !isFleeing&& !life.isMomified)
                 {
                     Roam();
                 }
                 CompareOwnPosToPlayer();
         
                 StartUpSummonTimeTimer += Time.deltaTime;
-                if (StartUpSummonTimeTimer >= StartUpSummonTime)
+                if (StartUpSummonTimeTimer >= StartUpSummonTime&& !life.isMomified)
                 {
                     isAttacking = true;
                     isWondering = false;
                     SummoningTimeTimer += Time.deltaTime;
                 }
 
-                if (SummoningTimeTimer >= SummoningTime)
+                if (SummoningTimeTimer >= SummoningTime&& !life.isMomified)
                 {
                     Summon();
                 }
@@ -176,7 +178,7 @@ public class IA_Shaman : MonoBehaviour
     {
         if (transform.position.x <
             player.transform.position
-                .x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
+                .x&& !life.isMomified) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
         {
             transform.localScale = new Vector3(-1, 2.2909f, 1);
         }

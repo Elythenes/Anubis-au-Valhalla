@@ -91,7 +91,8 @@ public class SpellManager : MonoBehaviour
     {
         Fireball = 0,
         FireArea = 1,
-        FuryOfSand = 2
+        FuryOfSand = 2,
+        Embaumement = 3
     }
     
     void SpellReplacement(List<SpellObject> list)
@@ -120,13 +121,18 @@ public class SpellManager : MonoBehaviour
     {
         if (spellSlot == 1)
         {
-            cooldownSpellBar.instance.SetCooldownMax1();
 
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
                     Debug.Log("FIRE-BAAAAALL");
-                    ThrowingSpell(prefabA,spellSlot);
+                    SpellThrowingObject FireballObj1 = prefabA.GetComponent<Fireball>().sOFireball;
+                    ThrowingSpell(prefabA,spellSlot,FireballObj1);
+                    break;
+                
+                case SpellNumber.Embaumement:
+                    SpellThrowingObject EmbaumementObj1 = prefabA.GetComponent<Embaumement>().sOEmbaumement;
+                    ThrowingSpell(prefabA,spellSlot,EmbaumementObj1);
                     break;
             
                 case SpellNumber.FireArea:
@@ -143,15 +149,20 @@ public class SpellManager : MonoBehaviour
 
         if (spellSlot == 2)
         {
-            cooldownSpellBar2.instance.SetCooldownMax2();
-            
+
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
                     Debug.Log("FIRE-BAAAAALL");
-                    ThrowingSpell(prefabB,spellSlot);
+                    SpellThrowingObject FireballObj2 = prefabB.GetComponent<Fireball>().sOFireball;
+                    ThrowingSpell(prefabB,spellSlot,FireballObj2);
                     break;
-            
+                
+                case SpellNumber.Embaumement:
+                    SpellThrowingObject EmbaumementObj2 = prefabB.GetComponent<Embaumement>().sOEmbaumement;
+                    ThrowingSpell(prefabB,spellSlot,EmbaumementObj2);
+                    break;
+
                 case SpellNumber.FireArea:
                     Debug.Log("FIRE-AREAAAAA");
                     TimeLimitedSpell(prefabB,spellSlot);
@@ -304,6 +315,48 @@ public class SpellManager : MonoBehaviour
                 }
                 break;
                 
+            case SpellNumber.Embaumement:
+                if (slotNumber == 1)
+                {
+                    spellTo = prefabA.GetComponent<Embaumement>().sOEmbaumement;
+                    cooldownSlot1 = spellTo.cooldown;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellTo = prefabB.GetComponent<Embaumement>().sOEmbaumement;
+                    cooldownSlot2 = spellTo.cooldown;
+                }
+                if (spellTo.cooldownTimer < spellTo.cooldown && !spellTo.canCast) 
+                {
+                    spellTo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellTo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellTo.cooldownTimer;
+                    }
+                }
+                else if (spellTo.cooldownTimer > spellTo.cooldown)
+                {
+                    spellTo.canCast = true;
+                    spellTo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
         }
     }
     
@@ -377,23 +430,18 @@ public class SpellManager : MonoBehaviour
 
     
     
-    void ThrowingSpell(GameObject gb, int slot)
+    void ThrowingSpell(GameObject gb, int slot, SpellThrowingObject spellTo)
     {
-        if (slot == 1)
-        {
-            spellTo = prefabA.GetComponent<Fireball>().sOFireball;
-        }
-        else if (slot == 2)
-        {
-            spellTo = prefabB.GetComponent<Fireball>().sOFireball;
-        }
-        else
-        {
-            Debug.Log("erreur dans la fonction Throwing Spell");
-        }
-
         if (spellTo.canCast)
         {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
             spellTo.canCast = false;
         Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 charaPos = CharacterController.instance.transform.position;

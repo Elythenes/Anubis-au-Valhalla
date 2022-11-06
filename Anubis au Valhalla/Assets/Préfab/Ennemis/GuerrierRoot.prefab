@@ -141,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emptyLayers: {fileID: 905385545975094749}
   isElite: 0
+  life: {fileID: 0}
   player: {fileID: 0}
   seeker: {fileID: 905385545039165342}
   aipath: {fileID: 905385545039165341}
@@ -176,6 +177,7 @@ MonoBehaviour:
   animator: {fileID: 905385545039165338}
   rb: {fileID: 0}
   healthBar: {fileID: 4873547502329376984}
+  ai: {fileID: 905385545039165341}
   vieMax: 100
   vieActuelle: 0
   soulValue: 4
@@ -235,10 +237,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  root: {fileID: 1959525455894448424}
   InvincibleTime: 0.19
   InvincibleTimeTimer: 0
   isInvincible: 0
-  root: {fileID: 1959525455894448424}
+  MomifiedTime: 0
+  MomifiedTimeTimer: 0
+  isMomified: 0
+  bandelettesMomie: {fileID: 5105585978381247783, guid: a0ce4c45d1cdc5f468a4f7668414d476, type: 3}
 --- !u!114 &905385545039165341
 MonoBehaviour:
   m_ObjectHideFlags: 0
