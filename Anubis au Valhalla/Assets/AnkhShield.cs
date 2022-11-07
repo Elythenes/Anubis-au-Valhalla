@@ -29,6 +29,7 @@ public class AnkhShield : MonoBehaviour
         if (secondesRestantes <= 0)
         {
             gameObject.SetActive(false);
+            DamageManager.instance.isAnkh = false;
         }
     }
 }

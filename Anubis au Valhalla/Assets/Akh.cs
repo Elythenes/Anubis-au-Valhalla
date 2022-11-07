@@ -24,8 +24,8 @@ public class Akh : MonoBehaviour
                 if (tempsReloadHitFlameAreaTimer > soAkh.espacementDoT && col.gameObject.tag == "Monstre")
                 {
                     Debug.Log("touché");
-                    col.GetComponent<MonsterLifeManager>().DamageText(soAkh.puissanceAttaque + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *10));
-                    col.GetComponent<MonsterLifeManager>().TakeDamage(soAkh.puissanceAttaque + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *10),soAkh.stagger);
+                    col.GetComponent<MonsterLifeManager>().DamageText(soAkh.puissanceAttaque + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5));
+                    col.GetComponent<MonsterLifeManager>().TakeDamage(soAkh.puissanceAttaque + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5),soAkh.stagger);
                     tempsReloadHitFlameAreaTimer = 0;
                 }
             }
