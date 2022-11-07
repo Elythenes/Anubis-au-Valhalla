@@ -99,7 +99,8 @@ public class SpellManager : MonoBehaviour
         Embaumement = 3,
         Ânkh = 4,
         Akh = 5,
-        PlumeMaat = 6
+        PlumeMaat = 6,
+        OiseauBa = 7
     }
     
     void SpellReplacement(List<SpellObject> list)
@@ -132,9 +133,13 @@ public class SpellManager : MonoBehaviour
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
-                    Debug.Log("FIRE-BAAAAALL");
                     SpellThrowingObject FireballObj1 = prefabA.GetComponent<Fireball>().sOFireball;
                     ThrowingSpell(prefabA,spellSlot,FireballObj1);
+                    break;
+                
+                case SpellNumber.OiseauBa:
+                    SpellThrowingObject OiseauBaObj1 = prefabA.GetComponent<OiseauBa>().soOiseauBa;
+                    ThrowingSpell(prefabA,spellSlot,OiseauBaObj1);
                     break;
                 
                 case SpellNumber.Embaumement:
@@ -158,7 +163,6 @@ public class SpellManager : MonoBehaviour
                     break;
                 
                 case SpellNumber.FuryOfSand:
-                    Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabA, spellSlot);
                     break;
                 
@@ -178,6 +182,11 @@ public class SpellManager : MonoBehaviour
                     Debug.Log("FIRE-BAAAAALL");
                     SpellThrowingObject FireballObj2 = prefabB.GetComponent<Fireball>().sOFireball;
                     ThrowingSpell(prefabB,spellSlot,FireballObj2);
+                    break;
+                
+                case SpellNumber.OiseauBa:
+                    SpellThrowingObject OiseauBaObj2 = prefabB.GetComponent<OiseauBa>().soOiseauBa;
+                    ThrowingSpell(prefabA,spellSlot,OiseauBaObj2);
                     break;
                 
                 case SpellNumber.Embaumement:
@@ -229,6 +238,49 @@ public class SpellManager : MonoBehaviour
                 if (slotNumber == 2)
                 {
                     spellTo = prefabB.GetComponent<Fireball>().sOFireball;
+                    cooldownSlot2 = spellTo.cooldown;
+                }
+                if (spellTo.cooldownTimer < spellTo.cooldown && !spellTo.canCast) //cooldown de la Fireball
+                {
+                    spellTo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellTo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellTo.cooldownTimer;
+                    }
+                }
+                else if (spellTo.cooldownTimer > spellTo.cooldown)
+                {
+                    spellTo.canCast = true;
+                    spellTo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
+            
+            case SpellNumber.OiseauBa:
+                if (slotNumber == 1)
+                {
+                    spellTo = prefabA.GetComponent<OiseauBa>().soOiseauBa;
+                    cooldownSlot1 = spellTo.cooldown;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellTo = prefabB.GetComponent<OiseauBa>().soOiseauBa;
                     cooldownSlot2 = spellTo.cooldown;
                 }
                 if (spellTo.cooldownTimer < spellTo.cooldown && !spellTo.canCast) //cooldown de la Fireball
