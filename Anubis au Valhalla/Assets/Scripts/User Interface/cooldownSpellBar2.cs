@@ -10,7 +10,9 @@ public class cooldownSpellBar2 : MonoBehaviour
     public Slider slider;
     public TextMeshProUGUI compteurCooldown;
     public float countdownCooldown2;
-
+    public TextMeshProUGUI compteurTempsRestant;
+    public GameObject ankhShield;
+    public AnkhShield ankhSheildData;
     
     private void Awake()
     {
@@ -33,6 +35,16 @@ public class cooldownSpellBar2 : MonoBehaviour
             else
             {
                 compteurCooldown.enabled = true;
+            }
+            
+            if (SpellManager.instance.prefabB == ankhShield)
+            {
+                compteurTempsRestant.enabled = true;
+                compteurTempsRestant.SetText(Mathf.RoundToInt(ankhSheildData.secondesRestantes) + "");
+            }
+            else
+            {
+                compteurTempsRestant.enabled = false;
             }
         }
     }

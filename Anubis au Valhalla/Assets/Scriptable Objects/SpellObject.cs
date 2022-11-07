@@ -7,7 +7,8 @@ public enum SpellType
 {
     Throwing,
     FollowingArea,
-    StaticArea
+    StaticArea,
+    DefenceShield
 }
 
 public abstract class SpellObject : ScriptableObject
