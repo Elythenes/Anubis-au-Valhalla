@@ -66,7 +66,7 @@ public class SalleGennerator : MonoBehaviour
         // Start is called before the first frame update
         void Start()
         {
-                TransitionToNextRoom(DoorOrientation.West);
+                TransitionToNextRoom(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ public class SalleGennerator : MonoBehaviour
                 if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * 0.2f) && roomsDone <= Mathf.RoundToInt(dungeonSize * 0.4f))
                 {
                         var shopspawn = Random.value;
-                        if (shopspawn >= 0.4f)
+                        if (shopspawn >= 0)
                         {
                                 Door removedDoor = s_doors[(int)fromDoor];
                                 s_doors.RemoveAt((int)fromDoor);
@@ -179,7 +179,7 @@ public class SalleGennerator : MonoBehaviour
         /// <summary>
         /// Méthode qui enclenche le changement de salle
         /// </summary>
-        public void TransitionToNextRoom(DoorOrientation door)
+        public void TransitionToNextRoom(DoorOrientation door, bool switchDoor, Door type)
         {
                 toDoor = door;
                 fromDoor = door switch
@@ -193,6 +193,7 @@ public class SalleGennerator : MonoBehaviour
                 transitionCanvas.DOFade(1, 0.25f).OnComplete(() =>
                 {
                         if (currentRoom != null) currentRoom.gameObject.SetActive(false);
+                        if(switchDoor) SwapDoorType(type);
                         currentRoom = BeginGeneration();
                         if (roomsDone != 0) MovePlayerToDoor(fromDoor);
                         ClearRoom();
@@ -279,6 +280,12 @@ public class SalleGennerator : MonoBehaviour
                         Souls.instance.CollectSouls(soul,1);
                 }
                 amount.Clear();
+        }
+
+        public void SwapDoorType(Door type)
+        {
+                type.currentSprite.sprite = type.doorSprites[0];
+                type.currentDoorType = Door.DoorType.Normal;
         }
         
         //------------------------------------------CODE OBSOLETE----------------------------------------//
