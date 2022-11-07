@@ -97,7 +97,8 @@ public class SpellManager : MonoBehaviour
         FireArea = 1,
         FuryOfSand = 2,
         Embaumement = 3,
-        Ânkh = 4
+        Ânkh = 4,
+        Akh = 5
     }
     
     void SpellReplacement(List<SpellObject> list)
@@ -141,10 +142,15 @@ public class SpellManager : MonoBehaviour
                     break;
             
                 case SpellNumber.FireArea:
-                    Debug.Log("FIRE-AREAAAAA");
-                    TimeLimitedSpell(prefabA,spellSlot);
+                    SpellStaticAreaObject FireAreaObj1 = prefabA.GetComponent<FlameArea>().sOFlameArea;
+                    TimeLimitedSpell(prefabA,spellSlot,FireAreaObj1);
                     break;
             
+                case SpellNumber.Akh:
+                    SpellStaticAreaObject AkhObj1 = prefabA.GetComponent<Akh>().soAkh;
+                    TimeLimitedSpell(prefabA,spellSlot,AkhObj1);
+                    break;
+                
                 case SpellNumber.FuryOfSand:
                     Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabA, spellSlot);
@@ -174,8 +180,13 @@ public class SpellManager : MonoBehaviour
                     break;
 
                 case SpellNumber.FireArea:
-                    Debug.Log("FIRE-AREAAAAA");
-                    TimeLimitedSpell(prefabB,spellSlot);
+                    SpellStaticAreaObject FireAreaObj2 = prefabB.GetComponent<FlameArea>().sOFlameArea;
+                    TimeLimitedSpell(prefabB,spellSlot,FireAreaObj2);
+                    break;
+                
+                case SpellNumber.Akh:
+                    SpellStaticAreaObject AkhObj2 = prefabB.GetComponent<Akh>().soAkh;
+                    TimeLimitedSpell(prefabB,spellSlot,AkhObj2);
                     break;
             
                 case SpellNumber.FuryOfSand:
@@ -241,7 +252,6 @@ public class SpellManager : MonoBehaviour
                 break;
             
             case SpellNumber.FireArea:
-                Debug.Log("CD Fire Area");
                 if (slotNumber == 1)
                 {
                     spellSAo = prefabA.GetComponent<FlameArea>().sOFlameArea;
@@ -284,6 +294,51 @@ public class SpellManager : MonoBehaviour
                     }
                 }
                 break;
+            
+            case SpellNumber.Akh:
+                if (slotNumber == 1)
+                {
+                    spellSAo = prefabA.GetComponent<Akh>().soAkh;
+                    cooldownSlot1 = spellSAo.cooldown;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellSAo = prefabB.GetComponent<Akh>().soAkh;
+                    cooldownSlot2 = spellSAo.cooldown;
+                }
+                if (spellSAo.cooldownTimer < spellSAo.cooldown && !spellSAo.canCast)
+                {
+                    spellSAo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellSAo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellSAo.cooldownTimer;
+                    }
+                    
+                }
+                else if (spellSAo.cooldownTimer > spellSAo.cooldown)
+                {
+                    spellSAo.canCast = true;
+                    spellSAo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
+
             
             case SpellNumber.FuryOfSand:
                 //Debug.Log("CD Fury of Sand");
@@ -432,25 +487,18 @@ public class SpellManager : MonoBehaviour
     
     
     //Pour un Spell qui apparaît (et disparaît après une durée timerReload)
-    void TimeLimitedSpell(GameObject gb/*, float timerReload*/, int slot)
+    void TimeLimitedSpell(GameObject gb/*, float timerReload*/, int slot,SpellStaticAreaObject spellSAo)
     {
-        if (slot == 1)
-        {
-            spellSAo = prefabA.GetComponent<FlameArea>().sOFlameArea;
-        }
-        if (slot == 2)
-        {
-            Debug.Log("test slot 2");
-            spellSAo = prefabB.GetComponent<FlameArea>().sOFlameArea;
-        }
-        else
-        {
-            Debug.Log("erreur dans la fonction TimeLimitedSpell");
-            
-        }
-
         if (spellSAo.canCast)
         {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
             spellSAo.canCast = false;
             var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity);
             Debug.Log("Spell1 used");

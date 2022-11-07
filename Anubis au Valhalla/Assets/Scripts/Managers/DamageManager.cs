@@ -32,6 +32,7 @@ public class DamageManager : MonoBehaviour
     [Header("Stats")]
     public int vieActuelle;
     public int vieMax;
+    public int damageReduction;
     public float TempsInvinsbleAfterHit;
     public float StunAfterHit;
     private bool stopWaiting;
@@ -80,18 +81,19 @@ public class DamageManager : MonoBehaviour
                 Time.timeScale = 0.3f;
                 if (isAnkh)
                 {
-                    vieActuelle -= damage / ankhShieldData.reducteurDamage;
-                    Debug.Log(damage / ankhShieldData.reducteurDamage);
-                    textDamage.GetComponentInChildren<TextMeshPro>().SetText((damage / ankhShieldData.reducteurDamage).ToString());
-                    Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity); 
+                    damageReduction = ankhShieldData.reducteurDamage;
+                    
                 }
                 else
                 {
-                    vieActuelle -= damage;
-                    textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
-                    Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity); 
+                    damageReduction = 1;
                 }
+                
+                vieActuelle -= damage / damageReduction;
+                textDamage.GetComponentInChildren<TextMeshPro>().SetText((damage / damageReduction).ToString());
+                Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
                 LifeBarManager.instance.SetHealth(vieActuelle);
+                
                 StartCoroutine(TempsInvinsibilité());
                 StartCoroutine(TempsStun());
             }
