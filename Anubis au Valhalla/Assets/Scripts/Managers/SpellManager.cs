@@ -15,6 +15,8 @@ public class SpellManager : MonoBehaviour
     public KeyCode spell2;
     public LayerMask layerMonstres;
     public bool canCastSpells;
+    public GameObject shield;
+    public AnkhShield shieldData;
 
     [Header("SPELL SLOTS")] 
     //public GameObject spellCollectManager;
@@ -33,6 +35,7 @@ public class SpellManager : MonoBehaviour
     [SerializeField] public SpellStaticAreaObject spellSAo;
     [SerializeField] public SpellFollowingAreaObject spellFAo;
     [SerializeField] public SpellThrowingObject spellTo;
+    [SerializeField] public SpellDefenceObject spellDo;
     public bool isSpell1Fill = false;
     public bool isSpell2Fill = false;
     
@@ -50,6 +53,7 @@ public class SpellManager : MonoBehaviour
 
     private void Start()
     {
+        shieldData = shield.GetComponent<AnkhShield>();
         containerA = null;
         prefabA = null;
         containerB = null;
@@ -92,7 +96,8 @@ public class SpellManager : MonoBehaviour
         Fireball = 0,
         FireArea = 1,
         FuryOfSand = 2,
-        Embaumement = 3
+        Embaumement = 3,
+        Ânkh = 4
     }
     
     void SpellReplacement(List<SpellObject> list)
@@ -144,6 +149,11 @@ public class SpellManager : MonoBehaviour
                     Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabA, spellSlot);
                     break;
+                
+                case SpellNumber.Ânkh:
+                    SpellDefenceObject shieldObj1 = prefabA.GetComponent<AnkhShield>().sOAnkhShield;
+                    Shield(prefabA, spellSlot, shieldObj1);
+                    break;
             }
         }
 
@@ -171,6 +181,11 @@ public class SpellManager : MonoBehaviour
                 case SpellNumber.FuryOfSand:
                     Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabB, spellSlot);
+                    break;
+                
+                case SpellNumber.Ânkh:
+                    SpellDefenceObject shieldObj1 = prefabB.GetComponent<AnkhShield>().sOAnkhShield;
+                    Shield(prefabA, spellSlot, shieldObj1);
                     break;
             }
         }
@@ -357,6 +372,49 @@ public class SpellManager : MonoBehaviour
                     }
                 }
                 break;
+            
+            case SpellNumber.Ânkh:
+                if (slotNumber == 1)
+                {
+                    spellDo = prefabA.GetComponent<AnkhShield>().sOAnkhShield;
+                    cooldownSlot1 = spellDo.secondesTotales;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellDo = prefabB.GetComponent<AnkhShield>().sOAnkhShield;
+                    cooldownSlot2 = spellDo.secondesTotales;
+                }
+                if (shieldData.secondesRestantes > 0)
+                {
+                    spellDo.canCast = true;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = shieldData.secondesRestantes;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = shieldData.secondesRestantes;
+                    }
+                }
+                else
+                {
+                    spellDo.canCast = false;
+                    spellDo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
         }
     }
     
@@ -452,5 +510,20 @@ public class SpellManager : MonoBehaviour
         StartCoroutine(TimeLimitedGb(gbInstance, spellTo.duration));
         }
 
+    }
+
+    public void Shield(GameObject gb, int slot, SpellDefenceObject spellDo)
+    {
+        if (spellDo.canCast && !shieldData.isActive)
+        {
+            shield.SetActive(true);
+            shieldData.isActive = true;
+        }
+        else if (spellDo.canCast && shieldData.isActive)
+        {
+            shield.SetActive(false);
+            shieldData.isActive = false;
+        }
+        
     }
 }

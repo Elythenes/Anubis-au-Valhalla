@@ -27,7 +27,6 @@ public class ContainScriptableObject : MonoBehaviour
         }
 
         int numberGot = Random.Range(0, SpellObjectsList.Count);
-        Debug.Log(numberGot);
         spellInside = SpellObjectsList[numberGot];
         prefabInside = prefabInsideList[numberGot];
 

@@ -17,10 +17,12 @@ public class DamageManager : MonoBehaviour
     public Volume gVolume;
     public Volume gVolumeMiss;
     private ColorAdjustments ca;
+    public SpellDefenceObject ankhShieldData;
 
     [Header("Alterations d'Etat")]
     public bool stun;
     public bool invinsible;
+    public bool isAnkh;
     public Animator animPlayer;
     
     [Header("Feedbacks")]
@@ -76,12 +78,22 @@ public class DamageManager : MonoBehaviour
                 StartCoroutine(RedScreen(timeRedScreen));
                 HitStop(timeHitStop*(damage/10));
                 Time.timeScale = 0.3f;
-                vieActuelle -= damage;
+                if (isAnkh)
+                {
+                    vieActuelle -= damage / ankhShieldData.reducteurDamage;
+                    Debug.Log(damage / ankhShieldData.reducteurDamage);
+                    textDamage.GetComponentInChildren<TextMeshPro>().SetText((damage / ankhShieldData.reducteurDamage).ToString());
+                    Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity); 
+                }
+                else
+                {
+                    vieActuelle -= damage;
+                    textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
+                    Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity); 
+                }
                 LifeBarManager.instance.SetHealth(vieActuelle);
                 StartCoroutine(TempsInvinsibilité());
                 StartCoroutine(TempsStun());
-                textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
-                Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity); 
             }
             else
             {
