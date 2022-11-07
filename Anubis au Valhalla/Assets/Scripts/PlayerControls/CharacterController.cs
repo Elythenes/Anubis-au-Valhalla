@@ -192,16 +192,25 @@ public class CharacterController : MonoBehaviour
   {
     if (col.gameObject.CompareTag("Door"))
     {
-      if (col.GetComponent<Door>().currentDoorType == Door.DoorType.ToShop)
-      {
-        SalleGennerator.instance.shopsVisited++;
-      }
-      SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
-      SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation);
       ghost.activerEffet = false;
       isDashing = false;
       canDash = true;
       timerdashCooldown = 0;
+      var hitDoor = col.GetComponent<Door>();
+      SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
+      if (hitDoor.currentDoorType == Door.DoorType.ToShop)
+      {
+        SalleGennerator.instance.shopsVisited++;
+        SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, true, hitDoor);
+      }
+      else if (hitDoor.currentDoorType != Door.DoorType.Normal)
+      {
+        SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, true, hitDoor);
+      }
+      else
+      {
+        SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, false, hitDoor);
+      }
     }
   }
 }
