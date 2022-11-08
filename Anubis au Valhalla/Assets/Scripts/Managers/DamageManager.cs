@@ -15,11 +15,14 @@ public class DamageManager : MonoBehaviour
     public GameObject player;
     public static DamageManager instance;
     public Volume gVolume;
+    public Volume gVolumeMiss;
     private ColorAdjustments ca;
+    public SpellDefenceObject ankhShieldData;
 
     [Header("Alterations d'Etat")]
     public bool stun;
     public bool invinsible;
+    public bool isAnkh;
     public Animator animPlayer;
     
     [Header("Feedbacks")]
@@ -29,6 +32,7 @@ public class DamageManager : MonoBehaviour
     [Header("Stats")]
     public int vieActuelle;
     public int vieMax;
+    public int damageReduction;
     public float TempsInvinsbleAfterHit;
     public float StunAfterHit;
     private bool stopWaiting;
@@ -58,21 +62,49 @@ public class DamageManager : MonoBehaviour
         {
             animPlayer.SetBool("IsInvinsible", false);
         }
+
+        if (vieActuelle > vieMax)
+        {
+            vieActuelle = vieMax;
+        }
     }
 
     public void TakeDamage(int damage)
     {
         if (!invinsible)
         {
-            StartCoroutine(RedScreen(timeRedScreen));
-            HitStop(timeHitStop*(damage/10));
-            Time.timeScale = 0.3f;
-            vieActuelle -= damage;
-            LifeBarManager.instance.SetHealth(vieActuelle);
-            StartCoroutine(TempsInvinsibilité());
-            StartCoroutine(TempsStun());
-            textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
-            Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+            if (!CharacterController.instance.isDashing)
+            {
+                Debug.Log("touché");
+                StartCoroutine(RedScreen(timeRedScreen));
+                HitStop(timeHitStop*(damage/10));
+                Time.timeScale = 0.3f;
+                if (isAnkh)
+                {
+                    damageReduction = ankhShieldData.reducteurDamage;
+                    
+                }
+                else
+                {
+                    damageReduction = 1;
+                }
+                
+                vieActuelle -= damage / damageReduction;
+                textDamage.GetComponentInChildren<TextMeshPro>().SetText((damage / damageReduction).ToString());
+                Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+                LifeBarManager.instance.SetHealth(vieActuelle);
+                
+                StartCoroutine(TempsInvinsibilité());
+                StartCoroutine(TempsStun());
+            }
+            else
+            {
+                Debug.Log("miss");
+                StartCoroutine(MissScreen(timeRedScreen));
+                HitStop(timeHitStop*(damage/10));
+                Time.timeScale = 0.3f;
+            }
+            
         }
 
         if (vieActuelle <= 0)
@@ -98,15 +130,22 @@ public class DamageManager : MonoBehaviour
 
     public IEnumerator RedScreen(float timeRedScreenC)
     {
-        /*Color newColor = new Color32(255, 0, 0,0); 
-        Color originalColor = new Color32(255, 255, 255,0);
-        gVolume.profile.TryGet(out ca);
-        ca.colorFilter.value = newColor;
-        yield return new WaitForSeconds(timeRedScreenC);
-        ca.colorFilter.value = originalColor;*/
-        gVolume.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
-        yield return new WaitForSeconds(timeRedScreen);
-        gVolume.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+        if (!CharacterController.instance.isDashing)
+        {
+            gVolume.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
+            yield return new WaitForSeconds(timeRedScreen);
+            gVolume.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+        }
+    }
+    
+    public IEnumerator MissScreen(float timeRedScreenC)
+    {
+        if (CharacterController.instance.isDashing)
+        {
+            gVolumeMiss.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
+            yield return new WaitForSeconds(timeRedScreen);
+            gVolumeMiss.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+        }
     }
     
   

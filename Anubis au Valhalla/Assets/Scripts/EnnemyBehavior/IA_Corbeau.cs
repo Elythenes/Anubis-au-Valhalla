@@ -13,6 +13,7 @@ public class IA_Corbeau : MonoBehaviour
     public bool isElite;
     private Rigidbody2D rb;
     public LayerMask layerPlayer;
+    public MonsterLifeManager life;
 
     [Header("Déplacements")] public GameObject player;
     public Seeker seeker;
@@ -36,6 +37,7 @@ public class IA_Corbeau : MonoBehaviour
 
     private void Start()
     {
+        life = GetComponent<MonsterLifeManager>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
@@ -73,7 +75,7 @@ public class IA_Corbeau : MonoBehaviour
         }
 
 
-        if (aipath.reachedDestination) // Quand le monstre arrive proche du joueur, il commence à attaquer
+        if (aipath.reachedDestination && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
             aipath.canMove = false;
             transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
@@ -81,56 +83,56 @@ public class IA_Corbeau : MonoBehaviour
 
             if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing)
             {
-                RaycastHit hitUp;
+               
                             if (Physics2D.Raycast(transform.position, Vector2.up, radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, Vector2.up * radiusFleeing, Color.red);
                                 rb.AddForce(Vector2.down * forceRepulse);
                             }
 
-                            RaycastHit hitDown;
+                           
                             if (Physics2D.Raycast(transform.position, Vector2.down, radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, Vector2.down * radiusFleeing, Color.red);
                                 rb.AddForce(Vector2.up * forceRepulse);
                             }
 
-                            RaycastHit hitRight;
+                            
                             if (Physics2D.Raycast(transform.position, Vector2.right, radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, Vector2.right * radiusFleeing, Color.red);
                                 rb.AddForce(Vector2.left * forceRepulse);
                             }
 
-                            RaycastHit hitLeft;
+                            
                             if (Physics2D.Raycast(transform.position, Vector2.left, radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, Vector2.left * radiusFleeing, Color.red);
                                 rb.AddForce(Vector2.right * forceRepulse);
                             }
 
-                            RaycastHit hitUpLeft;
+                           
                             if (Physics2D.Raycast(transform.position, new Vector2(1, 1), radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, new Vector2(1, 1) * radiusFleeing, Color.red);
                                 rb.AddForce(new Vector2(-1, -1) * forceRepulse);
                             }
 
-                            RaycastHit hitUpRight;
+                           
                             if (Physics2D.Raycast(transform.position, new Vector2(-1, 1), radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, new Vector2(-1, 1) * radiusFleeing, Color.red);
                                 rb.AddForce(new Vector2(1, -1) * forceRepulse);
                             }
 
-                            RaycastHit hitDownLeft;
+                            
                             if (Physics2D.Raycast(transform.position, new Vector2(1, -1), radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, new Vector2(1, -1) * radiusFleeing, Color.red);
                                 rb.AddForce(new Vector2(-1, 1) * forceRepulse);
                             }
 
-                            RaycastHit hitDownRight;
+                           
                             if (Physics2D.Raycast(transform.position, new Vector2(-1, -1), radiusFleeing,layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, new Vector2(-1, -1) * radiusFleeing, Color.red);
@@ -138,14 +140,14 @@ public class IA_Corbeau : MonoBehaviour
                             }
                 
                         
-                if (StartUpAttackTimeTimer >= StartUpAttackTime)
+                if (StartUpAttackTimeTimer >= StartUpAttackTime && !life.isMomified)
                 {
                     GameObject projPlume = Instantiate(projectilPlume, transform.position, Quaternion.identity);
                     projPlume.GetComponent<ProjectileCorbeau>().ia = this;
                     StartUpAttackTimeTimer = 0;
                 }
             }
-            else
+            else if (!life.isMomified)
             {
                 aipath.canMove = true;
             }

@@ -13,6 +13,7 @@ public class IA_Guerrier : MonoBehaviour
     [Header("Vie et visuels")]
     public GameObject emptyLayers;
     public bool isElite;
+    public MonsterLifeManager life;
 
     [Header("Déplacements")]
     public GameObject player;
@@ -42,6 +43,7 @@ public class IA_Guerrier : MonoBehaviour
 
     private void Start()
     {
+        life = GetComponent<MonsterLifeManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
@@ -67,7 +69,7 @@ public class IA_Guerrier : MonoBehaviour
             sr.sortingOrder = 1;
         }
 
-        if (!isAttacking)
+        if (!isAttacking && !life.isMomified)
         {
             if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
             {
@@ -80,7 +82,7 @@ public class IA_Guerrier : MonoBehaviour
         }
         
 
-        if (aipath.reachedDestination) // Quand le monstre arrive proche du joueur, il commence à attaquer
+        if (aipath.reachedDestination && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
             if (isWondering)
             {
@@ -93,14 +95,14 @@ public class IA_Guerrier : MonoBehaviour
 
         }
 
-        if (isAttacking)
+        if (isAttacking&& !life.isMomified)
         {
             aipath.canMove = false;
             StartUpAttackTimeTimer += Time.deltaTime;
             hasShaked = false;
         }
 
-        if (!hasShaked)
+        if (!hasShaked&& !life.isMomified)
         {
             transform.DOShakePosition(0.2f, 0.3f);
             hasShaked = true;
@@ -113,7 +115,7 @@ public class IA_Guerrier : MonoBehaviour
             aipath.canMove = true;
         }
 
-        if (StartUpAttackTimeTimer >= StartUpAttackTime)
+        if (StartUpAttackTimeTimer >= StartUpAttackTime&& !life.isMomified)
         {
             Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
             GameObject swingOj = Instantiate(swing, pointAttaque.position, Quaternion.identity);
@@ -131,7 +133,7 @@ public class IA_Guerrier : MonoBehaviour
             StartUpAttackTimeTimer = 0;
         }
 
-        if (isWondering)
+        if (isWondering&& !life.isMomified)
         {
             WonderingTimeTimer += Time.deltaTime;
             if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath) 
@@ -143,7 +145,7 @@ public class IA_Guerrier : MonoBehaviour
             }
         }
         
-        if (WonderingTimeTimer >= WonderingTime)
+        if (WonderingTimeTimer >= WonderingTime&& !life.isMomified)
         {
             isAttacking = false;
             isWondering = false;

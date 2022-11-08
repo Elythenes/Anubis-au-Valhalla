@@ -30,7 +30,6 @@ public class Salle : MonoBehaviour
     public List<GameObject> availableSpawnB;
     public List<GameObject> availableSpawnC;
     public List<int> costList = new List<int>();
-
     public PropSize propSizes = new PropSize();
     [Serializable]
     public class Props
@@ -219,16 +218,9 @@ public class Salle : MonoBehaviour
         {
             roomDone = true;
             SalleGennerator.instance.roomsDone++;
-            //int coffreSpawnChance = Random.Range(1, 2);
-            //Debug.Log(coffreSpawnChance);
-           // if (coffreSpawnChance == 2)
-            //{
             Instantiate(coffre,player.transform.position,Quaternion.identity);
-           // }
         }
     }
-    
-
 }
 
 

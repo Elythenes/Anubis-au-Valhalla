@@ -15,6 +15,8 @@ public class SpellManager : MonoBehaviour
     public KeyCode spell2;
     public LayerMask layerMonstres;
     public bool canCastSpells;
+    public GameObject shield;
+    public AnkhShield shieldData;
 
     [Header("SPELL SLOTS")] 
     //public GameObject spellCollectManager;
@@ -24,11 +26,16 @@ public class SpellManager : MonoBehaviour
     public GameObject prefabA;
     public SpellObject containerB;
     public GameObject prefabB;
+    public float cooldownSlot1;
+    public float cooldownSlotTimer1;
+    public float cooldownSlot2;
+    public float cooldownSlotTimer2;
 
     [Header("SPELL HIDDEN VAR")] 
     [SerializeField] public SpellStaticAreaObject spellSAo;
     [SerializeField] public SpellFollowingAreaObject spellFAo;
     [SerializeField] public SpellThrowingObject spellTo;
+    [SerializeField] public SpellDefenceObject spellDo;
     public bool isSpell1Fill = false;
     public bool isSpell2Fill = false;
     
@@ -46,6 +53,7 @@ public class SpellManager : MonoBehaviour
 
     private void Start()
     {
+        shieldData = shield.GetComponent<AnkhShield>();
         containerA = null;
         prefabA = null;
         containerB = null;
@@ -87,7 +95,12 @@ public class SpellManager : MonoBehaviour
     {
         Fireball = 0,
         FireArea = 1,
-        FuryOfSand = 2
+        FuryOfSand = 2,
+        Embaumement = 3,
+        Ânkh = 4,
+        Akh = 5,
+        PlumeMaat = 6,
+        OiseauBa = 7
     }
     
     void SpellReplacement(List<SpellObject> list)
@@ -116,42 +129,94 @@ public class SpellManager : MonoBehaviour
     {
         if (spellSlot == 1)
         {
+
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
-                    Debug.Log("FIRE-BAAAAALL");
-                    ThrowingSpell(prefabA,spellSlot);
+                    SpellThrowingObject FireballObj1 = prefabA.GetComponent<Fireball>().sOFireball;
+                    ThrowingSpell(prefabA,spellSlot,FireballObj1);
+                    break;
+                
+                case SpellNumber.OiseauBa:
+                    SpellThrowingObject OiseauBaObj1 = prefabA.GetComponent<OiseauBa>().soOiseauBa;
+                    ThrowingSpell(prefabA,spellSlot,OiseauBaObj1);
+                    break;
+                
+                case SpellNumber.Embaumement:
+                    SpellThrowingObject EmbaumementObj1 = prefabA.GetComponent<Embaumement>().sOEmbaumement;
+                    ThrowingSpell(prefabA,spellSlot,EmbaumementObj1);
                     break;
             
                 case SpellNumber.FireArea:
-                    Debug.Log("FIRE-AREAAAAA");
-                    TimeLimitedSpell(prefabA,spellSlot);
+                    SpellStaticAreaObject FireAreaObj1 = prefabA.GetComponent<FlameArea>().sOFlameArea;
+                    TimeLimitedSpell(prefabA,spellSlot,FireAreaObj1);
                     break;
             
+                case SpellNumber.Akh:
+                    SpellStaticAreaObject AkhObj1 = prefabA.GetComponent<Akh>().soAkh;
+                    TimeLimitedSpell(prefabA,spellSlot,AkhObj1);
+                    break;
+                
+                case SpellNumber.PlumeMaat:
+                    SpellStaticAreaObject PlumeObj1 = prefabA.GetComponent<PlumeMaat>().soPlumeMaat;
+                    TimeLimitedSpell(prefabA,spellSlot,PlumeObj1);
+                    break;
+                
                 case SpellNumber.FuryOfSand:
-                    Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabA, spellSlot);
+                    break;
+                
+                case SpellNumber.Ânkh:
+                    SpellDefenceObject shieldObj1 = prefabA.GetComponent<AnkhShield>().sOAnkhShield;
+                    Shield(prefabA, spellSlot, shieldObj1);
                     break;
             }
         }
 
         if (spellSlot == 2)
         {
+
             switch (spellNumber)
             {
                 case SpellNumber.Fireball:
                     Debug.Log("FIRE-BAAAAALL");
-                    ThrowingSpell(prefabB,spellSlot);
+                    SpellThrowingObject FireballObj2 = prefabB.GetComponent<Fireball>().sOFireball;
+                    ThrowingSpell(prefabB,spellSlot,FireballObj2);
                     break;
-            
+                
+                case SpellNumber.OiseauBa:
+                    SpellThrowingObject OiseauBaObj2 = prefabB.GetComponent<OiseauBa>().soOiseauBa;
+                    ThrowingSpell(prefabA,spellSlot,OiseauBaObj2);
+                    break;
+                
+                case SpellNumber.Embaumement:
+                    SpellThrowingObject EmbaumementObj2 = prefabB.GetComponent<Embaumement>().sOEmbaumement;
+                    ThrowingSpell(prefabB,spellSlot,EmbaumementObj2);
+                    break;
+
                 case SpellNumber.FireArea:
-                    Debug.Log("FIRE-AREAAAAA");
-                    TimeLimitedSpell(prefabB,spellSlot);
+                    SpellStaticAreaObject FireAreaObj2 = prefabB.GetComponent<FlameArea>().sOFlameArea;
+                    TimeLimitedSpell(prefabB,spellSlot,FireAreaObj2);
+                    break;
+                
+                case SpellNumber.Akh:
+                    SpellStaticAreaObject AkhObj2 = prefabB.GetComponent<Akh>().soAkh;
+                    TimeLimitedSpell(prefabB,spellSlot,AkhObj2);
+                    break;
+                
+                case SpellNumber.PlumeMaat:
+                    SpellStaticAreaObject PlumeObj2 = prefabB.GetComponent<PlumeMaat>().soPlumeMaat;
+                    TimeLimitedSpell(prefabB,spellSlot,PlumeObj2);
                     break;
             
                 case SpellNumber.FuryOfSand:
                     Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabB, spellSlot);
+                    break;
+                
+                case SpellNumber.Ânkh:
+                    SpellDefenceObject shieldObj1 = prefabB.GetComponent<AnkhShield>().sOAnkhShield;
+                    Shield(prefabA, spellSlot, shieldObj1);
                     break;
             }
         }
@@ -167,42 +232,217 @@ public class SpellManager : MonoBehaviour
                 if (slotNumber == 1)
                 {
                     spellTo = prefabA.GetComponent<Fireball>().sOFireball;
+                    cooldownSlot1 = spellTo.cooldown;
                 }
 
                 if (slotNumber == 2)
                 {
                     spellTo = prefabB.GetComponent<Fireball>().sOFireball;
+                    cooldownSlot2 = spellTo.cooldown;
                 }
                 if (spellTo.cooldownTimer < spellTo.cooldown && !spellTo.canCast) //cooldown de la Fireball
                 {
                     spellTo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellTo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellTo.cooldownTimer;
+                    }
                 }
                 else if (spellTo.cooldownTimer > spellTo.cooldown)
                 {
                     spellTo.canCast = true;
                     spellTo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
+            
+            case SpellNumber.OiseauBa:
+                if (slotNumber == 1)
+                {
+                    spellTo = prefabA.GetComponent<OiseauBa>().soOiseauBa;
+                    cooldownSlot1 = spellTo.cooldown;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellTo = prefabB.GetComponent<OiseauBa>().soOiseauBa;
+                    cooldownSlot2 = spellTo.cooldown;
+                }
+                if (spellTo.cooldownTimer < spellTo.cooldown && !spellTo.canCast) //cooldown de la Fireball
+                {
+                    spellTo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellTo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellTo.cooldownTimer;
+                    }
+                }
+                else if (spellTo.cooldownTimer > spellTo.cooldown)
+                {
+                    spellTo.canCast = true;
+                    spellTo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
                 }
                 break;
             
             case SpellNumber.FireArea:
-                Debug.Log("CD Fire Area");
                 if (slotNumber == 1)
                 {
                     spellSAo = prefabA.GetComponent<FlameArea>().sOFlameArea;
+                    cooldownSlot1 = spellSAo.cooldown;
                 }
 
                 if (slotNumber == 2)
                 {
                     spellSAo = prefabB.GetComponent<FlameArea>().sOFlameArea;
+                    cooldownSlot2 = spellSAo.cooldown;
                 }
                 if (spellSAo.cooldownTimer < spellSAo.cooldown && !spellSAo.canCast)
                 {
                     spellSAo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellSAo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellSAo.cooldownTimer;
+                    }
+                    
                 }
                 else if (spellSAo.cooldownTimer > spellSAo.cooldown)
                 {
                     spellSAo.canCast = true;
                     spellSAo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
+            
+            case SpellNumber.Akh:
+                if (slotNumber == 1)
+                {
+                    spellSAo = prefabA.GetComponent<Akh>().soAkh;
+                    cooldownSlot1 = spellSAo.cooldown;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellSAo = prefabB.GetComponent<Akh>().soAkh;
+                    cooldownSlot2 = spellSAo.cooldown;
+                }
+                if (spellSAo.cooldownTimer < spellSAo.cooldown && !spellSAo.canCast)
+                {
+                    spellSAo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellSAo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellSAo.cooldownTimer;
+                    }
+                    
+                }
+                else if (spellSAo.cooldownTimer > spellSAo.cooldown)
+                {
+                    spellSAo.canCast = true;
+                    spellSAo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
+
+            case SpellNumber.PlumeMaat:
+                if (slotNumber == 1)
+                {
+                    spellSAo = prefabA.GetComponent<PlumeMaat>().soPlumeMaat;
+                    cooldownSlot1 = spellSAo.cooldown;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellSAo = prefabB.GetComponent<PlumeMaat>().soPlumeMaat;
+                    cooldownSlot2 = spellSAo.cooldown;
+                }
+                if (spellSAo.cooldownTimer < spellSAo.cooldown && !spellSAo.canCast)
+                {
+                    spellSAo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellSAo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellSAo.cooldownTimer;
+                    }
+                    
+                }
+                else if (spellSAo.cooldownTimer > spellSAo.cooldown)
+                {
+                    spellSAo.canCast = true;
+                    spellSAo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
                 }
                 break;
             
@@ -211,24 +451,131 @@ public class SpellManager : MonoBehaviour
                 if (slotNumber == 1)
                 {
                     spellFAo = prefabA.GetComponent<HitboxSandstorm>().sOSandstorm;
+                    cooldownSlot1 = spellFAo.cooldown;
                 }
 
                 if (slotNumber == 2)
                 {
                     spellFAo = prefabB.GetComponent<HitboxSandstorm>().sOSandstorm;
+                    cooldownSlot2 = spellFAo.cooldown;
                 }
                 
                 if (spellFAo.cooldownTimer < spellFAo.cooldown && !spellFAo.canCast) //cooldown du Sandstorm
                 {
                     spellFAo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellFAo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellFAo.cooldownTimer;
+                    }
                 }
                 else if (spellFAo.cooldownTimer > spellFAo.cooldown)
                 {
                     spellFAo.canCast = true;
                     spellFAo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
                 }
                 break;
                 
+            case SpellNumber.Embaumement:
+                if (slotNumber == 1)
+                {
+                    spellTo = prefabA.GetComponent<Embaumement>().sOEmbaumement;
+                    cooldownSlot1 = spellTo.cooldown;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellTo = prefabB.GetComponent<Embaumement>().sOEmbaumement;
+                    cooldownSlot2 = spellTo.cooldown;
+                }
+                if (spellTo.cooldownTimer < spellTo.cooldown && !spellTo.canCast) 
+                {
+                    spellTo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellTo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellTo.cooldownTimer;
+                    }
+                }
+                else if (spellTo.cooldownTimer > spellTo.cooldown)
+                {
+                    spellTo.canCast = true;
+                    spellTo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
+            
+            case SpellNumber.Ânkh:
+                if (slotNumber == 1)
+                {
+                    spellDo = prefabA.GetComponent<AnkhShield>().sOAnkhShield;
+                    cooldownSlot1 = spellDo.secondesTotales;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellDo = prefabB.GetComponent<AnkhShield>().sOAnkhShield;
+                    cooldownSlot2 = spellDo.secondesTotales;
+                }
+                if (shieldData.secondesRestantes > 0)
+                {
+                    spellDo.canCast = true;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = shieldData.secondesRestantes;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = shieldData.secondesRestantes;
+                    }
+                }
+                else
+                {
+                    spellDo.canCast = false;
+                    spellDo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
         }
     }
     
@@ -246,25 +593,18 @@ public class SpellManager : MonoBehaviour
     
     
     //Pour un Spell qui apparaît (et disparaît après une durée timerReload)
-    void TimeLimitedSpell(GameObject gb/*, float timerReload*/, int slot)
+    void TimeLimitedSpell(GameObject gb/*, float timerReload*/, int slot,SpellStaticAreaObject spellSAo)
     {
-        if (slot == 1)
-        {
-            spellSAo = prefabA.GetComponent<FlameArea>().sOFlameArea;
-        }
-        if (slot == 2)
-        {
-            Debug.Log("test slot 2");
-            spellSAo = prefabB.GetComponent<FlameArea>().sOFlameArea;
-        }
-        else
-        {
-            Debug.Log("erreur dans la fonction TimeLimitedSpell");
-            
-        }
-
         if (spellSAo.canCast)
         {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
             spellSAo.canCast = false;
             var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity);
             Debug.Log("Spell1 used");
@@ -302,23 +642,18 @@ public class SpellManager : MonoBehaviour
 
     
     
-    void ThrowingSpell(GameObject gb, int slot)
+    void ThrowingSpell(GameObject gb, int slot, SpellThrowingObject spellTo)
     {
-        if (slot == 1)
-        {
-            spellTo = prefabA.GetComponent<Fireball>().sOFireball;
-        }
-        else if (slot == 2)
-        {
-            spellTo = prefabB.GetComponent<Fireball>().sOFireball;
-        }
-        else
-        {
-            Debug.Log("erreur dans la fonction Throwing Spell");
-        }
-
         if (spellTo.canCast)
         {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
             spellTo.canCast = false;
         Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 charaPos = CharacterController.instance.transform.position;
@@ -329,5 +664,22 @@ public class SpellManager : MonoBehaviour
         StartCoroutine(TimeLimitedGb(gbInstance, spellTo.duration));
         }
 
+    }
+
+    public void Shield(GameObject gb, int slot, SpellDefenceObject spellDo)
+    {
+        if (spellDo.canCast && !shieldData.isActive)
+        {
+            shield.SetActive(true);
+            shieldData.isActive = true;
+            DamageManager.instance.isAnkh = true;
+        }
+        else if (spellDo.canCast && shieldData.isActive)
+        {
+            shield.SetActive(false);
+            shieldData.isActive = false;
+            DamageManager.instance.isAnkh = false;
+        }
+        
     }
 }
