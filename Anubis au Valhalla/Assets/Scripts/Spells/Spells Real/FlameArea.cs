@@ -10,7 +10,6 @@ public class FlameArea : MonoBehaviour
     public SpellStaticAreaObject sOFlameArea;
     public float tempsReloadHitFlameAreaTimer;
     public bool stopAttack;
-    public bool startAttack;
 
     private void OnTriggerStay2D(Collider2D col)
     {
