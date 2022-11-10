@@ -36,6 +36,7 @@ public class SpellManager : MonoBehaviour
     [SerializeField] public SpellFollowingAreaObject spellFAo;
     [SerializeField] public SpellThrowingObject spellTo;
     [SerializeField] public SpellDefenceObject spellDo;
+    [SerializeField] public SpellSpawnEntityObject spellSEo;
     public bool isSpell1Fill = false;
     public bool isSpell2Fill = false;
     
@@ -100,7 +101,8 @@ public class SpellManager : MonoBehaviour
         Ânkh = 4,
         Akh = 5,
         PlumeMaat = 6,
-        OiseauBa = 7
+        OiseauBa = 7,
+        SandWall = 8
     }
     
     void SpellReplacement(List<SpellObject> list)
@@ -151,6 +153,11 @@ public class SpellManager : MonoBehaviour
                     SpellStaticAreaObject FireAreaObj1 = prefabA.GetComponent<FlameArea>().sOFlameArea;
                     TimeLimitedSpell(prefabA,spellSlot,FireAreaObj1);
                     break;
+                
+                case SpellNumber.SandWall:
+                    SpellSpawnEntityObject SandWallObj1 = prefabA.GetComponent<SandWall>().soSandWall;
+                    SpawnEntity(prefabA,spellSlot,SandWallObj1);
+                    break;
             
                 case SpellNumber.Akh:
                     SpellStaticAreaObject AkhObj1 = prefabA.GetComponent<Akh>().soAkh;
@@ -197,6 +204,11 @@ public class SpellManager : MonoBehaviour
                 case SpellNumber.FireArea:
                     SpellStaticAreaObject FireAreaObj2 = prefabB.GetComponent<FlameArea>().sOFlameArea;
                     TimeLimitedSpell(prefabB,spellSlot,FireAreaObj2);
+                    break;
+                
+                case SpellNumber.SandWall:
+                    SpellSpawnEntityObject SandWallObj2 = prefabB.GetComponent<SandWall>().soSandWall;
+                    SpawnEntity(prefabB,spellSlot,SandWallObj2);
                     break;
                 
                 case SpellNumber.Akh:
@@ -576,6 +588,50 @@ public class SpellManager : MonoBehaviour
                     }
                 }
                 break;
+            
+            case SpellNumber.SandWall:
+                if (slotNumber == 1)
+                {
+                    spellSEo = prefabA.GetComponent<SandWall>().soSandWall;
+                    cooldownSlot1 = spellSEo.cooldown;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellSEo = prefabB.GetComponent<SandWall>().soSandWall;
+                    cooldownSlot2 = spellSEo.cooldown;
+                }
+                if (spellSEo.cooldownTimer < spellSEo.cooldown && !spellSEo.canCast)
+                {
+                    spellSEo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellSEo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellSEo.cooldownTimer;
+                    }
+                    
+                }
+                else if (spellSEo.cooldownTimer > spellSEo.cooldown)
+                {
+                    spellSEo.canCast = true;
+                    spellSEo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
         }
     }
     
@@ -681,5 +737,39 @@ public class SpellManager : MonoBehaviour
             DamageManager.instance.isAnkh = false;
         }
         
+    }
+    
+    public void SpawnEntity(GameObject gb, int slot, SpellSpawnEntityObject spellSEo)
+    {
+        if (spellSEo.canCast)
+        {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
+            spellSEo.canCast = false;
+            Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 charaPos = CharacterController.instance.transform.position;
+            float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+            float distancePlayerFloat = Vector2.Distance(charaPos, mousePos);
+            Vector2 distancePlayerVector = new Vector2(charaPos.x - mousePos.x, charaPos.y - mousePos.y);
+            Vector2 PlayerToPoint = new Vector2(charaPos.x - spellSEo.maxDistanceSpawn, charaPos.y - spellSEo.maxDistanceSpawn);
+
+            if (distancePlayerFloat >= spellSEo.maxDistanceSpawn)
+            {
+                var gbInstance = Instantiate(gb, new Vector2(distancePlayerVector.x - PlayerToPoint.x,distancePlayerVector.y - PlayerToPoint.y), Quaternion.AngleAxis(angle, Vector3.forward));
+                StartCoroutine(TimeLimitedGb(gbInstance, spellSEo.duration));
+            }
+            else
+            {
+                var gbInstance = Instantiate(gb, mousePos, Quaternion.AngleAxis(angle, Vector3.forward));
+                StartCoroutine(TimeLimitedGb(gbInstance, spellSEo.duration));
+            }
+         
+        }
     }
 }
