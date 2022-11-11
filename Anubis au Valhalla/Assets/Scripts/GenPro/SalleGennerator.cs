@@ -67,6 +67,7 @@ public class SalleGennerator : MonoBehaviour
         void Start()
         {
                 TransitionToNextRoom(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
+                //Debug.Log(GameObject.Find("East").GetComponent<Door>());
         }
 
         /// <summary>

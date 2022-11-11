@@ -13,6 +13,7 @@ public class SandWall : MonoBehaviour
     public float speed;
     public float tempsReloadHitFlameAreaTimer;
     public bool stopAttack;
+    //public bool activateHitbox;
 
     
     private void Start()
@@ -27,14 +28,15 @@ public class SandWall : MonoBehaviour
 
         if (timerStep2Time >= soSandWall.timerStep2)
         {
+           // activateHitbox = true;
             collider.isTrigger = true;
-            transform.Translate(transform.right*speed,Space.Self);
+            transform.Translate(transform.right*speed,Space.World);
         }
     }
     
     private void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Monstre")
+        if (col.gameObject.tag == "Monstre" /*&& activateHitbox*/)
         {
             stopAttack = false;
             for (int i = 0; i < soSandWall.nombreOfDot; i++)
