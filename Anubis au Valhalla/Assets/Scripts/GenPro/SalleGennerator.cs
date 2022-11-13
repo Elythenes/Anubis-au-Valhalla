@@ -19,6 +19,7 @@ public class SalleGennerator : MonoBehaviour
         [Header("REFERENCES")]
         public CharacterController player;
         public static SalleGennerator instance;
+        public GameObject amphores;
         public List<Door> s_doors;
         [SerializeField] private Salle startRoom;
         [SerializeField] private Salle EndRoom;
@@ -67,6 +68,7 @@ public class SalleGennerator : MonoBehaviour
         void Start()
         {
                 TransitionToNextRoom(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
+                //Debug.Log(GameObject.Find("East").GetComponent<Door>());
         }
 
         /// <summary>
@@ -124,7 +126,15 @@ public class SalleGennerator : MonoBehaviour
                         if (i == (int) fromDoor) continue;
                         bool enabled = Random.value > 0.4f;
                         EnableDoors((DoorOrientation) i,enabled);
-                        s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+                        bool special = Random.value > 0.3f;
+                        if (special)
+                        {
+                                s_doors[i].ChooseSpecialToSpawn(Random.Range(1,specialRooms.Count));
+                        }
+                        else
+                        {
+                                s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));  
+                        }
                 }
 
                 if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * 0.2f) && roomsDone <= Mathf.RoundToInt(dungeonSize * 0.4f))
@@ -133,6 +143,7 @@ public class SalleGennerator : MonoBehaviour
                         if (shopspawn >= 0)
                         {
                                 Door removedDoor = s_doors[(int)fromDoor];
+                                Debug.Log(removedDoor);
                                 s_doors.RemoveAt((int)fromDoor);
                                 Door doorToShop = s_doors[Random.Range(0, s_doors.Count)];
                                 doorToShop.currentDoorType = Door.DoorType.ToShop;

@@ -193,7 +193,7 @@ public class SpellManager : MonoBehaviour
                 
                 case SpellNumber.OiseauBa:
                     SpellThrowingObject OiseauBaObj2 = prefabB.GetComponent<OiseauBa>().soOiseauBa;
-                    ThrowingSpell(prefabA,spellSlot,OiseauBaObj2);
+                    ThrowingSpell(prefabB,spellSlot,OiseauBaObj2);
                     break;
                 
                 case SpellNumber.Embaumement:
@@ -753,21 +753,24 @@ public class SpellManager : MonoBehaviour
             }
             spellSEo.canCast = false;
             Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 charaPos = CharacterController.instance.transform.position;
+            Vector2 charaPos = targetUser.transform.position;
+            Debug.Log(mousePos);
             float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
             float distancePlayerFloat = Vector2.Distance(charaPos, mousePos);
-            Vector2 distancePlayerVector = new Vector2(charaPos.x - mousePos.x, charaPos.y - mousePos.y);
-            Vector2 PlayerToPoint = new Vector2(charaPos.x - spellSEo.maxDistanceSpawn, charaPos.y - spellSEo.maxDistanceSpawn);
+            Vector2 vectorDirection = mousePos - charaPos;
+            Vector2 vectorDirectionNormalized = vectorDirection.normalized;
 
             if (distancePlayerFloat >= spellSEo.maxDistanceSpawn)
             {
-                var gbInstance = Instantiate(gb, new Vector2(distancePlayerVector.x - PlayerToPoint.x,distancePlayerVector.y - PlayerToPoint.y), Quaternion.AngleAxis(angle, Vector3.forward));
+                var gbInstance = Instantiate(gb, (Vector2)targetUser.transform.position + vectorDirectionNormalized * spellSEo.maxDistanceSpawn, Quaternion.AngleAxis(angle, Vector3.forward));
                 StartCoroutine(TimeLimitedGb(gbInstance, spellSEo.duration));
+                Debug.Log("not in range");
             }
             else
             {
                 var gbInstance = Instantiate(gb, mousePos, Quaternion.AngleAxis(angle, Vector3.forward));
                 StartCoroutine(TimeLimitedGb(gbInstance, spellSEo.duration));
+                Debug.Log("in range");
             }
          
         }

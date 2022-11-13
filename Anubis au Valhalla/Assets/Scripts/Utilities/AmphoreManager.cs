@@ -22,7 +22,7 @@ public class AmphoreManager : MonoBehaviour
         if(col.gameObject.CompareTag("Player"))
         {
             Souls.instance.CreateSouls(transform.position, Random.Range(0,4));
-            Instantiate(partculesAmphores, transform.position,Quaternion.identity);
+            Instantiate(partculesAmphores, new Vector3(transform.position.x,transform.position.y,10),Quaternion.identity);
             Destroy(gameObject);
         }
     }
