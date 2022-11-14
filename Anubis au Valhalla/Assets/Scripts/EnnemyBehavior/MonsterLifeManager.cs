@@ -78,7 +78,10 @@ public class MonsterLifeManager : MonoBehaviour
         if (!isInvincible)
         {
             StartCoroutine(AnimationDamaged());
-            transform.DOShakePosition(staggerDuration, 0.5f, 50);
+            transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
+            {
+                ai.canMove = true;
+            });
             vieActuelle -= damage; 
             healthBar.SetHealth(vieActuelle);
             isInvincible = true;
