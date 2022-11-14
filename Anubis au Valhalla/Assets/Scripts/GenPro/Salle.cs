@@ -125,7 +125,7 @@ public class Salle : MonoBehaviour
             costList[chosenValue] += 3;
             var chosenPoint = point[Random.Range(0, point.Count)];
             currentEnemies.Add(Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform));
-            point.Remove(chosenPoint);
+            //point.Remove(chosenPoint); // Get the spawner to spawn in waves if theres too many enemies to to spawn
         }
     }
 
