@@ -65,6 +65,9 @@ public class AttaquesNormales : MonoBehaviour
                     
                     if (canAttack)
                     {
+                        anim.SetBool("isAttacking1",true);
+                        anim.SetBool("isAttacking2",false);
+                        anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
@@ -77,6 +80,9 @@ public class AttaquesNormales : MonoBehaviour
                 case 1:
                     if (canAttack)
                     {
+                        anim.SetBool("isAttacking2",true);
+                        anim.SetBool("isAttacking1",false);
+                        anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                        // buffer = false;
@@ -138,7 +144,8 @@ public class AttaquesNormales : MonoBehaviour
             }
             if (stunDuration[i] >= stunDurationMax[i])
             {
-                anim.SetBool("isAttacking",false);
+                anim.SetBool("isAttacking1",false);
+                anim.SetBool("isAttacking2",false);
                 anim.SetBool("isIdle",true);
                 Debug.Log(stunDuration[i] >= stunDurationMax[i]);
                 canAttack = true;
@@ -165,9 +172,6 @@ public class AttaquesNormales : MonoBehaviour
     //<Combo 3>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
     public void Combo(int index) 
     {
-        anim.SetBool("isAttacking",true);
-        anim.SetBool("isIdle",false);
-        anim.SetBool("isWalking",false);
         abandonOn = true;
         isC[index] = true;
         canAttack = false;
@@ -186,13 +190,58 @@ public class AttaquesNormales : MonoBehaviour
         {
             CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,-180,CharacterController.instance.transform.localRotation.z);
         }
-        
-        CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
+
+        if (index == 0)
+        {
+            Slide(CharacterController.instance.facing);
+        }
+        else
+        {
+            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
+        }
         Debug.Log(moveDirection);
         
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
         swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+    }
+    public void Slide(CharacterController.LookingAt dir)
+    {
+        var rb = CharacterController.instance.rb;
+        switch (dir)
+        {
+            case CharacterController.LookingAt.Nord:
+                rb.velocity = (new Vector2(0,1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.Sud:
+                rb.velocity = (new Vector2(0,-1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.Est:
+                rb.velocity = (new Vector2(1,0) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.Ouest:
+                rb.velocity = (new Vector2(-1,0) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.NordEst:
+                rb.velocity = (new Vector2(1,1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.NordOuest:
+                rb.velocity = (new Vector2(-1,1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.SudEst:
+                rb.velocity = (new Vector2(1,-1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.SudOuest:
+                rb.velocity = (new Vector2(-1,-1) * rb.velocity.magnitude * 2.5f);
+                break;
+        }
     }
 }
 

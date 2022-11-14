@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Pathfinding;
+using Spine.Unity;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
@@ -18,11 +19,12 @@ public class IA_Monstre1 : MonoBehaviour
     public GameObject emptyLayers;
     public MonsterLifeManager life;
 
-    [Header("Déplacements")]
+    [Header("Déplacements")] 
+    public SkeletonMecanim mecanim;
     public GameObject player;
     public AIPath aipath;
     private Path path;
-    private SpriteRenderer sr;
+    //private SpriteRenderer sr;
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
     public float radiusWondering;
@@ -62,7 +64,7 @@ public class IA_Monstre1 : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         vieActuelle = vieMax;
         rb = gameObject.GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
+        //sr = GetComponent<SpriteRenderer>();
         playerFollow.target = player.transform;
         CooldownDashTimer = CooldownDash;
     }
@@ -70,28 +72,26 @@ public class IA_Monstre1 : MonoBehaviour
 
     public void Update()
     {
-        if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
+        /*if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
         {
            sr.sortingOrder = 2;
         }
         else
         {
           sr.sortingOrder = 1;
-        }
+        }*/
         
-        if (!isDashing&& !life.isMomified)
-        {
-            if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
+      
+            if (transform.localPosition.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
             {
-                transform.localScale = new Vector3(-1, 1.316351f, 1);
+                transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
             }
-            else if (transform.position.x > player.transform.position.x)
+            else if (transform.localPosition.x > player.transform.position.x)
             {
-                transform.localScale = new Vector3(1, 1.316351f, 1);
+                transform.localRotation = Quaternion.Euler(transform.localRotation.x, -180, transform.localRotation.z);
             }
-        }
 
-        if (aipath.reachedDestination&& !life.isMomified) // Quand le monstre arrive proche du joueur, il commence le dash
+            if (aipath.reachedDestination&& !life.isMomified) // Quand le monstre arrive proche du joueur, il commence le dash
         {
             if (isDashing == false && canDash)
             { 
@@ -134,7 +134,7 @@ public class IA_Monstre1 : MonoBehaviour
         {
             aipath.canMove = false;
             CooldownDashTimer += Time.deltaTime;
-            gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
+            //gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
         }
         
 
