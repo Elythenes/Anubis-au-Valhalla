@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3239004356962064045}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.4461844, y: 3.7682397, z: 0}
+  m_LocalPosition: {x: 2.63, y: 3.61, z: 0}
   m_LocalScale: {x: 12.687675, y: 12.687675, z: 3.5637145}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -187,14 +187,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textDamage: {fileID: 8409354514928129382, guid: 0fcdc49bb218bbb479b20e4233ce65a3, type: 3}
-  player: {fileID: 0}
+  player: {fileID: 6322498022790916544}
   gVolume: {fileID: 0}
   gVolumeMiss: {fileID: 0}
   ankhShieldData: {fileID: 11400000, guid: 9ce3cadf4eba1454fb02d4e6a2e8974e, type: 2}
   stun: 0
   invinsible: 0
   isAnkh: 0
-  animPlayer: {fileID: 0}
+  animPlayer: {fileID: 6322498022790916600}
   timeHitStop: 0.2
   timeRedScreen: 0.2
   vieActuelle: 0
@@ -380,7 +380,7 @@ MonoBehaviour:
   dashCooldown: 0.3
   isDashing: 0
   canDash: 1
-  ghost: {fileID: 0}
+  ghost: {fileID: 6322498022790916604}
   rb: {fileID: 0}
   astarPathTimer: 0
   astarPathTimerMax: 1
@@ -439,7 +439,7 @@ MonoBehaviour:
   abandonOn: 0
   canAttack: 1
   comboActuel: 0
-  cooldownAbandonCombo: 1
+  cooldownAbandonCombo: 0.6
   cooldownAbandonComboTimer: 0
   buffer: 0
   swordObj: {fileID: 0}
@@ -458,6 +458,7 @@ MonoBehaviour:
   ghostDelay: 0.3
   ghostDelaySeconds: 0
   ghost: {fileID: 3369172920769216219, guid: 85e75ab8033ebe24c9faf95668b14b43, type: 3}
+  ghostSprite: {fileID: 21300000, guid: d091dbfcc58ee164d8c014994b32b4de, type: 3}
   activerEffet: 0
   tousLesSprites: []
   lastPlayerPos: {x: 0, y: 0, z: 0}
@@ -561,11 +562,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957699828519070438, guid: 0b3a750f2e98173458ebfbe853c326bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.8775656
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 8957699828519070438, guid: 0b3a750f2e98173458ebfbe853c326bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.275747
+      value: 3.09
       objectReference: {fileID: 0}
     - target: {fileID: 8957699828519070438, guid: 0b3a750f2e98173458ebfbe853c326bf, type: 3}
       propertyPath: m_LocalPosition.z
