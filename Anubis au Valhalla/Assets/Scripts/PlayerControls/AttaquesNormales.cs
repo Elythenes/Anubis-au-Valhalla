@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 public class AttaquesNormales : MonoBehaviour
 {
-    
+    public Animator anim;
     private InputManager controls;
     public static AttaquesNormales instance;
 
@@ -138,6 +138,8 @@ public class AttaquesNormales : MonoBehaviour
             }
             if (stunDuration[i] >= stunDurationMax[i])
             {
+                anim.SetBool("isAttacking",false);
+                anim.SetBool("isIdle",true);
                 Debug.Log(stunDuration[i] >= stunDurationMax[i]);
                 canAttack = true;
                 CharacterController.instance.isAttacking = false;
@@ -163,6 +165,9 @@ public class AttaquesNormales : MonoBehaviour
     //<Combo 3>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
     public void Combo(int index) 
     {
+        anim.SetBool("isAttacking",true);
+        anim.SetBool("isIdle",false);
+        anim.SetBool("isWalking",false);
         abandonOn = true;
         isC[index] = true;
         canAttack = false;
@@ -173,7 +178,17 @@ public class AttaquesNormales : MonoBehaviour
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
+        if (moveDirection.x > 0)
+        {
+            CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,0,CharacterController.instance.transform.localRotation.z);
+        }
+        else
+        {
+            CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,-180,CharacterController.instance.transform.localRotation.z);
+        }
+        
         CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
+        Debug.Log(moveDirection);
         
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;

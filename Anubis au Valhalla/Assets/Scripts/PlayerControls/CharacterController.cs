@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 public class CharacterController : MonoBehaviour
 {
   [Header("Déplacements")]
+  public Animator anim;
   public InputManager controls;
   public static CharacterController instance; //jai besion de l'instance pour bouger le joueur au changements de salles
   public float speedX;
@@ -45,6 +46,7 @@ public class CharacterController : MonoBehaviour
 
     rb = gameObject.GetComponent<Rigidbody2D>();
     controls = new InputManager();
+    PivotTo(transform.position);
   }
 
   private void OnEnable()
@@ -54,6 +56,14 @@ public class CharacterController : MonoBehaviour
   private void OnDisable()
   {
     controls.Disable();
+  }
+  
+  public void PivotTo(Vector3 position)
+  {
+    Vector3 offset = transform.position - position;
+    foreach (Transform child in transform)
+      child.transform.position += offset;
+    transform.position = position;
   }
   
   private void Update()
@@ -66,7 +76,17 @@ public class CharacterController : MonoBehaviour
       {
         movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement 
       }
-      
+
+      if (movement.x != 0 || movement.y != 0)
+      {
+        anim.SetBool("isIdle", false);
+        anim.SetBool("isWalking", true);
+      }
+      else if (movement == Vector2.zero)
+      {
+        anim.SetBool("isIdle", true);
+        anim.SetBool("isWalking", false);
+      }
     }
 
     if (isDashing == false && !isAttacking) // Déplacments hors dash.

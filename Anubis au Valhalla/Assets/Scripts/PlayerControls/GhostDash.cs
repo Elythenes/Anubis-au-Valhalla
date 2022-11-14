@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Spine.Unity;
 using UnityEngine;
 
 public class GhostDash : MonoBehaviour
@@ -26,9 +27,9 @@ public class GhostDash : MonoBehaviour
             {
                 GameObject currentGhost = Instantiate(ghost, transform.position, transform.rotation);
                 tousLesSprites.Add(currentGhost);
-                Sprite currentSprite = GetComponent<SpriteRenderer>().sprite;
+                Mesh currentSprite = GetComponent<MeshFilter>().mesh;
                 currentGhost.transform.localScale = this.transform.localScale;
-                currentGhost.GetComponent<SpriteRenderer>().sprite = currentSprite;
+                currentGhost.GetComponent<MeshFilter>().mesh = currentSprite;
                 StartCoroutine(Destroyghost(currentGhost));
                 lastPlayerPos = CharacterController.instance.transform.position;
             } 
