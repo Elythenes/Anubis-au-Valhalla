@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class DamageManager : MonoBehaviour
 {
@@ -168,6 +169,14 @@ public class DamageManager : MonoBehaviour
     
     void Die()
     {
-        Destroy(player);
+        animPlayer.SetBool("isDead",true);
+        stun = true;
+        StartCoroutine(ReloadScene());
+    }
+
+    IEnumerator ReloadScene()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(0);
     }
 }
