@@ -97,9 +97,9 @@ public class CharacterController : MonoBehaviour
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
     {
-      //ghost.lastPlayerPos = transform.position;
+      ghost.lastPlayerPos = transform.position;
       AttaquesNormales.instance.canAttack = false;
-      //ghost.enabled = true;
+      ghost.enabled = true;
       isDashing = true;
     }
     

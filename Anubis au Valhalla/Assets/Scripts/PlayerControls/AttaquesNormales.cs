@@ -190,13 +190,58 @@ public class AttaquesNormales : MonoBehaviour
         {
             CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,-180,CharacterController.instance.transform.localRotation.z);
         }
-        
-        CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
+
+        if (index == 0)
+        {
+            Slide(CharacterController.instance.facing);
+        }
+        else
+        {
+            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
+        }
         Debug.Log(moveDirection);
         
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
         swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+    }
+    public void Slide(CharacterController.LookingAt dir)
+    {
+        var rb = CharacterController.instance.rb;
+        switch (dir)
+        {
+            case CharacterController.LookingAt.Nord:
+                rb.velocity = (new Vector2(0,1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.Sud:
+                rb.velocity = (new Vector2(0,-1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.Est:
+                rb.velocity = (new Vector2(1,0) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.Ouest:
+                rb.velocity = (new Vector2(-1,0) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.NordEst:
+                rb.velocity = (new Vector2(1,1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.NordOuest:
+                rb.velocity = (new Vector2(-1,1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.SudEst:
+                rb.velocity = (new Vector2(1,-1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.SudOuest:
+                rb.velocity = (new Vector2(-1,-1) * rb.velocity.magnitude * 2.5f);
+                break;
+        }
     }
 }
 
