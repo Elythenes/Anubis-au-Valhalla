@@ -82,13 +82,13 @@ public class IA_Monstre1 : MonoBehaviour
         }*/
         
       
-            if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
+            if (transform.localPosition.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
             {
                 //transform.localScale = new Vector3(-1, 1.316351f, 1);
                //mecanim.initialFlipX = false;
                transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
             }
-            else if (transform.position.x > player.transform.position.x)
+            else if (transform.localPosition.x > player.transform.position.x)
             {
                 //transform.localScale = new Vector3(1, 1.316351f, 1);
                 //mecanim.initialFlipX = true;
