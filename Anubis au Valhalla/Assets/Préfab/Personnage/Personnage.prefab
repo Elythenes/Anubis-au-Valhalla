@@ -267,15 +267,15 @@ MonoBehaviour:
   - 0
   - 0
   forceKnockback:
-  - 0
-  - 0
-  - 0
+  - 1
+  - 2
+  - 3
   stunDurationMax:
   - 0.2
   - 0.3
   - 0.4
   dashImpulse:
-  - 20
+  - 0
   - 50
   - 30
   timeForCanDash:
@@ -469,7 +469,7 @@ MonoBehaviour:
   player: {fileID: 2143346890506445695}
   gVolume: {fileID: 0}
   gVolumeMiss: {fileID: 0}
-  ankhShieldData: {fileID: 0}
+  ankhShieldData: {fileID: 11400000, guid: 9ce3cadf4eba1454fb02d4e6a2e8974e, type: 2}
   stun: 0
   invinsible: 0
   isAnkh: 0
@@ -495,6 +495,10 @@ PrefabInstance:
     - target: {fileID: 1970358934105937955, guid: 0b3a750f2e98173458ebfbe853c326bf, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091904357419966230, guid: 0b3a750f2e98173458ebfbe853c326bf, type: 3}
+      propertyPath: secondesRestantes
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8957699828519070438, guid: 0b3a750f2e98173458ebfbe853c326bf, type: 3}
       propertyPath: m_RootOrder
