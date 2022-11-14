@@ -2,17 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Glyph" ,menuName = "Glyph System/GlyphObject")]
+public enum GlyphPart
+{
+    Lame,
+    Manche,
+    Hampe
+}
 
+public enum GlyphType
+{
+    BasicStatUp,
+    SituationalStatUp,
+    Elemental,
+    AdditionalEffect,
+    AfterSmthEffect,
+    Charge,
+    TimeBased,
+    BoolEffect,
+    Others
+}
+
+public enum GlyphElement
+{
+    Bandage,
+    Water,
+    Fire,
+    SpiritualFire,
+    Thunder,
+    Curse,
+    Sand,
+    Bleeding,
+    Wind
+}
+
+[CreateAssetMenu(fileName = "Glyph" ,menuName = "Glyph System/GlyphObject")]
 public class GlyphObject : ScriptableObject
 {
     [Header("GENERAL")]
-    public string nom;
-    public int glyphIndex;
-    [TextArea(10,20)] public string description;
+    public string gNom;
+    public GlyphPart gPartie;
+    public GlyphType gType;
+    public int gIndex;
+    [TextArea(10,20)] public string gDescription;
+    //[TextArea(5, 10)] public string gCitation;
+    public GlyphElement gElement;
 
     [Header("GRAPH")]
-    public Texture icon;
-    
-    
+    public Texture gIcone;
+    public Texture gIconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
+    public Texture gFondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
+
+
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GlyphManager : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
         
     }
