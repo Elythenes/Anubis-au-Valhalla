@@ -9,14 +9,15 @@ using UnityEngine.InputSystem;
 public class CharacterController : MonoBehaviour
 {
   [Header("Déplacements")]
+  public Animator anim;
   public InputManager controls;
   public static CharacterController instance; //jai besion de l'instance pour bouger le joueur au changements de salles
   public float speedX;
   public float speedY;
   public bool isAttacking;
-  public lookingAt facing;
+  public LookingAt facing;
 
-  public enum lookingAt { Nord,NordEst,Est,SudEst,Sud,SudOuest,Ouest,NordOuest }
+  public enum LookingAt { Nord,NordEst,Est,SudEst,Sud,SudOuest,Ouest,NordOuest }
   
   [Header("Dash")]
   public float dashSpeed;
@@ -45,6 +46,7 @@ public class CharacterController : MonoBehaviour
 
     rb = gameObject.GetComponent<Rigidbody2D>();
     controls = new InputManager();
+    PivotTo(transform.position);
   }
 
   private void OnEnable()
@@ -54,6 +56,14 @@ public class CharacterController : MonoBehaviour
   private void OnDisable()
   {
     controls.Disable();
+  }
+  
+  public void PivotTo(Vector3 position)
+  {
+    Vector3 offset = transform.position - position;
+    foreach (Transform child in transform)
+      child.transform.position += offset;
+    transform.position = position;
   }
   
   private void Update()
@@ -66,7 +76,17 @@ public class CharacterController : MonoBehaviour
       {
         movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement 
       }
-      
+
+      if (movement.x != 0 || movement.y != 0)
+      {
+        anim.SetBool("isIdle", false);
+        anim.SetBool("isWalking", true);
+      }
+      else if (movement == Vector2.zero)
+      {
+        anim.SetBool("isIdle", true);
+        anim.SetBool("isWalking", false);
+      }
     }
 
     if (isDashing == false && !isAttacking) // Déplacments hors dash.
@@ -120,35 +140,35 @@ public class CharacterController : MonoBehaviour
     {
       switch (facing)
       {
-        case lookingAt.Nord:
+        case LookingAt.Nord:
           rb.velocity = (new Vector2(0,1) * dashSpeed);
           break;
           
-        case lookingAt.Sud:
+        case LookingAt.Sud:
           rb.velocity = (new Vector2(0,-1) * dashSpeed);
           break;
           
-        case lookingAt.Est:
+        case LookingAt.Est:
           rb.velocity = (new Vector2(1,0) * dashSpeed);
           break;
           
-        case lookingAt.Ouest:
+        case LookingAt.Ouest:
           rb.velocity = (new Vector2(-1,0) * dashSpeed);
           break;
           
-        case lookingAt.NordEst:
+        case LookingAt.NordEst:
           rb.velocity = (new Vector2(1,1) * dashSpeed);
           break;
           
-        case lookingAt.NordOuest:
+        case LookingAt.NordOuest:
           rb.velocity = (new Vector2(-1,1) * dashSpeed);
           break;
           
-        case lookingAt.SudEst:
+        case LookingAt.SudEst:
           rb.velocity = (new Vector2(1,-1) * dashSpeed);
           break;
           
-        case lookingAt.SudOuest:
+        case LookingAt.SudOuest:
           rb.velocity = (new Vector2(-1,-1) * dashSpeed);
           break;
       }
@@ -159,28 +179,28 @@ public class CharacterController : MonoBehaviour
   {
     if (movement.x > 0 && !isAttacking) // Le personnage s'oriente vers la direction où il marche. 
     {
-      facing = lookingAt.Est;
+      facing = LookingAt.Est;
       transform.localRotation = Quaternion.Euler(0, 0,0);
       //transform.localScale = new Vector3(1, 1, 0);
     }
 
     if (movement.x < 0 && !isAttacking)
     {
-      facing = lookingAt.Ouest;
+      facing = LookingAt.Ouest;
       transform.localRotation = Quaternion.Euler(0, 180,0);
       //transform.localScale = new Vector3(-1, 1, 0);
     }
     
     if (movement.y < 0 && !isAttacking)
     {
-      facing = lookingAt.Sud;
+      facing = LookingAt.Sud;
       float face = transform.localScale.x;
       face = 1;
     }
     
     if (movement.y > 0 && !isAttacking)
     {
-      facing = lookingAt.Nord;
+      facing = LookingAt.Nord;
       float face = transform.localScale.x;
       face = 1;
     }
