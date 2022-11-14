@@ -2,42 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GlyphPart
-{
-    Lame,
-    Manche,
-    Hampe
-}
-
-public enum GlyphType
-{
-    BasicStatUp,
-    SituationalStatUp,
-    Elemental,
-    AdditionalEffect,
-    AfterSmthEffect,
-    Charge,
-    TimeBased,
-    BoolEffect,
-    Others
-}
-
-public enum GlyphElement
-{
-    Bandage,
-    Water,
-    Fire,
-    SpiritualFire,
-    Thunder,
-    Curse,
-    Sand,
-    Bleeding,
-    Wind
-}
-
-[CreateAssetMenu(fileName = "Glyph" ,menuName = "Glyph System/GlyphObject")]
+//[CreateAssetMenu(fileName = "Glyph" ,menuName = "Glyph System/GlyphObject")]
 public class GlyphObject : ScriptableObject
 {
+    public enum GlyphPart
+    {
+        Lame,
+        Manche,
+        Hampe
+    }
+
+    public enum GlyphType
+    {
+        BasicStatUp,
+        SituationalStatUp,
+        Elemental,
+        AdditionalEffect,
+        AfterSmthEffect,
+        Charge,
+        TimeBased,
+        BoolEffect,
+        Others
+    }
+
+    public enum GlyphElement
+    {
+        None,
+        Bandage,
+        Water,
+        Fire,
+        SpiritualFire,
+        Thunder,
+        Curse,
+        Sand,
+        Bleeding,
+        Wind
+    }
+    
     [Header("GENERAL")]
     public string gNom;
     public GlyphPart gPartie;
