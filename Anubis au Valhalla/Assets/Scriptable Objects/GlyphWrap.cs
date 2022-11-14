@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
-public class GlyphWrap : MonoBehaviour
+[Serializable]
+public class GlyphWrap
 {
     public enum State
     {
