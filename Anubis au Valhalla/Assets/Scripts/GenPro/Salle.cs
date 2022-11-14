@@ -89,15 +89,18 @@ public class Salle : MonoBehaviour
     {
         if (spawnPoints == 0)
         {
-         SpawnEnemies(availableSpawnA);   
+            SpawnEnemies(availableSpawnA);
+            SpawnAmphores(availableSpawnB);
         }
         if (spawnPoints == 1)
         {
             SpawnEnemies(availableSpawnB);
+            SpawnAmphores(availableSpawnC);
         }
         if (spawnPoints == 2)
         {
             SpawnEnemies(availableSpawnC);
+            SpawnAmphores(availableSpawnA);
         }
     }
     public void SpawnEnemies(List<GameObject> point)
@@ -123,6 +126,19 @@ public class Salle : MonoBehaviour
             var chosenPoint = point[Random.Range(0, point.Count)];
             currentEnemies.Add(Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform));
             point.Remove(chosenPoint);
+        }
+    }
+
+    public void SpawnAmphores(List<GameObject> point)
+    {
+        if (point.Count == 0)
+        {
+            return;
+        }
+        for (int i = 0; i < Random.Range(1,6); i++)
+        {
+            var chosenPoint = point[Random.Range(0, point.Count)];
+            Instantiate(SalleGennerator.instance.amphores,chosenPoint.transform);
         }
     }
     
