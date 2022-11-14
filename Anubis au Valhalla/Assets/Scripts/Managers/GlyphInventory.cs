@@ -43,6 +43,7 @@ public class GlyphInventory : MonoBehaviour
             return;
         }
         AddInInventory(wrap.glyphObject);
+        VerifyIfOutleveled(gO,GlyphManager.instance.arrayLame);
     }
     
     void AddInInventory(GlyphObject glyphObject)
@@ -50,5 +51,21 @@ public class GlyphInventory : MonoBehaviour
         glyphInventory.Add(glyphObject);
         Debug.Log("New glyph added in Inventory. Name is " + glyphObject.gNom);
     }
-    
+
+    void VerifyIfOutleveled(GlyphObject gO, GlyphWrap[] array)
+    {
+        if (gO.gLevel == GlyphObject.GlyphLevel.MiddleLevel)
+        { 
+            array[gO.gIndex-100-1].gState = GlyphWrap.State.Outleveled;
+        }
+        else if (gO.gLevel == GlyphObject.GlyphLevel.MaximumLevel)
+        {
+            
+        }
+    }
+
+    void VerifyIfOverriden()
+    {
+        
+    }
 }

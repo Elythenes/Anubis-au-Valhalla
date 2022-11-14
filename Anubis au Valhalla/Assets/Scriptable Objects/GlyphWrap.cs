@@ -11,7 +11,7 @@ public class GlyphWrap
     {
         Inactive,
         Active,
-        OutLeveled, //pour les glyphes de niveau supérieur
+        Outleveled, //pour les glyphes de niveau supérieur
         Overridden, //pour les éléments (vu qu'ils peuvent pas se stack)
     }
     
