@@ -20,7 +20,6 @@ public class Combo1Hitbox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-            
         if (col.gameObject.CompareTag("Monstre"))
         {
             Vector3 angleKnockback = col.transform.position - transform.parent.position;
