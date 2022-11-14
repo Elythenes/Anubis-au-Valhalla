@@ -38,15 +38,25 @@ public class GlyphObject : ScriptableObject
         Bleeding,
         Wind
     }
+
+    public enum GlyphLevel
+    {
+        Unique,
+        MinimumLevel,
+        MiddleLevel,
+        MaximumLevel
+    }
     
     [Header("GENERAL")]
     public string gNom;
     public GlyphPart gPartie;
     public GlyphType gType;
+    public GlyphLevel gLevel;
     public int gIndex;
     [TextArea(10,20)] public string gDescription;
     //[TextArea(5, 10)] public string gCitation;
     public GlyphElement gElement;
+    
 
     [Header("GRAPH")]
     public Texture gIcone;
