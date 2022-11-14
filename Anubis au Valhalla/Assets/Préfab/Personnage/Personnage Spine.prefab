@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3239004356962064045}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.63, y: 3.61, z: 0}
+  m_LocalPosition: {x: 0.27, y: 3.61, z: 0}
   m_LocalScale: {x: 12.687675, y: 12.687675, z: 3.5637145}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -108,7 +108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5227790732225447395}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.8775656, y: 0.61, z: 0}
+  m_LocalPosition: {x: -0.13, y: 0.61, z: 0}
   m_LocalScale: {x: 2.5375352, y: 2.5375352, z: 2.5375352}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -141,7 +141,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5654807541883816732}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.8572657, y: 4.2503715, z: 0}
+  m_LocalPosition: {x: 0.09, y: 4.2503715, z: 0}
   m_LocalScale: {x: 2.5375352, y: 1.2137792, z: 2.5375352}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -380,7 +380,7 @@ MonoBehaviour:
   dashCooldown: 0.3
   isDashing: 0
   canDash: 1
-  ghost: {fileID: 6322498022790916604}
+  ghost: {fileID: 0}
   rb: {fileID: 0}
   astarPathTimer: 0
   astarPathTimerMax: 1
@@ -439,7 +439,7 @@ MonoBehaviour:
   abandonOn: 0
   canAttack: 1
   comboActuel: 0
-  cooldownAbandonCombo: 0.6
+  cooldownAbandonCombo: 1
   cooldownAbandonComboTimer: 0
   buffer: 0
   swordObj: {fileID: 0}
@@ -458,7 +458,6 @@ MonoBehaviour:
   ghostDelay: 0.3
   ghostDelaySeconds: 0
   ghost: {fileID: 3369172920769216219, guid: 85e75ab8033ebe24c9faf95668b14b43, type: 3}
-  ghostSprite: {fileID: 21300000, guid: d091dbfcc58ee164d8c014994b32b4de, type: 3}
   activerEffet: 0
   tousLesSprites: []
   lastPlayerPos: {x: 0, y: 0, z: 0}
@@ -497,7 +496,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.6069956, y: 0.56499666}
+  m_Offset: {x: -0.14, y: 0.56499666}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}

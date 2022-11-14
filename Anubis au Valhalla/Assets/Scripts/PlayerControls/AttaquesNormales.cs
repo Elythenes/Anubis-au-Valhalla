@@ -65,6 +65,9 @@ public class AttaquesNormales : MonoBehaviour
                     
                     if (canAttack)
                     {
+                        anim.SetBool("isAttacking1",true);
+                        anim.SetBool("isAttacking2",false);
+                        anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
@@ -77,6 +80,9 @@ public class AttaquesNormales : MonoBehaviour
                 case 1:
                     if (canAttack)
                     {
+                        anim.SetBool("isAttacking2",true);
+                        anim.SetBool("isAttacking1",false);
+                        anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                        // buffer = false;
@@ -138,7 +144,8 @@ public class AttaquesNormales : MonoBehaviour
             }
             if (stunDuration[i] >= stunDurationMax[i])
             {
-                anim.SetBool("isAttacking",false);
+                anim.SetBool("isAttacking1",false);
+                anim.SetBool("isAttacking2",false);
                 anim.SetBool("isIdle",true);
                 Debug.Log(stunDuration[i] >= stunDurationMax[i]);
                 canAttack = true;
@@ -165,9 +172,6 @@ public class AttaquesNormales : MonoBehaviour
     //<Combo 3>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
     public void Combo(int index) 
     {
-        anim.SetBool("isAttacking",true);
-        anim.SetBool("isIdle",false);
-        anim.SetBool("isWalking",false);
         abandonOn = true;
         isC[index] = true;
         canAttack = false;
