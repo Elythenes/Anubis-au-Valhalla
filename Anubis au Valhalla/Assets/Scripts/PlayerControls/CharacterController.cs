@@ -111,6 +111,7 @@ public class CharacterController : MonoBehaviour
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
+      rb.velocity *= 0.5f;
       AttaquesNormales.instance.canAttack = true;
       isDashing = false;
       timerDash = 0;
