@@ -13,6 +13,7 @@ public class DamageManager : MonoBehaviour
 {
     [Header("Objects")]
     public GameObject textDamage;
+    public Camera mainCamera;
     public GameObject player;
     public static DamageManager instance;
     public Volume gVolume;
@@ -100,10 +101,9 @@ public class DamageManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("miss");
+                HitStop(0.5f);
                 StartCoroutine(MissScreen(timeRedScreen));
-                HitStop(timeHitStop*(damage/10));
-                Time.timeScale = 0.3f;
+                HitStop(timeHitStop);
             }
             
         }
@@ -123,6 +123,8 @@ public class DamageManager : MonoBehaviour
 
     IEnumerator WaitStop(float duration)
     {
+        Time.timeScale = Mathf.Lerp(1f, 0.5f, 0.125f);
+        Time.fixedDeltaTime = 0.02F * Time.timeScale;
         stopWaiting = true;
         yield return new WaitForSecondsRealtime(duration);
         Time.timeScale = 1.0f;
@@ -133,20 +135,19 @@ public class DamageManager : MonoBehaviour
     {
         if (!CharacterController.instance.isDashing)
         {
+            mainCamera.fieldOfView = Mathf.Lerp(25, 10, timeRedScreen / Time.deltaTime);
             gVolume.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
             yield return new WaitForSeconds(timeRedScreen);
             gVolume.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+            mainCamera.fieldOfView = Mathf.Lerp(10, 25, timeRedScreen / Time.deltaTime);
         }
     }
     
     public IEnumerator MissScreen(float timeRedScreenC)
     {
-        if (CharacterController.instance.isDashing)
-        {
-            gVolumeMiss.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
-            yield return new WaitForSeconds(timeRedScreen);
-            gVolumeMiss.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
-        }
+        gVolumeMiss.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
+        yield return new WaitForSeconds(timeRedScreen);
+        gVolumeMiss.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
     }
     
   
