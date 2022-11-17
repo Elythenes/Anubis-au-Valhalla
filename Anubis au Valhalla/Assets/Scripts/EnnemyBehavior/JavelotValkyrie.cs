@@ -11,8 +11,7 @@ public class JavelotValkyrie : MonoBehaviour
 
     private void Start()
     {
-        dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,
-            CharacterController.instance.transform.position.y - transform.position.y);
+        dir = ia.dir;
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
         dir.Normalize();

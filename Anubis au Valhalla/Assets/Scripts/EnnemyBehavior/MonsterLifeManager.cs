@@ -28,18 +28,23 @@ public class MonsterLifeManager : MonoBehaviour
     public float InvincibleTime;
     public float InvincibleTimeTimer;
     public bool isInvincible;
-    public float MomifiedTime;
+    public float MomifiedTime = 3;
     public float MomifiedTimeTimer;
     public bool isMomified;
     public GameObject bandelettesMomie;
     public GameObject bandelettesHolder;
     private bool activeBandelettes;
+    public bool isEnvased;
+    public float EnvasedTime = 5;
+    public float EnvasedTimeTimer;
+    private float demiSpeed;
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         vieActuelle = vieMax;
+        demiSpeed = ai.speed / 2;
     }
 
     private void Update()
@@ -53,6 +58,20 @@ public class MonsterLifeManager : MonoBehaviour
             {
                 isInvincible = false;
                 InvincibleTimeTimer = 0;
+            }
+        }
+
+        if (isEnvased)
+        {
+            EnvasedTimeTimer += Time.deltaTime;
+            ai.speed = demiSpeed;
+            
+            if (EnvasedTimeTimer >= EnvasedTime)
+            {
+                ai.speed *= 2;
+                EnvasedTimeTimer = 0;
+                isEnvased = false;
+                
             }
         }
         
