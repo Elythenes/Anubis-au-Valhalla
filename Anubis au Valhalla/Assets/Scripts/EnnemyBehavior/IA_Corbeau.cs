@@ -28,6 +28,7 @@ public class IA_Corbeau : MonoBehaviour
 
     [Header("Attaque")] public bool isAttacking;
     public float rotationSpeed;
+    public float rotationSpeedSlown;
     public int puissanceAttaque;
     public float StartUpAttackTime;
     public float StartUpAttackTimeTimer;
@@ -45,6 +46,7 @@ public class IA_Corbeau : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
+        
     }
 
 
@@ -74,11 +76,20 @@ public class IA_Corbeau : MonoBehaviour
             }
         }
 
+       
 
         if (aipath.reachedDestination && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
             aipath.canMove = false;
-            transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
+            if (life.isEnvased)
+            {
+                transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeedSlown * Time.deltaTime);
+            }
+            else
+            {
+                transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
+            }
+          
             StartUpAttackTimeTimer += Time.deltaTime;
 
             if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing)

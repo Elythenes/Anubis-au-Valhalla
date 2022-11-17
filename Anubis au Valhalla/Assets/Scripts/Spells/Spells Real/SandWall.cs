@@ -13,9 +13,9 @@ public class SandWall : MonoBehaviour
     public float speed;
     public float tempsReloadHitFlameAreaTimer;
     public bool stopAttack;
-    //public bool activateHitbox;
+    public bool activeHitbox;
 
-    
+
     private void Start()
     {
         collider = GetComponent<BoxCollider2D>();
@@ -27,8 +27,8 @@ public class SandWall : MonoBehaviour
         timerStep2Time += Time.deltaTime;
 
         if (timerStep2Time >= soSandWall.timerStep2)
-        {
-           // activateHitbox = true;
+        { 
+            activeHitbox = true;
             collider.isTrigger = true;
             transform.Translate(transform.right*speed,Space.World);
         }
@@ -36,7 +36,7 @@ public class SandWall : MonoBehaviour
     
     private void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Monstre" /*&& activateHitbox*/)
+        if (col.gameObject.tag == "Monstre" && activeHitbox)
         {
             stopAttack = false;
             for (int i = 0; i < soSandWall.nombreOfDot; i++)
