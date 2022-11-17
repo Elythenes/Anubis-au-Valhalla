@@ -13,6 +13,7 @@ using Random = UnityEngine.Random;
 public class Salle : MonoBehaviour
 {
     public bool roomDone = false;
+    public bool isSpecial = false;
     public Transform[] transformReferences;
     public Transform AstarRef;
     public GameObject player;
