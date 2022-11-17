@@ -19,7 +19,7 @@ public class MonsterLifeManager : MonoBehaviour
     public int vieActuelle;
     public int soulValue = 4;
     public float delay;
-    public float forceKnockBack;
+    private float forceKnockBack = 10;
     public UnityEvent OnBegin, OnDone;
     
     public GameObject root;
@@ -96,11 +96,11 @@ public class MonsterLifeManager : MonoBehaviour
     {
         if (!isInvincible)
         {
-            StartCoroutine(AnimationDamaged());
-            transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
+            StartCoroutine(AnimationDamaged(staggerDuration));
+            /*transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
             {
                 ai.canMove = true;
-            });
+            });*/
             vieActuelle -= damage; 
             healthBar.SetHealth(vieActuelle);
             isInvincible = true;
@@ -112,10 +112,11 @@ public class MonsterLifeManager : MonoBehaviour
         }
     }
     
-    IEnumerator AnimationDamaged()
+    IEnumerator AnimationDamaged(float duration)
     {
         animator.SetBool("IsTouched", true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(duration);
+        ai.canMove = true;
         animator.SetBool("IsTouched", false);
     }
     

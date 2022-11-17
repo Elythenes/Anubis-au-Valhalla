@@ -84,9 +84,11 @@ public class IA_Corbeau : MonoBehaviour
             if (life.isEnvased)
             {
                 transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeedSlown * Time.deltaTime);
+                //rb.AddForce(Vector2.Perpendicular(transform.position - player.transform.position * rotationSpeedSlown ),ForceMode2D.Force);
             }
             else
             {
+                //rb.AddForce(Vector2.Perpendicular(transform.position - player.transform.position* rotationSpeed),ForceMode2D.Force);
                 transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
             }
           
