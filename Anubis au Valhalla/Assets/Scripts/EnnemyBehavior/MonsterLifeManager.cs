@@ -137,7 +137,8 @@ public class MonsterLifeManager : MonoBehaviour
         {
             //StopAllCoroutines();
             OnBegin?.Invoke();
-            rb.AddForce(direction * forceKnockBack,ForceMode2D.Impulse);
+            //rb.velocity = Vector2.zero;
+            //rb.AddForce(direction * forceKnockBack,ForceMode2D.Impulse);
             StartCoroutine(Reset());
         }
     }
