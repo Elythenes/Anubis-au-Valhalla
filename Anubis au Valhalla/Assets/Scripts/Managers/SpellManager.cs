@@ -102,7 +102,9 @@ public class SpellManager : MonoBehaviour
         Akh = 5,
         PlumeMaat = 6,
         OiseauBa = 7,
-        SandWall = 8
+        SandWall = 8,
+        NilWave = 9,
+        Sepulture = 10,
     }
     
     void SpellReplacement(List<SpellObject> list)
@@ -158,6 +160,17 @@ public class SpellManager : MonoBehaviour
                     SpellSpawnEntityObject SandWallObj1 = prefabA.GetComponent<SandWall>().soSandWall;
                     SpawnEntity(prefabA,spellSlot,SandWallObj1);
                     break;
+                
+                case SpellNumber.NilWave:
+                    SpellSpawnEntityObject NilWaveObj1 = prefabA.GetComponent<NilWave>().soNilWave;
+                    SpawnEntity(prefabA,spellSlot,NilWaveObj1);
+                    break;
+                
+                case SpellNumber.Sepulture:
+                    SpellSpawnEntityObject SarcophageObj1 = prefabA.GetComponent<SarcophageBehaviour>().soSarcophage;
+                    SpawnEntity(prefabA,spellSlot,SarcophageObj1);
+                    break;
+
             
                 case SpellNumber.Akh:
                     SpellStaticAreaObject AkhObj1 = prefabA.GetComponent<Akh>().soAkh;
@@ -209,6 +222,16 @@ public class SpellManager : MonoBehaviour
                 case SpellNumber.SandWall:
                     SpellSpawnEntityObject SandWallObj2 = prefabB.GetComponent<SandWall>().soSandWall;
                     SpawnEntity(prefabB,spellSlot,SandWallObj2);
+                    break;
+                
+                case SpellNumber.NilWave:
+                    SpellSpawnEntityObject NilWaveObj2 = prefabB.GetComponent<NilWave>().soNilWave;
+                    SpawnEntity(prefabB,spellSlot,NilWaveObj2);
+                    break;
+                
+                case SpellNumber.Sepulture:
+                    SpellSpawnEntityObject SarcophageObj2 = prefabB.GetComponent<SarcophageBehaviour>().soSarcophage;
+                    SpawnEntity(prefabB,spellSlot,SarcophageObj2);
                     break;
                 
                 case SpellNumber.Akh:
@@ -599,6 +622,94 @@ public class SpellManager : MonoBehaviour
                 if (slotNumber == 2)
                 {
                     spellSEo = prefabB.GetComponent<SandWall>().soSandWall;
+                    cooldownSlot2 = spellSEo.cooldown;
+                }
+                if (spellSEo.cooldownTimer < spellSEo.cooldown && !spellSEo.canCast)
+                {
+                    spellSEo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellSEo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellSEo.cooldownTimer;
+                    }
+                    
+                }
+                else if (spellSEo.cooldownTimer > spellSEo.cooldown)
+                {
+                    spellSEo.canCast = true;
+                    spellSEo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
+            
+            case SpellNumber.NilWave:
+                if (slotNumber == 1)
+                {
+                    spellSEo = prefabA.GetComponent<NilWave>().soNilWave;
+                    cooldownSlot1 = spellSEo.cooldown;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellSEo = prefabB.GetComponent<NilWave>().soNilWave;
+                    cooldownSlot2 = spellSEo.cooldown;
+                }
+                if (spellSEo.cooldownTimer < spellSEo.cooldown && !spellSEo.canCast)
+                {
+                    spellSEo.cooldownTimer += Time.deltaTime;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellSEo.cooldownTimer;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellSEo.cooldownTimer;
+                    }
+                    
+                }
+                else if (spellSEo.cooldownTimer > spellSEo.cooldown)
+                {
+                    spellSEo.canCast = true;
+                    spellSEo.cooldownTimer = 0;
+                    
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;
+            
+            case SpellNumber.Sepulture:
+                if (slotNumber == 1)
+                {
+                    spellSEo = prefabA.GetComponent<SarcophageBehaviour>().soSarcophage;
+                    cooldownSlot1 = spellSEo.cooldown;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellSEo = prefabB.GetComponent<SarcophageBehaviour>().soSarcophage;
                     cooldownSlot2 = spellSEo.cooldown;
                 }
                 if (spellSEo.cooldownTimer < spellSEo.cooldown && !spellSEo.canCast)

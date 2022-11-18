@@ -11,6 +11,11 @@ public class HitBoxFallValkyrie : MonoBehaviour
     void Update()
     {
         transform.localScale += new Vector3(0.006f, 0.006f, 0);
+
+        if (ia == null)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -19,7 +24,7 @@ public class HitBoxFallValkyrie : MonoBehaviour
         if (col.CompareTag("Player"))
         {
         Debug.Log(pushForce);
-            DamageManager.instance.TakeDamage(ia.FallDamage);
+            DamageManager.instance.TakeDamage(ia.FallDamage, gameObject);
             col.GetComponentInParent<Rigidbody2D>().AddForce(pushForce*ia.pushForce,ForceMode2D.Impulse);
         }
     }

@@ -10,6 +10,7 @@ public class Combo1Hitbox : MonoBehaviour
 {
     [Range(0, 2)] public int comboNumber;
     public float stagger = 0.2f;
+    
 
     private void Start()
     {

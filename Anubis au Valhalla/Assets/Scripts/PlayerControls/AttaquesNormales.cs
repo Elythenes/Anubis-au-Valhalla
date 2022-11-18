@@ -167,9 +167,9 @@ public class AttaquesNormales : MonoBehaviour
 
         // ------------------ Gestion Combo-------------
     }
-    //<Combo 1>/ Dash légèrement vers l'avant puis crée une hitbox devant le perso et touche les ennemis
-    //<Combo 2>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
-    //<Combo 3>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
+    //<Combo 1>/ Glisse vers l'avant puis crée une hitbox devant le perso et touche les ennemis
+    //<Combo 2>/ La même chose mais dash, et la hitbox est plus alongée et le dash plus long et rapide
+    //<Combo 3>/ La même chose mais hitbox est plus alongée et le dash plus long et rapide
     public void Combo(int index) 
     {
         abandonOn = true;

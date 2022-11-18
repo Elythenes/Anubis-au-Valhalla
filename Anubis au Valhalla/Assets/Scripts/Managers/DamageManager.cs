@@ -13,6 +13,7 @@ public class DamageManager : MonoBehaviour
 {
     [Header("Objects")]
     public GameObject textDamage;
+    public Camera mainCamera;
     public GameObject player;
     public static DamageManager instance;
     public Volume gVolume;
@@ -29,6 +30,9 @@ public class DamageManager : MonoBehaviour
     [Header("Feedbacks")]
     public float timeHitStop;
     public float timeRedScreen;
+    public bool timeRedScreenActivator;
+    public float t1;
+    public float t2;
 
     [Header("Stats")]
     public int vieActuelle;
@@ -55,35 +59,28 @@ public class DamageManager : MonoBehaviour
 
     private void Update()
     {
-        if (invinsible)
-        {
-            animPlayer.SetBool("IsInvinsible", true);
-        }
-        else
-        {
-            animPlayer.SetBool("IsInvinsible", false);
-        }
-
         if (vieActuelle > vieMax)
         {
             vieActuelle = vieMax;
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, GameObject enemy)
     {
         if (!invinsible)
         {
             if (!CharacterController.instance.isDashing)
             {
                 Debug.Log("touché");
-                StartCoroutine(RedScreen(timeRedScreen));
-                HitStop(timeHitStop*(damage/10));
-                Time.timeScale = 0.3f;
+                var angle = CharacterController.instance.transform.position - enemy.transform.position;
+                angle.Normalize();
+                CharacterController.instance.rb.AddForce(damage*angle, ForceMode2D.Impulse);
+                CharacterController.instance.anim.SetBool("isDead",true);
+                StartCoroutine(RedScreenStart(timeRedScreen));
+                HitStop(timeHitStop);
                 if (isAnkh)
                 {
                     damageReduction = ankhShieldData.reducteurDamage;
-                    
                 }
                 else
                 {
@@ -91,27 +88,27 @@ public class DamageManager : MonoBehaviour
                 }
                 
                 vieActuelle -= damage / damageReduction;
-                textDamage.GetComponentInChildren<TextMeshPro>().SetText((damage / damageReduction).ToString());
-                Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+                GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+                textObj.GetComponentInChildren<TextMeshPro>().SetText((damage / damageReduction).ToString());
                 LifeBarManager.instance.SetHealth(vieActuelle);
+                if (vieActuelle <= 0)
+                {
+                    Die();
+                }
                 
                 StartCoroutine(TempsInvinsibilité());
                 StartCoroutine(TempsStun());
             }
             else
             {
-                Debug.Log("miss");
+                HitStop(0.5f);
                 StartCoroutine(MissScreen(timeRedScreen));
-                HitStop(timeHitStop*(damage/10));
-                Time.timeScale = 0.3f;
+                HitStop(timeHitStop);
             }
             
         }
 
-        if (vieActuelle <= 0)
-        {
-            Die();
-        }
+        
     }
 
     public void HitStop(float duration)
@@ -123,30 +120,65 @@ public class DamageManager : MonoBehaviour
 
     IEnumerator WaitStop(float duration)
     {
+        Time.timeScale = 0f;
+        Time.fixedDeltaTime = 0.01F * Time.timeScale;
         stopWaiting = true;
         yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = 1.0f;
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.01F * Time.timeScale;
         stopWaiting = false;
     }
 
-    public IEnumerator RedScreen(float timeRedScreenC)
+    public IEnumerator RedScreenStart(float timeRedScreenC)
     {
-        if (!CharacterController.instance.isDashing)
+        float timeElapsed = 0;
+        while (timeElapsed < t1)
         {
-            gVolume.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
-            yield return new WaitForSeconds(timeRedScreen);
-            gVolume.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+            mainCamera.orthographicSize = Mathf.Lerp(7.75f, 7, timeElapsed / t1);
+            gVolume.weight = Mathf.Lerp(0, 1, timeElapsed / t1);
+            timeElapsed += Time.deltaTime;
+            yield return null;
         }
+        mainCamera.orthographicSize = 7;
+        gVolume.weight = 1;
+        
+        t2 = 0;
+        while (t2 < t1)
+        {
+            gVolume.weight = Mathf.Lerp(1, 0, t2 / t1);
+            mainCamera.orthographicSize = Mathf.Lerp(7, 7.75f, t2 / t1);
+            t2 += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.orthographicSize = 7.75f;
+        gVolume.weight = 0;
     }
-    
+
+   
+
     public IEnumerator MissScreen(float timeRedScreenC)
     {
-        if (CharacterController.instance.isDashing)
+        float timeElapsed = 0;
+        while (timeElapsed < t1)
         {
-            gVolumeMiss.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
-            yield return new WaitForSeconds(timeRedScreen);
-            gVolumeMiss.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+            mainCamera.orthographicSize = Mathf.Lerp(7.75f, 6, timeElapsed / t1);
+            gVolumeMiss.weight = Mathf.Lerp(0, 1, timeElapsed / t1);
+            timeElapsed += Time.deltaTime;
+            yield return null;
         }
+        mainCamera.orthographicSize = 6;
+        gVolume.weight = 1;
+        
+        t2 = 0;
+        while (t2 < t1)
+        {
+            gVolumeMiss.weight = Mathf.Lerp(1, 0, t2 / t1);
+            mainCamera.orthographicSize = Mathf.Lerp(6, 7.75f, t2 / t1);
+            t2 += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.orthographicSize = 7.75f;
+        gVolume.weight = 0;
     }
     
   
@@ -158,6 +190,7 @@ public class DamageManager : MonoBehaviour
         yield return new WaitForSeconds(StunAfterHit);
         AttaquesNormales.instance.canAttack = true;
         stun = false;
+        CharacterController.instance.anim.SetBool("isDead",false);
     }
     
     IEnumerator TempsInvinsibilité()

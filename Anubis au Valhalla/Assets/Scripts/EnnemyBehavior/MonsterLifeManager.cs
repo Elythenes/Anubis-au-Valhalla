@@ -19,7 +19,7 @@ public class MonsterLifeManager : MonoBehaviour
     public int vieActuelle;
     public int soulValue = 4;
     public float delay;
-    public float forceKnockBack;
+    private float forceKnockBack = 10;
     public UnityEvent OnBegin, OnDone;
     
     public GameObject root;
@@ -28,18 +28,23 @@ public class MonsterLifeManager : MonoBehaviour
     public float InvincibleTime;
     public float InvincibleTimeTimer;
     public bool isInvincible;
-    public float MomifiedTime;
+    public float MomifiedTime = 3;
     public float MomifiedTimeTimer;
     public bool isMomified;
     public GameObject bandelettesMomie;
     public GameObject bandelettesHolder;
     private bool activeBandelettes;
+    public bool isEnvased;
+    public float EnvasedTime = 5;
+    public float EnvasedTimeTimer;
+    private float demiSpeed;
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         vieActuelle = vieMax;
+        demiSpeed = ai.speed / 2;
     }
 
     private void Update()
@@ -53,6 +58,20 @@ public class MonsterLifeManager : MonoBehaviour
             {
                 isInvincible = false;
                 InvincibleTimeTimer = 0;
+            }
+        }
+
+        if (isEnvased)
+        {
+            EnvasedTimeTimer += Time.deltaTime;
+            ai.speed = demiSpeed;
+            
+            if (EnvasedTimeTimer >= EnvasedTime)
+            {
+                ai.speed *= 2;
+                EnvasedTimeTimer = 0;
+                isEnvased = false;
+                
             }
         }
         
@@ -77,11 +96,11 @@ public class MonsterLifeManager : MonoBehaviour
     {
         if (!isInvincible)
         {
-            StartCoroutine(AnimationDamaged());
-            transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
+            StartCoroutine(AnimationDamaged(staggerDuration));
+            /*transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
             {
                 ai.canMove = true;
-            });
+            });*/
             vieActuelle -= damage; 
             healthBar.SetHealth(vieActuelle);
             isInvincible = true;
@@ -93,10 +112,11 @@ public class MonsterLifeManager : MonoBehaviour
         }
     }
     
-    IEnumerator AnimationDamaged()
+    IEnumerator AnimationDamaged(float duration)
     {
         animator.SetBool("IsTouched", true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(duration);
+        ai.canMove = true;
         animator.SetBool("IsTouched", false);
     }
     
@@ -117,7 +137,8 @@ public class MonsterLifeManager : MonoBehaviour
         {
             //StopAllCoroutines();
             OnBegin?.Invoke();
-            rb.AddForce(direction * forceKnockBack,ForceMode2D.Impulse);
+            //rb.velocity = Vector2.zero;
+            //rb.AddForce(direction * forceKnockBack,ForceMode2D.Impulse);
             StartCoroutine(Reset());
         }
     }

@@ -476,7 +476,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: b573fad800f4f0243b66a8d4434a1d3e, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -605,7 +605,6 @@ MonoBehaviour:
   vieActuelle: 0
   soulValue: 15
   delay: 0.15
-  forceKnockBack: 0.5
   OnBegin:
     m_PersistentCalls:
       m_Calls:
@@ -664,10 +663,14 @@ MonoBehaviour:
   InvincibleTime: 0.19
   InvincibleTimeTimer: 0
   isInvincible: 0
-  MomifiedTime: 0
+  MomifiedTime: 3
   MomifiedTimeTimer: 0
   isMomified: 0
   bandelettesMomie: {fileID: 5105585978381247783, guid: a0ce4c45d1cdc5f468a4f7668414d476, type: 3}
+  bandelettesHolder: {fileID: 0}
+  isEnvased: 0
+  EnvasedTime: 5
+  EnvasedTimeTimer: 0
 --- !u!114 &1813138152235966950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,10 +696,12 @@ MonoBehaviour:
   pointToGo: {x: 0, y: 0}
   isAttacking: 0
   puissanceAttaqueJavelot: 20
-  javelotSpeed: 0.1
+  javelotSpeed: 0.2
   StartUpJavelotTime: 5
   StartUpJavelotTimeTimer: 0
   projectilJavelot: {fileID: 6246300457462273341, guid: cccc5c7b2ad4e7d4a8102dac28e32fcc, type: 3}
+  indicationJavelot: {fileID: 9059446152863737838, guid: d50c72a2c8d99624aa5799879a0fb137, type: 3}
+  dir: {x: 0, y: 0}
   indicationFall: {fileID: 2229639920476728955, guid: 357fb3723b2763741919521c467ae3ee, type: 3}
   hitboxFall: {fileID: 861668139924243964, guid: 2abb61bc0238b654d80d231a61b1ea70, type: 3}
   FallDamage: 35

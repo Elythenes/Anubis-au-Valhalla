@@ -34,7 +34,9 @@ public class CharacterController : MonoBehaviour
   public float astarPathTimer = 0f;
   public float astarPathTimerMax = 1f;
 
-  [Header("Utilitaires")] public KeyCode interaction;
+  [Header("Utilitaires")] 
+  public KeyCode interaction;
+  public GameObject indicationDirection;
 
 
   private void Awake()
@@ -65,19 +67,29 @@ public class CharacterController : MonoBehaviour
       child.transform.position += offset;
     transform.position = position;
   }
-  
+
+  private void FixedUpdate()
+  {
+    if (isDashing == false && !isAttacking) // Déplacments hors dash.
+    {
+      rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
+      //rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
+    }
+  }
+
   private void Update()
   {
     Keyboard kb = InputSystem.GetDevice<Keyboard>();
+
+    Vector2 directionIndic = Camera.main.ScreenToWorldPoint(Input.mousePosition) - indicationDirection.transform.position;
+    float angleIndic = Mathf.Atan2(directionIndic.y, directionIndic.x) * Mathf.Rad2Deg;
+    Quaternion rotationIndic = Quaternion.AngleAxis(angleIndic, Vector3.forward);
+    indicationDirection.transform.rotation = rotationIndic;
+    
     
     if (isDashing == false)
     {
-      if (DamageManager.instance.stun == false)
-      {
-        movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement 
-      }
-
-      if (movement.x != 0 || movement.y != 0)
+      if (movement.magnitude != 0)
       {
         anim.SetBool("isIdle", false);
         anim.SetBool("isWalking", true);
@@ -89,11 +101,7 @@ public class CharacterController : MonoBehaviour
       }
     }
 
-    if (isDashing == false && !isAttacking) // Déplacments hors dash.
-    {
-      rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
-      //rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
-    }
+   
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
     {
@@ -111,6 +119,7 @@ public class CharacterController : MonoBehaviour
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
+      rb.velocity *= 0.5f;
       AttaquesNormales.instance.canAttack = true;
       isDashing = false;
       timerDash = 0;

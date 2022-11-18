@@ -37,6 +37,7 @@ public class GhostDash : MonoBehaviour
 
         if (ghostDelaySeconds < 0)
         {
+            ghostDelaySeconds = ghostDelay;
             enabled = false;
         }
     }

@@ -27,7 +27,7 @@ public class IA_Valkyrie : MonoBehaviour
     public bool isFleeing;
     public float radiusWondering;
     public Vector2 pointToGo;
-    
+
 
 
     [Header("Attaque - Javelot")] 
@@ -37,6 +37,8 @@ public class IA_Valkyrie : MonoBehaviour
     public float StartUpJavelotTime;
     public float StartUpJavelotTimeTimer;
     public GameObject projectilJavelot;
+    public GameObject indicationJavelot;
+    [HideInInspector] public Vector2 dir;
 
     [Header("Attaque - Jump")]
     public GameObject indicationFall;
@@ -178,6 +180,12 @@ public class IA_Valkyrie : MonoBehaviour
 
     void attaqueJavelot()
     {
+        dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,
+            CharacterController.instance.transform.position.y - transform.position.y);
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        
+        GameObject indicJavelot = Instantiate(indicationJavelot,transform.position,  Quaternion.Euler(0,0,angle));
+        Destroy(indicJavelot,1);
         StartCoroutine(StartUpJavelot());
         transform.DOShakePosition(1,1);
         isAttacking = true;

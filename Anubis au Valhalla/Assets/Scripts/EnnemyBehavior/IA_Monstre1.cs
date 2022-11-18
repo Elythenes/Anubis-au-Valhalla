@@ -80,22 +80,21 @@ public class IA_Monstre1 : MonoBehaviour
         {
           sr.sortingOrder = 1;
         }*/
-        
-      
+
+        if (!isDashing)
+        {
             if (transform.localPosition.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
             {
-                //transform.localScale = new Vector3(-1, 1.316351f, 1);
-               //mecanim.initialFlipX = false;
-               transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
+                transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
             }
             else if (transform.localPosition.x > player.transform.position.x)
             {
-                //transform.localScale = new Vector3(1, 1.316351f, 1);
-                //mecanim.initialFlipX = true;
                 transform.localRotation = Quaternion.Euler(transform.localRotation.x, -180, transform.localRotation.z);
-            }
+            }  
+        }
+           
 
-            if (aipath.reachedDestination&& !life.isMomified) // Quand le monstre arrive proche du joueur, il commence le dash
+        if (aipath.reachedDestination&& !life.isMomified) // Quand le monstre arrive proche du joueur, il commence le dash
         {
             if (isDashing == false && canDash)
             { 
@@ -106,7 +105,7 @@ public class IA_Monstre1 : MonoBehaviour
             }
         }
 
-        if (isDashing&& !life.isMomified) // Faire dasher le monstre
+        if (isDashing && !life.isMomified) // Faire dasher le monstre
         {
             LagDebutDash += Time.deltaTime;
 
@@ -160,7 +159,7 @@ public class IA_Monstre1 : MonoBehaviour
       
         IEnumerator DashImpulse()
         {
-            rb.AddForce(targetPerso*dashSpeed,ForceMode2D.Impulse);
+            rb.AddForce(targetPerso.normalized*dashSpeed,ForceMode2D.Impulse);
             yield return new WaitForSeconds(0.001f);
             stopDash = false;
         }
@@ -172,7 +171,7 @@ public class IA_Monstre1 : MonoBehaviour
             foreach (Collider2D joueur in toucheJoueur)
             {
                 Debug.Log("touché");
-                joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque);
+                joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque, gameObject);
             }
         }
         
