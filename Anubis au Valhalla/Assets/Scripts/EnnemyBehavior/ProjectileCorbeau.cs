@@ -30,7 +30,7 @@ public class ProjectileCorbeau : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            DamageManager.instance.TakeDamage(ia.puissanceAttaque);
+            DamageManager.instance.TakeDamage(ia.puissanceAttaque, gameObject);
             Destroy(gameObject);
         }
     }

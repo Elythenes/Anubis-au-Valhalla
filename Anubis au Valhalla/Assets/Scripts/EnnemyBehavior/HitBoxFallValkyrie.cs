@@ -19,7 +19,7 @@ public class HitBoxFallValkyrie : MonoBehaviour
         if (col.CompareTag("Player"))
         {
         Debug.Log(pushForce);
-            DamageManager.instance.TakeDamage(ia.FallDamage);
+            DamageManager.instance.TakeDamage(ia.FallDamage, gameObject);
             col.GetComponentInParent<Rigidbody2D>().AddForce(pushForce*ia.pushForce,ForceMode2D.Impulse);
         }
     }

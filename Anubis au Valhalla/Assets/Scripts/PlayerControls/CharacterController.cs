@@ -80,12 +80,7 @@ public class CharacterController : MonoBehaviour
     
     if (isDashing == false)
     {
-      if (DamageManager.instance.stun == false)
-      {
-        movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement 
-      }
-
-      if (movement.x != 0 || movement.y != 0)
+      if (movement.magnitude != 0)
       {
         anim.SetBool("isIdle", false);
         anim.SetBool("isWalking", true);
