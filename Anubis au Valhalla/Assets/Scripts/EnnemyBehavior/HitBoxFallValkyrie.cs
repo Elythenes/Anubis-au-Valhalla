@@ -11,6 +11,11 @@ public class HitBoxFallValkyrie : MonoBehaviour
     void Update()
     {
         transform.localScale += new Vector3(0.006f, 0.006f, 0);
+
+        if (ia == null)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)

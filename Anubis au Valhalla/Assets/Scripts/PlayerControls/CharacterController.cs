@@ -67,7 +67,16 @@ public class CharacterController : MonoBehaviour
       child.transform.position += offset;
     transform.position = position;
   }
-  
+
+  private void FixedUpdate()
+  {
+    if (isDashing == false && !isAttacking) // Déplacments hors dash.
+    {
+      rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
+      //rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
+    }
+  }
+
   private void Update()
   {
     Keyboard kb = InputSystem.GetDevice<Keyboard>();
@@ -97,11 +106,7 @@ public class CharacterController : MonoBehaviour
       }
     }
 
-    if (isDashing == false && !isAttacking) // Déplacments hors dash.
-    {
-      rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
-      //rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
-    }
+   
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
     {

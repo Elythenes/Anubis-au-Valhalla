@@ -31,6 +31,7 @@ public class IA_Guerrier : MonoBehaviour
     public bool isAttacking;
     public Transform pointAttaque;
     public LayerMask HitboxPlayer;
+    public float dureeAttaque;
     public float rangeAttaque;
     public int puissanceAttaque;
     public float StartUpAttackTime;
@@ -117,15 +118,16 @@ public class IA_Guerrier : MonoBehaviour
 
         if (StartUpAttackTimeTimer >= StartUpAttackTime&& !life.isMomified)
         {
-            Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
+           // Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
             GameObject swingOj = Instantiate(swing, pointAttaque.position, Quaternion.identity);
+            swingOj.GetComponent<HitboxGuerrier>().ia = this;
             swingOj.transform.localScale = new Vector2(rangeAttaque,rangeAttaque);
             swingOj.transform.localRotation = new Quaternion(player.transform.position.x,player.transform.position.y,player.transform.position.z,0);
-            foreach (Collider2D joueur in toucheJoueur)
-            {
-                Debug.Log("touché");
-                joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque);
-            }
+            //foreach (Collider2D joueur in toucheJoueur)
+           // {
+                //Debug.Log("touché");
+               // joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque);
+           // }
 
             aipath.canMove = true;
             isWondering = true;
