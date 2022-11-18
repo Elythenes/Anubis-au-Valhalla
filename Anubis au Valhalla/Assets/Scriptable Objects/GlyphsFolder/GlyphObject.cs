@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Glyph" ,menuName = "Glyph System/GlyphObject")]
@@ -16,44 +17,35 @@ public class GlyphObject : ScriptableObject
     //public GlyphElement element;
     [Range(1, 4)] public int tier = 1;
     
-    [Header("GRAPH")]
-    public Texture icone;
-    public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
-    public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
+    [Foldout("GRAPH")] public Texture icone;
+    [Foldout("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
+    [Foldout("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
 
-    [Header("BASIC STAT UP")] 
-    public bool isBasicStatUp = false;
-    public AnubisStat anubisStat = AnubisStat.None;
-    public float bonusBasicStat = 5f;
+    [Foldout("BASIC STAT UP")] public bool isBasicStatUp = false;
+    [Foldout("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.None;
+    [Foldout("BASIC STAT UP")] public float bonusBasicStat = 5f;
     
-    [Header("SITUATIONAL STAT UP")]
-    public bool isSituationStatUp = false;
-    public int valeurPourLeHeader1;
+    [Foldout("SITUATIONAL STAT UP")] public bool isSituationStatUp = false;
+    [Foldout("SITUATIONAL STAT UP")] public int valeurPourLeHeader1;
     
-    [Header("ELEMENTAL")] 
-    public bool isElemental = false;
-    public GlyphElement glyphElement;
+    [Foldout("ELEMENTAL")] public bool isElemental = false;
+    [Foldout("ELEMENTAL")] public GlyphElement glyphElement;
     
-    [Header("ADDITIONAL EFFECT")]
-    public bool isAdditionalEffect = false;
-    public int valeurPourLeHeader2;
+    [Foldout("ADDITIONAL EFFECT")] public bool isAdditionalEffect = false;
+    [Foldout("ADDITIONAL EFFECT")] public int valeurPourLeHeader2;
     
-    [Header("TRIGGER EFFECT")]
-    public bool isTriggerEffect = false;
-    public bool isTriggerActive = false;
+    [Foldout("TRIGGER EFFECT")] public bool isTriggerEffect = false;
+    [Foldout("TRIGGER EFFECT")] public bool isTriggerActive = false;
     
-    [Header("CHARGE BASED")] 
-    public bool isCharge = false;
-    public int chargeBase = 0;
-    public int chargeNumber = 10;
+    [Foldout("CHARGE BASED")] public bool isCharge = false;
+    [Foldout("CHARGE BASED")] public int chargeBase = 0;
+    [Foldout("CHARGE BASED")] public int chargeNumber = 10;
 
-    [Header("TIME BASED")] 
-    public bool isTimeBased = false;
-    public float cooldownBeforeEffect = 5f;
+    [Foldout("TIME BASED")] public bool isTimeBased = false;
+    [Foldout("TIME BASED")] public float cooldownBeforeEffect = 5f;
     
-    [Header("BOOL EFFECT")]
-    public bool isBoolEffect = false;
-    public bool isEffectActive = true;
+    [Foldout("BOOL EFFECT")] public bool isBoolEffect = false;
+    [Foldout("BOOL EFFECT")] public bool isEffectActive = true;
     
     
     public enum GlyphPart
