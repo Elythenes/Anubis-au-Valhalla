@@ -92,7 +92,6 @@ public class IA_Corbeau : MonoBehaviour
                 transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
             }
           
-            StartUpAttackTimeTimer += Time.deltaTime;
 
             if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing)
             {
@@ -152,6 +151,7 @@ public class IA_Corbeau : MonoBehaviour
                                 rb.AddForce(new Vector2(1, 1) * forceRepulse);
                             }
                 
+                            StartUpAttackTimeTimer += Time.deltaTime;
                         
                 if (StartUpAttackTimeTimer >= StartUpAttackTime && !life.isMomified)
                 {
