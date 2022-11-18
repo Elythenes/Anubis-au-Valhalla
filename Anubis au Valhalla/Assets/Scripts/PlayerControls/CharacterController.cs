@@ -34,7 +34,9 @@ public class CharacterController : MonoBehaviour
   public float astarPathTimer = 0f;
   public float astarPathTimerMax = 1f;
 
-  [Header("Utilitaires")] public KeyCode interaction;
+  [Header("Utilitaires")] 
+  public KeyCode interaction;
+  public GameObject indicationDirection;
 
 
   private void Awake()
@@ -69,6 +71,12 @@ public class CharacterController : MonoBehaviour
   private void Update()
   {
     Keyboard kb = InputSystem.GetDevice<Keyboard>();
+
+    Vector2 directionIndic = Camera.main.ScreenToWorldPoint(Input.mousePosition) - indicationDirection.transform.position;
+    float angleIndic = Mathf.Atan2(directionIndic.y, directionIndic.x) * Mathf.Rad2Deg;
+    Quaternion rotationIndic = Quaternion.AngleAxis(angleIndic, Vector3.forward);
+    indicationDirection.transform.rotation = rotationIndic;
+    
     
     if (isDashing == false)
     {

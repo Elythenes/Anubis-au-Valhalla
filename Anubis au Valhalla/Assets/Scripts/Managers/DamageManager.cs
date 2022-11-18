@@ -30,6 +30,9 @@ public class DamageManager : MonoBehaviour
     [Header("Feedbacks")]
     public float timeHitStop;
     public float timeRedScreen;
+    public bool timeRedScreenActivator;
+    public float t1;
+    public float t2;
 
     [Header("Stats")]
     public int vieActuelle;
@@ -56,15 +59,6 @@ public class DamageManager : MonoBehaviour
 
     private void Update()
     {
-        if (invinsible)
-        {
-            animPlayer.SetBool("IsInvinsible", true);
-        }
-        else
-        {
-            animPlayer.SetBool("IsInvinsible", false);
-        }
-
         if (vieActuelle > vieMax)
         {
             vieActuelle = vieMax;
@@ -78,13 +72,11 @@ public class DamageManager : MonoBehaviour
             if (!CharacterController.instance.isDashing)
             {
                 Debug.Log("touché");
-                StartCoroutine(RedScreen(timeRedScreen));
-                HitStop(timeHitStop*(damage/10));
-                Time.timeScale = 0.3f;
+                StartCoroutine(RedScreenStart(timeRedScreen));
+                HitStop(timeHitStop);
                 if (isAnkh)
                 {
                     damageReduction = ankhShieldData.reducteurDamage;
-                    
                 }
                 else
                 {
@@ -92,9 +84,13 @@ public class DamageManager : MonoBehaviour
                 }
                 
                 vieActuelle -= damage / damageReduction;
-                textDamage.GetComponentInChildren<TextMeshPro>().SetText((damage / damageReduction).ToString());
-                Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+                GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+                textObj.GetComponentInChildren<TextMeshPro>().SetText((damage / damageReduction).ToString());
                 LifeBarManager.instance.SetHealth(vieActuelle);
+                if (vieActuelle <= 0)
+                {
+                    Die();
+                }
                 
                 StartCoroutine(TempsInvinsibilité());
                 StartCoroutine(TempsStun());
@@ -108,10 +104,7 @@ public class DamageManager : MonoBehaviour
             
         }
 
-        if (vieActuelle <= 0)
-        {
-            Die();
-        }
+        
     }
 
     public void HitStop(float duration)
@@ -123,31 +116,65 @@ public class DamageManager : MonoBehaviour
 
     IEnumerator WaitStop(float duration)
     {
-        Time.timeScale = Mathf.Lerp(1f, 0.5f, 0.125f);
-        Time.fixedDeltaTime = 0.02F * Time.timeScale;
+        Time.timeScale = 0f;
+        Time.fixedDeltaTime = 0.01F * Time.timeScale;
         stopWaiting = true;
         yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = 1.0f;
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.01F * Time.timeScale;
         stopWaiting = false;
     }
 
-    public IEnumerator RedScreen(float timeRedScreenC)
+    public IEnumerator RedScreenStart(float timeRedScreenC)
     {
-        if (!CharacterController.instance.isDashing)
+        float timeElapsed = 0;
+        while (timeElapsed < t1)
         {
-            mainCamera.fieldOfView = Mathf.Lerp(25, 10, timeRedScreen / Time.deltaTime);
-            gVolume.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
-            yield return new WaitForSeconds(timeRedScreen);
-            gVolume.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
-            mainCamera.fieldOfView = Mathf.Lerp(10, 25, timeRedScreen / Time.deltaTime);
+            mainCamera.orthographicSize = Mathf.Lerp(7.75f, 7, timeElapsed / t1);
+            gVolume.weight = Mathf.Lerp(0, 1, timeElapsed / t1);
+            timeElapsed += Time.deltaTime;
+            yield return null;
         }
+        mainCamera.orthographicSize = 7;
+        gVolume.weight = 1;
+        
+        t2 = 0;
+        while (t2 < t1)
+        {
+            gVolume.weight = Mathf.Lerp(1, 0, t2 / t1);
+            mainCamera.orthographicSize = Mathf.Lerp(7, 7.75f, t2 / t1);
+            t2 += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.orthographicSize = 7.75f;
+        gVolume.weight = 0;
     }
-    
+
+   
+
     public IEnumerator MissScreen(float timeRedScreenC)
     {
-        gVolumeMiss.weight = Mathf.Lerp(0, 1, timeRedScreen / Time.deltaTime);
-        yield return new WaitForSeconds(timeRedScreen);
-        gVolumeMiss.weight = Mathf.Lerp(1, 0, timeRedScreen / Time.deltaTime);
+        float timeElapsed = 0;
+        while (timeElapsed < t1)
+        {
+            mainCamera.orthographicSize = Mathf.Lerp(7.75f, 6, timeElapsed / t1);
+            gVolumeMiss.weight = Mathf.Lerp(0, 1, timeElapsed / t1);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.orthographicSize = 6;
+        gVolume.weight = 1;
+        
+        t2 = 0;
+        while (t2 < t1)
+        {
+            gVolumeMiss.weight = Mathf.Lerp(1, 0, t2 / t1);
+            mainCamera.orthographicSize = Mathf.Lerp(6, 7.75f, t2 / t1);
+            t2 += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.orthographicSize = 7.75f;
+        gVolume.weight = 0;
     }
     
   
