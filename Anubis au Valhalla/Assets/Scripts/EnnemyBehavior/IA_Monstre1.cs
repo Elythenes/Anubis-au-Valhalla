@@ -171,7 +171,7 @@ public class IA_Monstre1 : MonoBehaviour
             foreach (Collider2D joueur in toucheJoueur)
             {
                 Debug.Log("touché");
-                joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque);
+                joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque, gameObject);
             }
         }
         

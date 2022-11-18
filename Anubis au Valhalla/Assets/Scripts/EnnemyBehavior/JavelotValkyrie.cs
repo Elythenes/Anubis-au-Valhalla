@@ -27,7 +27,7 @@ public class JavelotValkyrie : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            DamageManager.instance.TakeDamage(ia.puissanceAttaqueJavelot);
+            DamageManager.instance.TakeDamage(ia.puissanceAttaqueJavelot, gameObject);
             Destroy(gameObject);
         }
     }

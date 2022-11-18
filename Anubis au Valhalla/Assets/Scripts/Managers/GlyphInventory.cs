@@ -64,7 +64,8 @@ public class GlyphInventory : MonoBehaviour
         if (gO.level == GlyphObject.GlyphLevel.MiddleLevel || gO.level == GlyphObject.GlyphLevel.MaximumLevel) //si le Glyphe obtenu est d'un niveau supérieur (>1) dans sa catégorie 
         {
             int compteur = 1;
-            while(array[gO.index-indexConvertor-compteur].glyphObject.level == GlyphObject.GlyphLevel.MiddleLevel) //regarde si y'a des Glyphes avec un tag Minimum ou MiddleLevel
+            while(array[gO.index-indexConvertor-compteur].glyphObject.level == GlyphObject.GlyphLevel.MiddleLevel 
+                  || array[gO.index-indexConvertor-compteur].glyphObject.level == GlyphObject.GlyphLevel.MinimumLevel) //regarde si y'a des Glyphes avec un tag Minimum ou MiddleLevel
             {
                 Debug.Log(compteur + "est le compteur");
                 array[gO.index-indexConvertor-compteur].gState = GlyphWrap.State.Outleveled; //si oui, remplace en Outleveled tous les glyphes de la catégorie qui sont possiblement actif

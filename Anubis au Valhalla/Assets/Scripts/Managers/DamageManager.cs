@@ -65,13 +65,17 @@ public class DamageManager : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, GameObject enemy)
     {
         if (!invinsible)
         {
             if (!CharacterController.instance.isDashing)
             {
                 Debug.Log("touché");
+                var angle = CharacterController.instance.transform.position - enemy.transform.position;
+                angle.Normalize();
+                CharacterController.instance.rb.AddForce(damage*angle, ForceMode2D.Impulse);
+                CharacterController.instance.anim.SetBool("isDead",true);
                 StartCoroutine(RedScreenStart(timeRedScreen));
                 HitStop(timeHitStop);
                 if (isAnkh)
@@ -186,6 +190,7 @@ public class DamageManager : MonoBehaviour
         yield return new WaitForSeconds(StunAfterHit);
         AttaquesNormales.instance.canAttack = true;
         stun = false;
+        CharacterController.instance.anim.SetBool("isDead",false);
     }
     
     IEnumerator TempsInvinsibilité()
