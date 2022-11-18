@@ -199,8 +199,7 @@ public class AttaquesNormales : MonoBehaviour
         {
             CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
         }
-        Debug.Log(moveDirection);
-        
+
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
         swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);

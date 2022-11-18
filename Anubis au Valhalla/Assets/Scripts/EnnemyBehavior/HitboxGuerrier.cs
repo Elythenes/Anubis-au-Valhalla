@@ -16,7 +16,7 @@ public class HitboxGuerrier : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
-            col.GetComponent<DamageManager>().TakeDamage(ia.puissanceAttaque);
+            col.GetComponent<DamageManager>().TakeDamage(ia.puissanceAttaque,ia.gameObject);
         }
     }
 }

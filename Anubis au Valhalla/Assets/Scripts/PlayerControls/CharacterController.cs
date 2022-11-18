@@ -85,7 +85,11 @@ public class CharacterController : MonoBehaviour
     float angleIndic = Mathf.Atan2(directionIndic.y, directionIndic.x) * Mathf.Rad2Deg;
     Quaternion rotationIndic = Quaternion.AngleAxis(angleIndic, Vector3.forward);
     indicationDirection.transform.rotation = rotationIndic;
-    
+
+    if (DamageManager.instance.stun == false)
+    {
+      movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement
+    }
     
     if (isDashing == false)
     {
