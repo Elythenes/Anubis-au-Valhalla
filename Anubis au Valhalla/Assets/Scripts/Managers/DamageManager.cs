@@ -30,7 +30,7 @@ public class DamageManager : MonoBehaviour
     [Header("Feedbacks")]
     public float timeHitStop;
     public float timeRedScreen;
-    public bool timeRedScreenActivator;
+    public bool EffectMiss;
     public float t1;
     public float t2;
 
@@ -55,6 +55,9 @@ public class DamageManager : MonoBehaviour
     {
         vieActuelle = vieMax;
         LifeBarManager.instance.SetMaxHealth(vieMax);
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.01F * Time.timeScale;
+        stopWaiting = false;
     }
 
     private void Update()
@@ -75,9 +78,9 @@ public class DamageManager : MonoBehaviour
                 var angle = CharacterController.instance.transform.position - enemy.transform.position;
                 angle.Normalize();
                 CharacterController.instance.rb.AddForce(damage*angle, ForceMode2D.Impulse);
-                CharacterController.instance.anim.SetBool("isDead",true);
+                animPlayer.SetBool("isDead",true);
                 StartCoroutine(RedScreenStart(timeRedScreen));
-                HitStop(timeHitStop);
+                HitStop(timeHitStop,false);
                 if (isAnkh)
                 {
                     damageReduction = ankhShieldData.reducteurDamage;
@@ -99,33 +102,52 @@ public class DamageManager : MonoBehaviour
                 StartCoroutine(TempsInvinsibilité());
                 StartCoroutine(TempsStun());
             }
-            else
+            else if(CharacterController.instance.isDashing)
             {
-                HitStop(0.5f);
-                StartCoroutine(MissScreen(timeRedScreen));
-                HitStop(timeHitStop);
+                if (EffectMiss)
+                {
+                    Debug.Log("miss");
+                    HitStop(timeHitStop,true);
+                    StartCoroutine(MissScreen(timeRedScreen));
+                    EffectMiss = false;
+                }
             }
             
         }
 
-        
     }
 
-    public void HitStop(float duration)
+    public void HitStop(float duration, bool miss)
     {
         if (stopWaiting)
             return;
-        StartCoroutine(WaitStop(duration));
+        StartCoroutine(WaitStop(duration,miss));
     }
 
-    IEnumerator WaitStop(float duration)
+    IEnumerator WaitStop(float duration,bool miss)
     {
-        Time.timeScale = 0f;
+        if (!miss)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 0.2f;
+        }
         Time.fixedDeltaTime = 0.01F * Time.timeScale;
         stopWaiting = true;
         yield return new WaitForSecondsRealtime(duration);
         Time.timeScale = 1;
-        Time.fixedDeltaTime = 0.01F * Time.timeScale;
+        if (miss)
+        {
+            Time.fixedDeltaTime = 0.01F * Time.timeScale;
+        }
+
+        if (!miss)
+        {
+            Time.fixedDeltaTime = 0.01f * Time.timeScale;
+        }
+        
         stopWaiting = false;
     }
 
@@ -163,22 +185,24 @@ public class DamageManager : MonoBehaviour
         {
             mainCamera.orthographicSize = Mathf.Lerp(7.75f, 6, timeElapsed / t1);
             gVolumeMiss.weight = Mathf.Lerp(0, 1, timeElapsed / t1);
-            timeElapsed += Time.deltaTime;
+            timeElapsed += 10f * Time.deltaTime;
             yield return null;
         }
         mainCamera.orthographicSize = 6;
-        gVolume.weight = 1;
+        gVolumeMiss.weight = 1;
         
         t2 = 0;
         while (t2 < t1)
         {
             gVolumeMiss.weight = Mathf.Lerp(1, 0, t2 / t1);
             mainCamera.orthographicSize = Mathf.Lerp(6, 7.75f, t2 / t1);
-            t2 += Time.deltaTime;
+            t2 += 0.7f * Time.deltaTime;
             yield return null;
         }
+
+        EffectMiss = true;
         mainCamera.orthographicSize = 7.75f;
-        gVolume.weight = 0;
+        gVolumeMiss.weight = 0;
     }
     
   
