@@ -99,13 +99,14 @@ public class DamageManager : MonoBehaviour
                     Die();
                 }
                 
-                StartCoroutine(TempsInvinsibilité());
+                StartCoroutine(TempsInvinsibilité(2f));
                 StartCoroutine(TempsStun());
             }
             else if(CharacterController.instance.isDashing)
             {
                 if (EffectMiss)
                 {
+                    StartCoroutine(TempsInvinsibilité(0.5f));
                     Debug.Log("miss");
                     HitStop(timeHitStop,true);
                     StartCoroutine(MissScreen(timeRedScreen));
@@ -217,10 +218,10 @@ public class DamageManager : MonoBehaviour
         CharacterController.instance.anim.SetBool("isDead",false);
     }
     
-    IEnumerator TempsInvinsibilité()
+    IEnumerator TempsInvinsibilité(float duration)
     {
         invinsible = true;
-        yield return new WaitForSeconds(TempsInvinsbleAfterHit);
+        yield return new WaitForSeconds(duration);
         invinsible = false;
     }
     
