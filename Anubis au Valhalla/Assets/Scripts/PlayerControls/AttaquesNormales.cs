@@ -9,11 +9,13 @@ using UnityEngine.Serialization;
 public class AttaquesNormales : MonoBehaviour
 {
     public Animator anim;
+    public Animator animTrail;
+    public TrailRenderer trailAttaque;
     private InputManager controls;
     public static AttaquesNormales instance;
 
     [Header("Stats Attaques")]
-
+    //public List<float> hitStopDuration = new List<float>();
     public List<GameObject> hitBoxC = new List<GameObject>();
     public List<Vector2> rangeAttaque = new List<Vector2>();
     public List<bool> isC = new List<bool>();
@@ -65,6 +67,10 @@ public class AttaquesNormales : MonoBehaviour
                     
                     if (canAttack)
                     {
+                        trailAttaque.emitting = true;
+                        animTrail.SetBool("Attack1",true);
+                        animTrail.SetBool("Attack2",false);
+                        
                         anim.SetBool("isAttacking1",true);
                         anim.SetBool("isAttacking2",false);
                         anim.SetBool("isIdle",false);
@@ -80,6 +86,10 @@ public class AttaquesNormales : MonoBehaviour
                 case 1:
                     if (canAttack)
                     {
+                        trailAttaque.emitting = true;
+                        animTrail.SetBool("Attack1",false);
+                        animTrail.SetBool("Attack2",true);
+                        
                         anim.SetBool("isAttacking2",true);
                         anim.SetBool("isAttacking1",false);
                         anim.SetBool("isIdle",false);
@@ -95,6 +105,7 @@ public class AttaquesNormales : MonoBehaviour
                 case 2:
                     if (canAttack)
                     {
+                        
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
@@ -144,6 +155,9 @@ public class AttaquesNormales : MonoBehaviour
             }
             if (stunDuration[i] >= stunDurationMax[i])
             {
+                trailAttaque.emitting = false;
+                animTrail.SetBool("Attack1",false);
+                animTrail.SetBool("Attack2",false);
                 anim.SetBool("isAttacking1",false);
                 anim.SetBool("isAttacking2",false);
                 anim.SetBool("isIdle",true);
