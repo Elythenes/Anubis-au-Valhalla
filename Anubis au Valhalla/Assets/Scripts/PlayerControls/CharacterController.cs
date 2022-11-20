@@ -8,7 +8,8 @@ using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour
 {
-  [Header("Déplacements")]
+  [Header("Déplacements")] 
+  public bool allowMovements;
   public Animator anim;
   public InputManager controls;
   public static CharacterController instance; //jai besion de l'instance pour bouger le joueur au changements de salles
@@ -81,12 +82,16 @@ public class CharacterController : MonoBehaviour
   {
     Keyboard kb = InputSystem.GetDevice<Keyboard>();
 
-    Vector2 directionIndic = Camera.main.ScreenToWorldPoint(Input.mousePosition) - indicationDirection.transform.position;
-    float angleIndic = Mathf.Atan2(directionIndic.y, directionIndic.x) * Mathf.Rad2Deg;
-    Quaternion rotationIndic = Quaternion.AngleAxis(angleIndic, Vector3.forward);
-    indicationDirection.transform.rotation = rotationIndic;
+    if (allowMovements)
+    {
+      Vector2 directionIndic = Camera.main.ScreenToWorldPoint(Input.mousePosition) - indicationDirection.transform.position;
+      float angleIndic = Mathf.Atan2(directionIndic.y, directionIndic.x) * Mathf.Rad2Deg;
+      Quaternion rotationIndic = Quaternion.AngleAxis(angleIndic, Vector3.forward);
+      indicationDirection.transform.rotation = rotationIndic;
+    }
+   
 
-    if (DamageManager.instance.stun == false)
+    if (DamageManager.instance.stun == false && allowMovements)
     {
       movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement
     }
@@ -115,7 +120,7 @@ public class CharacterController : MonoBehaviour
       isDashing = true;
     }
     
-    if (isDashing && !isAttacking) // Déplacement lors du dash selon la direction du regard du perso
+    if (isDashing && !isAttacking && allowMovements) // Déplacement lors du dash selon la direction du regard du perso
     { 
       Dashing();
     }
@@ -145,11 +150,11 @@ public class CharacterController : MonoBehaviour
   void Dashing()
   {
     timerDash += Time.deltaTime;
-    if (movement.x != 0 && movement.y != 0)
+    if (movement.x != 0 && movement.y != 0 && allowMovements)
     {
       rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * 2);
     }
-    else
+    else if (allowMovements)
     {
       switch (facing)
       {

@@ -59,7 +59,7 @@ public class AttaquesNormales : MonoBehaviour
     private void Update()
     {
         Mouse mouse = InputSystem.GetDevice<Mouse>(); // Trouver input de la souris
-        if (mouse.leftButton.wasPressedThisFrame && canAttack /*|| buffer*/) // Execute l'attaque selon l'avancement du combo
+        if (mouse.leftButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements) // Execute l'attaque selon l'avancement du combo
         {
             switch (comboActuel)
             {
