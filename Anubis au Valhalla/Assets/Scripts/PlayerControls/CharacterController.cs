@@ -91,7 +91,7 @@ public class CharacterController : MonoBehaviour
     }
    
 
-    if (DamageManager.instance.stun == false && allowMovements)
+    if (DamageManager.instance.stun == false && allowMovements && isDashing == false)
     {
       movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement
     }
@@ -152,7 +152,7 @@ public class CharacterController : MonoBehaviour
     timerDash += Time.deltaTime;
     if (movement.x != 0 && movement.y != 0 && allowMovements)
     {
-      rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * 2);
+      rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * 5);
     }
     else if (allowMovements)
     {

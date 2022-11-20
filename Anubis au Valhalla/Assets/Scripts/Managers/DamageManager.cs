@@ -78,7 +78,7 @@ public class DamageManager : MonoBehaviour
                 var angle = CharacterController.instance.transform.position - enemy.transform.position;
                 angle.Normalize();
                 CharacterController.instance.rb.AddForce(damage*angle, ForceMode2D.Impulse);
-                animPlayer.SetBool("isDead",true);
+                animPlayer.SetBool("isHurt",true);
                 StartCoroutine(RedScreenStart(timeRedScreen));
                 HitStop(timeHitStop,false);
                 if (isAnkh)
@@ -215,7 +215,7 @@ public class DamageManager : MonoBehaviour
         yield return new WaitForSeconds(StunAfterHit);
         AttaquesNormales.instance.canAttack = true;
         stun = false;
-        CharacterController.instance.anim.SetBool("isDead",false);
+        CharacterController.instance.anim.SetBool("isHurt",false);
     }
     
     IEnumerator TempsInvinsibilité(float duration)
