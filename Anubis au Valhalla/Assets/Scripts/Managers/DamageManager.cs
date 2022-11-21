@@ -13,6 +13,7 @@ public class DamageManager : MonoBehaviour
 {
     [Header("Objects")]
     public GameObject textDamage;
+    public GameObject textHealDamage;
     public Camera mainCamera;
     public GameObject player;
     public static DamageManager instance;
@@ -21,7 +22,8 @@ public class DamageManager : MonoBehaviour
     private ColorAdjustments ca;
     public SpellDefenceObject ankhShieldData;
 
-    [Header("Alterations d'Etat")]
+    [Header("Alterations d'Etat")] 
+    public float knockbackAmount;
     public bool stun;
     public bool invinsible;
     public bool isAnkh;
@@ -74,10 +76,9 @@ public class DamageManager : MonoBehaviour
         {
             if (!CharacterController.instance.isDashing)
             {
-                Debug.Log("touché");
                 var angle = CharacterController.instance.transform.position - enemy.transform.position;
                 angle.Normalize();
-                CharacterController.instance.rb.AddForce(damage*angle, ForceMode2D.Impulse);
+                CharacterController.instance.rb.AddForce(damage*angle*knockbackAmount, ForceMode2D.Impulse);
                 animPlayer.SetBool("isHurt",true);
                 StartCoroutine(RedScreenStart(timeRedScreen));
                 HitStop(timeHitStop,false);
@@ -93,11 +94,12 @@ public class DamageManager : MonoBehaviour
                 vieActuelle -= damage / damageReduction;
                 GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
                 textObj.GetComponentInChildren<TextMeshPro>().SetText((damage / damageReduction).ToString());
-                LifeBarManager.instance.SetHealth(vieActuelle);
                 if (vieActuelle <= 0)
                 {
+                    vieActuelle = 0;
                     Die();
                 }
+                LifeBarManager.instance.SetHealth(vieActuelle);
                 
                 StartCoroutine(TempsInvinsibilité(2f));
                 StartCoroutine(TempsStun());
@@ -116,6 +118,18 @@ public class DamageManager : MonoBehaviour
             
         }
 
+    }
+
+    public void Heal(int healAmount)
+    {
+        vieActuelle += healAmount;
+        GameObject textHealObj = Instantiate(textHealDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+        textHealObj.GetComponentInChildren<TextMeshPro>().SetText((healAmount).ToString());
+        if (vieActuelle >= 100)
+        {
+            vieActuelle = 100;
+        }
+        LifeBarManager.instance.SetHealth(vieActuelle);
     }
 
     public void HitStop(float duration, bool miss)
