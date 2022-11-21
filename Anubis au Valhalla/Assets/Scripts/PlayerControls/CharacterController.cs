@@ -22,6 +22,7 @@ public class CharacterController : MonoBehaviour
   
   [Header("Dash")]
   public float dashSpeed;
+  public float diagonalDashSpeed;
   private float timerDash;
   public float dashDuration;
   private float timerdashCooldown;
@@ -152,7 +153,7 @@ public class CharacterController : MonoBehaviour
     timerDash += Time.deltaTime;
     if (movement.x != 0 && movement.y != 0 && allowMovements)
     {
-      rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * 5);
+      rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * diagonalDashSpeed);
     }
     else if (allowMovements)
     {

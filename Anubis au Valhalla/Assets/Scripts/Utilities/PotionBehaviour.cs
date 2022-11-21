@@ -61,13 +61,7 @@ public class PotionBehaviour : MonoBehaviour
 
    void Potion()
    {
-      DamageManager.instance.vieActuelle += vieHealed;
-      if (DamageManager.instance.vieActuelle >= DamageManager.instance.vieMax)
-      {
-         DamageManager.instance.vieActuelle =  DamageManager.instance.vieMax;
-      }
-      LifeBarManager.instance.SetHealth(DamageManager.instance.vieActuelle);
-      
+      DamageManager.instance.Heal(vieHealed);
       Destroy(gameObject);
    }
 }
