@@ -22,7 +22,7 @@ public class MonsterLifeManager : MonoBehaviour
     public float delay;
     private float forceKnockBack = 10;
     public UnityEvent OnBegin, OnDone;
-    private float criticalPick;
+    public float criticalPick;
     
     public GameObject root;
 
@@ -98,13 +98,13 @@ public class MonsterLifeManager : MonoBehaviour
     {
         if (!isInvincible)
         {
+            criticalPick = Random.Range(0,100);
             StartCoroutine(AnimationDamaged(staggerDuration));
             transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
             {
                 ai.canMove = true;
             });
             
-            criticalPick = Random.Range(0, 100);
             if (criticalPick <= AttaquesNormales.instance.criticalRate[AttaquesNormales.instance.comboActuel])
             {
                 vieActuelle -= damage * 2; 
@@ -117,7 +117,6 @@ public class MonsterLifeManager : MonoBehaviour
                 vieActuelle -= damage; 
                 healthBar.SetHealth(vieActuelle);
                 isInvincible = true;
-                criticalPick = 0;
             }
         
         }

@@ -5828,6 +5828,14 @@ PrefabInstance:
       value: Toth
       objectReference: {fileID: 0}
     - target: {fileID: 1672115106884239162, guid: 98e20dd3ad4a71c4fb5ed4dbe169a3e3, type: 3}
+      propertyPath: offset.x
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1672115106884239162, guid: 98e20dd3ad4a71c4fb5ed4dbe169a3e3, type: 3}
+      propertyPath: offset.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1672115106884239162, guid: 98e20dd3ad4a71c4fb5ed4dbe169a3e3, type: 3}
       propertyPath: BlackScreen
       value: 
       objectReference: {fileID: 915867029}
@@ -5948,7 +5956,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_TargetDisplay: 0
 --- !u!1 &1354205477
 GameObject:
@@ -9882,7 +9890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916602, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: diagonalDashSpeed
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916602, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: indicationDirection
@@ -9899,6 +9907,18 @@ PrefabInstance:
     - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: criticalRate.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
+      propertyPath: dashTimers.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
+      propertyPath: dashTimers.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
+      propertyPath: dashTimers.Array.data[2]
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: dashImpulse.Array.data[0]
@@ -9930,15 +9950,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: forceKnockback.Array.data[0]
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: forceKnockback.Array.data[1]
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: forceKnockback.Array.data[2]
-      value: 30
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: rangeAttaque.Array.data[0].x
@@ -9963,6 +9983,18 @@ PrefabInstance:
     - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: rangeAttaque.Array.data[2].y
       value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
+      propertyPath: timeForCanDash.Array.data[0]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
+      propertyPath: timeForCanDash.Array.data[1]
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
+      propertyPath: timeForCanDash.Array.data[2]
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916603, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: hitStopDuration.Array.data[0]

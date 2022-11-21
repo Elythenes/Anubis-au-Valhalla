@@ -395,6 +395,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  criticalPick: 0
   root: {fileID: 202783276026614217}
   InvincibleTime: 0.19
   InvincibleTimeTimer: 0
@@ -429,13 +430,14 @@ MonoBehaviour:
   seeker: {fileID: 893181608378371501}
   aipath: {fileID: 893181608378371502}
   playerFollow: {fileID: 893181608378371500}
-  forceRepulse: 3
-  radiusFleeing: 5
+  isFleeing: 0
+  forceRepulse: 100
+  radiusFleeing: 3
   isAttacking: 0
   rotationSpeed: 60
   rotationSpeedSlown: 30
-  puissanceAttaque: 10
-  StartUpAttackTime: 3.5
+  puissanceAttaque: 25
+  StartUpAttackTime: 2
   StartUpAttackTimeTimer: 0
   projectilPlume: {fileID: 8367074886038053198, guid: 0aa299ca03a8604499e7458a67db7d1a, type: 3}
   plumeSpeed: 0.09
@@ -474,9 +476,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 0
-  slowdownDistance: 2.05
-  pickNextWaypointDist: 7
-  endReachedDistance: 7
+  slowdownDistance: 0
+  pickNextWaypointDist: 8.5
+  endReachedDistance: 8.5
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0

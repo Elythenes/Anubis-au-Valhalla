@@ -72,6 +72,8 @@ public class TothBehiavour : MonoBehaviour
       if (col.CompareTag("Player"))
       {
          CanvasInteraction.transform.position = transform.position + offset;
+         CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
+         CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
          TextInteraction.SetText("Parler");
          CanvasInteraction.SetActive(true);
          isTalkable = true;

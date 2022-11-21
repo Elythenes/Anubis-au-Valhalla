@@ -22,6 +22,7 @@ public class IA_Corbeau : MonoBehaviour
     private SpriteRenderer sr;
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
+    public bool isFleeing;
     public float forceRepulse;
     public float radiusFleeing;
 
@@ -95,8 +96,11 @@ public class IA_Corbeau : MonoBehaviour
 
             if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing)
             {
-               
-                            if (Physics2D.Raycast(transform.position, Vector2.up, radiusFleeing, layerPlayer))
+                Debug.Log("close");
+                isFleeing = true;
+                Vector2 angle = transform.position - player.transform.position;
+               rb.AddForce(angle.normalized*forceRepulse);
+                          /*  if (Physics2D.Raycast(transform.position, Vector2.up, radiusFleeing, layerPlayer))
                             {
                                 Debug.DrawRay(transform.position, Vector2.up * radiusFleeing, Color.red);
                                 rb.AddForce(Vector2.down * forceRepulse);
@@ -149,7 +153,7 @@ public class IA_Corbeau : MonoBehaviour
                             {
                                 Debug.DrawRay(transform.position, new Vector2(-1, -1) * radiusFleeing, Color.red);
                                 rb.AddForce(new Vector2(1, 1) * forceRepulse);
-                            }
+                            }*/
                 
                             StartUpAttackTimeTimer += Time.deltaTime;
                         
@@ -160,10 +164,18 @@ public class IA_Corbeau : MonoBehaviour
                     StartUpAttackTimeTimer = 0;
                 }
             }
-            else if (!life.isMomified)
+            else if(Vector3.Distance(player.transform.position, transform.position) >= radiusFleeing)
+            {
+                Debug.Log("far");
+                isFleeing = false;
+            }
+            
+            
+            if (!life.isMomified)
             {
                 aipath.canMove = true;
             }
+          
         }
     }
 }
