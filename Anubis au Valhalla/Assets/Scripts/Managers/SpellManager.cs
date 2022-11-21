@@ -865,7 +865,6 @@ public class SpellManager : MonoBehaviour
             spellSEo.canCast = false;
             Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 charaPos = targetUser.transform.position;
-            Debug.Log(mousePos);
             float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
             float distancePlayerFloat = Vector2.Distance(charaPos, mousePos);
             Vector2 vectorDirection = mousePos - charaPos;
