@@ -52,6 +52,7 @@ public class Akh : MonoBehaviour
                 monstre.GetComponent<MonsterLifeManager>().DamageText(soAkh.puissanceAttaque + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5));
                 monstre.GetComponent<MonsterLifeManager>().TakeDamage(soAkh.puissanceAttaque + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5),soAkh.stagger);
                 tempsReloadHitFlameAreaTimer = 0;
+                monsterList.Clear();
             }
         }
     }
