@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class MonsterLifeManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class MonsterLifeManager : MonoBehaviour
     public float delay;
     private float forceKnockBack = 10;
     public UnityEvent OnBegin, OnDone;
+    private float criticalPick;
     
     public GameObject root;
 
@@ -101,9 +103,23 @@ public class MonsterLifeManager : MonoBehaviour
             {
                 ai.canMove = true;
             });
-            vieActuelle -= damage; 
-            healthBar.SetHealth(vieActuelle);
-            isInvincible = true;
+            
+            criticalPick = Random.Range(0, 100);
+            if (criticalPick <= AttaquesNormales.instance.criticalRate[AttaquesNormales.instance.comboActuel])
+            {
+                vieActuelle -= damage * 2; 
+                healthBar.SetHealth(vieActuelle);
+                isInvincible = true;
+                criticalPick = 0;
+            }
+            else
+            {
+                vieActuelle -= damage; 
+                healthBar.SetHealth(vieActuelle);
+                isInvincible = true;
+                criticalPick = 0;
+            }
+        
         }
         
         if (vieActuelle <= 0)
@@ -124,8 +140,19 @@ public class MonsterLifeManager : MonoBehaviour
     {
         if (!isInvincible)
         {
-            textDamage.GetComponentInChildren<TextMeshPro>().SetText(damageAmount.ToString());
-            Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+            if (criticalPick <= AttaquesNormales.instance.criticalRate[AttaquesNormales.instance.comboActuel])
+            {
+                textDamage.GetComponentInChildren<TextMeshPro>().SetText((damageAmount * 2).ToString());
+                GameObject textOBJ = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+                textOBJ.transform.localScale *= 2;
+
+            }
+            else
+            {
+                textDamage.GetComponentInChildren<TextMeshPro>().SetText(damageAmount.ToString());
+                Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+            }
+          
         }
     }
     

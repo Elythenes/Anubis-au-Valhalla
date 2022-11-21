@@ -20,6 +20,7 @@ public class AttaquesNormales : MonoBehaviour
     public List<Vector2> rangeAttaque = new List<Vector2>();
     public List<bool> isC = new List<bool>();
     public List<int> damage = new List<int>();
+    public List<float> criticalRate = new List<float>();
     public List<float> dureeHitbox = new List<float>();
     [HideInInspector] public List<float> stunDuration = new List<float>();
     public List<float> forceKnockback = new List<float>();
