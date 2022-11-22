@@ -37,11 +37,11 @@ public class DamageManager : MonoBehaviour
     public float t2;
 
     [Header("Stats")]
-    public int vieActuelle;
-    public int vieMax;
-    public int damageReduction;
-    public float TempsInvinsbleAfterHit;
-    public float StunAfterHit;
+    [NaughtyAttributes.ReadOnly] public int vieActuelle = AnubisCurrentStats.instance.vieActuelle;
+    [NaughtyAttributes.ReadOnly] public int vieMax = AnubisCurrentStats.instance.vieMax;
+    [NaughtyAttributes.ReadOnly] public int damageReduction = AnubisCurrentStats.instance.damageReduction;
+    [NaughtyAttributes.ReadOnly] public float tempsInvinsibleAfterHit = AnubisCurrentStats.instance.tempsInvinsbleAfterHit;
+    [NaughtyAttributes.ReadOnly] public float stunAfterHit = AnubisCurrentStats.instance.stunAfterHit;
     private bool stopWaiting;
     
     private void Awake()
@@ -226,7 +226,7 @@ public class DamageManager : MonoBehaviour
     {
         stun = true;
         AttaquesNormales.instance.canAttack = false;
-        yield return new WaitForSeconds(StunAfterHit);
+        yield return new WaitForSeconds(stunAfterHit);
         AttaquesNormales.instance.canAttack = true;
         stun = false;
         CharacterController.instance.anim.SetBool("isHurt",false);

@@ -13,8 +13,8 @@ public class CharacterController : MonoBehaviour
   public Animator anim;
   public InputManager controls;
   public static CharacterController instance; //jai besion de l'instance pour bouger le joueur au changements de salles
-  public float speedX;
-  public float speedY;
+  [NaughtyAttributes.ReadOnly] public float speedX = AnubisCurrentStats.instance.speedX;
+  [NaughtyAttributes.ReadOnly] public float speedY = AnubisCurrentStats.instance.speedY;
   public bool isAttacking;
   public LookingAt facing;
 
@@ -26,7 +26,7 @@ public class CharacterController : MonoBehaviour
   private float timerDash;
   public float dashDuration;
   private float timerdashCooldown;
-  public float dashCooldown;
+  [NaughtyAttributes.ReadOnly] public float dashCooldown = AnubisCurrentStats.instance.dashCooldown;
   public bool isDashing;
   public bool canDash;
   public GhostDash ghost;
