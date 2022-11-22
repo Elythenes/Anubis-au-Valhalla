@@ -60,7 +60,6 @@ public class IA_Valkyrie : MonoBehaviour
     
     private void Start()
     {
-        life = GetComponent<MonsterLifeManager>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
