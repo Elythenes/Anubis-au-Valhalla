@@ -145,7 +145,7 @@ public class MonsterLifeManager : MonoBehaviour
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
                 textDamage.GetComponentInChildren<TextMeshPro>().SetText((damageAmount * 2).ToString());
-                GameObject textOBJ = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+                GameObject textOBJ = Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
                 textOBJ.transform.localScale *= 2;
 
             }
