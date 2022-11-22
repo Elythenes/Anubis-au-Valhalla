@@ -7,7 +7,6 @@ public class SoulBehavior : MonoBehaviour
     public Vector3 playerPos;
     [SerializeField] private float force = 3f;
     [SerializeField] private float forceSpawn = 3f;
-    [SerializeField] private float minForce = 1f;
     [SerializeField] private float timer = 1;
     [SerializeField] private float deceleration = 0.3f;
     [SerializeField] private float poofForce = 3f;

@@ -8,22 +8,26 @@ using UnityEngine.Serialization;
 
 public class AttaquesNormales : MonoBehaviour
 {
-    
+    public Animator anim;
+    public Animator animTrail;
+    public TrailRenderer trailAttaque;
     private InputManager controls;
     public static AttaquesNormales instance;
 
     [Header("Stats Attaques")]
-
-    public List<GameObject> hitBoxC = new List<GameObject>();
-    public List<Vector2> rangeAttaque = new List<Vector2>();
-    public List<bool> isC = new List<bool>();
-    public List<int> damage = new List<int>();
-    public List<float> dureeHitbox = new List<float>();
-    [HideInInspector] public List<float> stunDuration = new List<float>();
-    public List<float> stunDurationMax = new List<float>();
-    public List<float> dashImpulse = new List<float>();
-    public List<float> timeForCanDash = new List<float>();
-    public List<float> dashTimers = new List<float>();
+    //public List<float> hitStopDuration = new List<float>();
+    [NaughtyAttributes.ReadOnly] public List<GameObject> hitBoxC = AnubisCurrentStats.instance.hitBoxC;
+    [NaughtyAttributes.ReadOnly] public List<Vector2> rangeAttaque = AnubisCurrentStats.instance.rangeAttaque;
+    [NaughtyAttributes.ReadOnly] public List<bool> isC = AnubisCurrentStats.instance.isC;
+    [NaughtyAttributes.ReadOnly] public List<int> damage = AnubisCurrentStats.instance.comboDamage;
+    [NaughtyAttributes.ReadOnly] public int criticalRate = AnubisCurrentStats.instance.criticalRate;
+    [NaughtyAttributes.ReadOnly] public List<float> dureeHitbox = AnubisCurrentStats.instance.dureeHitbox;
+    [NaughtyAttributes.ReadOnly] public List<float> stunDuration = AnubisCurrentStats.instance.stunDuration;
+    [NaughtyAttributes.ReadOnly] public List<float> forceKnockback = AnubisCurrentStats.instance.forceKnockback;
+    [NaughtyAttributes.ReadOnly] public List<float> stunDurationMax = AnubisCurrentStats.instance.stunDurationMax;
+    [NaughtyAttributes.ReadOnly] public List<float> dashImpulse = AnubisCurrentStats.instance.dashImpulse;
+    [NaughtyAttributes.ReadOnly] public List<float> timeForCanDash = AnubisCurrentStats.instance.timeForCanDash;
+    [NaughtyAttributes.ReadOnly] public List<float> dashTimers = AnubisCurrentStats.instance.dashTimers;
 
     [Header("Général")]
     public bool abandonOn;
@@ -33,6 +37,7 @@ public class AttaquesNormales : MonoBehaviour
     public float cooldownAbandonComboTimer;
     public bool buffer;
     public GameObject swordObj;
+    
     private void Awake()
     {
         if (instance == null)
@@ -56,7 +61,7 @@ public class AttaquesNormales : MonoBehaviour
     private void Update()
     {
         Mouse mouse = InputSystem.GetDevice<Mouse>(); // Trouver input de la souris
-        if (mouse.leftButton.wasPressedThisFrame && canAttack /*|| buffer*/) // Execute l'attaque selon l'avancement du combo
+        if (mouse.leftButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements) // Execute l'attaque selon l'avancement du combo
         {
             switch (comboActuel)
             {
@@ -64,6 +69,13 @@ public class AttaquesNormales : MonoBehaviour
                     
                     if (canAttack)
                     {
+                        trailAttaque.emitting = true;
+                        animTrail.SetBool("Attack1",true);
+                        animTrail.SetBool("Attack2",false);
+                        
+                        anim.SetBool("isAttacking1",true);
+                        anim.SetBool("isAttacking2",false);
+                        anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
@@ -76,6 +88,13 @@ public class AttaquesNormales : MonoBehaviour
                 case 1:
                     if (canAttack)
                     {
+                        trailAttaque.emitting = true;
+                        animTrail.SetBool("Attack1",false);
+                        animTrail.SetBool("Attack2",true);
+                        
+                        anim.SetBool("isAttacking2",true);
+                        anim.SetBool("isAttacking1",false);
+                        anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                        // buffer = false;
@@ -88,6 +107,7 @@ public class AttaquesNormales : MonoBehaviour
                 case 2:
                     if (canAttack)
                     {
+                        
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
@@ -137,6 +157,12 @@ public class AttaquesNormales : MonoBehaviour
             }
             if (stunDuration[i] >= stunDurationMax[i])
             {
+                trailAttaque.emitting = false;
+                animTrail.SetBool("Attack1",false);
+                animTrail.SetBool("Attack2",false);
+                anim.SetBool("isAttacking1",false);
+                anim.SetBool("isAttacking2",false);
+                anim.SetBool("isIdle",true);
                 Debug.Log(stunDuration[i] >= stunDurationMax[i]);
                 canAttack = true;
                 CharacterController.instance.isAttacking = false;
@@ -157,9 +183,9 @@ public class AttaquesNormales : MonoBehaviour
 
         // ------------------ Gestion Combo-------------
     }
-    //<Combo 1>/ Dash légèrement vers l'avant puis crée une hitbox devant le perso et touche les ennemis
-    //<Combo 2>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
-    //<Combo 3>/ La même chose mais la hitbox est plus alongée et le dash plus long et rapide
+    //<Combo 1>/ Glisse vers l'avant puis crée une hitbox devant le perso et touche les ennemis
+    //<Combo 2>/ La même chose mais dash, et la hitbox est plus alongée et le dash plus long et rapide
+    //<Combo 3>/ La même chose mais hitbox est plus alongée et le dash plus long et rapide
     public void Combo(int index) 
     {
         abandonOn = true;
@@ -172,11 +198,65 @@ public class AttaquesNormales : MonoBehaviour
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
-        CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
-        
+        if (moveDirection.x > 0)
+        {
+            CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,0,CharacterController.instance.transform.localRotation.z);
+        }
+        else
+        {
+            CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,-180,CharacterController.instance.transform.localRotation.z);
+        }
+
+        if (index == 0)
+        {
+            Slide(CharacterController.instance.facing);
+        }
+        else
+        {
+            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
+        }
+
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
         swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+    }
+    public void Slide(CharacterController.LookingAt dir)
+    {
+        var rb = CharacterController.instance.rb;
+        switch (dir)
+        {
+            case CharacterController.LookingAt.Nord:
+                rb.velocity = (new Vector2(0,1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.Sud:
+                rb.velocity = (new Vector2(0,-1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.Est:
+                rb.velocity = (new Vector2(1,0) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.Ouest:
+                rb.velocity = (new Vector2(-1,0) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.NordEst:
+                rb.velocity = (new Vector2(1,1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.NordOuest:
+                rb.velocity = (new Vector2(-1,1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.SudEst:
+                rb.velocity = (new Vector2(1,-1) * rb.velocity.magnitude * 2.5f);
+                break;
+          
+            case CharacterController.LookingAt.SudOuest:
+                rb.velocity = (new Vector2(-1,-1) * rb.velocity.magnitude * 2.5f);
+                break;
+        }
     }
 }
 

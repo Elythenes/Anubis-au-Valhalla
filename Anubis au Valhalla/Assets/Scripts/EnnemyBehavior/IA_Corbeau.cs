@@ -13,6 +13,7 @@ public class IA_Corbeau : MonoBehaviour
     public bool isElite;
     private Rigidbody2D rb;
     public LayerMask layerPlayer;
+    public MonsterLifeManager life;
 
     [Header("Déplacements")] public GameObject player;
     public Seeker seeker;
@@ -21,17 +22,28 @@ public class IA_Corbeau : MonoBehaviour
     private SpriteRenderer sr;
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
+    public bool canMove = true;
+    public bool isFleeing;
+    public bool isRotating;
+    public bool isChasing;
     public float forceRepulse;
     public float radiusFleeing;
+    public float speedTowardPlayer;
 
 
     [Header("Attaque")] public bool isAttacking;
     public float rotationSpeed;
+    public float rotationSpeedSlown;
     public int puissanceAttaque;
     public float StartUpAttackTime;
     public float StartUpAttackTimeTimer;
+    public float AttackTime;
+    public float AttackTimeTimer;
     public GameObject projectilPlume;
+    public GameObject indicationAttaque;
+    private bool indic = true;
     public float plumeSpeed;
+    public Vector2 directionProj;
 
 
     private void Start()
@@ -43,6 +55,7 @@ public class IA_Corbeau : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
+        
     }
 
 
@@ -72,83 +85,86 @@ public class IA_Corbeau : MonoBehaviour
             }
         }
 
-
-        if (aipath.reachedDestination) // Quand le monstre arrive proche du joueur, il commence à attaquer
+        if (StartUpAttackTimeTimer >= StartUpAttackTime && !life.isMomified)
         {
-            aipath.canMove = false;
-            transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
-            StartUpAttackTimeTimer += Time.deltaTime;
-
-            if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing)
+            AttackTimeTimer += Time.deltaTime;
+            if (indic)
             {
-                RaycastHit hitUp;
-                            if (Physics2D.Raycast(transform.position, Vector2.up, radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, Vector2.up * radiusFleeing, Color.red);
-                                rb.AddForce(Vector2.down * forceRepulse);
-                            }
-
-                            RaycastHit hitDown;
-                            if (Physics2D.Raycast(transform.position, Vector2.down, radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, Vector2.down * radiusFleeing, Color.red);
-                                rb.AddForce(Vector2.up * forceRepulse);
-                            }
-
-                            RaycastHit hitRight;
-                            if (Physics2D.Raycast(transform.position, Vector2.right, radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, Vector2.right * radiusFleeing, Color.red);
-                                rb.AddForce(Vector2.left * forceRepulse);
-                            }
-
-                            RaycastHit hitLeft;
-                            if (Physics2D.Raycast(transform.position, Vector2.left, radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, Vector2.left * radiusFleeing, Color.red);
-                                rb.AddForce(Vector2.right * forceRepulse);
-                            }
-
-                            RaycastHit hitUpLeft;
-                            if (Physics2D.Raycast(transform.position, new Vector2(1, 1), radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, new Vector2(1, 1) * radiusFleeing, Color.red);
-                                rb.AddForce(new Vector2(-1, -1) * forceRepulse);
-                            }
-
-                            RaycastHit hitUpRight;
-                            if (Physics2D.Raycast(transform.position, new Vector2(-1, 1), radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, new Vector2(-1, 1) * radiusFleeing, Color.red);
-                                rb.AddForce(new Vector2(1, -1) * forceRepulse);
-                            }
-
-                            RaycastHit hitDownLeft;
-                            if (Physics2D.Raycast(transform.position, new Vector2(1, -1), radiusFleeing, layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, new Vector2(1, -1) * radiusFleeing, Color.red);
-                                rb.AddForce(new Vector2(-1, 1) * forceRepulse);
-                            }
-
-                            RaycastHit hitDownRight;
-                            if (Physics2D.Raycast(transform.position, new Vector2(-1, -1), radiusFleeing,layerPlayer))
-                            {
-                                Debug.DrawRay(transform.position, new Vector2(-1, -1) * radiusFleeing, Color.red);
-                                rb.AddForce(new Vector2(1, 1) * forceRepulse);
-                            }
-                
-                        
-                if (StartUpAttackTimeTimer >= StartUpAttackTime)
-                {
-                    GameObject projPlume = Instantiate(projectilPlume, transform.position, Quaternion.identity);
-                    projPlume.GetComponent<ProjectileCorbeau>().ia = this;
-                    StartUpAttackTimeTimer = 0;
-                }
+                aipath.canMove = false;
+                canMove = false;
+                directionProj = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,
+                    CharacterController.instance.transform.position.y - transform.position.y);
+                float angle = Mathf.Atan2(directionProj.y, directionProj.x) * Mathf.Rad2Deg;
+                    
+                GameObject indicOBJ = Instantiate(indicationAttaque,transform.position,  Quaternion.Euler(0,0,angle));
+                Destroy(indicOBJ,AttackTime+0.1f);
+                indic = false;
             }
-            else
+
+            if (AttackTimeTimer >= AttackTime && !life.isMomified)
             {
                 aipath.canMove = true;
+                GameObject projPlume = Instantiate(projectilPlume, transform.position, Quaternion.identity);
+                projPlume.GetComponent<ProjectileCorbeau>().ia = this;
+                StartUpAttackTimeTimer = 0;
+                AttackTimeTimer = 0;
+                indic = true;
+                canMove = true;
             }
         }
+
+        if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing * 3 && !life.isMomified && !isFleeing) // Quand le monstre arrive proche du joueur, il commence à attaquer
+        {
+            isRotating = true;
+            isChasing = false;
+            StartUpAttackTimeTimer += Time.deltaTime;
+                        
+           
+            
+            if (life.isEnvased && canMove)
+            {
+                transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeedSlown * Time.deltaTime);
+                //rb.AddForce(Vector2.Perpendicular(transform.position - player.transform.position * rotationSpeedSlown ),ForceMode2D.Force);
+            }
+            else if(canMove)
+            {
+                //rb.AddForce(Vector2.Perpendicular(transform.position - player.transform.position* rotationSpeed),ForceMode2D.Force);
+                transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
+            }
+
+        }
+        else
+        {
+            isRotating = false;
+        }
+        
+        if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing && !isChasing && canMove)
+        {
+            isChasing = false;
+            isRotating = false;
+            isFleeing = true;
+            Debug.Log("close");
+            isFleeing = true;
+            Vector2 angle = transform.position - player.transform.position;
+            rb.AddForce(angle.normalized*forceRepulse);
+        }
+        else
+        {
+            isFleeing = false;
+        }
+            
+        if(Vector3.Distance(player.transform.position, transform.position) >= radiusFleeing*3 && !isFleeing && !isRotating && canMove)
+        {
+            isChasing = true;
+            Vector2 angleTowardPlayer = player.transform.position - transform.position;
+            rb.AddForce(angleTowardPlayer*speedTowardPlayer);
+            Debug.Log("far");
+            isFleeing = false;
+        }
+        else
+        {
+            isChasing = false;
+        }
     }
+    
 }

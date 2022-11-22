@@ -13,14 +13,18 @@ public class PotionBehaviour : MonoBehaviour
    public bool canPickUp;
    public int vieHealed;
    public Rigidbody2D rb;
+   private SpriteRenderer sr;
+   public Sprite spriteNormal;
+   public Sprite spriteOutline;
 
    private void Awake()
    {
       Vector2 explode = new Vector2(Random.Range(-force, force), Random.Range(-force, force));
       rb.AddForce(explode, ForceMode2D.Impulse);
       rb.drag = deceleration;
+      sr = GetComponent<SpriteRenderer>();
    }
-
+   
    private void Update()
    {
       if (timer >= 0)
@@ -40,6 +44,7 @@ public class PotionBehaviour : MonoBehaviour
       if (col.CompareTag("Player"))
       {
          canPickUp = true;
+         //sr.sprite = spriteOutline;
       }
    }
    
@@ -48,6 +53,7 @@ public class PotionBehaviour : MonoBehaviour
       if (col.CompareTag("Player"))
       {
          canPickUp = false;
+        // sr.sprite = spriteNormal;
       }
       
    }
@@ -55,13 +61,7 @@ public class PotionBehaviour : MonoBehaviour
 
    void Potion()
    {
-      DamageManager.instance.vieActuelle += vieHealed;
-      LifeBarManager.instance.SetHealth(DamageManager.instance.vieActuelle);
-      if (DamageManager.instance.vieActuelle >= DamageManager.instance.vieMax)
-      {
-         DamageManager.instance.vieActuelle =  DamageManager.instance.vieMax;
-      }
-      
+      DamageManager.instance.Heal(vieHealed);
       Destroy(gameObject);
    }
 }

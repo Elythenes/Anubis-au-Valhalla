@@ -17,7 +17,7 @@ public class CollectSpell : MonoBehaviour
     void Start()
     {
         isSpellCollectable = false;
-        Debug.Log("isSpellCollectable commence à false");
+        //Debug.Log("isSpellCollectable commence à false");
 
     }
 

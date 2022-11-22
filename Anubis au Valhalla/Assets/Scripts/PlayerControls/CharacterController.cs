@@ -3,37 +3,45 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Pathfinding;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour
 {
-  [Header("Déplacements")]
+  [Header("Déplacements")] 
+  public bool allowMovements;
+  public Animator anim;
   public InputManager controls;
   public static CharacterController instance; //jai besion de l'instance pour bouger le joueur au changements de salles
-  public float speedX;
-  public float speedY;
+  [NaughtyAttributes.ReadOnly] public float speedX = AnubisCurrentStats.instance.speedX;
+  [NaughtyAttributes.ReadOnly] public float speedY = AnubisCurrentStats.instance.speedY;
   public bool isAttacking;
-  public lookingAt facing;
+  public LookingAt facing;
 
-  public enum lookingAt { Nord,NordEst,Est,SudEst,Sud,SudOuest,Ouest,NordOuest }
+  public enum LookingAt { Nord,NordEst,Est,SudEst,Sud,SudOuest,Ouest,NordOuest }
   
   [Header("Dash")]
   public float dashSpeed;
+  public float diagonalDashSpeed;
   private float timerDash;
   public float dashDuration;
   private float timerdashCooldown;
-  public float dashCooldown;
+  [NaughtyAttributes.ReadOnly] public float dashCooldown = AnubisCurrentStats.instance.dashCooldown;
   public bool isDashing;
   public bool canDash;
   public GhostDash ghost;
+  public LayerMask roomBorders;
+  public bool canPassThrough;
   
   [HideInInspector]public Rigidbody2D rb; // ca aussi
   private Vector2 movement;
   public float astarPathTimer = 0f;
   public float astarPathTimerMax = 1f;
 
-  [Header("Utilitaires")] public KeyCode interaction;
+  [Header("Utilitaires")] 
+  public KeyCode interaction;
+  public GameObject indicationDirection;
 
 
   private void Awake()
@@ -45,6 +53,7 @@ public class CharacterController : MonoBehaviour
 
     rb = gameObject.GetComponent<Rigidbody2D>();
     controls = new InputManager();
+    PivotTo(transform.position);
   }
 
   private void OnEnable()
@@ -56,24 +65,56 @@ public class CharacterController : MonoBehaviour
     controls.Disable();
   }
   
-  private void Update()
+  public void PivotTo(Vector3 position)
   {
-    Keyboard kb = InputSystem.GetDevice<Keyboard>();
-    
-    if (isDashing == false)
-    {
-      if (DamageManager.instance.stun == false)
-      {
-        movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement 
-      }
-      
-    }
+    Vector3 offset = transform.position - position;
+    foreach (Transform child in transform)
+      child.transform.position += offset;
+    transform.position = position;
+  }
 
+  private void FixedUpdate()
+  {
     if (isDashing == false && !isAttacking) // Déplacments hors dash.
     {
       rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
       //rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
     }
+  }
+
+  private void Update()
+  {
+    Keyboard kb = InputSystem.GetDevice<Keyboard>();
+
+    if (allowMovements)
+    {
+      Vector2 directionIndic = Camera.main.ScreenToWorldPoint(Input.mousePosition) - indicationDirection.transform.position;
+      float angleIndic = Mathf.Atan2(directionIndic.y, directionIndic.x) * Mathf.Rad2Deg;
+      Quaternion rotationIndic = Quaternion.AngleAxis(angleIndic, Vector3.forward);
+      indicationDirection.transform.rotation = rotationIndic;
+    }
+   
+
+    if (DamageManager.instance.stun == false && allowMovements && isDashing == false)
+    {
+      movement = controls.Player.Movement.ReadValue<Vector2>(); // Read les input de déplacement
+    }
+    
+    if (isDashing == false)
+    {
+      if (movement.magnitude != 0)
+      {
+        anim.SetBool("isIdle", false);
+        anim.SetBool("isWalking", true);
+      }
+      else if (movement == Vector2.zero)
+      {
+        anim.SetBool("isIdle", true);
+        anim.SetBool("isWalking", false);
+      }
+    }
+
+   
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
     {
@@ -83,14 +124,16 @@ public class CharacterController : MonoBehaviour
       isDashing = true;
     }
     
-    if (isDashing && !isAttacking) // Déplacement lors du dash selon la direction du regard du perso
-    { 
+    if (isDashing && !isAttacking && allowMovements) // Déplacement lors du dash selon la direction du regard du perso
+    {
+      canPassThrough = false;
       Dashing();
     }
     Flip();
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
+      rb.velocity *= 0.5f;
       AttaquesNormales.instance.canAttack = true;
       isDashing = false;
       timerDash = 0;
@@ -111,45 +154,84 @@ public class CharacterController : MonoBehaviour
 
   void Dashing()
   {
+   
     timerDash += Time.deltaTime;
-    if (movement.x != 0 && movement.y != 0)
+    if (movement.x != 0 && movement.y != 0 && allowMovements)
     {
-      rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * 2);
+      rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * diagonalDashSpeed);
+      if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(movement.x, movement.y), dashSpeed * diagonalDashSpeed,roomBorders));
+      {
+        canPassThrough = true;
+      }
     }
-    else
+    else if (allowMovements)
     {
       switch (facing)
       {
-        case lookingAt.Nord:
+        case LookingAt.Nord:
           rb.velocity = (new Vector2(0,1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(0,1), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
+          
           break;
           
-        case lookingAt.Sud:
+        case LookingAt.Sud:
           rb.velocity = (new Vector2(0,-1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(0,-1), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
           
-        case lookingAt.Est:
+        case LookingAt.Est:
           rb.velocity = (new Vector2(1,0) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(1,0), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
           
-        case lookingAt.Ouest:
+        case LookingAt.Ouest:
           rb.velocity = (new Vector2(-1,0) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,0), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
           
-        case lookingAt.NordEst:
+        case LookingAt.NordEst:
           rb.velocity = (new Vector2(1,1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(1,1), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
           
-        case lookingAt.NordOuest:
+        case LookingAt.NordOuest:
           rb.velocity = (new Vector2(-1,1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,1), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
+          break;
+
+        case LookingAt.SudEst:
+          rb.velocity = (new Vector2(1, -1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(1, -1), dashSpeed, roomBorders)) ;
+        {
+          canPassThrough = true;
+        }
+        
           break;
           
-        case lookingAt.SudEst:
-          rb.velocity = (new Vector2(1,-1) * dashSpeed);
-          break;
-          
-        case lookingAt.SudOuest:
+        case LookingAt.SudOuest:
           rb.velocity = (new Vector2(-1,-1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,-1), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
       }
     }
@@ -159,28 +241,28 @@ public class CharacterController : MonoBehaviour
   {
     if (movement.x > 0 && !isAttacking) // Le personnage s'oriente vers la direction où il marche. 
     {
-      facing = lookingAt.Est;
+      facing = LookingAt.Est;
       transform.localRotation = Quaternion.Euler(0, 0,0);
       //transform.localScale = new Vector3(1, 1, 0);
     }
 
     if (movement.x < 0 && !isAttacking)
     {
-      facing = lookingAt.Ouest;
+      facing = LookingAt.Ouest;
       transform.localRotation = Quaternion.Euler(0, 180,0);
       //transform.localScale = new Vector3(-1, 1, 0);
     }
     
     if (movement.y < 0 && !isAttacking)
     {
-      facing = lookingAt.Sud;
+      facing = LookingAt.Sud;
       float face = transform.localScale.x;
       face = 1;
     }
     
     if (movement.y > 0 && !isAttacking)
     {
-      facing = lookingAt.Nord;
+      facing = LookingAt.Nord;
       float face = transform.localScale.x;
       face = 1;
     }
@@ -192,12 +274,41 @@ public class CharacterController : MonoBehaviour
   {
     if (col.gameObject.CompareTag("Door"))
     {
-      SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
-      SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation);
       ghost.activerEffet = false;
       isDashing = false;
       canDash = true;
       timerdashCooldown = 0;
+      var hitDoor = col.GetComponent<Door>();
+      SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
+      if (hitDoor.currentDoorType == Door.DoorType.ToShop)
+      {
+        SalleGennerator.instance.shopsVisited++;
+        SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, true, hitDoor);
+      }
+      else if (hitDoor.currentDoorType != Door.DoorType.Normal)
+      {
+        SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, true, hitDoor);
+      }
+      else
+      {
+        SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, false, hitDoor);
+      }
     }
+
+    if (col.gameObject.layer ==roomBorders)
+    {
+      if (canPassThrough)
+      {
+        StartCoroutine(ChangeBox());
+      }
+    }
+  }
+
+  IEnumerator ChangeBox()
+  {
+    GetComponent<BoxCollider2D>().enabled = false;
+    yield return new WaitForSeconds(dashDuration);
+    GetComponent<BoxCollider2D>().enabled = true;
+    canPassThrough = false;
   }
 }

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fbd81585a19c2d4cbabb21547c1e35a, type: 3}
+  m_Name: SandWall
+  m_EditorClassIdentifier: Assembly-CSharp::SpellSpawnEntity
+  type: 4
+  nom: SandWall
+  spellIndex: 8
+  description: "Cr\xE9e un mur de sable bloquant enemis et projectils devant Anubis.
+    Apr\xE8s quelques secondes, le mur se change en vague de sable, qui avance et
+    inflige des d\xE9gats aux ennemis."
+  citation: "\"M\xEAler l'attaque et la d\xE9fence, c'est \xE7a la vraie puissance.\""
+  sprite: {fileID: 2800000, guid: 69d399dc46f97c14e8a97b81e3248890, type: 3}
+  duration: 5
+  puissanceAttaque: 3
+  nombreOfDot: 4
+  espacementDoT: 0.2
+  cooldownTimer: 0
+  timerStep2: 3
+  cooldown: 5
+  maxDistanceSpawn: 2.5
+  canCast: 1
+  stagger: 0.4

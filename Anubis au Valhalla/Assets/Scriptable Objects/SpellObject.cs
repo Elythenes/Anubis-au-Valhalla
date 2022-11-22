@@ -7,7 +7,9 @@ public enum SpellType
 {
     Throwing,
     FollowingArea,
-    StaticArea
+    StaticArea,
+    DefenceShield,
+    SpawnEntity
 }
 
 public abstract class SpellObject : ScriptableObject
@@ -22,5 +24,6 @@ public abstract class SpellObject : ScriptableObject
     
     [Header("GRAPH")]
     public Texture sprite;
+    
     
 }
