@@ -16,18 +16,18 @@ public class AttaquesNormales : MonoBehaviour
 
     [Header("Stats Attaques")]
     //public List<float> hitStopDuration = new List<float>();
-    public List<GameObject> hitBoxC = new List<GameObject>();
-    public List<Vector2> rangeAttaque = new List<Vector2>();
-    public List<bool> isC = new List<bool>();
-    public List<int> damage = new List<int>();
-    public List<float> criticalRate = new List<float>();
-    public List<float> dureeHitbox = new List<float>();
-    [HideInInspector] public List<float> stunDuration = new List<float>();
-    public List<float> forceKnockback = new List<float>();
-    public List<float> stunDurationMax = new List<float>();
-    public List<float> dashImpulse = new List<float>();
-    public List<float> timeForCanDash = new List<float>();
-    public List<float> dashTimers = new List<float>();
+    [NaughtyAttributes.ReadOnly] public List<GameObject> hitBoxC = AnubisCurrentStats.instance.hitBoxC;
+    [NaughtyAttributes.ReadOnly] public List<Vector2> rangeAttaque = AnubisCurrentStats.instance.rangeAttaque;
+    [NaughtyAttributes.ReadOnly] public List<bool> isC = AnubisCurrentStats.instance.isC;
+    [NaughtyAttributes.ReadOnly] public List<int> damage = AnubisCurrentStats.instance.damage;
+    [NaughtyAttributes.ReadOnly] public List<float> criticalRate = AnubisCurrentStats.instance.criticalRate;
+    [NaughtyAttributes.ReadOnly] public List<float> dureeHitbox = AnubisCurrentStats.instance.dureeHitbox;
+    [NaughtyAttributes.ReadOnly] public List<float> stunDuration = AnubisCurrentStats.instance.stunDuration;
+    [NaughtyAttributes.ReadOnly] public List<float> forceKnockback = AnubisCurrentStats.instance.forceKnockback;
+    [NaughtyAttributes.ReadOnly] public List<float> stunDurationMax = AnubisCurrentStats.instance.stunDurationMax;
+    [NaughtyAttributes.ReadOnly] public List<float> dashImpulse = AnubisCurrentStats.instance.dashImpulse;
+    [NaughtyAttributes.ReadOnly] public List<float> timeForCanDash = AnubisCurrentStats.instance.timeForCanDash;
+    [NaughtyAttributes.ReadOnly] public List<float> dashTimers = AnubisCurrentStats.instance.dashTimers;
 
     [Header("Général")]
     public bool abandonOn;
@@ -37,6 +37,7 @@ public class AttaquesNormales : MonoBehaviour
     public float cooldownAbandonComboTimer;
     public bool buffer;
     public GameObject swordObj;
+    
     private void Awake()
     {
         if (instance == null)
