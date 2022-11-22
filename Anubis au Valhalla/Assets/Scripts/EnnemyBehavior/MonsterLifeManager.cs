@@ -100,7 +100,7 @@ public class MonsterLifeManager : MonoBehaviour
         {
             criticalPick = Random.Range(0,100);
             StartCoroutine(AnimationDamaged(staggerDuration));
-            transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
+            root.transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
             {
                 ai.canMove = true;
             });

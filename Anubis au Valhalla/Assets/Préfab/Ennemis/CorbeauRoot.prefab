@@ -430,17 +430,25 @@ MonoBehaviour:
   seeker: {fileID: 893181608378371501}
   aipath: {fileID: 893181608378371502}
   playerFollow: {fileID: 893181608378371500}
+  canMove: 1
   isFleeing: 0
+  isRotating: 0
+  isChasing: 0
   forceRepulse: 100
   radiusFleeing: 3
+  speedTowardPlayer: 0.2
   isAttacking: 0
-  rotationSpeed: 60
-  rotationSpeedSlown: 30
+  rotationSpeed: 45
+  rotationSpeedSlown: 20
   puissanceAttaque: 25
-  StartUpAttackTime: 2
+  StartUpAttackTime: 3
   StartUpAttackTimeTimer: 0
+  AttackTime: 2
+  AttackTimeTimer: 0
   projectilPlume: {fileID: 8367074886038053198, guid: 0aa299ca03a8604499e7458a67db7d1a, type: 3}
+  indicationAttaque: {fileID: 9059446152863737838, guid: 9e1c6c2a24190f443a1d5d22b1f13cfa, type: 3}
   plumeSpeed: 0.09
+  directionProj: {x: 0, y: 0}
 --- !u!114 &893181608378371502
 MonoBehaviour:
   m_ObjectHideFlags: 0
