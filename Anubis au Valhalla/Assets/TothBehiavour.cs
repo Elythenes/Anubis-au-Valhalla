@@ -18,14 +18,25 @@ public class TothBehiavour : MonoBehaviour
    public GameObject dialogueMenu;
    public TextMeshProUGUI textDialogues;
    public CanvasGroup BlackScreen;
+   public static TothBehiavour instance;
+
+   private void Awake()
+   {
+      if (instance != null)
+      {
+         DestroyImmediate(gameObject);
+         return;
+      }
+      instance = this;
+   }
 
    private void Start()
    {
       CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
-      TextInteraction = GameObject.Find("CanvasInteraction/TextAction").GetComponent<TextMeshProUGUI>();
-      dialogueMenu = GameObject.Find("UI/MenuTuto");
-      textDialogues = GameObject.Find("UI/MenuTuto/Dialogues/TextZone/TextDialogues").GetComponent<TextMeshProUGUI>();
-      BlackScreen = GameObject.Find("UI/TransitionFonduDialogues").GetComponent<CanvasGroup>();
+      TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
+      dialogueMenu = GameObject.Find("MenuTuto");
+      textDialogues = GameObject.Find("TextDialogues").GetComponent<TextMeshProUGUI>();
+      BlackScreen = GameObject.Find("TransitionFonduDialogues").GetComponent<CanvasGroup>();
    }
 
    private void Update()

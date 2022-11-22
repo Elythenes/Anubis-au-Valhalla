@@ -37,16 +37,19 @@ public class SalleGennerator : MonoBehaviour
         [SerializeField] public int roomsDone = -1;
         public DoorOrientation fromDoor = DoorOrientation.West;
         [SerializeField] private DoorOrientation toDoor;
-        public DoorOrientation spawnDoor;
-        public Salle currentRoom;
-        public int chosenPattern;
+        
         public int GlobalBank = 10;
+        public float TimeBetweenWaves;
         public CanvasGroup transitionCanvas;
         public int shopsVisited;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
         private ProceduralGridMover moveGrid;
         public GameObject DisableOnShop;
+        [HideInInspector]
+        public DoorOrientation spawnDoor;
+        public Salle currentRoom;
+        public int chosenPattern;
 
         public enum DoorOrientation
         {

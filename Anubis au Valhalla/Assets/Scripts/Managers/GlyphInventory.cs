@@ -68,7 +68,7 @@ public class GlyphInventory : MonoBehaviour
             while(array[gO.index-indexConvertor-compteur].glyphObject.level == GlyphObject.GlyphLevel.MiddleLevel 
                   || array[gO.index-indexConvertor-compteur].glyphObject.level == GlyphObject.GlyphLevel.MinimumLevel) //regarde si y'a des Glyphes avec un tag Minimum ou MiddleLevel
             {
-                Debug.Log(compteur + "est le compteur");
+                //Debug.Log(compteur + "est le compteur");
                 array[gO.index-indexConvertor-compteur].gState = GlyphWrap.State.Outleveled; //si oui, remplace en Outleveled tous les glyphes de la catégorie qui sont possiblement actif
                 compteur += 1;
             }

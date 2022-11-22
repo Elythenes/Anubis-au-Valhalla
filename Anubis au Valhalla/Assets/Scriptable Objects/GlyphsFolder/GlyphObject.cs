@@ -17,7 +17,7 @@ public class GlyphObject : ScriptableObject
     //public GlyphElement element;
     [Range(1, 4)] public int tier = 1;
     
-    [BoxGroup("Glyph Type")] public bool isBasicStatUp = false;
+    /*[BoxGroup("Glyph Type")] public bool isBasicStatUp = false;
     [BoxGroup("Glyph Type")] public bool isSituationStatUp = false;
     //[BoxGroup("Glyph Type")] public bool isElemental = false;
     [BoxGroup("Glyph Type")] public bool isAdditionalEffect = false;
@@ -25,14 +25,16 @@ public class GlyphObject : ScriptableObject
     [BoxGroup("Glyph Type")] public bool isCharge = false;
     [BoxGroup("Glyph Type")] public bool isTimeBased = false;
     [BoxGroup("Glyph Type")] public bool isBoolEffect = false;
-    [BoxGroup("Glyph Type")] public bool isOther = false;
+    [BoxGroup("Glyph Type")] public bool isOther = false;*/
+
+    public GlyphType type;
     
     [Foldout("GRAPH")] public Texture icone;
     [Foldout("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
     [Foldout("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
     
     [Foldout("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.None;
-    [Foldout("BASIC STAT UP")] public float bonusBasicStat = 5f;
+    [Foldout("BASIC STAT UP")] public int bonusBasicStat = 5;
     
     [Foldout("SITUATIONAL STAT UP")] public int valeurPourLeHeader1;
     
@@ -96,21 +98,21 @@ public class GlyphObject : ScriptableObject
     
     public enum AnubisStat
     {
-        None,
-        AnubisBaseDamage,
-        LameDamage,
-        Combo1Damage,
-        Combo2Damage,
-        Combo3Damage,
-        ThrustDamage,
-        Range,
-        AttackSpeed,
-        //Knockback,
-        HealthPoint,
-        Defense,
-        Speed,
-        DashCd,
-        MagicForce
+        None = 0,
+        AnubisBaseDamage = 1,
+        AllComboDamage = 2,
+        Combo1Damage = 3,
+        Combo2Damage = 4,
+        Combo3Damage = 5,
+        ThrustDamage = 6,
+        Range = 7,
+        //AttackSpeed = 8,
+        //Knockback = 9,
+        HealthPoint = 10,
+        Defense = 11,
+        Speed = 12,
+        DashCd = 13,
+        //MagicForce = 14
     }
     
 }
