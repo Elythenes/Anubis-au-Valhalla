@@ -11,8 +11,9 @@ public class AnubisCurrentStats : MonoBehaviour
    public List<GameObject> hitBoxC = new List<GameObject>();
    public List<Vector2> rangeAttaque = new List<Vector2>();
    public List<bool> isC = new List<bool>();
-   public List<int> damage = new List<int>();
-   public List<float> criticalRate = new List<float>();
+   public List<int> comboDamage = new List<int>();
+   public int thrustDamage = 10;
+   public int criticalRate = 5;
    public List<float> dureeHitbox = new List<float>();
    [NaughtyAttributes.ReadOnly] public List<float> stunDuration = new List<float>();
    public List<float> forceKnockback = new List<float>();

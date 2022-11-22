@@ -19,7 +19,7 @@ public class GlyphObject : ScriptableObject
     
     [BoxGroup("Glyph Type")] public bool isBasicStatUp = false;
     [BoxGroup("Glyph Type")] public bool isSituationStatUp = false;
-    [BoxGroup("Glyph Type")] public bool isElemental = false;
+    //[BoxGroup("Glyph Type")] public bool isElemental = false;
     [BoxGroup("Glyph Type")] public bool isAdditionalEffect = false;
     [BoxGroup("Glyph Type")] public bool isTriggerEffect = false;
     [BoxGroup("Glyph Type")] public bool isCharge = false;
@@ -36,7 +36,7 @@ public class GlyphObject : ScriptableObject
     
     [Foldout("SITUATIONAL STAT UP")] public int valeurPourLeHeader1;
     
-    [Foldout("ELEMENTAL")] public GlyphElement glyphElement;
+    //[Foldout("ELEMENTAL")] public GlyphElement glyphElement;
     
     [Foldout("ADDITIONAL EFFECT")] public int valeurPourLeHeader2;
     
@@ -63,16 +63,16 @@ public class GlyphObject : ScriptableObject
     {
         BasicStatUp = 1,
         SituationalStatUp = 2,
-        Elemental = 3,
-        AdditionalEffect,
-        TriggerEffect,
-        Charge,
-        TimeBased,
-        BoolEffect,
-        Others
+        //Elemental = 3,
+        AdditionalEffect = 4,
+        TriggerEffect = 5,
+        Charge = 6,
+        TimeBased = 7,
+        BoolEffect = 8,
+        Others = 9
     }
 
-    public enum GlyphElement
+    /*public enum GlyphElement
     {
         None,
         Bandage,
@@ -84,7 +84,7 @@ public class GlyphObject : ScriptableObject
         Sand,
         Bleeding,
         Wind
-    }
+    }*/
 
     public enum GlyphLevel
     {
@@ -99,16 +99,16 @@ public class GlyphObject : ScriptableObject
         None,
         AnubisBaseDamage,
         LameDamage,
-        SwingDamage,
+        Combo1Damage,
+        Combo2Damage,
+        Combo3Damage,
         ThrustDamage,
-        SmashDamage,
         Range,
         AttackSpeed,
-        Knockback,
+        //Knockback,
         HealthPoint,
         Defense,
         Speed,
-        DashRange,
         DashCd,
         MagicForce
     }

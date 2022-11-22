@@ -105,7 +105,7 @@ public class MonsterLifeManager : MonoBehaviour
                 ai.canMove = true;
             });
             
-            if (criticalPick <= AttaquesNormales.instance.criticalRate[AttaquesNormales.instance.comboActuel])
+            if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
                 vieActuelle -= damage * 2; 
                 healthBar.SetHealth(vieActuelle);
@@ -139,7 +139,7 @@ public class MonsterLifeManager : MonoBehaviour
     {
         if (!isInvincible)
         {
-            if (criticalPick <= AttaquesNormales.instance.criticalRate[AttaquesNormales.instance.comboActuel])
+            if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
                 textDamage.GetComponentInChildren<TextMeshPro>().SetText((damageAmount * 2).ToString());
                 GameObject textOBJ = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
