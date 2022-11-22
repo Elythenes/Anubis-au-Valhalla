@@ -8,14 +8,15 @@ using UnityEngine;
 
 public class GlyphManager : MonoBehaviour
 {
-    public static GlyphManager instance; //singleton
-    private GlyphObject.GlyphType gType;
+    public static GlyphManager Instance; //singleton
+    private GlyphObject.GlyphType _gType;
+    private GlyphObject.GlyphPart _gPart;
     
     [Header("LAME")]
     public GlyphWrap[] arrayLame = new GlyphWrap[5];
-    [NaughtyAttributes.ReadOnly] public int swingDamage = AttaquesNormales.instance.damage[0] = 0;
-    [NaughtyAttributes.ReadOnly] public int thrustDamage = AttaquesNormales.instance.damage[1];
-    [NaughtyAttributes.ReadOnly] public int smashDamage = AttaquesNormales.instance.damage[2];
+    [NaughtyAttributes.ReadOnly] public int swingDamage = AnubisCurrentStats.instance.damage[0];
+    [NaughtyAttributes.ReadOnly] public int thrustDamage = AnubisCurrentStats.instance.damage[1];
+    [NaughtyAttributes.ReadOnly] public int smashDamage = AnubisCurrentStats.instance.damage[2];
     
     [Header("MANCHE")] 
     public GlyphWrap[] arrayManche = new GlyphWrap[5];
@@ -29,9 +30,9 @@ public class GlyphManager : MonoBehaviour
     
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
     }
 
@@ -82,7 +83,7 @@ public class GlyphManager : MonoBehaviour
         {
             if (arrayLame[i].gState == GlyphWrap.State.Active)
             {
-                switch (gType)
+                switch (_gType)
                 {
                     case GlyphObject.GlyphType.BasicStatUp:
                         UpdateBasicStatUp(arrayLame[i].glyphObject);
