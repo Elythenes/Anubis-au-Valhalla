@@ -17,35 +17,39 @@ public class GlyphObject : ScriptableObject
     //public GlyphElement element;
     [Range(1, 4)] public int tier = 1;
     
+    [BoxGroup("Glyph Type")] public bool isBasicStatUp = false;
+    [BoxGroup("Glyph Type")] public bool isSituationStatUp = false;
+    [BoxGroup("Glyph Type")] public bool isElemental = false;
+    [BoxGroup("Glyph Type")] public bool isAdditionalEffect = false;
+    [BoxGroup("Glyph Type")] public bool isTriggerEffect = false;
+    [BoxGroup("Glyph Type")] public bool isCharge = false;
+    [BoxGroup("Glyph Type")] public bool isTimeBased = false;
+    [BoxGroup("Glyph Type")] public bool isBoolEffect = false;
+    [BoxGroup("Glyph Type")] public bool isOther = false;
+    
     [Foldout("GRAPH")] public Texture icone;
     [Foldout("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
     [Foldout("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
-
-    [Foldout("BASIC STAT UP")] public bool isBasicStatUp = false;
+    
     [Foldout("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.None;
     [Foldout("BASIC STAT UP")] public float bonusBasicStat = 5f;
     
-    [Foldout("SITUATIONAL STAT UP")] public bool isSituationStatUp = false;
     [Foldout("SITUATIONAL STAT UP")] public int valeurPourLeHeader1;
     
-    [Foldout("ELEMENTAL")] public bool isElemental = false;
     [Foldout("ELEMENTAL")] public GlyphElement glyphElement;
     
-    [Foldout("ADDITIONAL EFFECT")] public bool isAdditionalEffect = false;
     [Foldout("ADDITIONAL EFFECT")] public int valeurPourLeHeader2;
     
-    [Foldout("TRIGGER EFFECT")] public bool isTriggerEffect = false;
     [Foldout("TRIGGER EFFECT")] public bool isTriggerActive = false;
-    
-    [Foldout("CHARGE BASED")] public bool isCharge = false;
+
     [Foldout("CHARGE BASED")] public int chargeBase = 0;
     [Foldout("CHARGE BASED")] public int chargeNumber = 10;
 
-    [Foldout("TIME BASED")] public bool isTimeBased = false;
     [Foldout("TIME BASED")] public float cooldownBeforeEffect = 5f;
-    
-    [Foldout("BOOL EFFECT")] public bool isBoolEffect = false;
+
     [Foldout("BOOL EFFECT")] public bool isEffectActive = true;
+
+    [Foldout("BOOL EFFECT")] public float pourLeOther;
     
     
     public enum GlyphPart

@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using NaughtyAttributes;
+using Unity.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GlyphManager : MonoBehaviour
 {
@@ -12,9 +13,9 @@ public class GlyphManager : MonoBehaviour
     
     [Header("LAME")]
     public GlyphWrap[] arrayLame = new GlyphWrap[5];
-    [HideInInspector] public int swingDamage = AttaquesNormales.instance.damage[0];
-    [HideInInspector] public int thrustDamage = AttaquesNormales.instance.damage[1];
-    [HideInInspector] public int smashDamage = AttaquesNormales.instance.damage[2];
+    [NaughtyAttributes.ReadOnly] public int swingDamage = AttaquesNormales.instance.damage[0] = 0;
+    [NaughtyAttributes.ReadOnly] public int thrustDamage = AttaquesNormales.instance.damage[1];
+    [NaughtyAttributes.ReadOnly] public int smashDamage = AttaquesNormales.instance.damage[2];
     
     [Header("MANCHE")] 
     public GlyphWrap[] arrayManche = new GlyphWrap[5];
@@ -100,6 +101,6 @@ public class GlyphManager : MonoBehaviour
 
     void UpdateBasicStatUp(GlyphObject gBasicStatUp)
     {
-        
+
     }
 }
