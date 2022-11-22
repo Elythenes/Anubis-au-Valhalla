@@ -402,7 +402,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   fill: {fileID: 1290762260328202008}
-  ia: {fileID: 143361107259542609}
+  ia: {fileID: 6243244991415517249}
   monstreassocie: {fileID: 6835188341655190664}
 --- !u!1 &1403523665766806141
 GameObject:
@@ -498,7 +498,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6835188341655190687}
   - component: {fileID: 6835188341655190656}
-  - component: {fileID: 143361107259542609}
   - component: {fileID: 1813138152235966950}
   - component: {fileID: 6835188341655190657}
   - component: {fileID: 6835188341655190658}
@@ -584,93 +583,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &143361107259542609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6835188341655190664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
-  animator: {fileID: 6835188341655190662}
-  rb: {fileID: 0}
-  healthBar: {fileID: 1290762260754414532}
-  ai: {fileID: 6835188341655190657}
-  vieMax: 150
-  vieActuelle: 0
-  soulValue: 15
-  delay: 0.15
-  OnBegin:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6835188341655190659}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6835188341655190657}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnDone:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6835188341655190659}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 6835188341655190657}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  root: {fileID: 8186765836855600671}
-  InvincibleTime: 0.19
-  InvincibleTimeTimer: 0
-  isInvincible: 0
-  MomifiedTime: 3
-  MomifiedTimeTimer: 0
-  isMomified: 0
-  bandelettesMomie: {fileID: 5105585978381247783, guid: a0ce4c45d1cdc5f468a4f7668414d476, type: 3}
-  bandelettesHolder: {fileID: 0}
-  isEnvased: 0
-  EnvasedTime: 5
-  EnvasedTimeTimer: 0
 --- !u!114 &1813138152235966950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,7 +597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isElite: 0
   emptyLayers: {fileID: 6835188342299557291}
-  life: {fileID: 0}
+  life: {fileID: 6243244991415517249}
   player: {fileID: 0}
   seeker: {fileID: 6835188341655190658}
   aipath: {fileID: 6835188341655190657}
@@ -1022,6 +934,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8394252117554534157}
+  - component: {fileID: 6243244991415517249}
   m_Layer: 0
   m_Name: VlakyrieRoot
   m_TagString: Untagged
@@ -1046,3 +959,92 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6243244991415517249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186765836855600671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
+  animator: {fileID: 6835188341655190662}
+  rb: {fileID: 0}
+  healthBar: {fileID: 1290762260754414532}
+  ai: {fileID: 6835188341655190657}
+  vieMax: 150
+  vieActuelle: 0
+  soulValue: 15
+  delay: 0.15
+  OnBegin:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6835188341655190659}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6835188341655190657}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDone:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6835188341655190659}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6835188341655190657}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  criticalPick: 0
+  spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
+  child: {fileID: 6835188341655190664}
+  InvincibleTime: 0.19
+  InvincibleTimeTimer: 0
+  isInvincible: 0
+  MomifiedTime: 3
+  MomifiedTimeTimer: 0
+  isMomified: 0
+  bandelettesMomie: {fileID: 5105585978381247783, guid: a0ce4c45d1cdc5f468a4f7668414d476, type: 3}
+  bandelettesHolder: {fileID: 0}
+  isEnvased: 0
+  EnvasedTime: 5
+  EnvasedTimeTimer: 0

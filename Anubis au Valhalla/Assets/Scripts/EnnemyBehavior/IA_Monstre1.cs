@@ -58,7 +58,6 @@ public class IA_Monstre1 : MonoBehaviour
 
     private void Start()
     {
-        life = GetComponent<MonsterLifeManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerFollow.enabled = true;
         ai = GetComponent<IAstarAI>();

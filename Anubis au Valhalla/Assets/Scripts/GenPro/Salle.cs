@@ -51,7 +51,11 @@ public class Salle : MonoBehaviour
         renderer.enabled = false;
         spawnBank = SalleGennerator.instance.GlobalBank;
         SalleGennerator.instance.GlobalBank = Mathf.RoundToInt(SalleGennerator.instance.GlobalBank * 1.1f);
-        
+        /*if (TothBehiavour.instance != null && )
+        {
+            DestroyImmediate(TothBehiavour.instance.gameObject);
+            return;
+        }*/
         AstarPath.active.Scan(AstarPath.active.data.graphs);
         RearrangeDoors();
         AdjustCameraConstraints();
@@ -110,20 +114,20 @@ public class Salle : MonoBehaviour
         if (point.Count == 0) return;
 
         var pattern = SalleGennerator.instance.chosenPattern;
-        foreach (EnemyData t in SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn)
-        {
-            int cost = t.cost;
-            costList.Add(cost);
+        if (costList.Count == 0)
+        {    
+            foreach (EnemyData t in SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn)
+            {
+                int cost = t.cost;
+                costList.Add(cost);
+            }
         }
         while (spawnBank > costList.Min()) //tries to buy enemies as long as it can afford at least one of them
         {
             var chosenValue = Random.Range(0, costList.Count);
             if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());//if it cant afford the most expensive enemy, it will buy the cheapest one
+            Debug.Log("OuiOui "+ pattern + chosenValue);
             var chosenEnemy = SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn[chosenValue];
-            /*Debug.Log(SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn.Length);
-            Debug.Log(SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn[chosenValue]);
-            Debug.Log(SalleGennerator.instance.spawnGroups[pattern]);
-            Debug.Log(SalleGennerator.instance.spawnGroups.Count);*/
             spawnBank -= costList[chosenValue];
             costList[chosenValue] += 3;
             var chosenPoint = point[Random.Range(0, point.Count)];
@@ -132,7 +136,6 @@ public class Salle : MonoBehaviour
             point.Remove(chosenPoint); // Get the spawner to spawn in waves if theres too many enemies to to spawn
             if (point.Count == 0)
             {
-                Debug.Log(discardedPoints.Count);
                 point.AddRange(discardedPoints);
                 discardedPoints.Clear();
                 return;
@@ -255,13 +258,34 @@ public class Salle : MonoBehaviour
             {
                 SpawnEnemies(availableSpawnC);
             }
-            return;
         }
 
         if (currentEnemies.Count != 0) return;
         roomDone = true;
         SalleGennerator.instance.roomsDone++;
         Instantiate(coffre,player.transform.position,Quaternion.identity);
+    }
+    public IEnumerator DelayedSpawns()
+    {
+        Debug.Log("ATTENTION, CA VA PETER");
+        yield return new WaitForSeconds(SalleGennerator.instance.TimeBetweenWaves);
+        Debug.Log("CA A PETEEDR");
+        if (spawnBank > costList.Min())
+        {
+            var spawnPoints = Random.Range(0, 3);
+            if (spawnPoints == 0)
+            {
+                SpawnEnemies(availableSpawnA);
+            }
+            if (spawnPoints == 1)
+            {
+                SpawnEnemies(availableSpawnB);
+            }
+            if (spawnPoints == 2)
+            {
+                SpawnEnemies(availableSpawnC);
+            }
+        }
     }
 }
 

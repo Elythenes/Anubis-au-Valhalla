@@ -44,7 +44,6 @@ public class IA_Guerrier : MonoBehaviour
 
     private void Start()
     {
-        life = GetComponent<MonsterLifeManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
