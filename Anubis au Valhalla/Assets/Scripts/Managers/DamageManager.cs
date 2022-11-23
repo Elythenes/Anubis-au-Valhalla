@@ -19,6 +19,7 @@ public class DamageManager : MonoBehaviour
     public static DamageManager instance;
     public Volume gVolume;
     public Volume gVolumeMiss;
+    public Volume gVolumeMort;
     private ColorAdjustments ca;
     public SpellDefenceObject ankhShieldData;
 
@@ -35,6 +36,7 @@ public class DamageManager : MonoBehaviour
     public bool EffectMiss;
     public float t1;
     public float t2;
+    public float t3;
 
     [Header("Stats")]
     [NaughtyAttributes.ReadOnly] public int vieActuelle = AnubisCurrentStats.instance.vieActuelle;
@@ -79,7 +81,6 @@ public class DamageManager : MonoBehaviour
                 var angle = CharacterController.instance.transform.position - enemy.transform.position;
                 angle.Normalize();
                 CharacterController.instance.rb.AddForce(damage*angle*knockbackAmount, ForceMode2D.Impulse);
-                animPlayer.SetBool("isHurt",true);
                 StartCoroutine(RedScreenStart(timeRedScreen));
                 HitStop(timeHitStop,false);
                 if (isAnkh)
@@ -94,15 +95,24 @@ public class DamageManager : MonoBehaviour
                 vieActuelle -= damage / damageReduction;
                 GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
                 textObj.GetComponentInChildren<TextMeshPro>().SetText((damage / damageReduction).ToString());
+                
+                
                 if (vieActuelle <= 0)
                 {
+                    Debug.Log("il semblerait qu'il soit mort");
+                    StopCoroutine(TempsStun());
                     vieActuelle = 0;
                     Die();
                 }
+                else
+                {
+                    animPlayer.SetBool("isHurt",true);
+                    StartCoroutine(TempsInvinsibilité(2f));
+                    StartCoroutine(TempsStun());
+                }
+                
                 LifeBarManager.instance.SetHealth(vieActuelle);
                 
-                StartCoroutine(TempsInvinsibilité(2f));
-                StartCoroutine(TempsStun());
             }
             else if(CharacterController.instance.isDashing)
             {
@@ -219,8 +229,22 @@ public class DamageManager : MonoBehaviour
         mainCamera.orthographicSize = 7.75f;
         gVolumeMiss.weight = 0;
     }
-    
-  
+
+    IEnumerator EffetMort()
+    {
+        Debug.Log("enterons le");
+        mainCamera.transform.position = new Vector3(transform.position.x,transform.position.y,mainCamera.transform.position.z);
+        float timeElapsed = 0;
+        while (timeElapsed < t3)
+        {
+            mainCamera.orthographicSize = Mathf.Lerp(7.75f, 4.5f, timeElapsed / t3);
+            gVolumeMort.weight = Mathf.Lerp(0, 1, timeElapsed / t3);
+            timeElapsed += 1.5f * Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.orthographicSize = 4.5f;
+        gVolumeMort.weight = 1;
+    }
     
     IEnumerator TempsStun()
     {
@@ -241,9 +265,14 @@ public class DamageManager : MonoBehaviour
     
     void Die()
     {
+        CharacterController.instance.allowMovements = false;
+        GetComponentInParent<Rigidbody2D>().velocity = Vector2.zero;
+        Debug.Log("vrai");
+        invinsible = true;
         animPlayer.SetBool("isDead",true);
         stun = true;
         StartCoroutine(ReloadScene());
+        StartCoroutine(EffetMort());
     }
 
     IEnumerator ReloadScene()
