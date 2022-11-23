@@ -58,7 +58,7 @@ public class GlyphObject : ScriptableObject
     {
         Lame,
         Manche,
-        Hampe
+        Poignee
     }
 
     public enum GlyphType

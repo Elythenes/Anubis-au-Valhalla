@@ -12,7 +12,7 @@ public class GlyphInventory : MonoBehaviour
 
     private int gLevelForLame = 100;
     private int gLevelForManche = 200;
-    private int gLevelForHampe = 300;
+    private int gLevelForPoignee = 300;
     
 
     void Start()
@@ -40,11 +40,11 @@ public class GlyphInventory : MonoBehaviour
             Debug.Log("Glyph added in Manager, array Manche, nom : " + wrap.glyphObject.nom);
             VerifyIfOutleveled(gO,GlyphManager.Instance.arrayLame, gLevelForManche);
         }
-        else if (gO.partie == GlyphObject.GlyphPart.Hampe)
+        else if (gO.partie == GlyphObject.GlyphPart.Poignee)
         {
-            GlyphManager.Instance.arrayLame[gO.index-gLevelForHampe] = wrap;           //assignation à la liste du GlyphManager de la Lame en enlevant la valeur de l'index en trop (ici 300)
+            GlyphManager.Instance.arrayLame[gO.index-gLevelForPoignee] = wrap;           //assignation à la liste du GlyphManager de la Lame en enlevant la valeur de l'index en trop (ici 300)
             Debug.Log("Glyph added in Manager, array Hampe, nom : " + wrap.glyphObject.nom);
-            VerifyIfOutleveled(gO,GlyphManager.Instance.arrayLame, gLevelForHampe);
+            VerifyIfOutleveled(gO,GlyphManager.Instance.arrayLame, gLevelForPoignee);
         }
         else
         {

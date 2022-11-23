@@ -23,8 +23,8 @@ public class GlyphManager : MonoBehaviour
     [Header("MANCHE")] 
     public GlyphWrap[] arrayManche = new GlyphWrap[5];
     
-    [Header("HAMPE")]
-    public GlyphWrap[] arrayHampe = new GlyphWrap[5];
+    [Header("POIGNEE")]
+    public GlyphWrap[] arrayPoignee = new GlyphWrap[5];
     
     
     
