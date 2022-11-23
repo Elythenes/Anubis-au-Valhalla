@@ -16,6 +16,8 @@ public class Combo1Hitbox : MonoBehaviour
     public GameObject camera;
     private bool isShaking;
     private bool isWaiting;
+    public GameObject bloodEffect;
+    public bool isStop;
     
 
     private void Start()
@@ -43,6 +45,8 @@ public class Combo1Hitbox : MonoBehaviour
             }*/
             Vector3 angleKnockback = col.transform.position - transform.parent.position;
             Vector3 angleNormalized = angleKnockback.normalized;
+            GameObject effetSang = Instantiate(bloodEffect, col.transform.position, Quaternion.identity);
+            effetSang.transform.rotation = Quaternion.Euler(0,0,angleKnockback.z);
             col.gameObject.GetComponent<AIPath>().canMove = false;
             col.gameObject.GetComponentInParent<MonsterLifeManager>().DamageText(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]));
             col.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
@@ -53,11 +57,13 @@ public class Combo1Hitbox : MonoBehaviour
 
     /*IEnumerator HitStop(float duration)
     {
+        isStop = true;
         Time.timeScale = 0.0f;
         isWaiting = true;
         yield return new WaitForSecondsRealtime(duration);
         Time.timeScale = 1.0f;
         isWaiting = false;
+        isStop = false;
     }*/
     
 
