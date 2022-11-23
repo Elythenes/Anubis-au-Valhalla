@@ -1206,6 +1206,12 @@ MonoBehaviour:
   zoomSpeed: 0.05
   shopUI: {fileID: 8340794214527784523}
   weaponShop: {fileID: 8839094893553521675}
+  upgradesList:
+    UpsLame:
+    - Lames:
+      - {fileID: 0}
+    UpsHampe: []
+    UpsManche: []
 --- !u!1 &1254034606072609099
 GameObject:
   m_ObjectHideFlags: 0
@@ -3156,6 +3162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomDone: 0
+  isSpecial: 0
   transformReferences:
   - {fileID: 5262343560680896301}
   - {fileID: 4867368931691066523}
@@ -3169,6 +3176,7 @@ MonoBehaviour:
   spawnBank: 10
   propsAmount: 5
   currentEnemies: []
+  discardedPoints: []
   tileMap: {fileID: 7641876777485681970}
   renderer: {fileID: 4886690607763870856}
   availableTilePos: []
@@ -3177,7 +3185,8 @@ MonoBehaviour:
   availableSpawnC: []
   costList: 
   propSizes:
-    PropsList: []
+    PropsList:
+    - props: []
 --- !u!1 &2690123840707064816
 GameObject:
   m_ObjectHideFlags: 0
