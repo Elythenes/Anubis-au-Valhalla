@@ -41,6 +41,7 @@ public class IA_Corbeau : MonoBehaviour
     public float AttackTimeTimer;
     public GameObject projectilPlume;
     public GameObject indicationAttaque;
+    private GameObject holder;
     private bool indic = true;
     public float plumeSpeed;
     public Vector2 directionProj;
@@ -90,17 +91,28 @@ public class IA_Corbeau : MonoBehaviour
             AttackTimeTimer += Time.deltaTime;
             if (indic)
             {
+                isRotating = false;
                 aipath.canMove = false;
                 canMove = false;
+                
                 directionProj = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,
                     CharacterController.instance.transform.position.y - transform.position.y);
                 float angle = Mathf.Atan2(directionProj.y, directionProj.x) * Mathf.Rad2Deg;
-                    
-                GameObject indicOBJ = Instantiate(indicationAttaque,transform.position,  Quaternion.Euler(0,0,angle));
-                Destroy(indicOBJ,AttackTime+0.1f);
+               holder = Instantiate(indicationAttaque,transform.position,  Quaternion.Euler(0,0,angle));
+                Destroy(holder,AttackTime+0.1f);
                 indic = false;
+                
             }
-
+            else if(life.gotHit)
+            {
+                Debug.Log("hit");
+                StartUpAttackTimeTimer = 0;
+                AttackTimeTimer = 0;
+                Destroy(holder);
+                canMove = true;
+                indic = true;
+            }
+            
             if (AttackTimeTimer >= AttackTime && !life.isMomified)
             {
                 aipath.canMove = true;
@@ -113,7 +125,7 @@ public class IA_Corbeau : MonoBehaviour
             }
         }
 
-        if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing * 3 && !life.isMomified && !isFleeing) // Quand le monstre arrive proche du joueur, il commence à attaquer
+        if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing * 3 && !life.isMomified && !isFleeing && canMove) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
             isRotating = true;
             isChasing = false;

@@ -22,10 +22,10 @@ public class OiseauBa : MonoBehaviour
         if (col.gameObject.tag == "Monstre")
         {
             Debug.Log("touché");
-            col.GetComponent<MonsterLifeManager>().DamageText(soOiseauBa.puissanceAttaque);
-            col.GetComponent<MonsterLifeManager>().TakeDamage(soOiseauBa.puissanceAttaque, soOiseauBa.stagger);
+            col.GetComponentInParent<MonsterLifeManager>().DamageText(soOiseauBa.puissanceAttaque);
+            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soOiseauBa.puissanceAttaque, soOiseauBa.stagger);
             
-            if (col.GetComponent<MonsterLifeManager>().vieActuelle <= 0)
+            if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= 0)
             {
                 DamageManager.instance.vieActuelle += 5;
                 LifeBarManager.instance.SetHealth(DamageManager.instance.vieActuelle);

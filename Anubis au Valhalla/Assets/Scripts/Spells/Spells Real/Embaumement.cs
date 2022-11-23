@@ -21,7 +21,7 @@ public class Embaumement : MonoBehaviour
     {
         if (col.gameObject.tag == "Monstre")
         {
-            MonsterLifeManager monstre = col.GetComponent<MonsterLifeManager>();
+            MonsterLifeManager monstre = col.GetComponentInParent<MonsterLifeManager>();
             monstre.DamageText(sOEmbaumement.puissanceAttaque);
             monstre.TakeDamage(sOEmbaumement.puissanceAttaque, sOEmbaumement.stagger);
             monstre.isMomified = true;
