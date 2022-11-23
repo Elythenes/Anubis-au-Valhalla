@@ -19,8 +19,8 @@ public class AttaquesNormales : MonoBehaviour
     [NaughtyAttributes.ReadOnly] public List<GameObject> hitBoxC = AnubisCurrentStats.instance.hitBoxC;
     [NaughtyAttributes.ReadOnly] public List<Vector2> rangeAttaque = AnubisCurrentStats.instance.rangeAttaque;
     [NaughtyAttributes.ReadOnly] public List<bool> isC = AnubisCurrentStats.instance.isC;
-    [NaughtyAttributes.ReadOnly] public List<int> damage = AnubisCurrentStats.instance.damage;
-    [NaughtyAttributes.ReadOnly] public List<float> criticalRate = AnubisCurrentStats.instance.criticalRate;
+    [NaughtyAttributes.ReadOnly] public List<int> damage = AnubisCurrentStats.instance.comboDamage;
+    [NaughtyAttributes.ReadOnly] public int criticalRate = AnubisCurrentStats.instance.criticalRate;
     [NaughtyAttributes.ReadOnly] public List<float> dureeHitbox = AnubisCurrentStats.instance.dureeHitbox;
     [NaughtyAttributes.ReadOnly] public List<float> stunDuration = AnubisCurrentStats.instance.stunDuration;
     [NaughtyAttributes.ReadOnly] public List<float> forceKnockback = AnubisCurrentStats.instance.forceKnockback;

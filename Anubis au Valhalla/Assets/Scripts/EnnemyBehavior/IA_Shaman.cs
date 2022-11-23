@@ -55,7 +55,6 @@ public class IA_Shaman : MonoBehaviour
 
     private void Start()
     {
-        life = GetComponent<MonsterLifeManager>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
@@ -234,7 +233,9 @@ public class IA_Shaman : MonoBehaviour
 
     void Summon()
     {
-        SalleGennerator.instance.currentRoom.currentEnemies.Add(Instantiate(corbeau, transform.position + new Vector3(0,3,0), Quaternion.identity));
+        var summon = Instantiate(corbeau, transform.position + new Vector3(0, 3, 0), Quaternion.identity);
+        SalleGennerator.instance.currentRoom.currentEnemies.Add(summon);
+        summon.GetComponent<MonsterLifeManager>().soulValue = 0;
         StartUpSummonTimeTimer = 0;
         SummoningTimeTimer = 0;
         isWondering = true;

@@ -24,7 +24,8 @@ public class MonsterLifeManager : MonoBehaviour
     public UnityEvent OnBegin, OnDone;
     public float criticalPick;
     
-    public GameObject root;
+    public GameObject spawnCircle;
+    public GameObject child;
 
     [Header("Alterations d'état")] 
     public float InvincibleTime;
@@ -47,6 +48,8 @@ public class MonsterLifeManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         vieActuelle = vieMax;
         demiSpeed = ai.speed / 2;
+        child.SetActive(false);
+        StartCoroutine(DelayedSpawn());
     }
 
     private void Update()
@@ -105,7 +108,7 @@ public class MonsterLifeManager : MonoBehaviour
                 ai.canMove = true;
             });
             
-            if (criticalPick <= AttaquesNormales.instance.criticalRate[AttaquesNormales.instance.comboActuel])
+            if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
                 vieActuelle -= damage * 2; 
                 healthBar.SetHealth(vieActuelle);
@@ -139,10 +142,10 @@ public class MonsterLifeManager : MonoBehaviour
     {
         if (!isInvincible)
         {
-            if (criticalPick <= AttaquesNormales.instance.criticalRate[AttaquesNormales.instance.comboActuel])
+            if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
                 textDamage.GetComponentInChildren<TextMeshPro>().SetText((damageAmount * 2).ToString());
-                GameObject textOBJ = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+                GameObject textOBJ = Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
                 textOBJ.transform.localScale *= 2;
 
             }
@@ -178,9 +181,16 @@ public class MonsterLifeManager : MonoBehaviour
 
     void Die()
     {
-        Souls.instance.CreateSouls(gameObject.transform.position, soulValue);
-        SalleGennerator.instance.currentRoom.currentEnemies.Remove(root);
+        Souls.instance.CreateSouls(child.transform.position, soulValue);
+        SalleGennerator.instance.currentRoom.currentEnemies.Remove(gameObject);
         SalleGennerator.instance.currentRoom.CheckForEnemies();
-        Destroy(root);
+        Destroy(gameObject);
+    }
+
+    IEnumerator DelayedSpawn()
+    {
+        Instantiate(spawnCircle, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(SalleGennerator.instance.TimeBetweenWaves);
+        child.SetActive(true);
     }
 }

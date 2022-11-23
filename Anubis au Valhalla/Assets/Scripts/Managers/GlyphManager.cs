@@ -2,21 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using NaughtyAttributes;
 using Unity.Collections;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class GlyphManager : MonoBehaviour
 {
     public static GlyphManager Instance; //singleton
     private GlyphObject.GlyphType _gType;
     private GlyphObject.GlyphPart _gPart;
+    private GlyphObject.AnubisStat _anuStat;
+    public List<int> indexActiveGlyphs = new List<int>();
     
     [Header("LAME")]
     public GlyphWrap[] arrayLame = new GlyphWrap[5];
-    [NaughtyAttributes.ReadOnly] public int swingDamage = AnubisCurrentStats.instance.damage[0];
-    [NaughtyAttributes.ReadOnly] public int thrustDamage = AnubisCurrentStats.instance.damage[1];
-    [NaughtyAttributes.ReadOnly] public int smashDamage = AnubisCurrentStats.instance.damage[2];
+    [NaughtyAttributes.ReadOnly] public int combo1Damage = AnubisCurrentStats.instance.comboDamage[0];
+    [NaughtyAttributes.ReadOnly] public int combo2Damage = AnubisCurrentStats.instance.comboDamage[1];
+    [NaughtyAttributes.ReadOnly] public int combo3Damage = AnubisCurrentStats.instance.comboDamage[2];
     
     [Header("MANCHE")] 
     public GlyphWrap[] arrayManche = new GlyphWrap[5];
@@ -38,7 +40,7 @@ public class GlyphManager : MonoBehaviour
 
     void Start()
     {
-
+        //Debug.Log("comco 1 est "+AnubisCurrentStats.instance.comboDamage[0]); 
     }
 
     void Update()
@@ -67,13 +69,13 @@ public class GlyphManager : MonoBehaviour
                 indexActive.Add(array[i].glyphObject.index);
             }
         }
+        indexActiveGlyphs = indexActive;
         return indexActive;
     }
     
     GlyphObject.GlyphType GlyphTypeConvertor()
     {
         GlyphObject.GlyphType gType = new GlyphObject.GlyphType();
-        
         return gType;
     }
 
@@ -83,7 +85,7 @@ public class GlyphManager : MonoBehaviour
         {
             if (arrayLame[i].gState == GlyphWrap.State.Active)
             {
-                switch (_gType)
+                switch (arrayLame[i].glyphObject.type)
                 {
                     case GlyphObject.GlyphType.BasicStatUp:
                         UpdateBasicStatUp(arrayLame[i].glyphObject);
@@ -102,6 +104,65 @@ public class GlyphManager : MonoBehaviour
 
     void UpdateBasicStatUp(GlyphObject gBasicStatUp)
     {
-
+        switch (gBasicStatUp.anubisStat)
+        {
+            case GlyphObject.AnubisStat.AnubisBaseDamage:   //augmente les débâts de toutes les attaques du combo et le Thrust
+                for (int i = 0; i < 3; i++)
+                {
+                    AnubisCurrentStats.instance.comboDamage[i] += gBasicStatUp.bonusBasicStat;
+                }
+                AnubisCurrentStats.instance.thrustDamage = +gBasicStatUp.bonusBasicStat;
+                break;
+            
+            case GlyphObject.AnubisStat.AllComboDamage:     //augmente les dégâts de toutes les attaques du combo
+                for (int i = 0; i < 3; i++)
+                {
+                    AnubisCurrentStats.instance.comboDamage[i] += gBasicStatUp.bonusBasicStat; 
+                }
+                break;
+            
+            case GlyphObject.AnubisStat.Combo1Damage:       //augmente les dégâts de la 1ère attaque du combo
+                AnubisCurrentStats.instance.comboDamage[0] += gBasicStatUp.bonusBasicStat;
+                break;
+            
+            case GlyphObject.AnubisStat.Combo2Damage:       //augmente les dégâts de la 2ème attaque du combo
+                AnubisCurrentStats.instance.comboDamage[1] += gBasicStatUp.bonusBasicStat;
+                break;
+            
+            case GlyphObject.AnubisStat.Combo3Damage:       //augmente les dégâts de la 3ème attaque du combo
+                AnubisCurrentStats.instance.comboDamage[2] += gBasicStatUp.bonusBasicStat;
+                break;
+            
+            case GlyphObject.AnubisStat.ThrustDamage:       //augmente les dégâts du Thrust
+                AnubisCurrentStats.instance.thrustDamage += gBasicStatUp.bonusBasicStat;
+                break;
+            
+            case GlyphObject.AnubisStat.Range:              //augmente la portée / Range d'Anubis
+                for (int i = 0; i < 3; i++)
+                {
+                    var vector2 = AnubisCurrentStats.instance.rangeAttaque[i];
+                    vector2.x *= gBasicStatUp.bonusBasicStat;
+                    vector2.y *= gBasicStatUp.bonusBasicStat;
+                    AnubisCurrentStats.instance.rangeAttaque[i] = vector2;
+                }
+                break;
+            
+            case GlyphObject.AnubisStat.HealthPoint:       //augmente les PV max d'Anubis
+                AnubisCurrentStats.instance.vieMax += gBasicStatUp.bonusBasicStat;
+                break;
+            
+            case GlyphObject.AnubisStat.Defense:            //augmente la réduction de dégâts d'Anubis
+                AnubisCurrentStats.instance.damageReduction += gBasicStatUp.bonusBasicStat;
+                break;
+            
+            case GlyphObject.AnubisStat.Speed:              //augmente la vitesse de déplacement d'Anubis
+                AnubisCurrentStats.instance.speedX *= gBasicStatUp.bonusBasicStat;
+                AnubisCurrentStats.instance.speedY *= gBasicStatUp.bonusBasicStat;
+                break;
+            
+            case GlyphObject.AnubisStat.DashCd:              //réduit la durée avant qu'Anubis ne puisse re-Dash
+                AnubisCurrentStats.instance.dashCooldown -= gBasicStatUp.bonusBasicStat;
+                break;
+        }
     }
 }

@@ -13,8 +13,7 @@ public class ProjectileCorbeau : MonoBehaviour
 
     private void Start()
     {
-        dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,
-            CharacterController.instance.transform.position.y - transform.position.y);
+        dir = ia.directionProj;
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
         dir.Normalize();
@@ -31,7 +30,10 @@ public class ProjectileCorbeau : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             DamageManager.instance.TakeDamage(ia.puissanceAttaque, gameObject);
-            Destroy(gameObject);
+            if (!CharacterController.instance.isDashing)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

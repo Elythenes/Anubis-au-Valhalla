@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Pathfinding;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +31,8 @@ public class CharacterController : MonoBehaviour
   public bool isDashing;
   public bool canDash;
   public GhostDash ghost;
+  public LayerMask roomBorders;
+  public bool canPassThrough;
   
   [HideInInspector]public Rigidbody2D rb; // ca aussi
   private Vector2 movement;
@@ -122,7 +125,8 @@ public class CharacterController : MonoBehaviour
     }
     
     if (isDashing && !isAttacking && allowMovements) // Déplacement lors du dash selon la direction du regard du perso
-    { 
+    {
+      canPassThrough = false;
       Dashing();
     }
     Flip();
@@ -150,10 +154,15 @@ public class CharacterController : MonoBehaviour
 
   void Dashing()
   {
+   
     timerDash += Time.deltaTime;
     if (movement.x != 0 && movement.y != 0 && allowMovements)
     {
       rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * diagonalDashSpeed);
+      if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(movement.x, movement.y), dashSpeed * diagonalDashSpeed,roomBorders));
+      {
+        canPassThrough = true;
+      }
     }
     else if (allowMovements)
     {
@@ -161,34 +170,68 @@ public class CharacterController : MonoBehaviour
       {
         case LookingAt.Nord:
           rb.velocity = (new Vector2(0,1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(0,1), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
+          
           break;
           
         case LookingAt.Sud:
           rb.velocity = (new Vector2(0,-1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(0,-1), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
           
         case LookingAt.Est:
           rb.velocity = (new Vector2(1,0) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(1,0), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
           
         case LookingAt.Ouest:
           rb.velocity = (new Vector2(-1,0) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,0), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
           
         case LookingAt.NordEst:
           rb.velocity = (new Vector2(1,1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(1,1), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
           
         case LookingAt.NordOuest:
           rb.velocity = (new Vector2(-1,1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,1), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
-          
+
         case LookingAt.SudEst:
-          rb.velocity = (new Vector2(1,-1) * dashSpeed);
+          rb.velocity = (new Vector2(1, -1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(1, -1), dashSpeed, roomBorders)) ;
+        {
+          canPassThrough = true;
+        }
+        
           break;
           
         case LookingAt.SudOuest:
           rb.velocity = (new Vector2(-1,-1) * dashSpeed);
+          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,-1), dashSpeed,roomBorders));
+        {
+          canPassThrough = true;
+        }
           break;
       }
     }
@@ -251,5 +294,21 @@ public class CharacterController : MonoBehaviour
         SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, false, hitDoor);
       }
     }
+
+    if (col.gameObject.layer ==roomBorders)
+    {
+      if (canPassThrough)
+      {
+        StartCoroutine(ChangeBox());
+      }
+    }
+  }
+
+  IEnumerator ChangeBox()
+  {
+    GetComponent<BoxCollider2D>().enabled = false;
+    yield return new WaitForSeconds(dashDuration);
+    GetComponent<BoxCollider2D>().enabled = true;
+    canPassThrough = false;
   }
 }
