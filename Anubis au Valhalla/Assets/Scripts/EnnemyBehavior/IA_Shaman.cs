@@ -41,6 +41,7 @@ public class IA_Shaman : MonoBehaviour
     public float SummoningTimeTimer;
     private bool hasShaked;
     public GameObject corbeau;
+    public int corbeauSoulDroped;
     
     public enum EnemyType
     {
@@ -235,7 +236,12 @@ public class IA_Shaman : MonoBehaviour
     {
         var summon = Instantiate(corbeau, transform.position + new Vector3(0, 3, 0), Quaternion.identity);
         SalleGennerator.instance.currentRoom.currentEnemies.Add(summon);
-        summon.GetComponent<MonsterLifeManager>().soulValue = 0;
+        summon.GetComponent<MonsterLifeManager>().soulValue = corbeauSoulDroped;
+        corbeauSoulDroped -= 1;
+        if (corbeauSoulDroped < 0)
+        {
+            corbeauSoulDroped = 0;
+        }
         StartUpSummonTimeTimer = 0;
         SummoningTimeTimer = 0;
         isWondering = true;

@@ -770,7 +770,7 @@ RectTransform:
   - {fileID: 1953149337}
   - {fileID: 1372699}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3360,13 +3360,14 @@ MonoBehaviour:
   roomsDone: 0
   fromDoor: 3
   toDoor: 1
-  spawnDoor: 1
-  currentRoom: {fileID: 0}
-  chosenPattern: 0
   GlobalBank: 50
+  TimeBetweenWaves: 3
   transitionCanvas: {fileID: 865683844}
   shopsVisited: 0
   DisableOnShop: {fileID: 0}
+  spawnDoor: 1
+  currentRoom: {fileID: 0}
+  chosenPattern: 0
 --- !u!4 &684153521
 Transform:
   m_ObjectHideFlags: 0
@@ -3382,8 +3383,9 @@ Transform:
   - {fileID: 92878254}
   - {fileID: 1391219300}
   - {fileID: 1270383590}
+  - {fileID: 2008553110}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &690651463
 GameObject:
@@ -9093,6 +9095,97 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2008553109
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2008553110}
+  - component: {fileID: 2008553111}
+  m_Layer: 5
+  m_Name: StatManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2008553110
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008553109}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 684153521}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2008553111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008553109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0654773ce12bd7c479df3beec43ebd4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitBoxC:
+  - {fileID: 6343942413881442319, guid: 03106833865738b479b88804e10340cb, type: 3}
+  - {fileID: 6343942413881442319, guid: 5124077cd6419004a8026f259c8f3884, type: 3}
+  - {fileID: 6343942413881442319, guid: 9888c393e182e3147a907bacc6e4d405, type: 3}
+  - {fileID: 6343942413881442319, guid: 1127c320cf4744f4dbcd445d1046a196, type: 3}
+  rangeAttaque:
+  - {x: 0.8, y: 1}
+  - {x: 1, y: 1}
+  - {x: 1.4, y: 1.4}
+  isC: 000000
+  comboDamage: 140000000f00000014000000
+  thrustDamage: 10
+  criticalRate: 5
+  dureeHitbox:
+  - 0.2
+  - 0.3
+  - 0.6
+  stunDuration: []
+  forceKnockback:
+  - 0
+  - 0
+  - 0
+  stunDurationMax:
+  - 0.3
+  - 0.4
+  - 0.5
+  dashImpulse:
+  - 0
+  - 0
+  - 5
+  - 20
+  timeForCanDash:
+  - 0.2
+  - 0.2
+  - 0.2
+  dashTimers:
+  - 0
+  - 0
+  - 0
+  vieActuelle: 100
+  vieMax: 100
+  damageReduction: 0
+  tempsInvinsbleAfterHit: 2
+  stunAfterHit: 0.2
+  speedX: 150
+  speedY: 100
+  dashCooldown: 0.25
 --- !u!1 &2051503417
 GameObject:
   m_ObjectHideFlags: 0
@@ -9899,6 +9992,10 @@ PrefabInstance:
     - target: {fileID: 6322498022790916602, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: diagonalDashSpeed
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322498022790916602, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
+      propertyPath: roomBorders.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916602, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: indicationDirection

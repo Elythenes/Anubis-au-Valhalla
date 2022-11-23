@@ -11,11 +11,6 @@ public class HitboxSandstorm : MonoBehaviour
    public bool stopAttack;
    public int nbDoT;
 
-   private void Start()
-   {
-      Debug.Log("n'importe quoi");
-   }
-
    private void OnTriggerStay2D(Collider2D col)
    {
       if (col.gameObject.tag == "Monstre" && !stopAttack)
@@ -30,8 +25,8 @@ public class HitboxSandstorm : MonoBehaviour
             if (tempsReloadHitSandstorm > sOSandstorm.espacementDoT)
             {
                Debug.Log("touché");
-               col.GetComponent<MonsterLifeManager>().DamageText(sOSandstorm.puissanceAttaque);
-               col.GetComponent<MonsterLifeManager>().TakeDamage(sOSandstorm.puissanceAttaque,sOSandstorm.stagger);
+               col.GetComponentInParent<MonsterLifeManager>().DamageText(sOSandstorm.puissanceAttaque);
+               col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOSandstorm.puissanceAttaque,sOSandstorm.stagger);
                tempsReloadHitSandstorm = 0;
             }
          } 

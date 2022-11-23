@@ -17,6 +17,7 @@ public class ProjectileCorbeau : MonoBehaviour
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
         dir.Normalize();
+        Destroy(gameObject,5f);
     }
 
     void Update()

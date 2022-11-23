@@ -49,8 +49,8 @@ public class SandWall : MonoBehaviour
                 if (tempsReloadHitFlameAreaTimer > soSandWall.espacementDoT && col.gameObject.tag == "Monstre")
                 {
                     Debug.Log("touché");
-                    col.GetComponent<MonsterLifeManager>().DamageText(soSandWall.puissanceAttaque);
-                    col.GetComponent<MonsterLifeManager>().TakeDamage(soSandWall.puissanceAttaque,soSandWall.stagger);
+                    col.GetComponentInParent<MonsterLifeManager>().DamageText(soSandWall.puissanceAttaque);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soSandWall.puissanceAttaque,soSandWall.stagger);
                     tempsReloadHitFlameAreaTimer = 0;
                 }
             }
