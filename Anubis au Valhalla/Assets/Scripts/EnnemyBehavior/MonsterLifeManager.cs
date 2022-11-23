@@ -48,7 +48,7 @@ public class MonsterLifeManager : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         vieActuelle = vieMax;
-        demiSpeed = ai.speed / 2;
+        demiSpeed = ai.maxSpeed / 2;
         child.SetActive(false);
         StartCoroutine(DelayedSpawn());
     }
@@ -70,11 +70,11 @@ public class MonsterLifeManager : MonoBehaviour
         if (isEnvased)
         {
             EnvasedTimeTimer += Time.deltaTime;
-            ai.speed = demiSpeed;
+            ai.maxSpeed = demiSpeed;
             
             if (EnvasedTimeTimer >= EnvasedTime)
             {
-                ai.speed *= 2;
+                ai.maxSpeed *= 2;
                 EnvasedTimeTimer = 0;
                 isEnvased = false;
                 
