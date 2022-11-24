@@ -45,8 +45,9 @@ public class Combo1Hitbox : MonoBehaviour
             }*/
             Vector3 angleKnockback = col.transform.position - transform.parent.position;
             Vector3 angleNormalized = angleKnockback.normalized;
+            float angle = Mathf.Atan2(transform.parent.position.y - col.transform.position.y,transform.parent.position.x - col.transform.position.x ) * Mathf.Rad2Deg;
             GameObject effetSang = Instantiate(bloodEffect, col.transform.position, Quaternion.identity);
-            effetSang.transform.rotation = Quaternion.Euler(0,0,angleKnockback.z);
+            effetSang.transform.rotation = Quaternion.Euler(0,0,angle);
             col.gameObject.GetComponent<AIPath>().canMove = false;
             col.gameObject.GetComponentInParent<MonsterLifeManager>().DamageText(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]));
             col.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
