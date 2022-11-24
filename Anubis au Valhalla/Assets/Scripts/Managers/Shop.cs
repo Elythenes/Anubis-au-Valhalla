@@ -18,10 +18,37 @@ public class Shop : MonoBehaviour
     public CanvasGroup shopUI;
 
     public GameObject weaponShop;
+
+    private GlyphInventory glyphUpdater;
+    public UpragesList upgradesList;
+    
     // Start is called before the first frame update
+    [Serializable]
+    public class UpragesList
+    {
+        public List<LameUps> UpsLame;
+        public List<HampeUps> UpsHampe;
+        public List<MancheUps> UpsManche;
+    }
+    [Serializable]
+    public class LameUps
+    {
+        public List<ScriptableObject> Lames;
+    }
+    [Serializable]
+    public class HampeUps
+    {
+        public List<ScriptableObject> Hampes;
+    }
+    [Serializable]
+    public class MancheUps
+    {
+        public List<ScriptableObject> Manches;
+    }   
     void Awake()
     {
         cam = Camera.main;
+        glyphUpdater = GameObject.Find("GlyphManager").GetComponent<GlyphInventory>();
     }
 
     // Update is called once per frame
