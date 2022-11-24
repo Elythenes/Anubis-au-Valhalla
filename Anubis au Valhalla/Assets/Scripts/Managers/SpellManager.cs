@@ -1,10 +1,8 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening.Core.Easing;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class SpellManager : MonoBehaviour
 {
@@ -115,13 +113,6 @@ public class SpellManager : MonoBehaviour
         }
     }
     
-    SpellNumber DetectSpellNumberInList(List<SpellObject> spellObjects) //récupère, à partir d'une liste d'un slot, l'index du spell (dans son SO) pour l'utiliser dans le switch UseSpellSlot1
-    {
-        var x = spellObjects[0].spellIndex;
-        Debug.Log("utilisation du spell index "+ x);
-        return (SpellNumber)x;
-    }
-
     SpellNumber ConvertSpellIndex(SpellObject spellObject)
     {
         var x = spellObject.spellIndex;

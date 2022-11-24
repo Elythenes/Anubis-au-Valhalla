@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public enum SpellType
 {
@@ -24,6 +24,4 @@ public abstract class SpellObject : ScriptableObject
     
     [Header("GRAPH")]
     public Texture sprite;
-    
-    
 }

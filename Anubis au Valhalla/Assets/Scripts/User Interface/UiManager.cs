@@ -10,6 +10,7 @@ public class UiManager : MonoBehaviour
 {
     public static UiManager instance; //singleton
     public CollectSpell cS;
+    public CollectPotion cP;
     
     [Header("GENERAL")]
     public GameObject spriteSpell1;
@@ -32,6 +33,8 @@ public class UiManager : MonoBehaviour
     public GameObject textOs2Name;
     public GameObject textOs2Description;
 
+    [Header("COLLECTED POTION MENU")] 
+    public GameObject menuCollectPotion;
     private void Awake()
     {
         if (instance == null)
@@ -69,6 +72,12 @@ public class UiManager : MonoBehaviour
         Destroy(cS.collectableSpell);
     }
 
+   /* public void CollectPotion()
+    {
+        PotionManager.instance.containerA = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside; 
+        PotionManager.instance.isPotionFill = true;
+    }*/
+
     public void DebugButton()
     {
         Debug.Log("boop");
@@ -79,6 +88,13 @@ public class UiManager : MonoBehaviour
         menuCollectSpell.SetActive(true);
         Time.timeScale = 0;
         FillMenu();
+    }
+    
+    public void ActivateMenuPotion()
+    {
+        menuCollectPotion.SetActive(true);
+        Time.timeScale = 0;
+        FillMenuPotion();
     }
     
     public void TimeBack()
@@ -93,6 +109,15 @@ public class UiManager : MonoBehaviour
         textCsDescription.GetComponent<TextMeshProUGUI>().text = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.description;
         textCsCitation.GetComponent<TextMeshProUGUI>().text = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.citation;
         spriteCs.GetComponent<RawImage>().texture = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.sprite; 
+    }
+    
+    void FillMenuPotion()
+    {
+        Debug.Log("fonction fillMenu utilisée");
+        textCsName.GetComponent<TextMeshProUGUI>().text = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.nom; 
+        textCsDescription.GetComponent<TextMeshProUGUI>().text = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.description;
+        textCsCitation.GetComponent<TextMeshProUGUI>().text = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.citation;
+        spriteCs.GetComponent<RawImage>().texture = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.sprite; 
     }
 
     void FillLittleMenu(SpellObject sO, int slot)
