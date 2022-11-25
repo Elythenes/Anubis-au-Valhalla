@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Glyph" ,menuName = "Glyph System/GlyphObject")]
+[CreateAssetMenu(fileName = "Glyph" ,menuName = "System/Glyph System/GlyphObject")]
 public class GlyphObject : ScriptableObject
 {
     [Header("GENERAL")]
@@ -109,7 +109,7 @@ public class GlyphObject : ScriptableObject
         //AttackSpeed = 8,
         //Knockback = 9,
         HealthPoint = 10,
-        Defense = 11,
+        Armor = 11,
         Speed = 12,
         DashCd = 13,
         //MagicForce = 14

@@ -151,7 +151,7 @@ public class GlyphManager : MonoBehaviour
                 AnubisCurrentStats.instance.vieMax += gBasicStatUp.bonusBasicStat;
                 break;
             
-            case GlyphObject.AnubisStat.Defense:            //augmente la réduction de dégâts d'Anubis
+            case GlyphObject.AnubisStat.Armor:            //augmente la réduction de dégâts d'Anubis
                 AnubisCurrentStats.instance.damageReduction += gBasicStatUp.bonusBasicStat;
                 break;
             

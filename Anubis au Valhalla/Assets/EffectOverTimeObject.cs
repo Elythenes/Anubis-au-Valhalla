@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Instant Potion" ,menuName = "Potion System/PotionObject/EffectOverTime")]
 public class EffectOverTimeObject : PotionObject
 {
     public int buffAmount;
@@ -13,6 +12,6 @@ public class EffectOverTimeObject : PotionObject
 
     public void Awake()
     {
-        type = PotionType.EffectOverTime;
+        //type = PotionType.EffectOverTime;
     }
 }

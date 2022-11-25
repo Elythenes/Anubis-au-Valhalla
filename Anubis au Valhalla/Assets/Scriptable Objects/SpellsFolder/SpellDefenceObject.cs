@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "FollowingArea Spell" ,menuName = "Spell System/SpellObject/DefenceShield")]
+[CreateAssetMenu(fileName = "FollowingArea Spell" ,menuName = "System/Spell System/SpellObject/DefenceShield")]
 
 
 public class SpellDefenceObject : SpellObject

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SpawnEntity Spell" ,menuName = "Spell System/SpellObject/SpawnEntity")]
+[CreateAssetMenu(fileName = "SpawnEntity Spell" ,menuName = "System/Spell System/SpellObject/SpawnEntity")]
 
 public class SpellSpawnEntityObject : SpellObject
 {
