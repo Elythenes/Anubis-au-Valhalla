@@ -12,8 +12,7 @@ public class cooldownSpellBar : MonoBehaviour
     public TextMeshProUGUI compteurCooldown;
     public TextMeshProUGUI compteurTempsRestant;
     public float countdownCooldown1;
-    public GameObject ankhShield;
-    public AnkhShield ankhSheildData;
+    public GameObject currentPower;
 
 
     private void Awake()
@@ -26,6 +25,7 @@ public class cooldownSpellBar : MonoBehaviour
 
     public void Update()
     {
+            currentPower = UiManager.instance.currentSpell1Holder;
             slider.maxValue = SpellManager.instance.cooldownSlot1;
             slider.value = SpellManager.instance.cooldownSlotTimer1;
             countdownCooldown1 -= Time.deltaTime;
@@ -39,11 +39,10 @@ public class cooldownSpellBar : MonoBehaviour
                 compteurCooldown.enabled = true;
             }
 
-            if (SpellManager.instance.prefabA == ankhShield)
+            if (currentPower.CompareTag("Feu"))
             {
-                Debug.Log("oui");
                 compteurTempsRestant.enabled = true;
-                compteurTempsRestant.SetText(Mathf.RoundToInt(ankhSheildData.secondesRestantes) + "");
+                compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirFeu>().secondesRestantes) + "");
             }
             else
             {

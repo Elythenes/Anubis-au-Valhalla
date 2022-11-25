@@ -29,6 +29,12 @@ public class AttaquesNormales : MonoBehaviour
     [NaughtyAttributes.ReadOnly] public List<float> timeForCanDash = AnubisCurrentStats.instance.timeForCanDash;
     [NaughtyAttributes.ReadOnly] public List<float> dashTimers = AnubisCurrentStats.instance.dashTimers;
 
+    [Header("Tracking valeurs pouvoirs")] 
+    public bool attaque1;
+    public bool attaque2;
+    public bool attaque3;
+    public bool attaqueSpe;
+    
     [Header("Général")]
     public bool abandonOn;
     public bool canAttack;
@@ -69,6 +75,8 @@ public class AttaquesNormales : MonoBehaviour
                     
                     if (canAttack)
                     {
+                        attaque1 = true;
+                        StartCoroutine(ResetTracking());
                         trailAttaque.emitting = true;
                         animTrail.SetBool("Attack1",true);
                         animTrail.SetBool("Attack2",false);
@@ -88,6 +96,8 @@ public class AttaquesNormales : MonoBehaviour
                 case 1:
                     if (canAttack)
                     {
+                        attaque2 = true;
+                        StartCoroutine(ResetTracking());
                         trailAttaque.emitting = true;
                         animTrail.SetBool("Attack1",false);
                         animTrail.SetBool("Attack2",true);
@@ -107,7 +117,8 @@ public class AttaquesNormales : MonoBehaviour
                 case 2:
                     if (canAttack)
                     {
-                        
+                        attaque3 = true;
+                        StartCoroutine(ResetTracking());
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
@@ -257,6 +268,14 @@ public class AttaquesNormales : MonoBehaviour
                 rb.velocity = (new Vector2(-1,-1) * rb.velocity.magnitude * 2.5f);
                 break;
         }
+    }
+
+    IEnumerator ResetTracking()
+    {
+        yield return new WaitForSeconds(0.001f);
+        attaque1 = false;
+        attaque2 = false;
+        attaque3 = false;
     }
 }
 

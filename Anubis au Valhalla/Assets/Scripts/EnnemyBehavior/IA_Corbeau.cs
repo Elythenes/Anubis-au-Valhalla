@@ -49,6 +49,7 @@ public class IA_Corbeau : MonoBehaviour
 
     private void Start()
     {
+        StartUpAttackTime = Random.Range(3, 6);
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();

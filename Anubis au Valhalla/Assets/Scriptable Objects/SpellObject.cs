@@ -9,7 +9,8 @@ public enum SpellType
     FollowingArea,
     StaticArea,
     DefenceShield,
-    SpawnEntity
+    SpawnEntity,
+    PouvoirFeu
 }
 
 public abstract class SpellObject : ScriptableObject

@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    public SpellThrowingObject sOFireball;
+    public PouvoirFeuObject soPouvoirFeu;
     private Rigidbody2D rb;
 
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
+        Destroy(gameObject,soPouvoirFeu.bulletDuration);
+        transform.localScale = soPouvoirFeu.bulletScale;
     }
 
     void Update()
     {
-        rb.velocity = transform.right * sOFireball.bulletSpeed;
+        rb.velocity = transform.right * soPouvoirFeu.bulletSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -23,8 +25,8 @@ public class Fireball : MonoBehaviour
         if (col.gameObject.tag == "Monstre")
         {
             Debug.Log("touché");
-            col.GetComponentInParent<MonsterLifeManager>().DamageText(sOFireball.puissanceAttaque);
-            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOFireball.puissanceAttaque, sOFireball.stagger);
+            col.GetComponentInParent<MonsterLifeManager>().DamageText(soPouvoirFeu.thrustDamage);
+            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirFeu.thrustDamage, soPouvoirFeu.stagger);
         }
     }
 }

@@ -19,6 +19,10 @@ public class CharacterController : MonoBehaviour
   public bool isAttacking;
   public LookingAt facing;
 
+  [Header("Valeurs tracking pour les pouvoirs")] 
+  public bool debutDash;
+  public bool finDash;
+  
   public enum LookingAt { Nord,NordEst,Est,SudEst,Sud,SudOuest,Ouest,NordOuest }
   
   [Header("Dash")]
@@ -118,6 +122,8 @@ public class CharacterController : MonoBehaviour
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
     {
+      debutDash = true;
+      StartCoroutine(ResetTracking());
       ghost.lastPlayerPos = transform.position;
       AttaquesNormales.instance.canAttack = false;
       ghost.enabled = true;
@@ -133,6 +139,8 @@ public class CharacterController : MonoBehaviour
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
+      finDash = true;
+      StartCoroutine(ResetTracking());
       rb.velocity *= 0.5f;
       AttaquesNormales.instance.canAttack = true;
       isDashing = false;
@@ -302,6 +310,13 @@ public class CharacterController : MonoBehaviour
         StartCoroutine(ChangeBox());
       }
     }
+  }
+
+  IEnumerator ResetTracking()
+  {
+    yield return new WaitForSeconds(0.1f);
+    debutDash = false;
+    finDash = false;
   }
 
   IEnumerator ChangeBox()

@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes.Test;
 using UnityEngine;
 
 
@@ -13,8 +14,9 @@ public class SpellManager : MonoBehaviour
     public KeyCode spell2;
     public LayerMask layerMonstres;
     public bool canCastSpells;
-    public GameObject shield;
-    public AnkhShield shieldData;
+    public SpriteRenderer indicDirection;
+    
+    
 
     [Header("SPELL SLOTS")] 
     //public GameObject spellCollectManager;
@@ -30,6 +32,8 @@ public class SpellManager : MonoBehaviour
     public float cooldownSlotTimer2;
 
     [Header("SPELL HIDDEN VAR")] 
+    [SerializeField] public PouvoirFeuObject spellPFo;
+    [SerializeField] public PouvoirFeu spellPFData;
     [SerializeField] public SpellStaticAreaObject spellSAo;
     [SerializeField] public SpellFollowingAreaObject spellFAo;
     [SerializeField] public SpellThrowingObject spellTo;
@@ -52,7 +56,6 @@ public class SpellManager : MonoBehaviour
 
     private void Start()
     {
-        shieldData = shield.GetComponent<AnkhShield>();
         containerA = null;
         prefabA = null;
         containerB = null;
@@ -103,16 +106,9 @@ public class SpellManager : MonoBehaviour
         SandWall = 8,
         NilWave = 9,
         Sepulture = 10,
+        PouvoirFeu = 11
     }
-    
-    void SpellReplacement(List<SpellObject> list)
-    {
-        if (list.Count >= 2)
-        {
-            list.RemoveRange(0,1);
-        }
-    }
-    
+
     SpellNumber ConvertSpellIndex(SpellObject spellObject)
     {
         var x = spellObject.spellIndex;
@@ -127,10 +123,15 @@ public class SpellManager : MonoBehaviour
 
             switch (spellNumber)
             {
-                case SpellNumber.Fireball:
+                case SpellNumber.PouvoirFeu:
+                    PouvoirFeuObject pouvoirFeuData1 = prefabA.GetComponent<PouvoirFeu>().soPouvoirFeu;
+                    PouvoirFeu(spellSlot,pouvoirFeuData1);
+                    break;
+                
+              /*  case SpellNumber.Fireball:
                     SpellThrowingObject FireballObj1 = prefabA.GetComponent<Fireball>().sOFireball;
                     ThrowingSpell(prefabA,spellSlot,FireballObj1);
-                    break;
+                    break;*/
                 
                 case SpellNumber.OiseauBa:
                     SpellThrowingObject OiseauBaObj1 = prefabA.GetComponent<OiseauBa>().soOiseauBa;
@@ -142,10 +143,10 @@ public class SpellManager : MonoBehaviour
                     ThrowingSpell(prefabA,spellSlot,EmbaumementObj1);
                     break;
             
-                case SpellNumber.FireArea:
+                /*case SpellNumber.FireArea:
                     SpellStaticAreaObject FireAreaObj1 = prefabA.GetComponent<FlameArea>().sOFlameArea;
                     TimeLimitedSpell(prefabA,spellSlot,FireAreaObj1);
-                    break;
+                    break;*/
                 
                 case SpellNumber.SandWall:
                     SpellSpawnEntityObject SandWallObj1 = prefabA.GetComponent<SandWall>().soSandWall;
@@ -177,10 +178,10 @@ public class SpellManager : MonoBehaviour
                     FollowingSpell(prefabA, spellSlot);
                     break;
                 
-                case SpellNumber.Ânkh:
+               /*case SpellNumber.Ânkh:
                     SpellDefenceObject shieldObj1 = prefabA.GetComponent<AnkhShield>().sOAnkhShield;
                     Shield(prefabA, spellSlot, shieldObj1);
-                    break;
+                    break;*/
             }
         }
 
@@ -189,11 +190,16 @@ public class SpellManager : MonoBehaviour
 
             switch (spellNumber)
             {
-                case SpellNumber.Fireball:
+                case SpellNumber.PouvoirFeu:
+                    PouvoirFeuObject pouvoirFeuData = prefabB.GetComponent<PouvoirFeu>().soPouvoirFeu;
+                    PouvoirFeu(spellSlot,pouvoirFeuData);
+                    break;
+                
+                /*case SpellNumber.Fireball:
                     Debug.Log("FIRE-BAAAAALL");
                     SpellThrowingObject FireballObj2 = prefabB.GetComponent<Fireball>().sOFireball;
                     ThrowingSpell(prefabB,spellSlot,FireballObj2);
-                    break;
+                    break;*/
                 
                 case SpellNumber.OiseauBa:
                     SpellThrowingObject OiseauBaObj2 = prefabB.GetComponent<OiseauBa>().soOiseauBa;
@@ -205,10 +211,10 @@ public class SpellManager : MonoBehaviour
                     ThrowingSpell(prefabB,spellSlot,EmbaumementObj2);
                     break;
 
-                case SpellNumber.FireArea:
+                /*case SpellNumber.FireArea:
                     SpellStaticAreaObject FireAreaObj2 = prefabB.GetComponent<FlameArea>().sOFlameArea;
                     TimeLimitedSpell(prefabB,spellSlot,FireAreaObj2);
-                    break;
+                    break;*/
                 
                 case SpellNumber.SandWall:
                     SpellSpawnEntityObject SandWallObj2 = prefabB.GetComponent<SandWall>().soSandWall;
@@ -240,10 +246,10 @@ public class SpellManager : MonoBehaviour
                     FollowingSpell(prefabB, spellSlot);
                     break;
                 
-                case SpellNumber.Ânkh:
+               /* case SpellNumber.Ânkh:
                     SpellDefenceObject shieldObj1 = prefabB.GetComponent<AnkhShield>().sOAnkhShield;
                     Shield(prefabA, spellSlot, shieldObj1);
-                    break;
+                    break;*/
             }
         }
     }
@@ -254,7 +260,7 @@ public class SpellManager : MonoBehaviour
     {
         switch (spellNumber)
         {
-            case SpellNumber.Fireball:
+           /* case SpellNumber.Fireball:
                 if (slotNumber == 1)
                 {
                     spellTo = prefabA.GetComponent<Fireball>().sOFireball;
@@ -285,6 +291,51 @@ public class SpellManager : MonoBehaviour
                     spellTo.canCast = true;
                     spellTo.cooldownTimer = 0;
                     
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = 0;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = 0;
+                    }
+                }
+                break;*/
+            
+            case SpellNumber.PouvoirFeu:
+                if (slotNumber == 1)
+                {
+                    spellPFData = UiManager.instance.currentSpell1Holder.GetComponent<PouvoirFeu>();
+                    spellPFo = prefabA.GetComponent<PouvoirFeu>().soPouvoirFeu;
+                    cooldownSlot1 = spellPFo.duration;
+                }
+
+                if (slotNumber == 2)
+                {
+                    spellPFData = UiManager.instance.currentSpell2Holder.GetComponent<PouvoirFeu>();
+                    spellPFo = prefabB.GetComponent<PouvoirFeu>().soPouvoirFeu;
+                    cooldownSlot2 = spellPFo.duration;
+                }
+                
+                if (spellPFData.secondesRestantes > 0)
+                {
+                    spellPFo.canCast = true;
+
+                    if (slotNumber == 1)
+                    {
+                        cooldownSlotTimer1 = spellPFData.secondesRestantes;
+                    }
+
+                    if (slotNumber == 2)
+                    {
+                        cooldownSlotTimer2 = spellPFData.secondesRestantes;
+                    }
+                }
+                else
+                {
+                    spellPFo.canCast = false;
+
                     if (slotNumber == 1)
                     {
                         cooldownSlotTimer1 = 0;
@@ -340,7 +391,7 @@ public class SpellManager : MonoBehaviour
                 }
                 break;
             
-            case SpellNumber.FireArea:
+            /*case SpellNumber.FireArea:
                 if (slotNumber == 1)
                 {
                     spellSAo = prefabA.GetComponent<FlameArea>().sOFlameArea;
@@ -382,7 +433,7 @@ public class SpellManager : MonoBehaviour
                         cooldownSlotTimer2 = 0;
                     }
                 }
-                break;
+                break;*/
             
             case SpellNumber.Akh:
                 if (slotNumber == 1)
@@ -560,7 +611,7 @@ public class SpellManager : MonoBehaviour
                 }
                 break;
             
-            case SpellNumber.Ânkh:
+           /* case SpellNumber.Ânkh:
                 if (slotNumber == 1)
                 {
                     spellDo = prefabA.GetComponent<AnkhShield>().sOAnkhShield;
@@ -601,7 +652,7 @@ public class SpellManager : MonoBehaviour
                         cooldownSlotTimer2 = 0;
                     }
                 }
-                break;
+                break;*/
             
             case SpellNumber.SandWall:
                 if (slotNumber == 1)
@@ -770,7 +821,30 @@ public class SpellManager : MonoBehaviour
         }
     }
     
-    
+    void PouvoirFeu(int slot,PouvoirFeuObject spellPFo)
+    {
+        if (!spellPFData.isActive && !spellPFData.lockCast)
+        {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
+            //indicDirection.color = Color.red;
+            spellPFData.isActive = true;
+            spellPFo.canCast = true;
+        }
+        
+        if(!spellPFData.isActive && !spellPFData.lockCast)
+        {
+            //indicDirection.color = Color.white;
+            spellPFData.isActive = false;
+            spellPFo.canCast = false;
+        }
+    }
     
     //Pour un Spell qui suit le joueur en permanence
     void FollowingSpell(GameObject gb, int slot)
@@ -824,7 +898,7 @@ public class SpellManager : MonoBehaviour
 
     }
 
-    public void Shield(GameObject gb, int slot, SpellDefenceObject spellDo)
+    /*public void Shield(GameObject gb, int slot, SpellDefenceObject spellDo)
     {
         if (spellDo.canCast && !shieldData.isActive)
         {
@@ -839,7 +913,7 @@ public class SpellManager : MonoBehaviour
             DamageManager.instance.isAnkh = false;
         }
         
-    }
+    }*/
     
     public void SpawnEntity(GameObject gb, int slot, SpellSpawnEntityObject spellSEo)
     {
