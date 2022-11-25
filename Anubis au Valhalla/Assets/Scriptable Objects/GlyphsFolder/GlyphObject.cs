@@ -33,12 +33,13 @@ public class GlyphObject : ScriptableObject
     [Foldout("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
     [Foldout("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
     
-    [Foldout("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.AnubisBaseDamage;
+    [Foldout("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.None;
     [Foldout("BASIC STAT UP")] public int bonusBasicStat = 5;
     [Foldout("BASIC STAT UP")] public AnubisStat otherStat = AnubisStat.None;
     [Foldout("BASIC STAT UP")] public int otherBonusBasicStat = 0;
     
-    [Foldout("SITUATIONAL STAT UP")] public int valeurPourLeHeader1;
+    [Foldout("SITUATIONAL STAT UP")] public AnubisStat situationalStat = AnubisStat.None;
+    [Foldout("SITUATIONAL STAT UP")] public int bonusSituationalStat = 0;
     
     //[Foldout("ELEMENTAL")] public GlyphElement glyphElement;
     
@@ -66,6 +67,7 @@ public class GlyphObject : ScriptableObject
     public enum GlyphEffect
     {
         BasicStatUp,
+        SituaionalStatUp,
         SpecialStat,
         //Elemental,
         AdditionalDamage,

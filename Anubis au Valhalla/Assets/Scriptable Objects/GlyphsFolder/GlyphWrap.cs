@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
@@ -15,7 +16,7 @@ public class GlyphWrap
         Overridden, //pour les éléments (vu qu'ils peuvent pas se stack)
     }
     
-    public GlyphObject glyphObject;
+    [Expandable] public GlyphObject glyphObject;
     public State gState = State.Inactive;
 }
 

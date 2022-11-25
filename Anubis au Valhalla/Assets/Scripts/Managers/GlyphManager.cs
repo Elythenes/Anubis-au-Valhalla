@@ -39,11 +39,8 @@ public class GlyphManager : MonoBehaviour
     {
         
     }
-    
-    
-    //Fonctions des Glyphes ********************************************************************************************
 
-    void LameManager() //à généraliser après
+    void LameManager()              //sert à intégrer les effets des glyphes pour le Perso    //à généraliser après
     {
         for (int i = 0; i < arrayLame.Length; i++)
         {
@@ -53,6 +50,10 @@ public class GlyphManager : MonoBehaviour
                 {
                     case GlyphObject.GlyphEffect.BasicStatUp:
                         UpdateBasicStatUp(arrayLame[i].glyphObject);
+                        break;
+                    
+                    case GlyphObject.GlyphEffect.SituaionalStatUp:
+                        UpdateSituationalStatUp(arrayLame[i].glyphObject);
                         break;
                 }
             }
@@ -129,6 +130,47 @@ public class GlyphManager : MonoBehaviour
                 break;
         }
     }
+
+
+    void UpdateSituationalStatUp(GlyphObject yah)
+    {
+        switch (yah.index)
+        {
+            case 0:
+                break ;
+        }
+    }
+    
+    
+    
+    //Fonctions des Glyphes ********************************************************************************************
+    
+    
+    //hello 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
