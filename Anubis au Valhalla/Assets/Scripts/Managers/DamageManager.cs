@@ -45,6 +45,9 @@ public class DamageManager : MonoBehaviour
     [NaughtyAttributes.ReadOnly] public float tempsInvinsibleAfterHit = AnubisCurrentStats.instance.tempsInvinsbleAfterHit;
     [NaughtyAttributes.ReadOnly] public float stunAfterHit = AnubisCurrentStats.instance.stunAfterHit;
     private bool stopWaiting;
+
+    [Header("Variables de tracking")] 
+    public bool isHurt;
     
     private void Awake()
     {
@@ -78,20 +81,13 @@ public class DamageManager : MonoBehaviour
         {
             if (!CharacterController.instance.isDashing)
             {
+                isHurt = true;
+                isHurt = false;
                 var angle = CharacterController.instance.transform.position - enemy.transform.position;
                 angle.Normalize();
                 CharacterController.instance.rb.AddForce(damage*angle*knockbackAmount, ForceMode2D.Impulse);
                 StartCoroutine(RedScreenStart(timeRedScreen));
                 HitStop(timeHitStop,false);
-                if (isAnkh)
-                {
-                    damageReduction = ankhShieldData.reducteurDamage;
-                }
-                else
-                {
-                    damageReduction = 1;
-                }
-                
                 vieActuelle -= damage / damageReduction;
                 GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
                 textObj.GetComponentInChildren<TextMeshPro>().SetText((damage / damageReduction).ToString());
@@ -119,7 +115,6 @@ public class DamageManager : MonoBehaviour
                 if (EffectMiss)
                 {
                     StartCoroutine(TempsInvinsibilité(0.5f));
-                    Debug.Log("miss");
                     HitStop(timeHitStop,true);
                     StartCoroutine(MissScreen(timeRedScreen));
                     EffectMiss = false;

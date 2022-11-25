@@ -77,7 +77,11 @@ public class PotionManager : MonoBehaviour
    {
       switch (num)
       {
-         case 0:
+         case 1:
+            /*if (DamageManager.instance.isHurt)
+            {
+               currentPotion. = currentPotion.effectDuration;
+            }*/
             break;
       }
    }
@@ -95,4 +99,8 @@ public class PotionManager : MonoBehaviour
    {
       
    }
+   
+   
+   
+   
 }
