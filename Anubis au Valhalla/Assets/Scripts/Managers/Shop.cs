@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class Shop : MonoBehaviour
 {
@@ -21,7 +24,21 @@ public class Shop : MonoBehaviour
 
     private GlyphInventory glyphUpdater;
     public UpragesList upgradesList;
+    public List<Button> upsButton;
+    public List<TextMeshProUGUI> buttonText;
+    public List<TextMeshProUGUI> description;
+
+    public List<GlyphObject> choice;
+
+    public enum UpsTypes
+    {
+        Lame,
+        Hampe,
+        Manche
+    }
+
     
+    #region classes
     // Start is called before the first frame update
     [Serializable]
     public class UpragesList
@@ -33,22 +50,24 @@ public class Shop : MonoBehaviour
     [Serializable]
     public class LameUps
     {
-        public List<ScriptableObject> Lames;
+        public List<GlyphObject> Lames;
     }
     [Serializable]
     public class HampeUps
     {
-        public List<ScriptableObject> Hampes;
+        public List<GlyphObject> Hampes;
     }
     [Serializable]
     public class MancheUps
     {
-        public List<ScriptableObject> Manches;
+        public List<GlyphObject> Manches;
     }   
+    #endregion
     void Awake()
     {
         cam = Camera.main;
         glyphUpdater = GameObject.Find("GlyphManager").GetComponent<GlyphInventory>();
+        SalleGennerator.instance.DisableOnShop = weaponShop;
     }
 
     // Update is called once per frame
@@ -75,7 +94,7 @@ public class Shop : MonoBehaviour
             CharacterController.instance.canDash = false;
             AttaquesNormales.instance.canAttack = false;
             shopUI.DOFade(1, 1);
-            SalleGennerator.instance.DisableOnShop.SetActive(false);
+            SalleGennerator.instance.DisableOnShop.SetActive(true);
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
@@ -98,7 +117,8 @@ public class Shop : MonoBehaviour
         AttaquesNormales.instance.canAttack = true;
         shopUI.DOFade(0, 1).OnComplete(() =>
         {
-            shopUI.gameObject.SetActive(false);
+            //shopUI.gameObject.SetActive(false);
+            weaponShop.transform.localScale = Vector3.one;
         });
         SalleGennerator.instance.DisableOnShop.SetActive(true);
 
@@ -122,4 +142,71 @@ public class Shop : MonoBehaviour
         }
 
     }
+
+    public void ChooseType(string chosenType)
+    {
+        switch (chosenType)
+        {
+            case "Lame":
+                ChooseUps(0);
+                break;
+            case "Hampe":
+                ChooseUps(1);
+                break;
+            case "Manche":
+                ChooseUps(2);
+                break;
+        }
+    }
+
+    public void ChooseUps(int type)
+    {
+        switch (type)
+        {
+            case 0:
+                for (int i = 0; i < upsButton.Count; i++)
+                {
+                    var index = Random.Range(0, upgradesList.UpsLame.Count);
+                    choice.Add(upgradesList.UpsLame[index].Lames[0]);
+                    buttonText[i].text = "" + upgradesList.UpsLame[index].Lames[0].nom;
+                    description[i].text = "" + upgradesList.UpsLame[index].Lames[0].description;
+                }
+                break;
+            case 1:
+                for (int i = 0; i < upsButton.Count; i++)
+                {
+                    var index = Random.Range(0, upgradesList.UpsHampe.Count);
+                    choice.Add(upgradesList.UpsHampe[index].Hampes[0]);
+                    
+                }
+                break;
+            case 2:
+                for (int i = 0; i < upsButton.Count; i++)
+                {
+                    var index = Random.Range(0, upgradesList.UpsManche.Count);
+                    choice.Add(upgradesList.UpsManche[index].Manches[0]);
+                }
+                break;
+        }
+    }
+
+    public void OnClickUpgrade(int buttonType)
+    {
+        glyphUpdater.AddGlyph(choice[buttonType]);
+        switch (buttonType)
+        {
+            case 0:
+                upgradesList.UpsLame[buttonType].Lames.Remove(choice[buttonType]);
+                break;
+            case 1:
+                upgradesList.UpsHampe[buttonType].Hampes.Remove(choice[buttonType]);
+                break;
+            case 2:
+                upgradesList.UpsManche[buttonType].Manches.Remove(choice[buttonType]);
+                break;
+        }
+        choice.Clear();
+    }
 }
+
+

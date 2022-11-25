@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Glyph" ,menuName = "Glyph System/GlyphObject")]
+[CreateAssetMenu(fileName = "Glyph" ,menuName = "System/Glyph System/GlyphObject")]
 public class GlyphObject : ScriptableObject
 {
     [Header("GENERAL")]
@@ -27,7 +27,7 @@ public class GlyphObject : ScriptableObject
     [BoxGroup("Glyph Type")] public bool isBoolEffect = false;
     [BoxGroup("Glyph Type")] public bool isOther = false;*/
 
-    public GlyphType type;
+    public GlyphEffect effectType;
     
     [Foldout("GRAPH")] public Texture icone;
     [Foldout("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
@@ -35,8 +35,11 @@ public class GlyphObject : ScriptableObject
     
     [Foldout("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.None;
     [Foldout("BASIC STAT UP")] public int bonusBasicStat = 5;
+    [Foldout("BASIC STAT UP")] public AnubisStat otherStat = AnubisStat.None;
+    [Foldout("BASIC STAT UP")] public int otherBonusBasicStat = 0;
     
-    [Foldout("SITUATIONAL STAT UP")] public int valeurPourLeHeader1;
+    [Foldout("SITUATIONAL STAT UP")] public AnubisStat situationalStat = AnubisStat.None;
+    [Foldout("SITUATIONAL STAT UP")] public int bonusSituationalStat = 0;
     
     //[Foldout("ELEMENTAL")] public GlyphElement glyphElement;
     
@@ -61,17 +64,18 @@ public class GlyphObject : ScriptableObject
         Poignee
     }
 
-    public enum GlyphType
+    public enum GlyphEffect
     {
-        BasicStatUp = 1,
-        SituationalStatUp = 2,
-        //Elemental = 3,
-        AdditionalEffect = 4,
-        TriggerEffect = 5,
-        Charge = 6,
-        TimeBased = 7,
-        BoolEffect = 8,
-        Others = 9
+        BasicStatUp,
+        SituaionalStatUp,
+        SpecialStat,
+        //Elemental,
+        AdditionalDamage,
+        TriggerEffect,
+        Charge,
+        TimeBased,
+        BoolEffect,
+        Others
     }
 
     /*public enum GlyphElement
@@ -98,21 +102,21 @@ public class GlyphObject : ScriptableObject
     
     public enum AnubisStat
     {
-        None = 0,
-        AnubisBaseDamage = 1,
-        AllComboDamage = 2,
-        Combo1Damage = 3,
-        Combo2Damage = 4,
-        Combo3Damage = 5,
-        ThrustDamage = 6,
-        Range = 7,
-        //AttackSpeed = 8,
-        //Knockback = 9,
-        HealthPoint = 10,
-        Defense = 11,
-        Speed = 12,
-        DashCd = 13,
-        //MagicForce = 14
+        None,
+        AnubisBaseDamage,
+        AllComboDamage,
+        Combo1Damage,
+        Combo2Damage,
+        Combo3Damage,
+        ThrustDamage,
+        Range,
+        //AttackSpeed,
+        //Knockback,
+        HealthPoint,
+        Armor,
+        Speed,
+        DashCd,
+        //MagicForce
     }
     
 }

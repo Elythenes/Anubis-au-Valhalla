@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5222769129760866140
 Transform:
   m_ObjectHideFlags: 0
@@ -100,7 +100,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -22, y: -39.562164}
+  m_AnchoredPosition: {x: -22, y: -101.100006}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7296055117541913925
@@ -158,8 +158,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -237,7 +237,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: -83}
+  m_AnchoredPosition: {x: -20, y: -39.600006}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2387863412868543659
@@ -1209,9 +1209,25 @@ MonoBehaviour:
   upgradesList:
     UpsLame:
     - Lames:
-      - {fileID: 0}
+      - {fileID: 11400000, guid: 6106a00ec6154124bacd91b27b3e2f47, type: 2}
+      - {fileID: 11400000, guid: dbafef15283ce9d49bc47c2aabb02c94, type: 2}
+      - {fileID: 11400000, guid: 1b4e529b77d73664ea10866c5d5e2182, type: 2}
+      - {fileID: 11400000, guid: 1a7eb26f4d1f1c448bc8f4f0f36e5b6f, type: 2}
     UpsHampe: []
     UpsManche: []
+  upsButton:
+  - {fileID: 5145430919697884675}
+  - {fileID: 9070261836199797550}
+  - {fileID: 770420698729825825}
+  buttonText:
+  - {fileID: 5731558537619521570}
+  - {fileID: 968907052741679284}
+  - {fileID: 3696320076522971947}
+  description:
+  - {fileID: 4284574544588599667}
+  - {fileID: 8956732561148767906}
+  - {fileID: 2755185683448556454}
+  choice: []
 --- !u!1 &1254034606072609099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,7 +1336,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -25, y: -83}
+  m_AnchoredPosition: {x: -25, y: -39.6}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6306525967055704102
@@ -1409,6 +1425,30 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
         m_MethodName: CloseShop
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 701104928559473726}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: ChooseUps
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 701104928559473726}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: OnClickUpgrade
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2727,7 +2767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 156, y: -39.562164}
+  m_AnchoredPosition: {x: 156, y: -101.100006}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7802895094628117964
@@ -2785,8 +2825,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3185,8 +3225,7 @@ MonoBehaviour:
   availableSpawnC: []
   costList: 
   propSizes:
-    PropsList:
-    - props: []
+    PropsList: []
 --- !u!1 &2690123840707064816
 GameObject:
   m_ObjectHideFlags: 0
@@ -3980,7 +4019,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2035946689034724572
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4011,7 +4050,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3449564956168939925}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -5179,6 +5218,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 701104928559473726}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: ChooseType
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Lame
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3959716691129505099
 GameObject:
   m_ObjectHideFlags: 0
@@ -6230,7 +6281,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -25.948303, y: -39.562164}
+  m_AnchoredPosition: {x: -25.948303, y: -101.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &728510023624349882
@@ -6288,8 +6339,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6554,7 +6605,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 155, y: -83}
+  m_AnchoredPosition: {x: 155, y: -39.600006}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4062175756993721544

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StaticArea Spell" ,menuName = "Spell System/SpellObject/StaticArea")]
+[CreateAssetMenu(fileName = "StaticArea Spell" ,menuName = "System/Spell System/SpellObject/StaticArea")]
 
 public class SpellStaticAreaObject : SpellObject
 {

@@ -17,10 +17,10 @@ public class GlyphInventory : MonoBehaviour
 
     void Start()
     {
-        AddGlyph(gOTest);
+        //AddGlyph(gOTest);
     }
 
-    void AddGlyph(GlyphObject gO) //faire une fonction pour chaque type de glyphe avec un case plus tôt ?? (Félix : flemme)
+    public void AddGlyph(GlyphObject gO) //faire une fonction pour chaque type de glyphe avec un case plus tôt ?? (Félix : flemme)
     {
         GlyphWrap wrap = new GlyphWrap();                                               //définition d'une variable pour la fonction 
         
