@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PotionManager : MonoBehaviour
 {
@@ -41,7 +42,8 @@ public class PotionManager : MonoBehaviour
       if (glouglou.type == PotionObject.PotionType.StatBasicPotion 
           || glouglou.type == PotionObject.PotionType.StatSpecificPotion)
       {
-         //while (compteur > glouglou.effectDuration)                //faire un truc pour faire la duraction
+         //float compteurDuration = 0f;
+         //while (compteurDuration < glouglou.effectDuration)                //faire un truc pour faire la duraction
          {
             for (int i = 0; i < 3; i++)
             {
@@ -61,15 +63,36 @@ public class PotionManager : MonoBehaviour
             }
             //Fonction avec la MagicForce
             Debug.Log("drink potion et ajout de stat");
+            VerifyForSpecificPotion(glouglou.index);
          }
       }
       else if (glouglou.type == PotionObject.PotionType.SpecialPotion)
       {
-         switch (glouglou.index)
-         {
-            case 1:
-               break;
-         }
+         UseSpecialPotion(glouglou.index);
       }
+   }
+
+   
+   void VerifyForSpecificPotion(int num)
+   {
+      switch (num)
+      {
+         case 0:
+            break;
+      }
+   }
+   
+   void UseSpecialPotion(int num)
+   {
+      switch (num)
+      {
+         case 0:
+            break;
+      }
+   }
+
+   void TriggerSpecialItem(int num)
+   {
+      
    }
 }

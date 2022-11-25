@@ -4,22 +4,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.Collections;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 public class GlyphManager : MonoBehaviour
 {
     public static GlyphManager Instance; //singleton
-    private GlyphObject.GlyphType _gType;
-    private GlyphObject.GlyphPart _gPart;
-    private GlyphObject.AnubisStat _anuStat;
     public List<int> indexActiveGlyphs = new List<int>();
     
     [Header("LAME")]
     public GlyphWrap[] arrayLame = new GlyphWrap[5];
-    [NaughtyAttributes.ReadOnly] public int combo1Damage = AnubisCurrentStats.instance.comboDamage[0];
-    [NaughtyAttributes.ReadOnly] public int combo2Damage = AnubisCurrentStats.instance.comboDamage[1];
-    [NaughtyAttributes.ReadOnly] public int combo3Damage = AnubisCurrentStats.instance.comboDamage[2];
-    
+
     [Header("MANCHE")] 
     public GlyphWrap[] arrayManche = new GlyphWrap[5];
     
@@ -40,54 +33,25 @@ public class GlyphManager : MonoBehaviour
 
     void Start()
     {
-        //Debug.Log("comco 1 est "+AnubisCurrentStats.instance.comboDamage[0]); 
     }
 
     void Update()
     {
-        UpdateActiveGlyphList(arrayLame);
+        
     }
     
     
     //Fonctions des Glyphes ********************************************************************************************
-    
-    /*void TestGlyphTest1()
-    {
-        if (glyphTest1.gState == GlyphWrap.State.Active)
-        {
-            Debug.Log(glyphTest1.glyphObject.gNom + "est actif");
-        }
-    }*/
 
-    List<int> UpdateActiveGlyphList(GlyphWrap[] array) //regarde dans une partie tous les Glyphes Actifs et donne une liste contenant leurs index
-    {
-        List<int> indexActive = new();
-        for (int i = 0; i < array.Length; i++)
-        {
-            if (array[i].gState == GlyphWrap.State.Active)
-            {
-                indexActive.Add(array[i].glyphObject.index);
-            }
-        }
-        indexActiveGlyphs = indexActive;
-        return indexActive;
-    }
-    
-    GlyphObject.GlyphType GlyphTypeConvertor()
-    {
-        GlyphObject.GlyphType gType = new GlyphObject.GlyphType();
-        return gType;
-    }
-
-    void LameManager()
+    void LameManager() //à généraliser après
     {
         for (int i = 0; i < arrayLame.Length; i++)
         {
             if (arrayLame[i].gState == GlyphWrap.State.Active)
             {
-                switch (arrayLame[i].glyphObject.type)
+                switch (arrayLame[i].glyphObject.effectType)
                 {
-                    case GlyphObject.GlyphType.BasicStatUp:
+                    case GlyphObject.GlyphEffect.BasicStatUp:
                         UpdateBasicStatUp(arrayLame[i].glyphObject);
                         break;
                 }
@@ -165,4 +129,39 @@ public class GlyphManager : MonoBehaviour
                 break;
         }
     }
+    
+    
+    
+    
+    
+    
+    //********************************   ouais je garde tous mes scripts obsolètes ici    *******************************
+    
+    /*void TestGlyphTest1()
+    {
+        if (glyphTest1.gState == GlyphWrap.State.Active)
+        {
+            Debug.Log(glyphTest1.glyphObject.gNom + "est actif");
+        }
+    }*/
+
+    /*List<int> UpdateActiveGlyphList(GlyphWrap[] array) //regarde dans une partie tous les Glyphes Actifs et donne une liste contenant leurs index
+    {
+        List<int> indexActive = new();
+        for (int i = 0; i < array.Length; i++)
+        {
+            if (array[i].gState == GlyphWrap.State.Active)
+            {
+                indexActive.Add(array[i].glyphObject.index);
+            }
+        }
+        indexActiveGlyphs = indexActive;
+        return indexActive;
+    }*/
+    
+    /*GlyphObject.GlyphEffect GlyphTypeConvertor()
+    {
+        GlyphObject.GlyphEffect gType = new GlyphObject.GlyphEffect();
+        return gType;
+    }*/
 }
