@@ -41,24 +41,27 @@ public class PotionManager : MonoBehaviour
       if (glouglou.type == PotionObject.PotionType.StatBasicPotion 
           || glouglou.type == PotionObject.PotionType.StatSpecificPotion)
       {
-         for (int i = 0; i < 3; i++)
+         //while (compteur > glouglou.effectDuration)                //faire un truc pour faire la duraction
          {
-            AnubisCurrentStats.instance.comboDamage[i] += glouglou.damage;
+            for (int i = 0; i < 3; i++)
+            {
+               AnubisCurrentStats.instance.comboDamage[i] += glouglou.damage;
+            }
+            AnubisCurrentStats.instance.thrustDamage += glouglou.damage;
+            //DamageManager.instance.Heal(glouglou.heal);
+            AnubisCurrentStats.instance.damageReduction += glouglou.armor;
+            if (glouglou.wArmor != 0)
+            {
+               AnubisCurrentStats.instance.damageReduction /= glouglou.wArmor;
+            }
+            if (glouglou.speed != 0)
+            {
+               AnubisCurrentStats.instance.speedX *= glouglou.speed;
+               AnubisCurrentStats.instance.speedY *= glouglou.speed;
+            }
+            //Fonction avec la MagicForce
+            Debug.Log("drink potion et ajout de stat");
          }
-         AnubisCurrentStats.instance.thrustDamage += glouglou.damage;
-         //DamageManager.instance.Heal(glouglou.heal);
-         AnubisCurrentStats.instance.damageReduction += glouglou.armor;
-         if (glouglou.wArmor != 0)
-         {
-            AnubisCurrentStats.instance.damageReduction /= glouglou.wArmor;
-         }
-         if (glouglou.speed != 0)
-         {
-            AnubisCurrentStats.instance.speedX *= glouglou.speed;
-            AnubisCurrentStats.instance.speedY *= glouglou.speed;
-         }
-         //Fonction avec la MagicForce
-         Debug.Log("drink potion et ajout de stat");
       }
       else if (glouglou.type == PotionObject.PotionType.SpecialPotion)
       {

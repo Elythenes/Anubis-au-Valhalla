@@ -16,6 +16,7 @@ public class PotionObject : ScriptableObject
     [Header("GAME DESIGN")] 
     public int index;
     public int prix;
+    public float effectDuration;
 
     [BoxGroup("BUFFS")] public int damage;
     //[BoxGroup("BUFFS")] public int attackSpeed;
