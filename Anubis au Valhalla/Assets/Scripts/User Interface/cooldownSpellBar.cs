@@ -58,6 +58,15 @@ public class cooldownSpellBar : MonoBehaviour
             {
                 compteurTempsRestant.enabled = false;
             }*/
+            if (currentPower.CompareTag("Eau"))
+            {
+                compteurTempsRestant.enabled = true;
+                compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirEau>().secondesRestantes) + "");
+            }
+            /*else
+            {
+                compteurTempsRestant.enabled = false;
+            }*/
     }
 
 

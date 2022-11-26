@@ -1,20 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class OiseauBa : MonoBehaviour
 {
-    public SpellThrowingObject soOiseauBa;
+    public PouvoirEauObject soEau;
     private Rigidbody2D rb;
 
     private void Start()
     {
+        transform.localScale = soEau.bulletScale;
+        Destroy(gameObject,soEau.bulletDuration);
         rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        rb.velocity = transform.right * soOiseauBa.bulletSpeed;
+        rb.velocity = transform.right * soEau.bulletSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -22,17 +25,12 @@ public class OiseauBa : MonoBehaviour
         if (col.gameObject.tag == "Monstre")
         {
             Debug.Log("touché");
-            col.GetComponentInParent<MonsterLifeManager>().DamageText(soOiseauBa.puissanceAttaque);
-            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soOiseauBa.puissanceAttaque, soOiseauBa.stagger);
+            col.GetComponentInParent<MonsterLifeManager>().DamageText(soEau.thrustDamage);
+            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soEau.thrustDamage, soEau.staggerThrust);
             
             if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= 0)
             {
-                DamageManager.instance.vieActuelle += 5;
-                LifeBarManager.instance.SetHealth(DamageManager.instance.vieActuelle);
-                if (DamageManager.instance.vieMax < DamageManager.instance.vieActuelle)
-                {
-                    DamageManager.instance.vieActuelle = DamageManager.instance.vieMax;
-                }
+                DamageManager.instance.Heal(soEau.bulletHeal);
             }
         }
     }
