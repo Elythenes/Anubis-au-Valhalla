@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class Embaumement : MonoBehaviour
 {
-    public SpellThrowingObject sOEmbaumement;
+    public PouvoirPlaieObject sOPlaie;
     private Rigidbody2D rb;
 
     private void Start()
     {
+        Destroy(gameObject,sOPlaie.bulletDuration);
         rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        rb.velocity = transform.right * sOEmbaumement.bulletSpeed;
+        rb.velocity = transform.right * sOPlaie.bulletSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -22,10 +23,10 @@ public class Embaumement : MonoBehaviour
         if (col.gameObject.tag == "Monstre")
         {
             MonsterLifeManager monstre = col.GetComponentInParent<MonsterLifeManager>();
-            monstre.DamageText(sOEmbaumement.puissanceAttaque);
-            monstre.TakeDamage(sOEmbaumement.puissanceAttaque, sOEmbaumement.stagger);
+            monstre.DamageText(sOPlaie.thrustDamage);
+            monstre.TakeDamage(sOPlaie.thrustDamage, sOPlaie.staggerThrust);
             monstre.isMomified = true;
-            monstre.MomifiedTime = sOEmbaumement.DebuffTime;
+            monstre.MomifiedTime = sOPlaie.staggerThrust;
         }
     }
 }
