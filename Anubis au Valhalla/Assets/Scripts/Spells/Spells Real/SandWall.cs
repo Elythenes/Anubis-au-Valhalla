@@ -1,14 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using DG.Tweening;
 using UnityEngine;
 
 public class SandWall : MonoBehaviour
 {
+    public PouvoirPlaieObject soPouvoirPlaiePlaie;
     private BoxCollider2D collider;
     private Rigidbody2D rb;
-    public SpellSpawnEntityObject soSandWall;
     public float timerStep2Time;
     public float speed;
     public float tempsReloadHitFlameAreaTimer;
@@ -18,6 +19,10 @@ public class SandWall : MonoBehaviour
 
     private void Start()
     {
+        Destroy(gameObject,soPouvoirPlaiePlaie.wallDuration);
+        Vector2 charaPos = CharacterController.instance.transform.position;
+        float angle = Mathf.Atan2(transform.position.y - charaPos.y, transform.position.x - charaPos.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
         collider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -26,7 +31,7 @@ public class SandWall : MonoBehaviour
     {
         timerStep2Time += Time.deltaTime;
 
-        if (timerStep2Time >= soSandWall.timerStep2)
+        if (timerStep2Time >= soPouvoirPlaiePlaie.timeToStep2)
         { 
             activeHitbox = true;
             collider.isTrigger = true;
@@ -39,18 +44,18 @@ public class SandWall : MonoBehaviour
         if (col.gameObject.tag == "Monstre" && activeHitbox)
         {
             stopAttack = false;
-            for (int i = 0; i < soSandWall.nombreOfDot; i++)
+            for (int i = 0; i < 3; i++)
             {
-                if (tempsReloadHitFlameAreaTimer <= soSandWall.espacementDoT && stopAttack == false)
+                if (tempsReloadHitFlameAreaTimer <= 0.2 && stopAttack == false)
                 {
                     tempsReloadHitFlameAreaTimer += Time.deltaTime;
                 }
 
-                if (tempsReloadHitFlameAreaTimer > soSandWall.espacementDoT && col.gameObject.tag == "Monstre")
+                if (tempsReloadHitFlameAreaTimer > 0.2 && col.gameObject.tag == "Monstre")
                 {
                     Debug.Log("touché");
-                    col.GetComponentInParent<MonsterLifeManager>().DamageText(soSandWall.puissanceAttaque);
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soSandWall.puissanceAttaque,soSandWall.stagger);
+                    col.GetComponentInParent<MonsterLifeManager>().DamageText(soPouvoirPlaiePlaie.dashDamage);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirPlaiePlaie.dashDamage,soPouvoirPlaiePlaie.staggerDash);
                     tempsReloadHitFlameAreaTimer = 0;
                 }
             }
@@ -73,5 +78,12 @@ public class SandWall : MonoBehaviour
             tempsReloadHitFlameAreaTimer = 0;
         }
     }
+
+    IEnumerator WaitToCollide()
+    {
+        yield return new WaitForSeconds(0.3f);
+        collider.enabled = true;
+    }
+    
     
 }

@@ -16,8 +16,7 @@ public class PouvoirFeu : MonoBehaviour
    {
       anubis = CharacterController.instance;
       anubisAtk = AttaquesNormales.instance;
-      //DamageManager.instance.isAnkh = true;
-      secondesRestantes = soPouvoirFeu.duration -0.5f;
+      secondesRestantes = soPouvoirFeu.duration -0.4f;
    }
 
    public void Update()
@@ -31,7 +30,6 @@ public class PouvoirFeu : MonoBehaviour
             if (timerSpawn >= soPouvoirFeu.dashSpawnRate)
             {
                GameObject fireZone = Instantiate(soPouvoirFeu.hitboxDash, anubis.transform.position, Quaternion.identity);
-               fireZone.GetComponent<FlameArea>().sOPouvoirFeu = soPouvoirFeu;
                timerSpawn = 0;
             }
          }

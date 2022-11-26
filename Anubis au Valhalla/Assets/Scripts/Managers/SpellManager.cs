@@ -34,6 +34,9 @@ public class SpellManager : MonoBehaviour
     [Header("SPELL HIDDEN VAR")] 
     [SerializeField] public PouvoirFeuObject spellPFo;
     [SerializeField] public PouvoirFeu spellPFData;
+    [SerializeField] public PouvoirPlaieObject spellPPo;
+    [SerializeField] public PouvoirPlaie spellPPData;
+    
     [SerializeField] public SpellStaticAreaObject spellSAo;
     [SerializeField] public SpellFollowingAreaObject spellFAo;
     [SerializeField] public SpellThrowingObject spellTo;
@@ -106,7 +109,8 @@ public class SpellManager : MonoBehaviour
         SandWall = 8,
         NilWave = 9,
         Sepulture = 10,
-        PouvoirFeu = 11
+        PouvoirFeu = 11,
+        PouvoirPlaie = 12
     }
 
     SpellNumber ConvertSpellIndex(SpellObject spellObject)
@@ -128,6 +132,11 @@ public class SpellManager : MonoBehaviour
                     PouvoirFeu(spellSlot,pouvoirFeuData1);
                     break;
                 
+                case SpellNumber.PouvoirPlaie:
+                    PouvoirPlaieObject pouvoirPlaieData1 = prefabA.GetComponent<PouvoirPlaie>().soPouvoirPlaie;
+                    PouvoirPlaie(spellSlot,pouvoirPlaieData1);
+                    break;
+                
               /*  case SpellNumber.Fireball:
                     SpellThrowingObject FireballObj1 = prefabA.GetComponent<Fireball>().sOFireball;
                     ThrowingSpell(prefabA,spellSlot,FireballObj1);
@@ -138,30 +147,30 @@ public class SpellManager : MonoBehaviour
                     ThrowingSpell(prefabA,spellSlot,OiseauBaObj1);
                     break;
                 
-                case SpellNumber.Embaumement:
+               /* case SpellNumber.Embaumement:
                     SpellThrowingObject EmbaumementObj1 = prefabA.GetComponent<Embaumement>().sOEmbaumement;
                     ThrowingSpell(prefabA,spellSlot,EmbaumementObj1);
-                    break;
+                    break;*/
             
                 /*case SpellNumber.FireArea:
                     SpellStaticAreaObject FireAreaObj1 = prefabA.GetComponent<FlameArea>().sOFlameArea;
                     TimeLimitedSpell(prefabA,spellSlot,FireAreaObj1);
                     break;*/
                 
-                case SpellNumber.SandWall:
+               /* case SpellNumber.SandWall:
                     SpellSpawnEntityObject SandWallObj1 = prefabA.GetComponent<SandWall>().soSandWall;
                     SpawnEntity(prefabA,spellSlot,SandWallObj1);
-                    break;
+                    break;*/
                 
                 case SpellNumber.NilWave:
                     SpellSpawnEntityObject NilWaveObj1 = prefabA.GetComponent<NilWave>().soNilWave;
                     SpawnEntity(prefabA,spellSlot,NilWaveObj1);
                     break;
                 
-                case SpellNumber.Sepulture:
+               /* case SpellNumber.Sepulture:
                     SpellSpawnEntityObject SarcophageObj1 = prefabA.GetComponent<SarcophageBehaviour>().soSarcophage;
                     SpawnEntity(prefabA,spellSlot,SarcophageObj1);
-                    break;
+                    break;*/
 
             
                 case SpellNumber.Akh:
@@ -195,6 +204,11 @@ public class SpellManager : MonoBehaviour
                     PouvoirFeu(spellSlot,pouvoirFeuData);
                     break;
                 
+                case SpellNumber.PouvoirPlaie:
+                    PouvoirPlaieObject pouvoirPlaieData2 = prefabB.GetComponent<PouvoirPlaie>().soPouvoirPlaie;
+                    PouvoirPlaie(spellSlot,pouvoirPlaieData2);
+                    break;
+                
                 /*case SpellNumber.Fireball:
                     Debug.Log("FIRE-BAAAAALL");
                     SpellThrowingObject FireballObj2 = prefabB.GetComponent<Fireball>().sOFireball;
@@ -206,30 +220,30 @@ public class SpellManager : MonoBehaviour
                     ThrowingSpell(prefabB,spellSlot,OiseauBaObj2);
                     break;
                 
-                case SpellNumber.Embaumement:
+               /* case SpellNumber.Embaumement:
                     SpellThrowingObject EmbaumementObj2 = prefabB.GetComponent<Embaumement>().sOEmbaumement;
                     ThrowingSpell(prefabB,spellSlot,EmbaumementObj2);
-                    break;
+                    break;*/
 
                 /*case SpellNumber.FireArea:
                     SpellStaticAreaObject FireAreaObj2 = prefabB.GetComponent<FlameArea>().sOFlameArea;
                     TimeLimitedSpell(prefabB,spellSlot,FireAreaObj2);
                     break;*/
                 
-                case SpellNumber.SandWall:
+              /*  case SpellNumber.SandWall:
                     SpellSpawnEntityObject SandWallObj2 = prefabB.GetComponent<SandWall>().soSandWall;
                     SpawnEntity(prefabB,spellSlot,SandWallObj2);
-                    break;
+                    break;*/
                 
                 case SpellNumber.NilWave:
                     SpellSpawnEntityObject NilWaveObj2 = prefabB.GetComponent<NilWave>().soNilWave;
                     SpawnEntity(prefabB,spellSlot,NilWaveObj2);
                     break;
                 
-                case SpellNumber.Sepulture:
+               /* case SpellNumber.Sepulture:
                     SpellSpawnEntityObject SarcophageObj2 = prefabB.GetComponent<SarcophageBehaviour>().soSarcophage;
                     SpawnEntity(prefabB,spellSlot,SarcophageObj2);
-                    break;
+                    break;*/
                 
                 case SpellNumber.Akh:
                     SpellStaticAreaObject AkhObj2 = prefabB.GetComponent<Akh>().soAkh;
@@ -347,6 +361,51 @@ public class SpellManager : MonoBehaviour
                     }
                 }
                 break;
+            
+           case SpellNumber.PouvoirPlaie:
+               if (slotNumber == 1)
+               {
+                   spellPPData = UiManager.instance.currentSpell1Holder.GetComponent<PouvoirPlaie>();
+                   spellPPo = prefabA.GetComponent<PouvoirPlaie>().soPouvoirPlaie;
+                   cooldownSlot1 = spellPPo.duration;
+               }
+
+               if (slotNumber == 2)
+               {
+                   spellPPData = UiManager.instance.currentSpell2Holder.GetComponent<PouvoirPlaie>();
+                   spellPPo = prefabB.GetComponent<PouvoirPlaie>().soPouvoirPlaie;
+                   cooldownSlot2 = spellPPo.duration;
+               }
+                
+               if (spellPPData.secondesRestantes > 0)
+               {
+                   spellPPo.canCast = true;
+
+                   if (slotNumber == 1)
+                   {
+                       cooldownSlotTimer1 = spellPPData.secondesRestantes;
+                   }
+
+                   if (slotNumber == 2)
+                   {
+                       cooldownSlotTimer2 = spellPPData.secondesRestantes;
+                   }
+               }
+               else
+               {
+                   spellPPo.canCast = false;
+
+                   if (slotNumber == 1)
+                   {
+                       cooldownSlotTimer1 = 0;
+                   }
+
+                   if (slotNumber == 2)
+                   {
+                       cooldownSlotTimer2 = 0;
+                   }
+               }
+               break;
             
             case SpellNumber.OiseauBa:
                 if (slotNumber == 1)
@@ -568,7 +627,7 @@ public class SpellManager : MonoBehaviour
                 }
                 break;
                 
-            case SpellNumber.Embaumement:
+            /*case SpellNumber.Embaumement:
                 if (slotNumber == 1)
                 {
                     spellTo = prefabA.GetComponent<Embaumement>().sOEmbaumement;
@@ -609,7 +668,7 @@ public class SpellManager : MonoBehaviour
                         cooldownSlotTimer2 = 0;
                     }
                 }
-                break;
+                break;*/
             
            /* case SpellNumber.Ânkh:
                 if (slotNumber == 1)
@@ -654,7 +713,7 @@ public class SpellManager : MonoBehaviour
                 }
                 break;*/
             
-            case SpellNumber.SandWall:
+            /*case SpellNumber.SandWall:
                 if (slotNumber == 1)
                 {
                     spellSEo = prefabA.GetComponent<SandWall>().soSandWall;
@@ -696,7 +755,7 @@ public class SpellManager : MonoBehaviour
                         cooldownSlotTimer2 = 0;
                     }
                 }
-                break;
+                break;*/
             
             case SpellNumber.NilWave:
                 if (slotNumber == 1)
@@ -742,7 +801,7 @@ public class SpellManager : MonoBehaviour
                 }
                 break;
             
-            case SpellNumber.Sepulture:
+            /*case SpellNumber.Sepulture:
                 if (slotNumber == 1)
                 {
                     spellSEo = prefabA.GetComponent<SarcophageBehaviour>().soSarcophage;
@@ -784,7 +843,7 @@ public class SpellManager : MonoBehaviour
                         cooldownSlotTimer2 = 0;
                     }
                 }
-                break;
+                break;*/
         }
     }
     
@@ -843,6 +902,31 @@ public class SpellManager : MonoBehaviour
             //indicDirection.color = Color.white;
             spellPFData.isActive = false;
             spellPFo.canCast = false;
+        }
+    }
+    
+    void PouvoirPlaie(int slot,PouvoirPlaieObject spellPPo)
+    {
+        if (!spellPPData.isActive && !spellPPData.lockCast)
+        {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
+            //indicDirection.color = Color.red;
+            spellPPData.isActive = true;
+            spellPPo.canCast = true;
+        }
+        
+        if(!spellPPData.isActive && !spellPPData.lockCast)
+        {
+            //indicDirection.color = Color.white;
+            spellPPData.isActive = false;
+            spellPPo.canCast = false;
         }
     }
     

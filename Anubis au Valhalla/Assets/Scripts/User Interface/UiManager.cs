@@ -59,7 +59,7 @@ public class UiManager : MonoBehaviour
             case 1:
                 if (currentSpell1Holder is not null)
                 {
-                    Destroy(currentSpell1Holder);
+                    Destroy(currentSpell1Holder.gameObject);
                 }
                 Debug.Log("ajout dans le slot A");
                 SpellManager.instance.containerA = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside;
@@ -76,18 +76,18 @@ public class UiManager : MonoBehaviour
             case 2:
                 if (currentSpell2Holder is not null)
                 {
-                    Destroy(currentSpell2Holder);
+                    Destroy(currentSpell2Holder.gameObject);
                 }
                 Debug.Log("ajout dans le slot B");
                 SpellManager.instance.containerB = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside;
                 SpellManager.instance.prefabB = cS.collectableSpell.GetComponent<ContainScriptableObject>().prefabInside;
                 currentSpell2 = cS.collectableSpell.GetComponent<ContainScriptableObject>().prefabInside;
-                currentSpell2Holder = Instantiate(currentSpell2, anubis.transform.position,Quaternion.identity);
-                currentSpell2Holder.transform.parent = anubis.transform;
                 SpellManager.instance.isSpell2Fill = true;
                 Debug.Log("sprite 2 changé");
                 spriteSpell2.GetComponent<RawImage>().texture = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.sprite;
                 FillLittleMenu(cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside, 2);
+                currentSpell2Holder = Instantiate(currentSpell2, anubis.transform.position,Quaternion.identity);
+                currentSpell2Holder.transform.parent = anubis.transform;
                 break;
         }
         menuCollectSpell.SetActive(false);

@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class SarcophageBehaviour : MonoBehaviour
 {
-    public SpellSpawnEntityObject soSarcophage;
-    private CircleCollider2D hitbox;
-    public float timeToCloseTimer;
-    public float forceRapprochement;
-    
+    public PouvoirPlaieObject soPlaie;
+    private Vector2 _direction;
+
+
     void Start()
     {
-        hitbox = GetComponent<CircleCollider2D>();
+        Destroy(gameObject,soPlaie.forceDuration);
         transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
 
@@ -20,24 +19,10 @@ public class SarcophageBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Monstre"))
         {
-            if (timeToCloseTimer >= soSarcophage.timerStep2)
-            {
-                // phase de refermement
-                hitbox.radius = 0.5f;
-                other.GetComponent<MonsterLifeManager>().TakeDamage(soSarcophage.puissanceAttaque,soSarcophage.stagger);
-                other.GetComponent<MonsterLifeManager>().DamageText(soSarcophage.puissanceAttaque);
-                Destroy(gameObject);
-            }
-            else if (timeToCloseTimer < soSarcophage.timerStep2)
-            {
-                // phase de raprochement
-                other.GetComponent<Rigidbody2D>().AddForce((transform.position - other.transform.position) * forceRapprochement);
-            }
+             _direction = other.transform.position - transform.position;
+             Vector2 driNormalized = _direction.normalized * soPlaie.forceAttraction;
+            other.GetComponent<Rigidbody2D>().velocity = _direction;
+            //other.GetComponent<Rigidbody2D>().AddForce((transform.position - other.transform.position) * soPlaie.forceAttraction,ForceMode2D.Impulse);
         }
-    }
-
-    void Update()
-    {
-        timeToCloseTimer += Time.deltaTime;
     }
 }

@@ -11,9 +11,9 @@ public class PouvoirFeuObject : SpellObject
   public GameObject hitboxAttaqueNormale;
   public GameObject hitboxThrust;
   public GameObject hitboxDash;
+
+  [Header("ATTAQUE NORMALE")]
   public int attaqueNormaleDamage;
- 
- 
   
   [Header("ATTAQUE DASH")]
   public float dashSpawnRate;

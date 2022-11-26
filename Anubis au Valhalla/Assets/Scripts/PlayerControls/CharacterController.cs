@@ -39,7 +39,7 @@ public class CharacterController : MonoBehaviour
   public bool canPassThrough;
   
   [HideInInspector]public Rigidbody2D rb; // ca aussi
-  private Vector2 movement;
+  public Vector2 movement;
   public float astarPathTimer = 0f;
   public float astarPathTimerMax = 1f;
 

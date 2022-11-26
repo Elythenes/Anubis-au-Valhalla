@@ -11,6 +11,8 @@ using UnityEngine.SceneManagement;
 
 public class DamageManager : MonoBehaviour
 {
+    public AnubisCurrentStats stats;
+    
     [Header("Objects")]
     public GameObject textDamage;
     public GameObject textHealDamage;
@@ -51,7 +53,7 @@ public class DamageManager : MonoBehaviour
     
     private void Awake()
     {
-
+stats = AnubisCurrentStats.instance;
         if (instance == null)
         {
             instance = this;
@@ -60,6 +62,12 @@ public class DamageManager : MonoBehaviour
     
     void Start()
     {
+        vieActuelle = stats.vieActuelle;
+        vieMax = stats.vieMax;
+        damageReduction = stats.damageReduction;
+        tempsInvinsibleAfterHit = stats.tempsInvinsbleAfterHit;
+        stunAfterHit = stats.stunAfterHit;
+        
         vieActuelle = vieMax;
         LifeBarManager.instance.SetMaxHealth(vieMax);
         Time.timeScale = 1;
@@ -69,6 +77,7 @@ public class DamageManager : MonoBehaviour
 
     private void Update()
     {
+      
         if (vieActuelle > vieMax)
         {
             vieActuelle = vieMax;

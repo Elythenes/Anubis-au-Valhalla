@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,10 +10,10 @@ public class cooldownSpellBar2 : MonoBehaviour
     public static cooldownSpellBar2 instance;
     public Slider slider;
     public TextMeshProUGUI compteurCooldown;
-    public float countdownCooldown2;
     public TextMeshProUGUI compteurTempsRestant;
-    public GameObject ankhShield;
-    public AnkhShield ankhSheildData;
+    public float countdownCooldown2;
+    public GameObject currentPower;
+
     
     private void Awake()
     {
@@ -24,6 +25,10 @@ public class cooldownSpellBar2 : MonoBehaviour
     void Update()
     {
         {
+            if (UiManager.instance.currentSpell2Holder is not null)
+            {
+                currentPower = UiManager.instance.currentSpell2Holder;
+            }
             slider.maxValue = SpellManager.instance.cooldownSlot2;
             slider.value = SpellManager.instance.cooldownSlotTimer2;
             countdownCooldown2 -= Time.deltaTime;
@@ -36,16 +41,30 @@ public class cooldownSpellBar2 : MonoBehaviour
             {
                 compteurCooldown.enabled = true;
             }
+
+            if (UiManager.instance.currentSpell2Holder is not null)
+            {
+                if (currentPower.CompareTag("Feu"))
+                {
+                    compteurTempsRestant.enabled = true;
+                    compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirFeu>().secondesRestantes) + "");
+                }
+                /*else
+                {
+                    compteurTempsRestant.enabled = false;
+                }*/
             
-            if (SpellManager.instance.prefabB == ankhShield)
-            {
-                compteurTempsRestant.enabled = true;
-                compteurTempsRestant.SetText(Mathf.RoundToInt(ankhSheildData.secondesRestantes) + "");
+                if (currentPower.CompareTag("Plaie"))
+                {
+                    compteurTempsRestant.enabled = true;
+                    compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirPlaie>().secondesRestantes) + "");
+                }
+                /*else
+                {
+                    compteurTempsRestant.enabled = false;
+                }*/
             }
-            else
-            {
-                compteurTempsRestant.enabled = false;
-            }
+            
         }
     }
     

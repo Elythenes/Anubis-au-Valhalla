@@ -44,10 +44,20 @@ public class cooldownSpellBar : MonoBehaviour
                 compteurTempsRestant.enabled = true;
                 compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirFeu>().secondesRestantes) + "");
             }
-            else
+            /*else
             {
                 compteurTempsRestant.enabled = false;
+            }*/
+            
+            if (currentPower.CompareTag("Plaie"))
+            {
+                compteurTempsRestant.enabled = true;
+                compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirPlaie>().secondesRestantes) + "");
             }
+            /*else
+            {
+                compteurTempsRestant.enabled = false;
+            }*/
     }
 
 
