@@ -35,27 +35,32 @@ public class GlyphObject : ScriptableObject
     [BoxGroup("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
     
     [BoxGroup("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.None;
-    [BoxGroup("BASIC STAT UP")] public int bonusBasicStat = 5;
+    [BoxGroup("BASIC STAT UP")] public float bonusBasicStat = 5;
     [BoxGroup("BASIC STAT UP")] public AnubisStat otherStat = AnubisStat.None;
-    [BoxGroup("BASIC STAT UP")] public int otherBonusBasicStat = 0;
+    [BoxGroup("BASIC STAT UP")] public float otherBonusBasicStat = 0;
     
     [BoxGroup("SITUATIONAL STAT UP")] public AnubisStat situationalStat = AnubisStat.None;
-    [BoxGroup("SITUATIONAL STAT UP")] public int bonusSituationalStat = 0;
+    [BoxGroup("SITUATIONAL STAT UP")] public float bonusSituationalStat = 0;
     
     //[BoxGroup("ELEMENTAL")] public GlyphElement glyphElement;
     
-    [BoxGroup("ADDITIONAL EFFECT")] public int valeurPourLeHeader2;
+    [BoxGroup("ADDITIONAL EFFECT")] public float valeurPourLeHeader2;
     
     [BoxGroup("TRIGGER EFFECT")] public bool isTriggerActive = false;
-
+    [BoxGroup("TRIGGER EFFECT")] public AnubisStat triggerStat = AnubisStat.None;
+    [BoxGroup("TRIGGER EFFECT")] public float additionalDamage = 0;
+    [BoxGroup("TRIGGER EFFECT")] public TriggerMove triggerMove = TriggerMove.None;
+    [BoxGroup("TRIGGER EFFECT")] public string revokeTrigger;
+        
     [BoxGroup("CHARGE BASED")] public int chargeBase = 0;
     [BoxGroup("CHARGE BASED")] public int chargeNumber = 10;
 
     [BoxGroup("TIME BASED")] public float cooldownBeforeEffect = 5f;
 
     [BoxGroup("BOOL EFFECT")] public bool isEffectActive = true;
+    [BoxGroup("BOOL EFFECT")] public string boolTrigger;
 
-    [BoxGroup("BOOL EFFECT")] public float pourLeOther;
+    [BoxGroup("OTHER")] public float pourLeOther;
     
     
     public enum GlyphPart
@@ -103,7 +108,6 @@ public class GlyphObject : ScriptableObject
     
     public enum AnubisStat
     {
-        None,
         AnubisBaseDamage,
         AllComboDamage,
         Combo1Damage,
@@ -117,7 +121,21 @@ public class GlyphObject : ScriptableObject
         Armor,
         Speed,
         DashCd,
-        //MagicForce
+        //MagicForce,
+        None
+    }
+
+    public enum TriggerMove
+    {
+        Attack,
+        AttackSomething,
+        UseDash,
+        PerformDodge,
+        DrinkPotion,
+        UsePower,
+        LaunchSpell,
+        None
+        
     }
     
 }
