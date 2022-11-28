@@ -23,7 +23,7 @@ public class UiManager : MonoBehaviour
     public GameObject currentSpell2;
     public GameObject currentSpell1Holder;
     public GameObject currentSpell2Holder;
-    
+
     [Header("COLLECTED SPELL MENU")]
     public GameObject menuCollectSpell;
     public GameObject spriteCs;
@@ -95,11 +95,11 @@ public class UiManager : MonoBehaviour
         Destroy(cS.collectableSpell);
     }
 
-   /* public void CollectPotion()
+   public void CollectPotion()
     {
-        PotionManager.instance.containerA = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside; 
-        PotionManager.instance.isPotionFill = true;
-    }*/
+        PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside; 
+        PotionManager.Instance.isPotionSlotFill = true;
+    }
 
     public void DebugButton()
     {
