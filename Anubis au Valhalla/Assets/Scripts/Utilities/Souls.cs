@@ -28,7 +28,7 @@ public class Souls : MonoBehaviour
         {
             instance = this;
         }
-        soulText.text = "0";
+        UpdateSoulsCounter();
     }
 
     // Update is called once per frame
@@ -48,7 +48,11 @@ public class Souls : MonoBehaviour
     {
         Destroy(collectedSoul);
         soulBank += value;
+        UpdateSoulsCounter();
+    }
+
+    public void UpdateSoulsCounter()
+    {
         soulText.text = soulBank.ToString();
-        
     }
 }
