@@ -294,6 +294,10 @@ public class SalleGennerator : MonoBehaviour
                         Souls.instance.CollectSouls(soul,1);
                 }
                 amount.Clear();
+                if (TothBehiavour.instance != null && roomsDone != 0)
+                {
+                        DestroyImmediate(TothBehiavour.instance.gameObject);
+                }
         }
 
         public void SwapDoorType(Door type)
