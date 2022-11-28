@@ -688,10 +688,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16459d0ac1aa37c40aaab3365d8dd00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anubis: {fileID: 0}
   cS: {fileID: 491855217}
   cP: {fileID: 0}
   spriteSpell1: {fileID: 1808698801}
   spriteSpell2: {fileID: 542082336}
+  currentSpell1: {fileID: 0}
+  currentSpell2: {fileID: 0}
+  currentSpell1Holder: {fileID: 0}
+  currentSpell2Holder: {fileID: 0}
   menuCollectSpell: {fileID: 1953149334}
   spriteCs: {fileID: 212787933}
   textCsName: {fileID: 539241531}
@@ -704,6 +709,7 @@ MonoBehaviour:
   textOs2Name: {fileID: 1361305523}
   textOs2Description: {fileID: 1885611560}
   menuCollectPotion: {fileID: 0}
+  spritePotion: {fileID: 0}
 --- !u!1 &143190725
 GameObject:
   m_ObjectHideFlags: 0
@@ -2804,8 +2810,7 @@ MonoBehaviour:
   compteurCooldown: {fileID: 473035103}
   compteurTempsRestant: {fileID: 1149491831}
   countdownCooldown1: 0
-  ankhShield: {fileID: 1970358934105937955, guid: 0b3a750f2e98173458ebfbe853c326bf, type: 3}
-  ankhSheildData: {fileID: 1492631390}
+  currentPower: {fileID: 0}
 --- !u!114 &596931001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3252,7 +3257,6 @@ MonoBehaviour:
   TimeBetweenWaves: 1
   transitionCanvas: {fileID: 865683844}
   shopsVisited: 0
-  DisableOnShop: {fileID: 0}
   spawnDoor: 1
   currentRoom: {fileID: 0}
   chosenPattern: 0
@@ -6354,7 +6358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soul: {fileID: 1754770387313819238, guid: e8f7de0302e26e24c93142ceb5872a09, type: 3}
-  soulBank: 0
+  soulBank: 100
   soulText: {fileID: 1896873358}
   shakeIntensity: 0.1
   soulsInScene: []
@@ -8009,10 +8013,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 1715939744}
   compteurCooldown: {fileID: 1363839337}
-  countdownCooldown2: 0
   compteurTempsRestant: {fileID: 470661280}
-  ankhShield: {fileID: 1970358934105937955, guid: 0b3a750f2e98173458ebfbe853c326bf, type: 3}
-  ankhSheildData: {fileID: 0}
+  countdownCooldown2: 0
+  currentPower: {fileID: 0}
 --- !u!1 &1732250996
 GameObject:
   m_ObjectHideFlags: 0
