@@ -39,6 +39,8 @@ public class PotionRepository : MonoBehaviour
     
     private void Update()
     {
+
+        isMoving = false;
         if (timer >= 0)
         {
             rb.velocity -= rb.velocity * 0.01f;

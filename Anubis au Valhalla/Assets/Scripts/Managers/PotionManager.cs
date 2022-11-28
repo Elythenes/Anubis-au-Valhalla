@@ -12,6 +12,7 @@ public class PotionManager : MonoBehaviour
 
    public KeyCode usePotion = KeyCode.A;
    [Expandable] public PotionObject currentPotion;
+   public bool isPotionSlotFill;
 
 
    private void Awake()
