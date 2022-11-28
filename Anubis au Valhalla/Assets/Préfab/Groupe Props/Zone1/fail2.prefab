@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 3.23, y: 1.83}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8748736738850617782
@@ -249,7 +249,7 @@ SpriteRenderer:
   m_Size: {x: 3.8, y: 3.83}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8748736739370286123
@@ -333,7 +333,7 @@ SpriteRenderer:
   m_Size: {x: 2.76, y: 3.04}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8748736739411449931
@@ -417,7 +417,7 @@ SpriteRenderer:
   m_Size: {x: 5.36, y: 2.46}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8748736739453712989
@@ -430,6 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8748736739453712991}
   - component: {fileID: 8748736739453712990}
+  - component: {fileID: 5109603066967136367}
   m_Layer: 0
   m_Name: fail2
   m_TagString: Untagged
@@ -445,7 +446,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8748736739453712989}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.31, y: 20.17, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -469,7 +470,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8748736739453712989}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -488,6 +489,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.613899, y: 1.8677502}
   m_EdgeRadius: 0
+--- !u!114 &5109603066967136367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748736739453712989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6655c3f4aeefc1e4bb8cc911bd5ff352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8748736739597776880
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +666,7 @@ SpriteRenderer:
   m_Size: {x: 2.72, y: 2.38}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8748736740093652513
@@ -737,7 +750,7 @@ SpriteRenderer:
   m_Size: {x: 2.16, y: 2.51}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8748736740494920179
@@ -905,6 +918,6 @@ SpriteRenderer:
   m_Size: {x: 1.1, y: 3.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

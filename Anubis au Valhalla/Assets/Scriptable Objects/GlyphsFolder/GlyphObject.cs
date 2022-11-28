@@ -11,56 +11,62 @@ public class GlyphObject : ScriptableObject
     public GlyphPart partie;
     //public GlyphType type;
     public GlyphLevel level;
+    public float price;
     public int index;
-    [TextArea(10,20)] public string description;
+    [TextArea(6,20)] public string description;
     //[TextArea(5, 10)] public string citation;
     //public GlyphElement element;
     [Range(1, 4)] public int tier = 1;
-    
-    /*[BoxGroup("Glyph Type")] public bool isBasicStatUp = false;
-    [BoxGroup("Glyph Type")] public bool isSituationStatUp = false;
-    //[BoxGroup("Glyph Type")] public bool isElemental = false;
-    [BoxGroup("Glyph Type")] public bool isAdditionalEffect = false;
-    [BoxGroup("Glyph Type")] public bool isTriggerEffect = false;
-    [BoxGroup("Glyph Type")] public bool isCharge = false;
-    [BoxGroup("Glyph Type")] public bool isTimeBased = false;
-    [BoxGroup("Glyph Type")] public bool isBoolEffect = false;
-    [BoxGroup("Glyph Type")] public bool isOther = false;*/
-
-    public GlyphEffect effectType;
-    [BoxGroup("PRICE")] public float lowerPriceRange;
-    [BoxGroup("PRICE")] public float upperPriceRange;
+    //public GlyphEffect effectType;
     [BoxGroup("GRAPH")] public Texture icone;
     [BoxGroup("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
     [BoxGroup("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
+
+    [BoxGroup("SHOW VALUES")] public bool isBasicStatUp;
+    [BoxGroup("SHOW VALUES")] public bool isSituationalStatUp;
+    [BoxGroup("SHOW VALUES")] public bool isSpecialStatUp;
+    [BoxGroup("SHOW VALUES")] public bool isAdditionalEffect;
+    [BoxGroup("SHOW VALUES")] public bool isTriggerEffect;
+    [BoxGroup("SHOW VALUES")] public bool isChargeBased;
+    [BoxGroup("SHOW VALUES")] public bool isTimeBased;
+    [BoxGroup("SHOW VALUES")] public bool isBoolEffect;
+    [BoxGroup("SHOW VALUES")] public bool isOther;
+
+    [ShowIf("isBasicStatUp")] [BoxGroup("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.NoneAnubisStat;
+    [ShowIf("isBasicStatUp")] [BoxGroup("BASIC STAT UP")] public float bonusBasicStat = 5;
+    [ShowIf("isBasicStatUp")] [BoxGroup("BASIC STAT UP")] public AnubisStat otherStat = AnubisStat.NoneAnubisStat;
+    [ShowIf("isBasicStatUp")] [BoxGroup("BASIC STAT UP")] public float otherBonusBasicStat = 0;
     
-    [BoxGroup("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.None;
-    [BoxGroup("BASIC STAT UP")] public float bonusBasicStat = 5;
-    [BoxGroup("BASIC STAT UP")] public AnubisStat otherStat = AnubisStat.None;
-    [BoxGroup("BASIC STAT UP")] public float otherBonusBasicStat = 0;
-    
-    [BoxGroup("SITUATIONAL STAT UP")] public AnubisStat situationalStat = AnubisStat.None;
-    [BoxGroup("SITUATIONAL STAT UP")] public float bonusSituationalStat = 0;
+    [ShowIf("isSituationalStatUp")] [BoxGroup("SITUATIONAL STAT UP")] public AnubisStat situationalStat = AnubisStat.NoneAnubisStat;
+    [ShowIf("isSituationalStatUp")] [BoxGroup("SITUATIONAL STAT UP")] public float bonusSituationalStat = 0;
+    [ShowIf("isSituationalStatUp")] [BoxGroup("SITUATIONAL STAT UP")] public bool dependsOnSoulCount;
+
+    [ShowIf("isSpecialStatUp")] [BoxGroup("SPECIAL STAT UP")] public SpecialEffect specialStat = SpecialEffect.NoneSpecialEffect;
+    [ShowIf("isSpecialStatUp")] [BoxGroup("SPECIAL STAT UP")] public float specialStatValue;
     
     //[BoxGroup("ELEMENTAL")] public GlyphElement glyphElement;
     
-    [BoxGroup("ADDITIONAL EFFECT")] public float valeurPourLeHeader2;
+    [ShowIf("isAdditionalEffect")] [BoxGroup("ADDITIONAL EFFECT")] public SpecialEffect specialAdditionalEffect = SpecialEffect.NoneSpecialEffect;
+    [ShowIf("isAdditionalEffect")] [BoxGroup("ADDITIONAL EFFECT")] public float specialAdditionalValue;
     
-    [BoxGroup("TRIGGER EFFECT")] public bool isTriggerActive = false;
-    [BoxGroup("TRIGGER EFFECT")] public AnubisStat triggerStat = AnubisStat.None;
-    [BoxGroup("TRIGGER EFFECT")] public float additionalDamage = 0;
-    [BoxGroup("TRIGGER EFFECT")] public TriggerMove triggerMove = TriggerMove.None;
-    [BoxGroup("TRIGGER EFFECT")] public string revokeTrigger;
-        
-    [BoxGroup("CHARGE BASED")] public int chargeBase = 0;
-    [BoxGroup("CHARGE BASED")] public int chargeNumber = 10;
+    [ShowIf("isTriggerEffect")] [BoxGroup("TRIGGER EFFECT/general")] public TriggerMove triggerMove = TriggerMove.NoneTriggerMove;
+    [ShowIf("isTriggerEffect")] [BoxGroup("TRIGGER EFFECT/general")] public string revokeTrigger;
+    [ShowIf("isTriggerEffect")] [BoxGroup("TRIGGER EFFECT/basic stat")] public AnubisStat triggerStat = AnubisStat.NoneAnubisStat;
+    [ShowIf("isTriggerEffect")] [BoxGroup("TRIGGER EFFECT/basic stat")] public float additionalDamage = 0;
+    [ShowIf("isTriggerEffect")] [BoxGroup("TRIGGER EFFECT/special")] public SpecialEffect specialTriggerEffect = SpecialEffect.NoneSpecialEffect;
+    [ShowIf("isTriggerEffect")] [BoxGroup("TRIGGER EFFECT/special")] public float specialTriggerValue;
 
-    [BoxGroup("TIME BASED")] public float cooldownBeforeEffect = 5f;
+    [ShowIf("isChargeBased")] [BoxGroup("CHARGE BASED")] public int chargeBase = 0;
+    [ShowIf("isChargeBased")] [BoxGroup("CHARGE BASED")] public int chargeNumber = 10;
 
-    [BoxGroup("BOOL EFFECT")] public bool isEffectActive = true;
-    [BoxGroup("BOOL EFFECT")] public string boolTrigger;
+    [ShowIf("isTimeBased")] [BoxGroup("TIME BASED")] public TimeType timeType = TimeType.NoneTimeType;
+    [ShowIf("isTimeBased")] [BoxGroup("TIME BASED")] public float periodicTimeValue;
 
-    [BoxGroup("OTHER")] public float pourLeOther;
+    [ShowIf("isBoolEffect")] [BoxGroup("BOOL EFFECT")] public bool startsActive = true;
+    [ShowIf("isBoolEffect")] [BoxGroup("BOOL EFFECT")] public string boolTrigger;
+    [ShowIf("isBoolEffect")] [BoxGroup("BOOL EFFECT")] public string revokeBool;
+
+    [ShowIf("isOther")] [BoxGroup("OTHER")] public string otherEffect;
     
     
     public enum GlyphPart
@@ -73,7 +79,7 @@ public class GlyphObject : ScriptableObject
     public enum GlyphEffect
     {
         BasicStatUp,
-        SituaionalStatUp,
+        SituationalStatUp,
         SpecialStat,
         //Elemental,
         AdditionalDamage,
@@ -121,8 +127,9 @@ public class GlyphObject : ScriptableObject
         Armor,
         Speed,
         DashCd,
-        //MagicForce,
-        None
+        MagicForce,
+        InvincibilityFrames,
+        NoneAnubisStat
     }
 
     public enum TriggerMove
@@ -134,8 +141,31 @@ public class GlyphObject : ScriptableObject
         DrinkPotion,
         UsePower,
         LaunchSpell,
-        None
-        
+        TakeDamage,
+        Death,
+        NoneTriggerMove
     }
-    
+
+    public enum SpecialEffect
+    {
+        AdditionalDamage,
+        Regeneration, 
+        Knockback,
+        Shield,
+        Stagger,
+        SummonBeetle,
+        SummonLocusts,
+        SummonFlies,
+        SoulBlessing,
+        ChangeEnemyDrop,
+        ReflectProjectiles,
+        NoneSpecialEffect
+    }
+
+    public enum TimeType
+    {
+        Continuous,
+        Periodic,
+        NoneTimeType
+    }
 }

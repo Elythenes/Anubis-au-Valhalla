@@ -193,10 +193,11 @@ public class Shop : MonoBehaviour
                 {
                     var index = Random.Range(0, upgradesList.UpsLame.Count);
                     var lame = upgradesList.UpsLame[index].Lames[0];
-                    var randCost = Mathf.RoundToInt(Random.Range(lame.lowerPriceRange, lame.upperPriceRange + 1));
+                    var itemCost = Mathf.RoundToInt(lame.price * 
+                                                    Mathf.Pow(((int)lame.level * lame.tier), (int)lame.level / 14)); //Multiplicator, based on the upgrades tier and level
                     choice.Add(lame);
-                    cost.Add(randCost);
-                    costText[i].text = "" + randCost;
+                    cost.Add(itemCost);
+                    costText[i].text = "" + itemCost;
                     buttonText[i].text = "" + lame.nom;
                     description[i].text = "" + lame.description;
                 }
@@ -206,10 +207,11 @@ public class Shop : MonoBehaviour
                 {
                     var index = Random.Range(0, upgradesList.UpsHampe.Count);
                     var hampe = upgradesList.UpsHampe[index].Hampes[0];
-                    var randCost = Mathf.RoundToInt(Random.Range(hampe.lowerPriceRange, hampe.upperPriceRange + 1));
+                    var itemCost = Mathf.RoundToInt(hampe.price * 
+                                                    Mathf.Pow(((int)hampe.level * hampe.tier), (int)hampe.level / 14)); //Multiplicator, based on the upgrades tier and level
                     choice.Add(hampe);
-                    cost.Add(randCost);
-                    costText[i].text = "" + randCost;
+                    cost.Add(itemCost);
+                    costText[i].text = "" + itemCost;
                     buttonText[i].text = "" + hampe.nom;
                     description[i].text = "" + hampe.description;
                     
@@ -220,10 +222,11 @@ public class Shop : MonoBehaviour
                 {
                     var index = Random.Range(0, upgradesList.UpsManche.Count);
                     var manche = upgradesList.UpsManche[index].Manches[0];
-                    var randCost = Mathf.RoundToInt(Random.Range(manche.lowerPriceRange, manche.upperPriceRange + 1));
+                    var itemCost = Mathf.RoundToInt(manche.price * 
+                                                    Mathf.Pow(((int)manche.level * manche.tier), (int)manche.level / 14)); //Multiplicator, based on the upgrades tier and level
                     choice.Add(manche);
-                    cost.Add(randCost);
-                    costText[i].text = "" + randCost;
+                    cost.Add(itemCost);
+                    costText[i].text = "" + itemCost;
                     buttonText[i].text = "" + manche.nom;
                     description[i].text = "" + manche.description;
                 }
