@@ -28,7 +28,7 @@ public class CharacterController : MonoBehaviour
   [Header("Dash")]
   public float dashSpeed;
   public float diagonalDashSpeed;
-  private float timerDash;
+  public float timerDash;
   public float dashDuration;
   private float timerdashCooldown;
   [NaughtyAttributes.ReadOnly] public float dashCooldown = AnubisCurrentStats.instance.dashCooldown;

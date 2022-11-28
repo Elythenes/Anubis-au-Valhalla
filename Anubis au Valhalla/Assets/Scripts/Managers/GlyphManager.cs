@@ -46,15 +46,13 @@ public class GlyphManager : MonoBehaviour
         {
             if (arrayLame[i].gState == GlyphWrap.State.Active)
             {
-                switch (arrayLame[i].glyphObject.effectType)
+                if (arrayLame[i].glyphObject.isBasicStatUp)
                 {
-                    case GlyphObject.GlyphEffect.BasicStatUp:
-                        UpdateBasicStatUp(arrayLame[i].glyphObject);
-                        break;
-                    
-                    case GlyphObject.GlyphEffect.SituaionalStatUp:
-                        UpdateSituationalStatUp(arrayLame[i].glyphObject);
-                        break;
+                    UpdateBasicStatUp(arrayLame[i].glyphObject);
+                }
+                if (arrayLame[i].glyphObject.isSituationalStatUp)
+                {
+                    UpdateSituationalStatUp(arrayLame[i].glyphObject);
                 }
             }
         }
