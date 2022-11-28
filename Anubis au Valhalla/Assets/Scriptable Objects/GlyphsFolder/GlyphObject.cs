@@ -28,7 +28,8 @@ public class GlyphObject : ScriptableObject
     [BoxGroup("Glyph Type")] public bool isOther = false;*/
 
     public GlyphEffect effectType;
-    
+    [Foldout("PRICE")] public float lowerPriceRange;
+    [Foldout("PRICE")] public float upperPriceRange;
     [Foldout("GRAPH")] public Texture icone;
     [Foldout("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
     [Foldout("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
