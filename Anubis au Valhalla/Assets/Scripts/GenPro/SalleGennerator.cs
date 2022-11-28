@@ -45,7 +45,6 @@ public class SalleGennerator : MonoBehaviour
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
         private ProceduralGridMover moveGrid;
-        public GameObject DisableOnShop;
         [HideInInspector]
         public DoorOrientation spawnDoor;
         public Salle currentRoom;

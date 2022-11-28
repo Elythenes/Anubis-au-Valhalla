@@ -9,7 +9,7 @@ public class GlyphManager : MonoBehaviour
 {
     public static GlyphManager Instance; //singleton
     public List<int> indexActiveGlyphs = new List<int>();
-    
+
     [Header("LAME")]
     public GlyphWrap[] arrayLame = new GlyphWrap[5];
 
@@ -74,32 +74,32 @@ public class GlyphManager : MonoBehaviour
             case GlyphObject.AnubisStat.AnubisBaseDamage:   //augmente les débâts de toutes les attaques du combo et le Thrust
                 for (int i = 0; i < 3; i++)
                 {
-                    AnubisCurrentStats.instance.comboDamage[i] += gBasicStatUp.bonusBasicStat;
+                    AnubisCurrentStats.instance.comboDamage[i] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
                 }
-                AnubisCurrentStats.instance.thrustDamage = +gBasicStatUp.bonusBasicStat;
+                AnubisCurrentStats.instance.thrustDamage += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.AllComboDamage:     //augmente les dégâts de toutes les attaques du combo
                 for (int i = 0; i < 3; i++)
                 {
-                    AnubisCurrentStats.instance.comboDamage[i] += gBasicStatUp.bonusBasicStat; 
+                    AnubisCurrentStats.instance.comboDamage[i] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat); 
                 }
                 break;
             
             case GlyphObject.AnubisStat.Combo1Damage:       //augmente les dégâts de la 1ère attaque du combo
-                AnubisCurrentStats.instance.comboDamage[0] += gBasicStatUp.bonusBasicStat;
+                AnubisCurrentStats.instance.comboDamage[0] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Combo2Damage:       //augmente les dégâts de la 2ème attaque du combo
-                AnubisCurrentStats.instance.comboDamage[1] += gBasicStatUp.bonusBasicStat;
+                AnubisCurrentStats.instance.comboDamage[1] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Combo3Damage:       //augmente les dégâts de la 3ème attaque du combo
-                AnubisCurrentStats.instance.comboDamage[2] += gBasicStatUp.bonusBasicStat;
+                AnubisCurrentStats.instance.comboDamage[2] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.ThrustDamage:       //augmente les dégâts du Thrust
-                AnubisCurrentStats.instance.thrustDamage += gBasicStatUp.bonusBasicStat;
+                AnubisCurrentStats.instance.thrustDamage += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Range:              //augmente la portée / Range d'Anubis
@@ -113,11 +113,11 @@ public class GlyphManager : MonoBehaviour
                 break;
             
             case GlyphObject.AnubisStat.HealthPoint:       //augmente les PV max d'Anubis
-                AnubisCurrentStats.instance.vieMax += gBasicStatUp.bonusBasicStat;
+                AnubisCurrentStats.instance.vieMax += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Armor:            //augmente la réduction de dégâts d'Anubis
-                AnubisCurrentStats.instance.damageReduction += gBasicStatUp.bonusBasicStat;
+                AnubisCurrentStats.instance.damageReduction += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Speed:              //augmente la vitesse de déplacement d'Anubis
@@ -140,9 +140,8 @@ public class GlyphManager : MonoBehaviour
                 break ;
         }
     }
-    
-    
-    
+
+
     //Fonctions des Glyphes ********************************************************************************************
     
     
