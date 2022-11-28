@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
@@ -6,6 +7,9 @@ using UnityEngine;
 public class AnubisCurrentStats : MonoBehaviour
 {
    public static AnubisCurrentStats instance;
+   public AttaquesNormales atk;
+   public DamageManager life;
+   public CharacterController move;
    
    [Header("ATTAQUE")] 
    public List<GameObject> hitBoxC = new List<GameObject>();
@@ -36,10 +40,70 @@ public class AnubisCurrentStats : MonoBehaviour
 
    private void Awake()
    {
+      /*atk = AttaquesNormales.instance;
+      move = CharacterController.instance;
+      life = DamageManager.instance;*/
+      
       if (instance == null)
       {
          instance = this;
       }
    }
-   
+
+   private void Start()
+   {
+      // pour les attaques
+      atk.hitBoxC = hitBoxC;
+      atk.rangeAttaque = rangeAttaque;
+      atk.isC = isC;
+      atk.damage = comboDamage;
+      atk.criticalRate = criticalRate;
+      atk.dureeHitbox = dureeHitbox;
+      atk.forceKnockback = forceKnockback;
+      atk.stunDurationMax = stunDurationMax;
+      atk.dashImpulse = dashImpulse;
+      atk.timeForCanDash = timeForCanDash;
+      atk.dashTimers = dashTimers;
+      
+      // pour la vie
+      life.vieActuelle = vieActuelle;
+      life.vieMax = vieMax;
+      life.damageReduction = damageReduction;
+      life.tempsInvinsibleAfterHit = tempsInvinsbleAfterHit;
+      life.stunAfterHit = stunAfterHit;
+
+      // pour les mouvements
+      move.speedX = speedX;
+      move.speedY = speedY;
+      move.dashCooldown = dashCooldown;
+      life.vieMax += 1;
+   }
+
+   private void Update()
+   {
+      // pour les attaques
+      atk.hitBoxC = hitBoxC;
+      atk.rangeAttaque = rangeAttaque;
+      atk.isC = isC;
+      atk.damage = comboDamage;
+      atk.criticalRate = criticalRate;
+      atk.dureeHitbox = dureeHitbox;
+      atk.forceKnockback = forceKnockback;
+      atk.stunDurationMax = stunDurationMax;
+      atk.dashImpulse = dashImpulse;
+      atk.timeForCanDash = timeForCanDash;
+      atk.dashTimers = dashTimers;
+      
+      // pour la vie
+      life.vieActuelle = vieActuelle;
+      life.vieMax = vieMax;
+      life.damageReduction = damageReduction;
+      life.tempsInvinsibleAfterHit = tempsInvinsbleAfterHit;
+      life.stunAfterHit = stunAfterHit;
+
+      // pour les mouvements
+      move.speedX = speedX;
+      move.speedY = speedY;
+      move.dashCooldown = dashCooldown;
+   }
 }

@@ -75,10 +75,6 @@ public class AttaquesNormales : MonoBehaviour
                     {
                         attaque1 = true;
                         StartCoroutine(ResetTracking());
-                        anim.SetBool("isAttacking1",true);
-                        anim.SetBool("isAttacking2",false);
-                        anim.SetBool("isAttacking3",false);
-                        anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
@@ -93,11 +89,6 @@ public class AttaquesNormales : MonoBehaviour
                     {
                         attaque2 = true;
                         StartCoroutine(ResetTracking());
-
-                        anim.SetBool("isAttacking1",false);
-                        anim.SetBool("isAttacking2",true);
-                        anim.SetBool("isAttacking3",false);
-                        anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                        // buffer = false;
@@ -112,11 +103,6 @@ public class AttaquesNormales : MonoBehaviour
                     {
                         attaque3 = true;
                         StartCoroutine(ResetTracking());
-                        
-                        anim.SetBool("isAttacking1",false);
-                        anim.SetBool("isAttacking2",false);
-                        anim.SetBool("isAttacking3",true);
-                        anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
@@ -169,6 +155,9 @@ public class AttaquesNormales : MonoBehaviour
                 anim.SetBool("isAttacking1",false);
                 anim.SetBool("isAttacking2",false);
                 anim.SetBool("isAttacking3",false);
+                anim.SetBool("isAttacking1Down",false);
+                anim.SetBool("isAttacking2Down",false);
+                anim.SetBool("isAttacking3Down",false);
                 anim.SetBool("isIdle",true);
                 Debug.Log(stunDuration[i] >= stunDurationMax[i]);
                 canAttack = true;
@@ -202,9 +191,74 @@ public class AttaquesNormales : MonoBehaviour
         Vector2 charaPos = CharacterController.instance.transform.position;
         Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+        Debug.Log(angle);
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
+
+        // Gestion des animations
+        
+        if (angle > 45 && angle < 135) // attaque vers le haut
+        {
+           // SetBool les animation vers le haut
+        }
+        else if (angle < 45 && angle > -45 || angle > 135 && angle < 180 || angle > -180 && angle < -135) // attaque à gauche ou à droite
+        {
+            if (index == 0)
+            {
+                anim.SetBool("isAttacking1",true);
+                anim.SetBool("isAttacking2",false);
+                anim.SetBool("isAttacking3",false);
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking",false);
+            }
+            else if(index == 1)
+            {
+                anim.SetBool("isAttacking1",false);
+                anim.SetBool("isAttacking2",true);
+                anim.SetBool("isAttacking3",false);
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking",false);
+            }
+            else if(index == 2)
+            {
+                anim.SetBool("isAttacking1",false);
+                anim.SetBool("isAttacking2",false);
+                anim.SetBool("isAttacking3",true);
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking",false);
+            }
+            
+        }
+        else if (angle > -135 && angle < -45) // attaque vers le bas
+        {
+            if (index == 0)
+            {
+                anim.SetBool("isAttacking1Down",true);
+                anim.SetBool("isAttacking2Down",false);
+                anim.SetBool("isAttacking3Down",false);
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking",false);
+            }
+            else if(index == 1)
+            {
+                anim.SetBool("isAttacking1Down",false);
+                anim.SetBool("isAttacking2Down",true);
+                anim.SetBool("isAttacking3Down",false);
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking",false);
+            }
+            else if(index == 2)
+            {
+                anim.SetBool("isAttacking1Down",false);
+                anim.SetBool("isAttacking2Down",false);
+                anim.SetBool("isAttacking3Down",true);
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking",false);
+            }
+        }
+       
+        
         if (moveDirection.x > 0)
         {
             CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,0,CharacterController.instance.transform.localRotation.z);
