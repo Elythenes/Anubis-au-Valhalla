@@ -186,12 +186,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bca14d1accf40fb4a9a2bfd5653776d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 0}
   textDamage: {fileID: 8409354514928129382, guid: 0fcdc49bb218bbb479b20e4233ce65a3, type: 3}
   textHealDamage: {fileID: 0}
   mainCamera: {fileID: 0}
   player: {fileID: 6322498022790916544}
   gVolume: {fileID: 0}
   gVolumeMiss: {fileID: 0}
+  gVolumeMort: {fileID: 0}
   ankhShieldData: {fileID: 11400000, guid: 9ce3cadf4eba1454fb02d4e6a2e8974e, type: 2}
   knockbackAmount: 0
   stun: 0
@@ -203,11 +205,13 @@ MonoBehaviour:
   EffectMiss: 0
   t1: 0
   t2: 0
+  t3: 0
   vieActuelle: 0
   vieMax: 100
   damageReduction: 0
   tempsInvinsibleAfterHit: 2
   stunAfterHit: 0.2
+  isHurt: 0
 --- !u!1 &6322498022790916544
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +387,8 @@ MonoBehaviour:
   speedY: 28
   isAttacking: 0
   facing: 0
+  debutDash: 0
+  finDash: 0
   dashSpeed: 75
   diagonalDashSpeed: 0
   dashDuration: 0.1
@@ -390,7 +396,12 @@ MonoBehaviour:
   isDashing: 0
   canDash: 1
   ghost: {fileID: 6322498022790916604}
+  roomBorders:
+    serializedVersion: 2
+    m_Bits: 0
+  canPassThrough: 0
   rb: {fileID: 0}
+  movement: {x: 0, y: 0}
   astarPathTimer: 0
   astarPathTimerMax: 1
   interaction: 97
@@ -420,7 +431,7 @@ MonoBehaviour:
   - {x: 3, y: 3}
   isC: 000000
   damage: 0a0000000f00000014000000
-  criticalRate: []
+  criticalRate: 5
   dureeHitbox:
   - 0.2
   - 0.3
@@ -449,6 +460,10 @@ MonoBehaviour:
   - 0.2
   - 0.2
   - 0.2
+  attaque1: 0
+  attaque2: 0
+  attaque3: 0
+  attaqueSpe: 0
   abandonOn: 0
   canAttack: 1
   comboActuel: 0
