@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Pouvoir Foudre" ,menuName = "Spell System/SpellObject/Pouvoir Foudre")]
-public class PouvoirFoudreObject : SpellObject
+[CreateAssetMenu(fileName = "Pouvoir Ame" ,menuName = "Spell System/SpellObject/Pouvoir Ame")]
+public class PouvoirAmeObject : SpellObject
 {
     public bool canCast;
     public float duration;
@@ -13,6 +13,7 @@ public class PouvoirFoudreObject : SpellObject
 
     [Header("ATTAQUE NORMALE")]
     public int attaqueNormaleDamage;
+    public float attaqueNormaleDuration;
 
     [Header("ATTAQUE DASH")] 
     public float staggerDash;
@@ -31,6 +32,6 @@ public class PouvoirFoudreObject : SpellObject
     public Vector3 bulletScale;
     public void Awake()
     {
-        type = SpellType.PouvoirFoudre;
+        type = SpellType.PouvoirAme;
     }
 }
