@@ -15,12 +15,11 @@ public class IA_Monstre1 : MonoBehaviour
     [Header("Vie et visuels")]
     public float vieMax;
     public float vieActuelle;
-    public Animator animator;
+    public Animator anim;
     public GameObject emptyLayers;
     public MonsterLifeManager life;
 
-    [Header("Déplacements")] 
-    public SkeletonMecanim mecanim;
+    [Header("Déplacements")]
     public GameObject player;
     public AIPath aipath;
     private Path path;
@@ -58,6 +57,7 @@ public class IA_Monstre1 : MonoBehaviour
 
     private void Start()
     {
+        anim.SetBool("isIdle", true);
         player = GameObject.FindGameObjectWithTag("Player");
         playerFollow.enabled = true;
         ai = GetComponent<IAstarAI>();
@@ -71,6 +71,10 @@ public class IA_Monstre1 : MonoBehaviour
 
     public void Update()
     {
+        if (life.vieActuelle <= 0)
+        {
+            anim.SetBool("isDead", true);
+        }
         /*if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
         {
            sr.sortingOrder = 2;
@@ -80,23 +84,25 @@ public class IA_Monstre1 : MonoBehaviour
           sr.sortingOrder = 1;
         }*/
 
-        if (!isDashing)
+        if (isDashing)
         {
-            if (transform.localPosition.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
+            if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
             {
                 transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
             }
-            else if (transform.localPosition.x > player.transform.position.x)
+            else if (transform.position.x > player.transform.position.x)
             {
                 transform.localRotation = Quaternion.Euler(transform.localRotation.x, -180, transform.localRotation.z);
             }  
+
         }
+           
            
 
         if (aipath.reachedDestination&& !life.isMomified) // Quand le monstre arrive proche du joueur, il commence le dash
         {
             if (isDashing == false && canDash)
-            { 
+            {
                 CooldownDashTimer = 0;
                 targetPerso  = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
                 aipath.canMove = false;
@@ -106,6 +112,9 @@ public class IA_Monstre1 : MonoBehaviour
 
         if (isDashing && !life.isMomified) // Faire dasher le monstre
         {
+            anim.SetBool("StartDash", true);
+            anim.SetBool("IsIdle", false);
+            anim.SetBool("IsRuning", false);
             LagDebutDash += Time.deltaTime;
 
             if (ShakeEnable)
@@ -116,13 +125,16 @@ public class IA_Monstre1 : MonoBehaviour
 
             if (LagDebutDash >= LagDebutDashMax&& !life.isMomified)
             {
-                
+                anim.SetBool("StartDash",false);
+                anim.SetBool("Dash", true);
                 stopDash = true;
                 hitboxActive = true;
                 timerDash += Time.deltaTime;
 
                 if (timerDash > dashDuration&& !life.isMomified)
                 {
+                    anim.SetBool("StopDash", true);
+                    anim.SetBool("Dash",false);
                     hitboxActive = false;
                     ShakeEnable = true;
                     rb.velocity = (Vector2.zero);
@@ -136,12 +148,16 @@ public class IA_Monstre1 : MonoBehaviour
         {
             aipath.canMove = false;
             CooldownDashTimer += Time.deltaTime;
+            anim.SetBool("Dash", false);
+            anim.SetBool("StopDash", true);
             //gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
         }
         
 
         if (CooldownDashTimer >= CooldownDash&& !life.isMomified)// Cooldown de l'attaque
         {
+            anim.SetBool("IsRuning", true);
+            anim.SetBool("StopDash", false);
             isWondering = false;
             aipath.canMove = true;
             canDash = true;
