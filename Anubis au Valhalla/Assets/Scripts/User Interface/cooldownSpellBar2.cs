@@ -73,6 +73,12 @@ public class cooldownSpellBar2 : MonoBehaviour
                     compteurTempsRestant.enabled = true;
                     compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirAme>().secondesRestantes) + "");
                 }
+                
+                if (currentPower.CompareTag("Malediction"))
+                {
+                    compteurTempsRestant.enabled = true;
+                    compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirMalediction>().secondesRestantes) + "");
+                }
             }
             
         }

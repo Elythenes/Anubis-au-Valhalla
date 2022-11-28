@@ -18,13 +18,13 @@ public class Akh : MonoBehaviour
     {
         if (col.gameObject.tag == "Monstre")
         {
-            monsterList.Add(col.gameObject.GetComponent<MonsterLifeManager>());
+            monsterList.Add(col.gameObject.GetComponentInParent<MonsterLifeManager>());
             foreach (MonsterLifeManager monstre in monsterList)
             {
                 Debug.Log("touché");
-                monstre.GetComponentInParent<MonsterLifeManager>().DamageText(soPouvoirAme.attaqueNormaleDamage + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5));
-                monstre.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirAme.attaqueNormaleDamage + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5),soPouvoirAme.stagger);
-                monsterList.Clear();
+                monstre.DamageText(soPouvoirAme.attaqueNormaleDamage + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5));
+                monstre.TakeDamage(soPouvoirAme.attaqueNormaleDamage + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5),soPouvoirAme.stagger);
+                //monsterList.Clear();
             }
         }
     }

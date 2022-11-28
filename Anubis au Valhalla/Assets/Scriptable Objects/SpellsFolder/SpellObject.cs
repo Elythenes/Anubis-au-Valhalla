@@ -14,7 +14,8 @@ public enum SpellType
     PouvoirPlaie,
     PouvoirEau,
     PouvoirFoudre,
-    PouvoirAme
+    PouvoirAme,
+    PouvoirMalediction
 }
 
 public abstract class SpellObject : ScriptableObject
