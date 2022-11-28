@@ -63,6 +63,11 @@ public class IA_Corbeau : MonoBehaviour
 
     public void Update()
     {
+        if (life.vieActuelle < 0)
+        {
+            Destroy(holder);
+        }
+        
         if (player.transform.position.y >
             emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
         {
