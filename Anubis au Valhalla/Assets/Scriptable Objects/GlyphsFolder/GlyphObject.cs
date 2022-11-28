@@ -11,15 +11,13 @@ public class GlyphObject : ScriptableObject
     public GlyphPart partie;
     //public GlyphType type;
     public GlyphLevel level;
+    public float price;
     public int index;
     [TextArea(6,20)] public string description;
     //[TextArea(5, 10)] public string citation;
     //public GlyphElement element;
     [Range(1, 4)] public int tier = 1;
     //public GlyphEffect effectType;
-    
-    [BoxGroup("PRICE")] public float lowerPriceRange;
-    [BoxGroup("PRICE")] public float upperPriceRange;
     [BoxGroup("GRAPH")] public Texture icone;
     [BoxGroup("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
     [BoxGroup("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
