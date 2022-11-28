@@ -43,6 +43,9 @@ public class UiManager : MonoBehaviour
 
     [Header("COLLECTED POTION MENU")] 
     public GameObject menuCollectPotion;
+    public GameObject spritePotion;
+    
+    
     private void Awake()
     {
         if (instance == null)
@@ -97,8 +100,10 @@ public class UiManager : MonoBehaviour
 
    public void CollectPotion()
     {
+        Debug.Log("entrée dans la fonction CollectPotion");
         PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside; 
         PotionManager.Instance.isPotionSlotFill = true;
+        spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
     }
 
     public void DebugButton()
