@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using NaughtyAttributes;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UI;
@@ -27,6 +28,14 @@ public class Shop : MonoBehaviour
     public List<Button> upsButton;
     public List<TextMeshProUGUI> buttonText;
     public List<TextMeshProUGUI> description;
+    public List<TextMeshProUGUI> costText;
+    private List<int> cost = new List<int>();
+
+    [Foldout("Consumables")] public List<Button> consumablesButton;
+    [Foldout("Consumables")] public List<TextMeshProUGUI> consumablesTitle;
+    [Foldout("Consumables")] public List<TextMeshProUGUI> consumableDesc;
+    [Foldout("Consumables")] public List<TextMeshProUGUI> costConsumables;
+    private List<int> consumablesCost = new List<int>();
 
     public List<GlyphObject> choice;
 
@@ -67,7 +76,6 @@ public class Shop : MonoBehaviour
     {
         cam = Camera.main;
         glyphUpdater = GameObject.Find("GlyphManager").GetComponent<GlyphInventory>();
-        SalleGennerator.instance.DisableOnShop = weaponShop;
     }
 
     // Update is called once per frame
@@ -76,6 +84,17 @@ public class Shop : MonoBehaviour
         if (open && cam.orthographicSize > 2)
         {
             OpenShop();
+        }
+
+        if (cost.Count > 0)
+        {
+            for (int i = 0; i < cost.Count; i++)
+            {
+                if (cost[i] > Souls.instance.soulBank)
+                {
+                    upsButton[i].interactable = false;
+                }
+            }
         }
 
         if (!open)
@@ -94,10 +113,12 @@ public class Shop : MonoBehaviour
             CharacterController.instance.canDash = false;
             AttaquesNormales.instance.canAttack = false;
             shopUI.DOFade(1, 1);
-            SalleGennerator.instance.DisableOnShop.SetActive(true);
+            weaponShop.SetActive(true);
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
+
+    #region GeneralShopFunctions
 
     void OpenShop()
     {
@@ -120,11 +141,15 @@ public class Shop : MonoBehaviour
             //shopUI.gameObject.SetActive(false);
             weaponShop.transform.localScale = Vector3.one;
         });
-        SalleGennerator.instance.DisableOnShop.SetActive(true);
+        weaponShop.SetActive(false);
 
     }
 
-    public void MoveCam(int buttonNumber)
+    #endregion
+
+    #region WeaponShop
+
+        public void MoveCam(int buttonNumber)
     {
         cam.orthographicSize = 1;
         weaponShop.transform.localScale = Vector3.one * 3;
@@ -167,16 +192,26 @@ public class Shop : MonoBehaviour
                 for (int i = 0; i < upsButton.Count; i++)
                 {
                     var index = Random.Range(0, upgradesList.UpsLame.Count);
-                    choice.Add(upgradesList.UpsLame[index].Lames[0]);
-                    buttonText[i].text = "" + upgradesList.UpsLame[index].Lames[0].nom;
-                    description[i].text = "" + upgradesList.UpsLame[index].Lames[0].description;
+                    var lame = upgradesList.UpsLame[index].Lames[0];
+                    var randCost = Mathf.RoundToInt(Random.Range(lame.lowerPriceRange, lame.upperPriceRange + 1));
+                    choice.Add(lame);
+                    cost.Add(randCost);
+                    costText[i].text = "" + randCost;
+                    buttonText[i].text = "" + lame.nom;
+                    description[i].text = "" + lame.description;
                 }
                 break;
             case 1:
                 for (int i = 0; i < upsButton.Count; i++)
                 {
                     var index = Random.Range(0, upgradesList.UpsHampe.Count);
-                    choice.Add(upgradesList.UpsHampe[index].Hampes[0]);
+                    var hampe = upgradesList.UpsHampe[index].Hampes[0];
+                    var randCost = Mathf.RoundToInt(Random.Range(hampe.lowerPriceRange, hampe.upperPriceRange + 1));
+                    choice.Add(hampe);
+                    cost.Add(randCost);
+                    costText[i].text = "" + randCost;
+                    buttonText[i].text = "" + hampe.nom;
+                    description[i].text = "" + hampe.description;
                     
                 }
                 break;
@@ -184,8 +219,15 @@ public class Shop : MonoBehaviour
                 for (int i = 0; i < upsButton.Count; i++)
                 {
                     var index = Random.Range(0, upgradesList.UpsManche.Count);
-                    choice.Add(upgradesList.UpsManche[index].Manches[0]);
+                    var manche = upgradesList.UpsManche[index].Manches[0];
+                    var randCost = Mathf.RoundToInt(Random.Range(manche.lowerPriceRange, manche.upperPriceRange + 1));
+                    choice.Add(manche);
+                    cost.Add(randCost);
+                    costText[i].text = "" + randCost;
+                    buttonText[i].text = "" + manche.nom;
+                    description[i].text = "" + manche.description;
                 }
+                Debug.Log(cost.Count);
                 break;
         }
     }
@@ -205,7 +247,34 @@ public class Shop : MonoBehaviour
                 upgradesList.UpsManche[buttonType].Manches.Remove(choice[buttonType]);
                 break;
         }
+        Souls.instance.soulBank -= cost[buttonType];
+        Souls.instance.UpdateSoulsCounter();
         choice.Clear();
+        cost.Clear();
+        Debug.Log(cost.Count);
+    }
+
+    #endregion
+    
+    public void GenerateConsumables()
+    {
+        for (int i = 0; i < consumablesButton.Count; i++)
+        {
+            if (i == 0)
+            {
+                consumablesTitle[i].text = "Soins";
+                consumableDesc[i].text = "Vous soigne de " + Mathf.RoundToInt(DamageManager.instance.vieMax / 3.5f) + " PV";
+                consumablesCost.Add(Mathf.RoundToInt(10 * Mathf.Pow(SalleGennerator.instance.roomsDone, 0.8f)));
+                costConsumables[i].text = consumablesCost[i].ToString();
+            }
+        }
+    }
+
+    public void InstantHeal()
+    {
+        DamageManager.instance.vieActuelle += Mathf.RoundToInt(DamageManager.instance.vieMax / 3.5f);
+        Souls.instance.soulBank -= consumablesCost[0];
+        consumablesCost.Clear();
     }
 }
 
