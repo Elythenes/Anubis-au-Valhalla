@@ -9,8 +9,6 @@ using UnityEngine.Serialization;
 public class AttaquesNormales : MonoBehaviour
 {
     public Animator anim;
-    public Animator animTrail;
-    public TrailRenderer trailAttaque;
     private InputManager controls;
     public static AttaquesNormales instance;
 
@@ -77,12 +75,9 @@ public class AttaquesNormales : MonoBehaviour
                     {
                         attaque1 = true;
                         StartCoroutine(ResetTracking());
-                        trailAttaque.emitting = true;
-                        animTrail.SetBool("Attack1",true);
-                        animTrail.SetBool("Attack2",false);
-                        
                         anim.SetBool("isAttacking1",true);
                         anim.SetBool("isAttacking2",false);
+                        anim.SetBool("isAttacking3",false);
                         anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
@@ -98,12 +93,10 @@ public class AttaquesNormales : MonoBehaviour
                     {
                         attaque2 = true;
                         StartCoroutine(ResetTracking());
-                        trailAttaque.emitting = true;
-                        animTrail.SetBool("Attack1",false);
-                        animTrail.SetBool("Attack2",true);
-                        
-                        anim.SetBool("isAttacking2",true);
+
                         anim.SetBool("isAttacking1",false);
+                        anim.SetBool("isAttacking2",true);
+                        anim.SetBool("isAttacking3",false);
                         anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
@@ -119,6 +112,11 @@ public class AttaquesNormales : MonoBehaviour
                     {
                         attaque3 = true;
                         StartCoroutine(ResetTracking());
+                        
+                        anim.SetBool("isAttacking1",false);
+                        anim.SetBool("isAttacking2",false);
+                        anim.SetBool("isAttacking3",true);
+                        anim.SetBool("isIdle",false);
                         abandonOn = false;
                         cooldownAbandonComboTimer = 0;
                         //buffer = false;
@@ -168,11 +166,9 @@ public class AttaquesNormales : MonoBehaviour
             }
             if (stunDuration[i] >= stunDurationMax[i])
             {
-                trailAttaque.emitting = false;
-                animTrail.SetBool("Attack1",false);
-                animTrail.SetBool("Attack2",false);
                 anim.SetBool("isAttacking1",false);
                 anim.SetBool("isAttacking2",false);
+                anim.SetBool("isAttacking3",false);
                 anim.SetBool("isIdle",true);
                 Debug.Log(stunDuration[i] >= stunDurationMax[i]);
                 canAttack = true;

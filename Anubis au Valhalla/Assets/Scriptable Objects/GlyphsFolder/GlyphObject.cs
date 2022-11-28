@@ -28,34 +28,34 @@ public class GlyphObject : ScriptableObject
     [BoxGroup("Glyph Type")] public bool isOther = false;*/
 
     public GlyphEffect effectType;
-    [Foldout("PRICE")] public float lowerPriceRange;
-    [Foldout("PRICE")] public float upperPriceRange;
-    [Foldout("GRAPH")] public Texture icone;
-    [Foldout("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
-    [Foldout("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
+    [BoxGroup("PRICE")] public float lowerPriceRange;
+    [BoxGroup("PRICE")] public float upperPriceRange;
+    [BoxGroup("GRAPH")] public Texture icone;
+    [BoxGroup("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
+    [BoxGroup("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
     
-    [Foldout("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.None;
-    [Foldout("BASIC STAT UP")] public int bonusBasicStat = 5;
-    [Foldout("BASIC STAT UP")] public AnubisStat otherStat = AnubisStat.None;
-    [Foldout("BASIC STAT UP")] public int otherBonusBasicStat = 0;
+    [BoxGroup("BASIC STAT UP")] public AnubisStat anubisStat = AnubisStat.None;
+    [BoxGroup("BASIC STAT UP")] public int bonusBasicStat = 5;
+    [BoxGroup("BASIC STAT UP")] public AnubisStat otherStat = AnubisStat.None;
+    [BoxGroup("BASIC STAT UP")] public int otherBonusBasicStat = 0;
     
-    [Foldout("SITUATIONAL STAT UP")] public AnubisStat situationalStat = AnubisStat.None;
-    [Foldout("SITUATIONAL STAT UP")] public int bonusSituationalStat = 0;
+    [BoxGroup("SITUATIONAL STAT UP")] public AnubisStat situationalStat = AnubisStat.None;
+    [BoxGroup("SITUATIONAL STAT UP")] public int bonusSituationalStat = 0;
     
-    //[Foldout("ELEMENTAL")] public GlyphElement glyphElement;
+    //[BoxGroup("ELEMENTAL")] public GlyphElement glyphElement;
     
-    [Foldout("ADDITIONAL EFFECT")] public int valeurPourLeHeader2;
+    [BoxGroup("ADDITIONAL EFFECT")] public int valeurPourLeHeader2;
     
-    [Foldout("TRIGGER EFFECT")] public bool isTriggerActive = false;
+    [BoxGroup("TRIGGER EFFECT")] public bool isTriggerActive = false;
 
-    [Foldout("CHARGE BASED")] public int chargeBase = 0;
-    [Foldout("CHARGE BASED")] public int chargeNumber = 10;
+    [BoxGroup("CHARGE BASED")] public int chargeBase = 0;
+    [BoxGroup("CHARGE BASED")] public int chargeNumber = 10;
 
-    [Foldout("TIME BASED")] public float cooldownBeforeEffect = 5f;
+    [BoxGroup("TIME BASED")] public float cooldownBeforeEffect = 5f;
 
-    [Foldout("BOOL EFFECT")] public bool isEffectActive = true;
+    [BoxGroup("BOOL EFFECT")] public bool isEffectActive = true;
 
-    [Foldout("BOOL EFFECT")] public float pourLeOther;
+    [BoxGroup("BOOL EFFECT")] public float pourLeOther;
     
     
     public enum GlyphPart

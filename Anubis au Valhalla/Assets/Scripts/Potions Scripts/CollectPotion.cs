@@ -19,7 +19,7 @@ public class CollectPotion : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other) //détecte si un spell est sur le joueur
     {
-        if (other.gameObject.CompareTag("CollectableSpell"))
+        if (other.gameObject.CompareTag("CollectablePotion"))
         {
             isPotionCollectable = true;
             collectablePotion = other.gameObject;
@@ -28,7 +28,7 @@ public class CollectPotion : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other) //c'est du Debug, ne sert pas vraiment
     {
-        if (other.gameObject.CompareTag("CollectableSpell"))
+        if (other.gameObject.CompareTag("CollectablePotion"))
         {
             isPotionCollectable = false;
             collectablePotion = null;
@@ -41,7 +41,8 @@ public class CollectPotion : MonoBehaviour
         {
             if (Input.GetKeyDown(interaction))
             {
-                UiManager.instance.ActivateMenu();
+                Debug.Log("potion récupéré");
+                UiManager.instance.CollectPotion();
             }
         }
     }
