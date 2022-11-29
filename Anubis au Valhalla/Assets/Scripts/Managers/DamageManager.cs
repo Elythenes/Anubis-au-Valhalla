@@ -78,9 +78,9 @@ stats = AnubisCurrentStats.instance;
     private void Update()
     {
       
-        if (vieActuelle > vieMax)
+        if (stats.vieActuelle > stats.vieMax)
         {
-            vieActuelle = vieMax;
+            stats.vieActuelle = stats.vieMax;
         }
     }
 
@@ -97,16 +97,16 @@ stats = AnubisCurrentStats.instance;
                 CharacterController.instance.rb.AddForce(damage*angle*knockbackAmount, ForceMode2D.Impulse);
                 StartCoroutine(RedScreenStart(timeRedScreen));
                 HitStop(timeHitStop,false);
-                vieActuelle -= damage / damageReduction;
+                stats.vieActuelle -= damage / stats.damageReduction;
                 GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
-                textObj.GetComponentInChildren<TextMeshPro>().SetText((damage / damageReduction).ToString());
+                textObj.GetComponentInChildren<TextMeshPro>().SetText((damage / stats.damageReduction).ToString());
                 
                 
-                if (vieActuelle <= 0)
+                if (stats.vieActuelle <= 0)
                 {
                     Debug.Log("il semblerait qu'il soit mort");
                     StopCoroutine(TempsStun());
-                    vieActuelle = 0;
+                    stats.vieActuelle = 0;
                     Die();
                 }
                 else
@@ -116,7 +116,7 @@ stats = AnubisCurrentStats.instance;
                     StartCoroutine(TempsStun());
                 }
                 
-                LifeBarManager.instance.SetHealth(vieActuelle);
+                LifeBarManager.instance.SetHealth(stats.vieActuelle);
                 
             }
             else if(CharacterController.instance.isDashing)
@@ -136,14 +136,14 @@ stats = AnubisCurrentStats.instance;
 
     public void Heal(int healAmount)
     {
-        vieActuelle += healAmount;
+        stats.vieActuelle += healAmount;
         GameObject textHealObj = Instantiate(textHealDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
         textHealObj.GetComponentInChildren<TextMeshPro>().SetText((healAmount).ToString());
-        if (vieActuelle >= 100)
+        if (stats.vieActuelle >= 100)
         {
-            vieActuelle = 100;
+            stats.vieActuelle = 100;
         }
-        LifeBarManager.instance.SetHealth(vieActuelle);
+        LifeBarManager.instance.SetHealth(stats.vieActuelle);
     }
 
     public void HitStop(float duration, bool miss)

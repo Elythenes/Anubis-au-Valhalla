@@ -42,6 +42,8 @@ public class SpellManager : MonoBehaviour
     [SerializeField] public PouvoirFoudre spellPFOData;
     [SerializeField] public PouvoirAmeObject spellPAo;
     [SerializeField] public PouvoirAme spellPAData;
+    [SerializeField] public PouvoirMaledictionObject spellPMo;
+    [SerializeField] public PouvoirMalediction spellPMData;
     
     
     [SerializeField] public SpellStaticAreaObject spellSAo;
@@ -120,7 +122,8 @@ public class SpellManager : MonoBehaviour
         PouvoirPlaie = 12,
         PouvoirEau = 13,
         PouvoirFoudre = 14,
-        PouvoirAme = 15
+        PouvoirAme = 15,
+        PouvoirMalediction = 16
     }
 
     SpellNumber ConvertSpellIndex(SpellObject spellObject)
@@ -160,6 +163,11 @@ public class SpellManager : MonoBehaviour
                 case SpellNumber.PouvoirAme:
                     PouvoirAmeObject pouvoirAmeData1 = prefabA.GetComponent<PouvoirAme>().soPouvoirAme;
                     PouvoirAme(spellSlot,pouvoirAmeData1);
+                    break;
+                
+                case SpellNumber.PouvoirMalediction:
+                    PouvoirMaledictionObject pouvoirMaledictionData1 = prefabA.GetComponent<PouvoirMalediction>().soPouvoirMalediction;
+                    PouvoirMalediction(spellSlot,pouvoirMaledictionData1);
                     break;
                 
               /*  case SpellNumber.Fireball:
@@ -203,10 +211,10 @@ public class SpellManager : MonoBehaviour
                     TimeLimitedSpell(prefabA,spellSlot,AkhObj1);
                     break;*/
                 
-                case SpellNumber.PlumeMaat:
+             /*   case SpellNumber.PlumeMaat:
                     SpellStaticAreaObject PlumeObj1 = prefabA.GetComponent<PlumeMaat>().soPlumeMaat;
                     TimeLimitedSpell(prefabA,spellSlot,PlumeObj1);
-                    break;
+                    break;*/
                 
                 case SpellNumber.FuryOfSand:
                     FollowingSpell(prefabA, spellSlot);
@@ -247,6 +255,11 @@ public class SpellManager : MonoBehaviour
                 case SpellNumber.PouvoirAme:
                     PouvoirAmeObject pouvoirAmeData2 = prefabB.GetComponent<PouvoirAme>().soPouvoirAme;
                     PouvoirAme(spellSlot,pouvoirAmeData2);
+                    break;
+                
+                case SpellNumber.PouvoirMalediction:
+                    PouvoirMaledictionObject pouvoirMaledictionData2 = prefabB.GetComponent<PouvoirMalediction>().soPouvoirMalediction;
+                    PouvoirMalediction(spellSlot,pouvoirMaledictionData2);
                     break;
                 
                 /*case SpellNumber.Fireball:
@@ -290,11 +303,11 @@ public class SpellManager : MonoBehaviour
                     TimeLimitedSpell(prefabB,spellSlot,AkhObj2);
                     break;*/
                 
-                case SpellNumber.PlumeMaat:
+               /* case SpellNumber.PlumeMaat:
                     SpellStaticAreaObject PlumeObj2 = prefabB.GetComponent<PlumeMaat>().soPlumeMaat;
                     TimeLimitedSpell(prefabB,spellSlot,PlumeObj2);
                     break;
-            
+            */
                 case SpellNumber.FuryOfSand:
                     Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabB, spellSlot);
@@ -581,7 +594,52 @@ public class SpellManager : MonoBehaviour
                    }
                }
                break;
-            
+           
+           case SpellNumber.PouvoirMalediction:
+               if (slotNumber == 1)
+               {
+                   spellPMData = UiManager.instance.currentSpell1Holder.GetComponent<PouvoirMalediction>();
+                   spellPMo = prefabA.GetComponent<PouvoirMalediction>().soPouvoirMalediction;
+                   cooldownSlot1 = spellPMo.duration;
+               }
+
+               if (slotNumber == 2)
+               {
+                   spellPMData = UiManager.instance.currentSpell2Holder.GetComponent<PouvoirMalediction>();
+                   spellPMo = prefabB.GetComponent<PouvoirMalediction>().soPouvoirMalediction;
+                   cooldownSlot2 = spellPMo.duration;
+               }
+                
+               if (spellPMData.secondesRestantes > 0)
+               {
+                   spellPMo.canCast = true;
+
+                   if (slotNumber == 1)
+                   {
+                       cooldownSlotTimer1 = spellPMData.secondesRestantes;
+                   }
+
+                   if (slotNumber == 2)
+                   {
+                       cooldownSlotTimer2 = spellPMData.secondesRestantes;
+                   }
+               }
+               else
+               {
+                   spellPMo.canCast = false;
+
+                   if (slotNumber == 1)
+                   {
+                       cooldownSlotTimer1 = 0;
+                   }
+
+                   if (slotNumber == 2)
+                   {
+                       cooldownSlotTimer2 = 0;
+                   }
+               }
+               break;
+
             /*case SpellNumber.OiseauBa:
                 if (slotNumber == 1)
                 {
@@ -713,7 +771,7 @@ public class SpellManager : MonoBehaviour
                 }
                 break;*/
 
-            case SpellNumber.PlumeMaat:
+           /* case SpellNumber.PlumeMaat:
                 if (slotNumber == 1)
                 {
                     spellSAo = prefabA.GetComponent<PlumeMaat>().soPlumeMaat;
@@ -755,7 +813,7 @@ public class SpellManager : MonoBehaviour
                         cooldownSlotTimer2 = 0;
                     }
                 }
-                break;
+                break;*/
             
             case SpellNumber.FuryOfSand:
                 //Debug.Log("CD Fury of Sand");
@@ -1177,6 +1235,31 @@ public class SpellManager : MonoBehaviour
             //indicDirection.color = Color.white;
             spellPAData.isActive = false;
             spellPAo.canCast = false;
+        }
+    }
+    
+    void PouvoirMalediction(int slot,PouvoirMaledictionObject spellPMo)
+    {
+        if (!spellPMData.isActive && !spellPMData.lockCast)
+        {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
+            //indicDirection.color = Color.red;
+            spellPMData.isActive = true;
+            spellPMo.canCast = true;
+        }
+        
+        if(!spellPMData.isActive && !spellPMData.lockCast)
+        {
+            //indicDirection.color = Color.white;
+            spellPMData.isActive = false;
+            spellPMo.canCast = false;
         }
     }
     
