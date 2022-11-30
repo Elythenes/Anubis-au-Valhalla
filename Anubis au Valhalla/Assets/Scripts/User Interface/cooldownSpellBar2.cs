@@ -49,29 +49,36 @@ public class cooldownSpellBar2 : MonoBehaviour
                     compteurTempsRestant.enabled = true;
                     compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirFeu>().secondesRestantes) + "");
                 }
-                /*else
-                {
-                    compteurTempsRestant.enabled = false;
-                }*/
-            
+
                 if (currentPower.CompareTag("Plaie"))
                 {
                     compteurTempsRestant.enabled = true;
                     compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirPlaie>().secondesRestantes) + "");
                 }
-                /*else
-                {
-                    compteurTempsRestant.enabled = false;
-                }*/
+              
                 if (currentPower.CompareTag("Eau"))
                 {
                     compteurTempsRestant.enabled = true;
                     compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirEau>().secondesRestantes) + "");
                 }
-                /*else
+              
+                if (currentPower.CompareTag("Foudre"))
                 {
-                    compteurTempsRestant.enabled = false;
-                }*/
+                    compteurTempsRestant.enabled = true;
+                    compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirFoudre>().secondesRestantes) + "");
+                }
+                
+                if (currentPower.CompareTag("Ame"))
+                {
+                    compteurTempsRestant.enabled = true;
+                    compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirAme>().secondesRestantes) + "");
+                }
+                
+                if (currentPower.CompareTag("Malediction"))
+                {
+                    compteurTempsRestant.enabled = true;
+                    compteurTempsRestant.SetText(Mathf.RoundToInt(currentPower.GetComponent<PouvoirMalediction>().secondesRestantes) + "");
+                }
             }
             
         }

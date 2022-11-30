@@ -12,7 +12,10 @@ public enum SpellType
     SpawnEntity,
     PouvoirFeu,
     PouvoirPlaie,
-    PouvoirEau
+    PouvoirEau,
+    PouvoirFoudre,
+    PouvoirAme,
+    PouvoirMalediction
 }
 
 public abstract class SpellObject : ScriptableObject

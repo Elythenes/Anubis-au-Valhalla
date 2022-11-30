@@ -32,12 +32,19 @@ public class SpellManager : MonoBehaviour
     public float cooldownSlotTimer2;
 
     [Header("SPELL HIDDEN VAR")] 
-    [SerializeField] public PouvoirFeuObject spellPFo;
-    [SerializeField] public PouvoirFeu spellPFData;
+    [SerializeField] public PouvoirFeuObject spellPFEo;
+    [SerializeField] public PouvoirFeu spellPFEData;
     [SerializeField] public PouvoirPlaieObject spellPPo;
     [SerializeField] public PouvoirPlaie spellPPData;
     [SerializeField] public PouvoirEauObject spellPEo;
     [SerializeField] public PouvoirEau spellPEData;
+    [SerializeField] public PouvoirFoudreObject spellPFOo;
+    [SerializeField] public PouvoirFoudre spellPFOData;
+    [SerializeField] public PouvoirAmeObject spellPAo;
+    [SerializeField] public PouvoirAme spellPAData;
+    [SerializeField] public PouvoirMaledictionObject spellPMo;
+    [SerializeField] public PouvoirMalediction spellPMData;
+    
     
     [SerializeField] public SpellStaticAreaObject spellSAo;
     [SerializeField] public SpellFollowingAreaObject spellFAo;
@@ -113,7 +120,10 @@ public class SpellManager : MonoBehaviour
         Sepulture = 10,
         PouvoirFeu = 11,
         PouvoirPlaie = 12,
-        PouvoirEau = 13
+        PouvoirEau = 13,
+        PouvoirFoudre = 14,
+        PouvoirAme = 15,
+        PouvoirMalediction = 16
     }
 
     SpellNumber ConvertSpellIndex(SpellObject spellObject)
@@ -143,6 +153,21 @@ public class SpellManager : MonoBehaviour
                 case SpellNumber.PouvoirEau:
                     PouvoirEauObject pouvoirEauData1 = prefabA.GetComponent<PouvoirEau>().soPouvoirEau;
                     PouvoirEau(spellSlot,pouvoirEauData1);
+                    break;
+                
+                case SpellNumber.PouvoirFoudre:
+                    PouvoirFoudreObject pouvoirFoudreData1 = prefabA.GetComponent<PouvoirFoudre>().soPouvoirFoudre;
+                    PouvoirFoudre(spellSlot,pouvoirFoudreData1);
+                    break;
+                
+                case SpellNumber.PouvoirAme:
+                    PouvoirAmeObject pouvoirAmeData1 = prefabA.GetComponent<PouvoirAme>().soPouvoirAme;
+                    PouvoirAme(spellSlot,pouvoirAmeData1);
+                    break;
+                
+                case SpellNumber.PouvoirMalediction:
+                    PouvoirMaledictionObject pouvoirMaledictionData1 = prefabA.GetComponent<PouvoirMalediction>().soPouvoirMalediction;
+                    PouvoirMalediction(spellSlot,pouvoirMaledictionData1);
                     break;
                 
               /*  case SpellNumber.Fireball:
@@ -181,15 +206,15 @@ public class SpellManager : MonoBehaviour
                     break;*/
 
             
-                case SpellNumber.Akh:
+                /*case SpellNumber.Akh:
                     SpellStaticAreaObject AkhObj1 = prefabA.GetComponent<Akh>().soAkh;
                     TimeLimitedSpell(prefabA,spellSlot,AkhObj1);
-                    break;
+                    break;*/
                 
-                case SpellNumber.PlumeMaat:
+             /*   case SpellNumber.PlumeMaat:
                     SpellStaticAreaObject PlumeObj1 = prefabA.GetComponent<PlumeMaat>().soPlumeMaat;
                     TimeLimitedSpell(prefabA,spellSlot,PlumeObj1);
-                    break;
+                    break;*/
                 
                 case SpellNumber.FuryOfSand:
                     FollowingSpell(prefabA, spellSlot);
@@ -220,6 +245,21 @@ public class SpellManager : MonoBehaviour
                 case SpellNumber.PouvoirEau:
                     PouvoirEauObject pouvoirEauData2 = prefabB.GetComponent<PouvoirEau>().soPouvoirEau;
                     PouvoirEau(spellSlot,pouvoirEauData2);
+                    break;
+                
+                case SpellNumber.PouvoirFoudre:
+                    PouvoirFoudreObject pouvoirFoudreData2 = prefabB.GetComponent<PouvoirFoudre>().soPouvoirFoudre;
+                    PouvoirFoudre(spellSlot,pouvoirFoudreData2);
+                    break;
+                
+                case SpellNumber.PouvoirAme:
+                    PouvoirAmeObject pouvoirAmeData2 = prefabB.GetComponent<PouvoirAme>().soPouvoirAme;
+                    PouvoirAme(spellSlot,pouvoirAmeData2);
+                    break;
+                
+                case SpellNumber.PouvoirMalediction:
+                    PouvoirMaledictionObject pouvoirMaledictionData2 = prefabB.GetComponent<PouvoirMalediction>().soPouvoirMalediction;
+                    PouvoirMalediction(spellSlot,pouvoirMaledictionData2);
                     break;
                 
                 /*case SpellNumber.Fireball:
@@ -258,16 +298,16 @@ public class SpellManager : MonoBehaviour
                     SpawnEntity(prefabB,spellSlot,SarcophageObj2);
                     break;*/
                 
-                case SpellNumber.Akh:
+              /*  case SpellNumber.Akh:
                     SpellStaticAreaObject AkhObj2 = prefabB.GetComponent<Akh>().soAkh;
                     TimeLimitedSpell(prefabB,spellSlot,AkhObj2);
-                    break;
+                    break;*/
                 
-                case SpellNumber.PlumeMaat:
+               /* case SpellNumber.PlumeMaat:
                     SpellStaticAreaObject PlumeObj2 = prefabB.GetComponent<PlumeMaat>().soPlumeMaat;
                     TimeLimitedSpell(prefabB,spellSlot,PlumeObj2);
                     break;
-            
+            */
                 case SpellNumber.FuryOfSand:
                     Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabB, spellSlot);
@@ -333,35 +373,35 @@ public class SpellManager : MonoBehaviour
             case SpellNumber.PouvoirFeu:
                 if (slotNumber == 1)
                 {
-                    spellPFData = UiManager.instance.currentSpell1Holder.GetComponent<PouvoirFeu>();
-                    spellPFo = prefabA.GetComponent<PouvoirFeu>().soPouvoirFeu;
-                    cooldownSlot1 = spellPFo.duration;
+                    spellPFEData = UiManager.instance.currentSpell1Holder.GetComponent<PouvoirFeu>();
+                    spellPFEo = prefabA.GetComponent<PouvoirFeu>().soPouvoirFeu;
+                    cooldownSlot1 = spellPFEo.duration;
                 }
 
                 if (slotNumber == 2)
                 {
-                    spellPFData = UiManager.instance.currentSpell2Holder.GetComponent<PouvoirFeu>();
-                    spellPFo = prefabB.GetComponent<PouvoirFeu>().soPouvoirFeu;
-                    cooldownSlot2 = spellPFo.duration;
+                    spellPFEData = UiManager.instance.currentSpell2Holder.GetComponent<PouvoirFeu>();
+                    spellPFEo = prefabB.GetComponent<PouvoirFeu>().soPouvoirFeu;
+                    cooldownSlot2 = spellPFEo.duration;
                 }
                 
-                if (spellPFData.secondesRestantes > 0)
+                if (spellPFEData.secondesRestantes > 0)
                 {
-                    spellPFo.canCast = true;
+                    spellPFEo.canCast = true;
 
                     if (slotNumber == 1)
                     {
-                        cooldownSlotTimer1 = spellPFData.secondesRestantes;
+                        cooldownSlotTimer1 = spellPFEData.secondesRestantes;
                     }
 
                     if (slotNumber == 2)
                     {
-                        cooldownSlotTimer2 = spellPFData.secondesRestantes;
+                        cooldownSlotTimer2 = spellPFEData.secondesRestantes;
                     }
                 }
                 else
                 {
-                    spellPFo.canCast = false;
+                    spellPFEo.canCast = false;
 
                     if (slotNumber == 1)
                     {
@@ -464,7 +504,142 @@ public class SpellManager : MonoBehaviour
                    }
                }
                break;
-            
+           
+           case SpellNumber.PouvoirFoudre:
+               if (slotNumber == 1)
+               {
+                   spellPFOData = UiManager.instance.currentSpell1Holder.GetComponent<PouvoirFoudre>();
+                   spellPFOo = prefabA.GetComponent<PouvoirFoudre>().soPouvoirFoudre;
+                   cooldownSlot1 = spellPFOo.duration;
+               }
+
+               if (slotNumber == 2)
+               {
+                   spellPFOData = UiManager.instance.currentSpell2Holder.GetComponent<PouvoirFoudre>();
+                   spellPFOo = prefabB.GetComponent<PouvoirFoudre>().soPouvoirFoudre;
+                   cooldownSlot2 = spellPFOo.duration;
+               }
+                
+               if (spellPFOData.secondesRestantes > 0)
+               {
+                   spellPFOo.canCast = true;
+
+                   if (slotNumber == 1)
+                   {
+                       cooldownSlotTimer1 = spellPFOData.secondesRestantes;
+                   }
+
+                   if (slotNumber == 2)
+                   {
+                       cooldownSlotTimer2 = spellPFOData.secondesRestantes;
+                   }
+               }
+               else
+               {
+                   spellPFOo.canCast = false;
+
+                   if (slotNumber == 1)
+                   {
+                       cooldownSlotTimer1 = 0;
+                   }
+
+                   if (slotNumber == 2)
+                   {
+                       cooldownSlotTimer2 = 0;
+                   }
+               }
+               break;
+           
+           case SpellNumber.PouvoirAme:
+               if (slotNumber == 1)
+               {
+                   spellPAData = UiManager.instance.currentSpell1Holder.GetComponent<PouvoirAme>();
+                   spellPAo = prefabA.GetComponent<PouvoirAme>().soPouvoirAme;
+                   cooldownSlot1 = spellPAo.duration;
+               }
+
+               if (slotNumber == 2)
+               {
+                   spellPAData = UiManager.instance.currentSpell2Holder.GetComponent<PouvoirAme>();
+                   spellPAo = prefabB.GetComponent<PouvoirAme>().soPouvoirAme;
+                   cooldownSlot2 = spellPAo.duration;
+               }
+                
+               if (spellPAData.secondesRestantes > 0)
+               {
+                   spellPAo.canCast = true;
+
+                   if (slotNumber == 1)
+                   {
+                       cooldownSlotTimer1 = spellPAData.secondesRestantes;
+                   }
+
+                   if (slotNumber == 2)
+                   {
+                       cooldownSlotTimer2 = spellPAData.secondesRestantes;
+                   }
+               }
+               else
+               {
+                   spellPAo.canCast = false;
+
+                   if (slotNumber == 1)
+                   {
+                       cooldownSlotTimer1 = 0;
+                   }
+
+                   if (slotNumber == 2)
+                   {
+                       cooldownSlotTimer2 = 0;
+                   }
+               }
+               break;
+           
+           case SpellNumber.PouvoirMalediction:
+               if (slotNumber == 1)
+               {
+                   spellPMData = UiManager.instance.currentSpell1Holder.GetComponent<PouvoirMalediction>();
+                   spellPMo = prefabA.GetComponent<PouvoirMalediction>().soPouvoirMalediction;
+                   cooldownSlot1 = spellPMo.duration;
+               }
+
+               if (slotNumber == 2)
+               {
+                   spellPMData = UiManager.instance.currentSpell2Holder.GetComponent<PouvoirMalediction>();
+                   spellPMo = prefabB.GetComponent<PouvoirMalediction>().soPouvoirMalediction;
+                   cooldownSlot2 = spellPMo.duration;
+               }
+                
+               if (spellPMData.secondesRestantes > 0)
+               {
+                   spellPMo.canCast = true;
+
+                   if (slotNumber == 1)
+                   {
+                       cooldownSlotTimer1 = spellPMData.secondesRestantes;
+                   }
+
+                   if (slotNumber == 2)
+                   {
+                       cooldownSlotTimer2 = spellPMData.secondesRestantes;
+                   }
+               }
+               else
+               {
+                   spellPMo.canCast = false;
+
+                   if (slotNumber == 1)
+                   {
+                       cooldownSlotTimer1 = 0;
+                   }
+
+                   if (slotNumber == 2)
+                   {
+                       cooldownSlotTimer2 = 0;
+                   }
+               }
+               break;
+
             /*case SpellNumber.OiseauBa:
                 if (slotNumber == 1)
                 {
@@ -552,7 +727,7 @@ public class SpellManager : MonoBehaviour
                 }
                 break;*/
             
-            case SpellNumber.Akh:
+           /* case SpellNumber.Akh:
                 if (slotNumber == 1)
                 {
                     spellSAo = prefabA.GetComponent<Akh>().soAkh;
@@ -594,9 +769,9 @@ public class SpellManager : MonoBehaviour
                         cooldownSlotTimer2 = 0;
                     }
                 }
-                break;
+                break;*/
 
-            case SpellNumber.PlumeMaat:
+           /* case SpellNumber.PlumeMaat:
                 if (slotNumber == 1)
                 {
                     spellSAo = prefabA.GetComponent<PlumeMaat>().soPlumeMaat;
@@ -638,7 +813,7 @@ public class SpellManager : MonoBehaviour
                         cooldownSlotTimer2 = 0;
                     }
                 }
-                break;
+                break;*/
             
             case SpellNumber.FuryOfSand:
                 //Debug.Log("CD Fury of Sand");
@@ -940,7 +1115,7 @@ public class SpellManager : MonoBehaviour
     
     void PouvoirFeu(int slot,PouvoirFeuObject spellPFo)
     {
-        if (!spellPFData.isActive && !spellPFData.lockCast)
+        if (!spellPFEData.isActive && !spellPFEData.lockCast)
         {
             if (slot == 1)
             {
@@ -951,14 +1126,14 @@ public class SpellManager : MonoBehaviour
                 cooldownSpellBar2.instance.SetCooldownMax2();
             }
             //indicDirection.color = Color.red;
-            spellPFData.isActive = true;
+            spellPFEData.isActive = true;
             spellPFo.canCast = true;
         }
         
-        if(!spellPFData.isActive && !spellPFData.lockCast)
+        if(!spellPFEData.isActive && !spellPFEData.lockCast)
         {
             //indicDirection.color = Color.white;
-            spellPFData.isActive = false;
+            spellPFEData.isActive = false;
             spellPFo.canCast = false;
         }
     }
@@ -1010,6 +1185,81 @@ public class SpellManager : MonoBehaviour
             //indicDirection.color = Color.white;
             spellPEData.isActive = false;
             spellPEo.canCast = false;
+        }
+    }
+    
+    void PouvoirFoudre(int slot,PouvoirFoudreObject spellPFOo)
+    {
+        if (!spellPFOData.isActive && !spellPFOData.lockCast)
+        {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
+            //indicDirection.color = Color.red;
+            spellPFOData.isActive = true;
+            spellPFOo.canCast = true;
+        }
+        
+        if(!spellPFOData.isActive && !spellPFOData.lockCast)
+        {
+            //indicDirection.color = Color.white;
+            spellPFOData.isActive = false;
+            spellPFOo.canCast = false;
+        }
+    }
+    
+    void PouvoirAme(int slot,PouvoirAmeObject spellPAo)
+    {
+        if (!spellPAData.isActive && !spellPAData.lockCast)
+        {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
+            //indicDirection.color = Color.red;
+            spellPAData.isActive = true;
+            spellPAo.canCast = true;
+        }
+        
+        if(!spellPAData.isActive && !spellPAData.lockCast)
+        {
+            //indicDirection.color = Color.white;
+            spellPAData.isActive = false;
+            spellPAo.canCast = false;
+        }
+    }
+    
+    void PouvoirMalediction(int slot,PouvoirMaledictionObject spellPMo)
+    {
+        if (!spellPMData.isActive && !spellPMData.lockCast)
+        {
+            if (slot == 1)
+            {
+                cooldownSpellBar.instance.SetCooldownMax1();
+            }
+            if (slot == 2)
+            {
+                cooldownSpellBar2.instance.SetCooldownMax2();
+            }
+            //indicDirection.color = Color.red;
+            spellPMData.isActive = true;
+            spellPMo.canCast = true;
+        }
+        
+        if(!spellPMData.isActive && !spellPMData.lockCast)
+        {
+            //indicDirection.color = Color.white;
+            spellPMData.isActive = false;
+            spellPMo.canCast = false;
         }
     }
     

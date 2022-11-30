@@ -322,7 +322,7 @@ public class AttaquesNormales : MonoBehaviour
 
     IEnumerator ResetTracking()
     {
-        yield return new WaitForSeconds(0.001f);
+        yield return new WaitForSeconds(0.0001f);
         attaque1 = false;
         attaque2 = false;
         attaque3 = false;
