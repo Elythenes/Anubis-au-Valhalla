@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEditor.Rendering;
+using UnityEngine.UI;
 
 public class PotionManager : MonoBehaviour
 {
@@ -27,50 +28,61 @@ public class PotionManager : MonoBehaviour
    {
       if (Input.GetKeyDown(usePotion))
       {
-         if (currentPotion.type == PotionObject.PotionType.SpecialItem)
+         
+         if (currentPotion == null)
          {
-            Debug.Log("Je ne peux pas boire une chose qui n'est pas une potion");
+            Debug.Log("il n'y a pas de potions");
          }
          else
          {
-            DrinkPotion(currentPotion);
+            if (currentPotion.type == PotionObject.PotionType.SpecialItem)
+            {
+               Debug.Log("Je ne peux pas boire une chose qui n'est pas une potion");
+            }
+            else
+            {
+               DrinkPotion(currentPotion);
+            }
          }
+         
       }
    }
 
-   void DrinkPotion(PotionObject glouglou)
+   void DrinkPotion(PotionObject glou)
    {
-      if (glouglou.type == PotionObject.PotionType.StatBasicPotion 
-          || glouglou.type == PotionObject.PotionType.StatSpecificPotion)
+      if (glou.type == PotionObject.PotionType.StatBasicPotion 
+          || glou.type == PotionObject.PotionType.StatSpecificPotion)
       {
-         //float compteurDuration = 0f;
-         //while (compteurDuration < glouglou.effectDuration)                //faire un truc pour faire la duraction
+         UiManager.instance.panelPotion.SetActive(true);
+         
+         for (int i = 0; i < 3; i++)
          {
-            for (int i = 0; i < 3; i++)
-            {
-               AnubisCurrentStats.instance.comboDamage[i] += glouglou.damage;
-            }
-            AnubisCurrentStats.instance.thrustDamage += glouglou.damage;
-            //DamageManager.instance.Heal(glouglou.heal);
-            AnubisCurrentStats.instance.damageReduction += glouglou.armor;
-            if (glouglou.wArmor != 0)
-            {
-               AnubisCurrentStats.instance.damageReduction /= glouglou.wArmor;
-            }
-            if (glouglou.speed != 0)
-            {
-               AnubisCurrentStats.instance.speedX *= glouglou.speed;
-               AnubisCurrentStats.instance.speedY *= glouglou.speed;
-            }
-            //Fonction avec la MagicForce
-            Debug.Log("drink potion et ajout de stat");
-            VerifyForSpecificPotion(glouglou.index);
+            AnubisCurrentStats.instance.comboDamage[i] += glou.damage;
          }
+         AnubisCurrentStats.instance.thrustDamage += glou.damage;
+         //DamageManager.instance.Heal(glouglou.heal);
+         AnubisCurrentStats.instance.damageReduction += glou.armor;
+         if (glou.wArmor != 0)
+         {
+            AnubisCurrentStats.instance.damageReduction /= glou.wArmor;
+         }
+         if (glou.speed != 0)
+         {
+            AnubisCurrentStats.instance.speedX *= glou.speed;
+            AnubisCurrentStats.instance.speedY *= glou.speed;
+         }
+         //Fonction avec la MagicForce
+         
+         Debug.Log("drink potion et ajout de stat");
+         VerifyForSpecificPotion(glou.index);
+         StartCoroutine(CoroutinePotion(glou.effectDuration, glou));
+
       }
-      else if (glouglou.type == PotionObject.PotionType.SpecialPotion)
+      else if (glou.type == PotionObject.PotionType.SpecialPotion)
       {
-         UseSpecialPotion(glouglou.index);
+         UseSpecialPotion(glou.index);
       }
+      
    }
 
    
@@ -100,8 +112,46 @@ public class PotionManager : MonoBehaviour
    {
       
    }
-   
-   
-   
+
+   void RevokePotion12(PotionObject glou)
+   {
+      UiManager.instance.panelPotion.SetActive(false);
+      UiManager.instance.spritePotion.GetComponent<RawImage>().texture = null;
+      
+      if (glou.type == PotionObject.PotionType.StatBasicPotion 
+          || glou.type == PotionObject.PotionType.StatSpecificPotion)
+      {
+         for (int i = 0; i < 3; i++)
+         {
+            AnubisCurrentStats.instance.comboDamage[i] -= glou.damage;
+         }
+         AnubisCurrentStats.instance.thrustDamage -= glou.damage;
+         //DamageManager.instance.Heal(glouglou.heal*-1);
+         AnubisCurrentStats.instance.damageReduction -= glou.armor;
+         if (glou.wArmor != 0)
+         {
+            AnubisCurrentStats.instance.damageReduction *= glou.wArmor;
+         }
+         if (glou.speed != 0)
+         {
+            AnubisCurrentStats.instance.speedX /= glou.speed;
+            AnubisCurrentStats.instance.speedY /= glou.speed;
+         }
+         //Fonction avec la MagicForce
+
+      }
+   }
+
+   private IEnumerator CoroutinePotion(float duree, PotionObject glouglou)
+   {
+      float compteurDuration = 0f;
+      while (compteurDuration < duree)
+      {
+         yield return new WaitForSecondsRealtime(1);
+         compteurDuration += 1;
+         //Debug.Log("compteur de duration potion est à " + compteurDuration);
+      }
+      RevokePotion12(glouglou);
+   }
    
 }

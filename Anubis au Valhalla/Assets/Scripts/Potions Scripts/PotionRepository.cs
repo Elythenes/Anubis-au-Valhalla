@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,8 +9,8 @@ public class PotionRepository : MonoBehaviour
 {
     public static PotionRepository Instance;
     
-    public List<PotionObject> potionsList;
-    public PotionObject potionInside;
+    [Expandable] public List<PotionObject> potionsList;
+    [Expandable] public PotionObject potionInside;
 
     public bool isMoving;
     
