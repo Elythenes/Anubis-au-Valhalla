@@ -49,6 +49,7 @@ public class SalleGennerator : MonoBehaviour
         public DoorOrientation spawnDoor;
         public Salle currentRoom;
         public int chosenPattern;
+        public int challengeChooser;
 
         public enum DoorOrientation
         {

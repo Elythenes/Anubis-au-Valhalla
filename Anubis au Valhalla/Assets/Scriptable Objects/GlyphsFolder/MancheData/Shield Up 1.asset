@@ -15,15 +15,14 @@ MonoBehaviour:
   nom: "B\xE9n\xE9diction de protection"
   partie: 1
   level: 0
+  price: 0
   index: 213
   description: Augmente l'armure total de 30%.
   tier: 1
-  lowerPriceRange: 0
-  upperPriceRange: 0
   icone: {fileID: 0}
   iconeElement: {fileID: 0}
   fondElement: {fileID: 0}
-  isBasicStatUp: 0
+  isBasicStatUp: 1
   isSituationalStatUp: 0
   isSpecialStatUp: 0
   isAdditionalEffect: 0
@@ -33,23 +32,27 @@ MonoBehaviour:
   isBoolEffect: 0
   isOther: 0
   anubisStat: 13
-  bonusBasicStat: 5
+  bonusBasicStat: 30
   otherStat: 13
   otherBonusBasicStat: 0
   situationalStat: 13
   bonusSituationalStat: 0
+  dependsOnSoulCount: 0
   specialStat: 11
+  specialStatValue: 0
   specialAdditionalEffect: 11
   specialAdditionalValue: 0
+  triggerMove: 7
+  revokeTrigger: 
   triggerStat: 13
   additionalDamage: 0
   specialTriggerEffect: 11
   specialTriggerValue: 0
-  triggerMove: 7
-  revokeTrigger: 
   chargeBase: 0
   chargeNumber: 10
-  cooldownBeforeEffect: 5
-  isEffectActive: 1
+  timeType: 2
+  periodicTimeValue: 0
+  startsActive: 1
   boolTrigger: 
-  pourLeOther: 0
+  revokeBool: 
+  otherEffect: 

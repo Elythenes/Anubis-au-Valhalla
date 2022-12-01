@@ -44,6 +44,7 @@ public class UiManager : MonoBehaviour
     [Header("COLLECTED POTION MENU")] 
     public GameObject menuCollectPotion;
     public GameObject spritePotion;
+    public GameObject panelPotion;
     
     
     private void Awake()
@@ -98,9 +99,9 @@ public class UiManager : MonoBehaviour
         Destroy(cS.collectableSpell);
     }
 
-   public void CollectPotion()
+   public void CollectPotionInUI()
     {
-        Debug.Log("entrée dans la fonction CollectPotion");
+        //Debug.Log("entrée dans la fonction CollectPotion");
         PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside; 
         PotionManager.Instance.isPotionSlotFill = true;
         spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
