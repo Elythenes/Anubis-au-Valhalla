@@ -33,6 +33,9 @@ public class Salle : MonoBehaviour
     public List<GameObject> availableSpawnC;
     public List<int> costList = new List<int>();
     public PropSize propSizes = new PropSize();
+
+    private int challengeChosen;
+    private bool hasElited = false;
     [Serializable]
     public class Props
     {
@@ -51,12 +54,8 @@ public class Salle : MonoBehaviour
         renderer.enabled = false;
         spawnBank = SalleGennerator.instance.GlobalBank;
         SalleGennerator.instance.GlobalBank = Mathf.RoundToInt(SalleGennerator.instance.GlobalBank * 1.1f);
-        /*if (TothBehiavour.instance != null && )
-        {
-            DestroyImmediate(TothBehiavour.instance.gameObject);
-            return;
-        }*/
         AstarPath.active.Scan(AstarPath.active.data.graphs);
+        
         RearrangeDoors();
         AdjustCameraConstraints();
         GetAvailableTiles();
@@ -64,6 +63,7 @@ public class Salle : MonoBehaviour
 
     private void Start()
     {
+        challengeChosen = SalleGennerator.instance.challengeChooser;
         if (currentEnemies.Count == 0)
         {
             roomDone = true;
@@ -73,8 +73,38 @@ public class Salle : MonoBehaviour
 
     private void Update()
     {
-
+        switch (challengeChosen)
+        {
+            case 0:
+                if (!hasElited)
+                {
+                    C1_AllElites();
+                }
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
     }
+
+    private void C1_AllElites()
+    {
+        foreach (var enemy in currentEnemies)
+        {
+            enemy.GetComponent<MonsterLifeManager>().elite = true;
+        }
+
+        hasElited = true;
+    }
+    
+    //private void C2_
 
     public void RearrangeDoors()
     {
@@ -131,6 +161,11 @@ public class Salle : MonoBehaviour
             costList[chosenValue] += 3;
             var chosenPoint = point[Random.Range(0, point.Count)];
             currentEnemies.Add(Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform));
+            if (chosenEnemy.isElite)
+            {
+                chosenEnemy.prefab.GetComponent<MonsterLifeManager>().elite = true;
+            }
+            //chosenEnemy.prefab.GetComponent<MonsterLifeManager>().data = chosenEnemy;
             discardedPoints.Add(chosenPoint);
             point.Remove(chosenPoint); // Get the spawner to spawn in waves if theres too many enemies to to spawn
             if (point.Count == 0)
