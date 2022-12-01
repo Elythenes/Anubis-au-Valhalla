@@ -314,7 +314,7 @@ public class CharacterController : MonoBehaviour
 
   IEnumerator ResetTracking()
   {
-    yield return new WaitForSeconds(0.1f);
+    yield return new WaitForSeconds(0.01f);
     debutDash = false;
     finDash = false;
   }

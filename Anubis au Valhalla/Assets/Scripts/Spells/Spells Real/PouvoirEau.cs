@@ -9,7 +9,7 @@ public class PouvoirEau : MonoBehaviour
       public bool isActive;
       private CharacterController anubis;
       private AttaquesNormales anubisAtk;
-      private float timerSpawn;
+   
       public bool lockCast;
    
       private void Start()
@@ -24,14 +24,11 @@ public class PouvoirEau : MonoBehaviour
          if (isActive && !lockCast)
          {
             secondesRestantes -= Time.deltaTime;
-            if (anubis.isDashing)
+            if (anubis.debutDash)
             {
-               timerSpawn += Time.deltaTime;
-               if (timerSpawn >= soPouvoirEau.dashSpawnRate)
-               {
-                  GameObject fireZone = Instantiate(soPouvoirEau.hitboxDash, anubis.transform.position, Quaternion.identity);
-                  timerSpawn = 0;
-               }
+               float angle = Mathf.Atan2(CharacterController.instance.movement.y ,CharacterController.instance.movement.x ) * Mathf.Rad2Deg;
+               GameObject RayonEau = Instantiate(soPouvoirEau.hitboxDash, anubis.transform.position, Quaternion.Euler(0,0,angle));
+               RayonEau.transform.parent = CharacterController.instance.transform;
             }
    
             if (anubisAtk.attaque3)
