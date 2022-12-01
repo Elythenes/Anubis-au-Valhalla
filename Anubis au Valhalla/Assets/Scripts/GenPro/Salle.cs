@@ -36,6 +36,7 @@ public class Salle : MonoBehaviour
 
     private int challengeChosen;
     private bool hasElited = false;
+    private GameObject timer;
     [Serializable]
     public class Props
     {
@@ -76,14 +77,21 @@ public class Salle : MonoBehaviour
         switch (challengeChosen)
         {
             case 0:
-                if (!hasElited)
+                if (hasElited)
                 {
-                    C1_AllElites();
+                    break;
                 }
+                C1_AllElites();
                 break;
             case 1:
+                C2_Darkness();
                 break;
             case 2:
+                if (timer != null)
+                {
+                    break;
+                }
+                C3_TimeAttack();
                 break;
             case 3:
                 break;
@@ -103,8 +111,16 @@ public class Salle : MonoBehaviour
 
         hasElited = true;
     }
-    
-    //private void C2_
+
+    private void C2_Darkness()
+    {
+        
+    }
+
+    private void C3_TimeAttack()
+    {
+        timer = Instantiate(SalleGennerator.instance.Timer);
+    }
 
     public void RearrangeDoors()
     {

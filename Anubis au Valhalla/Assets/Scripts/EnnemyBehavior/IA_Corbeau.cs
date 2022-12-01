@@ -57,6 +57,10 @@ public class IA_Corbeau : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
+        if (life.elite)
+        {
+            isElite = true;
+        }
         
     }
 
