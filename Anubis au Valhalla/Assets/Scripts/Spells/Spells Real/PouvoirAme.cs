@@ -1,16 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PouvoirAme : MonoBehaviour
 {
+   public static PouvoirAme instance;
     public PouvoirAmeObject soPouvoirAme;
    public float secondesRestantes;
    public bool isActive;
    public bool lockCast;
+   [HideInInspector] public bool spawnHitboxDash;
    private CharacterController anubis;
    private AttaquesNormales anubisAtk;
-   private float timerSpawn;
+
+   private void Awake()
+   {
+      if (instance == null)
+      {
+         instance = this;
+      }
+   }
 
    private void Start()
    {
@@ -23,17 +34,20 @@ public class PouvoirAme : MonoBehaviour
          if (isActive && !lockCast)
          {
             secondesRestantes -= Time.deltaTime;
+            
             if (anubis.isDashing)  // ATTAQUE DASH
             {
-               timerSpawn += Time.deltaTime;
-               if (timerSpawn >= soPouvoirAme.dashSpawnRate)
-               {
-                  Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                  Vector2 charaPos = CharacterController.instance.transform.position;
-                  float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-                  GameObject locustre = Instantiate(soPouvoirAme.hitboxDash, anubis.transform.position + new Vector3(Random.Range(-3,3),Random.Range(-3,3)), Quaternion.AngleAxis(angle,Vector3.forward));
-                  timerSpawn = 0;
-               }
+               DamageManager.instance.isAmePowered = true;
+            }
+            else
+            {
+               DamageManager.instance.isAmePowered = false;
+            }
+
+            if (spawnHitboxDash)
+            {
+               Instantiate(soPouvoirAme.hitboxDash, anubis.transform.position, Quaternion.identity);
+               spawnHitboxDash = false;
             }
    
             if (anubisAtk.attaque3)
@@ -43,7 +57,13 @@ public class PouvoirAme : MonoBehaviour
             
             if (Input.GetKeyDown(KeyCode.Mouse1)) //PLACEHOLDER - REMPLACER PAR LE THRUST
             {
-               Instantiate(soPouvoirAme.hitboxThrust, anubis.transform.position, Quaternion.identity);
+               Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+               Vector2 charaPos = CharacterController.instance.transform.position;
+               float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+               for (int i = 0; i < soPouvoirAme.zoneAmount; i++)
+               { 
+                  Instantiate(soPouvoirAme.hitboxThrust, anubis.transform.position + new Vector3(Random.Range(-3,3),Random.Range(-3,3)), Quaternion.AngleAxis(angle,Vector3.forward));
+               }
             }
          }
          

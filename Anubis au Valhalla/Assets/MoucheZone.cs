@@ -20,7 +20,8 @@ public class MoucheZone : MonoBehaviour
         moucheAmount = sOPouvoirAme.moucheAmount;
         for (int i = 0; i < moucheAmount; i++)
         {
-            GameObject moucheObj = Instantiate(mouche, transform.position + new Vector3(Random.Range(-3, 3), Random.Range(-3, 3)), Quaternion.identity);
+            GameObject moucheObj = Instantiate(mouche, transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f ,2f)), Quaternion.identity);
+            moucheObj.transform.parent = transform;
             moucheList.Add(moucheObj);
         }
         Destroy(gameObject,sOPouvoirAme.hitboxDashDuration);
@@ -37,10 +38,10 @@ public class MoucheZone : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Monstre" && moucheAmount > 0)
+        if (col.gameObject.tag == "Monstre")
         {
             stopAttack = false;
-            for (int i = 0; i < sOPouvoirAme.nombreOfDot; i++)
+            for (int i = 0; i < moucheAmount; i++)
             {
                 if (tempsReloadHitFlameAreaTimer <= sOPouvoirAme.espacementDoT && stopAttack == false)
                 {
@@ -51,10 +52,10 @@ public class MoucheZone : MonoBehaviour
                 {
                     Debug.Log("touché");
                     col.GetComponentInParent<MonsterLifeManager>().DamageText(sOPouvoirAme.dashPuissanceAttaque);
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOPouvoirAme.dashPuissanceAttaque,sOPouvoirAme.stagger);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOPouvoirAme.dashPuissanceAttaque,sOPouvoirAme.staggerThrust);
                     tempsReloadHitFlameAreaTimer = 0;
                     moucheAmount--;
-                    Destroy(moucheList[0]);
+                    Destroy(moucheList[moucheAmount]);
                 }
              
                 

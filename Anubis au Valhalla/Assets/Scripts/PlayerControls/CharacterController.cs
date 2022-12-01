@@ -37,7 +37,7 @@ public class CharacterController : MonoBehaviour
   public GhostDash ghost;
   public LayerMask roomBorders;
   public bool canPassThrough;
-  
+
   [HideInInspector]public Rigidbody2D rb; // ca aussi
   public Vector2 movement;
   public float astarPathTimer = 0f;
