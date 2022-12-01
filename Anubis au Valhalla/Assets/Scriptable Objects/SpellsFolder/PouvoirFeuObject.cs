@@ -14,6 +14,10 @@ public class PouvoirFeuObject : SpellObject
 
   [Header("ATTAQUE NORMALE")]
   public int attaqueNormaleDamage;
+  public float circleScaleSpeed;
+  public float circleMaxScale;
+  public float circleDuration;
+  public float pushForce;
   
   [Header("ATTAQUE DASH")]
   public float dashSpawnRate;
@@ -26,6 +30,7 @@ public class PouvoirFeuObject : SpellObject
   
   [Header("ATTAQUE Thrust")]
   public int thrustDamage;
+  public float explosionScale;
   public float bulletSpeed;
   public float bulletDuration;
   public Vector3 bulletScale;

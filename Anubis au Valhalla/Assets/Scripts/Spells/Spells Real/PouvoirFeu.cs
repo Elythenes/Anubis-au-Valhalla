@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PouvoirFeu : MonoBehaviour
 {
@@ -35,6 +36,11 @@ public class PouvoirFeu : MonoBehaviour
          }
 
          if (anubisAtk.attaque3)
+         {
+            Instantiate(soPouvoirFeu.hitboxAttaqueNormale, anubis.transform.position, Quaternion.identity);
+         }
+
+         if (Input.GetKeyDown(KeyCode.Mouse1)) // Attaque puissante
          {
             Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 charaPos = CharacterController.instance.transform.position;

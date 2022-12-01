@@ -14,6 +14,7 @@ public class PouvoirAmeObject : SpellObject
     [Header("ATTAQUE NORMALE")]
     public int attaqueNormaleDamage;
     public float attaqueNormaleDuration;
+    public int moucheAmount;
 
     [Header("ATTAQUE DASH")] 
     public float staggerDash;

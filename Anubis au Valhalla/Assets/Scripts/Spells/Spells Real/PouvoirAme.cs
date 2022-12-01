@@ -41,9 +41,9 @@ public class PouvoirAme : MonoBehaviour
                Instantiate(soPouvoirAme.hitboxAttaqueNormale, anubis.transform.position, Quaternion.identity);
             }
             
-            if (anubisAtk.attaque1) //PLACEHOLDER - REMPLACER PAR LE THRUST
+            if (Input.GetKeyDown(KeyCode.Mouse1)) //PLACEHOLDER - REMPLACER PAR LE THRUST
             {
-               
+               Instantiate(soPouvoirAme.hitboxThrust, anubis.transform.position, Quaternion.identity);
             }
          }
          
