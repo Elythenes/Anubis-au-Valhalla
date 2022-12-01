@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 
 public class MonsterLifeManager : MonoBehaviour
 {
+    public EnemyData data;
     public GameObject textDamage;
     public Animator animator;
     public Rigidbody2D rb;
@@ -42,6 +43,7 @@ public class MonsterLifeManager : MonoBehaviour
     public float EnvasedTime = 5;
     public float EnvasedTimeTimer;
     private float demiSpeed;
+    public bool elite = false;
 
 
     private void Start()
