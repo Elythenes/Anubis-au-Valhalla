@@ -8,7 +8,7 @@ public class GlyphInventory : MonoBehaviour
 {
     public List<GlyphObject> glyphInventory;
 
-    public GlyphObject gOTest;
+    [Expandable] public GlyphObject gOTest;
 
     private int gLevelForLame = 100;
     private int gLevelForManche = 200;
@@ -17,13 +17,12 @@ public class GlyphInventory : MonoBehaviour
 
     void Start()
     {
-        //AddGlyph(gOTest);
+        AddGlyph(gOTest);
     }
 
-    public void AddGlyph(GlyphObject gO) //faire une fonction pour chaque type de glyphe avec un case plus tôt ?? (Félix : flemme)
+    public void AddGlyph(GlyphObject gO) 
     {
-        GlyphWrap wrap = new GlyphWrap();                                               //définition d'une variable pour la fonction 
-        
+        GlyphWrap wrap = new GlyphWrap();                                               //définition d'une variable pour la fonction qui va contenir le glyphe et sa State
         wrap.glyphObject = gO;                                                          //attache du GlypheObject en soi
         wrap.gState = GlyphWrap.State.Active;                                           //attache de son state 
         Debug.Log("glyph set Active");
@@ -31,35 +30,39 @@ public class GlyphInventory : MonoBehaviour
         if (gO.partie == GlyphObject.GlyphPart.Lame)
         {
             GlyphManager.Instance.arrayLame[gO.index-gLevelForLame] = wrap;            //assignation à la liste du GlyphManager de la Lame en enlevant la valeur de l'index en trop (ici 100)
-            Debug.Log("Glyph added in Manager, array Lame, nom : " + wrap.glyphObject.nom);
+            Debug.Log("Glyph added in LameManager, nom : " + wrap.glyphObject.nom);
             VerifyIfOutleveled(gO,GlyphManager.Instance.arrayLame, gLevelForLame);
         }
         else if (gO.partie == GlyphObject.GlyphPart.Manche)
         {
             GlyphManager.Instance.arrayLame[gO.index-gLevelForManche] = wrap;          //assignation à la liste du GlyphManager de la Lame en enlevant la valeur de l'index en trop (ici 200)
-            Debug.Log("Glyph added in Manager, array Manche, nom : " + wrap.glyphObject.nom);
-            VerifyIfOutleveled(gO,GlyphManager.Instance.arrayLame, gLevelForManche);
+            Debug.Log("Glyph added in MancheManager, nom : " + wrap.glyphObject.nom);
+            VerifyIfOutleveled(gO,GlyphManager.Instance.arrayManche, gLevelForManche);
         }
         else if (gO.partie == GlyphObject.GlyphPart.Poignee)
         {
             GlyphManager.Instance.arrayLame[gO.index-gLevelForPoignee] = wrap;           //assignation à la liste du GlyphManager de la Lame en enlevant la valeur de l'index en trop (ici 300)
-            Debug.Log("Glyph added in Manager, array Hampe, nom : " + wrap.glyphObject.nom);
-            VerifyIfOutleveled(gO,GlyphManager.Instance.arrayLame, gLevelForPoignee);
+            Debug.Log("Glyph added in PoigneeManager, nom : " + wrap.glyphObject.nom);
+            VerifyIfOutleveled(gO,GlyphManager.Instance.arrayPoignee, gLevelForPoignee);
         }
         else
         {
             Debug.Log("erreur dans l'ajout du glyphe");
             return;
         }
-        AddInInventory(wrap.glyphObject);
-        
+        glyphInventory.Add(gO);                                             //ajout dans l'inventaire qui pourra être consulté
+        GlyphManager.Instance.AddGlyphToManager(gO);                        //ajout dans le Manager pour que les stats soient update
     }
+    
+    
     
     void AddInInventory(GlyphObject glyphObject)
     {
         glyphInventory.Add(glyphObject);
     }
 
+    
+    
     void VerifyIfOutleveled(GlyphObject gO, GlyphWrap[] array, int indexConvertor)
     {
         if (gO.level == GlyphObject.GlyphLevel.MiddleLevel || gO.level == GlyphObject.GlyphLevel.MaximumLevel) //si le Glyphe obtenu est d'un niveau supérieur (>1) dans sa catégorie 

@@ -10,10 +10,15 @@ using UnityEngine.UI;
 public class PotionManager : MonoBehaviour
 {
    public static PotionManager Instance;
-
+   
+   [Header("MANAGER")]
    public KeyCode usePotion = KeyCode.A;
    [Expandable] public PotionObject currentPotion;
    public bool isPotionSlotFill;
+   [NaughtyAttributes.ReadOnly] public bool revokePotionEarly = false;
+
+   [Header("SHOP")]
+   [Expandable] public List<PotionObject> potionsForShop = new();
 
 
    private void Awake()
@@ -44,8 +49,8 @@ public class PotionManager : MonoBehaviour
                DrinkPotion(currentPotion);
             }
          }
-         
       }
+      VerifyForSpecificPotion(currentPotion.index);
    }
 
    void DrinkPotion(PotionObject glou)
@@ -74,8 +79,7 @@ public class PotionManager : MonoBehaviour
          //Fonction avec la MagicForce
          
          Debug.Log("drink potion et ajout de stat");
-         VerifyForSpecificPotion(glou.index);
-         StartCoroutine(CoroutinePotion(glou.effectDuration, glou));
+         StartCoroutine(CoroutinePotion(glou));
 
       }
       else if (glou.type == PotionObject.PotionType.SpecialPotion)
@@ -88,13 +92,15 @@ public class PotionManager : MonoBehaviour
    
    void VerifyForSpecificPotion(int num)
    {
+      Debug.Log("verify for spe");
       switch (num)
       {
          case 1:
-            /*if (DamageManager.instance.isHurt)
+            if (Input.GetKeyDown(KeyCode.L)) //pour les autres cases remplacer le Input par la condition que vous voulez
             {
-               currentPotion. = currentPotion.effectDuration;
-            }*/
+               Debug.Log("lol");
+               revokePotionEarly = true;
+            }
             break;
       }
    }
@@ -142,14 +148,23 @@ public class PotionManager : MonoBehaviour
       }
    }
 
-   private IEnumerator CoroutinePotion(float duree, PotionObject glouglou)
+   private IEnumerator CoroutinePotion(PotionObject glouglou)
    {
       float compteurDuration = 0f;
-      while (compteurDuration < duree)
+      while (compteurDuration < glouglou.effectDuration)
       {
-         yield return new WaitForSecondsRealtime(1);
-         compteurDuration += 1;
-         //Debug.Log("compteur de duration potion est à " + compteurDuration);
+         if (revokePotionEarly == true)
+         {
+            RevokePotion12(glouglou);
+            revokePotionEarly = false;
+            yield break;
+         }
+         else
+         {
+            yield return new WaitForSecondsRealtime(0.1f);
+            compteurDuration += 0.1f;
+            //Debug.Log("compteur de duration potion est à " + compteurDuration);
+         }
       }
       RevokePotion12(glouglou);
    }
