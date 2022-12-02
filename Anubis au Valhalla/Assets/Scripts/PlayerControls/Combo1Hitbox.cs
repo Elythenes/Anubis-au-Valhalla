@@ -20,7 +20,7 @@ public class Combo1Hitbox : MonoBehaviour
     public bool isStop;
     
 
-    private void Start()
+    public virtual void Start()
     {
         camera = GameObject.Find("CameraHolder");
         transform.parent = CharacterController.instance.transform;
@@ -28,15 +28,15 @@ public class Combo1Hitbox : MonoBehaviour
        transform.localScale *= AttaquesNormales.instance.rangeAttaque[comboNumber];
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    public virtual void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Monstre"))
+        if (col.CompareTag("Monstre"))
         {
-            if (!isShaking)
+            /*if (!isShaking)
             {
                 isShaking = true;
                 camera.transform.DOShakePosition(0.15f, 0.8f).OnComplete((() => isShaking = false));
-            }
+            }*/
 
             /*if (!isWaiting)
             {
