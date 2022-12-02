@@ -51,6 +51,7 @@ public class SalleGennerator : MonoBehaviour
         public int chosenPattern;
         public int challengeChooser;
         public GameObject Timer;
+        public GameObject parasiteToSpawn;
 
         public enum DoorOrientation
         {

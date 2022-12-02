@@ -71,6 +71,13 @@ public class IA_Monstre1 : MonoBehaviour
         {
             isElite = true;
         }
+        if (life.overdose)
+        {
+            ai.maxSpeed *= 2;
+            timerDash *= 0.75f;
+            LagDebutDash *= 0.3f;
+            CooldownDash *= 0.2f;
+        }
     }
     
 

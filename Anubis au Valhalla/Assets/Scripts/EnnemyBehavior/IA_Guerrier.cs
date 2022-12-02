@@ -58,6 +58,13 @@ public class IA_Guerrier : MonoBehaviour
         {
             puissanceAttaque = damageElite;
         }
+        
+        if (life.overdose)
+        {
+            WonderingTime *= 0.5f;
+            ai.maxSpeed *= 2;
+            StartUpAttackTime *= 0.25f;
+        }
     }
 
 

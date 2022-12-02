@@ -79,6 +79,15 @@ public class IA_Valkyrie : MonoBehaviour
             puissanceAttaqueJavelot *= 2;
                 FallDamage *= 2;
         }
+        if (life.overdose)
+        {
+            ai.maxSpeed *= 2;
+            javelotSpeed *= 1.5f;
+            StartUpJavelotTime *= 0.4f;
+            JumpTime *= 0.4f;
+            IndicationTime *= 0.5f;
+            FallTime *= 0.5f;
+        }
     }
 
 

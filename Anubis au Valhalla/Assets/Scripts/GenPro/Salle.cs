@@ -37,6 +37,7 @@ public class Salle : MonoBehaviour
     private int challengeChosen;
     private bool hasElited = false;
     private GameObject timer;
+    public bool parasites = false;
     [Serializable]
     public class Props
     {
@@ -70,36 +71,27 @@ public class Salle : MonoBehaviour
             roomDone = true;
             SalleGennerator.instance.roomsDone++;
         }
+        switch (challengeChosen)
+        {
+            case 2:
+                C2_Darkness();
+                break;
+            case 3:
+                C3_TimeAttack();
+                break;
+            case 4:
+                C4_Parasites();
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+        }
     }
 
     private void Update()
     {
-        switch (challengeChosen)
-        {
-            case 0:
-                if (hasElited)
-                {
-                    break;
-                }
-                C1_AllElites();
-                break;
-            case 1:
-                C2_Darkness();
-                break;
-            case 2:
-                if (timer != null)
-                {
-                    break;
-                }
-                C3_TimeAttack();
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-        }
+
     }
 
     private void C1_AllElites()
@@ -108,8 +100,6 @@ public class Salle : MonoBehaviour
         {
             enemy.GetComponent<MonsterLifeManager>().elite = true;
         }
-
-        hasElited = true;
     }
 
     private void C2_Darkness()
@@ -120,6 +110,16 @@ public class Salle : MonoBehaviour
     private void C3_TimeAttack()
     {
         timer = Instantiate(SalleGennerator.instance.Timer);
+    }
+
+    private void C4_Parasites()
+    {
+        parasites = true;
+    }
+
+    private void C5_IceSkating()
+    {
+        
     }
 
     public void RearrangeDoors()
@@ -186,6 +186,12 @@ public class Salle : MonoBehaviour
             point.Remove(chosenPoint); // Get the spawner to spawn in waves if theres too many enemies to to spawn
             if (point.Count == 0)
             {
+                switch (challengeChosen)
+                {
+                    case 1:
+                        C1_AllElites();
+                        break;
+                }
                 point.AddRange(discardedPoints);
                 discardedPoints.Clear();
                 return;
@@ -313,6 +319,21 @@ public class Salle : MonoBehaviour
         if (currentEnemies.Count != 0) return;
         roomDone = true;
         SalleGennerator.instance.roomsDone++;
+        switch (challengeChosen)
+        {
+            case 1:
+                //spawn better loot
+                break;
+            case 2:
+                //spawn better loot
+                break;
+            case 3:
+                if (timer.GetComponent<TimerChallenge>().internalTimer > 0)
+                {
+                    //spawn better loot
+                }
+                break;
+        }
         Instantiate(coffre,player.transform.position,Quaternion.identity);
     }
     public IEnumerator DelayedSpawns()

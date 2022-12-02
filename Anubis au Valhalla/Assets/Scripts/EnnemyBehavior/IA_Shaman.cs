@@ -66,6 +66,13 @@ public class IA_Shaman : MonoBehaviour
         {
             isElite = true;
         }
+        if (life.overdose)
+        {
+            ai.maxSpeed *= 1.5f;
+            forceRepulse *= 2f;
+            StartUpSummonTime *= 0.2f;
+            SummoningTime *= 0.5f;
+        }
     }
 
 
