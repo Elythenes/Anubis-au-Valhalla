@@ -39,7 +39,7 @@ public class PouvoirPlaie : MonoBehaviour
                Instantiate(soPouvoirPlaie.hitboxAttaqueNormale, anubis.transform.position, Quaternion.identity);
             }
             
-            if (Input.GetKeyDown(KeyCode.Mouse1)) //PLACEHOLDER - REMPLACER PAR LE THRUST
+            if (anubisAtk.attaqueSpe) //PLACEHOLDER - REMPLACER PAR LE THRUST
             {
                for (int i = 0; i < soPouvoirPlaie.nuberOfBullets; i++)
                {

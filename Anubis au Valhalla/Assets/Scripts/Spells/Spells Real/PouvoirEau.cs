@@ -39,7 +39,7 @@ public class PouvoirEau : MonoBehaviour
                Instantiate(soPouvoirEau.hitboxAttaqueNormale, anubis.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse1))
+            if (anubisAtk.attaqueSpe)
             {
                Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
                Vector2 charaPos = CharacterController.instance.transform.position;

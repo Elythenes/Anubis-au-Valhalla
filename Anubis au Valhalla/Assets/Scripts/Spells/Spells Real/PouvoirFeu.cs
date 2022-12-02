@@ -40,7 +40,7 @@ public class PouvoirFeu : MonoBehaviour
             Instantiate(soPouvoirFeu.hitboxAttaqueNormale, anubis.transform.position, Quaternion.identity);
          }
 
-         if (Input.GetKeyDown(KeyCode.Mouse1)) // Attaque puissante
+         if (anubisAtk.attaqueSpe) // Attaque puissante
          {
             Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 charaPos = CharacterController.instance.transform.position;

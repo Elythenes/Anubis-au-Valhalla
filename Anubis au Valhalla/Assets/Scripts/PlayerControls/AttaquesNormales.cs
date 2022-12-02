@@ -299,20 +299,69 @@ public class AttaquesNormales : MonoBehaviour
 
     public void SpecialAttack()
     {
+        Vector2 charaPos = CharacterController.instance.transform.position;
+        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float angle2 = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+        Vector3 moveDirection2 = (mousePos - charaPos);
+        moveDirection2.z = 0;
+        moveDirection2.Normalize();
+        
+        if (angle2 > 45 && angle2 < 135) // attaque vers le haut
+        {
+           // SetBool les animation vers le haut
+        }
+        else if (angle2 < 45 && angle2 > -45 || angle2 > 135 && angle2 < 180 || angle2 > -180 && angle2 < -135) // attaque à gauche ou à droite
+        {
+            anim.SetBool("isAttackingSpe",true);
+            anim.SetBool("isAttacking1",false);
+            anim.SetBool("isAttacking2",false);
+            anim.SetBool("isAttacking3",false);
+            anim.SetBool("isIdle",false);
+            anim.SetBool("isWalking",false);
+        }
+        else if (angle2 > -135 && angle2 < -45) // attaque vers le bas
+        {
+            anim.SetBool("isAttackingSpeDown",true);
+            anim.SetBool("isAttacking1Down",false);
+            anim.SetBool("isAttacking2Down",false);
+            anim.SetBool("isAttacking3Down",false);
+            anim.SetBool("isIdle",false);
+            anim.SetBool("isWalking",false);
+        }
+    
+       
+        if (moveDirection2.x > 0)
+        {
+            CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,0,CharacterController.instance.transform.localRotation.z);
+        }
+        else
+        {
+            CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,-180,CharacterController.instance.transform.localRotation.z);
+        }
+        attaqueSpe = true;
+        StartCoroutine(ResetTracking());
+        StartCoroutine(ResetState());
         comboActuel = 0;
         canAttack = false;
         CharacterController.instance.isAttacking = true;
-        Vector2 charaPos = CharacterController.instance.transform.position;
-        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-        Vector3 moveDirection = (mousePos - charaPos);
-        moveDirection.z = 0;
-        moveDirection.Normalize();
-        Instantiate(thrust, 
-            charaPos,
-            Quaternion.AngleAxis(angle, Vector3.forward));
-
+        CharacterController.instance.rb.AddForce(moveDirection2 * dashImpulse[3], ForceMode2D.Impulse);
+        GameObject thrustObj = Instantiate(thrust, charaPos, Quaternion.AngleAxis(angle2, Vector3.forward));
+        //thrustObj.transform.GetChild(0).gameObject.transform.localScale = rangeAttaque[3];
+        thrustObj.transform.localScale = rangeAttaque[3];
     }
+
+    IEnumerator ResetState()
+    {
+        yield return new WaitForSeconds(stunDurationMax[3]);
+        anim.SetBool("isAttackingSpe",false);
+        anim.SetBool("isAttackingSpeDown",false);
+        anim.SetBool("isWalking",false);
+        anim.SetBool("isIdle",true);
+        attaqueSpe = false;
+        canAttack = true;
+        CharacterController.instance.isAttacking = false;
+    }
+    
     public void Slide(CharacterController.LookingAt dir)
     {
         var rb = CharacterController.instance.rb;
@@ -354,10 +403,11 @@ public class AttaquesNormales : MonoBehaviour
 
     IEnumerator ResetTracking()
     {
-        yield return new WaitForSeconds(0.0001f);
+        yield return new WaitForSeconds(0.0000000001f);
         attaque1 = false;
         attaque2 = false;
         attaque3 = false;
+        attaqueSpe = false;
     }
 }
 
