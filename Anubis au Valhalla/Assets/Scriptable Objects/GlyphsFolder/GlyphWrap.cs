@@ -12,11 +12,10 @@ public class GlyphWrap
     {
         Inactive,
         Active,
-        Outleveled, //pour les glyphes de niveau supérieur
-        Overridden, //pour les éléments (vu qu'ils peuvent pas se stack)
+        Outleveled //pour les glyphes de niveau supérieur
     }
     
     [Expandable] public GlyphObject glyphObject;
-    public State gState = State.Inactive;
+    public State hieroState = State.Inactive;
 }
 

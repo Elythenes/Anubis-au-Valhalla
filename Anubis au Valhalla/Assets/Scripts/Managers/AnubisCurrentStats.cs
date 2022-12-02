@@ -15,16 +15,20 @@ public class AnubisCurrentStats : MonoBehaviour
    public List<GameObject> hitBoxC = new List<GameObject>();
    public List<Vector2> rangeAttaque = new List<Vector2>();
    public List<bool> isC = new List<bool>();
+   public float baseDamage = 20;
+   public float baseDamageforSoul;
+   public List<float> multiplicateurDamage = new(4){.5f,.75f,1,1.3f};
    public List<int> comboDamage = new List<int>();
    public int thrustDamage = 10;
    public int criticalRate = 5;
    public List<float> dureeHitbox = new List<float>();
-   [NaughtyAttributes.ReadOnly] public List<float> stunDuration = new List<float>();
+   public List<float> stunDuration = new List<float>();
    public List<float> forceKnockback = new List<float>();
    public List<float> stunDurationMax = new List<float>();
    public List<float> dashImpulse = new List<float>();
    public List<float> timeForCanDash = new List<float>();
    public List<float> dashTimers = new List<float>();
+   public float magicForce = 30;
    
    [Header("DEFENSE")] 
    public int vieActuelle;
@@ -48,6 +52,8 @@ public class AnubisCurrentStats : MonoBehaviour
       {
          instance = this;
       }
+      
+      UpdateDamageWithMultiplicateur();
    }
 
    private void Start()
@@ -93,6 +99,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.dashImpulse = dashImpulse;
       atk.timeForCanDash = timeForCanDash;
       atk.dashTimers = dashTimers;
+      UpdateDamageWithMultiplicateur();
       
       // pour la vie
       life.vieActuelle = vieActuelle;
@@ -106,4 +113,15 @@ public class AnubisCurrentStats : MonoBehaviour
       move.speedY = speedY;
       move.dashCooldown = dashCooldown;
    }
+
+
+   void UpdateDamageWithMultiplicateur()
+   {
+      for (int i = 0; i < 3; i++)
+      {
+         comboDamage[i] = Mathf.RoundToInt(baseDamage * multiplicateurDamage[i]);
+      }
+      thrustDamage = Mathf.RoundToInt(baseDamage * multiplicateurDamage[3]);
+   }
+   
 }

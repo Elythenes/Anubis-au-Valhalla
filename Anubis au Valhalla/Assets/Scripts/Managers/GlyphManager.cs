@@ -6,6 +6,7 @@ using NaughtyAttributes;
 using Unity.Collections;
 using UnityEditor.Rendering;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class GlyphManager : MonoBehaviour
 {
@@ -20,9 +21,11 @@ public class GlyphManager : MonoBehaviour
     
     [Header("POIGNEE")]
     public GlyphWrap[] arrayPoignee = new GlyphWrap[60];
-    
-    
-    
+
+    public bool showBools = false;
+
+    [ShowIf("showBools")] public bool soulPowerForce1;
+
     //Fonctions Système ************************************************************************************************
     
     private void Awake()
@@ -35,82 +38,61 @@ public class GlyphManager : MonoBehaviour
 
     void Start()
     {
+        
     }
 
     void Update()
     {
         
     }
-
-    void LameManager(GlyphObject hiero)              //sert à intégrer les effets des glyphes pour le Perso    //à généraliser après
-    {
-        for (int i = 0; i < arrayLame.Length; i++)
-        {
-            if (arrayLame[i].gState == GlyphWrap.State.Active)
-            {
-                if (arrayLame[i].glyphObject.isBasicStatUp)
-                {
-                    UpdateBasicStatUp(arrayLame[i].glyphObject);
-                }
-                if (arrayLame[i].glyphObject.isSituationalStatUp)
-                {
-                    UpdateSituationalStatUp(arrayLame[i].glyphObject);
-                }
-            }
-        }
-        
-    }
-
-    public void AddGlyphToManager(GlyphObject hiero)
+    
+    public void ActiveGlyphInManager(GlyphObject hiero)
     {
         if (hiero.isBasicStatUp)
         {
-            UpdateBasicStatUp(hiero);
+            SetOnBasicStatUp(hiero);
         }
         if (hiero.isSituationalStatUp)
         {
-            UpdateSituationalStatUp(hiero);
+            SetOnSituationalStatUp(hiero);
         }
         if (hiero.isSpecialStatUp)
         {
-            UpdateSpecialEffect(hiero);
+            SetOnSpecialEffect(hiero);
         }
         if (hiero.isAdditionalEffect)
         {
-            UpdateAdditionalEffect(hiero);
+            SetOnAdditionalEffect(hiero);
         }
         if (hiero.isTriggerEffect)
         {
-            UpdateTriggerEffect(hiero);
+            SetOnTriggerEffect(hiero);
         }
         if (hiero.isChargeBased)
         {
-            UpdateChargeBasedEffect(hiero);
+            SetOnChargeBasedEffect(hiero);
         }
         if (hiero.isTimeBased)
         {
-            UpdateTimeBasedEffect(hiero);
+            SetOnTimeBasedEffect(hiero);
         }
         if (hiero.isBoolEffect)
         {
-            UpdateBoolEffect(hiero);
+            SetOnBoolEffect(hiero);
         }
         if (hiero.isOther)
         {
-            UpdateOther(hiero);
+            SetOnOther(hiero);
         }
     }
-
-    void UpdateBasicStatUp(GlyphObject gBasicStatUp)
+    
+    void SetOnBasicStatUp(GlyphObject gBasicStatUp)
     {
         switch (gBasicStatUp.anubisStat)
         {
             case GlyphObject.AnubisStat.AnubisBaseDamage:   //augmente les débâts de toutes les attaques du combo et le Thrust
-                for (int i = 0; i < 3; i++)
-                {
-                    AnubisCurrentStats.instance.comboDamage[i] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
-                }
-                AnubisCurrentStats.instance.thrustDamage += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.baseDamage += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.baseDamageforSoul += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.AllComboDamage:     //augmente les dégâts de toutes les attaques du combo
@@ -139,10 +121,17 @@ public class GlyphManager : MonoBehaviour
             case GlyphObject.AnubisStat.Range:              //augmente la portée / Range d'Anubis
                 for (int i = 0; i < 3; i++)
                 {
-                    var vector2 = AnubisCurrentStats.instance.rangeAttaque[i];
-                    vector2.x *= gBasicStatUp.bonusBasicStat;
-                    vector2.y *= gBasicStatUp.bonusBasicStat;
-                    AnubisCurrentStats.instance.rangeAttaque[i] = vector2;
+                    if (gBasicStatUp.bonusBasicStat != 0)
+                    {
+                        var vector2 = AnubisCurrentStats.instance.rangeAttaque[i];
+                        vector2.x *= gBasicStatUp.bonusBasicStat;
+                        vector2.y *= gBasicStatUp.bonusBasicStat;
+                        AnubisCurrentStats.instance.rangeAttaque[i] = vector2;
+                    }
+                    else
+                    {
+                        Debug.LogError("Bonus Basic Stat pas bonne, car = 0");
+                    }
                 }
                 break;
             
@@ -155,8 +144,15 @@ public class GlyphManager : MonoBehaviour
                 break;
             
             case GlyphObject.AnubisStat.Speed:              //augmente la vitesse de déplacement d'Anubis
-                AnubisCurrentStats.instance.speedX *= gBasicStatUp.bonusBasicStat;
-                AnubisCurrentStats.instance.speedY *= gBasicStatUp.bonusBasicStat;
+                if (gBasicStatUp.bonusBasicStat != 0)
+                {
+                    AnubisCurrentStats.instance.speedX *= gBasicStatUp.bonusBasicStat;
+                    AnubisCurrentStats.instance.speedY *= gBasicStatUp.bonusBasicStat;
+                }
+                else
+                {
+                    Debug.LogError("Bonus Basic Stat pas bonne, car = 0");
+                }
                 break;
             
             case GlyphObject.AnubisStat.DashCd:              //réduit la durée avant qu'Anubis ne puisse re-Dash
@@ -166,84 +162,105 @@ public class GlyphManager : MonoBehaviour
     }
 
 
-    void UpdateSituationalStatUp(GlyphObject hiero)
+    void SetOnSituationalStatUp(GlyphObject hiero)
     {
         switch (hiero.index)
         {
             case 0:
-                break ;
+                break;
         }
     }
 
-    void UpdateSpecialEffect(GlyphObject hiero)
+    void SetOnSpecialEffect(GlyphObject hiero)
+    {
+        switch (hiero.index)
+        {
+            case 135:
+                soulPowerForce1 = true;
+                break;
+        }
+    }
+    
+    void SetOnAdditionalEffect(GlyphObject hiero)
     {
         switch (hiero.index)
         {
             case 0:
-                break ;
+                break;
         }
     }
     
-    void UpdateAdditionalEffect(GlyphObject hiero)
+    void SetOnTriggerEffect(GlyphObject hiero)
     {
         switch (hiero.index)
         {
             case 0:
-                break ;
+                break;
         }
     }
     
-    void UpdateTriggerEffect(GlyphObject hiero)
+    void SetOnChargeBasedEffect(GlyphObject hiero)
     {
         switch (hiero.index)
         {
             case 0:
-                break ;
+                break;
         }
     }
     
-    void UpdateChargeBasedEffect(GlyphObject hiero)
+    void SetOnTimeBasedEffect(GlyphObject hiero)
     {
         switch (hiero.index)
         {
             case 0:
-                break ;
+                break;
         }
     }
     
-    void UpdateTimeBasedEffect(GlyphObject hiero)
+    void SetOnBoolEffect(GlyphObject hiero)
     {
         switch (hiero.index)
         {
             case 0:
-                break ;
+                break;
         }
     }
     
-    void UpdateBoolEffect(GlyphObject hiero)
+    void SetOnOther(GlyphObject hiero)
     {
         switch (hiero.index)
         {
             case 0:
-                break ;
+                break;
         }
     }
-    
-    void UpdateOther(GlyphObject hiero)
+
+    void UpdateGlyphLame()
     {
-        switch (hiero.index)
+        for (int i = 0; i < arrayLame.Length; i++)
         {
-            case 0:
-                break ;
+            switch (i)
+            {
+                case 35: //soul Power Force 1
+                    SoulPower();
+                    soulPowerForce1 = false;
+                    break;
+            }
         }
     }
-    
     
 
     //Fonctions des Glyphes ********************************************************************************************
+
+    void SoulPower()
+    {
+        while (soulPowerForce1)
+        {
+            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
+        }
+        Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * 5);
+    }
     
-    
-    //hello 
     
     
     
