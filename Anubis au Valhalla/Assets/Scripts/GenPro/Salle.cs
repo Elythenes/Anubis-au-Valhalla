@@ -38,6 +38,7 @@ public class Salle : MonoBehaviour
     private bool hasElited = false;
     private GameObject timer;
     public bool parasites = false;
+    public bool overdose = true;
     [Serializable]
     public class Props
     {
@@ -83,8 +84,7 @@ public class Salle : MonoBehaviour
                 C4_Parasites();
                 break;
             case 5:
-                break;
-            case 6:
+                C5_Overdose();
                 break;
         }
     }
@@ -118,9 +118,9 @@ public class Salle : MonoBehaviour
         parasites = true;
     }
 
-    private void C5_IceSkating()
+    private void C5_Overdose()
     {
-        
+        overdose = true;
     }
 
     public void RearrangeDoors()
@@ -182,17 +182,15 @@ public class Salle : MonoBehaviour
             {
                 chosenEnemy.prefab.GetComponent<MonsterLifeManager>().elite = true;
             }
+            if (overdose)
+            {
+                chosenEnemy.prefab.GetComponent<MonsterLifeManager>().overdose = true;
+            }
             //chosenEnemy.prefab.GetComponent<MonsterLifeManager>().data = chosenEnemy;
             discardedPoints.Add(chosenPoint);
             point.Remove(chosenPoint); // Get the spawner to spawn in waves if theres too many enemies to to spawn
             if (point.Count == 0)
             {
-                switch (challengeChosen)
-                {
-                    case 1:
-                        C1_AllElites();
-                        break;
-                }
                 point.AddRange(discardedPoints);
                 discardedPoints.Clear();
                 return;
@@ -333,6 +331,12 @@ public class Salle : MonoBehaviour
                 {
                     //spawn better loot
                 }
+                break;
+            case 4:
+                //spawn better loot
+                break;
+            case 5:
+                //spawn better loot
                 break;
         }
         Instantiate(coffre,player.transform.position,Quaternion.identity);
