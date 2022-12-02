@@ -12,6 +12,7 @@ public class Door : MonoBehaviour
     public DoorType currentDoorType;
     public SpriteRenderer currentSprite;
     public List<Sprite> doorSprites;
+    public bool willChooseSpecial;
 
     public enum DoorType
     {

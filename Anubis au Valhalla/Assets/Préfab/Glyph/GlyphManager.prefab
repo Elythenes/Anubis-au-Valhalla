@@ -46,7 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glyphInventory: []
-  gOTest: {fileID: 0}
+  doStartHieroTest: 1
+  hieroTest: {fileID: 11400000, guid: 93c24785ca640f7449ca5e93bfa96ec4, type: 2}
+  indexConvertorForLame: 100
+  indexConvertorForManche: 200
+  indexConvertorPoignee: 300
 --- !u!114 &2978162688395123704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,366 +63,374 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea18cac8d0181e4199ec4c53d557d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  indexActiveGlyphs: 
   arrayLame:
+  - glyphObject: {fileID: 11400000, guid: 6106a00ec6154124bacd91b27b3e2f47, type: 2}
+    hieroState: 0
+  - glyphObject: {fileID: 11400000, guid: dbafef15283ce9d49bc47c2aabb02c94, type: 2}
+    hieroState: 0
+  - glyphObject: {fileID: 11400000, guid: 1b4e529b77d73664ea10866c5d5e2182, type: 2}
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
-  - glyphObject: {fileID: 0}
-    gState: 0
-  - glyphObject: {fileID: 0}
-    gState: 0
-  - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   arrayManche:
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   arrayPoignee:
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
   - glyphObject: {fileID: 0}
-    gState: 0
+    hieroState: 0
+  showBools: 0
+  soulPowerForce1: 0
+  soulPowerForce2: 0
+  soulPowerForce3: 0
+  soulPowerDefense1: 0
+  soulPowerDefense2: 0
+  soulPowerDefense3: 0

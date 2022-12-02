@@ -6,6 +6,7 @@ using NaughtyAttributes;
 using Unity.Collections;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using Debug = UnityEngine.Debug;
 
 public class GlyphManager : MonoBehaviour
@@ -22,9 +23,19 @@ public class GlyphManager : MonoBehaviour
     [Header("POIGNEE")]
     public GlyphWrap[] arrayPoignee = new GlyphWrap[60];
 
+    //Liste de bool pour les fonctions
     public bool showBools = false;
 
-    [ShowIf("showBools")] public bool soulPowerForce1;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerForce1;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerForce2;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerForce3;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense1;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense2;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense3;
+
+    private GlyphObject tempObject;
+    
+    
 
     //Fonctions Système ************************************************************************************************
     
@@ -43,7 +54,7 @@ public class GlyphManager : MonoBehaviour
 
     void Update()
     {
-        
+        UpdateGlyph();
     }
     
     public void ActiveGlyphInManager(GlyphObject hiero)
@@ -166,7 +177,34 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
-            case 0:
+            case 135:
+                soulPowerForce1 = true;
+                break;
+            
+            case 136:
+                soulPowerForce1 = false;
+                soulPowerForce2 = true;
+                break;
+            
+            case 137:
+                soulPowerForce1 = false;
+                soulPowerForce2 = false;
+                soulPowerForce3 = true;
+                break;
+            
+            case 221:
+                soulPowerForce1 = true;
+                break;
+            
+            case 222:
+                soulPowerForce1 = false;
+                soulPowerForce2 = true;
+                break;
+            
+            case 223:
+                soulPowerForce1 = false;
+                soulPowerForce2 = false;
+                soulPowerForce3 = true;
                 break;
         }
     }
@@ -175,8 +213,7 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
-            case 135:
-                soulPowerForce1 = true;
+            case 0:
                 break;
         }
     }
@@ -235,16 +272,79 @@ public class GlyphManager : MonoBehaviour
         }
     }
 
-    void UpdateGlyphLame()
+    void UpdateGlyph()
     {
+        /*for (int i = 0; i < indexActiveGlyphs.Count; i++)
+        {
+            switch (indexActiveGlyphs[i])
+            {
+                case 135: //soul Power Force 1
+                    SoulPower();
+                    Debug.Log("soul force 1");
+                    //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                    break;
+                
+                case 136: //soul Power Force 2
+                    SoulPower();
+                    //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                    break;
+                
+                case 137: //soul Power Force 3
+                    Debug.Log("soul force 3");
+                    SoulPower();
+                    //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                    break;
+            }
+        }*/
+
+
         for (int i = 0; i < arrayLame.Length; i++)
         {
-            switch (i)
+            if (arrayLame[i].glyphObject != null)
             {
-                case 35: //soul Power Force 1
-                    SoulPower();
-                    soulPowerForce1 = false;
-                    break;
+                switch (arrayLame[i].glyphObject.index)
+                {
+                    case 135: //soul Power Force 1
+                        SoulPower();
+                        Debug.Log("soul force 1");
+                        //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                        break;
+                
+                    case 136: //soul Power Force 2
+                        SoulPower();
+                        //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                        break;
+                
+                    case 137: //soul Power Force 3
+                        Debug.Log("soul force 3");
+                        SoulPower();
+                        //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                        break;
+                }
+            }
+        }
+
+        for (int i = 0; i < arrayManche.Length; i++)
+        {
+            if (arrayManche[i] != null)
+            {
+                switch (arrayManche[i].glyphObject.index)
+                {
+                    case 200:
+                        break;
+                }
+            }
+        }
+        
+        for (int i = 0; i < arrayPoignee.Length; i++)
+        {
+            if (arrayPoignee[i] != null)
+            {
+                switch (arrayPoignee[i].glyphObject.index)
+                {
+                    case 300:
+                        break;
+                }
             }
         }
     }
@@ -254,11 +354,18 @@ public class GlyphManager : MonoBehaviour
 
     void SoulPower()
     {
-        while (soulPowerForce1)
+        if (soulPowerForce1)
         {
             AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
         }
-        Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * 5);
+        if (soulPowerForce2)
+        {
+            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *7);
+        }
+        if (soulPowerForce3)
+        {
+            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *9);
+        }
     }
     
     
