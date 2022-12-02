@@ -38,6 +38,14 @@ public class PouvoirEau : MonoBehaviour
                float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
                Instantiate(soPouvoirEau.hitboxAttaqueNormale, anubis.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
             }
+
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+               Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+               Vector2 charaPos = CharacterController.instance.transform.position;
+               float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+               Instantiate(soPouvoirEau.hitboxThrust, anubis.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+            }
          }
          
          if (!isActive)

@@ -38,7 +38,7 @@ public class IA_Guerrier : MonoBehaviour
     public float StartUpAttackTimeTimer;
     public float WonderingTime;
     public float WonderingTimeTimer;
-    public float rangeElite;
+    public int damageElite;
     private bool hasShaked;
 
 
@@ -56,7 +56,7 @@ public class IA_Guerrier : MonoBehaviour
         }
         if (isElite)
         {
-            rangeAttaque = rangeElite;
+            puissanceAttaque = damageElite;
         }
     }
 

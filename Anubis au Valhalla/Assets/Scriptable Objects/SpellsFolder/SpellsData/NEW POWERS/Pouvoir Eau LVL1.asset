@@ -20,16 +20,18 @@ MonoBehaviour:
   sprite: {fileID: 2800000, guid: b42e1b89403ac444eb780ea7fb32e1fa, type: 3}
   canCast: 1
   duration: 5
-  hitboxAttaqueNormale: {fileID: 2563157444610368081, guid: c1dbb12e5d249234fa583c00f57c4a79, type: 3}
-  hitboxThrust: {fileID: 0}
+  hitboxAttaqueNormale: {fileID: 6665802142371134018, guid: 29d1e4087dc1c0445b1237fd4e7a53d2, type: 3}
+  hitboxThrust: {fileID: 2563157444610368081, guid: c1dbb12e5d249234fa583c00f57c4a79, type: 3}
   hitboxDash: {fileID: 5960957066020024626, guid: 838ca50d4cefc0446ad0d51ec24df0e6, type: 3}
-  forceAttraction: 0
-  forceDuration: 0
-  nbOfDotRayon: 3
+  dammageWave: 5
+  durationDamageScale: 5
+  durationWave: 3
+  maxScaleWave: {x: 0.5, y: 0.5, z: 0}
+  nbOfDotRayon: 5
   espacementDoTRayon: 0.2
   staggerRayon: 0.2
   rayonDamage: 2
-  rayonScale: {x: 0, y: 1.5, z: 0}
+  rayonScale: {x: 0, y: 3, z: 0}
   thrustDamage: 15
   bulletSpeed: 5
   bulletDuration: 2
