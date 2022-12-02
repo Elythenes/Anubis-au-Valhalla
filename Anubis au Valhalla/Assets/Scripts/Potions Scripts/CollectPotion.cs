@@ -41,8 +41,8 @@ public class CollectPotion : MonoBehaviour
         {
             if (Input.GetKeyDown(interaction))
             {
-                //Debug.Log("potion récupéré");
                 UiManager.instance.CollectPotionInUI();
+                Destroy(collectablePotion);
             }
         }
     }

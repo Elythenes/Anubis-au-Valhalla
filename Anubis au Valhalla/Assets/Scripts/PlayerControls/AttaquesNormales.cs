@@ -191,7 +191,6 @@ public class AttaquesNormales : MonoBehaviour
         Vector2 charaPos = CharacterController.instance.transform.position;
         Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-        Debug.Log(angle);
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
