@@ -6,6 +6,7 @@ using NaughtyAttributes;
 using Unity.Collections;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using Debug = UnityEngine.Debug;
 
 public class GlyphManager : MonoBehaviour
@@ -53,7 +54,7 @@ public class GlyphManager : MonoBehaviour
 
     void Update()
     {
-        
+        UpdateGlyph();
     }
     
     public void ActiveGlyphInManager(GlyphObject hiero)
@@ -254,6 +255,24 @@ public class GlyphManager : MonoBehaviour
                 case 135: //soul Power Force 1
                     SoulPower();
                     //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                    break;
+            }
+        }
+
+        for (int i = 0; i < arrayManche.Length; i++)
+        {
+            switch (arrayManche[i].glyphObject.index)
+            {
+                case 200:
+                    break;
+            }
+        }
+        
+        for (int i = 0; i < arrayPoignee.Length; i++)
+        {
+            switch (arrayPoignee[i].glyphObject.index)
+            {
+                case 300:
                     break;
             }
         }
