@@ -6,6 +6,7 @@ using NaughtyAttributes;
 using Unity.Collections;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using Debug = UnityEngine.Debug;
 
 public class GlyphManager : MonoBehaviour
@@ -22,9 +23,19 @@ public class GlyphManager : MonoBehaviour
     [Header("POIGNEE")]
     public GlyphWrap[] arrayPoignee = new GlyphWrap[60];
 
+    //Liste de bool pour les fonctions
     public bool showBools = false;
 
-    [ShowIf("showBools")] public bool soulPowerForce1;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerForce1;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerForce2;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerForce3;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense1;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense2;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense3;
+    
+    
+    
+    
 
     //Fonctions Système ************************************************************************************************
     
@@ -43,7 +54,7 @@ public class GlyphManager : MonoBehaviour
 
     void Update()
     {
-        
+        UpdateGlyph();
     }
     
     public void ActiveGlyphInManager(GlyphObject hiero)
@@ -235,15 +246,33 @@ public class GlyphManager : MonoBehaviour
         }
     }
 
-    void UpdateGlyphLame()
+    void UpdateGlyph()
     {
         for (int i = 0; i < arrayLame.Length; i++)
         {
-            switch (i)
+            switch (arrayLame[i].glyphObject.index)
             {
-                case 35: //soul Power Force 1
+                case 135: //soul Power Force 1
                     SoulPower();
-                    soulPowerForce1 = false;
+                    //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                    break;
+            }
+        }
+
+        for (int i = 0; i < arrayManche.Length; i++)
+        {
+            switch (arrayManche[i].glyphObject.index)
+            {
+                case 200:
+                    break;
+            }
+        }
+        
+        for (int i = 0; i < arrayPoignee.Length; i++)
+        {
+            switch (arrayPoignee[i].glyphObject.index)
+            {
+                case 300:
                     break;
             }
         }
@@ -258,7 +287,7 @@ public class GlyphManager : MonoBehaviour
         {
             AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
         }
-        Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * 5);
+        
     }
     
     
