@@ -1,20 +1,21 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
+using System.Linq;
 using UnityEngine;
 
 public class ElecticBallBehiavour : MonoBehaviour
 {
     public PouvoirFoudreObject soPouvoirFoudre;
     private Rigidbody2D rb;
-    public BounceRange bounceData;
-    public List<GameObject> monsterList;
+    public GameObject[] monsterList;
+    public List<GameObject> alreadyDone;
     public GameObject target;
+    public int bounce;
+    private bool noTarget = true;
 
 
     private void Start()
     {
+        target = null;
         rb = gameObject.GetComponent<Rigidbody2D>();
         Destroy(gameObject,soPouvoirFoudre.bulletDuration);
         transform.localScale = soPouvoirFoudre.bulletScale;
@@ -22,31 +23,37 @@ public class ElecticBallBehiavour : MonoBehaviour
 
     void Update()
     {
-        monsterList = bounceData.monsterList;
-        rb.velocity = transform.right * soPouvoirFoudre.bulletSpeed;
+        if (noTarget)
+        {
+            rb.velocity = transform.right * soPouvoirFoudre.bulletSpeed;
+        }
+       
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Monstre")
+        if (col.gameObject.tag == "Monstre" && bounce <= soPouvoirFoudre.maxBounce)
         {
-            monsterList.Remove(col.gameObject);
+            alreadyDone.Add(col.gameObject);
+            bounce++;
+            noTarget = false;
+            monsterList = GameObject.FindGameObjectsWithTag("Monstre").Where(e => !e.Equals(col.gameObject)).ToArray();
             col.GetComponentInParent<MonsterLifeManager>().DamageText(soPouvoirFoudre.thrustDamage);
             col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirFoudre.thrustDamage, soPouvoirFoudre.stagger);
             GetClosestEnemy(monsterList);
-            if (target is not null)
-            {
-                transform.DOMove(target.transform.position, 0.2f);
-            }
-            else if(target is null)
-            {
-                Destroy(gameObject);
-            }
+            Vector2 dir = target.transform.position - transform.position;
+            rb.velocity = Vector2.zero;
+            rb.velocity += dir*(soPouvoirFoudre.bulletSpeed*1.3f);
+            Debug.Log(dir);
+        }
+        else if(bounce > soPouvoirFoudre.maxBounce)
+        {
+            Destroy(gameObject);
         }
     }
     
       
-    Transform GetClosestEnemy (List<GameObject> enemies)
+    Transform GetClosestEnemy (GameObject[] enemies)
     {
         Transform bestTarget = null;
         float closestDistanceSqr = Mathf.Infinity;
@@ -62,7 +69,7 @@ public class ElecticBallBehiavour : MonoBehaviour
             }
         }
 
-        if (bestTarget is not null)
+        if (bestTarget.gameObject.layer == 6)
         {
             target = bestTarget.gameObject;
         }

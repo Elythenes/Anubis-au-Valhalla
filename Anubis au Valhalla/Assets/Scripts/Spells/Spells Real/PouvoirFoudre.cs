@@ -36,6 +36,11 @@ public class PouvoirFoudre : MonoBehaviour
             }
             if (anubisAtk.attaque3)
             {
+               Instantiate(soPouvoirFoudre.hitboxAttaqueNormale, anubis.transform.position, Quaternion.identity);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse1)) // Attaque Puissante
+            {
                Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
                Vector2 charaPos = CharacterController.instance.transform.position;
                float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;

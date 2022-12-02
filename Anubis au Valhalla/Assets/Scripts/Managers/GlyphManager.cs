@@ -2,22 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using NaughtyAttributes;
 using Unity.Collections;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class GlyphManager : MonoBehaviour
 {
     public static GlyphManager Instance; //singleton
-    public List<int> indexActiveGlyphs = new List<int>();
+    [NaughtyAttributes.ReadOnly] public List<int> indexActiveGlyphs = new();
 
     [Header("LAME")]
-    public GlyphWrap[] arrayLame = new GlyphWrap[5];
+    public GlyphWrap[] arrayLame = new GlyphWrap[60];
 
     [Header("MANCHE")] 
-    public GlyphWrap[] arrayManche = new GlyphWrap[5];
+    public GlyphWrap[] arrayManche = new GlyphWrap[60];
     
     [Header("POIGNEE")]
-    public GlyphWrap[] arrayPoignee = new GlyphWrap[5];
+    public GlyphWrap[] arrayPoignee = new GlyphWrap[60];
     
     
     
@@ -40,7 +42,7 @@ public class GlyphManager : MonoBehaviour
         
     }
 
-    void LameManager()              //sert à intégrer les effets des glyphes pour le Perso    //à généraliser après
+    void LameManager(GlyphObject hiero)              //sert à intégrer les effets des glyphes pour le Perso    //à généraliser après
     {
         for (int i = 0; i < arrayLame.Length; i++)
         {
@@ -56,13 +58,47 @@ public class GlyphManager : MonoBehaviour
                 }
             }
         }
+        
+    }
 
-        /*regarde si c'est Active
-         * en fonction du type de Glyph (case ?)
-         * fait une fonction type (pour les BSU, ajouter à la bonne stat la valeur du SO)
-         * BSU : case pour la catégorie de la stat focus
-         * ajouter pour cette case le stat bonus
-        */
+    public void AddGlyphToManager(GlyphObject hiero)
+    {
+        if (hiero.isBasicStatUp)
+        {
+            UpdateBasicStatUp(hiero);
+        }
+        if (hiero.isSituationalStatUp)
+        {
+            UpdateSituationalStatUp(hiero);
+        }
+        if (hiero.isSpecialStatUp)
+        {
+            UpdateSpecialEffect(hiero);
+        }
+        if (hiero.isAdditionalEffect)
+        {
+            UpdateAdditionalEffect(hiero);
+        }
+        if (hiero.isTriggerEffect)
+        {
+            UpdateTriggerEffect(hiero);
+        }
+        if (hiero.isChargeBased)
+        {
+            UpdateChargeBasedEffect(hiero);
+        }
+        if (hiero.isTimeBased)
+        {
+            UpdateTimeBasedEffect(hiero);
+        }
+        if (hiero.isBoolEffect)
+        {
+            UpdateBoolEffect(hiero);
+        }
+        if (hiero.isOther)
+        {
+            UpdateOther(hiero);
+        }
     }
 
     void UpdateBasicStatUp(GlyphObject gBasicStatUp)
@@ -130,15 +166,79 @@ public class GlyphManager : MonoBehaviour
     }
 
 
-    void UpdateSituationalStatUp(GlyphObject yah)
+    void UpdateSituationalStatUp(GlyphObject hiero)
     {
-        switch (yah.index)
+        switch (hiero.index)
         {
             case 0:
                 break ;
         }
     }
 
+    void UpdateSpecialEffect(GlyphObject hiero)
+    {
+        switch (hiero.index)
+        {
+            case 0:
+                break ;
+        }
+    }
+    
+    void UpdateAdditionalEffect(GlyphObject hiero)
+    {
+        switch (hiero.index)
+        {
+            case 0:
+                break ;
+        }
+    }
+    
+    void UpdateTriggerEffect(GlyphObject hiero)
+    {
+        switch (hiero.index)
+        {
+            case 0:
+                break ;
+        }
+    }
+    
+    void UpdateChargeBasedEffect(GlyphObject hiero)
+    {
+        switch (hiero.index)
+        {
+            case 0:
+                break ;
+        }
+    }
+    
+    void UpdateTimeBasedEffect(GlyphObject hiero)
+    {
+        switch (hiero.index)
+        {
+            case 0:
+                break ;
+        }
+    }
+    
+    void UpdateBoolEffect(GlyphObject hiero)
+    {
+        switch (hiero.index)
+        {
+            case 0:
+                break ;
+        }
+    }
+    
+    void UpdateOther(GlyphObject hiero)
+    {
+        switch (hiero.index)
+        {
+            case 0:
+                break ;
+        }
+    }
+    
+    
 
     //Fonctions des Glyphes ********************************************************************************************
     

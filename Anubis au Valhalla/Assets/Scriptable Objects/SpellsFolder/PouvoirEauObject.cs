@@ -15,13 +15,14 @@ public class PouvoirEauObject : SpellObject
     public float forceAttraction;
     public float forceDuration;
 
-    [Header("ATTAQUE DASH")] 
-    public float dashSpawnRate;
-    public int dashDamage;
-    public float timeToStep2;
-    public float staggerDash;
-    public float wallDuration;
-  
+    [Header("ATTAQUE DASH")]
+    public int nbOfDotRayon;
+    public float espacementDoTRayon;
+    public float staggerRayon;
+    public int rayonDamage;
+    public Vector3 rayonScale;
+    
+    
     [Header("ATTAQUE Thrust")]
     public int thrustDamage;
     public float bulletSpeed;

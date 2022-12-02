@@ -31,6 +31,7 @@ public class DamageManager : MonoBehaviour
     public bool invinsible;
     public bool isAnkh;
     public Animator animPlayer;
+    public bool isAmePowered; // pour le pouvoir spéciale "âme" du dash 
     
     [Header("Feedbacks")]
     public float timeHitStop;
@@ -121,6 +122,10 @@ stats = AnubisCurrentStats.instance;
             }
             else if(CharacterController.instance.isDashing)
             {
+                if (isAmePowered &&  !PouvoirAme.instance.spawnHitboxDash)
+                {
+                    PouvoirAme.instance.spawnHitboxDash = true;
+                }
                 if (EffectMiss)
                 {
                     StartCoroutine(TempsInvinsibilité(0.5f));

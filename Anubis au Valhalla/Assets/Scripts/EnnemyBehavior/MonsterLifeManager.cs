@@ -173,11 +173,11 @@ public class MonsterLifeManager : MonoBehaviour
             OnBegin?.Invoke();
             //rb.velocity = Vector2.zero;
             //rb.AddForce(direction * forceKnockBack,ForceMode2D.Impulse);
-            StartCoroutine(Reset());
+            StartCoroutine(Reset(0.5f));
         }
     }
 
-    private IEnumerator Reset()
+    public IEnumerator Reset(float delay)
     {
         yield return new WaitForSeconds(delay);
         rb.velocity = Vector3.zero;
