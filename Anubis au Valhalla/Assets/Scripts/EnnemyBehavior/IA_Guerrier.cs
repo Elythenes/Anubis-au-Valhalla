@@ -50,7 +50,10 @@ public class IA_Guerrier : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
-
+        if (life.elite)
+        {
+            isElite = true;
+        }
         if (isElite)
         {
             rangeAttaque = rangeElite;

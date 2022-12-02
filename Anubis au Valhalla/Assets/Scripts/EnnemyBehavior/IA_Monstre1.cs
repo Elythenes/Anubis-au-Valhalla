@@ -18,6 +18,7 @@ public class IA_Monstre1 : MonoBehaviour
     public Animator anim;
     public GameObject emptyLayers;
     public MonsterLifeManager life;
+    public bool isElite;
 
     [Header("Déplacements")]
     public GameObject player;
@@ -66,6 +67,10 @@ public class IA_Monstre1 : MonoBehaviour
         //sr = GetComponent<SpriteRenderer>();
         playerFollow.target = player.transform;
         CooldownDashTimer = CooldownDash;
+        if (life.elite)
+        {
+            isElite = true;
+        }
     }
     
 
