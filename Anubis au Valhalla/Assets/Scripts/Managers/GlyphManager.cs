@@ -21,9 +21,11 @@ public class GlyphManager : MonoBehaviour
     
     [Header("POIGNEE")]
     public GlyphWrap[] arrayPoignee = new GlyphWrap[60];
-    
-    
-    
+
+    public bool showBools = false;
+
+    [ShowIf("showBools")] public bool soulPowerForce1;
+
     //Fonctions Système ************************************************************************************************
     
     private void Awake()
@@ -89,11 +91,8 @@ public class GlyphManager : MonoBehaviour
         switch (gBasicStatUp.anubisStat)
         {
             case GlyphObject.AnubisStat.AnubisBaseDamage:   //augmente les débâts de toutes les attaques du combo et le Thrust
-                for (int i = 0; i < 3; i++)
-                {
-                    AnubisCurrentStats.instance.comboDamage[i] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
-                }
-                AnubisCurrentStats.instance.thrustDamage += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.baseDamage += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.baseDamageforSoul += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.AllComboDamage:     //augmente les dégâts de toutes les attaques du combo
@@ -176,7 +175,8 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
-            case 0:
+            case 135:
+                soulPowerForce1 = true;
                 break;
         }
     }
@@ -241,7 +241,9 @@ public class GlyphManager : MonoBehaviour
         {
             switch (i)
             {
-                case 0:
+                case 35: //soul Power Force 1
+                    SoulPower();
+                    soulPowerForce1 = false;
                     break;
             }
         }
@@ -249,9 +251,16 @@ public class GlyphManager : MonoBehaviour
     
 
     //Fonctions des Glyphes ********************************************************************************************
+
+    void SoulPower()
+    {
+        while (soulPowerForce1)
+        {
+            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
+        }
+        Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * 5);
+    }
     
-    
-    //hello 
     
     
     
