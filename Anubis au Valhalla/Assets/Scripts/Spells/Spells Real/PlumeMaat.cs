@@ -10,17 +10,17 @@ public class PlumeMaat : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject,soMalediction.dashHitboxDuration);
+        Destroy(gameObject,soMalediction.plumeHitboxDuration);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Monstre")
         {
-            if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= col.GetComponentInParent<MonsterLifeManager>().vieMax * 25 / 100)
+            if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= col.GetComponentInParent<MonsterLifeManager>().vieMax * 10 / 100)
             {
-                col.GetComponentInParent<MonsterLifeManager>().DamageText(soMalediction.dashDamage);
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(soMalediction.dashDamage),soMalediction.staggerDash);
+                col.GetComponentInParent<MonsterLifeManager>().DamageText(soMalediction.plumeDamage);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(soMalediction.plumeDamage),soMalediction.staggerplume);
             }
             else
             {

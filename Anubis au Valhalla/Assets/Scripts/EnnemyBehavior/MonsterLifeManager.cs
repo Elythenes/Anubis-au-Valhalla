@@ -44,15 +44,22 @@ public class MonsterLifeManager : MonoBehaviour
     public float EnvasedTimeTimer;
     private float demiSpeed;
     public bool elite = false;
+    public bool isParasite = false;
+    public bool overdose = false;
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (overdose)
+        {
+            vieMax = Mathf.RoundToInt(vieMax * 0.3f);
+        }
         vieActuelle = vieMax;
         demiSpeed = ai.maxSpeed / 2;
         child.SetActive(false);
         StartCoroutine(DelayedSpawn());
+
     }
 
     private void Update()
@@ -108,10 +115,10 @@ public class MonsterLifeManager : MonoBehaviour
             gotHit = true;
             criticalPick = Random.Range(0,100);
             StartCoroutine(AnimationDamaged(staggerDuration));
-            transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
+            /*transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
             {
                 ai.canMove = true;
-            });
+            });*/
             
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
@@ -193,6 +200,13 @@ public class MonsterLifeManager : MonoBehaviour
     
     void Die()
     {
+        if (SalleGennerator.instance.currentRoom.parasites && !isParasite)
+        {
+            var parasite = Instantiate(SalleGennerator.instance.parasiteToSpawn);
+            parasite.GetComponent<MonsterLifeManager>().isParasite = true;
+            parasite.GetComponent<MonsterLifeManager>().soulValue =
+                Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
+        }
         Souls.instance.CreateSouls(child.transform.position, soulValue);
         SalleGennerator.instance.currentRoom.currentEnemies.Remove(gameObject);
         SalleGennerator.instance.currentRoom.CheckForEnemies();

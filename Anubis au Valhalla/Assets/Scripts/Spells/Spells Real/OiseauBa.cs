@@ -24,7 +24,6 @@ public class OiseauBa : MonoBehaviour
     {
         if (col.gameObject.tag == "Monstre")
         {
-            Debug.Log("touché");
             col.GetComponentInParent<MonsterLifeManager>().DamageText(soEau.thrustDamage);
             col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soEau.thrustDamage, soEau.staggerThrust);
             

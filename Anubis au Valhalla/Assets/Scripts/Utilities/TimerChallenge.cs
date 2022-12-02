@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class TimerChallenge : MonoBehaviour
 {
-    private float internalTimer = 60f;
-
-    private int minutes;
+    public float internalTimer = 60f;
 
     private int seconds;
 
@@ -20,9 +18,11 @@ public class TimerChallenge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        internalTimer -= Time.deltaTime;
-        seconds = Mathf.RoundToInt(internalTimer);
-        timer.text = seconds.ToString();
-
+        if (internalTimer >= 0)
+        {
+            internalTimer -= Time.deltaTime;
+            seconds = Mathf.RoundToInt(internalTimer);
+            timer.text = seconds.ToString();
+        }
     }
 }

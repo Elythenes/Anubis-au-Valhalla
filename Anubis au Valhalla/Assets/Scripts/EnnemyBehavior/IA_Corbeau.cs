@@ -61,6 +61,16 @@ public class IA_Corbeau : MonoBehaviour
         {
             isElite = true;
         }
+
+        if (life.overdose)
+        {
+            speedTowardPlayer *= 150;
+            forceRepulse *= 1.5f;
+            rotationSpeed *= 2;
+            rotationSpeedSlown *= 2;
+            StartUpAttackTime *= 0.25f;
+            AttackTime *= 0.3f;
+        }
         
     }
 

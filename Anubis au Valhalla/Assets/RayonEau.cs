@@ -18,7 +18,7 @@ public class RayonEau : MonoBehaviour
 
     private void Update()
     {
-        transform.localScale += new Vector3(1f, 0, 0);
+        transform.localScale += new Vector3(1.5f, 0, 0);
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -36,7 +36,7 @@ public class RayonEau : MonoBehaviour
                 if (tempsReloadHitTimer > sOPouvoirEau.espacementDoTRayon && col.gameObject.tag == "Monstre")
                 {
                     Debug.Log("touché");
-                    col.GetComponentInParent<MonsterLifeManager>().DamageText(sOPouvoirEau.rayonDamage + (AnubisCurrentStats.instance.vieActuelle /25));
+                    col.GetComponentInParent<MonsterLifeManager>().DamageText(sOPouvoirEau.rayonDamage + (AnubisCurrentStats.instance.vieActuelle /6));
                     col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOPouvoirEau.rayonDamage + (AnubisCurrentStats.instance.vieActuelle /25),sOPouvoirEau.staggerRayon);
                     tempsReloadHitTimer = 0;
                 }

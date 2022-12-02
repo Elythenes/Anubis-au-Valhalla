@@ -160,7 +160,7 @@ MonoBehaviour:
   StartUpAttackTimeTimer: 0
   WonderingTime: 5
   WonderingTimeTimer: 0
-  rangeElite: 10
+  damageElite: 25
 --- !u!114 &905385545039165341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 0}
   textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
   animator: {fileID: 905385545039165338}
   rb: {fileID: 0}
@@ -537,6 +538,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   criticalPick: 0
+  gotHit: 0
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 905385545039165332}
   InvincibleTime: 0.19
@@ -550,6 +552,7 @@ MonoBehaviour:
   isEnvased: 0
   EnvasedTime: 5
   EnvasedTimeTimer: 0
+  elite: 0
 --- !u!1 &4873547501407545037
 GameObject:
   m_ObjectHideFlags: 0

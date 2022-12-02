@@ -38,7 +38,7 @@ public class IA_Guerrier : MonoBehaviour
     public float StartUpAttackTimeTimer;
     public float WonderingTime;
     public float WonderingTimeTimer;
-    public float rangeElite;
+    public int damageElite;
     private bool hasShaked;
 
 
@@ -56,7 +56,14 @@ public class IA_Guerrier : MonoBehaviour
         }
         if (isElite)
         {
-            rangeAttaque = rangeElite;
+            puissanceAttaque = damageElite;
+        }
+        
+        if (life.overdose)
+        {
+            WonderingTime *= 0.5f;
+            ai.maxSpeed *= 2;
+            StartUpAttackTime *= 0.25f;
         }
     }
 

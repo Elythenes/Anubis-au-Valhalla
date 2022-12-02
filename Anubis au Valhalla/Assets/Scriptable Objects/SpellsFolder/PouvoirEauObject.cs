@@ -12,8 +12,11 @@ public class PouvoirEauObject : SpellObject
     public GameObject hitboxDash;
 
     [Header("ATTAQUE NORMALE")]
-    public float forceAttraction;
-    public float forceDuration;
+    public int dammageWave;
+    public float durationDamageScale;
+    public float durationWave;
+    public Vector3 maxScaleWave;
+    
 
     [Header("ATTAQUE DASH")]
     public int nbOfDotRayon;

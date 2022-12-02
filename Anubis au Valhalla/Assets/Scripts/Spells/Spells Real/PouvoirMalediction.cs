@@ -20,15 +20,19 @@ public class PouvoirMalediction : MonoBehaviour
    
       public void Update()
       {
+         if (secondesRestantes > soPouvoirMalediction.duration)
+         {
+            secondesRestantes = soPouvoirMalediction.duration;
+         }
+         
          if (isActive && !lockCast)
          {
             secondesRestantes -= Time.deltaTime;
             
-            if (anubis.isDashing)
+            if (anubis.debutDash)
             {
-               GameObject plumeMaat = Instantiate(soPouvoirMalediction.hitboxDash, anubis.transform.position, Quaternion.identity);
-               plumeMaat.transform.parent = anubis.transform;
-               Destroy(plumeMaat,soPouvoirMalediction.dashHitboxDuration);
+               GameObject hitboxDash = Instantiate(soPouvoirMalediction.hitboxDash, anubis.transform.position, Quaternion.identity);
+               hitboxDash.transform.parent = anubis.transform;
             }
             
             if (anubisAtk.attaque3)
@@ -36,7 +40,12 @@ public class PouvoirMalediction : MonoBehaviour
                Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
                Vector2 charaPos = CharacterController.instance.transform.position;
                float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-               Instantiate(soPouvoirMalediction.hitboxThrust, anubis.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+               Instantiate(soPouvoirMalediction.hitboxAttaqueNormale, anubis.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+               GameObject plumeMaat = Instantiate(soPouvoirMalediction.hitboxThrust, anubis.transform.position, Quaternion.identity);
             }
          }
          
