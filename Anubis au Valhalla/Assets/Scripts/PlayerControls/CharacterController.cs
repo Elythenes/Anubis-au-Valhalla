@@ -6,6 +6,7 @@ using Pathfinding;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class CharacterController : MonoBehaviour
 {
@@ -288,6 +289,16 @@ public class CharacterController : MonoBehaviour
       timerdashCooldown = 0;
       var hitDoor = col.GetComponent<Door>();
       SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
+      if (hitDoor.willChooseSpecial)
+      {
+        SalleGennerator.instance.challengeChooser = Random.Range(1, 6);
+        Debug.Log("Challenge chosen is: " + SalleGennerator.instance.challengeChooser);
+      }
+      else
+      {
+        SalleGennerator.instance.challengeChooser = 0;
+        Debug.Log("noChallenges");
+      }
       if (hitDoor.currentDoorType == Door.DoorType.ToShop)
       {
         SalleGennerator.instance.shopsVisited++;
@@ -301,6 +312,9 @@ public class CharacterController : MonoBehaviour
       {
         SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, false, hitDoor);
       }
+
+      hitDoor.willChooseSpecial = false;
+
     }
 
     if (col.gameObject.layer ==roomBorders)

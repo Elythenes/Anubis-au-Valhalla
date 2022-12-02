@@ -8,7 +8,7 @@ public class GlyphInventory : MonoBehaviour
 {
     public static GlyphInventory Instance;
     
-    public List<GlyphObject> glyphInventory;
+    [Expandable] public List<GlyphObject> glyphInventory;
 
     public bool doStartHieroTest;
     [Expandable] public GlyphObject hieroTest;
@@ -46,7 +46,7 @@ public class GlyphInventory : MonoBehaviour
             GlyphManager.Instance.ActiveGlyphInManager(hiero);                                    //ajout dans le Manager pour que les stats soient update
             glyphInventory.Add(hiero);                                                            //ajout dans l'inventaire qui pourra être consulté
             Debug.Log("Glyph added in LameManager, nom : " + wrap.glyphObject.nom);
-            
+            GlyphManager.Instance.indexActiveGlyphs.Add((hiero.index));
         }
         else if (hiero.partie == GlyphObject.GlyphPart.Manche)
         {

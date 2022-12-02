@@ -26,6 +26,7 @@ public class AttaquesNormales : MonoBehaviour
     [NaughtyAttributes.ReadOnly] public List<float> dashImpulse = AnubisCurrentStats.instance.dashImpulse;
     [NaughtyAttributes.ReadOnly] public List<float> timeForCanDash = AnubisCurrentStats.instance.timeForCanDash;
     [NaughtyAttributes.ReadOnly] public List<float> dashTimers = AnubisCurrentStats.instance.dashTimers;
+    [NaughtyAttributes.ReadOnly] public int specialDmg = AnubisCurrentStats.instance.thrustDamage;
 
     [Header("Tracking valeurs pouvoirs")] 
     public bool attaque1;
@@ -41,6 +42,7 @@ public class AttaquesNormales : MonoBehaviour
     public float cooldownAbandonComboTimer;
     public bool buffer;
     public GameObject swordObj;
+    public GameObject thrust;
     
     private void Awake()
     {
@@ -65,6 +67,9 @@ public class AttaquesNormales : MonoBehaviour
     private void Update()
     {
         Mouse mouse = InputSystem.GetDevice<Mouse>(); // Trouver input de la souris
+
+        #region Attaques Normalles
+        
         if (mouse.leftButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements) // Execute l'attaque selon l'avancement du combo
         {
             switch (comboActuel)
@@ -177,6 +182,14 @@ public class AttaquesNormales : MonoBehaviour
 
         }
 
+        #endregion
+
+        if (mouse.rightButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements)
+        {
+            SpecialAttack();
+        }
+        
+
         // ------------------ Gestion Combo-------------
     }
     //<Combo 1>/ Glisse vers l'avant puis crée une hitbox devant le perso et touche les ennemis
@@ -196,7 +209,7 @@ public class AttaquesNormales : MonoBehaviour
         moveDirection.z = 0;
         moveDirection.Normalize();
 
-        // Gestion des animations
+        #region Gestion des animations
         
         if (angle > 45 && angle < 135) // attaque vers le haut
         {
@@ -257,6 +270,9 @@ public class AttaquesNormales : MonoBehaviour
                 anim.SetBool("isWalking",false);
             }
         }
+
+        #endregion
+        
        
         
         if (moveDirection.x > 0)
@@ -280,6 +296,23 @@ public class AttaquesNormales : MonoBehaviour
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
         swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+    }
+
+    public void SpecialAttack()
+    {
+        comboActuel = 0;
+        canAttack = false;
+        CharacterController.instance.isAttacking = true;
+        Vector2 charaPos = CharacterController.instance.transform.position;
+        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+        Vector3 moveDirection = (mousePos - charaPos);
+        moveDirection.z = 0;
+        moveDirection.Normalize();
+        Instantiate(thrust, 
+            charaPos,
+            Quaternion.AngleAxis(angle, Vector3.forward));
+
     }
     public void Slide(CharacterController.LookingAt dir)
     {
