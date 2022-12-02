@@ -109,7 +109,8 @@ public class Salle : MonoBehaviour
 
     private void C3_TimeAttack()
     {
-        timer = Instantiate(SalleGennerator.instance.Timer);
+        timer = SalleGennerator.instance.Timer;
+        timer.SetActive(true);
     }
 
     private void C4_Parasites()

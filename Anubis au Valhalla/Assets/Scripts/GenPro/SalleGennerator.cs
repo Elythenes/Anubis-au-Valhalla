@@ -135,12 +135,10 @@ public class SalleGennerator : MonoBehaviour
                         bool special = Random.value > 0.3f;
                         if (special)
                         {
-                                s_doors[i].ChooseSpecialToSpawn(Random.Range(1,specialRooms.Count));
+                                s_doors[i].willChooseSpecial = true;
                         }
-                        else
-                        {
-                                s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));  
-                        }
+                        s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));  
+                        
                 }
 
                 if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * 0.2f) && roomsDone <= Mathf.RoundToInt(dungeonSize * 0.4f))
