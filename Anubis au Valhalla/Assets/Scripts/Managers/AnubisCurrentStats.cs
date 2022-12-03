@@ -70,6 +70,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.dashImpulse = dashImpulse;
       atk.timeForCanDash = timeForCanDash;
       atk.dashTimers = dashTimers;
+      atk.specialDmg = thrustDamage;
       
       // pour la vie
       life.vieActuelle = vieActuelle;
@@ -99,6 +100,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.dashImpulse = dashImpulse;
       atk.timeForCanDash = timeForCanDash;
       atk.dashTimers = dashTimers;
+      atk.specialDmg = thrustDamage;
       UpdateDamageWithMultiplicateur();
       
       // pour la vie
