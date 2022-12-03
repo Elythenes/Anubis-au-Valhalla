@@ -72,6 +72,7 @@ public class Shop : MonoBehaviour
         public List<GlyphObject> Manches;
     }   
     #endregion
+    
     void Awake()
     {
         cam = Camera.main;
