@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Pathfinding;
+using Spine.Unity;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
@@ -14,14 +15,16 @@ public class IA_Monstre1 : MonoBehaviour
     [Header("Vie et visuels")]
     public float vieMax;
     public float vieActuelle;
-    public Animator animator;
+    public Animator anim;
     public GameObject emptyLayers;
+    public MonsterLifeManager life;
+    public bool isElite;
 
     [Header("Déplacements")]
     public GameObject player;
     public AIPath aipath;
     private Path path;
-    private SpriteRenderer sr;
+    //private SpriteRenderer sr;
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
     public float radiusWondering;
@@ -55,44 +58,63 @@ public class IA_Monstre1 : MonoBehaviour
 
     private void Start()
     {
+        anim.SetBool("isIdle", true);
         player = GameObject.FindGameObjectWithTag("Player");
         playerFollow.enabled = true;
         ai = GetComponent<IAstarAI>();
         vieActuelle = vieMax;
         rb = gameObject.GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
+        //sr = GetComponent<SpriteRenderer>();
         playerFollow.target = player.transform;
         CooldownDashTimer = CooldownDash;
+        if (life.elite)
+        {
+            isElite = true;
+        }
+        if (life.overdose)
+        {
+            ai.maxSpeed *= 2;
+            timerDash *= 0.75f;
+            LagDebutDash *= 0.3f;
+            CooldownDash *= 0.2f;
+        }
     }
     
 
     public void Update()
     {
-        if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
+        if (life.vieActuelle <= 0)
+        {
+            anim.SetBool("isDead", true);
+        }
+        /*if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
         {
            sr.sortingOrder = 2;
         }
         else
         {
           sr.sortingOrder = 1;
-        }
-        
-        if (!isDashing)
+        }*/
+
+        if (isDashing)
         {
             if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
             {
-                transform.localScale = new Vector3(-1, 1.316351f, 1);
+                transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
             }
             else if (transform.position.x > player.transform.position.x)
             {
-                transform.localScale = new Vector3(1, 1.316351f, 1);
-            }
-        }
+                transform.localRotation = Quaternion.Euler(transform.localRotation.x, -180, transform.localRotation.z);
+            }  
 
-        if (aipath.reachedDestination) // Quand le monstre arrive proche du joueur, il commence le dash
+        }
+           
+           
+
+        if (aipath.reachedDestination&& !life.isMomified) // Quand le monstre arrive proche du joueur, il commence le dash
         {
             if (isDashing == false && canDash)
-            { 
+            {
                 CooldownDashTimer = 0;
                 targetPerso  = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
                 aipath.canMove = false;
@@ -100,8 +122,11 @@ public class IA_Monstre1 : MonoBehaviour
             }
         }
 
-        if (isDashing) // Faire dasher le monstre
+        if (isDashing && !life.isMomified) // Faire dasher le monstre
         {
+            anim.SetBool("StartDash", true);
+            anim.SetBool("IsIdle", false);
+            anim.SetBool("IsRuning", false);
             LagDebutDash += Time.deltaTime;
 
             if (ShakeEnable)
@@ -110,15 +135,18 @@ public class IA_Monstre1 : MonoBehaviour
                 ShakeEnable = false;
             }
 
-            if (LagDebutDash >= LagDebutDashMax)
+            if (LagDebutDash >= LagDebutDashMax&& !life.isMomified)
             {
-                
+                anim.SetBool("StartDash",false);
+                anim.SetBool("Dash", true);
                 stopDash = true;
                 hitboxActive = true;
                 timerDash += Time.deltaTime;
 
-                if (timerDash > dashDuration)
+                if (timerDash > dashDuration&& !life.isMomified)
                 {
+                    anim.SetBool("StopDash", true);
+                    anim.SetBool("Dash",false);
                     hitboxActive = false;
                     ShakeEnable = true;
                     rb.velocity = (Vector2.zero);
@@ -128,16 +156,20 @@ public class IA_Monstre1 : MonoBehaviour
             }
         }
         
-        if (isDashing == false) // Reset le dash quand il est terminé
+        if (isDashing == false&& !life.isMomified) // Reset le dash quand il est terminé
         {
             aipath.canMove = false;
             CooldownDashTimer += Time.deltaTime;
-            gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
+            anim.SetBool("Dash", false);
+            anim.SetBool("StopDash", true);
+            //gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
         }
         
 
-        if (CooldownDashTimer >= CooldownDash) // Cooldown de l'attaque
+        if (CooldownDashTimer >= CooldownDash&& !life.isMomified)// Cooldown de l'attaque
         {
+            anim.SetBool("IsRuning", true);
+            anim.SetBool("StopDash", false);
             isWondering = false;
             aipath.canMove = true;
             canDash = true;
@@ -146,7 +178,7 @@ public class IA_Monstre1 : MonoBehaviour
             isDashing = false;
         }
 
-        if (stopDash)
+        if (stopDash&& !life.isMomified)
         {
             StartCoroutine(DashImpulse());
         }
@@ -154,19 +186,18 @@ public class IA_Monstre1 : MonoBehaviour
       
         IEnumerator DashImpulse()
         {
-            rb.AddForce(targetPerso*dashSpeed,ForceMode2D.Impulse);
+            rb.AddForce(targetPerso.normalized*dashSpeed,ForceMode2D.Impulse);
             yield return new WaitForSeconds(0.001f);
             stopDash = false;
         }
 
-        if (hitboxActive) // Active la hitbox et fait des dégâts
+        if (hitboxActive&& !life.isMomified) // Active la hitbox et fait des dégâts
         {
             Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
 
             foreach (Collider2D joueur in toucheJoueur)
             {
-                Debug.Log("touché");
-                joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque);
+                joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque, gameObject);
             }
         }
         

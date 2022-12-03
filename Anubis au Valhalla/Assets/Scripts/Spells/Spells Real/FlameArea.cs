@@ -7,28 +7,33 @@ using UnityEngine.Serialization;
 public class FlameArea : MonoBehaviour
 {
     [Header("FlameArea")] 
-    public SpellStaticAreaObject sOFlameArea;
+    public PouvoirFeuObject sOPouvoirFeu;
     public float tempsReloadHitFlameAreaTimer;
     public bool stopAttack;
-    public bool startAttack;
+
+    private void Start()
+    {
+        Destroy(gameObject,sOPouvoirFeu.hitboxDashDuration);
+        transform.localScale = sOPouvoirFeu.zoneScale;
+    }
 
     private void OnTriggerStay2D(Collider2D col)
     {
         if (col.gameObject.tag == "Monstre")
         {
             stopAttack = false;
-         for (int i = 0; i < sOFlameArea.nombreOfDot; i++)
+         for (int i = 0; i < sOPouvoirFeu.nombreOfDot; i++)
          {
-            if (tempsReloadHitFlameAreaTimer <= sOFlameArea.espacementDoT && stopAttack == false)
+            if (tempsReloadHitFlameAreaTimer <= sOPouvoirFeu.espacementDoT && stopAttack == false)
             {
                 tempsReloadHitFlameAreaTimer += Time.deltaTime;
             }
 
-            if (tempsReloadHitFlameAreaTimer > sOFlameArea.espacementDoT && col.gameObject.tag == "Monstre")
+            if (tempsReloadHitFlameAreaTimer > sOPouvoirFeu.espacementDoT && col.gameObject.tag == "Monstre")
             {
                 Debug.Log("touché");
-                col.GetComponent<MonsterLifeManager>().DamageText(sOFlameArea.puissanceAttaque);
-                col.GetComponent<MonsterLifeManager>().TakeDamage(sOFlameArea.puissanceAttaque,sOFlameArea.stagger);
+                col.GetComponentInParent<MonsterLifeManager>().DamageText(sOPouvoirFeu.dashPuissanceAttaque);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOPouvoirFeu.dashPuissanceAttaque,sOPouvoirFeu.stagger);
                 tempsReloadHitFlameAreaTimer = 0;
             }
          }

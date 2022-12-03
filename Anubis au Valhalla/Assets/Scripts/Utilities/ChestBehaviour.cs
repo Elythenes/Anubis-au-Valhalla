@@ -11,13 +11,28 @@ public class ChestBehaviour : MonoBehaviour
     public List<ItemPattern> patternList;
     public ItemPattern patternLooted;
     private Rigidbody2D rbItem;
-    
+    private SpriteRenderer sr;
+    public Sprite spriteNormal;
+    public Sprite spriteOutline;
+    public LayerMask groundLayer;
+
+    private void Start()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        
+        if(Physics2D.Raycast(transform.position,new Vector3(0,0,1),10,groundLayer))
+        {
+            transform.position = new Vector2(transform.position.x, transform.position.y-5);
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             CanOpen = true;
+            //sr.sprite = spriteOutline;
         }
     }
     
@@ -26,6 +41,7 @@ public class ChestBehaviour : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CanOpen = false;
+            //sr.sprite = spriteNormal;
         }
     }
 

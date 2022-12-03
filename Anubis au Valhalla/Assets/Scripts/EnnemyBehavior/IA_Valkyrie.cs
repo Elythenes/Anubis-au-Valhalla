@@ -10,6 +10,7 @@ public class IA_Valkyrie : MonoBehaviour
    [Header("Général")]
     public bool isElite;
     public GameObject emptyLayers;
+    public MonsterLifeManager life;
 
 
     [Header("Déplacements")]
@@ -18,6 +19,7 @@ public class IA_Valkyrie : MonoBehaviour
     public AIPath aipath;
     private Path path;
     private SpriteRenderer sr;
+    public GameObject canvasLifeBar;
     private Rigidbody2D rb;
     private Collider2D collider;
     IAstarAI ai;
@@ -25,7 +27,7 @@ public class IA_Valkyrie : MonoBehaviour
     public bool isFleeing;
     public float radiusWondering;
     public Vector2 pointToGo;
-    
+
 
 
     [Header("Attaque - Javelot")] 
@@ -35,6 +37,8 @@ public class IA_Valkyrie : MonoBehaviour
     public float StartUpJavelotTime;
     public float StartUpJavelotTimeTimer;
     public GameObject projectilJavelot;
+    public GameObject indicationJavelot;
+    [HideInInspector] public Vector2 dir;
 
     [Header("Attaque - Jump")]
     public GameObject indicationFall;
@@ -64,13 +68,25 @@ public class IA_Valkyrie : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
-
-
+        
+        if (life.elite)
+        {
+            isElite = true;
+        }
 
         if (isElite)
         {
             puissanceAttaqueJavelot *= 2;
                 FallDamage *= 2;
+        }
+        if (life.overdose)
+        {
+            ai.maxSpeed *= 2;
+            javelotSpeed *= 1.5f;
+            StartUpJavelotTime *= 0.4f;
+            JumpTime *= 0.4f;
+            IndicationTime *= 0.5f;
+            FallTime *= 0.5f;
         }
     }
 
@@ -79,14 +95,16 @@ public class IA_Valkyrie : MonoBehaviour
     {
         SortEnemies();
 
-        if (!isAttacking)
+        if (!isAttacking&& !life.isMomified)
         {
             Flip();
         }
         
-        if(!isAttacking) // Cooldwn des attaques;
+        if(!isAttacking&& !life.isMomified) // Cooldwn des attaques;
         {
+            StartUpJavelotTime = Random.Range(5, 9);
             StartUpJavelotTimeTimer += Time.deltaTime;
+            TriggerJumpTime = Random.Range(8, 13);
             TriggerJumpTimeTimer += Time.deltaTime;
         }
         
@@ -101,6 +119,7 @@ public class IA_Valkyrie : MonoBehaviour
                 TriggerJumpTimeTimer = 0;
                 hasShaked = false;
                 sr.enabled = false;
+                canvasLifeBar.SetActive(false);
                 collider.enabled = false;
                 IndicationTimeTimer += Time.deltaTime;
             
@@ -117,7 +136,7 @@ public class IA_Valkyrie : MonoBehaviour
             attaqueJavelot();
         }
         
-        if (!isFleeing) // Déplacements
+        if (!isFleeing&& !life.isMomified) // Déplacements
         {
             deplacement();
         }
@@ -153,6 +172,7 @@ public class IA_Valkyrie : MonoBehaviour
             FallTimeTimer = 0;
             transform.position = fallPos;
             sr.enabled = true;
+            canvasLifeBar.SetActive(true);
             collider.enabled = true;
             StartCoroutine(LagFall());
         }             
@@ -171,6 +191,12 @@ public class IA_Valkyrie : MonoBehaviour
 
     void attaqueJavelot()
     {
+        dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,
+            CharacterController.instance.transform.position.y - transform.position.y);
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        
+        GameObject indicJavelot = Instantiate(indicationJavelot,transform.position,  Quaternion.Euler(0,0,angle));
+        Destroy(indicJavelot,1);
         StartCoroutine(StartUpJavelot());
         transform.DOShakePosition(1,1);
         isAttacking = true;

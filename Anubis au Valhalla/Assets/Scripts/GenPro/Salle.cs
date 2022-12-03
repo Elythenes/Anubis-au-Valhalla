@@ -13,6 +13,7 @@ using Random = UnityEngine.Random;
 public class Salle : MonoBehaviour
 {
     public bool roomDone = false;
+    public bool isSpecial = false;
     public Transform[] transformReferences;
     public Transform AstarRef;
     public GameObject player;
@@ -22,6 +23,7 @@ public class Salle : MonoBehaviour
     public int spawnBank = 0;
     public int propsAmount = 5;
     public List<GameObject> currentEnemies = new List<GameObject>();
+    public List<GameObject> discardedPoints = new List<GameObject>();
     public Tilemap tileMap;
     public TilemapRenderer renderer;
     public List<Vector3> availableTilePos;
@@ -30,8 +32,13 @@ public class Salle : MonoBehaviour
     public List<GameObject> availableSpawnB;
     public List<GameObject> availableSpawnC;
     public List<int> costList = new List<int>();
-
     public PropSize propSizes = new PropSize();
+
+    private int challengeChosen;
+    private bool hasElited = false;
+    private GameObject timer;
+    public bool parasites = false;
+    public bool overdose = true;
     [Serializable]
     public class Props
     {
@@ -50,8 +57,8 @@ public class Salle : MonoBehaviour
         renderer.enabled = false;
         spawnBank = SalleGennerator.instance.GlobalBank;
         SalleGennerator.instance.GlobalBank = Mathf.RoundToInt(SalleGennerator.instance.GlobalBank * 1.1f);
-        
         AstarPath.active.Scan(AstarPath.active.data.graphs);
+        
         RearrangeDoors();
         AdjustCameraConstraints();
         GetAvailableTiles();
@@ -59,16 +66,61 @@ public class Salle : MonoBehaviour
 
     private void Start()
     {
+        challengeChosen = SalleGennerator.instance.challengeChooser;
         if (currentEnemies.Count == 0)
         {
             roomDone = true;
             SalleGennerator.instance.roomsDone++;
+        }
+        switch (challengeChosen)
+        {
+            case 2:
+                C2_Darkness();
+                break;
+            case 3:
+                C3_TimeAttack();
+                break;
+            case 4:
+                C4_Parasites();
+                break;
+            case 5:
+                C5_Overdose();
+                break;
         }
     }
 
     private void Update()
     {
 
+    }
+
+    private void C1_AllElites()
+    {
+        foreach (var enemy in currentEnemies)
+        {
+            enemy.GetComponent<MonsterLifeManager>().elite = true;
+        }
+    }
+
+    private void C2_Darkness()
+    {
+        
+    }
+
+    private void C3_TimeAttack()
+    {
+        timer = SalleGennerator.instance.Timer;
+        timer.SetActive(true);
+    }
+
+    private void C4_Parasites()
+    {
+        parasites = true;
+    }
+
+    private void C5_Overdose()
+    {
+        overdose = true;
     }
 
     public void RearrangeDoors()
@@ -90,40 +142,72 @@ public class Salle : MonoBehaviour
     {
         if (spawnPoints == 0)
         {
-         SpawnEnemies(availableSpawnA);   
+            SpawnEnemies(availableSpawnA);
+            SpawnAmphores(availableSpawnB);
         }
         if (spawnPoints == 1)
         {
             SpawnEnemies(availableSpawnB);
+            SpawnAmphores(availableSpawnC);
         }
         if (spawnPoints == 2)
         {
             SpawnEnemies(availableSpawnC);
+            SpawnAmphores(availableSpawnA);
         }
     }
     public void SpawnEnemies(List<GameObject> point)
     {
-        if (point.Count == 0)
-        {
-            return;
-        }
+        if (point.Count == 0) return;
+
         var pattern = SalleGennerator.instance.chosenPattern;
-        foreach (EnemyData t in SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn)
-        {
-            int cost = t.cost;
-            costList.Add(cost);
+        if (costList.Count == 0)
+        {    
+            foreach (EnemyData t in SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn)
+            {
+                int cost = t.cost;
+                costList.Add(cost);
+            }
         }
         while (spawnBank > costList.Min()) //tries to buy enemies as long as it can afford at least one of them
         {
             var chosenValue = Random.Range(0, costList.Count);
             if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());//if it cant afford the most expensive enemy, it will buy the cheapest one
-            Debug.Log(chosenValue);
             var chosenEnemy = SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn[chosenValue];
             spawnBank -= costList[chosenValue];
             costList[chosenValue] += 3;
             var chosenPoint = point[Random.Range(0, point.Count)];
             currentEnemies.Add(Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform));
-            point.Remove(chosenPoint);
+            if (chosenEnemy.isElite)
+            {
+                chosenEnemy.prefab.GetComponent<MonsterLifeManager>().elite = true;
+            }
+            if (overdose)
+            {
+                chosenEnemy.prefab.GetComponent<MonsterLifeManager>().overdose = true;
+            }
+            //chosenEnemy.prefab.GetComponent<MonsterLifeManager>().data = chosenEnemy;
+            discardedPoints.Add(chosenPoint);
+            point.Remove(chosenPoint); // Get the spawner to spawn in waves if theres too many enemies to to spawn
+            if (point.Count == 0)
+            {
+                point.AddRange(discardedPoints);
+                discardedPoints.Clear();
+                return;
+            }
+        }
+    }
+
+    public void SpawnAmphores(List<GameObject> point)
+    {
+        if (point.Count == 0)
+        {
+            return;
+        }
+        for (int i = 0; i < Random.Range(1,6); i++)
+        {
+            var chosenPoint = point[Random.Range(0, point.Count)];
+            Instantiate(SalleGennerator.instance.amphores,chosenPoint.transform);
         }
     }
     
@@ -214,21 +298,71 @@ public class Salle : MonoBehaviour
 
     public void CheckForEnemies()
     {
-        
-        if (currentEnemies.Count == 0)
+        if (spawnBank > costList.Min() && currentEnemies.Count == 0)
         {
-            roomDone = true;
-            SalleGennerator.instance.roomsDone++;
-            //int coffreSpawnChance = Random.Range(1, 2);
-            //Debug.Log(coffreSpawnChance);
-           // if (coffreSpawnChance == 2)
-            //{
-            Instantiate(coffre,player.transform.position,Quaternion.identity);
-           // }
+            var spawnPoints = Random.Range(0, 3);
+            if (spawnPoints == 0)
+            {
+                SpawnEnemies(availableSpawnA);
+            }
+            if (spawnPoints == 1)
+            {
+                SpawnEnemies(availableSpawnB);
+            }
+            if (spawnPoints == 2)
+            {
+                SpawnEnemies(availableSpawnC);
+            }
+        }
+
+        if (currentEnemies.Count != 0) return;
+        roomDone = true;
+        SalleGennerator.instance.roomsDone++;
+        switch (challengeChosen)
+        {
+            case 1:
+                //spawn better loot
+                break;
+            case 2:
+                //spawn better loot
+                break;
+            case 3:
+                if (timer.GetComponent<TimerChallenge>().internalTimer > 0)
+                {
+                    //spawn better loot
+                }
+                break;
+            case 4:
+                //spawn better loot
+                break;
+            case 5:
+                //spawn better loot
+                break;
+        }
+        Instantiate(coffre,player.transform.position,Quaternion.identity);
+    }
+    public IEnumerator DelayedSpawns()
+    {
+        Debug.Log("ATTENTION, CA VA PETER");
+        yield return new WaitForSeconds(SalleGennerator.instance.TimeBetweenWaves);
+        Debug.Log("CA A PETEEDR");
+        if (spawnBank > costList.Min())
+        {
+            var spawnPoints = Random.Range(0, 3);
+            if (spawnPoints == 0)
+            {
+                SpawnEnemies(availableSpawnA);
+            }
+            if (spawnPoints == 1)
+            {
+                SpawnEnemies(availableSpawnB);
+            }
+            if (spawnPoints == 2)
+            {
+                SpawnEnemies(availableSpawnC);
+            }
         }
     }
-    
-
 }
 
 

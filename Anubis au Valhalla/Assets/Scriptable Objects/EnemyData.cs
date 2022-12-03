@@ -9,4 +9,9 @@ public class EnemyData : ScriptableObject
     public int cost;
     public GameObject prefab;
     public bool isElite;
+
+    private void Awake()
+    {
+        
+    }
 }
