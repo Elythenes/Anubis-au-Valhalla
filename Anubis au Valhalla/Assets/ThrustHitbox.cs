@@ -8,13 +8,12 @@ public class ThrustHitbox : Combo1Hitbox
 {
     public override void Start()
     {
-        camera = GameObject.Find("CameraHolder");
         transform.parent = CharacterController.instance.transform;
         Destroy(gameObject, AttaquesNormales.instance.dureeHitbox[3]);
         transform.localScale *= AttaquesNormales.instance.rangeAttaque[3];
     }
     
-    public void OnTriggerExit2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Monstre"))
         {

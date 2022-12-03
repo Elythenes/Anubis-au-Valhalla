@@ -37,7 +37,6 @@ public class MonsterLifeManager : MonoBehaviour
     public float MomifiedTimeTimer;
     public bool isMomified;
     public GameObject bandelettesMomie;
-    public GameObject bandelettesHolder;
     private bool activeBandelettes;
     public bool isEnvased;
     public float EnvasedTime = 5;
@@ -93,16 +92,18 @@ public class MonsterLifeManager : MonoBehaviour
         if (isMomified)
         {
             MomifiedTimeTimer += Time.deltaTime;
-            ai.canMove = false;
-            GameObject bandelettesHolder = Instantiate(bandelettesMomie, transform);
+            OnBegin.Invoke();
+            ai.canMove = false; 
+           bandelettesMomie.SetActive(true);
             
             if (MomifiedTimeTimer >= MomifiedTime)
             {
+                OnDone.Invoke();
                 activeBandelettes = true;
-                MomifiedTimeTimer = 0;
                 isMomified = false;
-                Destroy(bandelettesHolder);
+                bandelettesMomie.SetActive(false);
                 ai.canMove = true;
+                MomifiedTimeTimer = 0;
             }
         }
     }

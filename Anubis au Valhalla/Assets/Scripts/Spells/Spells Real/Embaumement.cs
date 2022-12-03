@@ -11,6 +11,7 @@ public class Embaumement : MonoBehaviour
     {
         Destroy(gameObject,sOPlaie.bulletDuration);
         rb = gameObject.GetComponent<Rigidbody2D>();
+        transform.localScale = sOPlaie.bulletScale;
     }
 
     void Update()
@@ -26,7 +27,7 @@ public class Embaumement : MonoBehaviour
             monstre.DamageText(sOPlaie.thrustDamage);
             monstre.TakeDamage(sOPlaie.thrustDamage, sOPlaie.staggerThrust);
             monstre.isMomified = true;
-            monstre.MomifiedTime = sOPlaie.staggerThrust;
+            monstre.MomifiedTime = sOPlaie.dureeMomification;
         }
     }
 }

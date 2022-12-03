@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class BoueBehaviour : MonoBehaviour
 {
+    public PouvoirPlaieObject soPlaie;
     private void Start()
     {
-        Destroy(gameObject, 5);
+        Destroy(gameObject, soPlaie.dashHitboxDuration);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -15,8 +16,7 @@ public class BoueBehaviour : MonoBehaviour
        
         if (col.gameObject.tag == "Monstre")
         {
-            Debug.Log("oui2");
-            col.GetComponent<MonsterLifeManager>().isEnvased = true;
+            col.GetComponentInParent<MonsterLifeManager>().isEnvased = true;
         }
     }
 }

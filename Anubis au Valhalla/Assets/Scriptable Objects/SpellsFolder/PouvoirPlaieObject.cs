@@ -14,10 +14,13 @@ public class PouvoirPlaieObject : SpellObject
     public GameObject hitboxDash;
 
     [Header("ATTAQUE NORMALE")]
-    public float forceAttraction;
-    public float forceDuration;
+    public int damageAttaqueNormale;
+    public float durationAttaqueNormale;
+    public float durationStunAttaqueNormale;
+    public float staggerAttaqueNormale;
 
     [Header("ATTAQUE DASH")] 
+    public float dashHitboxDuration;
     public float dashSpawnRate;
     public int dashDamage;
     public float timeToStep2;
@@ -30,6 +33,7 @@ public class PouvoirPlaieObject : SpellObject
     public float bulletDuration;
     public float nuberOfBullets;
     public float staggerThrust;
+    public float dureeMomification;
     public Vector3 bulletScale;
     public void Awake()
     {

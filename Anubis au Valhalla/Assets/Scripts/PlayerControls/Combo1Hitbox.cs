@@ -13,7 +13,6 @@ public class Combo1Hitbox : MonoBehaviour
 {
     [Range(0, 2)] public int comboNumber;
     public float stagger = 0.2f;
-    public GameObject camera;
     private bool isShaking;
     private bool isWaiting;
     public GameObject bloodEffect;
@@ -22,7 +21,6 @@ public class Combo1Hitbox : MonoBehaviour
 
     public virtual void Start()
     {
-        camera = GameObject.Find("CameraHolder");
         transform.parent = CharacterController.instance.transform;
         Destroy(gameObject, AttaquesNormales.instance.dureeHitbox[comboNumber]);
        transform.localScale *= AttaquesNormales.instance.rangeAttaque[comboNumber];

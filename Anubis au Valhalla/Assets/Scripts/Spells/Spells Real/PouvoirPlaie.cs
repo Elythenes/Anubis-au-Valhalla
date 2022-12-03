@@ -28,24 +28,33 @@ public class PouvoirPlaie : MonoBehaviour
                timerSpawn += Time.deltaTime;
                if (timerSpawn >= soPouvoirPlaie.dashSpawnRate)
                {
-                  Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                  Vector2 charaPos = CharacterController.instance.transform.position;
-                  float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+                  float angle = Mathf.Atan2(CharacterController.instance.movement.x,CharacterController.instance.movement.y) * Mathf.Rad2Deg;
                   GameObject murDeSable = Instantiate(soPouvoirPlaie.hitboxDash, anubis.transform.position, Quaternion.AngleAxis(angle,Vector3.forward));
                   timerSpawn = 0;
                }
             }
    
-            if (anubisAtk.attaque2) // ATTAQUE NORMALE
+            if (anubisAtk.attaque3) // ATTAQUE NORMALE
             {
                Instantiate(soPouvoirPlaie.hitboxAttaqueNormale, anubis.transform.position, Quaternion.identity);
             }
             
-            if (anubisAtk.attaque1) //PLACEHOLDER - REMPLACER PAR LE THRUST
+            if (anubisAtk.attaqueSpe) //PLACEHOLDER - REMPLACER PAR LE THRUST
             {
                for (int i = 0; i < soPouvoirPlaie.nuberOfBullets; i++)
                {
-                  Instantiate(soPouvoirPlaie.hitboxThrust,transform.position,Quaternion.identity);
+                  Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                  Vector2 charaPos = CharacterController.instance.transform.position;
+                  float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+                  if (i == 0)
+                  {
+                     angle -= 20;
+                  }
+                  else if(i == 2)
+                  {
+                     angle += 20;
+                  }
+                  Instantiate(soPouvoirPlaie.hitboxThrust,transform.position,Quaternion.AngleAxis(angle,Vector3.forward));
                }
             }
          }

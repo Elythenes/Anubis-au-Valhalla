@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class SarcophageBehaviour : MonoBehaviour
@@ -11,7 +12,7 @@ public class SarcophageBehaviour : MonoBehaviour
 
     void Start()
     {
-        Destroy(gameObject,soPlaie.forceDuration);
+        Destroy(gameObject,soPlaie.durationAttaqueNormale);
         transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
 
@@ -19,10 +20,11 @@ public class SarcophageBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Monstre"))
         {
-             _direction = other.transform.position - transform.position;
-             Vector2 driNormalized = _direction.normalized * soPlaie.forceAttraction;
-            other.GetComponent<Rigidbody2D>().velocity = _direction;
-            //other.GetComponent<Rigidbody2D>().AddForce((transform.position - other.transform.position) * soPlaie.forceAttraction,ForceMode2D.Impulse);
+            MonsterLifeManager monstre = other.GetComponentInParent<MonsterLifeManager>();
+            monstre.DamageText(soPlaie.damageAttaqueNormale);
+            monstre.TakeDamage(soPlaie.thrustDamage, soPlaie.staggerAttaqueNormale);
+            monstre.isMomified = true;
+            monstre.MomifiedTime = soPlaie.durationStunAttaqueNormale;
         }
     }
 }
