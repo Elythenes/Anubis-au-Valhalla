@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public class BoutonHampe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Animator anim;
+    public Animator animMenuPartie;
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
@@ -18,5 +19,13 @@ public class BoutonHampe : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         anim.SetBool("HampeDown",true);
         anim.SetBool("HampeUp",false);
         anim.SetBool("IdleHampe",true);
+    }
+    
+    public void ChoseHampe()
+    {
+        animMenuPartie.SetBool("ChoseHampe",true);
+        anim.SetBool("HampeUp",false);
+        anim.SetBool("HampeDown",false);
+        anim.SetBool("IdleHampe",false);
     }
 }

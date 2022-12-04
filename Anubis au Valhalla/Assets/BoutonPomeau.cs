@@ -4,7 +4,8 @@ using UnityEngine.EventSystems;
 public class BoutonPomeau : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Animator anim;
-
+    public Animator animMenuPartie;
+    
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
         anim.SetBool("PomeauUp",true);
@@ -17,5 +18,10 @@ public class BoutonPomeau : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         anim.SetBool("PomeauDown",true);
         anim.SetBool("PomeauUp",false);
         anim.SetBool("IdlePomeau",true);
+    }
+    
+    public void ChosePomeau()
+    {
+        animMenuPartie.SetBool("ChosePomeau",true);
     }
 }

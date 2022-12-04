@@ -5,6 +5,8 @@ using DG.Tweening;
 public class BoutonLame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Animator anim;
+    public Animator animMenuPartie;
+    public Animator animMenuChoices;
     public CanvasGroup choseMenu;
     public bool fade;
 
@@ -38,6 +40,12 @@ public class BoutonLame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 choseMenu.alpha += Time.deltaTime;    
             }
         }
+    }
+
+    public void ChoseLame()
+    {
+        animMenuPartie.SetBool("ChoseLame",true);
+        animMenuChoices.SetBool("SpawnChoices",true);
     }
 
     public void FadeOut()
