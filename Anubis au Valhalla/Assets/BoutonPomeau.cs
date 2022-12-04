@@ -25,5 +25,6 @@ public class BoutonPomeau : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         animMenuPartie.SetBool("ChosePomeau",true);
         animMenuChoices.SetBool("SpawnChoices",true);
+        animMenuChoices.SetBool("BackIdle",false);
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 public class UIMenuShop : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Animator anim;
+    public Animator animChosePartMenu;
+    public Animator animChoseUpgradeMenu;
     public CanvasGroup choseMenuMenu;
     public CanvasGroup choseUpgradeMenu;
     public bool fade;
@@ -55,6 +57,15 @@ public class UIMenuShop : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
     }
 
+    public void ResetAllAnimatorMenu()
+    {
+        fade2 = false;
+        animChoseUpgradeMenu.SetBool("BackIdle",true);
+        animChoseUpgradeMenu.SetBool("SpawnChoices",false);
+        animChosePartMenu.SetBool("ChoseLame",false);
+        animChosePartMenu.SetBool("ChoseHampe",false);
+        animChosePartMenu.SetBool("ChosePomeau",false);
+    }
     public void FadeOut()
     {
         fade = true;
