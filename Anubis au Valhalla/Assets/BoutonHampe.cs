@@ -6,6 +6,7 @@ public class BoutonHampe : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     public Animator anim;
     public Animator animMenuPartie;
+    public Animator animMenuChoices;
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
@@ -24,8 +25,6 @@ public class BoutonHampe : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void ChoseHampe()
     {
         animMenuPartie.SetBool("ChoseHampe",true);
-        anim.SetBool("HampeUp",false);
-        anim.SetBool("HampeDown",false);
-        anim.SetBool("IdleHampe",false);
+        animMenuChoices.SetBool("SpawnChoices",true);
     }
 }

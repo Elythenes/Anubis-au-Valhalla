@@ -5,8 +5,10 @@ using UnityEngine.EventSystems;
 public class UIMenuShop : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Animator anim;
-    public CanvasGroup choseMenu;
+    public CanvasGroup choseMenuMenu;
+    public CanvasGroup choseUpgradeMenu;
     public bool fade;
+    public bool fade2;
     
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
@@ -20,20 +22,35 @@ public class UIMenuShop : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         anim.SetBool("Idle",true);
     }
 
-    public void Update()
+    public void Update()  
     {
-        if (fade)
+        if (fade)// Gérer le fade in et out du menu de de choix (upgrade - consombales)
         {
-            if (choseMenu.alpha > 0)
+            if (choseMenuMenu.alpha > 0)
             {
-                choseMenu.alpha -= Time.deltaTime; 
+                choseMenuMenu.alpha -= Time.deltaTime; 
             }
         }
         else if(!fade)
         {
-            if (choseMenu.alpha < 1)
+            if (choseMenuMenu.alpha < 1)
             {
-                choseMenu.alpha += Time.deltaTime;    
+                choseMenuMenu.alpha += Time.deltaTime;    
+            }
+        }
+        
+        if (fade2) // Gérer le fade in et out du menu de de choix des upgrades
+        {
+            if (choseUpgradeMenu.alpha > 0)
+            {
+                choseUpgradeMenu.alpha -= Time.deltaTime; 
+            }
+        }
+        else if(!fade2)
+        {
+            if (choseUpgradeMenu.alpha < 1)
+            {
+                choseUpgradeMenu.alpha += Time.deltaTime;    
             }
         }
     }
@@ -41,5 +58,29 @@ public class UIMenuShop : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void FadeOut()
     {
         fade = true;
+        choseMenuMenu.interactable = false;
+        choseMenuMenu.blocksRaycasts= false;
+
+    }
+    
+    public void FadeIn()
+    {
+        fade = false;
+        choseMenuMenu.interactable = true;
+        choseMenuMenu.blocksRaycasts = true;
+    }
+    
+    public void FadeOutChoseUpgrade()
+    {
+        fade2 = true;
+        choseUpgradeMenu.interactable = false;
+        choseUpgradeMenu.blocksRaycasts= false;
+    }
+    
+    public void FadeInChoseUpgrade()
+    {
+        fade2 = false;
+        choseUpgradeMenu.interactable = true;
+        choseUpgradeMenu.blocksRaycasts= true;
     }
 }

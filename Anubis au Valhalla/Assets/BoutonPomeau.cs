@@ -5,6 +5,7 @@ public class BoutonPomeau : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     public Animator anim;
     public Animator animMenuPartie;
+    public Animator animMenuChoices;
     
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
@@ -23,5 +24,6 @@ public class BoutonPomeau : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void ChosePomeau()
     {
         animMenuPartie.SetBool("ChosePomeau",true);
+        animMenuChoices.SetBool("SpawnChoices",true);
     }
 }

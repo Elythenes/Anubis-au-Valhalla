@@ -51,10 +51,14 @@ public class BoutonLame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void FadeOut()
     {
         fade = true;
+        choseMenu.interactable = false;
+        choseMenu.blocksRaycasts = false;
     }
     
     public void FadeIn()
     {
         fade = false;
+        choseMenu.interactable = true;
+        choseMenu.blocksRaycasts = true;
     }
 }
