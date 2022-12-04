@@ -26,5 +26,6 @@ public class BoutonHampe : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         animMenuPartie.SetBool("ChoseHampe",true);
         animMenuChoices.SetBool("SpawnChoices",true);
+        animMenuChoices.SetBool("BackIdle",false);
     }
 }

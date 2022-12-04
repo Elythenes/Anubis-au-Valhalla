@@ -26,7 +26,7 @@ public class BoutonLame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     
     public void Update()
     {
-        if (fade)
+        if (fade) // Gérer le fade in et out du menu de choix des parties
         {
             if (choseMenu.alpha > 0)
             {
@@ -46,6 +46,7 @@ public class BoutonLame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         animMenuPartie.SetBool("ChoseLame",true);
         animMenuChoices.SetBool("SpawnChoices",true);
+        animMenuChoices.SetBool("BackIdle",false);
     }
 
     public void FadeOut()
@@ -60,5 +61,13 @@ public class BoutonLame : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         fade = false;
         choseMenu.interactable = true;
         choseMenu.blocksRaycasts = true;
+    }
+
+    public void BackIdle()
+    {
+        animMenuPartie.SetBool("BackIdle",true);
+        animMenuPartie.SetBool("ChoseLame",false);
+        animMenuPartie.SetBool("ChoseHampe",false);
+        animMenuPartie.SetBool("ChosePomeau",false);
     }
 }
