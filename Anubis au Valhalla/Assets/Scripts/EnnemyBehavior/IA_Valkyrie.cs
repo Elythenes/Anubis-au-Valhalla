@@ -18,7 +18,6 @@ public class IA_Valkyrie : MonoBehaviour
     public Seeker seeker;
     public AIPath aipath;
     private Path path;
-    private SpriteRenderer sr;
     public GameObject canvasLifeBar;
     private Rigidbody2D rb;
     private Collider2D collider;
@@ -63,7 +62,6 @@ public class IA_Valkyrie : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
-        sr = GetComponent<SpriteRenderer>();
         collider = GetComponent<BoxCollider2D>();
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
@@ -93,12 +91,12 @@ public class IA_Valkyrie : MonoBehaviour
 
     public void Update()
     {
-        SortEnemies();
+        //SortEnemies();
 
-        if (!isAttacking&& !life.isMomified)
+       /* if (!isAttacking&& !life.isMomified)
         {
             Flip();
-        }
+        }*/
         
         if(!isAttacking&& !life.isMomified) // Cooldwn des attaques;
         {
@@ -118,7 +116,6 @@ public class IA_Valkyrie : MonoBehaviour
         {
                 TriggerJumpTimeTimer = 0;
                 hasShaked = false;
-                sr.enabled = false;
                 canvasLifeBar.SetActive(false);
                 collider.enabled = false;
                 IndicationTimeTimer += Time.deltaTime;
@@ -171,7 +168,6 @@ public class IA_Valkyrie : MonoBehaviour
             IndicationTimeTimer = 0;
             FallTimeTimer = 0;
             transform.position = fallPos;
-            sr.enabled = true;
             canvasLifeBar.SetActive(true);
             collider.enabled = true;
             StartCoroutine(LagFall());
@@ -211,7 +207,7 @@ public class IA_Valkyrie : MonoBehaviour
     }
 
 
-    void Flip()
+   /* void Flip()
     {
         if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
         {
@@ -221,8 +217,8 @@ public class IA_Valkyrie : MonoBehaviour
         {
             transform.localScale = new Vector3(1, transform.localScale.y,transform.localScale.z);
         }
-    }
-    void SortEnemies()
+    }/*
+   /* void SortEnemies()
     {
         if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
         {
@@ -232,7 +228,7 @@ public class IA_Valkyrie : MonoBehaviour
         {
             sr.sortingOrder = 1;
         }
-    }
+    }*/
     
     
     
