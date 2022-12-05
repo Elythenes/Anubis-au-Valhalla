@@ -81,7 +81,6 @@ public class AnubisCurrentStats : MonoBehaviour
       move.speedX = speedX;
       move.speedY = speedY;
       move.dashCooldown = dashCooldown;
-      life.vieMax += 1;                      //à quoi ça sert ?
    }
 
    private void Update()

@@ -78,7 +78,6 @@ public class DamageManager : MonoBehaviour
 
     private void Update()
     {
-      
         if (stats.vieActuelle > stats.vieMax)
         {
             stats.vieActuelle = stats.vieMax;
@@ -95,7 +94,7 @@ public class DamageManager : MonoBehaviour
                 isHurt = false;
                 var angle = CharacterController.instance.transform.position - enemy.transform.position;
                 angle.Normalize();
-                CharacterController.instance.rb.AddForce(damage*angle*knockbackAmount, ForceMode2D.Impulse);
+                CharacterController.instance.rb.AddForce(angle * (damage * knockbackAmount), ForceMode2D.Impulse);
                 StartCoroutine(RedScreenStart(timeRedScreen));
                 HitStop(timeHitStop,false);
                 stats.vieActuelle -= damage - damageReduction/100 * damage;
