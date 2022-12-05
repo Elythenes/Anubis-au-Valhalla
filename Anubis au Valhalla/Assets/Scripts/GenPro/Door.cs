@@ -48,6 +48,15 @@ public class Door : MonoBehaviour
                 currentSprite.sprite = doorSprites[5];
                 break;
         }
+
+        if (willChooseSpecial && currentDoorType != DoorType.ToShop)
+        {
+            currentSprite.sprite = doorSprites[2];
+        }
+        else
+        {
+            currentSprite.sprite = doorSprites[0];
+        }
     }
 
 
