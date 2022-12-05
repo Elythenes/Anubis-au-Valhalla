@@ -12,6 +12,7 @@ public class ChestBehaviour : MonoBehaviour
     public ItemPattern patternLooted;
     private Rigidbody2D rbItem;
     public LayerMask groundLayer;
+    public Animator openAnim;
 
     private void Start()
     {
@@ -45,13 +46,15 @@ public class ChestBehaviour : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && CanOpen && !isOpened)
         {
-            OpenChest();
+            StartCoroutine(OpenChest());
         }
     }
 
-    void OpenChest()
+    public IEnumerator OpenChest()
     {
         isOpened = true;
+        openAnim.enabled = true;
+        yield return new WaitForSeconds(1.3f);
         patternLooted = patternList[Random.Range(0, patternList.Count)];
         Souls.instance.CreateSouls(transform.position, patternLooted.soulAmount);
         
