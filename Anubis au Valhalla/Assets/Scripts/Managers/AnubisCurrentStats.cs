@@ -124,7 +124,7 @@ public class AnubisCurrentStats : MonoBehaviour
       {
          comboDamage[i] = Mathf.RoundToInt(baseDamage * multiplicateurDamage[i]);
       }
-      thrustDamage = Mathf.RoundToInt(baseDamage * multiplicateurDamage[4]);
+      thrustDamage = Mathf.RoundToInt(baseDamage * multiplicateurDamage[3]);
    }
    
 }
