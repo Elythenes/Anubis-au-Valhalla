@@ -16,7 +16,7 @@ public class AnubisCurrentStats : MonoBehaviour
    public List<Vector2> rangeAttaque = new List<Vector2>();
    public List<bool> isC = new List<bool>();
    public float baseDamage = 20;
-   public float baseDamageforSoul;
+   public float baseDamageForSoul;
    public List<float> multiplicateurDamage = new(4){.5f,.75f,1,1.3f};
    public List<int> comboDamage = new List<int>();
    public int thrustDamage = 10;
@@ -52,18 +52,16 @@ public class AnubisCurrentStats : MonoBehaviour
       {
          instance = this;
       }
-      
-      UpdateDamageWithMultiplicateur();
    }
 
    private void Start()
    {
       // pour les attaques
-      baseDamageforSoul = baseDamage;
+      baseDamageForSoul = baseDamage;
+      UpdateDamageWithMultiplicateur();
       atk.hitBoxC = hitBoxC;
       atk.rangeAttaque = rangeAttaque;
       atk.isC = isC;
-      atk.damage = comboDamage;
       atk.criticalRate = criticalRate;
       atk.dureeHitbox = dureeHitbox;
       atk.forceKnockback = forceKnockback;
@@ -71,8 +69,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.dashImpulse = dashImpulse;
       atk.timeForCanDash = timeForCanDash;
       atk.dashTimers = dashTimers;
-      atk.specialDmg = thrustDamage;
-      
+
       // pour la vie
       life.vieActuelle = vieActuelle;
       life.vieMax = vieMax;
@@ -94,7 +91,6 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.hitBoxC = hitBoxC;
       atk.rangeAttaque = rangeAttaque;
       atk.isC = isC;
-      atk.damage = comboDamage;
       atk.criticalRate = criticalRate;
       atk.dureeHitbox = dureeHitbox;
       atk.forceKnockback = forceKnockback;
@@ -102,8 +98,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.dashImpulse = dashImpulse;
       atk.timeForCanDash = timeForCanDash;
       atk.dashTimers = dashTimers;
-      atk.specialDmg = thrustDamage;
-      
+
       // pour la vie
       life.vieActuelle = vieActuelle;
       life.vieMax = vieMax;

@@ -54,7 +54,7 @@ public class DamageManager : MonoBehaviour
     
     private void Awake()
     {
-stats = AnubisCurrentStats.instance;
+        stats = AnubisCurrentStats.instance;
         if (instance == null)
         {
             instance = this;
@@ -98,9 +98,10 @@ stats = AnubisCurrentStats.instance;
                 CharacterController.instance.rb.AddForce(damage*angle*knockbackAmount, ForceMode2D.Impulse);
                 StartCoroutine(RedScreenStart(timeRedScreen));
                 HitStop(timeHitStop,false);
-                stats.vieActuelle -= damage / stats.damageReduction;
+                stats.vieActuelle -= damage - damageReduction/100 * damage;
+                PotionManager.Instance.tookDamage = true;
                 GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
-                textObj.GetComponentInChildren<TextMeshPro>().SetText((damage / stats.damageReduction).ToString());
+                textObj.GetComponentInChildren<TextMeshPro>().SetText((damage - damageReduction/100 * damage).ToString());
                 
                 
                 if (stats.vieActuelle <= 0)

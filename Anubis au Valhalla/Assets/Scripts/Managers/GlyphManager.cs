@@ -97,46 +97,46 @@ public class GlyphManager : MonoBehaviour
         }
     }
     
-    void SetOnBasicStatUp(GlyphObject gBasicStatUp)
+    void SetOnBasicStatUp(GlyphObject hiero)
     {
-        switch (gBasicStatUp.anubisStat)
+        switch (hiero.anubisStat)
         {
             case GlyphObject.AnubisStat.AnubisBaseDamage:   //augmente les débâts de toutes les attaques du combo et le Thrust
-                AnubisCurrentStats.instance.baseDamage += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
-                AnubisCurrentStats.instance.baseDamageforSoul += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.baseDamage += Mathf.RoundToInt(hiero.bonusBasicStat);
+                AnubisCurrentStats.instance.baseDamageForSoul += Mathf.RoundToInt(hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.AllComboDamage:     //augmente les dégâts de toutes les attaques du combo
                 for (int i = 0; i < 3; i++)
                 {
-                    AnubisCurrentStats.instance.comboDamage[i] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat); 
+                    AnubisCurrentStats.instance.comboDamage[i] += Mathf.RoundToInt(hiero.bonusBasicStat); 
                 }
                 break;
             
             case GlyphObject.AnubisStat.Combo1Damage:       //augmente les dégâts de la 1ère attaque du combo
-                AnubisCurrentStats.instance.comboDamage[0] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.comboDamage[0] += Mathf.RoundToInt(hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Combo2Damage:       //augmente les dégâts de la 2ème attaque du combo
-                AnubisCurrentStats.instance.comboDamage[1] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.comboDamage[1] += Mathf.RoundToInt(hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Combo3Damage:       //augmente les dégâts de la 3ème attaque du combo
-                AnubisCurrentStats.instance.comboDamage[2] += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.comboDamage[2] += Mathf.RoundToInt(hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.ThrustDamage:       //augmente les dégâts du Thrust
-                AnubisCurrentStats.instance.thrustDamage += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.thrustDamage += Mathf.RoundToInt(hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Range:              //augmente la portée / Range d'Anubis
                 for (int i = 0; i < 3; i++)
                 {
-                    if (gBasicStatUp.bonusBasicStat != 0)
+                    if (hiero.bonusBasicStat != 0)
                     {
                         var vector2 = AnubisCurrentStats.instance.rangeAttaque[i];
-                        vector2.x *= gBasicStatUp.bonusBasicStat;
-                        vector2.y *= gBasicStatUp.bonusBasicStat;
+                        vector2.x *= hiero.bonusBasicStat;
+                        vector2.y *= hiero.bonusBasicStat;
                         AnubisCurrentStats.instance.rangeAttaque[i] = vector2;
                     }
                     else
@@ -147,18 +147,18 @@ public class GlyphManager : MonoBehaviour
                 break;
             
             case GlyphObject.AnubisStat.HealthPoint:       //augmente les PV max d'Anubis
-                AnubisCurrentStats.instance.vieMax += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.vieMax += Mathf.RoundToInt(hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Armor:            //augmente la réduction de dégâts d'Anubis
-                AnubisCurrentStats.instance.damageReduction += Mathf.RoundToInt(gBasicStatUp.bonusBasicStat);
+                AnubisCurrentStats.instance.damageReduction += Mathf.RoundToInt(hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Speed:              //augmente la vitesse de déplacement d'Anubis
-                if (gBasicStatUp.bonusBasicStat != 0)
+                if (hiero.bonusBasicStat != 0)
                 {
-                    AnubisCurrentStats.instance.speedX *= gBasicStatUp.bonusBasicStat;
-                    AnubisCurrentStats.instance.speedY *= gBasicStatUp.bonusBasicStat;
+                    AnubisCurrentStats.instance.speedX *= hiero.bonusBasicStat;
+                    AnubisCurrentStats.instance.speedY *= hiero.bonusBasicStat;
                 }
                 else
                 {
@@ -167,7 +167,7 @@ public class GlyphManager : MonoBehaviour
                 break;
             
             case GlyphObject.AnubisStat.DashCd:              //réduit la durée avant qu'Anubis ne puisse re-Dash
-                AnubisCurrentStats.instance.dashCooldown -= gBasicStatUp.bonusBasicStat;
+                AnubisCurrentStats.instance.dashCooldown -= hiero.bonusBasicStat;
                 break;
         }
     }
@@ -324,7 +324,7 @@ public class GlyphManager : MonoBehaviour
 
         for (int i = 0; i < arrayManche.Length; i++)
         {
-            if (arrayManche[i].glyphObject != null)
+            if (arrayManche[i] != null)
             {
                 switch (arrayManche[i].glyphObject.index)
                 {
@@ -348,7 +348,7 @@ public class GlyphManager : MonoBehaviour
         
         for (int i = 0; i < arrayPoignee.Length; i++)
         {
-            if (arrayPoignee[i].glyphObject != null)
+            if (arrayPoignee[i] != null)
             {
                 switch (arrayPoignee[i].glyphObject.index)
                 {
@@ -366,17 +366,17 @@ public class GlyphManager : MonoBehaviour
     {
         if (soulPowerForce1)
         {
-            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
+            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageForSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
             Debug.Log("soul force 1");
         }
         if (soulPowerForce2)
         {
-            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *7);
+            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageForSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *7);
             Debug.Log("soul force 2");
         }
         if (soulPowerForce3)
         {
-            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *9);
+            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageForSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *9);
             Debug.Log("soul force 3");
         }
     }

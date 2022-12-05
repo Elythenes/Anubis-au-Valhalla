@@ -12,9 +12,12 @@ public class PotionRepository : MonoBehaviour
     [Expandable] public List<PotionObject> potionsList;
     [Expandable] public PotionObject potionInside;
 
-    public bool isMoving;
+    [Header("TESTING")] 
+    public bool doPotionTest;
+    [Expandable] public PotionObject potionTest;
     
     [Header("Force Au Spawn")]
+    public bool isMoving;
     [SerializeField] private float force = 3f;
     [SerializeField] private float deceleration = 0.3f;
     public float timer;
@@ -27,8 +30,16 @@ public class PotionRepository : MonoBehaviour
             Instance = this;
         }
 
-        int numberGot = Random.Range(0, potionsList.Count);
-        potionInside = potionsList[numberGot];
+        if (doPotionTest)
+        {
+            potionInside = potionTest;
+        }
+        else
+        {
+            int numberGot = Random.Range(0, potionsList.Count);
+            potionInside = potionsList[numberGot];
+        }
+        
         
         if (isMoving)
         {
