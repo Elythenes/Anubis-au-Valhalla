@@ -59,6 +59,7 @@ public class AnubisCurrentStats : MonoBehaviour
    private void Start()
    {
       // pour les attaques
+      baseDamageforSoul = baseDamage;
       atk.hitBoxC = hitBoxC;
       atk.rangeAttaque = rangeAttaque;
       atk.isC = isC;
@@ -83,7 +84,7 @@ public class AnubisCurrentStats : MonoBehaviour
       move.speedX = speedX;
       move.speedY = speedY;
       move.dashCooldown = dashCooldown;
-      life.vieMax += 1;
+      life.vieMax += 1;                      //à quoi ça sert ?
    }
 
    private void Update()
@@ -119,11 +120,11 @@ public class AnubisCurrentStats : MonoBehaviour
 
    void UpdateDamageWithMultiplicateur()
    {
-      for (int i = 0; i < 2; i++)
+      for (int i = 0; i < 3; i++)
       {
          comboDamage[i] = Mathf.RoundToInt(baseDamage * multiplicateurDamage[i]);
       }
-      thrustDamage = Mathf.RoundToInt(baseDamage * multiplicateurDamage[3]);
+      thrustDamage = Mathf.RoundToInt(baseDamage * multiplicateurDamage[4]);
    }
    
 }

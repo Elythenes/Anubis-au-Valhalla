@@ -193,18 +193,18 @@ public class GlyphManager : MonoBehaviour
                 break;
             
             case 221:
-                soulPowerForce1 = true;
+                soulPowerDefense1 = true;
                 break;
             
             case 222:
-                soulPowerForce1 = false;
-                soulPowerForce2 = true;
+                soulPowerDefense1 = false;
+                soulPowerDefense2 = true;
                 break;
             
             case 223:
-                soulPowerForce1 = false;
-                soulPowerForce2 = false;
-                soulPowerForce3 = true;
+                soulPowerDefense1 = false;
+                soulPowerDefense2 = false;
+                soulPowerDefense3 = true;
                 break;
         }
     }
@@ -305,19 +305,17 @@ public class GlyphManager : MonoBehaviour
                 switch (arrayLame[i].glyphObject.index)
                 {
                     case 135: //soul Power Force 1
-                        SoulPower();
-                        Debug.Log("soul force 1");
+                        SoulPowerForce();
                         //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
                         break;
                 
                     case 136: //soul Power Force 2
-                        SoulPower();
+                        SoulPowerForce();
                         //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
                         break;
                 
                     case 137: //soul Power Force 3
-                        Debug.Log("soul force 3");
-                        SoulPower();
+                        SoulPowerForce();
                         //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
                         break;
                 }
@@ -330,7 +328,19 @@ public class GlyphManager : MonoBehaviour
             {
                 switch (arrayManche[i].glyphObject.index)
                 {
-                    case 200:
+                    case 221:
+                        soulPowerDefense1 = true;
+                        break;
+            
+                    case 222:
+                        soulPowerDefense1 = false;
+                        soulPowerDefense2 = true;
+                        break;
+            
+                    case 223:
+                        soulPowerDefense1 = false;
+                        soulPowerDefense2 = false;
+                        soulPowerDefense3 = true;
                         break;
                 }
             }
@@ -352,23 +362,40 @@ public class GlyphManager : MonoBehaviour
 
     //Fonctions des Glyphes ********************************************************************************************
 
-    void SoulPower()
+    void SoulPowerForce()
     {
         if (soulPowerForce1)
         {
             AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
+            Debug.Log("soul force 1");
         }
         if (soulPowerForce2)
         {
             AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *7);
+            Debug.Log("soul force 2");
         }
         if (soulPowerForce3)
         {
             AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageforSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *9);
+            Debug.Log("soul force 3");
         }
     }
-    
-    
+
+    void SoulPowerDefense()
+    {
+        if (soulPowerDefense1)
+        {
+            
+        }
+        if (soulPowerDefense2)
+        {
+            
+        }
+        if (soulPowerDefense3)
+        {
+            
+        }
+    }
     
     
     
