@@ -11,10 +11,9 @@ public class PotionRepository : MonoBehaviour
     
     [Expandable] public List<PotionObject> potionsList;
     [Expandable] public PotionObject potionInside;
-
-    public bool isMoving;
     
     [Header("Force Au Spawn")]
+    public bool isMoving;
     [SerializeField] private float force = 3f;
     [SerializeField] private float deceleration = 0.3f;
     public float timer;
