@@ -74,6 +74,9 @@ public class Salle : MonoBehaviour
         }
         switch (challengeChosen)
         {
+            case 1:
+                C1_AllElites();
+                break;
             case 2:
                 C2_Darkness();
                 break;

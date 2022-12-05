@@ -326,7 +326,7 @@ public class GlyphManager : MonoBehaviour
 
         for (int i = 0; i < arrayManche.Length; i++)
         {
-            if (arrayManche[i] != null)
+            if (arrayManche[i].glyphObject != null)
             {
                 switch (arrayManche[i].glyphObject.index)
                 {
@@ -338,7 +338,7 @@ public class GlyphManager : MonoBehaviour
         
         for (int i = 0; i < arrayPoignee.Length; i++)
         {
-            if (arrayPoignee[i] != null)
+            if (arrayPoignee[i].glyphObject != null)
             {
                 switch (arrayPoignee[i].glyphObject.index)
                 {

@@ -50,7 +50,11 @@ public class PotionManager : MonoBehaviour
             }
          }
       }
-      VerifyForSpecificPotion(currentPotion.index);
+
+      if (currentPotion != null)
+      {
+         VerifyForSpecificPotion(currentPotion.index);
+      }
    }
 
    void DrinkPotion(PotionObject glou)
