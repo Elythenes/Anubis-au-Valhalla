@@ -42,7 +42,7 @@ public class cooldownSpellBar2 : MonoBehaviour
                 compteurCooldown.enabled = true;
             }
 
-            if (UiManager.instance.currentSpell2Holder is not null)
+            if (currentPower != null)
             {
                 if (currentPower.CompareTag("Feu"))
                 {

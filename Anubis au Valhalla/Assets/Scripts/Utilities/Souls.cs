@@ -29,6 +29,7 @@ public class Souls : MonoBehaviour
         {
             instance = this;
         }
+        
         UpdateSoulsCounter();
     }
 
@@ -55,6 +56,12 @@ public class Souls : MonoBehaviour
     public void UpdateSoulsCounter()
     {
         soulText.text = soulBank.ToString();
+    }
+
+    public void UpdateSoulsShop()
+    {
+        soulTextShop = GameObject.Find("Ames Shop").GetComponent<TextMeshProUGUI>();
         soulTextShop.text = soulBank.ToString();
+        UpdateSoulsCounter();
     }
 }
