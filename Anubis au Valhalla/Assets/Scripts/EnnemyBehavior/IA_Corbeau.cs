@@ -111,10 +111,12 @@ public class IA_Corbeau : MonoBehaviour
             AttackTimeTimer += Time.deltaTime;
             if (indic)
             {
+                isFleeing = false;
+                isChasing = false;
                 isRotating = false;
                 aipath.canMove = false;
                 canMove = false;
-                
+                rb.velocity = Vector2.zero;
                 directionProj = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,
                     CharacterController.instance.transform.position.y - transform.position.y);
                 float angle = Mathf.Atan2(directionProj.y, directionProj.x) * Mathf.Rad2Deg;
@@ -128,7 +130,7 @@ public class IA_Corbeau : MonoBehaviour
                 Debug.Log("hit");
                 StartUpAttackTimeTimer = 0;
                 AttackTimeTimer = 0;
-                Destroy(holder);
+                Destroy(holder.gameObject);
                 canMove = true;
                 indic = true;
             }

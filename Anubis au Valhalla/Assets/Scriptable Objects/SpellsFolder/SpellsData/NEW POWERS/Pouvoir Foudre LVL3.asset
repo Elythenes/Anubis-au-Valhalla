@@ -13,27 +13,28 @@ MonoBehaviour:
   m_Name: Pouvoir Foudre LVL3
   m_EditorClassIdentifier: 
   type: 8
-  nom: Pouvoir Foudre LVL1
+  nom: Pouvoir Foudre LVL3
   spellIndex: 14
-  description: "Augmente la vitesse d'attaque et de d\xE9placement d'Anubis et conf\xE8re
-    \xE0 ses attaques des pouvoir infl\xE9geant des d\xE9gats aux ennemis en zone."
+  description: "Conf\xE8re \xE0 Anubis des pouvoir tr\xE8s rapides infl\xE9geant
+    des d\xE9gats aux ennemis en zone."
   citation: "\"La foudre est l'\xE9l\xE9ment de puissance pure\""
   sprite: {fileID: 2800000, guid: aa0da7a1c78fd5a48929be94037c3616, type: 3}
   canCast: 1
-  duration: 5
-  hitboxAttaqueNormale: {fileID: 0}
-  hitboxThrust: {fileID: 4344678159390435016, guid: 4d5547e9641c3d8428476ed3d4852de1, type: 3}
-  hitboxDash: {fileID: 2052899350185052313, guid: 7a0d4b316628d454c990242c6f00616d, type: 3}
-  attaqueNormaleDamage: 0
-  staggerDash: 3
-  dashSpawnRate: 0
-  hitboxDashDuration: 2
-  dashPuissanceAttaque: 5
-  nombreOfDot: 4
-  espacementDoT: 2
+  duration: 10
+  hitboxAttaqueNormale: {fileID: 2070572112627775315, guid: 8f1761c5cb5e3064aa1ca0ca338dc30a, type: 3}
+  hitboxThrust: {fileID: 4344678159390435016, guid: 65e474466735929448ab47e3b27fc95f, type: 3}
+  hitboxDash: {fileID: 2052899350185052313, guid: f0d0c98eeb866594a9e8ae7f874c9ff8, type: 3}
   stagger: 0
-  zoneScale: {x: 1, y: 1, z: 0}
-  thrustDamage: 5
-  bulletSpeed: 10
-  bulletDuration: 5
-  bulletScale: {x: 1.5, y: 1.5, z: 0}
+  attaqueNormaleDamage: 7
+  attaqueNormaleDuration: 10
+  attaqueNormaleScale: {x: 5, y: 5, z: 0}
+  nombreOfDot: 8
+  espacementDoT: 0.2
+  staggerDash: 5
+  dashSpawnRate: 0.1
+  dashPuissanceAttaque: 15
+  thrustDamage: 20
+  bulletSpeed: 12
+  bulletDuration: 6
+  bulletScale: {x: 2.5, y: 2.5, z: 0}
+  maxBounce: 15

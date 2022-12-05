@@ -22,11 +22,7 @@ public class PouvoirPlaieObject : SpellObject
     [Header("ATTAQUE DASH")] 
     public float dashHitboxDuration;
     public float dashSpawnRate;
-    public int dashDamage;
-    public float timeToStep2;
-    public float staggerDash;
-    public float wallDuration;
-  
+
     [Header("ATTAQUE Thrust")]
     public int thrustDamage;
     public float bulletSpeed;

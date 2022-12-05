@@ -13,21 +13,31 @@ MonoBehaviour:
   m_Name: Pouvoir Feu LVL2
   m_EditorClassIdentifier: 
   type: 5
-  nom: Pouvoir Feu Niveau 2
+  nom: Pouvoir Feu LVL2
   spellIndex: 11
-  description: "Prof\xE8re les pouvoirs du feu "
-  citation: c'est vrai
+  description: "Donne des propori\xE9t\xE9s aux attaques d'Anubis infligeant d'importants
+    d\xE9gats en zone."
+  citation: "\"La mort par le feu est une purification de l'\xE2me\""
   sprite: {fileID: 2800000, guid: 432e3b36112c0a444ab618145e26a3d4, type: 3}
   canCast: 1
-  duration: 5
-  hitboxAttaqueNormale: {fileID: 0}
-  hitboxThrust: {fileID: 3272022552115205699, guid: b89b73c8528437f4583e754e1b240b58, type: 3}
-  hitboxDash: {fileID: 2070572112627775315, guid: 89d34f91fc1dec8488658721c13e624f, type: 3}
-  attaqueNormaleDamage: 10
-  thrustDamage: 10
-  dashSpawnRate: 0.1
-  hitboxDashDuration: 2
-  dashPuissanceAttaque: 5
-  nombreOfDot: 4
-  espacementDoT: 2
+  duration: 7
+  hitboxAttaqueNormale: {fileID: 8270509922594474234, guid: 8dc2318a848bb0545a425cd546a372c0, type: 3}
+  hitboxThrust: {fileID: 3272022552115205699, guid: 75035aed5625c884287fc7fed2e245f7, type: 3}
+  hitboxDash: {fileID: 2070572112627775315, guid: 2de662e3c21a0b448ae983bfd5f2c2e0, type: 3}
+  attaqueNormaleDamage: 25
+  circleScaleSpeed: 0.01
+  circleMaxScale: 1.5
+  circleDuration: 1.5
+  pushForce: 15
+  dashSpawnRate: 0.03
+  hitboxDashDuration: 3
+  dashPuissanceAttaque: 7
+  nombreOfDot: 5
+  espacementDoT: 0.2
   stagger: 0
+  zoneScale: {x: 2.5, y: 2.5, z: 0}
+  thrustDamage: 25
+  explosionScale: 7
+  bulletSpeed: 25
+  bulletDuration: 2
+  bulletScale: {x: 2, y: 2, z: 0}

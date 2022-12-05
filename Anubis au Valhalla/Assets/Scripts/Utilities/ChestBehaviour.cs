@@ -43,7 +43,7 @@ public class ChestBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A) && CanOpen && !isOpened)
+        if (Input.GetKeyDown(KeyCode.F) && CanOpen && !isOpened)
         {
             OpenChest();
         }

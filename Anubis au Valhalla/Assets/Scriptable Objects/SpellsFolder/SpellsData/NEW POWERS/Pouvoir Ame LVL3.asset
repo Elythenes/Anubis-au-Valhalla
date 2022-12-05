@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pouvoir Ame LVL3
   m_EditorClassIdentifier: 
   type: 9
-  nom: Pouvoir Ame LVL1
+  nom: Pouvoir Ame LVL3
   spellIndex: 15
   description: "Donne des propori\xE9t\xE9s aux attaques d'Anubis dont les d\xE9gats
     d\xE9pendent du nombre d'ames r\xE9colt\xE9. Certaines capacit\xE9s invoquent
@@ -21,20 +21,20 @@ MonoBehaviour:
   citation: "\"Je ma\xEEtrise la vie, mais aussi la mort\""
   sprite: {fileID: 2800000, guid: dcc8079cd73a29646818131e5c0a44e5, type: 3}
   canCast: 1
-  duration: 5
-  hitboxAttaqueNormale: {fileID: 4221535208593553017, guid: 400f3cd18dde47c46b9e4325dd218b11, type: 3}
-  hitboxThrust: {fileID: 0}
-  hitboxDash: {fileID: 0}
-  attaqueNormaleDamage: 1
-  staggerDash: 0
-  dashSpawnRate: 0
-  hitboxDashDuration: 2
-  dashPuissanceAttaque: 5
-  nombreOfDot: 4
-  espacementDoT: 2
-  stagger: 0.2
-  zoneScale: {x: 0, y: 0, z: 0}
-  thrustDamage: 0
-  bulletSpeed: 0
-  bulletDuration: 0
-  bulletScale: {x: 0, y: 0, z: 0}
+  duration: 10
+  hitboxAttaqueNormale: {fileID: 4221535208593553017, guid: 297437e31a522404ea48b966fddad8e1, type: 3}
+  hitboxThrust: {fileID: 665082451481059450, guid: 256a37523deb83243b585ba8974fd0a3, type: 3}
+  hitboxDash: {fileID: 6762206887782335003, guid: e38d4f5c6a807d843a90dcef9685a1a9, type: 3}
+  stagger: 0.3
+  attaqueNormaleDamage: 10
+  attaqueNormaleDuration: 3
+  staggerThrust: 0.7
+  hitboxthrustDuration: 5
+  thrustDamage: 60
+  explosionScale: {x: 8, y: 8, z: 0}
+  zoneAmount: 5
+  moucheAmount: 35
+  hitboxDashDuration: 5
+  dashPuissanceAttaque: 4
+  espacementDoT: 0.4
+  zoneScale: {x: 4, y: 4, z: 0}

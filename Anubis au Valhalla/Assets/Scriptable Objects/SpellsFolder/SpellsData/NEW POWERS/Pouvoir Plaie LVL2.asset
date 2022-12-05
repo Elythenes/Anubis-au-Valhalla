@@ -13,26 +13,27 @@ MonoBehaviour:
   m_Name: Pouvoir Plaie LVL2
   m_EditorClassIdentifier: 
   type: 6
-  nom: Povoir Plaie Niveau 1
+  nom: Povoir Plaie LVL2
   spellIndex: 12
-  description: "\xE7a me plaie"
-  citation: "d'\xE9gypte"
+  description: "Donne des propori\xE9t\xE9s aux attaques d'Anubis qui ralentissent
+    ou entravent les ennemis."
+  citation: "\"Le sable du d\xE9sert absorbe l'energie avec sa chaleur\""
   sprite: {fileID: 2800000, guid: bc48568a2c219c84291e5978a869aea2, type: 3}
   canCast: 1
-  duration: 6
-  hitboxAttaqueNormale: {fileID: 1583822756971804013, guid: 8086552562fa8114585107d6195517fa, type: 3}
-  hitboxThrust: {fileID: 5229445006829840168, guid: 85f5710bff377894b9609517c7af4a5a, type: 3}
-  hitboxDash: {fileID: 9005093320522423617, guid: 8a695013104e52140aa9f933fe6edb40, type: 3}
-  forceAttraction: 500
-  forceDuration: 0.5
-  dashSpawnRate: 0.08
-  dashDamage: 5
-  timeToStep2: 1.5
-  staggerDash: 0.2
-  wallDuration: 3
+  duration: 8
+  hitboxAttaqueNormale: {fileID: 1583822756971804013, guid: caebd0aacc2a46a4888854d5b8fe46f0, type: 3}
+  hitboxThrust: {fileID: 5229445006829840168, guid: 55ed24bcb4a6e9240a7c1d1279d09937, type: 3}
+  hitboxDash: {fileID: 555738509962139763, guid: c85ecfd532ab78142952872827c6ed82, type: 3}
+  damageAttaqueNormale: 10
+  durationAttaqueNormale: 4
+  durationStunAttaqueNormale: 2.5
+  staggerAttaqueNormale: 0.1
+  dashHitboxDuration: 7
+  dashSpawnRate: 0.01
   thrustDamage: 10
-  bulletSpeed: 5
+  bulletSpeed: 7
   bulletDuration: 3
   nuberOfBullets: 3
   staggerThrust: 0
-  bulletScale: {x: 1.5, y: 1.5, z: 0}
+  dureeMomification: 4
+  bulletScale: {x: 2.5, y: 1, z: 0}
