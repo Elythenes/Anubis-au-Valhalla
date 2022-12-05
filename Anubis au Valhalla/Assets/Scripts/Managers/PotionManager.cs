@@ -16,7 +16,18 @@ public class PotionManager : MonoBehaviour
    [Expandable] public PotionObject currentPotion;
    public bool isPotionSlotFill;
    [NaughtyAttributes.ReadOnly] public bool revokePotionEarly = false;
-
+   
+   public bool showBools;
+   [ShowIf("showBools")] public float baseDamageBeforePotion;
+   [ShowIf("showBools")] public float baseDamageForSoulBeforePotion;
+   [ShowIf("showBools")] public int armorBeforePotion;
+   [ShowIf("showBools")] public float speedXBeforePotion;
+   [ShowIf("showBools")] public float speedYBeforePotion;
+   [ShowIf("showBools")] public float magicForceBeforePotion;
+   
+   [ShowIf("showBools")] public float hpBeforePotion;
+   [ShowIf("showBools")] public bool tookDamage;
+   
    [Header("SHOP")]
    [Expandable] public List<PotionObject> potionsForShop = new();
 
@@ -54,22 +65,24 @@ public class PotionManager : MonoBehaviour
       {
          VerifyForSpecificPotion(currentPotion.index);
       }
+      
+      Debug.Log("tookDamage is = " + tookDamage);
    }
 
    void DrinkPotion(PotionObject glou)
    {
+      SaveStatBeforePotion();
       if (glou.type == PotionObject.PotionType.StatBasicPotion 
           || glou.type == PotionObject.PotionType.StatSpecificPotion)
       {
          UiManager.instance.panelPotion.SetActive(true);
          
-         for (int i = 0; i < 3; i++)
-         {
-            AnubisCurrentStats.instance.comboDamage[i] += glou.damage;
-         }
-         AnubisCurrentStats.instance.thrustDamage += glou.damage;
+         AnubisCurrentStats.instance.baseDamage += AnubisCurrentStats.instance.baseDamage * glou.damage/100;
+         AnubisCurrentStats.instance.baseDamageForSoul += AnubisCurrentStats.instance.baseDamageForSoul * glou.damage/100;
+         
          //DamageManager.instance.Heal(glouglou.heal);
-         AnubisCurrentStats.instance.damageReduction += glou.armor;
+         
+         AnubisCurrentStats.instance.damageReduction *= glou.armor;
          if (glou.wArmor != 0)
          {
             AnubisCurrentStats.instance.damageReduction /= glou.wArmor;
@@ -80,8 +93,6 @@ public class PotionManager : MonoBehaviour
             AnubisCurrentStats.instance.speedY *= glou.speed;
          }
          //Fonction avec la MagicForce
-         
-         Debug.Log("drink potion et ajout de stat");
          StartCoroutine(CoroutinePotion(glou));
 
       }
@@ -89,13 +100,23 @@ public class PotionManager : MonoBehaviour
       {
          UseSpecialPotion(glou.index);
       }
+
+      if (glou.type == PotionObject.PotionType.StatSpecificPotion)
+      {
+         switch (glou.index)
+         {
+            case 6: //Potion fragile de force
+               //hpBeforePotion = Mathf.RoundToInt(AnubisCurrentStats.instance.vieActuelle);
+               tookDamage = false;
+               break;
+         }
+      }
       
    }
 
    
    void VerifyForSpecificPotion(int num)
    {
-      Debug.Log("verify for spe");
       switch (num)
       {
          case 1:
@@ -105,11 +126,23 @@ public class PotionManager : MonoBehaviour
                revokePotionEarly = true;
             }
             break;
+         
+         case 6: //Potion fragile de force
+            if (tookDamage)  //Anubis prend des dégâts
+            {
+               Debug.Log("perte pot fragile");
+               revokePotionEarly = true;
+               tookDamage = false;
+            }
+            break;
+         
+         
       }
    }
    
    void UseSpecialPotion(int num)
    {
+      SaveStatBeforePotion();
       switch (num)
       {
          case 0:
@@ -130,24 +163,12 @@ public class PotionManager : MonoBehaviour
       if (glou.type == PotionObject.PotionType.StatBasicPotion 
           || glou.type == PotionObject.PotionType.StatSpecificPotion)
       {
-         for (int i = 0; i < 3; i++)
-         {
-            AnubisCurrentStats.instance.comboDamage[i] -= glou.damage;
-         }
-         AnubisCurrentStats.instance.thrustDamage -= glou.damage;
-         //DamageManager.instance.Heal(glouglou.heal*-1);
-         AnubisCurrentStats.instance.damageReduction -= glou.armor;
-         if (glou.wArmor != 0)
-         {
-            AnubisCurrentStats.instance.damageReduction *= glou.wArmor;
-         }
-         if (glou.speed != 0)
-         {
-            AnubisCurrentStats.instance.speedX /= glou.speed;
-            AnubisCurrentStats.instance.speedY /= glou.speed;
-         }
-         //Fonction avec la MagicForce
-
+         AnubisCurrentStats.instance.baseDamage = baseDamageBeforePotion;
+         AnubisCurrentStats.instance.baseDamageForSoul = baseDamageForSoulBeforePotion;
+         AnubisCurrentStats.instance.damageReduction = armorBeforePotion;
+         AnubisCurrentStats.instance.speedX = speedXBeforePotion;
+         AnubisCurrentStats.instance.speedY = speedYBeforePotion;
+         AnubisCurrentStats.instance.magicForce = magicForceBeforePotion;
       }
    }
 
@@ -171,5 +192,16 @@ public class PotionManager : MonoBehaviour
       }
       RevokePotion12(glouglou);
    }
+
+
+   void SaveStatBeforePotion()
+   {
+      baseDamageBeforePotion = AnubisCurrentStats.instance.baseDamage;
+      baseDamageForSoulBeforePotion = AnubisCurrentStats.instance.baseDamageForSoul;
+      armorBeforePotion = AnubisCurrentStats.instance.damageReduction;
+      speedXBeforePotion = AnubisCurrentStats.instance.speedX;
+      speedYBeforePotion = AnubisCurrentStats.instance.speedY;
+   }
+   
    
 }

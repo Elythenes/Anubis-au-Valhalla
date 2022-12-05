@@ -99,6 +99,7 @@ public class DamageManager : MonoBehaviour
                 StartCoroutine(RedScreenStart(timeRedScreen));
                 HitStop(timeHitStop,false);
                 stats.vieActuelle -= damage - damageReduction/100 * damage;
+                PotionManager.Instance.tookDamage = true;
                 GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
                 textObj.GetComponentInChildren<TextMeshPro>().SetText((damage - damageReduction/100 * damage).ToString());
                 
