@@ -59,7 +59,6 @@ public class Door : MonoBehaviour
         }
     }
 
-
     public void ChooseRoomToSpawn(int room)
     {
         roomToSpawn = SalleGennerator.instance.roomPrefab[room];
