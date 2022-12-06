@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using TMPro;
-using Unity.Mathematics;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
@@ -45,6 +42,16 @@ public class UiManager : MonoBehaviour
     public GameObject menuCollectPotion;
     public GameObject spritePotion;
     public GameObject panelPotion;
+    public GameObject currentPotionSprite;
+    public GameObject currentPotionName;
+    public GameObject currentPotionDescription;
+    public GameObject currentPotionCitation;
+    public GameObject newPotionSprite;
+    public GameObject newPotionName;
+    public GameObject newPotionDescription;
+    public GameObject newPotionCitation;
+    public GameObject buttonSwitch;
+    public GameObject buttonPrendre;
     
     
     private void Awake()
@@ -99,13 +106,15 @@ public class UiManager : MonoBehaviour
         Destroy(cS.collectableSpell);
     }
 
-   public void CollectPotionInUI()
-    {
-        //Debug.Log("entrée dans la fonction CollectPotion");
-        PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside; 
-        PotionManager.Instance.isPotionSlotFill = true;
-        spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
-    }
+   public void CollectPotion()
+   {
+       //Debug.Log("entrée dans la fonction CollectPotion");
+       PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside; 
+       PotionManager.Instance.isPotionSlotFill = true;
+       spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+       menuCollectPotion.SetActive(false);
+       TimeBack();
+   }
 
     public void DebugButton()
     {
@@ -121,8 +130,8 @@ public class UiManager : MonoBehaviour
     
     public void ActivateMenuPotion()
     {
-        menuCollectPotion.SetActive(true);
         Time.timeScale = 0;
+        menuCollectPotion.SetActive(true);
         FillMenuPotion();
     }
     
@@ -142,11 +151,38 @@ public class UiManager : MonoBehaviour
     
     void FillMenuPotion()
     {
-        Debug.Log("fonction fillMenu utilisée");
-        textCsName.GetComponent<TextMeshProUGUI>().text = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.nom; 
-        textCsDescription.GetComponent<TextMeshProUGUI>().text = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.description;
-        textCsCitation.GetComponent<TextMeshProUGUI>().text = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.citation;
-        spriteCs.GetComponent<RawImage>().texture = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.sprite; 
+        Debug.Log("fonction fillMenuPotion utilisée");
+        if (PotionManager.Instance.currentPotion == null)
+        {
+            buttonPrendre.SetActive(true);
+            buttonSwitch.SetActive(false);
+            
+            currentPotionName.SetActive(false);
+            currentPotionDescription.GetComponent<TextMeshProUGUI>().text = "Je ne possède pas de potion actuellement.";
+            currentPotionCitation.SetActive(false);
+            currentPotionSprite.SetActive(false);
+            
+            newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
+            newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
+            newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
+            newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
+        }
+        else
+        {
+            buttonPrendre.SetActive(false);
+            buttonSwitch.SetActive(true);
+            
+            currentPotionName.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
+            currentPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
+            currentPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.citation;
+            currentPotionSprite.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+            
+            newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
+            newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
+            newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
+            newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
+        }
+        
     }
 
     void FillLittleMenu(SpellObject sO, int slot)
