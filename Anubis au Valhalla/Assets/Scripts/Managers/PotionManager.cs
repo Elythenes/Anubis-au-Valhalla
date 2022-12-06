@@ -15,8 +15,11 @@ public class PotionManager : MonoBehaviour
    public KeyCode usePotion = KeyCode.A;
    [Expandable] public PotionObject currentPotion;
    public bool isPotionSlotFill;
-   [NaughtyAttributes.ReadOnly] public bool revokePotionEarly = false;
+   public bool addStartingPotion;
+   [Expandable] public PotionObject startingPotion;
    
+   [Header("DEBUG")]
+   [NaughtyAttributes.ReadOnly] public bool revokePotionEarly = false;
    public bool showBools;
    [ShowIf("showBools")] public float baseDamageBeforePotion;
    [ShowIf("showBools")] public float baseDamageForSoulBeforePotion;
@@ -37,6 +40,11 @@ public class PotionManager : MonoBehaviour
       if (Instance == null)
       {
          Instance = this;
+      }
+
+      if (addStartingPotion)
+      {
+         currentPotion = startingPotion;
       }
    }
 
@@ -66,11 +74,12 @@ public class PotionManager : MonoBehaviour
          VerifyForSpecificPotion(currentPotion.index);
       }
       
-      Debug.Log("tookDamage is = " + tookDamage);
+      //Debug.Log("tookDamage is = " + tookDamage);
    }
 
    void DrinkPotion(PotionObject glou)
    {
+      Debug.Log("Drink" + glou.nom);
       SaveStatBeforePotion();
       if (glou.type == PotionObject.PotionType.StatBasicPotion 
           || glou.type == PotionObject.PotionType.StatSpecificPotion)

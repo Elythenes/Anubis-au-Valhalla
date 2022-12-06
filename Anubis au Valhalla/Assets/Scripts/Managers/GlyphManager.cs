@@ -324,7 +324,7 @@ public class GlyphManager : MonoBehaviour
 
         for (int i = 0; i < arrayManche.Length; i++)
         {
-            if (arrayManche[i] != null)
+            if (arrayManche[i].glyphObject != null)
             {
                 switch (arrayManche[i].glyphObject.index)
                 {
@@ -348,7 +348,7 @@ public class GlyphManager : MonoBehaviour
         
         for (int i = 0; i < arrayPoignee.Length; i++)
         {
-            if (arrayPoignee[i] != null)
+            if (arrayPoignee[i].glyphObject != null)
             {
                 switch (arrayPoignee[i].glyphObject.index)
                 {
@@ -367,17 +367,17 @@ public class GlyphManager : MonoBehaviour
         if (soulPowerForce1)
         {
             AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageForSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
-            Debug.Log("soul force 1");
+            //Debug.Log("soul force 1");
         }
         if (soulPowerForce2)
         {
             AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageForSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *7);
-            Debug.Log("soul force 2");
+            //Debug.Log("soul force 2");
         }
         if (soulPowerForce3)
         {
             AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageForSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *9);
-            Debug.Log("soul force 3");
+            //Debug.Log("soul force 3");
         }
     }
 
