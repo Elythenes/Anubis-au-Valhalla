@@ -116,10 +116,10 @@ public class MonsterLifeManager : MonoBehaviour
             gotHit = true;
             criticalPick = Random.Range(0,100);
             StartCoroutine(AnimationDamaged(staggerDuration));
-            /*transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
+            transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
             {
                 ai.canMove = true;
-            });*/
+            });
             
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
