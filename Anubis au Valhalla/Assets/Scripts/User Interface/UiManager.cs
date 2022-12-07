@@ -58,8 +58,7 @@ public class UiManager : MonoBehaviour
     [Foldout("PAUSE MENU")] public GameObject buttonCheatMenu;
     [Foldout("PAUSE MENU")] public GameObject buttonOptions;
     [Foldout("PAUSE MENU")] public GameObject buttonQuit;
-
-    [Foldout("INVENTORY")] public BoxInventory boxInv;
+    
     [Foldout("INVENTORY")] public List<GameObject> listBoxInventaire;
     [Foldout("INVENTORY")] public GameObject boxInvTitre;
     [Foldout("INVENTORY")] public GameObject boxInvDescription;
@@ -79,8 +78,7 @@ public class UiManager : MonoBehaviour
 
     private void Start()
     {
-        SetBoxInventoryPositions();
-        FillBoxInventory();
+        
     }
 
     private void Update()
@@ -139,6 +137,7 @@ public class UiManager : MonoBehaviour
     {
         Pause();
         menuPause.SetActive((true));
+        FillBoxInventory();
         isPause = true;
     }
     
@@ -155,11 +154,11 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    public void FillDescriptionInventory()
+    public void FillDescriptionInventory(int boxPos)
     {
-        Debug.Log(boxInv.GetButtonPosition());
-        boxInvTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxInv.GetButtonPosition()].nom;
-        boxInvDescription.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxInv.GetButtonPosition()].description;
+        Debug.Log(boxPos);
+        boxInvTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos-1].nom;
+        boxInvDescription.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos-1].description;
     }
 
     public void SetBoxInventoryPositions()

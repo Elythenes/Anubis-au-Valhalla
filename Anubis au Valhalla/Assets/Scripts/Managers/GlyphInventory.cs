@@ -11,7 +11,7 @@ public class GlyphInventory : MonoBehaviour
     [Expandable] public List<GlyphObject> glyphInventory;
 
     public bool doStartHieroTest;
-    [Expandable] public GlyphObject hieroTest;
+    [Expandable] public List<GlyphObject> hieroTest;
 
     [NaughtyAttributes.ReadOnly] public int indexConvertorForLame = 100;
     [NaughtyAttributes.ReadOnly] public int indexConvertorForManche = 200;
@@ -21,9 +21,9 @@ public class GlyphInventory : MonoBehaviour
     {
         if (doStartHieroTest)
         {
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < hieroTest.Count; i++)
             {
-                AddGlyph(hieroTest);
+                AddGlyph(hieroTest[i]);
             }
         }
     }

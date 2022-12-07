@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore;
 using UnityEngine.UI;
 using Image = UnityEngine.UIElements.Image;
 
 public class BoxInventory : MonoBehaviour
 {
-    public int inventoryPosition;
+
+    [Range(1,21)] public int inventoryPosition;
     
     void Start()
     {
