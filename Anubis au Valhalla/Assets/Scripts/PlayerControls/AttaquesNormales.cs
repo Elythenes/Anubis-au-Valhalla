@@ -72,6 +72,7 @@ public class AttaquesNormales : MonoBehaviour
         
         if (mouse.leftButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements) // Execute l'attaque selon l'avancement du combo
         {
+            CharacterController.instance.stopDash = true;
             switch (comboActuel)
             {
                 case 0:
@@ -138,17 +139,6 @@ public class AttaquesNormales : MonoBehaviour
             cooldownAbandonComboTimer = 0;
         }
         
-        // ------------------ Gestion Abandon du Combo ---------------
-        // ------------------ Gestion Combo -------------
-      
-        /*if (IsC1 && !canAttack && StunDurationTimer1 <= StunDuration1 && abandonOn)
-        {
-            if (mouse.leftButton.wasPressedThisFrame)
-            {
-                buffer = true;
-            }
-        }*/
-        //ComboTimers(stunDurationMax,stunDuration);
         for (int i = 0; i < hitBoxC.Count; i++)
         {
             if (!isC[i])
@@ -164,22 +154,12 @@ public class AttaquesNormales : MonoBehaviour
                 anim.SetBool("isAttacking2Down",false);
                 anim.SetBool("isAttacking3Down",false);
                 anim.SetBool("isIdle",true);
-                Debug.Log(stunDuration[i] >= stunDurationMax[i]);
                 canAttack = true;
                 CharacterController.instance.isAttacking = false;
                 isC[i] = false;
                 stunDuration[i] = 0;
-                dashTimers[i] = 0;
-            }
-
-            if (dashTimers[i] >= timeForCanDash[i])
-            {
-                CharacterController.instance.canDash = true;
             }
             stunDuration[i] += Time.deltaTime;
-            dashTimers[i] += Time.deltaTime;
-            
-
         }
 
         #endregion
@@ -346,7 +326,6 @@ public class AttaquesNormales : MonoBehaviour
         CharacterController.instance.isAttacking = true;
         CharacterController.instance.rb.AddForce(moveDirection2 * dashImpulse[3], ForceMode2D.Impulse);
         GameObject thrustObj = Instantiate(thrust, charaPos, Quaternion.AngleAxis(angle2, Vector3.forward));
-        //thrustObj.transform.GetChild(0).gameObject.transform.localScale = rangeAttaque[3];
         thrustObj.transform.localScale = rangeAttaque[3];
     }
 
@@ -368,35 +347,35 @@ public class AttaquesNormales : MonoBehaviour
         switch (dir)
         {
             case CharacterController.LookingAt.Nord:
-                rb.velocity = (new Vector2(0,1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(0,1) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.Sud:
-                rb.velocity = (new Vector2(0,-1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(0,-1) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.Est:
-                rb.velocity = (new Vector2(1,0) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(1,0) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.Ouest:
-                rb.velocity = (new Vector2(-1,0) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(-1,0) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.NordEst:
-                rb.velocity = (new Vector2(1,1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(1,1) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.NordOuest:
-                rb.velocity = (new Vector2(-1,1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(-1,1) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.SudEst:
-                rb.velocity = (new Vector2(1,-1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(1,-1) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.SudOuest:
-                rb.velocity = (new Vector2(-1,-1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(-1,-1) * (rb.velocity.magnitude * 2.5f));
                 break;
         }
     }

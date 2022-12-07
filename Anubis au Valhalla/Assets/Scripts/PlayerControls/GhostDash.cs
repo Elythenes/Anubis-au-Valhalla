@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Spine.Unity;
@@ -14,6 +15,11 @@ public class GhostDash : MonoBehaviour
     public Vector3 lastPlayerPos;
     public float frequency;
 
+    private void Start()
+    {
+        ghostDelay = CharacterController.instance.dashDuration;
+    }
+
     public void OnEnable()
     {
         ghostDelaySeconds = ghostDelay;
@@ -22,18 +28,13 @@ public class GhostDash : MonoBehaviour
     void Update()
     {
         ghostDelaySeconds -= Time.deltaTime;
-        if (!CharacterController.instance.isAttacking)
-        {
-            if (Vector3.Distance(CharacterController.instance.transform.position,lastPlayerPos) >= frequency) // Créer un effet fantôme derrière le player pendant le dash
+        if (Vector3.Distance(CharacterController.instance.transform.position,lastPlayerPos) >= frequency) // Créer un effet fantôme derrière le player pendant le dash
             {
                 GameObject currentGhost = Instantiate(ghost, transform.position,transform.rotation);
                 tousLesSprites.Add(currentGhost);
-                //currentGhost.transform.localScale = this.transform.localScale;
-                currentGhost.GetComponent<SpriteRenderer>().sprite = ghostSprite;
                 StartCoroutine(Destroyghost(currentGhost));
                 lastPlayerPos = CharacterController.instance.transform.position;
-            } 
-        }
+            }
 
         if (ghostDelaySeconds < 0)
         {
@@ -44,8 +45,8 @@ public class GhostDash : MonoBehaviour
 
     public IEnumerator Destroyghost(GameObject ghost)
     {
-        Destroy(ghost, 1f);
-        yield return new WaitForSeconds(1f);
+        Destroy(ghost, 0.7f);
+        yield return new WaitForSeconds(0.7f);
         tousLesSprites.Remove(ghost);
     }
 }
