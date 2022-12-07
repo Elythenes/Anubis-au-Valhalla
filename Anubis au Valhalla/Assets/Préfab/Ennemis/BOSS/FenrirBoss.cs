@@ -11,7 +11,9 @@ public class FenrirBoss : MonoBehaviour
     public bool left;
     public bool right;
     public bool back;
-    
+    public List<PuppetHealth> parts = new List<PuppetHealth>();
+    public float reduceScaleTimer;
+    public float deactivationRecoil;
     public enum State
     {
         Idle,
@@ -46,6 +48,7 @@ public class FenrirBoss : MonoBehaviour
     private void Start()
     {
         player = CharacterController.instance;
+        parts.AddRange(GetComponentsInChildren<PuppetHealth>());
     }
 
     // Update is called once per frame

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8885979321056951486}
   - component: {fileID: 3538746198098444998}
   - component: {fileID: 4242846392065924849}
+  - component: {fileID: 5932674108198829622}
   m_Layer: 0
   m_Name: Right paw
   m_TagString: Paw
@@ -111,6 +112,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.69, y: 7.17}
   m_EdgeRadius: 0
+--- !u!114 &5932674108198829622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679548383731234026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17e363457859de4d89865d7ca85b435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3533414962166237604
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +135,7 @@ GameObject:
   - component: {fileID: 2828393514233068730}
   - component: {fileID: 1450589295004555598}
   - component: {fileID: 2341114349829054889}
+  - component: {fileID: 6049457081651250404}
   m_Layer: 0
   m_Name: Head
   m_TagString: Head
@@ -212,6 +226,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.6823764
+--- !u!114 &6049457081651250404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3533414962166237604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17e363457859de4d89865d7ca85b435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6164769398596336692
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,6 +247,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5588087877969416989}
+  - component: {fileID: 2090009912}
   m_Layer: 0
   m_Name: Fenrir
   m_TagString: Untagged
@@ -237,8 +264,8 @@ Transform:
   m_GameObject: {fileID: 6164769398596336692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3.1, y: 3.1, z: 3.1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2828393514233068730}
   - {fileID: 8885979321056951486}
@@ -246,6 +273,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2090009912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6164769398596336692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c63ff99c4a974479e08a1648e4b326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  center: 0
+  left: 0
+  right: 0
+  back: 0
+  parts: []
 --- !u!1 &8841046118958106823
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,6 +301,7 @@ GameObject:
   - component: {fileID: 2583840113840483927}
   - component: {fileID: 4197220791908216738}
   - component: {fileID: 986765847086324804}
+  - component: {fileID: 9155694734850263227}
   m_Layer: 0
   m_Name: Left paw
   m_TagString: Paw
@@ -357,3 +402,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.69, y: 7.17}
   m_EdgeRadius: 0
+--- !u!114 &9155694734850263227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8841046118958106823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17e363457859de4d89865d7ca85b435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

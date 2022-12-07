@@ -47,7 +47,7 @@ public class MonsterLifeManager : MonoBehaviour
     public bool overdose = false;
 
 
-    private void Start()
+    public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         if (overdose)
@@ -61,7 +61,7 @@ public class MonsterLifeManager : MonoBehaviour
 
     }
 
-    private void Update()
+    public virtual void Update()
     {
         transform.localRotation = Quaternion.identity;
         if (isInvincible)
@@ -108,7 +108,7 @@ public class MonsterLifeManager : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage, float staggerDuration)
+    public virtual void TakeDamage(int damage, float staggerDuration)
     {
         if (!isInvincible)
         {
@@ -126,7 +126,6 @@ public class MonsterLifeManager : MonoBehaviour
                 vieActuelle -= damage * 2; 
                 healthBar.SetHealth(vieActuelle);
                 isInvincible = true;
-                criticalPick = 0;
             }
             else
             {
@@ -151,7 +150,7 @@ public class MonsterLifeManager : MonoBehaviour
         animator.SetBool("IsTouched", false);
     }
     
-    public void DamageText(int damageAmount)
+    public virtual void DamageText(int damageAmount)
     {
         if (!isInvincible)
         {
@@ -171,7 +170,7 @@ public class MonsterLifeManager : MonoBehaviour
         }
     }
     
-    public void OnTriggerEnter2D(Collider2D col)
+    public virtual void OnTriggerEnter2D(Collider2D col)
     {
         Vector2 direction = (transform.position - col.transform.position);
         direction.Normalize();
@@ -199,7 +198,7 @@ public class MonsterLifeManager : MonoBehaviour
         gotHit = false;
     }
     
-    void Die()
+    public virtual void Die()
     {
         if (SalleGennerator.instance.currentRoom.parasites && !isParasite)
         {
