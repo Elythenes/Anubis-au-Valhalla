@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
+using Image = UnityEngine.UIElements.Image;
 
 public class UiManager : MonoBehaviour
 {
@@ -57,6 +58,13 @@ public class UiManager : MonoBehaviour
     [Foldout("PAUSE MENU")] public GameObject buttonCheatMenu;
     [Foldout("PAUSE MENU")] public GameObject buttonOptions;
     [Foldout("PAUSE MENU")] public GameObject buttonQuit;
+
+    [Foldout("INVENTORY")] public BoxInventory boxInv;
+    [Foldout("INVENTORY")] public List<GameObject> listBoxInventaire;
+    [Foldout("INVENTORY")] public GameObject boxInvTitre;
+    [Foldout("INVENTORY")] public GameObject boxInvDescription;
+    
+    
     
     
     //Fonctions systèmes ***********************************************************************************************
@@ -68,6 +76,18 @@ public class UiManager : MonoBehaviour
             instance = this;
         }
     }
+
+    private void Start()
+    {
+        SetBoxInventoryPositions();
+        FillBoxInventory();
+    }
+
+    private void Update()
+    {
+        ControlPause();
+    }
+
 
     public void DebugButton()
     {
@@ -124,8 +144,34 @@ public class UiManager : MonoBehaviour
     
     
     
+    
+    //Fonctions : Inventaire ************************************************************************************************************************************************************************************
 
+    public void FillBoxInventory()
+    {
+        for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
+        {
+            listBoxInventaire[i].GetComponentInChildren<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
+        }
+    }
 
+    public void FillDescriptionInventory()
+    {
+        Debug.Log(boxInv.GetButtonPosition());
+        boxInvTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxInv.GetButtonPosition()].nom;
+        boxInvDescription.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxInv.GetButtonPosition()].description;
+    }
+
+    public void SetBoxInventoryPositions()
+    {
+        for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
+        {
+            listBoxInventaire[i].GetComponent<BoxInventory>().inventoryPosition = i;
+        }
+    }
+    
+    
+    
     //Fonctions : Spells ************************************************************************************************************************************************************************************
     
     public void CollectSpell(int spellSlot)

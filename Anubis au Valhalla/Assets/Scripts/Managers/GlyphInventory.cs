@@ -21,7 +21,10 @@ public class GlyphInventory : MonoBehaviour
     {
         if (doStartHieroTest)
         {
-            AddGlyph(hieroTest);
+            for (int i = 0; i < 16; i++)
+            {
+                AddGlyph(hieroTest);
+            }
         }
     }
 
