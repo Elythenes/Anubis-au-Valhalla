@@ -25,10 +25,10 @@ public class CharacterController : MonoBehaviour
   public bool finDash;
   
   public enum LookingAt { Nord,NordEst,Est,SudEst,Sud,SudOuest,Ouest,NordOuest }
-  
-  [Header("Dash")]
+
+  [Header("Dash")] 
+  public bool stopDash;
   public float dashSpeed;
-  public float diagonalDashSpeed;
   public float timerDash;
   public float dashDuration;
   private float timerdashCooldown;
@@ -83,12 +83,12 @@ public class CharacterController : MonoBehaviour
     if (isDashing == false && !isAttacking) // Déplacments hors dash.
     {
       rb.AddForce(new Vector2(movement.x * speedX, movement.y * speedY));
-      //rb.velocity = new Vector2(movement.x * speedX, movement.y * speedY);
     }
   }
 
   private void Update()
   {
+    Flip();
     Keyboard kb = InputSystem.GetDevice<Keyboard>();
 
     if (allowMovements)
@@ -119,10 +119,23 @@ public class CharacterController : MonoBehaviour
       }
     }
 
-   
-
-    if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash)
+    /*if (stopDash)
     {
+      allowMovements = true;
+      finDash = true;
+      StartCoroutine(ResetTracking());
+      rb.velocity *= 0.85f;
+      AttaquesNormales.instance.canAttack = true;
+      isDashing = false;
+      timerDash = 0;
+      canDash = false;
+      stopDash = false;
+    }*/
+
+    if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash && allowMovements)
+    {
+      stopDash = false;
+      allowMovements = false;
       debutDash = true;
       StartCoroutine(ResetTracking());
       ghost.lastPlayerPos = transform.position;
@@ -131,18 +144,19 @@ public class CharacterController : MonoBehaviour
       isDashing = true;
     }
     
-    if (isDashing && !isAttacking && allowMovements) // Déplacement lors du dash selon la direction du regard du perso
+    if (isDashing && !stopDash) // Déplacement lors du dash selon la direction du regard du perso
     {
       canPassThrough = false;
       Dashing();
     }
-    Flip();
+    
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
+      allowMovements = true;
       finDash = true;
       StartCoroutine(ResetTracking());
-      rb.velocity *= 0.5f;
+      rb.velocity *= 0.85f;
       AttaquesNormales.instance.canAttack = true;
       isDashing = false;
       timerDash = 0;
@@ -163,117 +177,154 @@ public class CharacterController : MonoBehaviour
 
   void Dashing()
   {
-   
     timerDash += Time.deltaTime;
-    if (movement.x != 0 && movement.y != 0 && allowMovements)
-    {
-      rb.AddForce(new Vector2(movement.x,movement.y) * dashSpeed * diagonalDashSpeed);
-      if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(movement.x, movement.y), dashSpeed * diagonalDashSpeed,roomBorders));
-      {
-        canPassThrough = true;
-      }
-    }
-    else if (allowMovements)
     {
       switch (facing)
       {
         case LookingAt.Nord:
           rb.velocity = (new Vector2(0,1) * dashSpeed);
-          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(0,1), dashSpeed,roomBorders));
+          /*if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(0,1), dashSpeed,roomBorders));
         {
           canPassThrough = true;
-        }
+        }*/
           
           break;
           
         case LookingAt.Sud:
           rb.velocity = (new Vector2(0,-1) * dashSpeed);
-          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(0,-1), dashSpeed,roomBorders));
+          /*if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(0,-1), dashSpeed,roomBorders));
         {
           canPassThrough = true;
-        }
+        }*/
           break;
           
         case LookingAt.Est:
           rb.velocity = (new Vector2(1,0) * dashSpeed);
-          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(1,0), dashSpeed,roomBorders));
+          /*if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(1,0), dashSpeed,roomBorders));
         {
           canPassThrough = true;
-        }
+        }*/
           break;
           
         case LookingAt.Ouest:
           rb.velocity = (new Vector2(-1,0) * dashSpeed);
-          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,0), dashSpeed,roomBorders));
+         /* if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,0), dashSpeed,roomBorders));
         {
           canPassThrough = true;
-        }
+        }*/
           break;
           
         case LookingAt.NordEst:
-          rb.velocity = (new Vector2(1,1) * dashSpeed);
-          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(1,1), dashSpeed,roomBorders));
+          rb.velocity = (new Vector2(0.5f,0.5f) * dashSpeed);
+          /*if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(1,1), dashSpeed,roomBorders));
         {
           canPassThrough = true;
-        }
+        }*/
           break;
           
         case LookingAt.NordOuest:
-          rb.velocity = (new Vector2(-1,1) * dashSpeed);
-          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,1), dashSpeed,roomBorders));
+          rb.velocity = (new Vector2(-0.5f,0.5f) * dashSpeed);
+         /* if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,1), dashSpeed,roomBorders));
         {
           canPassThrough = true;
-        }
+        }*/
           break;
 
         case LookingAt.SudEst:
-          rb.velocity = (new Vector2(1, -1) * dashSpeed);
-          if (Physics.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(1, -1), dashSpeed, roomBorders)) ;
+          rb.velocity = (new Vector2(0.5f, -0.5f) * dashSpeed);
+         /* if (Physics.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(1, -1), dashSpeed, roomBorders)) ;
         {
           canPassThrough = true;
-        }
+        }*/
         
           break;
           
         case LookingAt.SudOuest:
-          rb.velocity = (new Vector2(-1,-1) * dashSpeed);
-          if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,-1), dashSpeed,roomBorders));
+          rb.velocity = (new Vector2(-0.5f,-0.5f) * dashSpeed);
+          /*if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,-1), dashSpeed,roomBorders));
         {
           canPassThrough = true;
-        }
+        }*/
           break;
       }
     }
   }
 
+  public void ResetDash()
+  {
+    
+  }
   void Flip()
   {
+    bool isEST;
+    bool isNORD;
+    bool isSUD;
+    bool isOUEST;
+    
+    
     if (movement.x > 0 && !isAttacking) // Le personnage s'oriente vers la direction où il marche. 
     {
+      isEST = true;
       facing = LookingAt.Est;
       transform.localRotation = Quaternion.Euler(0, 0,0);
       //transform.localScale = new Vector3(1, 1, 0);
     }
+    else
+    {
+      isEST = false;
+    }
 
     if (movement.x < 0 && !isAttacking)
     {
+      isOUEST= true;
       facing = LookingAt.Ouest;
       transform.localRotation = Quaternion.Euler(0, 180,0);
       //transform.localScale = new Vector3(-1, 1, 0);
     }
+    else
+    {
+      isOUEST = false;
+    }
     
     if (movement.y < 0 && !isAttacking)
     {
+      isSUD = true;
       facing = LookingAt.Sud;
       float face = transform.localScale.x;
       face = 1;
     }
+    else
+    {
+      isSUD = false;
+    }
     
     if (movement.y > 0 && !isAttacking)
     {
+      isNORD = true;
       facing = LookingAt.Nord;
       float face = transform.localScale.x;
       face = 1;
+    }
+    else
+    {
+      isNORD = false;
+    }
+
+    if (isEST && isSUD)
+    {
+      facing = LookingAt.SudEst;
+    }
+    if (isEST && isNORD)
+    {
+      facing = LookingAt.NordEst;
+    }
+    if (isOUEST && isSUD)
+    {
+      facing = LookingAt.SudOuest;
+    }
+    if (isOUEST && isNORD)
+    {
+      facing = LookingAt.NordOuest;
     }
   }
   
@@ -283,6 +334,7 @@ public class CharacterController : MonoBehaviour
   {
     if (col.gameObject.CompareTag("Door"))
     {
+      allowMovements = true;
       ghost.activerEffet = false;
       isDashing = false;
       canDash = true;

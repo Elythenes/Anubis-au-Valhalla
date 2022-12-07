@@ -16,6 +16,8 @@ public class DamageManager : MonoBehaviour
     [Header("Objects")]
     public GameObject textDamage;
     public GameObject textHealDamage;
+    public GameObject deathMenu;
+    public GameObject GameUI;
     public Camera mainCamera;
     public GameObject player;
     public static DamageManager instance;
@@ -241,7 +243,6 @@ public class DamageManager : MonoBehaviour
 
     IEnumerator EffetMort()
     {
-        Debug.Log("enterons le");
         mainCamera.transform.position = new Vector3(transform.position.x,transform.position.y,mainCamera.transform.position.z);
         float timeElapsed = 0;
         while (timeElapsed < t3)
@@ -275,9 +276,10 @@ public class DamageManager : MonoBehaviour
     void Die()
     {
         CharacterController.instance.allowMovements = false;
-        GetComponentInParent<Rigidbody2D>().velocity = Vector2.zero;
-        Debug.Log("vrai");
+        CharacterController.instance.movement = Vector2.zero;
+        CharacterController.instance.rb.velocity = Vector2.zero;
         invinsible = true;
+        animPlayer.SetBool("isIdle",true);
         animPlayer.SetBool("isDead",true);
         stun = true;
         StartCoroutine(ReloadScene());
@@ -286,7 +288,9 @@ public class DamageManager : MonoBehaviour
 
     IEnumerator ReloadScene()
     {
+        GameUI.SetActive(false);
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(0);
+        deathMenu.SetActive(true);
+        Time.timeScale = 0;
     }
 }
