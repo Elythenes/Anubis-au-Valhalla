@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,48 +12,54 @@ public class UiManager : MonoBehaviour
     public GameObject anubis;
     public static UiManager instance; //singleton
     public CollectSpell cS;
-    public CollectPotion cP;
-    
-    [Header("GENERAL")]
-    public GameObject spriteSpell1;
-    public GameObject spriteSpell2;
-    public GameObject currentSpell1;
-    public GameObject currentSpell2;
-    public GameObject currentSpell1Holder;
-    public GameObject currentSpell2Holder;
 
-    [Header("COLLECTED SPELL MENU")]
-    public GameObject menuCollectSpell;
-    public GameObject spriteCs;
-    public GameObject textCsName;
-    public GameObject textCsDescription;
-    public GameObject textCsCitation;
-    
-    [Header("OWNED SPELL MENU 1")]
-    public GameObject spriteOs1;
-    public GameObject textOs1Name;
-    public GameObject textOs1Description;
-    
-    [Header("OWNED SPELL MENU 2")]
-    public GameObject spriteOs2;
-    public GameObject textOs2Name;
-    public GameObject textOs2Description;
+    [Foldout("GENERAL")] public GameObject spriteSpell1;
+    [Foldout("GENERAL")] public GameObject spriteSpell2;
+    [Foldout("GENERAL")] public GameObject currentSpell1;
+    [Foldout("GENERAL")] public GameObject currentSpell2;
+    [Foldout("GENERAL")] public GameObject currentSpell1Holder;
+    [Foldout("GENERAL")] public GameObject currentSpell2Holder;
 
-    [Header("COLLECTED POTION MENU")] 
-    public GameObject menuCollectPotion;
-    public GameObject spritePotion;
-    public GameObject panelPotion;
-    public GameObject currentPotionSprite;
-    public GameObject currentPotionName;
-    public GameObject currentPotionDescription;
-    public GameObject currentPotionCitation;
-    public GameObject newPotionSprite;
-    public GameObject newPotionName;
-    public GameObject newPotionDescription;
-    public GameObject newPotionCitation;
-    public GameObject buttonSwitch;
-    public GameObject buttonPrendre;
+    [Foldout("COLLECTED SPELL MENU")] public GameObject menuCollectSpell;
+    [Foldout("COLLECTED SPELL MENU")] public GameObject spriteCs;
+    [Foldout("COLLECTED SPELL MENU")] public GameObject textCsName;
+    [Foldout("COLLECTED SPELL MENU")] public GameObject textCsDescription;
+    [Foldout("COLLECTED SPELL MENU")] public GameObject textCsCitation;
     
+    [Foldout("OWNED SPELL MENU 1")] public GameObject spriteOs1;
+    [Foldout("OWNED SPELL MENU 1")] public GameObject textOs1Name;
+    [Foldout("OWNED SPELL MENU 1")]public GameObject textOs1Description;
+    
+    [Foldout("OWNED SPELL MENU 2")] public GameObject spriteOs2;
+    [Foldout("OWNED SPELL MENU 2")] public GameObject textOs2Name;
+    [Foldout("OWNED SPELL MENU 2")] public GameObject textOs2Description;
+
+    [Foldout("POTION MENU")] public GameObject menuCollectPotion;
+    [Foldout("POTION MENU")] public GameObject spritePotion;
+    [Foldout("POTION MENU")] public GameObject panelPotion;
+    [Foldout("POTION MENU")] public GameObject currentPotionSprite;
+    [Foldout("POTION MENU")] public GameObject currentPotionName;
+    [Foldout("POTION MENU")] public GameObject currentPotionDescription;
+    [Foldout("POTION MENU")] public GameObject currentPotionCitation;
+    [Foldout("POTION MENU")] public GameObject newPotionSprite;
+    [Foldout("POTION MENU")] public GameObject newPotionName;
+    [Foldout("POTION MENU")] public GameObject newPotionDescription;
+    [Foldout("POTION MENU")] public GameObject newPotionCitation;
+    [Foldout("POTION MENU")] public GameObject buttonSwitch;
+    [Foldout("POTION MENU")] public GameObject buttonPrendre;
+
+    [Foldout("PAUSE MENU")] public GameObject menuPause;
+    [Foldout("PAUSE MENU")] public KeyCode buttonPause;
+    [Foldout("PAUSE MENU")] public bool isPause;
+    [Foldout("PAUSE MENU")] public GameObject buttonResume;
+    [Foldout("PAUSE MENU")] public GameObject buttonRerun;
+    [Foldout("PAUSE MENU")] public GameObject buttonReturnToHub;
+    [Foldout("PAUSE MENU")] public GameObject buttonCheatMenu;
+    [Foldout("PAUSE MENU")] public GameObject buttonOptions;
+    [Foldout("PAUSE MENU")] public GameObject buttonQuit;
+    
+    
+    //Fonctions systèmes ***********************************************************************************************
     
     private void Awake()
     {
@@ -62,6 +69,65 @@ public class UiManager : MonoBehaviour
         }
     }
 
+    public void DebugButton()
+    {
+        Debug.Log("boop");
+    }
+    
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+    
+    public void TimeBack()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    
+    
+    
+    //Fonctions : Pause ************************************************************************************************************************************************************************************
+
+    public void ControlPause()
+    {
+        if (Input.GetKeyDown(buttonPause))
+        {
+            if (isPause) //quand on "Echap" depuis le menu Pause
+            {
+                DeActivatePause();
+            }
+            else //quand on pause avec "Echap"
+            {
+                ActivatePause();
+            }
+        }
+    }
+
+    public void DeActivatePause()
+    {
+        TimeBack();
+        menuPause.SetActive(false);
+        isPause = false;
+    }
+    
+    public void ActivatePause()
+    {
+        Pause();
+        menuPause.SetActive((true));
+        isPause = true;
+    }
+    
+    
+    
+
+
+    //Fonctions : Spells ************************************************************************************************************************************************************************************
+    
     public void CollectSpell(int spellSlot)
     {
         switch (spellSlot)
@@ -105,41 +171,14 @@ public class UiManager : MonoBehaviour
         TimeBack();
         Destroy(cS.collectableSpell);
     }
-
-   public void CollectPotion()
-   {
-       //Debug.Log("entrée dans la fonction CollectPotion");
-       PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside; 
-       PotionManager.Instance.isPotionSlotFill = true;
-       spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
-       menuCollectPotion.SetActive(false);
-       TimeBack();
-   }
-
-    public void DebugButton()
-    {
-        Debug.Log("boop");
-    }
-
+    
     public void ActivateMenu()
     {
         menuCollectSpell.SetActive(true);
-        Time.timeScale = 0;
+        Pause();
         FillMenu();
     }
     
-    public void ActivateMenuPotion()
-    {
-        Time.timeScale = 0;
-        menuCollectPotion.SetActive(true);
-        FillMenuPotion();
-    }
-    
-    public void TimeBack()
-    {
-        Time.timeScale = 1;
-    }
-
     void FillMenu()
     {
         Debug.Log("fonction fillMenu utilisée");
@@ -147,6 +186,27 @@ public class UiManager : MonoBehaviour
         textCsDescription.GetComponent<TextMeshProUGUI>().text = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.description;
         textCsCitation.GetComponent<TextMeshProUGUI>().text = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.citation;
         spriteCs.GetComponent<RawImage>().texture = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.sprite; 
+    }
+
+    
+    
+    //Fonctions : Potions ***********************************************************************************************************************************************************************************
+    
+    public void CollectPotion()
+    {
+        //Debug.Log("entrée dans la fonction CollectPotion");
+        PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside; 
+        PotionManager.Instance.isPotionSlotFill = true;
+        spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        menuCollectPotion.SetActive(false);
+        TimeBack();
+    }
+
+    public void ActivateMenuPotion()
+    {
+        Pause();
+        menuCollectPotion.SetActive(true);
+        FillMenuPotion();
     }
     
     void FillMenuPotion()
@@ -184,6 +244,11 @@ public class UiManager : MonoBehaviour
         }
         
     }
+    
+    
+    
+    //Fonctions autres ***********************************************************************************************************************************************************************************
+    
 
     void FillLittleMenu(SpellObject sO, int slot)
     {
