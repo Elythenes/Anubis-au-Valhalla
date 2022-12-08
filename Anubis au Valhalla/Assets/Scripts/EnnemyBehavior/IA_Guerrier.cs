@@ -1,10 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using Pathfinding;
-using TMPro;
-using Unity.Mathematics;
-using UnityEditor.Rendering;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

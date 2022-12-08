@@ -1,6 +1,8 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,9 +15,14 @@ public class ChestBehaviour : MonoBehaviour
     private Rigidbody2D rbItem;
     public LayerMask groundLayer;
     public Animator openAnim;
+    public GameObject CanvasInteraction;
+    public Vector3 offset;
+    public TextMeshProUGUI TextInteraction;
 
     private void Start()
     {
+        CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
+        TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
 
         if(Physics2D.Raycast(transform.position,new Vector3(0,0,1),10,groundLayer))
         {
@@ -28,8 +35,16 @@ public class ChestBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            CanOpen = true;
-            //sr.sprite = spriteOutline;
+            if (!isOpened)
+            {
+                CanOpen = true;
+                CanvasInteraction.transform.position = transform.position + offset;
+                CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
+                CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
+                TextInteraction.SetText("Ouvrir");
+                CanvasInteraction.SetActive(true); 
+            }
+         
         }
     }
     
@@ -38,7 +53,7 @@ public class ChestBehaviour : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CanOpen = false;
-            //sr.sprite = spriteNormal;
+            CanvasInteraction.SetActive(false);
         }
     }
 
@@ -47,6 +62,7 @@ public class ChestBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && CanOpen && !isOpened)
         {
             StartCoroutine(OpenChest());
+            CanvasInteraction.SetActive(false);
         }
     }
 

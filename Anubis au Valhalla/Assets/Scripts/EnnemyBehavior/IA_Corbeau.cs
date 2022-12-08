@@ -45,6 +45,7 @@ public class IA_Corbeau : MonoBehaviour
     private bool indic = true;
     public float plumeSpeed;
     public Vector2 directionProj;
+    public Gradient gradientIndic;
 
 
     private void Start()
@@ -109,6 +110,7 @@ public class IA_Corbeau : MonoBehaviour
         if (StartUpAttackTimeTimer >= StartUpAttackTime && !life.isMomified)
         {
             AttackTimeTimer += Time.deltaTime;
+            
             if (indic)
             {
                 isFleeing = false;
@@ -120,20 +122,24 @@ public class IA_Corbeau : MonoBehaviour
                 directionProj = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,
                     CharacterController.instance.transform.position.y - transform.position.y);
                 float angle = Mathf.Atan2(directionProj.y, directionProj.x) * Mathf.Rad2Deg;
-               holder = Instantiate(indicationAttaque,transform.position,  Quaternion.Euler(0,0,angle));
-                Destroy(holder,AttackTime+0.1f);
-                indic = false;
-                
+               GameObject indicOBJ = Instantiate(indicationAttaque,transform.position,  Quaternion.Euler(0,0,angle));
+               holder = indicOBJ;
+               Destroy(indicOBJ,AttackTime+0.1f);
+               indic = false;
             }
             else if(life.gotHit)
             {
-                Debug.Log("hit");
+                if (holder is not null)
+                {
+                    Destroy(holder.gameObject);
+                }
                 StartUpAttackTimeTimer = 0;
                 AttackTimeTimer = 0;
-                Destroy(holder.gameObject);
                 canMove = true;
                 indic = true;
             }
+
+            holder.GetComponent<SpriteRenderer>().color = gradientIndic.Evaluate(AttackTimeTimer);
             
             if (AttackTimeTimer >= AttackTime && !life.isMomified)
             {
