@@ -102,6 +102,7 @@ public class TothBehiavour : MonoBehaviour
 
    public void DialogueUP()
    {
+      dialogueMenu.SetActive(true);
       dialogueMenu.transform.DOLocalMove(new Vector3(transform.position.x,upDownY,transform.position.z),menuSpeed);
       StartCoroutine(Type("Bonjour Anubis, si tu as la moindre question, je suis pret à y répondre."));
    }
@@ -114,6 +115,7 @@ public class TothBehiavour : MonoBehaviour
       StartCoroutine(Type("Bonne chance Anubis, je veillerais sur toi."));
       dialogueMenu.transform.DOLocalMove(new Vector3(transform.position.x,upDownY - 440,transform.position.z),menuSpeed);
       CharacterController.instance.allowMovements = true;
+      dialogueMenu.SetActive(false);
    }
 
    public void DialogueSorts()

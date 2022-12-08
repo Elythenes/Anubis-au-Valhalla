@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Pathfinding;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class IA_Valkyrie : MonoBehaviour
     public bool isElite;
     public GameObject emptyLayers;
     public MonsterLifeManager life;
+    public SpriteRenderer[] spriteArray;
 
 
     [Header("Déplacements")]
@@ -59,6 +61,7 @@ public class IA_Valkyrie : MonoBehaviour
     
     private void Start()
     {
+        spriteArray = GetComponentsInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
@@ -117,6 +120,10 @@ public class IA_Valkyrie : MonoBehaviour
                 TriggerJumpTimeTimer = 0;
                 hasShaked = false;
                 canvasLifeBar.SetActive(false);
+                foreach (SpriteRenderer sprite in spriteArray)
+                {
+                    sprite.enabled = false;
+                }
                 collider.enabled = false;
                 IndicationTimeTimer += Time.deltaTime;
             
@@ -169,6 +176,10 @@ public class IA_Valkyrie : MonoBehaviour
             FallTimeTimer = 0;
             transform.position = fallPos;
             canvasLifeBar.SetActive(true);
+            foreach (SpriteRenderer sprite in spriteArray)
+            {
+                sprite.enabled = true;
+            }
             collider.enabled = true;
             StartCoroutine(LagFall());
         }             
@@ -206,32 +217,6 @@ public class IA_Valkyrie : MonoBehaviour
         isAttacking = false;
     }
 
-
-   /* void Flip()
-    {
-        if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
-        {
-            transform.localScale = new Vector3(-1, transform.localScale.y,transform.localScale.z);
-        }
-        else if (transform.position.x > player.transform.position.x)
-        {
-            transform.localScale = new Vector3(1, transform.localScale.y,transform.localScale.z);
-        }
-    }/*
-   /* void SortEnemies()
-    {
-        if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
-        {
-            sr.sortingOrder = 2;
-        }
-        else
-        {
-            sr.sortingOrder = 1;
-        }
-    }*/
-    
-    
-    
     IEnumerator LagFall() // A la fin de l'attaque du saut
     {
         Debug.Log("oui");

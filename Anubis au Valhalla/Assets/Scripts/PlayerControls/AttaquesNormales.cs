@@ -119,11 +119,7 @@ public class AttaquesNormales : MonoBehaviour
                     
             }
         }
-
-        if (CharacterController.instance.isDashing)
-        {
-            Destroy(swordObj);
-        }
+        
 
 
         // ------------------ Gestion Abandon du Combo ---------------
@@ -137,6 +133,14 @@ public class AttaquesNormales : MonoBehaviour
             abandonOn = false;
             comboActuel = 0;
             cooldownAbandonComboTimer = 0;
+        }
+
+        if (comboActuel == 1 || comboActuel == 2)
+        {
+            if (CharacterController.instance.isDashing)
+            {
+                Destroy(swordObj);
+            }
         }
         
         for (int i = 0; i < hitBoxC.Count; i++)
@@ -187,6 +191,11 @@ public class AttaquesNormales : MonoBehaviour
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
+
+        if (index == 0)
+        {
+            CharacterController.instance.rb.AddForce(CharacterController.instance.movement * dashImpulse[0], ForceMode2D.Impulse);
+        }
 
         #region Gestion des animations
         
@@ -251,9 +260,7 @@ public class AttaquesNormales : MonoBehaviour
         }
 
         #endregion
-        
-       
-        
+
         if (moveDirection.x > 0)
         {
             CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,0,CharacterController.instance.transform.localRotation.z);
@@ -261,15 +268,6 @@ public class AttaquesNormales : MonoBehaviour
         else
         {
             CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,-180,CharacterController.instance.transform.localRotation.z);
-        }
-
-        if (index == 0)
-        {
-            Slide(CharacterController.instance.facing);
-        }
-        else
-        {
-            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
         }
 
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
@@ -326,7 +324,6 @@ public class AttaquesNormales : MonoBehaviour
         CharacterController.instance.isAttacking = true;
         CharacterController.instance.rb.AddForce(moveDirection2 * dashImpulse[3], ForceMode2D.Impulse);
         GameObject thrustObj = Instantiate(thrust, charaPos, Quaternion.AngleAxis(angle2, Vector3.forward));
-        thrustObj.transform.localScale = rangeAttaque[3];
     }
 
     IEnumerator ResetState()

@@ -207,6 +207,8 @@ public class MonsterLifeManager : MonoBehaviour
             parasite.GetComponent<MonsterLifeManager>().soulValue =
                 Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
         }
+
+        ScoreManager.instance.currentScore += data.Score;
         Souls.instance.CreateSouls(child.transform.position, soulValue);
         SalleGennerator.instance.currentRoom.currentEnemies.Remove(gameObject);
         SalleGennerator.instance.currentRoom.CheckForEnemies();

@@ -346,9 +346,7 @@ public class Salle : MonoBehaviour
     }
     public IEnumerator DelayedSpawns()
     {
-        Debug.Log("ATTENTION, CA VA PETER");
         yield return new WaitForSeconds(SalleGennerator.instance.TimeBetweenWaves);
-        Debug.Log("CA A PETEEDR");
         if (spawnBank > costList.Min())
         {
             var spawnPoints = Random.Range(0, 3);

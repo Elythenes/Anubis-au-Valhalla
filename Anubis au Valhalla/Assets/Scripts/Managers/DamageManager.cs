@@ -26,6 +26,7 @@ public class DamageManager : MonoBehaviour
     public Volume gVolumeMort;
     private ColorAdjustments ca;
     public SpellDefenceObject ankhShieldData;
+    public TextMeshProUGUI compteurScore;
 
     [Header("Alterations d'Etat")] 
     public float knockbackAmount;
@@ -275,6 +276,7 @@ public class DamageManager : MonoBehaviour
     
     void Die()
     {
+        compteurScore.text = ScoreManager.instance.currentScore.ToString();
         CharacterController.instance.allowMovements = false;
         CharacterController.instance.movement = Vector2.zero;
         CharacterController.instance.rb.velocity = Vector2.zero;
