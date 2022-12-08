@@ -1,38 +1,50 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PuppetHealth : MonsterLifeManager
 {
     public bool canAttack = true;
     public SpriteRenderer sprite;
-    public Color deactivatedColor = new Color(0.3f, 0.3f, 0.3f);
+    public Vector3 targetRecoil;
+    public bool isHead;
+    private Vector3 basePos;
+    private Vector3 baseScale;
+    private BoxCollider2D dmgTrigger;
+    private FenrirBoss fb;
+
+    public void Awake()
+    {
+
+    }
 
     public override void Start()
     {
+        fb = FenrirBoss.instance;
+        targetRecoil = new Vector3(transform.position.x,
+            transform.position.y + fb.deactivationRecoil, 
+            transform.position.z);
+        basePos = transform.position;
+        baseScale = transform.localScale;
+        if (!isHead)
+        {
+            dmgTrigger = GetComponent<BoxCollider2D>();
+        }
         ResetHealth();
         sprite = GetComponent<SpriteRenderer>();
+        if (isHead)
+        {
+            isInvincible = true;
+        }
     }
 
     public override void Update()
     {
-        if (isInvincible)
-        {
-            InvincibleTimeTimer += Time.deltaTime;
-
-            if (InvincibleTimeTimer >= InvincibleTime)
-            {
-                isInvincible = false;
-                InvincibleTimeTimer = 0;
-            }
-        }
-
-        if (!canAttack && sprite.color != deactivatedColor)
-        {
-            Deactivate();
-        }
+        
     }
 
     public override void TakeDamage(int damage, float staggerDuration)
@@ -49,12 +61,14 @@ public class PuppetHealth : MonsterLifeManager
             {
                 vieActuelle -= damage;
             }
-        
+
+            transform.DOComplete();
+            transform.DOShakePosition(0.1f,0.2f,30);
         }
         
         if (vieActuelle <= 0)
         {
-            canAttack = false;
+            Deactivate();
         }
     }
     public override void DamageText(int damageAmount)
@@ -73,20 +87,48 @@ public class PuppetHealth : MonsterLifeManager
                 textDamage.GetComponentInChildren<TextMeshPro>().SetText(damageAmount.ToString());
                 Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
             }
-          
         }
     }
 
     public void Deactivate()
     {
-        if (transform.localScale.x >= 0.4f)
+        Debug.Log("oui");
+        dmgTrigger.enabled = false;
+        canAttack = false;
+        transform.DOMoveY(fb.deactivationRecoil, 1f);
+        transform.DOScale(Vector3.one * 0.4f, 1f);
+        sprite.DOColor(fb.deactivatedColor, 1f);
+        fb.CheckPaws();
+    }
+
+    public void Reactivate()
+    {
+        dmgTrigger.enabled = true;
+        canAttack = true;
+        transform.DOMove(basePos, 1f);
+        transform.DOScale(baseScale, 1f);
+        sprite.DOColor(Color.white, 1f);
+        ResetHealth();
+    }
+
+    public void StunHead()
+    {
+        sprite.color = fb.vulnerableColor;
+        sprite.DOColor(Color.white, 0.5f);
+        transform.DOShakePosition(0.75f, 0.2f,30).OnComplete(() =>
         {
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * 0.4f, FenrirBoss.instance.reduceScaleTimer);
-            sprite.color = Color.Lerp(sprite.color, deactivatedColor, FenrirBoss.instance.reduceScaleTimer);
-            return;
-        }
-        transform.localScale = Vector3.one * 0.4f;
-        sprite.color = deactivatedColor;
+            transform.DOMove(transform.position + Vector3.down * 2, 0.5f);
+            StartCoroutine(fb.StunReset());
+        });
+    }
+
+    public void HeadReset()
+    {
+        isInvincible = true;
+        transform.DOShakePosition(0.25f, 0.2f, 30).OnComplete(() =>
+        {
+            transform.DOMove(transform.position + Vector3.up * 2, 0.5f);
+        });
     }
 
     public void ResetHealth()
