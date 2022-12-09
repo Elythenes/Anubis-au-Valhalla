@@ -134,66 +134,15 @@ public class IA_Shaman : MonoBehaviour
         void DetectPlayerRelativePos()
     {
         
-        if(Physics2D.Raycast(transform.position, Vector2.up, radiusWondering,layerPlayer))
+        if (Vector3.Distance(player.transform.position, transform.position) <= radiusWondering)
         {
-            Debug.DrawRay(transform.position,Vector2.up * radiusWondering,Color.red);
-            rb.AddForce(Vector2.down * forceRepulse);
-            isWondering = false;
+            isFleeing = true;
+            Vector2 angle = transform.position - player.transform.position;
+            rb.AddForce(angle.normalized * forceRepulse);
         }
-                        
-        
-        if(Physics2D.Raycast(transform.position, Vector2.down, radiusWondering,layerPlayer))
+        else
         {
-            Debug.DrawRay(transform.position,Vector2.down * radiusWondering,Color.red);
-            rb.AddForce(Vector2.up * forceRepulse);
-            isWondering = false;
-        }
-                        
-        
-        if(Physics2D.Raycast(transform.position, Vector2.right, radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,Vector2.right * radiusWondering,Color.red);
-            rb.AddForce(Vector2.left * forceRepulse);
-            isWondering = false;
-        }
-                        
-       
-        if(Physics2D.Raycast(transform.position, Vector2.left, radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,Vector2.left * radiusWondering,Color.red);
-            rb.AddForce(Vector2.right * forceRepulse);
-            isWondering = false;
-        }
-                        
-        if(Physics2D.Raycast(transform.position, new Vector2(1,1), radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,new Vector2(1,1) * radiusWondering,Color.red);
-            rb.AddForce(new Vector2(-1,-1) * forceRepulse);
-            isWondering = false;
-        }
-                        
-        
-        if(Physics2D.Raycast(transform.position, new Vector2(-1,1), radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,new Vector2(-1,1) * radiusWondering,Color.red);
-            rb.AddForce(new Vector2(1,-1) * forceRepulse);
-            isWondering = false;
-        }
-                        
-        
-        if(Physics2D.Raycast(transform.position, new Vector2(1,-1), radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,new Vector2(1,-1) * radiusWondering,Color.red);
-            rb.AddForce(new Vector2(-1,1) * forceRepulse);
-            isWondering = false;
-        }
-                        
-        
-        if(Physics2D.Raycast(transform.position, new Vector2(-1,-1), radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,new Vector2(-1,-1) * radiusWondering,Color.red);
-            rb.AddForce(new Vector2(1,1) * forceRepulse);
-            isWondering = false;
+            isFleeing = false;
         }
     }
     void SortEnemies()

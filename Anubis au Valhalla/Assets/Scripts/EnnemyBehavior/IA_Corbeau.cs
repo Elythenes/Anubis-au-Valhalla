@@ -65,7 +65,7 @@ public class IA_Corbeau : MonoBehaviour
             isElite = true;
         }
 
-        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
+       if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             speedTowardPlayer *= 150;
             forceRepulse *= 1.5f;
@@ -180,27 +180,24 @@ public class IA_Corbeau : MonoBehaviour
             isRotating = false;
         }
         
-        if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing && !isChasing && canMove)
+        /*if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing && !isChasing && canMove)
         {
             isChasing = false;
             isRotating = false;
             isFleeing = true;
-            Debug.Log("close");
-            isFleeing = true;
             Vector2 angle = transform.position - player.transform.position;
-            rb.AddForce(angle.normalized*forceRepulse);
+            rb.AddForce(angle.normalized * forceRepulse);
         }
         else
         {
             isFleeing = false;
-        }
+        }*/
             
         if(Vector3.Distance(player.transform.position, transform.position) >= radiusFleeing*3 && !isFleeing && !isRotating && canMove)
         {
             isChasing = true;
             Vector2 angleTowardPlayer = player.transform.position - transform.position;
             rb.AddForce(angleTowardPlayer*speedTowardPlayer);
-            Debug.Log("far");
             isFleeing = false;
         }
         else

@@ -180,8 +180,6 @@ public class MonsterLifeManager : MonoBehaviour
         {
             //StopAllCoroutines();
             OnBegin?.Invoke();
-            //rb.velocity = Vector2.zero;
-            //rb.AddForce(direction * forceKnockBack,ForceMode2D.Impulse);
             StartCoroutine(Reset(0.5f));
         }
     }

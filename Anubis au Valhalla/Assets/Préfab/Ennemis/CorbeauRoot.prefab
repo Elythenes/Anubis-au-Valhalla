@@ -55,6 +55,7 @@ MonoBehaviour:
   vieMax: 50
   vieActuelle: 0
   soulValue: 4
+  delay: 0
   OnBegin:
     m_PersistentCalls:
       m_Calls:
@@ -109,7 +110,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  criticalPick: 0
+  criticalPick: 100
   gotHit: 0
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 893181608378371495}
@@ -439,7 +440,7 @@ MonoBehaviour:
   isFleeing: 0
   isRotating: 0
   isChasing: 0
-  forceRepulse: 100
+  forceRepulse: 500
   radiusFleeing: 2.5
   speedTowardPlayer: 0.2
   isAttacking: 0
