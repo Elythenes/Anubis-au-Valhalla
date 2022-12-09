@@ -256,6 +256,7 @@ public class SalleGennerator : MonoBehaviour
         public void OpenDoors(DoorOrientation index, bool state)
         {
                 s_doors[(int)index].GetComponent<BoxCollider2D>().enabled = state;
+                s_doors[(int)index].GetComponentInChildren<Animator>().SetBool("Open",state);
         }
         /// <summary>
         /// TP la caméra au joueur
