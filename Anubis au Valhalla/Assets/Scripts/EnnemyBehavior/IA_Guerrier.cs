@@ -62,7 +62,7 @@ public class IA_Guerrier : MonoBehaviour
             puissanceAttaque = damageElite;
         }
         
-        if (life.overdose)
+        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             WonderingTime *= 0.5f;
             ai.maxSpeed *= 2;

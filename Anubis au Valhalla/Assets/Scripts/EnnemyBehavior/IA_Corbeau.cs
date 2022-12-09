@@ -70,7 +70,7 @@ public class IA_Corbeau : MonoBehaviour
             isElite = true;
         }
 
-        if (life.overdose)
+        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             speedTowardPlayer *= 150;
             forceRepulse *= 1.5f;

@@ -88,6 +88,8 @@ public class Salle : MonoBehaviour
                 C5_Overdose();
                 break;
         }
+
+        //Debug.Log("challenge chosen " + challengeChosen);
     }
 
     private void Update()
@@ -129,7 +131,9 @@ public class Salle : MonoBehaviour
         for (int i = 0; i < (int)SalleGennerator.DoorOrientation.West + 1; i++)
         {
             SalleGennerator.instance.s_doors[i].transform.position = transformReferences[i].position;
+            //SalleGennerator.instance.s_doors[i].GetComponentInChildren<Animator>().SetBool("Open",false);
         }
+        
     }
 
     public void AdjustCameraConstraints()
@@ -178,14 +182,15 @@ public class Salle : MonoBehaviour
             spawnBank -= costList[chosenValue];
             costList[chosenValue] += 3;
             var chosenPoint = point[Random.Range(0, point.Count)];
-            currentEnemies.Add(Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform));
+            var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
+            currentEnemies.Add(enemyObject);
             if (chosenEnemy.isElite)
             {
-                chosenEnemy.prefab.GetComponent<MonsterLifeManager>().elite = true;
+                enemyObject.GetComponent<MonsterLifeManager>().elite = true;
             }
             if (overdose)
             {
-                chosenEnemy.prefab.GetComponent<MonsterLifeManager>().overdose = true;
+                enemyObject.GetComponent<MonsterLifeManager>().overdose = true;
             }
             //chosenEnemy.prefab.GetComponent<MonsterLifeManager>().data = chosenEnemy;
             discardedPoints.Add(chosenPoint);

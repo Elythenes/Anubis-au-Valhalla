@@ -1,13 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using Pathfinding;
-using Spine.Unity;
-using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Serialization;
+
 using Random = UnityEngine.Random;
 
 public class IA_Monstre1 : MonoBehaviour
@@ -21,30 +17,34 @@ public class IA_Monstre1 : MonoBehaviour
     public bool isElite;
 
     [Header("Déplacements")]
+    private Rigidbody2D rb;
     public GameObject player;
     public AIPath aipath;
-    private Path path;
-    //private SpriteRenderer sr;
-    IAstarAI ai;
     public AIDestinationSetter playerFollow;
-    public float radiusWondering;
-    public bool isWondering;
+    IAstarAI ai;
+    public float speedX;
+    public float speedY;
+    
 
     [Header("Dash")] 
     public bool canDash;
+    public bool isChasing;
+    public bool isPreparing;
     public bool isDashing;
-    public float timerDash;
-    public float dashDuration;
-    public float LagDebutDash;
-    public float LagDebutDashMax;
-    public float CooldownDashTimer;
-    public float CooldownDash;
-    private Rigidbody2D rb;
-    public float dashSpeed;
-    private Vector2 targetPerso;
     public bool stopDash;
     public bool ShakeEnable;
     public bool hitboxActive; 
+    
+    public float CooldownDashTimer;
+    public float CooldownDash;
+    public float dashdurationTimer;
+    public float dashDuration;
+    public float LagDebutDashTimer;
+    public float LagDebutDashMax;
+    public float radiusDash;
+    public float dashSpeed;
+    public Vector2 targetPlayer;
+
 
     [Header("Attaque")] 
     public Transform pointAttaque;
@@ -56,62 +56,159 @@ public class IA_Monstre1 : MonoBehaviour
 
     public int soulValue = 4;
 
+    /*private void Awake()
+    {
+        puissanceAttaque = GetComponentInParent<EnemyData>().damage;
+    }*/
+    
     private void Start()
     {
+        ai = GetComponent<IAstarAI>();
+        rb = gameObject.GetComponent<Rigidbody2D>();
+        
         anim.SetBool("isIdle", true);
         player = GameObject.FindGameObjectWithTag("Player");
+        
         playerFollow.enabled = true;
-        ai = GetComponent<IAstarAI>();
-        vieActuelle = vieMax;
-        rb = gameObject.GetComponent<Rigidbody2D>();
-        //sr = GetComponent<SpriteRenderer>();
         playerFollow.target = player.transform;
+        
+        vieActuelle = vieMax;
         CooldownDashTimer = CooldownDash;
+        
         if (life.elite)
         {
             isElite = true;
         }
-        if (life.overdose)
+        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             ai.maxSpeed *= 2;
-            timerDash *= 0.75f;
-            LagDebutDash *= 0.3f;
+            dashdurationTimer *= 0.75f;
+            LagDebutDashTimer *= 0.3f;
             CooldownDash *= 0.2f;
         }
     }
-    
+
+    private void FixedUpdate()
+    {
+        if (isChasing && !isDashing)
+        {
+            rb.AddForce(new Vector2(aipath.targetDirection.x * speedX,aipath.targetDirection.y * speedY) * Time.deltaTime);
+            anim.SetBool("IsRuning", true);
+            anim.SetBool("StopDash", false);
+        }
+  
+        if (isDashing && !isChasing)
+        {
+            dashdurationTimer += Time.deltaTime;
+  
+            if (dashdurationTimer <= dashDuration)
+            {
+                rb.AddForce(targetPlayer.normalized * (dashSpeed * Time.deltaTime),ForceMode2D.Impulse);
+            }
+            else
+            {
+                rb.velocity = Vector2.zero;
+                isDashing = false;
+                isChasing = true;
+                dashdurationTimer = 0;
+                
+                anim.SetBool("StopDash", true);
+                anim.SetBool("Dash",false);
+            }
+        }
+    }
 
     public void Update()
     {
-        if (life.vieActuelle <= 0)
-        {
-            anim.SetBool("isDead", true);
-        }
-        /*if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
-        {
-           sr.sortingOrder = 2;
-        }
-        else
-        {
-          sr.sortingOrder = 1;
-        }*/
 
-        if (isDashing)
-        {
-            if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
-            {
-                transform.localRotation = Quaternion.Euler(transform.localRotation.x, 0, transform.localRotation.z);
-            }
-            else if (transform.position.x > player.transform.position.x)
-            {
-                transform.localRotation = Quaternion.Euler(transform.localRotation.x, -180, transform.localRotation.z);
-            }  
+        #region Movements
 
-        }
-           
-           
+          if (isChasing && !isDashing)
+          {
+              if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
+              {
+                  var localRotation = transform.localRotation;
+                  localRotation = Quaternion.Euler(localRotation.x, 0, localRotation.z);
+                  transform.localRotation = localRotation;
+              }
+              else if (transform.position.x > player.transform.position.x)
+              {
+                  var localRotation = transform.localRotation;
+                  localRotation = Quaternion.Euler(localRotation.x, -180, localRotation.z);
+                  transform.localRotation = localRotation;
+              }  
+  
+          }
 
-        if (aipath.reachedDestination&& !life.isMomified) // Quand le monstre arrive proche du joueur, il commence le dash
+          #endregion
+      
+       # region AttaquesTrigger
+
+         if (!canDash)
+         {
+             CooldownDashTimer += Time.deltaTime;
+         }
+
+         if (isDashing)
+         {
+             hitboxActive = true;
+         }
+         else
+         {
+             hitboxActive = false;
+         }
+    
+
+         if (CooldownDashTimer >= CooldownDash)
+         {
+             canDash = true;
+             CooldownDashTimer = 0;
+             ShakeEnable = true;
+         }
+
+         if (canDash)
+         {
+             if (Vector3.Distance(aipath.destination, transform.position) <= radiusDash)
+             {
+                 if (isChasing)
+                 {
+                     targetPlayer = aipath.destination - transform.position;
+                     isChasing = false;
+                 }
+
+                 isPreparing = true;
+                 anim.SetBool("StartDash", true);
+                 anim.SetBool("IsIdle", false);
+                 anim.SetBool("IsRuning", false);
+             }
+
+             if (isPreparing)
+             {
+                 LagDebutDashTimer += Time.deltaTime;
+                 
+                 
+                 if (ShakeEnable)
+                 {
+                     transform.DOShakePosition(LagDebutDashMax, 0.4f);
+                     ShakeEnable = false;
+                 }
+                 
+                 if (LagDebutDashTimer >= LagDebutDashMax)
+                 {
+                     isPreparing = false;
+                     isDashing = true; 
+                     canDash = false;
+                     LagDebutDashTimer = 0;
+                     
+                     anim.SetBool("StartDash",false);
+                     anim.SetBool("Dash", true);
+                 }
+             }
+         }
+         #endregion
+       
+       
+        /*if (aipath.reachedDestination&& !life.isMomified) // Quand le monstre arrive proche du joueur, il commence le dash
         {
             if (isDashing == false && canDash)
             {
@@ -189,7 +286,7 @@ public class IA_Monstre1 : MonoBehaviour
             rb.AddForce(targetPerso.normalized*dashSpeed,ForceMode2D.Impulse);
             yield return new WaitForSeconds(0.001f);
             stopDash = false;
-        }
+        }*/
 
         if (hitboxActive&& !life.isMomified) // Active la hitbox et fait des dégâts
         {
@@ -199,14 +296,6 @@ public class IA_Monstre1 : MonoBehaviour
             {
                 joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque, gameObject);
             }
-        }
-        
-        Vector2 PickRandomPoint() 
-        {
-            var point = Random.insideUnitCircle * radiusWondering;
-            point.x += ai.position.x;
-            point.y += ai.position.y;
-            return point;
         }
     }
 }

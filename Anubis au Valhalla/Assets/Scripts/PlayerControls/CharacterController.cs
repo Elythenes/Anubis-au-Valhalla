@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Pathfinding;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -47,6 +48,7 @@ public class CharacterController : MonoBehaviour
   [Header("Utilitaires")] 
   public KeyCode interaction;
   public GameObject indicationDirection;
+  public TrailRenderer trail;
 
 
   private void Awake()
@@ -365,6 +367,7 @@ public class CharacterController : MonoBehaviour
         SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, false, hitDoor);
       }
 
+      
       hitDoor.willChooseSpecial = false;
 
     }
@@ -392,4 +395,5 @@ public class CharacterController : MonoBehaviour
     GetComponent<BoxCollider2D>().enabled = true;
     canPassThrough = false;
   }
+  
 }
