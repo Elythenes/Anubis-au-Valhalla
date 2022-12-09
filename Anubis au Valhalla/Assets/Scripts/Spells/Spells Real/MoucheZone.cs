@@ -51,7 +51,6 @@ public class MoucheZone : MonoBehaviour
                 if (tempsReloadHitFlameAreaTimer > sOPouvoirAme.espacementDoT && col.gameObject.tag == "Monstre")
                 {
                     Debug.Log("touché");
-                    col.GetComponentInParent<MonsterLifeManager>().DamageText(sOPouvoirAme.dashPuissanceAttaque);
                     col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOPouvoirAme.dashPuissanceAttaque,sOPouvoirAme.staggerThrust);
                     tempsReloadHitFlameAreaTimer = 0;
                     moucheAmount--;

@@ -12,7 +12,6 @@ public class ElectricDash : MonoBehaviour
     {
         if (col.CompareTag("Monstre"))
         {
-            col.GetComponentInParent<MonsterLifeManager>().DamageText(soPouvoirFoudre.dashPuissanceAttaque);
             col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirFoudre.dashPuissanceAttaque, soPouvoirFoudre.staggerDash);
         }
     }

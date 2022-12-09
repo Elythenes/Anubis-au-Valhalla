@@ -38,7 +38,6 @@ public class ElecticBallBehiavour : MonoBehaviour
             bounce++;
             noTarget = false;
             monsterList = GameObject.FindGameObjectsWithTag("Monstre").Where(e => !e.Equals(col.gameObject)).ToArray();
-            col.GetComponentInParent<MonsterLifeManager>().DamageText(soPouvoirFoudre.thrustDamage);
             col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirFoudre.thrustDamage, soPouvoirFoudre.stagger);
             GetClosestEnemy(monsterList);
             Vector2 dir = target.transform.position - transform.position;

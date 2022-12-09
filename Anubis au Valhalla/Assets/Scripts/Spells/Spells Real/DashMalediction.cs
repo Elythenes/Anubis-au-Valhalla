@@ -21,7 +21,6 @@ public class DashMalediction : MonoBehaviour
     {
         if (col.gameObject.tag == "Monstre")
         {
-            col.GetComponentInParent<MonsterLifeManager>().DamageText(soPouvoirMalediction.dashDamage);
             col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirMalediction.dashDamage, soPouvoirMalediction.staggerDash);
             
             if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= 0)

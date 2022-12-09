@@ -25,7 +25,6 @@ public class HitboxSandstorm : MonoBehaviour
             if (tempsReloadHitSandstorm > sOSandstorm.espacementDoT)
             {
                Debug.Log("touché");
-               col.GetComponentInParent<MonsterLifeManager>().DamageText(sOSandstorm.puissanceAttaque);
                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOSandstorm.puissanceAttaque,sOSandstorm.stagger);
                tempsReloadHitSandstorm = 0;
             }

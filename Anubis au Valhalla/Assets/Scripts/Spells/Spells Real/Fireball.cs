@@ -57,7 +57,6 @@ public class Fireball : MonoBehaviour
             sr.enabled = false;
             hitboxExplosion.SetActive(true);
             isExploding = true;
-            col.GetComponentInParent<MonsterLifeManager>().DamageText(soPouvoirFeu.thrustDamage);
             col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirFeu.thrustDamage, soPouvoirFeu.stagger);
         }
     }

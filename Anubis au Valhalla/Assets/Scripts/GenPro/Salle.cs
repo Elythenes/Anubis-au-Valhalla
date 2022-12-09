@@ -57,7 +57,7 @@ public class Salle : MonoBehaviour
         spawnBank = SalleGennerator.instance.GlobalBank;
         SalleGennerator.instance.GlobalBank = Mathf.RoundToInt(SalleGennerator.instance.GlobalBank * 1.1f);
         AstarPath.active.Scan(AstarPath.active.data.graphs);
-        CharacterController.instance.ground = GameObject.Find("Ground").GetComponent<TilemapRenderer>();
+        //CharacterController.instance.ground = GameObject.Find("Ground").GetComponent<TilemapRenderer>();
         RearrangeDoors();
         AdjustCameraConstraints();
         GetAvailableTiles();

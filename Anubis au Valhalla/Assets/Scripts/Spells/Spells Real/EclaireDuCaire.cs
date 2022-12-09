@@ -30,7 +30,6 @@ public class EclaireDuCaire : MonoBehaviour
                 if (tempsReloadHitFlameAreaTimer > sOPouvoirFoudre.espacementDoT && col.gameObject.tag == "Monstre")
                 {
                     Debug.Log("touché");
-                    col.GetComponentInParent<MonsterLifeManager>().DamageText(sOPouvoirFoudre.attaqueNormaleDamage);
                     col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOPouvoirFoudre.attaqueNormaleDamage,sOPouvoirFoudre.stagger);
                     tempsReloadHitFlameAreaTimer = 0;
                 }

@@ -21,7 +21,7 @@ public class SarcophageBehaviour : MonoBehaviour
         if (other.CompareTag("Monstre"))
         {
             MonsterLifeManager monstre = other.GetComponentInParent<MonsterLifeManager>();
-            monstre.DamageText(soPlaie.damageAttaqueNormale);
+            //monstre.DamageText(soPlaie.damageAttaqueNormale);
             monstre.TakeDamage(soPlaie.thrustDamage, soPlaie.staggerAttaqueNormale);
             monstre.isMomified = true;
             monstre.MomifiedTime = soPlaie.durationStunAttaqueNormale;

@@ -71,7 +71,7 @@ public class PuppetHealth : MonsterLifeManager
             Deactivate();
         }
     }
-    public override void DamageText(int damageAmount)
+    public void DamageText(int damageAmount)
     {
         if (!isInvincible)
         {

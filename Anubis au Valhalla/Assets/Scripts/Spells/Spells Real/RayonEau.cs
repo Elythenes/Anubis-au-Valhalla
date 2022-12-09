@@ -36,7 +36,6 @@ public class RayonEau : MonoBehaviour
                 if (tempsReloadHitTimer > sOPouvoirEau.espacementDoTRayon && col.gameObject.tag == "Monstre")
                 {
                     Debug.Log("touché");
-                    col.GetComponentInParent<MonsterLifeManager>().DamageText(sOPouvoirEau.rayonDamage + (AnubisCurrentStats.instance.vieActuelle /6));
                     col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOPouvoirEau.rayonDamage + (AnubisCurrentStats.instance.vieActuelle /25),sOPouvoirEau.staggerRayon);
                     tempsReloadHitTimer = 0;
                 }

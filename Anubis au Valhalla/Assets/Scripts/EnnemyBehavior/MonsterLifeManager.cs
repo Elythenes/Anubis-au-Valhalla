@@ -115,9 +115,21 @@ public class MonsterLifeManager : MonoBehaviour
     {
         if (!isInvincible)
         {
+            criticalPick = Random.Range(0,100);
+            if (criticalPick <= AttaquesNormales.instance.criticalRate)
+            {
+                textDamage.GetComponentInChildren<TextMeshPro>().SetText((damage * 2).ToString());
+                GameObject textOBJ = Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
+                textOBJ.transform.localScale *= 2;
+
+            }
+            else
+            {
+                textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
+                Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
+            }
             StartCoroutine(HitScanReset());
             gotHit = true;
-            criticalPick = Random.Range(0,100);
             StartCoroutine(AnimationDamaged(staggerDuration));
             transform.DOShakePosition(staggerDuration, 0.5f, 50);/*.OnComplete(() =>
             {
@@ -126,12 +138,15 @@ public class MonsterLifeManager : MonoBehaviour
             
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
-                vieActuelle -= damage * 2; 
+                Debug.Log("crit");
+                damage *= 2;
+                vieActuelle -= damage; 
                 healthBar.SetHealth(vieActuelle);
                 isInvincible = true;
             }
             else
             {
+                Debug.Log("normal");
                 vieActuelle -= damage; 
                 healthBar.SetHealth(vieActuelle);
                 isInvincible = true;
@@ -151,27 +166,7 @@ public class MonsterLifeManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         animator.SetBool("IsTouched", false);
     }
-    
-    public virtual void DamageText(int damageAmount)
-    {
-        if (!isInvincible)
-        {
-            if (criticalPick <= AttaquesNormales.instance.criticalRate)
-            {
-                textDamage.GetComponentInChildren<TextMeshPro>().SetText((damageAmount * 2).ToString());
-                GameObject textOBJ = Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
-                textOBJ.transform.localScale *= 2;
 
-            }
-            else
-            {
-                textDamage.GetComponentInChildren<TextMeshPro>().SetText(damageAmount.ToString());
-                Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
-            }
-          
-        }
-    }
-    
     public virtual void OnTriggerEnter2D(Collider2D col)
     {
         Vector2 direction = (transform.position - col.transform.position);

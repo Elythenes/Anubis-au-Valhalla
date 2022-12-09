@@ -27,7 +27,6 @@ public class ExplosionAmeDash : MonoBehaviour
    {
       if (col.gameObject.tag == "Monstre")
       {
-         col.GetComponentInParent<MonsterLifeManager>().DamageText(soPouvoirAme.thrustDamage);
          col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirAme.thrustDamage, soPouvoirAme.stagger);
       }
    }

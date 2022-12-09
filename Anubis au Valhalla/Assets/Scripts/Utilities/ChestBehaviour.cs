@@ -53,7 +53,10 @@ public class ChestBehaviour : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CanOpen = false;
-            CanvasInteraction.SetActive(false);
+            if (CanvasInteraction is not null)
+            {
+                CanvasInteraction.SetActive(false);
+            }
         }
     }
 
@@ -62,7 +65,10 @@ public class ChestBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && CanOpen && !isOpened)
         {
             StartCoroutine(OpenChest());
-            CanvasInteraction.SetActive(false);
+            if (CanvasInteraction is not null)
+            {
+                CanvasInteraction.SetActive(false);
+            }
         }
     }
 
