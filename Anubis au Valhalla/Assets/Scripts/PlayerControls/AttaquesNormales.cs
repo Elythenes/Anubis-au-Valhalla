@@ -41,6 +41,7 @@ public class AttaquesNormales : MonoBehaviour
     public float cooldownAbandonCombo;
     public float cooldownAbandonComboTimer;
     public bool buffer;
+    public bool buffer2;
     public GameObject swordObj;
     public GameObject thrust;
     
@@ -52,7 +53,6 @@ public class AttaquesNormales : MonoBehaviour
         }
 
         controls = new InputManager();
-        specialDmg = AnubisCurrentStats.instance.thrustDamage;
     }
 
     private void OnEnable()
@@ -73,55 +73,18 @@ public class AttaquesNormales : MonoBehaviour
         
         if (mouse.leftButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements) // Execute l'attaque selon l'avancement du combo
         {
-            CharacterController.instance.stopDash = true;
-            switch (comboActuel)
-            {
-                case 0:
-                    
-                    if (canAttack)
-                    {
-                        attaque1 = true;
-                        StartCoroutine(ResetTracking());
-                        abandonOn = false;
-                        cooldownAbandonComboTimer = 0;
-                        //buffer = false;
-                        comboActuel++;
-                        Combo(0);     
-                    }
-                    
-                    break;
-                
-                case 1:
-                    if (canAttack)
-                    {
-                        attaque2 = true;
-                        StartCoroutine(ResetTracking());
-                        abandonOn = false;
-                        cooldownAbandonComboTimer = 0;
-                       // buffer = false;
-                        comboActuel++;
-                        Combo(1);
-                    }
-                    
-                    break;
-                
-                case 2:
-                    if (canAttack)
-                    {
-                        attaque3 = true;
-                        StartCoroutine(ResetTracking());
-                        abandonOn = false;
-                        cooldownAbandonComboTimer = 0;
-                        //buffer = false;
-                        comboActuel = 0;
-                        Combo(2);
-                    }
-                    break;
-                    
-            }
+            ExecuteAttack();
         }
-        
 
+        if (mouse.leftButton.wasPressedThisFrame && CharacterController.instance.isDashing)
+        {
+            buffer = true;
+        }
+
+        if (mouse.rightButton.wasPressedThisFrame && CharacterController.instance.isDashing)
+        {
+            buffer2 = true;
+        }
 
         // ------------------ Gestion Abandon du Combo ---------------
         if (abandonOn)
@@ -177,6 +140,57 @@ public class AttaquesNormales : MonoBehaviour
 
         // ------------------ Gestion Combo-------------
     }
+
+    public void ExecuteAttack()
+    {
+        CharacterController.instance.stopDash = true;
+        switch (comboActuel)
+        {
+            case 0:
+
+                if (canAttack)
+                {
+                    attaque1 = true;
+                    StartCoroutine(ResetTracking());
+                    abandonOn = false;
+                    cooldownAbandonComboTimer = 0;
+                    //buffer = false;
+                    comboActuel++;
+                    Combo(0);
+                }
+
+                break;
+
+            case 1:
+                if (canAttack)
+                {
+                    attaque2 = true;
+                    StartCoroutine(ResetTracking());
+                    abandonOn = false;
+                    cooldownAbandonComboTimer = 0;
+                    // buffer = false;
+                    comboActuel++;
+                    Combo(1);
+                }
+
+                break;
+
+            case 2:
+                if (canAttack)
+                {
+                    attaque3 = true;
+                    StartCoroutine(ResetTracking());
+                    abandonOn = false;
+                    cooldownAbandonComboTimer = 0;
+                    //buffer = false;
+                    comboActuel = 0;
+                    Combo(2);
+                }
+
+                break;
+        }
+    }
+
     //<Combo 1>/ Glisse vers l'avant puis crée une hitbox devant le perso et touche les ennemis
     //<Combo 2>/ La même chose mais dash, et la hitbox est plus alongée et le dash plus long et rapide
     //<Combo 3>/ La même chose mais hitbox est plus alongée et le dash plus long et rapide

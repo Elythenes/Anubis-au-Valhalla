@@ -72,6 +72,7 @@ public class SalleGennerator : MonoBehaviour
                 }
                 instance = this;
                 moveGrid = AstarPath.active.gameObject.GetComponent<ProceduralGridMover>();
+                Timer = GameObject.FindWithTag("Timer");
         }
         // Start is called before the first frame update
         void Start()

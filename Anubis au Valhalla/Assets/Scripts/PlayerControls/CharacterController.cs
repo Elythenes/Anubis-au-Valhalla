@@ -163,6 +163,17 @@ public class CharacterController : MonoBehaviour
       isDashing = false;
       timerDash = 0;
       canDash = false;
+      if (AttaquesNormales.instance.buffer)
+      {
+        AttaquesNormales.instance.buffer = false;
+        AttaquesNormales.instance.ExecuteAttack();
+      }
+
+      if (AttaquesNormales.instance.buffer2)
+      {
+        AttaquesNormales.instance.buffer2 = false;
+        AttaquesNormales.instance.SpecialAttack();
+      }
     }
 
     if (canDash == false)
