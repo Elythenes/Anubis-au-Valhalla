@@ -93,13 +93,17 @@ public class IA_Guerrier : MonoBehaviour
                 transform.localScale = new Vector3(1, 2.2909f, 1);
             }
         }
-        
 
+        if (life.gotHit)
+        {
+            ai.canMove = true;
+        }
+        
         if (aipath.reachedDestination && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
             if (isWondering)
             {
-                StartCoroutine(WaitMove());
+                //StartCoroutine(WaitMove());
             }
             else
             {
@@ -117,14 +121,14 @@ public class IA_Guerrier : MonoBehaviour
 
         if (!hasShaked&& !life.isMomified)
         {
-            transform.DOShakePosition(0.2f, 0.3f);
+            transform.DOShakePosition(0.2f, 0.1f);
             hasShaked = true;
         }
         
         IEnumerator WaitMove()
         {
             aipath.canMove = false;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
             aipath.canMove = true;
         }
 

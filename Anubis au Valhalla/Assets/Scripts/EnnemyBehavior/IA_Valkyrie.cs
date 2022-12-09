@@ -110,12 +110,10 @@ public class IA_Valkyrie : MonoBehaviour
 
     public void Update()
     {
-        //SortEnemies();
-
-       /* if (!isAttacking&& !life.isMomified)
+        if (life.gotHit)
         {
-            Flip();
-        }*/
+            aipath.canMove = true;
+        }
         
         if(!isAttacking&& !life.isMomified) // Cooldwn des attaques;
         {

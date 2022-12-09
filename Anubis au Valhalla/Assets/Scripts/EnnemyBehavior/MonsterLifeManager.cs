@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using Pathfinding;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -122,10 +119,10 @@ public class MonsterLifeManager : MonoBehaviour
             gotHit = true;
             criticalPick = Random.Range(0,100);
             StartCoroutine(AnimationDamaged(staggerDuration));
-            transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
+            transform.DOShakePosition(staggerDuration, 0.5f, 50);/*.OnComplete(() =>
             {
                 ai.canMove = true;
-            });
+            });*/
             
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
@@ -152,7 +149,6 @@ public class MonsterLifeManager : MonoBehaviour
     {
         animator.SetBool("IsTouched", true);
         yield return new WaitForSeconds(duration);
-        ai.canMove = true;
         animator.SetBool("IsTouched", false);
     }
     

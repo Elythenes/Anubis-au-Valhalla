@@ -42,7 +42,7 @@ public class IA_Shaman : MonoBehaviour
     private bool hasShaked;
     public int corbeauSoulDroped;
     public GameObject corbeau;
-    public ParticleSystem particulesSummon;
+    public GameObject particulesSummon;
     
     public enum EnemyType
     {
@@ -91,8 +91,10 @@ public class IA_Shaman : MonoBehaviour
         }
         switch (enemyType)
         {
+            
             case EnemyType.Shaman:
-
+                    bool oneUse = true;
+                
                 if (isWondering && !isFleeing&& !life.isMomified)
                 {
                     Roam();
@@ -102,10 +104,12 @@ public class IA_Shaman : MonoBehaviour
                 StartUpSummonTimeTimer += Time.deltaTime;
                 if (StartUpSummonTimeTimer >= StartUpSummonTime&& !life.isMomified)
                 {
+                   
                     isAttacking = true;
                     isWondering = false;
                     SummoningTimeTimer += Time.deltaTime;
-                    particulesSummon.Play();
+                    particulesSummon.SetActive(true);
+                    
 
                     if (life.gotHit)
                     {
@@ -113,13 +117,13 @@ public class IA_Shaman : MonoBehaviour
                         isWondering = true;
                         SummoningTimeTimer = 0;
                         StartUpSummonTimeTimer = 0;
-                        particulesSummon.Stop();
+                        particulesSummon.SetActive(false);
                     }
                 }
 
                 if (SummoningTimeTimer >= SummoningTime && !life.isMomified)
                 {
-                    particulesSummon.Stop();
+                    particulesSummon.SetActive(false);
                     Summon();
                 }
                 break;
