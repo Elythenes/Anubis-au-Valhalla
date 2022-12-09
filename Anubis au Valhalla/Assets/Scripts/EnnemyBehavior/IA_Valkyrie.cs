@@ -33,7 +33,7 @@ public class IA_Valkyrie : MonoBehaviour
 
     [Header("Attaque - Javelot")] 
     public bool isAttacking;
-    public int puissanceAttaqueJavelot;
+    [NaughtyAttributes.ReadOnly] public int puissanceAttaqueJavelot;
     public float javelotSpeed;
     public float StartUpJavelotTime;
     public float StartUpJavelotTimeTimer;
@@ -50,7 +50,8 @@ public class IA_Valkyrie : MonoBehaviour
     public GameObject indicationFall;
     public GameObject hitboxFall;
     private Vector2 fallPos;
-    public int FallDamage;
+    [NaughtyAttributes.ReadOnly] public int FallDamage;
+    public float fallDamageMultiplier = 1.5f;
     public float pushForce;
     public bool hasShaked;
     public bool hasFallen;
@@ -63,6 +64,14 @@ public class IA_Valkyrie : MonoBehaviour
     public float FallTime;
     public float FallTimeTimer;           // Le temps que met la valkyrie entre la retombée et le retour à son etat normal.
     
+    
+    //Fonctions ******************************************************************************************************************************************************
+    
+    private void Awake()
+    {
+        puissanceAttaqueJavelot = GetComponentInParent<EnemyData>().damage;
+        FallDamage = Mathf.RoundToInt(GetComponentInParent<EnemyData>().damage * fallDamageMultiplier);
+    }
     
     private void Start()
     {

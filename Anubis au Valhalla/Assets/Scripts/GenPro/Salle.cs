@@ -89,7 +89,7 @@ public class Salle : MonoBehaviour
                 break;
         }
 
-        Debug.Log("challenge chosen " + challengeChosen);
+        //Debug.Log("challenge chosen " + challengeChosen);
     }
 
     private void Update()
@@ -131,7 +131,9 @@ public class Salle : MonoBehaviour
         for (int i = 0; i < (int)SalleGennerator.DoorOrientation.West + 1; i++)
         {
             SalleGennerator.instance.s_doors[i].transform.position = transformReferences[i].position;
+            //SalleGennerator.instance.s_doors[i].GetComponentInChildren<Animator>().SetBool("Open",false);
         }
+        
     }
 
     public void AdjustCameraConstraints()

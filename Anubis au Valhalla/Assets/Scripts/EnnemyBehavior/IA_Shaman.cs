@@ -53,7 +53,12 @@ public class IA_Shaman : MonoBehaviour
         Valkyrie = 4
     }
     
-
+    //Fonctions ******************************************************************************************************************************************************
+    
+    private void Awake()
+    {
+        //puissanceAttaque = GetComponentInParent<EnemyData>().damage;
+    }
 
     private void Start()
     {

@@ -256,6 +256,7 @@ public class SalleGennerator : MonoBehaviour
         public void OpenDoors(DoorOrientation index, bool state)
         {
                 s_doors[(int)index].GetComponent<BoxCollider2D>().enabled = state;
+                s_doors[(int)index].GetComponentInChildren<Animator>().SetBool("Open",state);
         }
         /// <summary>
         /// TP la caméra au joueur
@@ -273,6 +274,7 @@ public class SalleGennerator : MonoBehaviour
         /// </summary>
         public void ClearRoom()
         {
+                player.trail.Clear();
                 foreach(GameObject item in GameObject.FindGameObjectsWithTag("Item"))
                 {
                         Destroy(item);
@@ -298,6 +300,7 @@ public class SalleGennerator : MonoBehaviour
                 {
                         DestroyImmediate(TothBehiavour.instance.gameObject);
                 }
+
         }
 
         public void SwapDoorType(Door type)

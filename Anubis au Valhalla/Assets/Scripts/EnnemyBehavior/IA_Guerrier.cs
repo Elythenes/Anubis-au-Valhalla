@@ -29,7 +29,7 @@ public class IA_Guerrier : MonoBehaviour
     public LayerMask HitboxPlayer;
     public float dureeAttaque;
     public float rangeAttaque;
-    public int puissanceAttaque;
+    [NaughtyAttributes.ReadOnly] public int puissanceAttaque;
     public float StartUpAttackTime;
     public float StartUpAttackTimeTimer;
     public float WonderingTime;
@@ -37,6 +37,13 @@ public class IA_Guerrier : MonoBehaviour
     public int damageElite;
     private bool hasShaked;
 
+    
+    //Fonctions ******************************************************************************************************************************************************
+    
+    private void Awake()
+    {
+        puissanceAttaque = GetComponentInParent<EnemyData>().damage;
+    }
 
     private void Start()
     {
