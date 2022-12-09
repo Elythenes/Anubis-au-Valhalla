@@ -66,7 +66,7 @@ public class IA_Shaman : MonoBehaviour
         {
             isElite = true;
         }
-        if (life.overdose)
+        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             ai.maxSpeed *= 1.5f;
             forceRepulse *= 2f;

@@ -71,7 +71,7 @@ public class IA_Monstre1 : MonoBehaviour
         {
             isElite = true;
         }
-        if (life.overdose)
+        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             ai.maxSpeed *= 2;
             timerDash *= 0.75f;

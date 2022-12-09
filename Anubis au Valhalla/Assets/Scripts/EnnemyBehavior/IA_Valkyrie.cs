@@ -87,7 +87,7 @@ public class IA_Valkyrie : MonoBehaviour
             puissanceAttaqueJavelot *= 2;
                 FallDamage *= 2;
         }
-        if (life.overdose)
+        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             ai.maxSpeed *= 2;
             javelotSpeed *= 1.5f;
