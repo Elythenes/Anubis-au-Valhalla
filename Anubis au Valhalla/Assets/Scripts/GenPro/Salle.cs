@@ -89,7 +89,7 @@ public class Salle : MonoBehaviour
                 break;
         }
 
-        Debug.Log("challenge chosen " + challengeChosen);
+        //Debug.Log("challenge chosen " + challengeChosen);
     }
 
     private void Update()

@@ -273,6 +273,7 @@ public class SalleGennerator : MonoBehaviour
         /// </summary>
         public void ClearRoom()
         {
+                player.trail.Clear();
                 foreach(GameObject item in GameObject.FindGameObjectsWithTag("Item"))
                 {
                         Destroy(item);
@@ -298,6 +299,7 @@ public class SalleGennerator : MonoBehaviour
                 {
                         DestroyImmediate(TothBehiavour.instance.gameObject);
                 }
+
         }
 
         public void SwapDoorType(Door type)
