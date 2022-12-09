@@ -34,7 +34,7 @@ public class IA_Corbeau : MonoBehaviour
     [Header("Attaque")] public bool isAttacking;
     public float rotationSpeed;
     public float rotationSpeedSlown;
-    public int puissanceAttaque;
+    [NaughtyAttributes.ReadOnly] public int puissanceAttaque;
     public float StartUpAttackTime;
     public float StartUpAttackTimeTimer;
     public float AttackTime;
@@ -46,7 +46,14 @@ public class IA_Corbeau : MonoBehaviour
     public float plumeSpeed;
     public Vector2 directionProj;
     public Gradient gradientIndic;
-
+    
+    
+    //Fonctions ******************************************************************************************************************************************************
+    
+    private void Awake()
+    {
+        puissanceAttaque = GetComponentInParent<EnemyData>().damage;
+    }
 
     private void Start()
     {

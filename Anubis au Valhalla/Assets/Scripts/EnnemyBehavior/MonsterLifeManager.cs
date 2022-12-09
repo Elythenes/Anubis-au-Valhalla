@@ -17,9 +17,9 @@ public class MonsterLifeManager : MonoBehaviour
     public Rigidbody2D rb;
     public HealthBarMonstre healthBar;
     public AIPath ai;
-    public int vieMax;
+    [NaughtyAttributes.ReadOnly] public int vieMax;
     public int vieActuelle;
-    public int soulValue = 4;
+    [NaughtyAttributes.ReadOnly] public int soulValue = 4;
     public float delay;
     private float forceKnockBack = 10;
     public UnityEvent OnBegin, OnDone;
@@ -45,7 +45,13 @@ public class MonsterLifeManager : MonoBehaviour
     public bool elite = false;
     public bool isParasite = false;
     public bool overdose = false;
+    
 
+    private void Awake()
+    {
+        vieMax = data.maxHealth;
+        soulValue = data.soulScore;
+    }
 
     public virtual void Start()
     {
@@ -208,7 +214,7 @@ public class MonsterLifeManager : MonoBehaviour
                 Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
         }
 
-        ScoreManager.instance.currentScore += data.Score;
+        ScoreManager.instance.currentScore += data.score;
         Souls.instance.CreateSouls(child.transform.position, soulValue);
         SalleGennerator.instance.currentRoom.currentEnemies.Remove(gameObject);
         SalleGennerator.instance.currentRoom.CheckForEnemies();

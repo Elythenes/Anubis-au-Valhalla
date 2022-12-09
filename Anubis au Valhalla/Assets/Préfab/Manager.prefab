@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1887789526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1887789527}
+  - component: {fileID: 1887789528}
+  m_Layer: 5
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1887789527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887789526}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8073836599328315930}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1887789528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887789526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa861c1bcb7f014984221d58202369a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScore: 0
 --- !u!1 &8073836598578214144
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,6 +158,7 @@ Transform:
   - {fileID: 8073836600493889085}
   - {fileID: 2208207674967088067}
   - {fileID: 2670374917511593723}
+  - {fileID: 1887789527}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -139,12 +185,10 @@ MonoBehaviour:
   startRoom: {fileID: -3130041957661822193, guid: 275dbe2f5663ba9409d64c44049cb9e4, type: 3}
   EndRoom: {fileID: -3130041957661822193, guid: dbfc59af419f1e54a976416c5e178cad, type: 3}
   roomPrefab:
-  - {fileID: -3130041957661822193, guid: 0176a2ba6d1feb44ebda0888a7c6fb8b, type: 3}
-  - {fileID: -3130041957661822193, guid: 0176a2ba6d1feb44ebda0888a7c6fb8b, type: 3}
-  - {fileID: -3130041957661822193, guid: 0176a2ba6d1feb44ebda0888a7c6fb8b, type: 3}
-  - {fileID: -3130041957661822193, guid: 0176a2ba6d1feb44ebda0888a7c6fb8b, type: 3}
-  - {fileID: -3130041957661822193, guid: 0176a2ba6d1feb44ebda0888a7c6fb8b, type: 3}
-  - {fileID: -3130041957661822193, guid: 0176a2ba6d1feb44ebda0888a7c6fb8b, type: 3}
+  - {fileID: -3130041957661822193, guid: 30683252e083f234b968adc72ad0c17a, type: 3}
+  - {fileID: 849478512648400581, guid: a6e64fd5ce5462248bb5f715417843bb, type: 3}
+  - {fileID: -3130041957661822193, guid: 239b8202c8ae27c4e8db7ced9c25a4c0, type: 3}
+  - {fileID: -3130041957661822193, guid: cfd811be74a6ab54b888fdd952ffacd9, type: 3}
   specialRooms:
   - {fileID: -3130041957661822193, guid: 0176a2ba6d1feb44ebda0888a7c6fb8b, type: 3}
   - {fileID: -3130041957661822193, guid: 239b8202c8ae27c4e8db7ced9c25a4c0, type: 3}
@@ -368,6 +412,54 @@ PrefabInstance:
     - target: {fileID: 5903773606544849420, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
       propertyPath: m_Name
       value: StatManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: hitBoxC.Array.data[2]
+      value: 
+      objectReference: {fileID: 7628316649932769322, guid: f8b53fa7a1322ec47abd73399fd7b4ef, type: 3}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: dashTimers.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: dashTimers.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: dashTimers.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: dashImpulse.Array.data[0]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: dureeHitbox.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: rangeAttaque.Array.data[2].x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: rangeAttaque.Array.data[2].y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: timeForCanDash.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: timeForCanDash.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: timeForCanDash.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903773606544849422, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
+      propertyPath: stunDurationMax.Array.data[3]
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5903773606544849423, guid: 0af0a94015a6ab64b99baf8690481232, type: 3}
       propertyPath: m_RootOrder
@@ -593,6 +685,10 @@ PrefabInstance:
       propertyPath: gOTest
       value: 
       objectReference: {fileID: 11400000, guid: fe8d609627f33fd4f99dcdc0ab1cf2ac, type: 2}
+    - target: {fileID: 6761814157336263990, guid: 1b184e452e7efa6449443a7ded3bc7c3, type: 3}
+      propertyPath: doStartHieroTest
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8148628976302366869, guid: 1b184e452e7efa6449443a7ded3bc7c3, type: 3}
       propertyPath: m_Name
       value: GlyphManager
