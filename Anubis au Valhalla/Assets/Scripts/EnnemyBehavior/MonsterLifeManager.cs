@@ -20,7 +20,6 @@ public class MonsterLifeManager : MonoBehaviour
     public int vieMax;
     public int vieActuelle;
     public int soulValue = 4;
-    public float delay;
     private float forceKnockBack = 10;
     public UnityEvent OnBegin, OnDone;
     public float criticalPick;
@@ -116,10 +115,10 @@ public class MonsterLifeManager : MonoBehaviour
             gotHit = true;
             criticalPick = Random.Range(0,100);
             StartCoroutine(AnimationDamaged(staggerDuration));
-            transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
+            transform.DOShakePosition(staggerDuration, 0.5f, 50);/*.OnComplete(() =>
             {
                 ai.canMove = true;
-            });
+            });*/
             
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
@@ -146,7 +145,6 @@ public class MonsterLifeManager : MonoBehaviour
     {
         animator.SetBool("IsTouched", true);
         yield return new WaitForSeconds(duration);
-        ai.canMove = true;
         animator.SetBool("IsTouched", false);
     }
     
