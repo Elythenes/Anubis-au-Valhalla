@@ -52,7 +52,6 @@ public class AttaquesNormales : MonoBehaviour
         }
 
         controls = new InputManager();
-        specialDmg = AnubisCurrentStats.instance.thrustDamage;
     }
 
     private void OnEnable()
@@ -120,7 +119,11 @@ public class AttaquesNormales : MonoBehaviour
                     
             }
         }
-        
+
+        if (mouse.leftButton.wasPressedThisFrame && CharacterController.instance.isDashing)
+        {
+            
+        }
 
 
         // ------------------ Gestion Abandon du Combo ---------------

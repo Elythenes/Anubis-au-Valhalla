@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -113,7 +114,7 @@ public class Salle : MonoBehaviour
     private void C3_TimeAttack()
     {
         timer = SalleGennerator.instance.Timer;
-        timer.SetActive(true);
+        timer.GetComponent<TextMeshProUGUI>().enabled = true;
     }
 
     private void C4_Parasites()
@@ -335,6 +336,7 @@ public class Salle : MonoBehaviour
             case 3:
                 if (timer.GetComponent<TimerChallenge>().internalTimer > 0)
                 {
+                    timer.GetComponent<TextMeshProUGUI>().enabled = false;
                     //spawn better loot
                 }
                 break;
