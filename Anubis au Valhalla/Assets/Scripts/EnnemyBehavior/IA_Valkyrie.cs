@@ -37,9 +37,14 @@ public class IA_Valkyrie : MonoBehaviour
     public float javelotSpeed;
     public float StartUpJavelotTime;
     public float StartUpJavelotTimeTimer;
+    public bool isJavelotIndic;
+    public float IndicJavelotTime;
+    public float IndicJavelotTimeTimer;
     public GameObject projectilJavelot;
     public GameObject indicationJavelot;
     [HideInInspector] public Vector2 dir;
+    public Gradient gradientIndic;
+    public GameObject indicHolder;
 
     [Header("Attaque - Jump")]
     public GameObject indicationFall;
@@ -61,6 +66,8 @@ public class IA_Valkyrie : MonoBehaviour
     
     private void Start()
     {
+        StartUpJavelotTime = Random.Range(5, 9);
+        TriggerJumpTime = Random.Range(8, 13);
         spriteArray = GetComponentsInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -80,7 +87,7 @@ public class IA_Valkyrie : MonoBehaviour
             puissanceAttaqueJavelot *= 2;
                 FallDamage *= 2;
         }
-        if (life.overdose)
+        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             ai.maxSpeed *= 2;
             javelotSpeed *= 1.5f;
@@ -103,9 +110,7 @@ public class IA_Valkyrie : MonoBehaviour
         
         if(!isAttacking&& !life.isMomified) // Cooldwn des attaques;
         {
-            StartUpJavelotTime = Random.Range(5, 9);
             StartUpJavelotTimeTimer += Time.deltaTime;
-            TriggerJumpTime = Random.Range(8, 13);
             TriggerJumpTimeTimer += Time.deltaTime;
         }
         
@@ -139,10 +144,34 @@ public class IA_Valkyrie : MonoBehaviour
         {
             attaqueJavelot();
         }
+
+        if (isJavelotIndic)
+        {
+            IndicJavelotTimeTimer += Time.deltaTime;
+            if (indicHolder is not null)
+            {
+                Debug.Log("ouiqdqdd");
+                indicHolder.GetComponent<SpriteRenderer>().color = gradientIndic.Evaluate(IndicJavelotTimeTimer);
+            }
+            
+            if (IndicJavelotTimeTimer >= IndicJavelotTime)
+            {
+                StartUpJavelot();
+                IndicJavelotTimeTimer = 0;
+            }
+        }
         
         if (!isFleeing&& !life.isMomified) // Déplacements
         {
             deplacement();
+        }
+
+        if (life.vieActuelle <= 0)
+        {
+            if (indicHolder is not null)
+            {
+                Destroy(indicHolder.gameObject);
+            }
         }
     }
 
@@ -203,18 +232,21 @@ public class IA_Valkyrie : MonoBehaviour
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         
         GameObject indicJavelot = Instantiate(indicationJavelot,transform.position,  Quaternion.Euler(0,0,angle));
-        Destroy(indicJavelot,1);
-        StartCoroutine(StartUpJavelot());
-        transform.DOShakePosition(1,1);
+        Destroy(indicJavelot,IndicJavelotTime+0.1f);
+        indicHolder = indicJavelot;
+        isJavelotIndic = true;
+        transform.DOShakePosition(IndicJavelotTime,1);
         isAttacking = true;
         StartUpJavelotTimeTimer = 0;
     }
-    IEnumerator StartUpJavelot() // Au début de l'attaque du javelot
+    
+  
+    void StartUpJavelot() // Au début de l'attaque du javelot
     {
-        yield return new WaitForSeconds(1f);
         GameObject projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
         projJavelot.GetComponent<JavelotValkyrie>().ia = this;
         isAttacking = false;
+        isJavelotIndic = false;
     }
 
     IEnumerator LagFall() // A la fin de l'attaque du saut

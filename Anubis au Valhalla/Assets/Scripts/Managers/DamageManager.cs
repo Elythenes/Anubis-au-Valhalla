@@ -1,13 +1,10 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.SceneManagement;
+
 
 public class DamageManager : MonoBehaviour
 {
@@ -66,12 +63,11 @@ public class DamageManager : MonoBehaviour
     
     void Start()
     {
-        vieActuelle = stats.vieActuelle;
+        /*vieActuelle = stats.vieActuelle;
         vieMax = stats.vieMax;
         damageReduction = stats.damageReduction;
         tempsInvinsibleAfterHit = stats.tempsInvinsbleAfterHit;
-        stunAfterHit = stats.stunAfterHit;
-        
+        stunAfterHit = stats.stunAfterHit;*/
         vieActuelle = vieMax;
         LifeBarManager.instance.SetMaxHealth(vieMax);
         Time.timeScale = 1;
@@ -104,11 +100,10 @@ public class DamageManager : MonoBehaviour
                 PotionManager.Instance.tookDamage = true;
                 GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
                 textObj.GetComponentInChildren<TextMeshPro>().SetText((damage - damageReduction/100 * damage).ToString());
-                
+                LifeBarManager.instance.SetHealth(stats.vieActuelle);
                 
                 if (stats.vieActuelle <= 0)
                 {
-                    Debug.Log("il semblerait qu'il soit mort");
                     StopCoroutine(TempsStun());
                     stats.vieActuelle = 0;
                     Die();
@@ -120,7 +115,7 @@ public class DamageManager : MonoBehaviour
                     StartCoroutine(TempsStun());
                 }
                 
-                LifeBarManager.instance.SetHealth(stats.vieActuelle);
+              
                 
             }
             else if(CharacterController.instance.isDashing)
