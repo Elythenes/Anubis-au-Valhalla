@@ -29,7 +29,6 @@ public class FireCircle : MonoBehaviour
       //Vector2 pushForce = col.transform.position - transform.position;
       //col.GetComponent<AIPath>().canMove = false;
       //col.GetComponentInParent<MonsterLifeManager>().Reset(0.2f);
-      col.GetComponentInParent<MonsterLifeManager>().DamageText(soPouvoirFeu.attaqueNormaleDamage);
       col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirFeu.attaqueNormaleDamage, soPouvoirFeu.stagger);
       //col.GetComponent<Rigidbody2D>().AddRelativeForce(pushForce.normalized*soPouvoirFeu.pushForce,ForceMode2D.Impulse);
     }

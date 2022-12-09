@@ -31,7 +31,6 @@ public class WaveEau : MonoBehaviour
         Debug.Log("touché");
         if(col.gameObject.tag == "Monstre")
         {
-           col.GetComponentInParent<MonsterLifeManager>().DamageText(Mathf.RoundToInt(sOPouvoirEau.dammageWave * damageTimer) + (AnubisCurrentStats.instance.vieActuelle /10));
            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(sOPouvoirEau.dammageWave * damageTimer),sOPouvoirEau.staggerRayon);
         }
      

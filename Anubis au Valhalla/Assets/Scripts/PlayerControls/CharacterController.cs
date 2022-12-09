@@ -50,7 +50,7 @@ public class CharacterController : MonoBehaviour
   public KeyCode interaction;
   public GameObject indicationDirection;
   public TrailRenderer trail;
-  public TilemapRenderer ground;
+  //public TilemapRenderer ground;
 
 
   private void Awake()

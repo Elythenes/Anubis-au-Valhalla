@@ -19,12 +19,10 @@ public class PlumeMaat : MonoBehaviour
         {
             if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= col.GetComponentInParent<MonsterLifeManager>().vieMax * 10 / 100)
             {
-                col.GetComponentInParent<MonsterLifeManager>().DamageText(soMalediction.plumeDamage);
                 col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(soMalediction.plumeDamage),soMalediction.staggerplume);
             }
             else
             {
-                col.GetComponentInParent<MonsterLifeManager>().DamageText(1);
                 col.GetComponentInParent<MonsterLifeManager>().TakeDamage(1,0.1f);
             }
             

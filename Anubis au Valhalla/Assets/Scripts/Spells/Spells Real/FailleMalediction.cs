@@ -22,7 +22,6 @@ public class FailleMalediction : MonoBehaviour
     {
         if (col.gameObject.tag == "Monstre")
         {
-            col.GetComponentInParent<MonsterLifeManager>().DamageText(soMalediction.damageAttaqueNormale);
             col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soMalediction.damageAttaqueNormale, soMalediction.staggerAttaqueNormale);
         }
     }

@@ -22,7 +22,6 @@ public class Akh : MonoBehaviour
             foreach (MonsterLifeManager monstre in monsterList)
             {
                 Debug.Log("touché");
-                monstre.DamageText(soPouvoirAme.attaqueNormaleDamage + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5));
                 monstre.TakeDamage(soPouvoirAme.attaqueNormaleDamage + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5),soPouvoirAme.stagger);
                 //monsterList.Clear();
             }
