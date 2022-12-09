@@ -42,7 +42,7 @@ public class IA_Guerrier : MonoBehaviour
     
     private void Awake()
     {
-        puissanceAttaque = GetComponentInParent<EnemyData>().damage;
+        puissanceAttaque = GetComponentInParent<MonsterLifeManager>().data.damage;
     }
 
     private void Start()

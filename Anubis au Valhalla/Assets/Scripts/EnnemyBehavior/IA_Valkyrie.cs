@@ -69,8 +69,8 @@ public class IA_Valkyrie : MonoBehaviour
     
     private void Awake()
     {
-        puissanceAttaqueJavelot = GetComponentInParent<EnemyData>().damage;
-        FallDamage = Mathf.RoundToInt(GetComponentInParent<EnemyData>().damage * fallDamageMultiplier);
+        puissanceAttaqueJavelot = GetComponentInParent<MonsterLifeManager>().data.damage;
+        FallDamage = Mathf.RoundToInt(puissanceAttaqueJavelot * fallDamageMultiplier);
     }
     
     private void Start()

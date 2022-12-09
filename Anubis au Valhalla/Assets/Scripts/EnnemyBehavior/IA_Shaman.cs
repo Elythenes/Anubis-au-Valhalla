@@ -57,7 +57,7 @@ public class IA_Shaman : MonoBehaviour
     
     private void Awake()
     {
-        //puissanceAttaque = GetComponentInParent<EnemyData>().damage;
+        //puissanceAttaque = GetComponentInParent<MonsterLifeManager>().data.damage;
     }
 
     private void Start()
