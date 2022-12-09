@@ -28,11 +28,14 @@ public class SalleGennerator : MonoBehaviour
         public List<Salle> roomPrefab = new List<Salle>();
         public List<Salle> specialRooms;
         private List<GameObject> itemList;
+
+        [Header("SHOP")]
+        [NaughtyAttributes.MinMaxSlider(0.0f, 1.0f)] public Vector2 minMaxShopThreshold = new(.2f,.4f);
+        [Range(0, 1)] public float shopSpawnChance = .3f;
+        
         [Header("PATTERNES")]
         public List<SalleContent_Ennemies> spawnGroups = new List<SalleContent_Ennemies>();
-
-
-
+        
         [Header("VARIABLES INTERNES POUR DEBUG")]
         [SerializeField] public int roomsDone = -1;
         public DoorOrientation fromDoor = DoorOrientation.West;
@@ -140,10 +143,10 @@ public class SalleGennerator : MonoBehaviour
                         s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
                 }
 
-                if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * 0.2f) && roomsDone <= Mathf.RoundToInt(dungeonSize * 0.4f))
+                if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.x) && roomsDone <= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y))
                 {
                         var shopspawn = Random.value;
-                        if (shopspawn >= 0)
+                        if (shopspawn >= shopSpawnChance)
                         {
                                 Door removedDoor = s_doors[(int)fromDoor];
                                 Debug.Log(removedDoor);
