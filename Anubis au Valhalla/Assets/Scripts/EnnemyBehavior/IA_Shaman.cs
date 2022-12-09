@@ -40,8 +40,9 @@ public class IA_Shaman : MonoBehaviour
     public float SummoningTime;
     public float SummoningTimeTimer;
     private bool hasShaked;
-    public GameObject corbeau;
     public int corbeauSoulDroped;
+    public GameObject corbeau;
+    public ParticleSystem particulesSummon;
     
     public enum EnemyType
     {
@@ -104,13 +105,26 @@ public class IA_Shaman : MonoBehaviour
                     isAttacking = true;
                     isWondering = false;
                     SummoningTimeTimer += Time.deltaTime;
+                    particulesSummon.Play();
+
+                    if (life.gotHit)
+                    {
+                        isAttacking = false;
+                        isWondering = true;
+                        SummoningTimeTimer = 0;
+                        StartUpSummonTimeTimer = 0;
+                        particulesSummon.Stop();
+                    }
                 }
 
-                if (SummoningTimeTimer >= SummoningTime&& !life.isMomified)
+                if (SummoningTimeTimer >= SummoningTime && !life.isMomified)
                 {
+                    particulesSummon.Stop();
                     Summon();
                 }
                 break;
+            
+            
         }
     }
         void DetectPlayerRelativePos()

@@ -52,6 +52,7 @@ public class AttaquesNormales : MonoBehaviour
         }
 
         controls = new InputManager();
+        specialDmg = AnubisCurrentStats.instance.thrustDamage;
     }
 
     private void OnEnable()
