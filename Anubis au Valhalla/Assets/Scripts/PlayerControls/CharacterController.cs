@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class CharacterController : MonoBehaviour
@@ -49,6 +50,7 @@ public class CharacterController : MonoBehaviour
   public KeyCode interaction;
   public GameObject indicationDirection;
   public TrailRenderer trail;
+  public TilemapRenderer ground;
 
 
   private void Awake()
