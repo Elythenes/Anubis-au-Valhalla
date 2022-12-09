@@ -13,7 +13,7 @@ public class ThrustHitbox : Combo1Hitbox
         transform.localScale *= AttaquesNormales.instance.rangeAttaque[3];
     }
     
-    public void OnTriggerEnter2D(Collider2D other)
+    public override void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Monstre"))
         {
@@ -22,6 +22,13 @@ public class ThrustHitbox : Combo1Hitbox
             float angle = Mathf.Atan2(transform.parent.position.y - other.transform.position.y,transform.parent.position.x - other.transform.position.x ) * Mathf.Rad2Deg;
             GameObject effetSang = Instantiate(bloodEffect, other.transform.position, Quaternion.identity);
             effetSang.transform.rotation = Quaternion.Euler(0,0,angle);
+            if (other.GetComponent<PuppetHealth>())
+            {
+                Debug.Log("vous avez raison");
+                other.gameObject.GetComponent<MonsterLifeManager>().DamageText(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg));
+                other.gameObject.GetComponent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg), stagger);
+                return;
+            }
             other.gameObject.GetComponent<AIPath>().canMove = false;
             other.gameObject.GetComponentInParent<MonsterLifeManager>().DamageText(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg));
             other.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg), stagger);
