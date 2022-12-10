@@ -50,6 +50,14 @@ public class CharacterController : MonoBehaviour
   public KeyCode interaction;
   public GameObject indicationDirection;
   public TrailRenderer trail;
+
+  public GameObject doorInteractUI;
+
+  public RectTransform doorUITransform;
+
+  public GameObject dashTracker;
+
+  [HideInInspector] public BoxCollider2D playerCol;
   //public TilemapRenderer ground;
 
 
@@ -61,8 +69,11 @@ public class CharacterController : MonoBehaviour
     }
 
     rb = gameObject.GetComponent<Rigidbody2D>();
+    playerCol = GetComponent<BoxCollider2D>();
     controls = new InputManager();
     PivotTo(transform.position);
+    doorUITransform = doorInteractUI.GetComponent<RectTransform>();
+    dashTracker.SetActive(false);
   }
 
   private void OnEnable()
@@ -138,6 +149,7 @@ public class CharacterController : MonoBehaviour
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash && allowMovements)
     {
+      dashTracker.SetActive(true);
       stopDash = false;
       allowMovements = false;
       debutDash = true;
@@ -150,13 +162,14 @@ public class CharacterController : MonoBehaviour
     
     if (isDashing && !stopDash) // Déplacement lors du dash selon la direction du regard du perso
     {
-      canPassThrough = false;
       Dashing();
     }
     
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
+      playerCol.enabled = true;
+      dashTracker.SetActive(false);
       allowMovements = true;
       finDash = true;
       StartCoroutine(ResetTracking());
@@ -165,6 +178,7 @@ public class CharacterController : MonoBehaviour
       isDashing = false;
       timerDash = 0;
       canDash = false;
+      canPassThrough = false;
       if (AttaquesNormales.instance.buffer)
       {
         AttaquesNormales.instance.buffer = false;
@@ -282,18 +296,23 @@ public class CharacterController : MonoBehaviour
       isEST = true;
       facing = LookingAt.Est;
       transform.localRotation = Quaternion.Euler(0, 0,0);
+      doorUITransform.rotation = new Quaternion(0,0,0, 0);
       //transform.localScale = new Vector3(1, 1, 0);
     }
     else
     {
       isEST = false;
+
     }
 
     if (movement.x < 0 && !isAttacking)
     {
+      
       isOUEST= true;
       facing = LookingAt.Ouest;
       transform.localRotation = Quaternion.Euler(0, 180,0);
+      doorUITransform.rotation = new Quaternion(0,180,0, 0);
+
       //transform.localScale = new Vector3(-1, 1, 0);
     }
     else
@@ -345,44 +364,15 @@ public class CharacterController : MonoBehaviour
   
   // ---TRUC POUR GENERER LA PROCHAINE SALLE---
 
-  private void OnTriggerEnter2D(Collider2D col)
+  private void OnTriggerStay2D(Collider2D col)
   {
     if (col.gameObject.CompareTag("Door"))
     {
-      allowMovements = true;
-      ghost.activerEffet = false;
-      isDashing = false;
-      canDash = true;
-      timerdashCooldown = 0;
-      var hitDoor = col.GetComponent<Door>();
-      SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
-      if (hitDoor.willChooseSpecial)
+      if (Input.GetKeyDown(KeyCode.F))
       {
-        SalleGennerator.instance.challengeChooser = Random.Range(1, 6);
-        Debug.Log("Challenge chosen is: " + SalleGennerator.instance.challengeChooser);
+        InteractWithDoor(col);
       }
-      else
-      {
-        SalleGennerator.instance.challengeChooser = 0;
-        Debug.Log("noChallenges");
-      }
-      if (hitDoor.currentDoorType == Door.DoorType.ToShop)
-      {
-        SalleGennerator.instance.shopsVisited++;
-        SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, true, hitDoor);
-      }
-      else if (hitDoor.currentDoorType != Door.DoorType.Normal)
-      {
-        SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, true, hitDoor);
-      }
-      else
-      {
-        SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, false, hitDoor);
-      }
-
-      
-      hitDoor.willChooseSpecial = false;
-
+      doorInteractUI.SetActive(true);
     }
 
     if (col.gameObject.layer ==roomBorders)
@@ -392,6 +382,53 @@ public class CharacterController : MonoBehaviour
         StartCoroutine(ChangeBox());
       }
     }
+  }
+  private void OnTriggerExit2D(Collider2D col)
+  {
+    if (col.gameObject.CompareTag("Door"))
+    {
+      doorInteractUI.SetActive(false);
+    }
+  }
+  private void InteractWithDoor(Collider2D col)
+  {
+    allowMovements = true;
+    ghost.activerEffet = false;
+    isDashing = false;
+    canDash = true;
+    timerdashCooldown = 0;
+    var hitDoor = col.GetComponent<Door>();
+    SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
+    if (hitDoor.willChooseSpecial)
+    {
+      SalleGennerator.instance.challengeChooser = Random.Range(1, 6);
+      Debug.Log("Challenge chosen is: " + SalleGennerator.instance.challengeChooser);
+    }
+    else
+    {
+      SalleGennerator.instance.challengeChooser = 0;
+      Debug.Log("noChallenges");
+    }
+
+    if (hitDoor.currentDoorType == Door.DoorType.ToShop)
+    {
+      SalleGennerator.instance.shopsVisited++;
+      SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, true,
+        hitDoor);
+    }
+    else if (hitDoor.currentDoorType != Door.DoorType.Normal)
+    {
+      SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, true,
+        hitDoor);
+    }
+    else
+    {
+      SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, false,
+        hitDoor);
+    }
+
+
+    hitDoor.willChooseSpecial = false;
   }
 
   IEnumerator ResetTracking()

@@ -1,7 +1,7 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,8 +10,8 @@ public class ChestBehaviour : MonoBehaviour
 {
     public bool CanOpen;
     public bool isOpened;
-    public List<ItemPattern> patternList;
-    public ItemPattern patternLooted;
+    [Expandable] public List<ItemPattern> patternList;
+    [Expandable] public ItemPattern patternLooted;
     private Rigidbody2D rbItem;
     public LayerMask groundLayer;
     public Animator openAnim;
