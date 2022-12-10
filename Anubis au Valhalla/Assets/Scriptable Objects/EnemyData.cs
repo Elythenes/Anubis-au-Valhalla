@@ -16,7 +16,7 @@ public class EnemyData : ScriptableObject
     public int maxHealth;
 
     [Header("ANNEXE")] 
-    public int soulScore;
+    public int soulValue;
     public int score;
 
     [Foldout("TEST")] public int armorPercentage;
