@@ -42,11 +42,11 @@ public class DamageManager : MonoBehaviour
     public float t3;
 
     [Header("Stats")]
-    [NaughtyAttributes.ReadOnly] public int vieActuelle = AnubisCurrentStats.instance.vieActuelle;
-    [NaughtyAttributes.ReadOnly] public int vieMax = AnubisCurrentStats.instance.vieMax;
-    [NaughtyAttributes.ReadOnly] public int damageReduction = AnubisCurrentStats.instance.damageReduction;
-    [NaughtyAttributes.ReadOnly] public float tempsInvinsibleAfterHit = AnubisCurrentStats.instance.tempsInvinsbleAfterHit;
-    [NaughtyAttributes.ReadOnly] public float stunAfterHit = AnubisCurrentStats.instance.stunAfterHit;
+    [NaughtyAttributes.ReadOnly] public int vieActuelle;
+    [NaughtyAttributes.ReadOnly] public int vieMax;
+    [NaughtyAttributes.ReadOnly] public int damageReduction;
+    [NaughtyAttributes.ReadOnly] public float tempsInvinsibleAfterHit;
+    [NaughtyAttributes.ReadOnly] public float stunAfterHit;
     private bool stopWaiting;
 
     [Header("Variables de tracking")] 

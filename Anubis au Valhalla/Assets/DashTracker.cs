@@ -28,7 +28,7 @@ public class DashTracker : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0,0,270);
                 break;
             case CharacterController.LookingAt.NordEst:
-                transform.position = CharacterController.instance.transform.position + new Vector3(0,-3,0) + new Vector3(0.5f,0.5f,0) * distance;
+                transform.position = CharacterController.instance.transform.position + new Vector3(0.5f,0.5f,0) * distance;
                 transform.rotation = Quaternion.Euler(0,0,45);
                 break;
             case CharacterController.LookingAt.NordOuest:

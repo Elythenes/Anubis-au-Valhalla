@@ -1,13 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
-using Pathfinding;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class CharacterController : MonoBehaviour
@@ -17,8 +11,8 @@ public class CharacterController : MonoBehaviour
   public Animator anim;
   public InputManager controls;
   public static CharacterController instance; //jai besion de l'instance pour bouger le joueur au changements de salles
-  [NaughtyAttributes.ReadOnly] public float speedX = AnubisCurrentStats.instance.speedX;
-  [NaughtyAttributes.ReadOnly] public float speedY = AnubisCurrentStats.instance.speedY;
+  [NaughtyAttributes.ReadOnly] public float speedX;
+  [NaughtyAttributes.ReadOnly] public float speedY;
   public bool isAttacking;
   public LookingAt facing;
 
@@ -34,7 +28,7 @@ public class CharacterController : MonoBehaviour
   public float timerDash;
   public float dashDuration;
   private float timerdashCooldown;
-  [NaughtyAttributes.ReadOnly] public float dashCooldown = AnubisCurrentStats.instance.dashCooldown;
+  [NaughtyAttributes.ReadOnly] public float dashCooldown;
   public bool isDashing;
   public bool canDash;
   public GhostDash ghost;
