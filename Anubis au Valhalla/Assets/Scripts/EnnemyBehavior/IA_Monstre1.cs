@@ -53,13 +53,12 @@ public class IA_Monstre1 : MonoBehaviour
     public int puissanceAttaque;
 
 
-
-    public int soulValue = 4;
-
-    /*private void Awake()
+    //Fonctions ******************************************************************************************************************************************************
+    
+    private void Awake()
     {
         puissanceAttaque = GetComponentInParent<EnemyData>().damage;
-    }*/
+    }
     
     private void Start()
     {
@@ -72,7 +71,7 @@ public class IA_Monstre1 : MonoBehaviour
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
         
-        vieActuelle = vieMax;
+        //vieActuelle = life.vieMax;
         CooldownDashTimer = CooldownDash;
         
         if (life.elite)
