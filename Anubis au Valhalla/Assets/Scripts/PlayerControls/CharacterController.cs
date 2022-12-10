@@ -318,11 +318,11 @@ public class CharacterController : MonoBehaviour
   {
     if (col.gameObject.CompareTag("Door"))
     {
+      CanvasInteraction.SetActive(true); 
       CanvasInteraction.transform.position = transform.position + offset;
       CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
       CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
-      TextInteraction.SetText("Salle suivante");
-      CanvasInteraction.SetActive(true); 
+      TextInteraction.SetText("Continuer");
       
       if (Input.GetKeyDown(KeyCode.F))
       {
@@ -342,7 +342,10 @@ public class CharacterController : MonoBehaviour
   {
     if (col.gameObject.CompareTag("Door"))
     {
-      doorInteractUI.SetActive(false);
+      if (CanvasInteraction is not null)
+      {
+        CanvasInteraction.SetActive(false);
+      }
     }
   }
   private void InteractWithDoor(Collider2D col)
