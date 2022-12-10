@@ -10,14 +10,14 @@ public class DataCalculator : MonoBehaviour
 
     [Header("ENNEMIS")] 
     [Expandable] public EnemyData guerrier;
-    [Expandable] public EnemyData loup;
-    [Expandable] public EnemyData corbeau;
-    [Expandable] public EnemyData chaman;
-    [Expandable] public EnemyData valkyrie;
     [Expandable] public EnemyData guerrierElite;
+    [Expandable] public EnemyData loup;
     [Expandable] public EnemyData loupElite;
+    [Expandable] public EnemyData corbeau;
     [Expandable] public EnemyData corbeauElite;
+    [Expandable] public EnemyData chaman;
     [Expandable] public EnemyData chamanElite;
+    [Expandable] public EnemyData valkyrie;
     [Expandable] public EnemyData valkyrieElite;
 
     [BoxGroup("PRIX ENNEMIS")] public Vector2 priceGuerrier = new(2,6);
