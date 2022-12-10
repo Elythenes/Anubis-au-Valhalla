@@ -1,5 +1,6 @@
-using System;
 using System.Collections;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -15,6 +16,11 @@ public class CharacterController : MonoBehaviour
   [NaughtyAttributes.ReadOnly] public float speedY;
   public bool isAttacking;
   public LookingAt facing;
+  
+  [Header("Interactions")] 
+  public GameObject CanvasInteraction;
+  public Vector3 offset;
+  public TextMeshProUGUI TextInteraction;
 
   [Header("Valeurs tracking pour les pouvoirs")] 
   public bool debutDash;
@@ -68,6 +74,8 @@ public class CharacterController : MonoBehaviour
     PivotTo(transform.position);
     doorUITransform = doorInteractUI.GetComponent<RectTransform>();
     dashTracker.SetActive(false);
+    CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
+    TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
   }
 
   private void OnEnable()
@@ -127,19 +135,6 @@ public class CharacterController : MonoBehaviour
         anim.SetBool("isWalking", false);
       }
     }
-
-    /*if (stopDash)
-    {
-      allowMovements = true;
-      finDash = true;
-      StartCoroutine(ResetTracking());
-      rb.velocity *= 0.85f;
-      AttaquesNormales.instance.canAttack = true;
-      isDashing = false;
-      timerDash = 0;
-      canDash = false;
-      stopDash = false;
-    }*/
 
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash && allowMovements)
     {
@@ -206,77 +201,40 @@ public class CharacterController : MonoBehaviour
       {
         case LookingAt.Nord:
           rb.velocity = (new Vector2(0,1) * dashSpeed);
-          /*if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(0,1), dashSpeed,roomBorders));
-        {
-          canPassThrough = true;
-        }*/
-          
           break;
           
         case LookingAt.Sud:
           rb.velocity = (new Vector2(0,-1) * dashSpeed);
-          /*if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(0,-1), dashSpeed,roomBorders));
-        {
-          canPassThrough = true;
-        }*/
           break;
           
         case LookingAt.Est:
           rb.velocity = (new Vector2(1,0) * dashSpeed);
-          /*if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(1,0), dashSpeed,roomBorders));
-        {
-          canPassThrough = true;
-        }*/
           break;
           
         case LookingAt.Ouest:
           rb.velocity = (new Vector2(-1,0) * dashSpeed);
-         /* if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,0), dashSpeed,roomBorders));
-        {
-          canPassThrough = true;
-        }*/
           break;
           
         case LookingAt.NordEst:
           rb.velocity = (new Vector2(0.5f,0.5f) * dashSpeed);
-          /*if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(1,1), dashSpeed,roomBorders));
-        {
-          canPassThrough = true;
-        }*/
           break;
           
         case LookingAt.NordOuest:
           rb.velocity = (new Vector2(-0.5f,0.5f) * dashSpeed);
-         /* if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,1), dashSpeed,roomBorders));
-        {
-          canPassThrough = true;
-        }*/
           break;
 
         case LookingAt.SudEst:
           rb.velocity = (new Vector2(0.5f, -0.5f) * dashSpeed);
-         /* if (Physics.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(1, -1), dashSpeed, roomBorders)) ;
-        {
-          canPassThrough = true;
-        }*/
-        
           break;
           
         case LookingAt.SudOuest:
           rb.velocity = (new Vector2(-0.5f,-0.5f) * dashSpeed);
-          /*if (Physics.Raycast(new Vector2(transform.position.x,transform.position.y) , new Vector2(-1,-1), dashSpeed,roomBorders));
-        {
-          canPassThrough = true;
-        }*/
           break;
       }
     }
   }
-
-  public void ResetDash()
-  {
-    
-  }
+  
+  #region Gestion De l'Orientation
   void Flip()
   {
     bool isEST;
@@ -290,8 +248,7 @@ public class CharacterController : MonoBehaviour
       isEST = true;
       facing = LookingAt.Est;
       transform.localRotation = Quaternion.Euler(0, 0,0);
-      doorUITransform.rotation = new Quaternion(0,0,0, 0);
-      //transform.localScale = new Vector3(1, 1, 0);
+      doorUITransform.rotation = new Quaternion(0, 0, 0, 0);
     }
     else
     {
@@ -306,8 +263,6 @@ public class CharacterController : MonoBehaviour
       facing = LookingAt.Ouest;
       transform.localRotation = Quaternion.Euler(0, 180,0);
       doorUITransform.rotation = new Quaternion(0,180,0, 0);
-
-      //transform.localScale = new Vector3(-1, 1, 0);
     }
     else
     {
@@ -355,6 +310,7 @@ public class CharacterController : MonoBehaviour
       facing = LookingAt.NordOuest;
     }
   }
+  #endregion
   
   // ---TRUC POUR GENERER LA PROCHAINE SALLE---
 
@@ -362,11 +318,16 @@ public class CharacterController : MonoBehaviour
   {
     if (col.gameObject.CompareTag("Door"))
     {
+      CanvasInteraction.transform.position = transform.position + offset;
+      CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
+      CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
+      TextInteraction.SetText("Salle suivante");
+      CanvasInteraction.SetActive(true); 
+      
       if (Input.GetKeyDown(KeyCode.F))
       {
         InteractWithDoor(col);
       }
-      doorInteractUI.SetActive(true);
     }
 
     if (col.gameObject.layer ==roomBorders)
