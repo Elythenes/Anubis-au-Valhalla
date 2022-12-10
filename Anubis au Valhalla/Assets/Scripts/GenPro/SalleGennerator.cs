@@ -15,8 +15,8 @@ public class SalleGennerator : MonoBehaviour
 {
         [Header("CETTE VARIABLE MODIFIE LA TAILLE DU DONJON QU'ON VEUX GENERER")]
         public int dungeonSize;
-        
-        [Header("REFERENCES")]
+
+        [Header("REFERENCES")] 
         public CharacterController player;
         public static SalleGennerator instance;
         public GameObject amphores;
