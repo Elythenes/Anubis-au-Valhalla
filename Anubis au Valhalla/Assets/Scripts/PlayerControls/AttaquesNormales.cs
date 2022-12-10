@@ -14,19 +14,19 @@ public class AttaquesNormales : MonoBehaviour
 
     [Header("Stats Attaques")]
     //public List<float> hitStopDuration = new List<float>();
-    [NaughtyAttributes.ReadOnly] public List<GameObject> hitBoxC = AnubisCurrentStats.instance.hitBoxC;
-    [NaughtyAttributes.ReadOnly] public List<Vector2> rangeAttaque = AnubisCurrentStats.instance.rangeAttaque;
-    [NaughtyAttributes.ReadOnly] public List<bool> isC = AnubisCurrentStats.instance.isC;
-    [NaughtyAttributes.ReadOnly] public List<int> damage = AnubisCurrentStats.instance.comboDamage;
-    [NaughtyAttributes.ReadOnly] public int criticalRate = AnubisCurrentStats.instance.criticalRate;
-    [NaughtyAttributes.ReadOnly] public List<float> dureeHitbox = AnubisCurrentStats.instance.dureeHitbox;
-    [NaughtyAttributes.ReadOnly] public List<float> stunDuration = AnubisCurrentStats.instance.stunDuration;
-    [NaughtyAttributes.ReadOnly] public List<float> forceKnockback = AnubisCurrentStats.instance.forceKnockback;
-    [NaughtyAttributes.ReadOnly] public List<float> stunDurationMax = AnubisCurrentStats.instance.stunDurationMax;
-    [NaughtyAttributes.ReadOnly] public List<float> dashImpulse = AnubisCurrentStats.instance.dashImpulse;
-    [NaughtyAttributes.ReadOnly] public List<float> timeForCanDash = AnubisCurrentStats.instance.timeForCanDash;
-    [NaughtyAttributes.ReadOnly] public List<float> dashTimers = AnubisCurrentStats.instance.dashTimers;
-    [NaughtyAttributes.ReadOnly] public int specialDmg = AnubisCurrentStats.instance.thrustDamage;
+    [NaughtyAttributes.ReadOnly] public List<GameObject> hitBoxC;
+    [NaughtyAttributes.ReadOnly] public List<Vector2> rangeAttaque;
+    [NaughtyAttributes.ReadOnly] public List<bool> isC;
+    [NaughtyAttributes.ReadOnly] public List<int> damage;
+    [NaughtyAttributes.ReadOnly] public int criticalRate;
+    [NaughtyAttributes.ReadOnly] public List<float> dureeHitbox;
+    [NaughtyAttributes.ReadOnly] public List<float> stunDuration;
+    [NaughtyAttributes.ReadOnly] public List<float> forceKnockback;
+    [NaughtyAttributes.ReadOnly] public List<float> stunDurationMax;
+    [NaughtyAttributes.ReadOnly] public List<float> dashImpulse;
+    [NaughtyAttributes.ReadOnly] public List<float> timeForCanDash;
+    [NaughtyAttributes.ReadOnly] public List<float> dashTimers;
+    [NaughtyAttributes.ReadOnly] public int specialDmg;
 
     [Header("Tracking valeurs pouvoirs")] 
     public bool attaque1;
