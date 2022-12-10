@@ -17,6 +17,8 @@ public class GlyphInventory : MonoBehaviour
     [NaughtyAttributes.ReadOnly] public int indexConvertorForManche = 200;
     [NaughtyAttributes.ReadOnly] public int indexConvertorPoignee = 300;
     
+
+
     void Start()
     {
         if (doStartHieroTest)
