@@ -47,7 +47,7 @@ public class MonsterLifeManager : MonoBehaviour
     private void Awake()
     {
         vieMax = data.maxHealth;
-        soulValue = data.soulScore;
+        soulValue = data.soulValue;
     }
 
     public virtual void Start()
