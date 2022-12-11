@@ -121,7 +121,7 @@ public class IA_Guerrier : MonoBehaviour
 
         if (!hasShaked&& !life.isMomified)
         {
-            transform.DOShakePosition(0.2f, 0.1f);
+            transform.DOShakePosition(0.2f, 0.3f);
             hasShaked = true;
         }
         
