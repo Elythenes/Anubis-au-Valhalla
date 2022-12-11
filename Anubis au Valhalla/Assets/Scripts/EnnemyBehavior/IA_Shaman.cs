@@ -40,8 +40,9 @@ public class IA_Shaman : MonoBehaviour
     public float SummoningTime;
     public float SummoningTimeTimer;
     private bool hasShaked;
-    public GameObject corbeau;
     public int corbeauSoulDroped;
+    public GameObject corbeau;
+    public GameObject particulesSummon;
     
     public enum EnemyType
     {
@@ -52,7 +53,12 @@ public class IA_Shaman : MonoBehaviour
         Valkyrie = 4
     }
     
-
+    //Fonctions ******************************************************************************************************************************************************
+    
+    private void Awake()
+    {
+        //puissanceAttaque = GetComponentInParent<MonsterLifeManager>().data.damage;
+    }
 
     private void Start()
     {
@@ -66,7 +72,7 @@ public class IA_Shaman : MonoBehaviour
         {
             isElite = true;
         }
-        if (life.overdose)
+        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             ai.maxSpeed *= 1.5f;
             forceRepulse *= 2f;
@@ -85,8 +91,10 @@ public class IA_Shaman : MonoBehaviour
         }
         switch (enemyType)
         {
+            
             case EnemyType.Shaman:
-
+                    bool oneUse = true;
+                
                 if (isWondering && !isFleeing&& !life.isMomified)
                 {
                     Roam();
@@ -96,81 +104,45 @@ public class IA_Shaman : MonoBehaviour
                 StartUpSummonTimeTimer += Time.deltaTime;
                 if (StartUpSummonTimeTimer >= StartUpSummonTime&& !life.isMomified)
                 {
+                   
                     isAttacking = true;
                     isWondering = false;
                     SummoningTimeTimer += Time.deltaTime;
+                    particulesSummon.SetActive(true);
+                    
+
+                    if (life.gotHit)
+                    {
+                        isAttacking = false;
+                        isWondering = true;
+                        SummoningTimeTimer = 0;
+                        StartUpSummonTimeTimer = 0;
+                        particulesSummon.SetActive(false);
+                    }
                 }
 
-                if (SummoningTimeTimer >= SummoningTime&& !life.isMomified)
+                if (SummoningTimeTimer >= SummoningTime && !life.isMomified)
                 {
+                    particulesSummon.SetActive(false);
                     Summon();
                 }
                 break;
+            
+            
         }
     }
         void DetectPlayerRelativePos()
     {
         
-        if(Physics2D.Raycast(transform.position, Vector2.up, radiusWondering,layerPlayer))
+        if (Vector3.Distance(player.transform.position, transform.position) <= radiusWondering)
         {
-            Debug.DrawRay(transform.position,Vector2.up * radiusWondering,Color.red);
-            rb.AddForce(Vector2.down * forceRepulse);
-            isWondering = false;
+            isFleeing = true;
+            Vector2 angle = transform.position - player.transform.position;
+            rb.AddForce(angle.normalized * forceRepulse);
         }
-                        
-        
-        if(Physics2D.Raycast(transform.position, Vector2.down, radiusWondering,layerPlayer))
+        else
         {
-            Debug.DrawRay(transform.position,Vector2.down * radiusWondering,Color.red);
-            rb.AddForce(Vector2.up * forceRepulse);
-            isWondering = false;
-        }
-                        
-        
-        if(Physics2D.Raycast(transform.position, Vector2.right, radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,Vector2.right * radiusWondering,Color.red);
-            rb.AddForce(Vector2.left * forceRepulse);
-            isWondering = false;
-        }
-                        
-       
-        if(Physics2D.Raycast(transform.position, Vector2.left, radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,Vector2.left * radiusWondering,Color.red);
-            rb.AddForce(Vector2.right * forceRepulse);
-            isWondering = false;
-        }
-                        
-        if(Physics2D.Raycast(transform.position, new Vector2(1,1), radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,new Vector2(1,1) * radiusWondering,Color.red);
-            rb.AddForce(new Vector2(-1,-1) * forceRepulse);
-            isWondering = false;
-        }
-                        
-        
-        if(Physics2D.Raycast(transform.position, new Vector2(-1,1), radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,new Vector2(-1,1) * radiusWondering,Color.red);
-            rb.AddForce(new Vector2(1,-1) * forceRepulse);
-            isWondering = false;
-        }
-                        
-        
-        if(Physics2D.Raycast(transform.position, new Vector2(1,-1), radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,new Vector2(1,-1) * radiusWondering,Color.red);
-            rb.AddForce(new Vector2(-1,1) * forceRepulse);
-            isWondering = false;
-        }
-                        
-        
-        if(Physics2D.Raycast(transform.position, new Vector2(-1,-1), radiusWondering,layerPlayer))
-        {
-            Debug.DrawRay(transform.position,new Vector2(-1,-1) * radiusWondering,Color.red);
-            rb.AddForce(new Vector2(1,1) * forceRepulse);
-            isWondering = false;
+            isFleeing = false;
         }
     }
     void SortEnemies()

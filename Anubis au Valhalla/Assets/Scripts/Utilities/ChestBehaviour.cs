@@ -1,6 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,18 +10,20 @@ public class ChestBehaviour : MonoBehaviour
 {
     public bool CanOpen;
     public bool isOpened;
-    public List<ItemPattern> patternList;
-    public ItemPattern patternLooted;
+    [Expandable] public List<ItemPattern> patternList;
+    [Expandable] public ItemPattern patternLooted;
     private Rigidbody2D rbItem;
-    private SpriteRenderer sr;
-    public Sprite spriteNormal;
-    public Sprite spriteOutline;
     public LayerMask groundLayer;
+    public Animator openAnim;
+    public GameObject CanvasInteraction;
+    public Vector3 offset;
+    public TextMeshProUGUI TextInteraction;
 
     private void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
-        
+        CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
+        TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
+
         if(Physics2D.Raycast(transform.position,new Vector3(0,0,1),10,groundLayer))
         {
             transform.position = new Vector2(transform.position.x, transform.position.y-5);
@@ -31,8 +35,16 @@ public class ChestBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            CanOpen = true;
-            //sr.sprite = spriteOutline;
+            if (!isOpened)
+            {
+                CanOpen = true;
+                CanvasInteraction.SetActive(true); 
+                CanvasInteraction.transform.position = transform.position + offset;
+                CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
+                CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
+                TextInteraction.SetText("Ouvrir");
+            }
+         
         }
     }
     
@@ -41,21 +53,30 @@ public class ChestBehaviour : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CanOpen = false;
-            //sr.sprite = spriteNormal;
+            if (CanvasInteraction is not null)
+            {
+                CanvasInteraction.SetActive(false);
+            }
         }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A) && CanOpen && !isOpened)
+        if (Input.GetKeyDown(KeyCode.F) && CanOpen && !isOpened)
         {
-            OpenChest();
+            StartCoroutine(OpenChest());
+            if (CanvasInteraction is not null)
+            {
+                CanvasInteraction.SetActive(false);
+            }
         }
     }
 
-    void OpenChest()
+    public IEnumerator OpenChest()
     {
         isOpened = true;
+        openAnim.enabled = true;
+        yield return new WaitForSeconds(1.3f);
         patternLooted = patternList[Random.Range(0, patternList.Count)];
         Souls.instance.CreateSouls(transform.position, patternLooted.soulAmount);
         

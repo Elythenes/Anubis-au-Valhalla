@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class LayerManager : MonoBehaviour
 {
-    private GameObject player;
-    private GameObject emptyLayerPlayer;
-    private MeshRenderer srPlayer;
-    private SpriteRenderer srProps;
-    private Transform emptyLayer;
-    void Start()
+    [HideInInspector]public GameObject player;
+    [HideInInspector]public GameObject emptyLayerPlayer;
+    [HideInInspector]public MeshRenderer srPlayer;
+    [HideInInspector]public SpriteRenderer srProps;
+    [HideInInspector]public Transform emptyLayer;
+    public virtual void Start()
     {
         player = GameObject.Find("Personnage Spine");
         emptyLayerPlayer = GameObject.Find("PlayerEmptyLayer");
@@ -21,7 +21,7 @@ public class LayerManager : MonoBehaviour
     }
 
     
-    void Update()
+    public virtual void Update()
     {
         if (emptyLayerPlayer.transform.position.y > emptyLayer.position.y)
         {

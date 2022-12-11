@@ -14,19 +14,19 @@ public class AttaquesNormales : MonoBehaviour
 
     [Header("Stats Attaques")]
     //public List<float> hitStopDuration = new List<float>();
-    [NaughtyAttributes.ReadOnly] public List<GameObject> hitBoxC = AnubisCurrentStats.instance.hitBoxC;
-    [NaughtyAttributes.ReadOnly] public List<Vector2> rangeAttaque = AnubisCurrentStats.instance.rangeAttaque;
-    [NaughtyAttributes.ReadOnly] public List<bool> isC = AnubisCurrentStats.instance.isC;
-    [NaughtyAttributes.ReadOnly] public List<int> damage = AnubisCurrentStats.instance.comboDamage;
-    [NaughtyAttributes.ReadOnly] public int criticalRate = AnubisCurrentStats.instance.criticalRate;
-    [NaughtyAttributes.ReadOnly] public List<float> dureeHitbox = AnubisCurrentStats.instance.dureeHitbox;
-    [NaughtyAttributes.ReadOnly] public List<float> stunDuration = AnubisCurrentStats.instance.stunDuration;
-    [NaughtyAttributes.ReadOnly] public List<float> forceKnockback = AnubisCurrentStats.instance.forceKnockback;
-    [NaughtyAttributes.ReadOnly] public List<float> stunDurationMax = AnubisCurrentStats.instance.stunDurationMax;
-    [NaughtyAttributes.ReadOnly] public List<float> dashImpulse = AnubisCurrentStats.instance.dashImpulse;
-    [NaughtyAttributes.ReadOnly] public List<float> timeForCanDash = AnubisCurrentStats.instance.timeForCanDash;
-    [NaughtyAttributes.ReadOnly] public List<float> dashTimers = AnubisCurrentStats.instance.dashTimers;
-    [NaughtyAttributes.ReadOnly] public int specialDmg = AnubisCurrentStats.instance.thrustDamage;
+    [NaughtyAttributes.ReadOnly] public List<GameObject> hitBoxC;
+    [NaughtyAttributes.ReadOnly] public List<Vector2> rangeAttaque;
+    [NaughtyAttributes.ReadOnly] public List<bool> isC;
+    [NaughtyAttributes.ReadOnly] public List<int> damage;
+    [NaughtyAttributes.ReadOnly] public int criticalRate;
+    [NaughtyAttributes.ReadOnly] public List<float> dureeHitbox;
+    [NaughtyAttributes.ReadOnly] public List<float> stunDuration;
+    [NaughtyAttributes.ReadOnly] public List<float> forceKnockback;
+    [NaughtyAttributes.ReadOnly] public List<float> stunDurationMax;
+    [NaughtyAttributes.ReadOnly] public List<float> dashImpulse;
+    [NaughtyAttributes.ReadOnly] public List<float> timeForCanDash;
+    [NaughtyAttributes.ReadOnly] public List<float> dashTimers;
+    [NaughtyAttributes.ReadOnly] public int specialDmg;
 
     [Header("Tracking valeurs pouvoirs")] 
     public bool attaque1;
@@ -41,6 +41,7 @@ public class AttaquesNormales : MonoBehaviour
     public float cooldownAbandonCombo;
     public float cooldownAbandonComboTimer;
     public bool buffer;
+    public bool buffer2;
     public GameObject swordObj;
     public GameObject thrust;
     
@@ -72,58 +73,18 @@ public class AttaquesNormales : MonoBehaviour
         
         if (mouse.leftButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements) // Execute l'attaque selon l'avancement du combo
         {
-            switch (comboActuel)
-            {
-                case 0:
-                    
-                    if (canAttack)
-                    {
-                        attaque1 = true;
-                        StartCoroutine(ResetTracking());
-                        abandonOn = false;
-                        cooldownAbandonComboTimer = 0;
-                        //buffer = false;
-                        comboActuel++;
-                        Combo(0);     
-                    }
-                    
-                    break;
-                
-                case 1:
-                    if (canAttack)
-                    {
-                        attaque2 = true;
-                        StartCoroutine(ResetTracking());
-                        abandonOn = false;
-                        cooldownAbandonComboTimer = 0;
-                       // buffer = false;
-                        comboActuel++;
-                        Combo(1);
-                    }
-                    
-                    break;
-                
-                case 2:
-                    if (canAttack)
-                    {
-                        attaque3 = true;
-                        StartCoroutine(ResetTracking());
-                        abandonOn = false;
-                        cooldownAbandonComboTimer = 0;
-                        //buffer = false;
-                        comboActuel = 0;
-                        Combo(2);
-                    }
-                    break;
-                    
-            }
+            ExecuteAttack();
         }
 
-        if (CharacterController.instance.isDashing)
+        if (mouse.leftButton.wasPressedThisFrame && CharacterController.instance.isDashing)
         {
-            Destroy(swordObj);
+            buffer = true;
         }
 
+        if (mouse.rightButton.wasPressedThisFrame && CharacterController.instance.isDashing)
+        {
+            buffer2 = true;
+        }
 
         // ------------------ Gestion Abandon du Combo ---------------
         if (abandonOn)
@@ -137,18 +98,15 @@ public class AttaquesNormales : MonoBehaviour
             comboActuel = 0;
             cooldownAbandonComboTimer = 0;
         }
-        
-        // ------------------ Gestion Abandon du Combo ---------------
-        // ------------------ Gestion Combo -------------
-      
-        /*if (IsC1 && !canAttack && StunDurationTimer1 <= StunDuration1 && abandonOn)
+
+        if (comboActuel == 1 || comboActuel == 2)
         {
-            if (mouse.leftButton.wasPressedThisFrame)
+            if (CharacterController.instance.isDashing)
             {
-                buffer = true;
+                Destroy(swordObj);
             }
-        }*/
-        //ComboTimers(stunDurationMax,stunDuration);
+        }
+        
         for (int i = 0; i < hitBoxC.Count; i++)
         {
             if (!isC[i])
@@ -164,22 +122,12 @@ public class AttaquesNormales : MonoBehaviour
                 anim.SetBool("isAttacking2Down",false);
                 anim.SetBool("isAttacking3Down",false);
                 anim.SetBool("isIdle",true);
-                Debug.Log(stunDuration[i] >= stunDurationMax[i]);
                 canAttack = true;
                 CharacterController.instance.isAttacking = false;
                 isC[i] = false;
                 stunDuration[i] = 0;
-                dashTimers[i] = 0;
-            }
-
-            if (dashTimers[i] >= timeForCanDash[i])
-            {
-                CharacterController.instance.canDash = true;
             }
             stunDuration[i] += Time.deltaTime;
-            dashTimers[i] += Time.deltaTime;
-            
-
         }
 
         #endregion
@@ -192,6 +140,57 @@ public class AttaquesNormales : MonoBehaviour
 
         // ------------------ Gestion Combo-------------
     }
+
+    public void ExecuteAttack()
+    {
+        CharacterController.instance.stopDash = true;
+        switch (comboActuel)
+        {
+            case 0:
+
+                if (canAttack)
+                {
+                    attaque1 = true;
+                    StartCoroutine(ResetTracking());
+                    abandonOn = false;
+                    cooldownAbandonComboTimer = 0;
+                    //buffer = false;
+                    comboActuel++;
+                    Combo(0);
+                }
+
+                break;
+
+            case 1:
+                if (canAttack)
+                {
+                    attaque2 = true;
+                    StartCoroutine(ResetTracking());
+                    abandonOn = false;
+                    cooldownAbandonComboTimer = 0;
+                    // buffer = false;
+                    comboActuel++;
+                    Combo(1);
+                }
+
+                break;
+
+            case 2:
+                if (canAttack)
+                {
+                    attaque3 = true;
+                    StartCoroutine(ResetTracking());
+                    abandonOn = false;
+                    cooldownAbandonComboTimer = 0;
+                    //buffer = false;
+                    comboActuel = 0;
+                    Combo(2);
+                }
+
+                break;
+        }
+    }
+
     //<Combo 1>/ Glisse vers l'avant puis crée une hitbox devant le perso et touche les ennemis
     //<Combo 2>/ La même chose mais dash, et la hitbox est plus alongée et le dash plus long et rapide
     //<Combo 3>/ La même chose mais hitbox est plus alongée et le dash plus long et rapide
@@ -207,6 +206,11 @@ public class AttaquesNormales : MonoBehaviour
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
+
+        if (index == 0)
+        {
+            CharacterController.instance.rb.AddForce(CharacterController.instance.movement * dashImpulse[0], ForceMode2D.Impulse);
+        }
 
         #region Gestion des animations
         
@@ -271,9 +275,7 @@ public class AttaquesNormales : MonoBehaviour
         }
 
         #endregion
-        
-       
-        
+
         if (moveDirection.x > 0)
         {
             CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,0,CharacterController.instance.transform.localRotation.z);
@@ -281,15 +283,6 @@ public class AttaquesNormales : MonoBehaviour
         else
         {
             CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,-180,CharacterController.instance.transform.localRotation.z);
-        }
-
-        if (index == 0)
-        {
-            Slide(CharacterController.instance.facing);
-        }
-        else
-        {
-            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[index], ForceMode2D.Impulse);
         }
 
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
@@ -346,8 +339,6 @@ public class AttaquesNormales : MonoBehaviour
         CharacterController.instance.isAttacking = true;
         CharacterController.instance.rb.AddForce(moveDirection2 * dashImpulse[3], ForceMode2D.Impulse);
         GameObject thrustObj = Instantiate(thrust, charaPos, Quaternion.AngleAxis(angle2, Vector3.forward));
-        //thrustObj.transform.GetChild(0).gameObject.transform.localScale = rangeAttaque[3];
-        thrustObj.transform.localScale = rangeAttaque[3];
     }
 
     IEnumerator ResetState()
@@ -368,35 +359,35 @@ public class AttaquesNormales : MonoBehaviour
         switch (dir)
         {
             case CharacterController.LookingAt.Nord:
-                rb.velocity = (new Vector2(0,1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(0,1) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.Sud:
-                rb.velocity = (new Vector2(0,-1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(0,-1) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.Est:
-                rb.velocity = (new Vector2(1,0) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(1,0) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.Ouest:
-                rb.velocity = (new Vector2(-1,0) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(-1,0) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.NordEst:
-                rb.velocity = (new Vector2(1,1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(1,1) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.NordOuest:
-                rb.velocity = (new Vector2(-1,1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(-1,1) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.SudEst:
-                rb.velocity = (new Vector2(1,-1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(1,-1) * (rb.velocity.magnitude * 2.5f));
                 break;
           
             case CharacterController.LookingAt.SudOuest:
-                rb.velocity = (new Vector2(-1,-1) * rb.velocity.magnitude * 2.5f);
+                rb.velocity = (new Vector2(-1,-1) * (rb.velocity.magnitude * 2.5f));
                 break;
         }
     }

@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -66,7 +66,7 @@ public class TothBehiavour : MonoBehaviour
          }
       }
       
-      if (Input.GetKeyDown(KeyCode.A))
+      if (Input.GetKeyDown(KeyCode.F))
       {
          if(isTalkable)
          {
@@ -102,6 +102,7 @@ public class TothBehiavour : MonoBehaviour
 
    public void DialogueUP()
    {
+      dialogueMenu.SetActive(true);
       dialogueMenu.transform.DOLocalMove(new Vector3(transform.position.x,upDownY,transform.position.z),menuSpeed);
       StartCoroutine(Type("Bonjour Anubis, si tu as la moindre question, je suis pret à y répondre."));
    }
@@ -114,18 +115,19 @@ public class TothBehiavour : MonoBehaviour
       StartCoroutine(Type("Bonne chance Anubis, je veillerais sur toi."));
       dialogueMenu.transform.DOLocalMove(new Vector3(transform.position.x,upDownY - 440,transform.position.z),menuSpeed);
       CharacterController.instance.allowMovements = true;
+      dialogueMenu.SetActive(false);
    }
 
    public void DialogueSorts()
    {
       StopDialogue();
-      StartCoroutine(Type("Les sorts sont des abilités puissantes que tu trouvera dans des coffres en terminant des salles. Tu peux en porter 2 à la fois et les utiliser aves les touches E et R. Mais attention, leurs utilisations sont limités donc utilise les avec parcimonie."));
+      StartCoroutine(Type("Les pouvoirs sont des abilités puissantes que tu trouvera dans des coffres en terminant des salles. Tu peux en porter 2 à la fois et les utiliser aves les touches E et R. Une fois un pouvoir activé, tes attaques aurons des propriétés particulières."));
    }
    
    public void DialogueShop()
    {
       StopDialogue();
-      StartCoroutine(Type("Tu trouveras dans le Valhalla, des endrois propice à la médiatation. Dans ceux-ci, connecte toi avec les esprits pour utiliser les âmes aquises au combat pour améliorer ton arme. Tu pouras choisir d'améliorer la lame, la hamp ou la poignée qui proposent respectivement des améliorations offensives, défensives ou de mobilité."));
+      StartCoroutine(Type("Tu trouveras dans le Valhalla, des endrois propice à la médiatation. Dans ceux-ci, utilise les âmes aquises au combat pour améliorer ton arme. Tu pouras choisir d'améliorer la lame, la hampe ou la poignée qui proposent respectivement des améliorations offensives, défensives ou de mobilité."));
    }
    
    public void DialogueLD()

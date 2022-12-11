@@ -2,9 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
@@ -58,10 +57,11 @@ public class Salle : MonoBehaviour
         spawnBank = SalleGennerator.instance.GlobalBank;
         SalleGennerator.instance.GlobalBank = Mathf.RoundToInt(SalleGennerator.instance.GlobalBank * 1.1f);
         AstarPath.active.Scan(AstarPath.active.data.graphs);
-        
+        //CharacterController.instance.ground = GameObject.Find("Ground").GetComponent<TilemapRenderer>();
         RearrangeDoors();
         AdjustCameraConstraints();
         GetAvailableTiles();
+        
     }
 
     private void Start()
@@ -74,6 +74,9 @@ public class Salle : MonoBehaviour
         }
         switch (challengeChosen)
         {
+            case 1:
+                C1_AllElites();
+                break;
             case 2:
                 C2_Darkness();
                 break;
@@ -87,6 +90,8 @@ public class Salle : MonoBehaviour
                 C5_Overdose();
                 break;
         }
+
+        //Debug.Log("challenge chosen " + challengeChosen);
     }
 
     private void Update()
@@ -110,7 +115,7 @@ public class Salle : MonoBehaviour
     private void C3_TimeAttack()
     {
         timer = SalleGennerator.instance.Timer;
-        timer.SetActive(true);
+        timer.GetComponent<TextMeshProUGUI>().enabled = true;
     }
 
     private void C4_Parasites()
@@ -128,7 +133,9 @@ public class Salle : MonoBehaviour
         for (int i = 0; i < (int)SalleGennerator.DoorOrientation.West + 1; i++)
         {
             SalleGennerator.instance.s_doors[i].transform.position = transformReferences[i].position;
+            //SalleGennerator.instance.s_doors[i].GetComponentInChildren<Animator>().SetBool("Open",false);
         }
+        
     }
 
     public void AdjustCameraConstraints()
@@ -177,14 +184,15 @@ public class Salle : MonoBehaviour
             spawnBank -= costList[chosenValue];
             costList[chosenValue] += 3;
             var chosenPoint = point[Random.Range(0, point.Count)];
-            currentEnemies.Add(Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform));
+            var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
+            currentEnemies.Add(enemyObject);
             if (chosenEnemy.isElite)
             {
-                chosenEnemy.prefab.GetComponent<MonsterLifeManager>().elite = true;
+                enemyObject.GetComponent<MonsterLifeManager>().elite = true;
             }
             if (overdose)
             {
-                chosenEnemy.prefab.GetComponent<MonsterLifeManager>().overdose = true;
+                enemyObject.GetComponent<MonsterLifeManager>().overdose = true;
             }
             //chosenEnemy.prefab.GetComponent<MonsterLifeManager>().data = chosenEnemy;
             discardedPoints.Add(chosenPoint);
@@ -329,6 +337,7 @@ public class Salle : MonoBehaviour
             case 3:
                 if (timer.GetComponent<TimerChallenge>().internalTimer > 0)
                 {
+                    timer.GetComponent<TextMeshProUGUI>().enabled = false;
                     //spawn better loot
                 }
                 break;
@@ -343,9 +352,7 @@ public class Salle : MonoBehaviour
     }
     public IEnumerator DelayedSpawns()
     {
-        Debug.Log("ATTENTION, CA VA PETER");
         yield return new WaitForSeconds(SalleGennerator.instance.TimeBetweenWaves);
-        Debug.Log("CA A PETEEDR");
         if (spawnBank > costList.Min())
         {
             var spawnPoints = Random.Range(0, 3);

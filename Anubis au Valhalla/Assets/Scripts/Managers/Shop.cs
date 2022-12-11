@@ -29,13 +29,15 @@ public class Shop : MonoBehaviour
     public List<TextMeshProUGUI> buttonText;
     public List<TextMeshProUGUI> description;
     public List<TextMeshProUGUI> costText;
-    private List<int> cost = new List<int>();
+    public List<int> cost = new List<int>();
 
     [Foldout("Consumables")] public List<Button> consumablesButton;
     [Foldout("Consumables")] public List<TextMeshProUGUI> consumablesTitle;
     [Foldout("Consumables")] public List<TextMeshProUGUI> consumableDesc;
     [Foldout("Consumables")] public List<TextMeshProUGUI> costConsumables;
+    [Foldout("Consumables")] public List<RawImage> consumableSprites;
     private List<int> consumablesCost = new List<int>();
+    public List<PotionObject> consumableObject = new List<PotionObject>();
 
     public List<GlyphObject> choice;
 
@@ -72,10 +74,14 @@ public class Shop : MonoBehaviour
         public List<GlyphObject> Manches;
     }   
     #endregion
+    
     void Awake()
     {
         cam = Camera.main;
         glyphUpdater = GameObject.Find("GlyphManager").GetComponent<GlyphInventory>();
+        Souls.instance.UpdateSoulsShop();
+        consumableObject.Add(null);
+        
     }
 
     // Update is called once per frame
@@ -107,13 +113,12 @@ public class Shop : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            shopUI.gameObject.SetActive(true);
+            shopUI.interactable = true;
             open = true;
             CharacterController.instance.controls.Disable();
             CharacterController.instance.canDash = false;
             AttaquesNormales.instance.canAttack = false;
             shopUI.DOFade(1, 1);
-            weaponShop.SetActive(true);
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
@@ -136,6 +141,7 @@ public class Shop : MonoBehaviour
         CharacterController.instance.controls.Enable();
         CharacterController.instance.canDash = true;
         AttaquesNormales.instance.canAttack = true;
+        shopUI.interactable = false;
         shopUI.DOFade(0, 1).OnComplete(() =>
         {
             //shopUI.gameObject.SetActive(false);
@@ -148,25 +154,6 @@ public class Shop : MonoBehaviour
     #endregion
 
     #region WeaponShop
-
-        public void MoveCam(int buttonNumber)
-    {
-        cam.orthographicSize = 1;
-        weaponShop.transform.localScale = Vector3.one * 3;
-        if (buttonNumber == 0)
-        {
-            weaponShop.transform.Translate(230,20,0);
-        }
-        if (buttonNumber == 1)
-        {
-            weaponShop.transform.Translate(0,20,0);
-        }
-        if (buttonNumber == 2)
-        {
-            weaponShop.transform.Translate(-210,20,0);
-        }
-
-    }
 
     public void ChooseType(string chosenType)
     {
@@ -193,8 +180,10 @@ public class Shop : MonoBehaviour
                 {
                     var index = Random.Range(0, upgradesList.UpsLame.Count);
                     var lame = upgradesList.UpsLame[index].Lames[0];
-                    var itemCost = Mathf.RoundToInt(lame.price * 
-                                                    Mathf.Pow(((int)lame.level * lame.tier), (int)lame.level / 14)); //Multiplicator, based on the upgrades tier and level
+                    Debug.Log(lame.price);
+                    Debug.Log((int)lame.level);
+                    var itemCost = Mathf.RoundToInt(10 * 
+                                                    Mathf.Pow((((int)lame.level+1) * lame.tier), (1+(int)lame.level) / 14)); //Multiplicator, based on the upgrades tier and level
                     choice.Add(lame);
                     cost.Add(itemCost);
                     costText[i].text = "" + itemCost;
@@ -207,8 +196,8 @@ public class Shop : MonoBehaviour
                 {
                     var index = Random.Range(0, upgradesList.UpsHampe.Count);
                     var hampe = upgradesList.UpsHampe[index].Hampes[0];
-                    var itemCost = Mathf.RoundToInt(hampe.price * 
-                                                    Mathf.Pow(((int)hampe.level * hampe.tier), (int)hampe.level / 14)); //Multiplicator, based on the upgrades tier and level
+                    var itemCost = Mathf.RoundToInt(10 * 
+                                                    Mathf.Pow((((int)hampe.level+1) * hampe.tier), ((int)hampe.level+1)/ 14)); //Multiplicator, based on the upgrades tier and level
                     choice.Add(hampe);
                     cost.Add(itemCost);
                     costText[i].text = "" + itemCost;
@@ -222,8 +211,8 @@ public class Shop : MonoBehaviour
                 {
                     var index = Random.Range(0, upgradesList.UpsManche.Count);
                     var manche = upgradesList.UpsManche[index].Manches[0];
-                    var itemCost = Mathf.RoundToInt(manche.price * 
-                                                    Mathf.Pow(((int)manche.level * manche.tier), (int)manche.level / 14)); //Multiplicator, based on the upgrades tier and level
+                    var itemCost = Mathf.RoundToInt(10 * 
+                                                    Mathf.Pow((((int)manche.level+1) * manche.tier), ((int)manche.level+1) / 14)); //Multiplicator, based on the upgrades tier and level
                     choice.Add(manche);
                     cost.Add(itemCost);
                     costText[i].text = "" + itemCost;
@@ -251,7 +240,7 @@ public class Shop : MonoBehaviour
                 break;
         }
         Souls.instance.soulBank -= cost[buttonType];
-        Souls.instance.UpdateSoulsCounter();
+        Souls.instance.UpdateSoulsShop();
         choice.Clear();
         cost.Clear();
         Debug.Log(cost.Count);
@@ -269,7 +258,16 @@ public class Shop : MonoBehaviour
                 consumableDesc[i].text = "Vous soigne de " + Mathf.RoundToInt(DamageManager.instance.vieMax / 3.5f) + " PV";
                 consumablesCost.Add(Mathf.RoundToInt(10 * Mathf.Pow(SalleGennerator.instance.roomsDone, 0.8f)));
                 costConsumables[i].text = consumablesCost[i].ToString();
+                continue;
             }
+
+            var potionToSell = PotionManager.Instance.potionsForShop[Random.Range(0, PotionManager.Instance.potionsForShop.Count)];
+            consumablesTitle[i].text = potionToSell.nom;
+            consumableDesc[i].text = potionToSell.description;
+            consumablesCost.Add(potionToSell.prix);
+            costConsumables[i].text = consumablesCost[i].ToString();
+            consumableObject.Add(potionToSell);
+            consumableSprites[i].texture = potionToSell.sprite;
         }
     }
 
@@ -278,6 +276,19 @@ public class Shop : MonoBehaviour
         DamageManager.instance.vieActuelle += Mathf.RoundToInt(DamageManager.instance.vieMax / 3.5f);
         Souls.instance.soulBank -= consumablesCost[0];
         consumablesCost.Clear();
+        Souls.instance.UpdateSoulsShop();
+    }
+
+    public void GetConsumable(int index)
+    {
+        PotionManager.Instance.currentPotion = consumableObject[index];
+        UiManager.instance.spritePotion.GetComponent<RawImage>().texture = consumableObject[index].sprite;
+        Souls.instance.soulBank -= consumablesCost[index];
+        Souls.instance.UpdateSoulsShop();
+        consumablesCost.Clear();
+        consumableObject.Clear();
+        consumableObject.Add(null);
+        
     }
 }
 

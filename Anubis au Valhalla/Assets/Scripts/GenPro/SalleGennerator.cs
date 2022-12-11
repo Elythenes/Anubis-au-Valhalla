@@ -15,8 +15,8 @@ public class SalleGennerator : MonoBehaviour
 {
         [Header("CETTE VARIABLE MODIFIE LA TAILLE DU DONJON QU'ON VEUX GENERER")]
         public int dungeonSize;
-        
-        [Header("REFERENCES")]
+
+        [Header("REFERENCES")] 
         public CharacterController player;
         public static SalleGennerator instance;
         public GameObject amphores;
@@ -28,11 +28,14 @@ public class SalleGennerator : MonoBehaviour
         public List<Salle> roomPrefab = new List<Salle>();
         public List<Salle> specialRooms;
         private List<GameObject> itemList;
+
+        [Header("SHOP")]
+        [NaughtyAttributes.MinMaxSlider(0.0f, 1.0f)] public Vector2 minMaxShopThreshold = new(.2f,.4f);
+        [Range(0, 1)] public float shopSpawnChance = .3f;
+        
         [Header("PATTERNES")]
         public List<SalleContent_Ennemies> spawnGroups = new List<SalleContent_Ennemies>();
-
-
-
+        
         [Header("VARIABLES INTERNES POUR DEBUG")]
         [SerializeField] public int roomsDone = -1;
         public DoorOrientation fromDoor = DoorOrientation.West;
@@ -69,6 +72,7 @@ public class SalleGennerator : MonoBehaviour
                 }
                 instance = this;
                 moveGrid = AstarPath.active.gameObject.GetComponent<ProceduralGridMover>();
+                Timer = GameObject.FindWithTag("Timer");
         }
         // Start is called before the first frame update
         void Start()
@@ -140,10 +144,10 @@ public class SalleGennerator : MonoBehaviour
                         s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
                 }
 
-                if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * 0.2f) && roomsDone <= Mathf.RoundToInt(dungeonSize * 0.4f))
+                if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.x) && roomsDone <= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y))
                 {
                         var shopspawn = Random.value;
-                        if (shopspawn >= 0)
+                        if (shopspawn >= shopSpawnChance)
                         {
                                 Door removedDoor = s_doors[(int)fromDoor];
                                 Debug.Log(removedDoor);
@@ -256,6 +260,7 @@ public class SalleGennerator : MonoBehaviour
         public void OpenDoors(DoorOrientation index, bool state)
         {
                 s_doors[(int)index].GetComponent<BoxCollider2D>().enabled = state;
+                s_doors[(int)index].GetComponentInChildren<Animator>().SetBool("Open",state);
         }
         /// <summary>
         /// TP la caméra au joueur
@@ -273,6 +278,7 @@ public class SalleGennerator : MonoBehaviour
         /// </summary>
         public void ClearRoom()
         {
+                player.trail.Clear();
                 foreach(GameObject item in GameObject.FindGameObjectsWithTag("Item"))
                 {
                         Destroy(item);
@@ -298,6 +304,7 @@ public class SalleGennerator : MonoBehaviour
                 {
                         DestroyImmediate(TothBehiavour.instance.gameObject);
                 }
+
         }
 
         public void SwapDoorType(Door type)

@@ -94,6 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 666319212847664321}
   - component: {fileID: 3946900375653862397}
+  - component: {fileID: -5894000487693009171}
+  - component: {fileID: -4420869421952898601}
   m_Layer: 0
   m_Name: PropsZone1.5
   m_TagString: Untagged
@@ -110,7 +112,7 @@ Transform:
   m_GameObject: {fileID: 788445584946821892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.2317, y: -10.7217, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5296306556557530030}
@@ -155,6 +157,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.309657, y: 0.56344795}
   m_EdgeRadius: 0
+--- !u!210 &-5894000487693009171
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788445584946821892}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
+--- !u!114 &-4420869421952898601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788445584946821892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b840a1b17d8ce94fa9b232e012ebcf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  emptyLayerPlayer: {fileID: 0}
+  srPlayer: {fileID: 0}
+  srProps: {fileID: 0}
+  emptyLayer: {fileID: 0}
 --- !u!1 &1591428207186730498
 GameObject:
   m_ObjectHideFlags: 0

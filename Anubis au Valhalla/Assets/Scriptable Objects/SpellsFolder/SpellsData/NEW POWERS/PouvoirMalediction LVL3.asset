@@ -13,27 +13,24 @@ MonoBehaviour:
   m_Name: PouvoirMalediction LVL3
   m_EditorClassIdentifier: 
   type: 10
-  nom: "Pouvoir Mal\xE9diction LVL1"
+  nom: "Pouvoir Mal\xE9diction LVL3"
   spellIndex: 16
-  description: "Prof\xE8re des pouvoirs pouvant infliger de s alterations d'\xE9tat
-    aux ennemis"
+  description: "Donne des propori\xE9t\xE9s aux attaques d'Anubis qui peuvent ex\xE9cuter
+    instant\xE9n\xE9ment les ennemis."
   citation: '"Je me nourris de leur faiblesse"'
   sprite: {fileID: 2800000, guid: 124ce2cbcc53d204d95e4dbc47131b4b, type: 3}
   canCast: 1
-  duration: 5
-  hitboxAttaqueNormale: {fileID: 0}
-  hitboxThrust: {fileID: 0}
-  hitboxDash: {fileID: 5777516302902405384, guid: 8942f083cf500324cb9237a74fd991fc, type: 3}
-  forceAttraction: 0
-  forceDuration: 0
-  dashSpawnRate: 0
-  dashDamage: 999999
-  timeToStep2: 0
-  staggerDash: 999999
-  dashHitboxDuration: 1.5
-  thrustDamage: 0
-  bulletSpeed: 0
-  bulletDuration: 0
-  nuberOfBullets: 0
-  staggerThrust: 0
-  bulletScale: {x: 0, y: 0, z: 0}
+  duration: 11
+  hitboxAttaqueNormale: {fileID: 9078109884080130668, guid: 767c2b6b4c74e7146a6ba43dd30888ad, type: 3}
+  hitboxThrust: {fileID: 5777516302902405384, guid: 37b6e6c6ff16cbe48af00eeeb4883e9c, type: 3}
+  hitboxDash: {fileID: 1380277468721774822, guid: cab5c2d5cb995ad47825f4e7bbb659ef, type: 3}
+  damageAttaqueNormale: 25
+  dureeAttaqueNormale: 3
+  staggerAttaqueNormale: 2
+  ScaleYAttaqueNormale: {x: 0, y: 4.5, z: 1}
+  dashDamage: 20
+  staggerDash: 0.2
+  durationRefiled: 5
+  plumeDamage: 99999
+  staggerplume: 99999
+  plumeHitboxDuration: 2

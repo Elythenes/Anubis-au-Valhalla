@@ -1,10 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using Pathfinding;
-using TMPro;
-using Unity.Mathematics;
-using UnityEditor.Rendering;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -33,7 +29,7 @@ public class IA_Guerrier : MonoBehaviour
     public LayerMask HitboxPlayer;
     public float dureeAttaque;
     public float rangeAttaque;
-    public int puissanceAttaque;
+    [NaughtyAttributes.ReadOnly] public int puissanceAttaque;
     public float StartUpAttackTime;
     public float StartUpAttackTimeTimer;
     public float WonderingTime;
@@ -41,6 +37,13 @@ public class IA_Guerrier : MonoBehaviour
     public int damageElite;
     private bool hasShaked;
 
+    
+    //Fonctions ******************************************************************************************************************************************************
+    
+    private void Awake()
+    {
+        puissanceAttaque = GetComponentInParent<MonsterLifeManager>().data.damage;
+    }
 
     private void Start()
     {
@@ -59,7 +62,7 @@ public class IA_Guerrier : MonoBehaviour
             puissanceAttaque = damageElite;
         }
         
-        if (life.overdose)
+        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             WonderingTime *= 0.5f;
             ai.maxSpeed *= 2;
@@ -90,13 +93,17 @@ public class IA_Guerrier : MonoBehaviour
                 transform.localScale = new Vector3(1, 2.2909f, 1);
             }
         }
-        
 
+        if (life.gotHit)
+        {
+            ai.canMove = true;
+        }
+        
         if (aipath.reachedDestination && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
             if (isWondering)
             {
-                StartCoroutine(WaitMove());
+                //StartCoroutine(WaitMove());
             }
             else
             {
@@ -114,14 +121,14 @@ public class IA_Guerrier : MonoBehaviour
 
         if (!hasShaked&& !life.isMomified)
         {
-            transform.DOShakePosition(0.2f, 0.3f);
+            transform.DOShakePosition(0.2f, 0.1f);
             hasShaked = true;
         }
         
         IEnumerator WaitMove()
         {
             aipath.canMove = false;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
             aipath.canMove = true;
         }
 

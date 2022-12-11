@@ -25,7 +25,7 @@ public class LifeBarManager : MonoBehaviour
     {
         slider.maxValue = health;
         slider.value = health;
-        textPV.SetText(AnubisCurrentStats.instance.vieActuelle + " / " + health);
+        textPV.SetText(AnubisCurrentStats.instance.vieActuelle + " / " + AnubisCurrentStats.instance.vieMax);
 
         fill.color = gradient.Evaluate(1f);
     }

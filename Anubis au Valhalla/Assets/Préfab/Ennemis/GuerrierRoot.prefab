@@ -157,7 +157,7 @@ MonoBehaviour:
   dureeAttaque: 0.2
   rangeAttaque: 2
   puissanceAttaque: 12
-  StartUpAttackTime: 1
+  StartUpAttackTime: 1.5
   StartUpAttackTimeTimer: 0
   WonderingTime: 5
   WonderingTimeTimer: 0
@@ -256,10 +256,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.25170052}
+  m_Offset: {x: 0, y: -0.17838198}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -270,7 +270,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.49659893}
+  m_Size: {x: 1, y: 0.64323604}
   m_EdgeRadius: 0
 --- !u!50 &905385545039165337
 Rigidbody2D:
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 943d79b16daaccc438230030c79e2db0, type: 2}
   textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
   animator: {fileID: 905385545039165338}
   rb: {fileID: 0}
@@ -483,7 +483,7 @@ MonoBehaviour:
   vieMax: 100
   vieActuelle: 0
   soulValue: 4
-  delay: 0.15
+  delay: 0
   OnBegin:
     m_PersistentCalls:
       m_Calls:
@@ -497,7 +497,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 905385545039165341}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
@@ -509,7 +509,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
   OnDone:
     m_PersistentCalls:
@@ -902,7 +902,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 4873547501950284807}
   m_HandleRect: {fileID: 0}

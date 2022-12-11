@@ -13,28 +13,29 @@ MonoBehaviour:
   m_Name: Pouvoir Eau LVL2
   m_EditorClassIdentifier: 
   type: 7
-  nom: Pouvoir eau LVL1
+  nom: Pouvoir eau LVL2
   spellIndex: 13
-  description: 
-  citation: 
+  description: "Donne des propori\xE9t\xE9s aux attaques d'Anubis qui rendent des
+    PV. Certaines capacit\xE9s feront plus de d\xE9gats plus Anubis n'as de vie."
+  citation: "\"L'eau est la source de vie du d\xE9sert\""
   sprite: {fileID: 2800000, guid: b42e1b89403ac444eb780ea7fb32e1fa, type: 3}
   canCast: 1
-  duration: 5
-  hitboxAttaqueNormale: {fileID: 2563157444610368081, guid: c1dbb12e5d249234fa583c00f57c4a79, type: 3}
-  hitboxThrust: {fileID: 0}
-  hitboxDash: {fileID: 0}
-  dammageWave: 0
-  durationDamageScale: 0
-  durationWave: 0
-  maxScaleWave: {x: 0, y: 0, z: 0}
-  nbOfDotRayon: 3
+  duration: 7
+  hitboxAttaqueNormale: {fileID: 6665802142371134018, guid: f3790a9b0fd69314183359412e402445, type: 3}
+  hitboxThrust: {fileID: 2563157444610368081, guid: 4cff8834f516297448c71d11efc90026, type: 3}
+  hitboxDash: {fileID: 5960957066020024626, guid: c753587bb4eab48429d99c524a3bc2be, type: 3}
+  dammageWave: 10
+  durationDamageScale: 6
+  durationWave: 4
+  maxScaleWave: {x: 0.7, y: 0.7, z: 0}
+  nbOfDotRayon: 7
   espacementDoTRayon: 0.2
-  staggerRayon: 0.1
-  rayonDamage: 2
-  rayonScale: {x: 0, y: 0, z: 0}
-  thrustDamage: 15
+  staggerRayon: 0.2
+  rayonDamage: 3
+  rayonScale: {x: 0, y: 4, z: 0}
+  thrustDamage: 20
   bulletSpeed: 5
   bulletDuration: 2
-  bulletHeal: 5
+  bulletHeal: 15
   staggerThrust: 0.3
-  bulletScale: {x: 1.5, y: 1.5, z: 0}
+  bulletScale: {x: 2, y: 2, z: 0}

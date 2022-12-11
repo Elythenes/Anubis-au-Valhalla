@@ -1,51 +1,72 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using NaughtyAttributes;
 using TMPro;
-using Unity.Mathematics;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
+using Image = UnityEngine.UIElements.Image;
 
 public class UiManager : MonoBehaviour
 {
     public GameObject anubis;
     public static UiManager instance; //singleton
     public CollectSpell cS;
-    public CollectPotion cP;
-    
-    [Header("GENERAL")]
-    public GameObject spriteSpell1;
-    public GameObject spriteSpell2;
-    public GameObject currentSpell1;
-    public GameObject currentSpell2;
-    public GameObject currentSpell1Holder;
-    public GameObject currentSpell2Holder;
 
-    [Header("COLLECTED SPELL MENU")]
-    public GameObject menuCollectSpell;
-    public GameObject spriteCs;
-    public GameObject textCsName;
-    public GameObject textCsDescription;
-    public GameObject textCsCitation;
-    
-    [Header("OWNED SPELL MENU 1")]
-    public GameObject spriteOs1;
-    public GameObject textOs1Name;
-    public GameObject textOs1Description;
-    
-    [Header("OWNED SPELL MENU 2")]
-    public GameObject spriteOs2;
-    public GameObject textOs2Name;
-    public GameObject textOs2Description;
+    [Foldout("GENERAL")] public GameObject spriteSpell1;
+    [Foldout("GENERAL")] public GameObject spriteSpell2;
+    [Foldout("GENERAL")] public GameObject currentSpell1;
+    [Foldout("GENERAL")] public GameObject currentSpell2;
+    [Foldout("GENERAL")] public GameObject currentSpell1Holder;
+    [Foldout("GENERAL")] public GameObject currentSpell2Holder;
 
-    [Header("COLLECTED POTION MENU")] 
-    public GameObject menuCollectPotion;
-    public GameObject spritePotion;
-    public GameObject panelPotion;
+    [Foldout("COLLECTED SPELL MENU")] public GameObject menuCollectSpell;
+    [Foldout("COLLECTED SPELL MENU")] public GameObject spriteCs;
+    [Foldout("COLLECTED SPELL MENU")] public GameObject textCsName;
+    [Foldout("COLLECTED SPELL MENU")] public GameObject textCsDescription;
+    [Foldout("COLLECTED SPELL MENU")] public GameObject textCsCitation;
     
+    [Foldout("OWNED SPELL MENU 1")] public GameObject spriteOs1;
+    [Foldout("OWNED SPELL MENU 1")] public GameObject textOs1Name;
+    [Foldout("OWNED SPELL MENU 1")]public GameObject textOs1Description;
+    
+    [Foldout("OWNED SPELL MENU 2")] public GameObject spriteOs2;
+    [Foldout("OWNED SPELL MENU 2")] public GameObject textOs2Name;
+    [Foldout("OWNED SPELL MENU 2")] public GameObject textOs2Description;
+
+    [Foldout("POTION MENU")] public GameObject menuCollectPotion;
+    [Foldout("POTION MENU")] public GameObject spritePotion;
+    [Foldout("POTION MENU")] public GameObject panelPotion;
+    [Foldout("POTION MENU")] public GameObject currentPotionSprite;
+    [Foldout("POTION MENU")] public GameObject currentPotionName;
+    [Foldout("POTION MENU")] public GameObject currentPotionDescription;
+    [Foldout("POTION MENU")] public GameObject currentPotionCitation;
+    [Foldout("POTION MENU")] public GameObject newPotionSprite;
+    [Foldout("POTION MENU")] public GameObject newPotionName;
+    [Foldout("POTION MENU")] public GameObject newPotionDescription;
+    [Foldout("POTION MENU")] public GameObject newPotionCitation;
+    [Foldout("POTION MENU")] public GameObject buttonSwitch;
+    [Foldout("POTION MENU")] public GameObject buttonPrendre;
+
+    [Foldout("PAUSE MENU")] public GameObject menuPause;
+    [Foldout("PAUSE MENU")] public KeyCode buttonPause;
+    [Foldout("PAUSE MENU")] public bool isPause;
+    [Foldout("PAUSE MENU")] public GameObject buttonResume;
+    [Foldout("PAUSE MENU")] public GameObject buttonRerun;
+    [Foldout("PAUSE MENU")] public GameObject buttonReturnToHub;
+    [Foldout("PAUSE MENU")] public GameObject buttonCheatMenu;
+    [Foldout("PAUSE MENU")] public GameObject buttonOptions;
+    [Foldout("PAUSE MENU")] public GameObject buttonQuit;
+    
+    [Foldout("INVENTORY")] public List<GameObject> listBoxInventaire;
+    [Foldout("INVENTORY")] public GameObject boxInvTitre;
+    [Foldout("INVENTORY")] public GameObject boxInvDescription;
+    
+    
+    
+    
+    //Fonctions systèmes ***********************************************************************************************
     
     private void Awake()
     {
@@ -55,6 +76,103 @@ public class UiManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        
+    }
+
+    private void Update()
+    {
+        ControlPause();
+    }
+
+
+    public void DebugButton()
+    {
+        Debug.Log("boop");
+    }
+    
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+    
+    public void TimeBack()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    
+    
+    
+    //Fonctions : Pause ************************************************************************************************************************************************************************************
+
+    public void ControlPause()
+    {
+        if (Input.GetKeyDown(buttonPause))
+        {
+            if (isPause) //quand on "Echap" depuis le menu Pause
+            {
+                DeActivatePause();
+            }
+            else //quand on pause avec "Echap"
+            {
+                ActivatePause();
+            }
+        }
+    }
+
+    public void DeActivatePause()
+    {
+        TimeBack();
+        menuPause.SetActive(false);
+        isPause = false;
+    }
+    
+    public void ActivatePause()
+    {
+        Pause();
+        menuPause.SetActive((true));
+        FillBoxInventory();
+        isPause = true;
+    }
+    
+    
+    
+    
+    //Fonctions : Inventaire ************************************************************************************************************************************************************************************
+
+    public void FillBoxInventory()
+    {
+        for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
+        {
+            listBoxInventaire[i].GetComponentInChildren<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
+        }
+    }
+
+    public void FillDescriptionInventory(int boxPos)
+    {
+        Debug.Log(boxPos);
+        boxInvTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos-1].nom;
+        boxInvDescription.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos-1].description;
+    }
+
+    public void SetBoxInventoryPositions()
+    {
+        for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
+        {
+            listBoxInventaire[i].GetComponent<BoxInventory>().inventoryPosition = i;
+        }
+    }
+    
+    
+    
+    //Fonctions : Spells ************************************************************************************************************************************************************************************
+    
     public void CollectSpell(int spellSlot)
     {
         switch (spellSlot)
@@ -98,39 +216,14 @@ public class UiManager : MonoBehaviour
         TimeBack();
         Destroy(cS.collectableSpell);
     }
-
-   public void CollectPotionInUI()
-    {
-        //Debug.Log("entrée dans la fonction CollectPotion");
-        PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside; 
-        PotionManager.Instance.isPotionSlotFill = true;
-        spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
-    }
-
-    public void DebugButton()
-    {
-        Debug.Log("boop");
-    }
-
+    
     public void ActivateMenu()
     {
         menuCollectSpell.SetActive(true);
-        Time.timeScale = 0;
+        Pause();
         FillMenu();
     }
     
-    public void ActivateMenuPotion()
-    {
-        menuCollectPotion.SetActive(true);
-        Time.timeScale = 0;
-        FillMenuPotion();
-    }
-    
-    public void TimeBack()
-    {
-        Time.timeScale = 1;
-    }
-
     void FillMenu()
     {
         Debug.Log("fonction fillMenu utilisée");
@@ -139,15 +232,68 @@ public class UiManager : MonoBehaviour
         textCsCitation.GetComponent<TextMeshProUGUI>().text = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.citation;
         spriteCs.GetComponent<RawImage>().texture = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.sprite; 
     }
+
+    
+    
+    //Fonctions : Potions ***********************************************************************************************************************************************************************************
+    
+    public void CollectPotion()
+    {
+        //Debug.Log("entrée dans la fonction CollectPotion");
+        PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside; 
+        PotionManager.Instance.isPotionSlotFill = true;
+        spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        menuCollectPotion.SetActive(false);
+        TimeBack();
+    }
+
+    public void ActivateMenuPotion()
+    {
+        Pause();
+        menuCollectPotion.SetActive(true);
+        FillMenuPotion();
+    }
     
     void FillMenuPotion()
     {
-        Debug.Log("fonction fillMenu utilisée");
-        textCsName.GetComponent<TextMeshProUGUI>().text = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.nom; 
-        textCsDescription.GetComponent<TextMeshProUGUI>().text = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.description;
-        textCsCitation.GetComponent<TextMeshProUGUI>().text = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.citation;
-        spriteCs.GetComponent<RawImage>().texture = cP.collectablePotion.GetComponent<ContainScriptableObject>().spellInside.sprite; 
+        Debug.Log("fonction fillMenuPotion utilisée");
+        if (PotionManager.Instance.currentPotion == null)
+        {
+            buttonPrendre.SetActive(true);
+            buttonSwitch.SetActive(false);
+            
+            currentPotionName.SetActive(false);
+            currentPotionDescription.GetComponent<TextMeshProUGUI>().text = "Je ne possède pas de potion actuellement.";
+            currentPotionCitation.SetActive(false);
+            currentPotionSprite.SetActive(false);
+            
+            newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
+            newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
+            newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
+            newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
+        }
+        else
+        {
+            buttonPrendre.SetActive(false);
+            buttonSwitch.SetActive(true);
+            
+            currentPotionName.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
+            currentPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
+            currentPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.citation;
+            currentPotionSprite.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+            
+            newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
+            newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
+            newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
+            newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
+        }
+        
     }
+    
+    
+    
+    //Fonctions autres ***********************************************************************************************************************************************************************************
+    
 
     void FillLittleMenu(SpellObject sO, int slot)
     {

@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using DG.Tweening;
-using UnityEditor.Experimental.GraphView;
 
 public class IA_Corbeau : MonoBehaviour
 {
@@ -34,7 +29,7 @@ public class IA_Corbeau : MonoBehaviour
     [Header("Attaque")] public bool isAttacking;
     public float rotationSpeed;
     public float rotationSpeedSlown;
-    public int puissanceAttaque;
+    [NaughtyAttributes.ReadOnly] public int puissanceAttaque;
     public float StartUpAttackTime;
     public float StartUpAttackTimeTimer;
     public float AttackTime;
@@ -45,7 +40,15 @@ public class IA_Corbeau : MonoBehaviour
     private bool indic = true;
     public float plumeSpeed;
     public Vector2 directionProj;
-
+    public Gradient gradientIndic;
+    
+    
+    //Fonctions ******************************************************************************************************************************************************
+    
+    private void Awake()
+    {
+        puissanceAttaque = GetComponentInParent<MonsterLifeManager>().data.damage;
+    }
 
     private void Start()
     {
@@ -62,7 +65,7 @@ public class IA_Corbeau : MonoBehaviour
             isElite = true;
         }
 
-        if (life.overdose)
+       if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
             speedTowardPlayer *= 150;
             forceRepulse *= 1.5f;
@@ -109,29 +112,36 @@ public class IA_Corbeau : MonoBehaviour
         if (StartUpAttackTimeTimer >= StartUpAttackTime && !life.isMomified)
         {
             AttackTimeTimer += Time.deltaTime;
+            
             if (indic)
             {
+                isFleeing = false;
+                isChasing = false;
                 isRotating = false;
                 aipath.canMove = false;
                 canMove = false;
-                
+                rb.velocity = Vector2.zero;
                 directionProj = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,
                     CharacterController.instance.transform.position.y - transform.position.y);
                 float angle = Mathf.Atan2(directionProj.y, directionProj.x) * Mathf.Rad2Deg;
-               holder = Instantiate(indicationAttaque,transform.position,  Quaternion.Euler(0,0,angle));
-                Destroy(holder,AttackTime+0.1f);
-                indic = false;
-                
+               GameObject indicOBJ = Instantiate(indicationAttaque,transform.position,  Quaternion.Euler(0,0,angle));
+               holder = indicOBJ;
+               Destroy(indicOBJ,AttackTime+0.1f);
+               indic = false;
             }
             else if(life.gotHit)
             {
-                Debug.Log("hit");
+                if (holder is not null)
+                {
+                    Destroy(holder.gameObject);
+                }
                 StartUpAttackTimeTimer = 0;
                 AttackTimeTimer = 0;
-                Destroy(holder);
                 canMove = true;
                 indic = true;
             }
+
+            holder.GetComponent<SpriteRenderer>().color = gradientIndic.Evaluate(AttackTimeTimer);
             
             if (AttackTimeTimer >= AttackTime && !life.isMomified)
             {
@@ -170,27 +180,24 @@ public class IA_Corbeau : MonoBehaviour
             isRotating = false;
         }
         
-        if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing && !isChasing && canMove)
+        /*if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing && !isChasing && canMove)
         {
             isChasing = false;
             isRotating = false;
             isFleeing = true;
-            Debug.Log("close");
-            isFleeing = true;
             Vector2 angle = transform.position - player.transform.position;
-            rb.AddForce(angle.normalized*forceRepulse);
+            rb.AddForce(angle.normalized * forceRepulse);
         }
         else
         {
             isFleeing = false;
-        }
+        }*/
             
         if(Vector3.Distance(player.transform.position, transform.position) >= radiusFleeing*3 && !isFleeing && !isRotating && canMove)
         {
             isChasing = true;
             Vector2 angleTowardPlayer = player.transform.position - transform.position;
             rb.AddForce(angleTowardPlayer*speedTowardPlayer);
-            Debug.Log("far");
             isFleeing = false;
         }
         else

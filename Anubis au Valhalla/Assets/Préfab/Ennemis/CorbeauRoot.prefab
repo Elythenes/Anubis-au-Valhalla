@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: d6cfa380a3dfc774390d61c906c1f584, type: 2}
   textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
   animator: {fileID: 893181608378371497}
   rb: {fileID: 0}
@@ -110,7 +110,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  criticalPick: 0
+  criticalPick: 100
   gotHit: 0
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 893181608378371495}
@@ -440,8 +440,8 @@ MonoBehaviour:
   isFleeing: 0
   isRotating: 0
   isChasing: 0
-  forceRepulse: 100
-  radiusFleeing: 3
+  forceRepulse: 500
+  radiusFleeing: 2.5
   speedTowardPlayer: 0.2
   isAttacking: 0
   rotationSpeed: 45
@@ -455,6 +455,35 @@ MonoBehaviour:
   indicationAttaque: {fileID: 9059446152863737838, guid: 9e1c6c2a24190f443a1d5d22b1f13cfa, type: 3}
   plumeSpeed: 0.09
   directionProj: {x: 0, y: 0}
+  gradientIndic:
+    serializedVersion: 2
+    key0: {r: 0.28449082, g: 1, b: 0, a: 1}
+    key1: {r: 1, g: 0, b: 0, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
 --- !u!114 &893181608378371502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -992,7 +1021,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 4060464529141236645}
   m_HandleRect: {fileID: 0}

@@ -11,6 +11,7 @@ public class UIMonstreManager : MonoBehaviour
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        monstreAsuivre = transform.parent;
     }
 
     private void Update()

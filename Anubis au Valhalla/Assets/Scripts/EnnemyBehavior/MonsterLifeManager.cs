@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using Pathfinding;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -17,9 +14,9 @@ public class MonsterLifeManager : MonoBehaviour
     public Rigidbody2D rb;
     public HealthBarMonstre healthBar;
     public AIPath ai;
-    public int vieMax;
+    [NaughtyAttributes.ReadOnly] public int vieMax;
     public int vieActuelle;
-    public int soulValue = 4;
+    [NaughtyAttributes.ReadOnly] public int soulValue = 4;
     public float delay;
     private float forceKnockBack = 10;
     public UnityEvent OnBegin, OnDone;
@@ -45,9 +42,15 @@ public class MonsterLifeManager : MonoBehaviour
     public bool elite = false;
     public bool isParasite = false;
     public bool overdose = false;
+    
 
+    private void Awake()
+    {
+        vieMax = data.maxHealth;
+        soulValue = data.soulValue;
+    }
 
-    private void Start()
+    public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         if (overdose)
@@ -61,7 +64,7 @@ public class MonsterLifeManager : MonoBehaviour
 
     }
 
-    private void Update()
+    public virtual void Update()
     {
         transform.localRotation = Quaternion.identity;
         if (isInvincible)
@@ -108,28 +111,42 @@ public class MonsterLifeManager : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage, float staggerDuration)
+    public virtual void TakeDamage(int damage, float staggerDuration)
     {
         if (!isInvincible)
         {
+            criticalPick = Random.Range(0,100);
+            if (criticalPick <= AttaquesNormales.instance.criticalRate)
+            {
+                textDamage.GetComponentInChildren<TextMeshPro>().SetText((damage * 2).ToString());
+                GameObject textOBJ = Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
+                textOBJ.transform.localScale *= 2;
+
+            }
+            else
+            {
+                textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
+                Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
+            }
             StartCoroutine(HitScanReset());
             gotHit = true;
-            criticalPick = Random.Range(0,100);
             StartCoroutine(AnimationDamaged(staggerDuration));
-            /*transform.DOShakePosition(staggerDuration, 0.5f, 50).OnComplete(() =>
+            transform.DOShakePosition(staggerDuration, 0.5f, 50);/*.OnComplete(() =>
             {
                 ai.canMove = true;
             });*/
             
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
-                vieActuelle -= damage * 2; 
+                Debug.Log("crit");
+                damage *= 2;
+                vieActuelle -= damage; 
                 healthBar.SetHealth(vieActuelle);
                 isInvincible = true;
-                criticalPick = 0;
             }
             else
             {
+                Debug.Log("normal");
                 vieActuelle -= damage; 
                 healthBar.SetHealth(vieActuelle);
                 isInvincible = true;
@@ -147,31 +164,10 @@ public class MonsterLifeManager : MonoBehaviour
     {
         animator.SetBool("IsTouched", true);
         yield return new WaitForSeconds(duration);
-        ai.canMove = true;
         animator.SetBool("IsTouched", false);
     }
-    
-    public void DamageText(int damageAmount)
-    {
-        if (!isInvincible)
-        {
-            if (criticalPick <= AttaquesNormales.instance.criticalRate)
-            {
-                textDamage.GetComponentInChildren<TextMeshPro>().SetText((damageAmount * 2).ToString());
-                GameObject textOBJ = Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
-                textOBJ.transform.localScale *= 2;
 
-            }
-            else
-            {
-                textDamage.GetComponentInChildren<TextMeshPro>().SetText(damageAmount.ToString());
-                Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
-            }
-          
-        }
-    }
-    
-    public void OnTriggerEnter2D(Collider2D col)
+    public virtual void OnTriggerEnter2D(Collider2D col)
     {
         Vector2 direction = (transform.position - col.transform.position);
         direction.Normalize();
@@ -179,8 +175,6 @@ public class MonsterLifeManager : MonoBehaviour
         {
             //StopAllCoroutines();
             OnBegin?.Invoke();
-            //rb.velocity = Vector2.zero;
-            //rb.AddForce(direction * forceKnockBack,ForceMode2D.Impulse);
             StartCoroutine(Reset(0.5f));
         }
     }
@@ -199,7 +193,7 @@ public class MonsterLifeManager : MonoBehaviour
         gotHit = false;
     }
     
-    void Die()
+    public virtual void Die()
     {
         if (SalleGennerator.instance.currentRoom.parasites && !isParasite)
         {
@@ -208,6 +202,8 @@ public class MonsterLifeManager : MonoBehaviour
             parasite.GetComponent<MonsterLifeManager>().soulValue =
                 Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
         }
+
+        ScoreManager.instance.currentScore += data.score;
         Souls.instance.CreateSouls(child.transform.position, soulValue);
         SalleGennerator.instance.currentRoom.currentEnemies.Remove(gameObject);
         SalleGennerator.instance.currentRoom.CheckForEnemies();
