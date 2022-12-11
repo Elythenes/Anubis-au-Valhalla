@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3104542422036145518}
-  m_LocalRotation: {x: -0.000000044703484, y: 0.039850622, z: -0.030922793, w: 0.9987271}
-  m_LocalPosition: {x: 0.38, y: -0.92, z: 0.95}
+  m_LocalRotation: {x: 0.022501074, y: -0.40313882, z: -0.022961862, w: 0.914574}
+  m_LocalPosition: {x: -0.5025834, y: -0.9390437, z: 0.87115264}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7180432341892624806}
-  m_RootOrder: 1
+  m_Father: {fileID: 4785630951836660167}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.141, y: 4.566, z: -3.541}
 --- !u!198 &3104542422036145519
 ParticleSystem:
@@ -4817,7 +4817,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fd6192c14da89254986f560bd601018a, type: 2}
@@ -4838,8 +4838,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -423827251
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -4870,7 +4870,7 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
 --- !u!212 &3104542422036145506
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4933,7 +4933,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4785630951836660167}
   - component: {fileID: 1066379348362347033}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: BloodSlashParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4952,7 +4952,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3104542422036145505}
   - {fileID: 7180432341892624806}
+  - {fileID: 7180432341753421233}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4994,13 +4996,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7180432341753421234}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.38, y: -0.92, z: 0.95}
+  m_LocalRotation: {x: 0.009091246, y: -0.43976772, z: 0.0044518863, w: 0.8980544}
+  m_LocalPosition: {x: -0.5025834, y: -0.9390437, z: 0.87115264}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7180432341892624806}
-  m_RootOrder: 0
+  m_Father: {fileID: 4785630951836660167}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &7180432341753421235
 ParticleSystem:
@@ -9727,7 +9729,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 405e327f75fe19c4b9d17ede6c116a46, type: 2}
@@ -9748,8 +9750,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -423827251
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_RenderMode: 1
   m_MeshDistribution: 0
@@ -9780,7 +9782,7 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
 --- !u!212 &7180432341753421236
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9858,15 +9860,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7180432341892624803}
-  m_LocalRotation: {x: 0.009091249, y: -0.43976775, z: 0.0044518877, w: 0.8980545}
+  m_LocalRotation: {x: 0.009091246, y: -0.43976772, z: 0.0044518863, w: 0.8980544}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7180432341753421233}
-  - {fileID: 3104542422036145505}
+  m_Children: []
   m_Father: {fileID: 4785630951836660167}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 1.16, y: -52.181, z: 0}
 --- !u!198 &7180432341892624801
 ParticleSystem:
@@ -14652,7 +14652,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 405e327f75fe19c4b9d17ede6c116a46, type: 2}
@@ -14673,8 +14673,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -423827251
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_RenderMode: 1
   m_MeshDistribution: 0
@@ -14705,4 +14705,4 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
