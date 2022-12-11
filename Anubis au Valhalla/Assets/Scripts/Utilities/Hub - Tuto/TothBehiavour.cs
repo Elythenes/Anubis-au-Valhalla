@@ -82,6 +82,7 @@ public class TothBehiavour : MonoBehaviour
    {
       if (col.CompareTag("Player"))
       {
+         CanvasInteraction.GetComponent<Canvas>().enabled = true;
          CanvasInteraction.transform.position = transform.position + offset;
          CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
          CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
@@ -95,7 +96,8 @@ public class TothBehiavour : MonoBehaviour
    {
       if (col.CompareTag("Player"))
       {
-         CanvasInteraction.SetActive(false);
+         CanvasInteraction.GetComponent<Canvas>().enabled = false;
+         //CanvasInteraction.SetActive(false);
          isTalkable = false;
       }
    }

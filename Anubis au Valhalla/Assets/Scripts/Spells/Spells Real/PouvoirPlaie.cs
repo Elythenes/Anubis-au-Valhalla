@@ -39,7 +39,7 @@ public class PouvoirPlaie : MonoBehaviour
                Instantiate(soPouvoirPlaie.hitboxAttaqueNormale, anubis.transform.position, Quaternion.identity);
             }
             
-            if (anubisAtk.attaqueSpe2) //PLACEHOLDER - REMPLACER PAR LE THRUST
+            if (anubisAtk.attaqueSpeSpell) //PLACEHOLDER - REMPLACER PAR LE THRUST
             {
                for (int i = 0; i < soPouvoirPlaie.nuberOfBullets; i++)
                {

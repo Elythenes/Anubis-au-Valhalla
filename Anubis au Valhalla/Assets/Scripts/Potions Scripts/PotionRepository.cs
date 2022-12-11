@@ -73,6 +73,7 @@ public class PotionRepository : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
+            CanvasInteraction.GetComponent<Canvas>().enabled = true;
             canInteract = true;
             CanvasInteraction.SetActive(true);
             CanvasInteraction.transform.position = transform.transform.position + offset;
@@ -87,7 +88,8 @@ public class PotionRepository : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CanvasInteraction.SetActive(false);
+            CanvasInteraction.GetComponent<Canvas>().enabled = false;
+            //CanvasInteraction.SetActive(false);
             canInteract = false;
         }
     }

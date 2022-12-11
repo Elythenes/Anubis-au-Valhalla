@@ -22,6 +22,7 @@ public class CharacterController : MonoBehaviour
   public bool canInteract;
   public Collider2D currentDoor;
   public GameObject CanvasInteraction;
+  public Canvas CanvasInteractionCanvas;
   public Vector3 offset;
   public TextMeshProUGUI TextInteraction;
 
@@ -79,6 +80,7 @@ public class CharacterController : MonoBehaviour
     dashTracker.SetActive(false);
     CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
     TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
+    CanvasInteractionCanvas = CanvasInteraction.GetComponent<Canvas>();
   }
 
   private void OnEnable()
@@ -199,6 +201,7 @@ public class CharacterController : MonoBehaviour
     // Interaction avec la porte
     if (canInteract)
     {
+      CanvasInteractionCanvas.enabled = true;
       CanvasInteraction.SetActive(true); 
       CanvasInteraction.transform.position = transform.position + offset;
       CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
@@ -348,7 +351,8 @@ public class CharacterController : MonoBehaviour
     {
       if (CanvasInteraction is not null)
       {
-        CanvasInteraction.SetActive(false);
+        CanvasInteractionCanvas.enabled = false;
+        //CanvasInteraction.SetActive(false);
       }
       canInteract = false;
       currentDoor = null;

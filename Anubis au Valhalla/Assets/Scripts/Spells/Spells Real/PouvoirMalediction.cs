@@ -43,7 +43,7 @@ public class PouvoirMalediction : MonoBehaviour
                Instantiate(soPouvoirMalediction.hitboxAttaqueNormale, anubis.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
             }
 
-            if (anubisAtk.attaqueSpe2)
+            if (anubisAtk.attaqueSpeSpell)
             {
                GameObject plumeMaat = Instantiate(soPouvoirMalediction.hitboxThrust, anubis.transform.position, Quaternion.identity);
             }
