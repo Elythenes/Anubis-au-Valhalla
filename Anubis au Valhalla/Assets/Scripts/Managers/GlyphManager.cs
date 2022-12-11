@@ -1,12 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using NaughtyAttributes;
-using Unity.Collections;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using Debug = UnityEngine.Debug;
 
 public class GlyphManager : MonoBehaviour

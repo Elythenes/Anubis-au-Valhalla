@@ -35,21 +35,25 @@ public class SalleGennerator : MonoBehaviour
         
         [Header("PATTERNES")]
         public List<SalleContent_Ennemies> spawnGroups = new List<SalleContent_Ennemies>();
+        public List<SalleContent_Ennemies> spawnGroupsLevel2 = new List<SalleContent_Ennemies>();
         
         [Header("VARIABLES INTERNES POUR DEBUG")]
         [SerializeField] public int roomsDone = -1;
         public DoorOrientation fromDoor = DoorOrientation.West;
         [SerializeField] private DoorOrientation toDoor;
         
-        public int GlobalBank = 10;
+        public int globalBank = 14;
+        public bool testBankSystem;
+        public List<int> extraMoneyPerRoom = new List<int>(){0,0,3,3,0,5,5,6,0,0,7,0,8,9,9,0,12,14,16,0,0};
+        public int inflation = 1;
+        
         public float TimeBetweenWaves;
         public CanvasGroup transitionCanvas;
         public int shopsVisited;
 
         private readonly Queue<Salle> roomsQueue = new Queue<Salle>();
         private ProceduralGridMover moveGrid;
-        [HideInInspector]
-        public DoorOrientation spawnDoor;
+        [HideInInspector] public DoorOrientation spawnDoor;
         public Salle currentRoom;
         public int chosenPattern;
         public int challengeChooser;
