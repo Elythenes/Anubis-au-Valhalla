@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 8756243602683833442}
   - component: {fileID: 1116189893545236907}
   - component: {fileID: 8413557754465905876}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Potion Repository
   m_TagString: CollectablePotion
   m_Icon: {fileID: 0}
@@ -250,10 +250,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5184d61877dadde48a1fcaabc8970e53, type: 2}
   - {fileID: 11400000, guid: 14ef827a82a4a6b4aa7728c1926a86ea, type: 2}
   potionInside: {fileID: 0}
-  doPotionTest: 1
-  potionTest: {fileID: 0}
-  isMoving: 1
-  force: 30
+  doPotionTest: 0
+  potionTest: {fileID: 11400000, guid: 14ef827a82a4a6b4aa7728c1926a86ea, type: 2}
+  isMoving: 0
+  force: 10
   deceleration: 1
   timer: 0.3
   rb: {fileID: 1116189893545236907}
