@@ -248,11 +248,17 @@ public class UiManager : MonoBehaviour
     public void CollectPotion()
     {
         //Debug.Log("entrée dans la fonction CollectPotion");
-        PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside; 
+        PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside;
         PotionManager.Instance.isPotionSlotFill = true;
         spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
         menuCollectPotion.SetActive(false);
         TimeBack();
+    }
+
+    public void CollectPotionDebug()
+    {
+        PotionManager.Instance.isPotionSlotFill = true;
+        spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
     }
 
     public void ActivateMenuPotion()
