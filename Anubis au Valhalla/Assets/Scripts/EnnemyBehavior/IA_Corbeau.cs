@@ -197,7 +197,7 @@ public class IA_Corbeau : MonoBehaviour
         {
             isChasing = true;
             Vector2 angleTowardPlayer = player.transform.position - transform.position;
-            rb.AddForce(angleTowardPlayer*speedTowardPlayer);
+            rb.AddForce(angleTowardPlayer.normalized * speedTowardPlayer);
             isFleeing = false;
         }
         else

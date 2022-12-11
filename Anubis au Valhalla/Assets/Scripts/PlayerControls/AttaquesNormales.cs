@@ -136,7 +136,21 @@ public class AttaquesNormales : MonoBehaviour
         {
             SpecialAttack();
         }
-        
+
+        if (attaqueSpe)
+        {
+            stunDuration[2] += Time.deltaTime;
+            if (stunDuration[2] >= stunDurationMax[3])
+            {
+                anim.SetBool("isAttackingSpe",false);
+                anim.SetBool("isAttackingSpeDown",false);
+                anim.SetBool("isWalking",false);
+                anim.SetBool("isIdle",true);
+                attaqueSpe = false;
+                canAttack = true;
+                CharacterController.instance.isAttacking = false;
+            }
+        }
 
         // ------------------ Gestion Combo-------------
     }
@@ -333,9 +347,10 @@ public class AttaquesNormales : MonoBehaviour
         }
         attaqueSpe = true;
         StartCoroutine(ResetTracking());
-        StartCoroutine(ResetState());
+        //StartCoroutine(ResetState());
         comboActuel = 0;
         canAttack = false;
+        stunDuration[2] = 0;
         CharacterController.instance.isAttacking = true;
         CharacterController.instance.rb.AddForce(moveDirection2 * dashImpulse[3], ForceMode2D.Impulse);
         GameObject thrustObj = Instantiate(thrust, charaPos, Quaternion.AngleAxis(angle2, Vector3.forward));
@@ -394,11 +409,10 @@ public class AttaquesNormales : MonoBehaviour
 
     IEnumerator ResetTracking()
     {
-        yield return new WaitForSeconds(0.0000000001f);
+        yield return new WaitForSeconds(0.0000001f);
         attaque1 = false;
         attaque2 = false;
         attaque3 = false;
-        attaqueSpe = false;
     }
 }
 

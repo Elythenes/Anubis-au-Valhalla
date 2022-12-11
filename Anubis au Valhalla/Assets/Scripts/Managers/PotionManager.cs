@@ -120,7 +120,7 @@ public class PotionManager : MonoBehaviour
                break;
          }
       }
-      
+      currentPotion = null;
    }
 
    

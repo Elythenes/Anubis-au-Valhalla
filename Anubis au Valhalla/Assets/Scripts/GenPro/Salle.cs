@@ -54,8 +54,15 @@ public class Salle : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         AstarRef = GameObject.Find("A* Ref").GetComponent<Transform>();
         renderer.enabled = false;
-        spawnBank = SalleGennerator.instance.GlobalBank;
-        SalleGennerator.instance.GlobalBank = Mathf.RoundToInt(SalleGennerator.instance.GlobalBank * 1.1f);
+        spawnBank = SalleGennerator.instance.globalBank;
+        if (SalleGennerator.instance.testBankSystem)
+        {
+            SalleGennerator.instance.globalBank += SalleGennerator.instance.extraMoneyPerRoom[SalleGennerator.instance.roomsDone];
+        }
+        else
+        {
+            SalleGennerator.instance.globalBank = Mathf.RoundToInt(SalleGennerator.instance.globalBank * 1.1f);
+        }
         AstarPath.active.Scan(AstarPath.active.data.graphs);
         //CharacterController.instance.ground = GameObject.Find("Ground").GetComponent<TilemapRenderer>();
         RearrangeDoors();
@@ -182,7 +189,7 @@ public class Salle : MonoBehaviour
             if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());//if it cant afford the most expensive enemy, it will buy the cheapest one
             var chosenEnemy = SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn[chosenValue];
             spawnBank -= costList[chosenValue];
-            costList[chosenValue] += 3;
+            costList[chosenValue] += SalleGennerator.instance.inflation;
             var chosenPoint = point[Random.Range(0, point.Count)];
             var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
             currentEnemies.Add(enemyObject);

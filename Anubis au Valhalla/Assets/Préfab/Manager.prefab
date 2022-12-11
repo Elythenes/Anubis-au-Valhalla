@@ -215,10 +215,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b8c0a5019e89b8a478e1574da6a3a28b, type: 2}
   - {fileID: 11400000, guid: 525790a370e730342bbc4f80309c8f1b, type: 2}
   - {fileID: 11400000, guid: 4eed6d2af4263d048a75d014b5923013, type: 2}
+  spawnGroupsLevel2: []
   roomsDone: 0
   fromDoor: 3
   toDoor: 1
-  GlobalBank: 50
+  globalBank: 14
+  testBankSystem: 1
+  extraMoneyPerRoom: 000000000000000003000000030000000000000005000000050000000600000000000000000000000700000000000000080000000900000009000000000000000c0000000e000000100000000000000000000000
   TimeBetweenWaves: 3
   transitionCanvas: {fileID: 0}
   shopsVisited: 0
@@ -588,6 +591,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7973947163249663059, guid: c9c03e51c218ea040b20de1fb78d4c7b, type: 3}
+      propertyPath: startingPotion
+      value: 
+      objectReference: {fileID: 11400000, guid: 654a4f4f3a0188749b768cfc63a6673f, type: 2}
+    - target: {fileID: 7973947163249663059, guid: c9c03e51c218ea040b20de1fb78d4c7b, type: 3}
+      propertyPath: addStartingPotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7973947163249663059, guid: c9c03e51c218ea040b20de1fb78d4c7b, type: 3}
       propertyPath: potionsForShop.Array.size
       value: 9
       objectReference: {fileID: 0}
@@ -707,8 +718,16 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: fe8d609627f33fd4f99dcdc0ab1cf2ac, type: 2}
     - target: {fileID: 6761814157336263990, guid: 1b184e452e7efa6449443a7ded3bc7c3, type: 3}
       propertyPath: doStartHieroTest
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6761814157336263990, guid: 1b184e452e7efa6449443a7ded3bc7c3, type: 3}
+      propertyPath: hieroTest.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6761814157336263990, guid: 1b184e452e7efa6449443a7ded3bc7c3, type: 3}
+      propertyPath: hieroTest.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6106a00ec6154124bacd91b27b3e2f47, type: 2}
     - target: {fileID: 8148628976302366869, guid: 1b184e452e7efa6449443a7ded3bc7c3, type: 3}
       propertyPath: m_Name
       value: GlyphManager
