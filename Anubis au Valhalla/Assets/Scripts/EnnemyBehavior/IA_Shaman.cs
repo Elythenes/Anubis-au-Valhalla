@@ -84,6 +84,11 @@ public class IA_Shaman : MonoBehaviour
 
     public void Update()
     {
+        if (life.gotHit)
+        {
+            ai.canMove = true;
+        }
+        
         SortEnemies();
         if (!isAttacking&& !life.isMomified)
         {
@@ -143,6 +148,8 @@ public class IA_Shaman : MonoBehaviour
         else
         {
             isFleeing = false;
+            isWondering = true;
+            rb.AddForce(Vector2.zero);
         }
     }
     void SortEnemies()
