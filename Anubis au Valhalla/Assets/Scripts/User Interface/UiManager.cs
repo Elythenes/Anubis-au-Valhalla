@@ -157,8 +157,16 @@ public class UiManager : MonoBehaviour
     public void FillDescriptionInventory(int boxPos)
     {
         Debug.Log(boxPos);
-        boxInvTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos-1].nom;
-        boxInvDescription.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos-1].description;
+        if (GlyphInventory.Instance.glyphInventory[boxPos - 1].nom is not null)
+        {
+            boxInvTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos-1].nom;
+        }
+
+        if (GlyphInventory.Instance.glyphInventory[boxPos - 1].description is not null)
+        {
+            boxInvDescription.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos-1].description;
+        }
+        
     }
 
     public void SetBoxInventoryPositions()

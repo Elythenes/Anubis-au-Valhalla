@@ -54,7 +54,6 @@ public class DamageManager : MonoBehaviour
     
     private void Awake()
     {
-        stats = AnubisCurrentStats.instance;
         if (instance == null)
         {
             instance = this;
@@ -63,6 +62,7 @@ public class DamageManager : MonoBehaviour
     
     void Start()
     {
+        stats = AnubisCurrentStats.instance;
         /*vieActuelle = stats.vieActuelle;
         vieMax = stats.vieMax;
         damageReduction = stats.damageReduction;
