@@ -17,7 +17,7 @@ public class GhostDash : MonoBehaviour
 
     private void Start()
     {
-        ghostDelay = CharacterController.instance.dashDuration;
+        //ghostDelay = CharacterController.instance.dashDuration;
     }
 
     public void OnEnable()
@@ -29,12 +29,12 @@ public class GhostDash : MonoBehaviour
     {
         ghostDelaySeconds -= Time.deltaTime;
         if (Vector3.Distance(CharacterController.instance.transform.position,lastPlayerPos) >= frequency) // Créer un effet fantôme derrière le player pendant le dash
-            {
-                GameObject currentGhost = Instantiate(ghost, transform.position,transform.rotation);
-                tousLesSprites.Add(currentGhost);
-                StartCoroutine(Destroyghost(currentGhost));
-                lastPlayerPos = CharacterController.instance.transform.position;
-            }
+        {
+            GameObject currentGhost = Instantiate(ghost, transform.position,transform.rotation);
+            tousLesSprites.Add(currentGhost);
+            StartCoroutine(Destroyghost(currentGhost));
+            lastPlayerPos = CharacterController.instance.transform.position;
+        }
 
         if (ghostDelaySeconds < 0)
         {
