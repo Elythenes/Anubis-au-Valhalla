@@ -10,7 +10,7 @@ public class GlyphObject : ScriptableObject
     public string nom;
     public GlyphPart partie;
     //public GlyphType type;
-    public GlyphLevel level;
+    [HideInInspector] public GlyphLevel level;
     public float price;
     public int index;
     [TextArea(6,20)] public string description;
