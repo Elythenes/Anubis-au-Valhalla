@@ -74,6 +74,10 @@ public class UiManager : MonoBehaviour
         {
             instance = this;
         }
+        
+        spriteSpell1.GetComponent<RawImage>().color = new Color(255,255,255,0);
+        spriteSpell2.GetComponent<RawImage>().color = new Color(255,255,255,0);
+        spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
     }
 
     private void Start()
@@ -198,6 +202,7 @@ public class UiManager : MonoBehaviour
                 SpellManager.instance.isSpell1Fill = true;
                 Debug.Log("sprite 1 changé");
                 spriteSpell1.GetComponent<RawImage>().texture = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.sprite;
+                spriteSpell1.GetComponent<RawImage>().color = new Color(255,255,255,1);
                 FillLittleMenu(cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside, 1);
                 currentSpell1Holder = Instantiate(currentSpell1, anubis.transform.position,Quaternion.identity);
                 currentSpell1Holder.transform.parent = anubis.transform;
@@ -215,6 +220,7 @@ public class UiManager : MonoBehaviour
                 SpellManager.instance.isSpell2Fill = true;
                 Debug.Log("sprite 2 changé");
                 spriteSpell2.GetComponent<RawImage>().texture = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.sprite;
+                spriteSpell2.GetComponent<RawImage>().color = new Color(255,255,255,1);
                 FillLittleMenu(cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside, 2);
                 currentSpell2Holder = Instantiate(currentSpell2, anubis.transform.position,Quaternion.identity);
                 currentSpell2Holder.transform.parent = anubis.transform;
@@ -251,6 +257,7 @@ public class UiManager : MonoBehaviour
         PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside;
         PotionManager.Instance.isPotionSlotFill = true;
         spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 1);
         menuCollectPotion.SetActive(false);
         TimeBack();
     }

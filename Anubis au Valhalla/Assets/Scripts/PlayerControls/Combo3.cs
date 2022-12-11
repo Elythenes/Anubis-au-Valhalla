@@ -22,8 +22,11 @@ public class Combo3 : MonoBehaviour
         if (col.CompareTag("Monstre"))
         {
             float angle = Mathf.Atan2(transform.position.y - col.transform.position.y,transform.position.x - col.transform.position.x ) * Mathf.Rad2Deg;
-            GameObject effetSang = Instantiate(bloodEffect, col.transform.position, Quaternion.identity);
-            effetSang.transform.rotation = Quaternion.Euler(0,0,angle);
+            if (col.GetComponent<MonsterLifeManager>().isInvincible == false)
+            {
+                GameObject effetSang = Instantiate(bloodEffect, col.transform.position, Quaternion.identity);
+                effetSang.transform.rotation = Quaternion.Euler(0,0,angle);
+            }
             Vector3 angleKnockback = col.transform.position - transform.position;
             Vector3 angleNormalized = angleKnockback.normalized;
             

@@ -302,7 +302,10 @@ public class AttaquesNormales : MonoBehaviour
 
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
-        swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+        if (index == 0 || index == 1)
+        {
+            swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+        }
     }
 
     public void SpecialAttack()
