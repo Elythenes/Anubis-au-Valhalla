@@ -55,7 +55,7 @@ public class PouvoirAme : MonoBehaviour
                Instantiate(soPouvoirAme.hitboxAttaqueNormale, anubis.transform.position, Quaternion.identity);
             }
             
-            if (anubisAtk.attaqueSpe) //PLACEHOLDER - REMPLACER PAR LE THRUST
+            if (anubisAtk.attaqueSpe2) //PLACEHOLDER - REMPLACER PAR LE THRUST
             {
                Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
                Vector2 charaPos = CharacterController.instance.transform.position;

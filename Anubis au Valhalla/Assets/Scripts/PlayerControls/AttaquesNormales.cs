@@ -32,9 +32,10 @@ public class AttaquesNormales : MonoBehaviour
     public bool attaque1;
     public bool attaque2;
     public bool attaque3;
-    public bool attaqueSpe;
-    
+    public bool attaqueSpeSpell;
+
     [Header("Général")]
+    public bool attaqueSpe2;
     public bool abandonOn;
     public bool canAttack;
     public int comboActuel;
@@ -137,7 +138,7 @@ public class AttaquesNormales : MonoBehaviour
             SpecialAttack();
         }
 
-        if (attaqueSpe)
+        if (attaqueSpe2)
         {
             stunDuration[2] += Time.deltaTime;
             if (stunDuration[2] >= stunDurationMax[3])
@@ -146,7 +147,7 @@ public class AttaquesNormales : MonoBehaviour
                 anim.SetBool("isAttackingSpeDown",false);
                 anim.SetBool("isWalking",false);
                 anim.SetBool("isIdle",true);
-                attaqueSpe = false;
+                attaqueSpe2 = false;
                 canAttack = true;
                 CharacterController.instance.isAttacking = false;
             }
@@ -345,7 +346,8 @@ public class AttaquesNormales : MonoBehaviour
         {
             CharacterController.instance.transform.localRotation = Quaternion.Euler(CharacterController.instance.transform.localRotation.x,-180,CharacterController.instance.transform.localRotation.z);
         }
-        attaqueSpe = true;
+        attaqueSpeSpell = true;
+        attaqueSpe2 = true;
         StartCoroutine(ResetTracking());
         //StartCoroutine(ResetState());
         comboActuel = 0;
@@ -363,7 +365,7 @@ public class AttaquesNormales : MonoBehaviour
         anim.SetBool("isAttackingSpeDown",false);
         anim.SetBool("isWalking",false);
         anim.SetBool("isIdle",true);
-        attaqueSpe = false;
+        attaqueSpe2 = false;
         canAttack = true;
         CharacterController.instance.isAttacking = false;
     }
@@ -413,6 +415,7 @@ public class AttaquesNormales : MonoBehaviour
         attaque1 = false;
         attaque2 = false;
         attaque3 = false;
+        attaqueSpeSpell = false;
     }
 }
 
