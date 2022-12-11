@@ -209,13 +209,6 @@ public class CharacterController : MonoBehaviour
         InteractWithDoor(currentDoor);
       }
     }
-    else
-    {
-      if (CanvasInteraction is not null)
-      {
-        CanvasInteraction.SetActive(false);
-      }
-    }
   }
 
   void Dashing()
@@ -353,6 +346,10 @@ public class CharacterController : MonoBehaviour
   {
     if (col.gameObject.CompareTag("Door"))
     {
+      if (CanvasInteraction is not null)
+      {
+        CanvasInteraction.SetActive(false);
+      }
       canInteract = false;
       currentDoor = null;
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -22,6 +23,12 @@ public class PotionRepository : MonoBehaviour
     [SerializeField] private float deceleration = 0.3f;
     public float timer;
     public Rigidbody2D rb;
+    
+    [Header("Interaction")]
+    public bool canInteract;
+    public GameObject CanvasInteraction;
+    public Vector3 offset;
+    public TextMeshProUGUI TextInteraction;
 
     private void Awake()
     {
@@ -47,11 +54,13 @@ public class PotionRepository : MonoBehaviour
             rb.AddForce(explode, ForceMode2D.Impulse);
             rb.drag = deceleration;
         }
+        
+        CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
+        TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
     }
     
     private void Update()
     {
-
         isMoving = false;
         if (timer >= 0)
         {
@@ -59,5 +68,27 @@ public class PotionRepository : MonoBehaviour
             timer -= Time.deltaTime;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            canInteract = true;
+            CanvasInteraction.SetActive(true);
+            CanvasInteraction.transform.position = transform.transform.position + offset;
+            CanvasInteraction.transform.localScale = new Vector3(0, 0, CanvasInteraction.transform.localScale.z);
+            CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z), 0.25f);
+            TextInteraction.SetText("Prendre");
+        }
+    }
     
+    
+    private void OnTriggerExit2D(Collider2D other) //c'est du Debug, ne sert pas vraiment
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            CanvasInteraction.SetActive(false);
+            canInteract = false;
+        }
+    }
 }

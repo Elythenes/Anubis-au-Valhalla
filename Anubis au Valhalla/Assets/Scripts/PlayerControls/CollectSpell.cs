@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -10,31 +11,13 @@ public class CollectSpell : MonoBehaviour
     [Header("DEBUG")]
     public bool isSpellCollectable = false;
     public GameObject collectableSpell;
-    public GameObject CanvasInteraction;
-    public Vector3 offset;
-    public TextMeshProUGUI TextInteraction;
-    
+
     void Start()
     {
-        isSpellCollectable = false;  CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
-        CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
-        TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
+        isSpellCollectable = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.CompareTag("CollectableSpell"))
-        {
-            if (isSpellCollectable)
-            {
-                CanvasInteraction.transform.position = collectableSpell.transform.position + offset;
-            }
-            CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
-            CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
-            TextInteraction.SetText("Prendre");
-            CanvasInteraction.SetActive(true); 
-        }
-    }
+    
 
     private void OnTriggerStay2D(Collider2D other) //détecte si un spell est sur le joueur
     {
@@ -46,14 +29,14 @@ public class CollectSpell : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D other) //c'est du Debug, ne sert pas vraiment
-    {
+    { 
         if (other.gameObject.CompareTag("CollectableSpell"))
         {
-            CanvasInteraction.SetActive(false);
             isSpellCollectable = false;
             collectableSpell = null;
         }
     }
+    
 
     private void Update()
     {
@@ -66,6 +49,9 @@ public class CollectSpell : MonoBehaviour
         }
     }
 
+    
+    
+    
     
     
     /* ancien code de ses morts (je le garde, on sait jamais :D)

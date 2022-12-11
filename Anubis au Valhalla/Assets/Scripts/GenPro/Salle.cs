@@ -63,11 +63,11 @@ public class Salle : MonoBehaviour
         {
             SalleGennerator.instance.globalBank = Mathf.RoundToInt(SalleGennerator.instance.globalBank * 1.1f);
         }
-        AstarPath.active.Scan(AstarPath.active.data.graphs);
         //CharacterController.instance.ground = GameObject.Find("Ground").GetComponent<TilemapRenderer>();
         RearrangeDoors();
         AdjustCameraConstraints();
         GetAvailableTiles();
+        AstarPath.active.Scan(AstarPath.active.data.graphs);
         
     }
 

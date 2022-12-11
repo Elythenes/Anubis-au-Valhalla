@@ -7,6 +7,7 @@ public class DashTracker : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
+        if (CharacterController.instance is null) return;
         switch (CharacterController.instance.facing)
         {
             case CharacterController.LookingAt.Nord:
