@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
@@ -16,8 +17,10 @@ public class CharacterController : MonoBehaviour
   [NaughtyAttributes.ReadOnly] public float speedY;
   public bool isAttacking;
   public LookingAt facing;
-  
+
   [Header("Interactions")] 
+  public bool canInteract;
+  public Collider2D currentDoor;
   public GameObject CanvasInteraction;
   public Vector3 offset;
   public TextMeshProUGUI TextInteraction;
@@ -191,6 +194,28 @@ public class CharacterController : MonoBehaviour
       canDash = true;
       timerdashCooldown = 0;
     }
+    
+    
+    // Interaction avec la porte
+    if (canInteract)
+    {
+      CanvasInteraction.SetActive(true); 
+      CanvasInteraction.transform.position = transform.position + offset;
+      CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
+      CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
+      TextInteraction.SetText("Continuer");
+      if (Input.GetKeyDown(KeyCode.F) && currentDoor is not null)
+      {
+        InteractWithDoor(currentDoor);
+      }
+    }
+    else
+    {
+      if (CanvasInteraction is not null)
+      {
+        CanvasInteraction.SetActive(false);
+      }
+    }
   }
 
   void Dashing()
@@ -314,38 +339,22 @@ public class CharacterController : MonoBehaviour
   
   // ---TRUC POUR GENERER LA PROCHAINE SALLE---
 
-  private void OnTriggerStay2D(Collider2D col)
-  {
-    if (col.gameObject.CompareTag("Door"))
-    {
-      CanvasInteraction.SetActive(true); 
-      CanvasInteraction.transform.position = transform.position + offset;
-      CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
-      CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
-      TextInteraction.SetText("Continuer");
-      
-      if (Input.GetKeyDown(KeyCode.F))
-      {
-        InteractWithDoor(col);
-      }
-    }
 
-    if (col.gameObject.layer ==roomBorders)
+  private void OnTriggerEnter2D(Collider2D col)
+  {
+    if (col.CompareTag("Door"))
     {
-      if (canPassThrough)
-      {
-        StartCoroutine(ChangeBox());
-      }
+      canInteract = true;
+      currentDoor = col;
     }
   }
+  
   private void OnTriggerExit2D(Collider2D col)
   {
     if (col.gameObject.CompareTag("Door"))
     {
-      if (CanvasInteraction is not null)
-      {
-        CanvasInteraction.SetActive(false);
-      }
+      canInteract = false;
+      currentDoor = null;
     }
   }
   private void InteractWithDoor(Collider2D col)
@@ -396,12 +405,4 @@ public class CharacterController : MonoBehaviour
     finDash = false;
   }
 
-  IEnumerator ChangeBox()
-  {
-    GetComponent<BoxCollider2D>().enabled = false;
-    yield return new WaitForSeconds(dashDuration);
-    GetComponent<BoxCollider2D>().enabled = true;
-    canPassThrough = false;
-  }
-  
 }

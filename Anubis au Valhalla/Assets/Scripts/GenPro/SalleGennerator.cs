@@ -235,7 +235,7 @@ public class SalleGennerator : MonoBehaviour
                                 CharacterController.instance.transform.position = new Vector3(s_doors[(int) DoorOrientation.West].transform.position.x +1,s_doors[(int) DoorOrientation.West].transform.position.y,s_doors[(int) DoorOrientation.West].transform.position.z);
                                 break;
                         case DoorOrientation.South:
-                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) DoorOrientation.South].transform.position.x,s_doors[(int) DoorOrientation.South].transform.position.y +1,s_doors[(int) DoorOrientation.South].transform.position.z);
+                                CharacterController.instance.transform.position = new Vector3(s_doors[(int) DoorOrientation.South].transform.position.x,s_doors[(int) DoorOrientation.South].transform.position.y +2,s_doors[(int) DoorOrientation.South].transform.position.z);
                                 break;
                         case DoorOrientation.East:
                                 CharacterController.instance.transform.position = new Vector3(s_doors[(int) DoorOrientation.East].transform.position.x-1,s_doors[(int) DoorOrientation.East].transform.position.y,s_doors[(int) DoorOrientation.East].transform.position.z);
