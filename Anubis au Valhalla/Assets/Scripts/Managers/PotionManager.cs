@@ -45,6 +45,7 @@ public class PotionManager : MonoBehaviour
       if (addStartingPotion)
       {
          currentPotion = startingPotion;
+         UiManager.instance.CollectPotionDebug();
       }
    }
 
