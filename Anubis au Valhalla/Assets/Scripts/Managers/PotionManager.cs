@@ -74,7 +74,6 @@ public class PotionManager : MonoBehaviour
       {
          VerifyForSpecificPotion(currentPotion.index);
       }
-      
       //Debug.Log("tookDamage is = " + tookDamage);
    }
 
@@ -87,9 +86,9 @@ public class PotionManager : MonoBehaviour
       {
          UiManager.instance.panelPotion.SetActive(true);
          
-         AnubisCurrentStats.instance.baseDamage += AnubisCurrentStats.instance.baseDamage * glou.damage/100;
-         AnubisCurrentStats.instance.baseDamageForSoul += AnubisCurrentStats.instance.baseDamageForSoul * glou.damage/100;
-         
+         AnubisCurrentStats.instance.totalBaseBonusDamage += AnubisCurrentStats.instance.totalBaseBonusDamage * glou.damage/100;
+         AnubisCurrentStats.instance.totalBaseBonusDamage += AnubisCurrentStats.instance.totalBaseBonusDamage * glou.damage/100;
+
          //DamageManager.instance.Heal(glouglou.heal);
          
          AnubisCurrentStats.instance.damageReduction *= glou.armor;
@@ -173,7 +172,7 @@ public class PotionManager : MonoBehaviour
       if (glou.type == PotionObject.PotionType.StatBasicPotion 
           || glou.type == PotionObject.PotionType.StatSpecificPotion)
       {
-         AnubisCurrentStats.instance.baseDamage = baseDamageBeforePotion;
+         AnubisCurrentStats.instance.totalBaseBonusDamage = baseDamageBeforePotion;
          AnubisCurrentStats.instance.baseDamageForSoul = baseDamageForSoulBeforePotion;
          AnubisCurrentStats.instance.damageReduction = armorBeforePotion;
          AnubisCurrentStats.instance.speedX = speedXBeforePotion;
@@ -206,7 +205,7 @@ public class PotionManager : MonoBehaviour
 
    void SaveStatBeforePotion()
    {
-      baseDamageBeforePotion = AnubisCurrentStats.instance.baseDamage;
+      baseDamageBeforePotion = AnubisCurrentStats.instance.totalBaseDamage;
       baseDamageForSoulBeforePotion = AnubisCurrentStats.instance.baseDamageForSoul;
       armorBeforePotion = AnubisCurrentStats.instance.damageReduction;
       speedXBeforePotion = AnubisCurrentStats.instance.speedX;
