@@ -98,7 +98,7 @@ public class GlyphManager : MonoBehaviour
         switch (hiero.anubisStat)
         {
             case GlyphObject.AnubisStat.AnubisBaseDamage:   //augmente les débâts de toutes les attaques du combo et le Thrust
-                AnubisCurrentStats.instance.baseDamageForSoul += Mathf.RoundToInt(hiero.bonusBasicStat);
+                //AnubisCurrentStats.instance.baseDamageForSoul += Mathf.RoundToInt(hiero.bonusBasicStat);
                 AnubisCurrentStats.instance.AddBonusDamage(1,hiero.bonusBasicStat);
                 break;
             

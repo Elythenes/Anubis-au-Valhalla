@@ -69,12 +69,12 @@ public class AnubisCurrentStats : MonoBehaviour
       {
          instance = this;
       }
+      StartDamageForStat();
    }
 
    private void Start()
    {
       // pour les attaques
-      StartDamageForStat();
       atk.hitBoxC = hitBoxC;
       atk.rangeAttaque = rangeAttaque;
       atk.isC = isC;
@@ -106,6 +106,7 @@ public class AnubisCurrentStats : MonoBehaviour
       UpdateDamageForStat();
       atk.hitBoxC = hitBoxC;
       atk.rangeAttaque = rangeAttaque;
+      atk.damage = comboDamageForStat;
       atk.isC = isC;
       atk.criticalRate = criticalRate;
       atk.dureeHitbox = dureeHitbox;
@@ -170,6 +171,7 @@ public class AnubisCurrentStats : MonoBehaviour
             break;
          
          case 1: //Total Base Damage
+            Debug.Log("glyph marchent");
             totalBaseBonusDamage += value;
             break;
          
