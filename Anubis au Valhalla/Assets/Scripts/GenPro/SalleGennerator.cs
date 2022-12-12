@@ -22,10 +22,13 @@ public class SalleGennerator : MonoBehaviour
         public GameObject amphores;
         public List<Door> s_doors;
         [SerializeField] private Salle startRoom;
-        [SerializeField] private Salle EndRoom;
+        [SerializeField] public Salle EndRoom;
+        [SerializeField] public Salle startRoom2;
+        [SerializeField] private Salle EndRoom2;
 
         [Header("CONTENU DU DONJON")]
         public List<Salle> roomPrefab = new List<Salle>();
+        public List<Salle> roomPrefab2 = new List<Salle>();
         public List<Salle> specialRooms;
         private List<GameObject> itemList;
 
@@ -59,6 +62,7 @@ public class SalleGennerator : MonoBehaviour
         public int challengeChooser;
         public GameObject Timer;
         public GameObject parasiteToSpawn;
+        public bool zone2;
 
         public enum DoorOrientation
         {
@@ -104,10 +108,23 @@ public class SalleGennerator : MonoBehaviour
                         OpenDoors((DoorOrientation)i,true);
                 }
         }
-        
+
         /// <summary>
         /// première partie de la génération, check s'il doit générer le début ou la fin du donjon avant de générer une salle
         /// </summary>
+
+        public void NewZone(DoorOrientation door, bool switchDoor, Door type)
+        {
+                zone2 = true;
+                startRoom = startRoom2;
+                roomPrefab.Clear();
+                roomPrefab.AddRange(roomPrefab2);
+                roomsDone = 0;
+                dungeonSize -= shopsVisited;
+                shopsVisited = 0;
+                TransitionToNextRoom(door,switchDoor,type);
+
+        }
         public Salle BeginGeneration()
         {
                 //if (currentRoom != null) Destroy(currentRoom.gameObject);
@@ -128,11 +145,31 @@ public class SalleGennerator : MonoBehaviour
         /// </summary>
         public Salle GenerateDungeon2()
         {
-                if (roomsDone == 0)
+                if (roomsDone == 0 )
                 {
-                        EnableDoors(DoorOrientation.East,true);
-                        OpenDoors(DoorOrientation.East, true);
-                        s_doors[(int) DoorOrientation.East].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+                        if (zone2)
+                        {
+                                for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
+                                {
+                                        if (i == (int) fromDoor) continue;
+                                        bool enabled = Random.value > 0.4f;
+                                        EnableDoors((DoorOrientation) i,enabled);
+                                        bool special = Random.value > 0.3f;
+                                        if (special)
+                                        {
+                                                s_doors[i].willChooseSpecial = true;
+                                        }
+                                        s_doors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+                                }
+                        }
+                        else
+                        {
+                                Debug.Log("ZEROOO");
+                                EnableDoors(DoorOrientation.East,true);
+                                OpenDoors(DoorOrientation.East, true);
+                                s_doors[(int) DoorOrientation.East].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+
+                        }
                         return Instantiate(startRoom);
                 }
                 for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
@@ -182,6 +219,7 @@ public class SalleGennerator : MonoBehaviour
                         Door doorToShop = s_doors[Random.Range(0, s_doors.Count)];
                         doorToShop.currentDoorType = Door.DoorType.ToShop;
                         doorToShop.ChooseSpecialToSpawn(0);
+                        doorToShop.willChooseSpecial = false;
                         s_doors.Insert((int)fromDoor, removedDoor);
                 }
                 if (roomsDone == dungeonSize)
@@ -189,8 +227,15 @@ public class SalleGennerator : MonoBehaviour
                         for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                         {
                                 EnableDoors((DoorOrientation) i ,false);
+                                s_doors[i].willChooseSpecial = false;
+                        }
+
+                        if (zone2)
+                        {
+                                return Instantiate(EndRoom2);
                         }
                         EnableDoors(fromDoor,true);
+                        EnableDoors(toDoor,true);
                         return Instantiate(EndRoom);
                 }
                 EnableDoors(fromDoor,true);
@@ -211,13 +256,20 @@ public class SalleGennerator : MonoBehaviour
                         DoorOrientation.North => DoorOrientation.South,
                         DoorOrientation.South => DoorOrientation.North,
                         _ => fromDoor
-                };
+                };      
                 transitionCanvas.DOFade(1, 0.25f).OnComplete(() =>
                 {
                         if (currentRoom != null) currentRoom.gameObject.SetActive(false);
                         if(switchDoor) SwapDoorType(type);
                         currentRoom = BeginGeneration();
-                        if (roomsDone != 0) MovePlayerToDoor(fromDoor);
+                        if (roomsDone != 0)
+                        {
+                                MovePlayerToDoor(fromDoor);
+                        }
+                        else if (zone2)
+                        {
+                                MovePlayerToDoor(fromDoor);
+                        }
                         ClearRoom();
                         if(currentRoom != startRoom)currentRoom.GetSpawnPoints(Random.Range(0, 3));
                         moveGrid.target = currentRoom.AstarRef;
@@ -263,7 +315,7 @@ public class SalleGennerator : MonoBehaviour
         /// </summary>
         public void OpenDoors(DoorOrientation index, bool state)
         {
-                s_doors[(int)index].GetComponent<BoxCollider2D>().enabled = state;
+                s_doors[(int)index].collider.enabled = state;
                 s_doors[(int)index].GetComponentInChildren<Animator>().SetBool("Open",state);
         }
         /// <summary>
@@ -293,7 +345,7 @@ public class SalleGennerator : MonoBehaviour
                         Destroy(item);
                 }
 
-                List<GameObject> amount = CharacterController.instance.GetComponent<GhostDash>().tousLesSprites;
+                List<GameObject> amount = CharacterController.instance.ghost.tousLesSprites;
                 for (int i = 0; i < amount.Count; i++)
                 {
                         Destroy(CharacterController.instance.GetComponent<GhostDash>().tousLesSprites[i].gameObject);
