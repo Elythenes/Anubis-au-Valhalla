@@ -44,7 +44,10 @@ public class ContainScriptableObject : MonoBehaviour
         }
         
         CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
-        TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
+        if (GameObject.Find("TexteAction") is not null)
+        {
+            TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
+        }
     }
 
     private void Update()
@@ -60,6 +63,7 @@ public class ContainScriptableObject : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
+            CanvasInteraction.GetComponent<Canvas>().enabled = true;
             canInteract = true;
             CanvasInteraction.SetActive(true);
             CanvasInteraction.transform.position = transform.transform.position + offset;
@@ -74,7 +78,7 @@ public class ContainScriptableObject : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CanvasInteraction.SetActive(false);
+            CanvasInteraction.GetComponent<Canvas>().enabled = false;
             canInteract = false;
         }
     }

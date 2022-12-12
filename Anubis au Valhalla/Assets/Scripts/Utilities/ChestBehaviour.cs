@@ -8,13 +8,16 @@ using Random = UnityEngine.Random;
 
 public class ChestBehaviour : MonoBehaviour
 {
-    public bool CanOpen;
+
     public bool isOpened;
     [Expandable] public List<ItemPattern> patternList;
     [Expandable] public ItemPattern patternLooted;
     private Rigidbody2D rbItem;
     public LayerMask groundLayer;
     public Animator openAnim;
+    
+    [Header("Interaction")]
+    public bool CanOpen;
     public GameObject CanvasInteraction;
     public Vector3 offset;
     public TextMeshProUGUI TextInteraction;
@@ -24,19 +27,20 @@ public class ChestBehaviour : MonoBehaviour
         CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
         TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
 
-        if(Physics2D.Raycast(transform.position,new Vector3(0,0,1),10,groundLayer))
+        /*if(Physics2D.Raycast(transform.position,new Vector3(0,0,1),10,groundLayer))
         {
             transform.position = new Vector2(transform.position.x, transform.position.y-5);
-        }
+        }*/
     }
 
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (other.CompareTag("Player"))
+        if (col.gameObject.CompareTag("Player"))
         {
             if (!isOpened)
             {
+                CanvasInteraction.GetComponent<Canvas>().enabled = true;
                 CanOpen = true;
                 CanvasInteraction.SetActive(true); 
                 CanvasInteraction.transform.position = transform.position + offset;
@@ -48,15 +52,13 @@ public class ChestBehaviour : MonoBehaviour
         }
     }
     
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other) //c'est du Debug, ne sert pas vraiment
     {
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
+            CanvasInteraction.GetComponent<Canvas>().enabled = false;
+            //CanvasInteraction.SetActive(false);
             CanOpen = false;
-            if (CanvasInteraction is not null)
-            {
-                CanvasInteraction.SetActive(false);
-            }
         }
     }
 
@@ -67,7 +69,8 @@ public class ChestBehaviour : MonoBehaviour
             StartCoroutine(OpenChest());
             if (CanvasInteraction is not null)
             {
-                CanvasInteraction.SetActive(false);
+                CanvasInteraction.GetComponent<Canvas>().enabled = false;
+                //CanvasInteraction.SetActive(false);
             }
         }
     }

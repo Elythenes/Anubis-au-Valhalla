@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class LayerManager : MonoBehaviour
 {
-    [HideInInspector]public GameObject player;
-    [HideInInspector]public GameObject emptyLayerPlayer;
-    [HideInInspector]public MeshRenderer srPlayer;
-    [HideInInspector]public SpriteRenderer srProps;
-    [HideInInspector]public Transform emptyLayer;
+    public GameObject player;
+    public GameObject emptyLayerPlayer;
+    public MeshRenderer srPlayer;
+    public SpriteRenderer srProps;
+    public Transform emptyLayer;
     public virtual void Start()
     {
         player = GameObject.Find("Personnage Spine");
