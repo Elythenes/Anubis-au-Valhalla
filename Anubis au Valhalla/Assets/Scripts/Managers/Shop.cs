@@ -42,6 +42,12 @@ public class Shop : MonoBehaviour
 
     public List<GlyphObject> choice;
 
+    public bool lockInteract;
+    public bool canInteract;
+    public Vector3 offset;
+    public GameObject CanvasInteraction;
+    public TextMeshProUGUI TextInteraction;
+
     public enum UpsTypes
     {
         Lame,
@@ -82,7 +88,8 @@ public class Shop : MonoBehaviour
         glyphUpdater = GameObject.Find("GlyphManager").GetComponent<GlyphInventory>();
         Souls.instance.UpdateSoulsShop();
         consumableObject.Add(null);
-        
+        CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
+        TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -119,25 +126,38 @@ public class Shop : MonoBehaviour
         {
             QuitShop();
         }
-    }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        if (canInteract)
         {
-            popupShop.enabled = true;
             if (Input.GetKeyDown(KeyCode.F))
             {
-                popupShop.gameObject.SetActive(false);
+                CanvasInteraction.GetComponent<Canvas>().enabled = false;
+                lockInteract = true;
                 GetShop();
             }
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Player") && !lockInteract)
+        {
+            CanvasInteraction.GetComponent<Canvas>().enabled = true;
+            CanvasInteraction.transform.position = transform.position + offset;
+            CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
+            CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
+            TextInteraction.SetText("Acheter");
+            CanvasInteraction.SetActive(true);
+            canInteract = true;
+        }
+    }
+    
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            popupShop.enabled = false;
+            CanvasInteraction.GetComponent<Canvas>().enabled = false;
+            canInteract = false;
         }
     }
 
