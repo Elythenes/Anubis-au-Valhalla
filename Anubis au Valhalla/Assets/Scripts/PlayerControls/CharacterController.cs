@@ -162,6 +162,8 @@ public class CharacterController : MonoBehaviour
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
+      anim.SetBool("isDashing",false);
+      anim.SetBool("isWalking",true);
       playerCol.enabled = true;
       dashTracker.SetActive(false);
       allowMovements = true;
@@ -217,8 +219,10 @@ public class CharacterController : MonoBehaviour
   {
     timerDash += Time.deltaTime;
     {
+      anim.SetBool("isDashing",true);
       switch (facing)
       {
+       
         case LookingAt.Nord:
           rb.velocity = (new Vector2(0,1) * dashSpeed);
           break;

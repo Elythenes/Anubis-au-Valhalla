@@ -95,6 +95,7 @@ public class AttaquesNormales : MonoBehaviour
         
         if (cooldownAbandonComboTimer >= cooldownAbandonCombo) // Condition de retour à l'idle
         {
+            anim.SetBool("StopCombo",true);
             abandonOn = false;
             comboActuel = 0;
             cooldownAbandonComboTimer = 0;
@@ -159,6 +160,7 @@ public class AttaquesNormales : MonoBehaviour
     public void ExecuteAttack()
     {
         CharacterController.instance.stopDash = true;
+        anim.SetBool("StopCombo",false);
         switch (comboActuel)
         {
             case 0:
