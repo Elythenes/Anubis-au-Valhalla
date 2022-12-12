@@ -30,6 +30,7 @@ public class Shop : MonoBehaviour
     public List<TextMeshProUGUI> description;
     public List<TextMeshProUGUI> costText;
     public List<int> cost = new List<int>();
+    public TextMeshProUGUI popupShop;
 
     [Foldout("Consumables")] public List<Button> consumablesButton;
     [Foldout("Consumables")] public List<TextMeshProUGUI> consumablesTitle;
@@ -103,28 +104,55 @@ public class Shop : MonoBehaviour
             }
         }
 
+        if (consumablesCost.Count > 0)
+        {
+            for (int i = 0; i < consumablesCost.Count; i++)
+            {
+                if (consumablesCost[i] > Souls.instance.soulBank)
+                {
+                    consumablesButton[i].interactable = false;
+                }
+            }
+        }
+
         if (!open)
         {
             QuitShop();
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            shopUI.interactable = true;
-            open = true;
-            CharacterController.instance.controls.Disable();
-            CharacterController.instance.canDash = false;
-            AttaquesNormales.instance.canAttack = false;
-            shopUI.DOFade(1, 1);
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            popupShop.enabled = true;
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                popupShop.gameObject.SetActive(false);
+                GetShop();
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            popupShop.enabled = false;
         }
     }
 
     #region GeneralShopFunctions
 
+    void GetShop()
+    {
+        shopUI.interactable = true;
+        open = true;
+        CharacterController.instance.controls.Disable();
+        CharacterController.instance.canDash = false;
+        AttaquesNormales.instance.canAttack = false;
+        shopUI.DOFade(1, 1);
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+    }
     void OpenShop()
     {
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 1.9f, zoomSpeed);
