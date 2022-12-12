@@ -118,7 +118,6 @@ public class IA_Monstre1 : MonoBehaviour
 
     public void Update()
     {
-
         #region Movements
 
           if (isChasing && !isDashing)
