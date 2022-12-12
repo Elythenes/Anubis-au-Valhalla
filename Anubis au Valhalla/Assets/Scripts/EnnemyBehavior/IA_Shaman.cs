@@ -63,7 +63,7 @@ public class IA_Shaman : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = CharacterController.instance.gameObject;
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
         ai = GetComponent<IAstarAI>();
@@ -225,8 +225,9 @@ public class IA_Shaman : MonoBehaviour
     void Summon()
     {
         var summon = Instantiate(corbeau, transform.position + new Vector3(0, 3, 0), Quaternion.identity);
-        SalleGennerator.instance.currentRoom.currentEnemies.Add(summon);
-        summon.GetComponent<MonsterLifeManager>().soulValue = corbeauSoulDroped;
+        var summonScript = summon.GetComponent<MonsterLifeManager>();
+        SalleGennerator.instance.currentRoom.currentEnemies.Add(summonScript);
+        summonScript.soulValue = corbeauSoulDroped;
         corbeauSoulDroped -= 1;
         if (corbeauSoulDroped < 0)
         {

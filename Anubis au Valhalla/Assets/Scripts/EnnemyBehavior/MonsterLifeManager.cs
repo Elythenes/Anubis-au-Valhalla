@@ -195,7 +195,9 @@ public class MonsterLifeManager : MonoBehaviour
     {
         if (SalleGennerator.instance.currentRoom.parasites && !isParasite)
         {
-            var parasite = Instantiate(SalleGennerator.instance.parasiteToSpawn);
+            var parasite = Instantiate(SalleGennerator.instance.parasiteToSpawn, transform.position, Quaternion.identity);
+            var parasiteScript = parasite.GetComponent<MonsterLifeManager>();
+            SalleGennerator.instance.currentRoom.currentEnemies.Add(parasiteScript);
             parasite.GetComponent<MonsterLifeManager>().isParasite = true;
             parasite.GetComponent<MonsterLifeManager>().soulValue =
                 Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
@@ -203,7 +205,7 @@ public class MonsterLifeManager : MonoBehaviour
 
         ScoreManager.instance.currentScore += data.score;
         Souls.instance.CreateSouls(child.transform.position, soulValue);
-        SalleGennerator.instance.currentRoom.currentEnemies.Remove(gameObject);
+        SalleGennerator.instance.currentRoom.currentEnemies.Remove(this);
         SalleGennerator.instance.currentRoom.CheckForEnemies();
         Destroy(gameObject);
     }
@@ -211,7 +213,14 @@ public class MonsterLifeManager : MonoBehaviour
     IEnumerator DelayedSpawn()
     {
         Instantiate(spawnCircle, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(SalleGennerator.instance.TimeBetweenWaves);
+        if (isParasite)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(SalleGennerator.instance.TimeBetweenWaves);
+        }
         child.SetActive(true);
     }
 }
