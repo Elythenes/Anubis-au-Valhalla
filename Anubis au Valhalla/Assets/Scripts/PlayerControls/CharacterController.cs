@@ -398,8 +398,6 @@ public class CharacterController : MonoBehaviour
       SalleGennerator.instance.TransitionToNextRoom(hitDoor.doorOrientation, false,
         hitDoor);
     }
-
-
     hitDoor.willChooseSpecial = false;
   }
 
