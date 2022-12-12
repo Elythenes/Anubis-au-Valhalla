@@ -133,9 +133,12 @@ public class IA_Guerrier : MonoBehaviour
         
         IEnumerator WaitMove()
         {
-            aipath.canMove = false;
-            yield return new WaitForSeconds(0.1f);
-            aipath.canMove = true;
+            yield return new WaitForSeconds(0.3f);
+            GameObject swingOj = Instantiate(swing, pointAttaque.position, Quaternion.identity);
+            swingOj.GetComponent<HitboxGuerrier>().ia = this;
+            swingOj.transform.localScale = new Vector2(rangeAttaque,rangeAttaque);
+            float angle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
+            swingOj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
         }
 
         if (StartUpAttackTimeTimer >= StartUpAttackTime&& !life.isMomified)
@@ -144,12 +147,9 @@ public class IA_Guerrier : MonoBehaviour
             anim.SetBool("isIdle",false);
             anim.SetBool("PrepareAttack",false);
             anim.SetBool("isAttacking",true);
+            StartCoroutine(WaitMove());
            // Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
-            GameObject swingOj = Instantiate(swing, pointAttaque.position, Quaternion.identity);
-            swingOj.GetComponent<HitboxGuerrier>().ia = this;
-            swingOj.transform.localScale = new Vector2(rangeAttaque,rangeAttaque);
-            float angle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
-            swingOj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+           
             //foreach (Collider2D joueur in toucheJoueur)
            // {
                 //Debug.Log("touché");

@@ -4,7 +4,9 @@ using Random = UnityEngine.Random;
 
 public class IA_Corbeau : MonoBehaviour
 {
-    [Header("Vie et visuels")] public GameObject emptyLayers;
+    [Header("Vie et visuels")] 
+    public Animator anim;
+    public GameObject emptyLayers;
     public bool isElite;
     private Rigidbody2D rb;
     public LayerMask layerPlayer;
@@ -52,6 +54,7 @@ public class IA_Corbeau : MonoBehaviour
 
     private void Start()
     {
+        anim.SetBool("isAttacking",true);
         StartUpAttackTime = Random.Range(3, 6);
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -64,6 +67,8 @@ public class IA_Corbeau : MonoBehaviour
         {
             isElite = true;
         }
+        
+        
 
        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
         {
@@ -80,9 +85,10 @@ public class IA_Corbeau : MonoBehaviour
 
     public void Update()
     {
-        if (life.vieActuelle < 0)
+        if (life.vieActuelle <= 0)
         {
-            Destroy(holder);
+            anim.SetBool("isDead",true);
+            Destroy(holder.gameObject);
         }
         
         if (player.transform.position.y >
@@ -97,16 +103,19 @@ public class IA_Corbeau : MonoBehaviour
 
         if (!isAttacking)
         {
-            if (transform.position.x <
-                player.transform.position
-                    .x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
+            if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
             {
-                transform.localScale = new Vector3(-1, 2.2909f, 1);
+                var localRotation = transform.localRotation;
+                localRotation = Quaternion.Euler(localRotation.x, -180, localRotation.z);
+                transform.localRotation = localRotation;
             }
             else if (transform.position.x > player.transform.position.x)
             {
-                transform.localScale = new Vector3(1, 2.2909f, 1);
-            }
+                var localRotation = transform.localRotation;
+                localRotation = Quaternion.Euler(localRotation.x, 0, localRotation.z);
+                transform.localRotation = localRotation;
+            }  
+
         }
 
         if (StartUpAttackTimeTimer >= StartUpAttackTime && !life.isMomified)
@@ -115,6 +124,9 @@ public class IA_Corbeau : MonoBehaviour
             
             if (indic)
             {
+                anim.SetBool("isAttacking",false);
+                anim.SetBool("StartUpAttaque",true);
+                anim.SetBool("isWalking",false);
                 isFleeing = false;
                 isChasing = false;
                 isRotating = false;
@@ -131,6 +143,10 @@ public class IA_Corbeau : MonoBehaviour
             }
             else if(life.gotHit)
             {
+                anim.SetBool("isAttacking",false);
+                anim.SetBool("StartUpAttaque",false);
+                anim.SetBool("isWalking",true);
+                
                 if (holder is not null)
                 {
                     Destroy(holder.gameObject);
@@ -145,6 +161,8 @@ public class IA_Corbeau : MonoBehaviour
             
             if (AttackTimeTimer >= AttackTime && !life.isMomified)
             {
+                anim.SetBool("isAttacking",true);
+                anim.SetBool("StartUpAttaque",false);
                 aipath.canMove = true;
                 GameObject projPlume = Instantiate(projectilPlume, transform.position, Quaternion.identity);
                 projPlume.GetComponent<ProjectileCorbeau>().ia = this;
@@ -152,6 +170,7 @@ public class IA_Corbeau : MonoBehaviour
                 AttackTimeTimer = 0;
                 indic = true;
                 canMove = true;
+                anim.SetBool("isWalking",true);
             }
         }
 
