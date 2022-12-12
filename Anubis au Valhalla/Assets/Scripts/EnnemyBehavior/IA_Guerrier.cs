@@ -6,7 +6,8 @@ using Random = UnityEngine.Random;
 
 public class IA_Guerrier : MonoBehaviour
 {
-    [Header("Vie et visuels")]
+    [Header("Vie et visuels")] 
+    public Animator anim;
     public GameObject emptyLayers;
     public bool isElite;
     public MonsterLifeManager life;
@@ -47,6 +48,7 @@ public class IA_Guerrier : MonoBehaviour
 
     private void Start()
     {
+        anim.SetBool("isRuning",true);
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
@@ -73,25 +75,20 @@ public class IA_Guerrier : MonoBehaviour
 
     public void Update()
     {
-        if (player.transform.position.y > emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
-        {
-            sr.sortingOrder = 2;
-        }
-        else
-        {
-            sr.sortingOrder = 1;
-        }
-
         if (!isAttacking && !life.isMomified)
         {
             if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
             {
-                transform.localScale = new Vector3(-1, 2.2909f, 1);
+                var localRotation = transform.localRotation;
+                localRotation = Quaternion.Euler(localRotation.x, 0, localRotation.z);
+                transform.localRotation = localRotation;
             }
             else if (transform.position.x > player.transform.position.x)
             {
-                transform.localScale = new Vector3(1, 2.2909f, 1);
-            }
+                var localRotation = transform.localRotation;
+                localRotation = Quaternion.Euler(localRotation.x, -180, localRotation.z);
+                transform.localRotation = localRotation;
+            }  
         }
 
         if (life.gotHit)
@@ -112,8 +109,17 @@ public class IA_Guerrier : MonoBehaviour
 
         }
 
+        if (life.vieActuelle <= 0)
+        {
+            anim.SetBool("isDead",true);
+        }
+
         if (isAttacking&& !life.isMomified)
         {
+            anim.SetBool("isRuning",false);
+            anim.SetBool("isIdle",false);
+            anim.SetBool("PrepareAttack",true);
+            anim.SetBool("isAttacking",false);
             aipath.canMove = false;
             StartUpAttackTimeTimer += Time.deltaTime;
             hasShaked = false;
@@ -134,11 +140,16 @@ public class IA_Guerrier : MonoBehaviour
 
         if (StartUpAttackTimeTimer >= StartUpAttackTime&& !life.isMomified)
         {
+            Debug.Log("attaque");
+            anim.SetBool("isIdle",false);
+            anim.SetBool("PrepareAttack",false);
+            anim.SetBool("isAttacking",true);
            // Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
             GameObject swingOj = Instantiate(swing, pointAttaque.position, Quaternion.identity);
             swingOj.GetComponent<HitboxGuerrier>().ia = this;
             swingOj.transform.localScale = new Vector2(rangeAttaque,rangeAttaque);
-            swingOj.transform.localRotation = new Quaternion(player.transform.position.x,player.transform.position.y,player.transform.position.z,0);
+            float angle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
+            swingOj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
             //foreach (Collider2D joueur in toucheJoueur)
            // {
                 //Debug.Log("touché");
@@ -153,10 +164,11 @@ public class IA_Guerrier : MonoBehaviour
 
         if (isWondering&& !life.isMomified)
         {
+            anim.SetBool("isIdle",false);
+             anim.SetBool("isRunning",true);
             WonderingTimeTimer += Time.deltaTime;
             if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath) 
             {
-                Debug.Log("wondering");
                 playerFollow.enabled = false;
                 ai.destination = PickRandomPoint();
                 ai.SearchPath();
