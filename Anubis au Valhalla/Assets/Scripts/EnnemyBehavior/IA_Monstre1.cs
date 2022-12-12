@@ -106,13 +106,12 @@ public class IA_Monstre1 : MonoBehaviour
             }
             else
             {
-                rb.velocity = Vector2.zero;
-                isDashing = false;
-                isChasing = true;
-                dashdurationTimer = 0;
-                
                 anim.SetBool("StopDash", true);
                 anim.SetBool("Dash",false);
+                rb.velocity = Vector2.zero;
+                dashdurationTimer = 0;
+                isDashing = false;
+                isChasing = true;
             }
         }
     }
