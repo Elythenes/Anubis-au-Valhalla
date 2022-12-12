@@ -117,6 +117,7 @@ public class SalleGennerator : MonoBehaviour
         {
                 zone2 = true;
                 startRoom = startRoom2;
+                EndRoom = EndRoom2;
                 roomPrefab.Clear();
                 roomPrefab.AddRange(roomPrefab2);
                 roomsDone = 0;
@@ -164,7 +165,6 @@ public class SalleGennerator : MonoBehaviour
                         }
                         else
                         {
-                                Debug.Log("ZEROOO");
                                 EnableDoors(DoorOrientation.East,true);
                                 OpenDoors(DoorOrientation.East, true);
                                 s_doors[(int) DoorOrientation.East].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
@@ -191,11 +191,11 @@ public class SalleGennerator : MonoBehaviour
                         if (shopspawn >= shopSpawnChance)
                         {
                                 Door removedDoor = s_doors[(int)fromDoor];
-                                Debug.Log(removedDoor);
                                 s_doors.RemoveAt((int)fromDoor);
                                 Door doorToShop = s_doors[Random.Range(0, s_doors.Count)];
                                 doorToShop.currentDoorType = Door.DoorType.ToShop;
                                 doorToShop.ChooseSpecialToSpawn(0);
+                                doorToShop.willChooseSpecial = false;
                                 s_doors.Insert((int)fromDoor, removedDoor);
                         }
 
@@ -232,6 +232,7 @@ public class SalleGennerator : MonoBehaviour
 
                         if (zone2)
                         {
+                                Debug.Log("el cringo");
                                 return Instantiate(EndRoom2);
                         }
                         EnableDoors(fromDoor,true);
@@ -308,6 +309,7 @@ public class SalleGennerator : MonoBehaviour
         {
                 
                 s_doors[(int) index].gameObject.SetActive(state);
+                s_doors[(int) index].ResetDoorState();
                 OpenDoors(index,false);
         }
         /// <summary>
@@ -316,7 +318,7 @@ public class SalleGennerator : MonoBehaviour
         public void OpenDoors(DoorOrientation index, bool state)
         {
                 s_doors[(int)index].collider.enabled = state;
-                s_doors[(int)index].GetComponentInChildren<Animator>().SetBool("Open",state);
+                //s_doors[(int)index].GetComponentInChildren<Animator>().SetBool("Open",state);
         }
         /// <summary>
         /// TP la caméra au joueur

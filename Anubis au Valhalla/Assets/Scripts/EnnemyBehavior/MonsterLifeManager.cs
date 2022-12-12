@@ -138,7 +138,6 @@ public class MonsterLifeManager : MonoBehaviour
             
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
-                Debug.Log("crit");
                 damage *= 2;
                 vieActuelle -= damage; 
                 healthBar.SetHealth(vieActuelle);
@@ -146,7 +145,6 @@ public class MonsterLifeManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("normal");
                 vieActuelle -= damage; 
                 healthBar.SetHealth(vieActuelle);
                 isInvincible = true;

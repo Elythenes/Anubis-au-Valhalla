@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Door : MonoBehaviour
 {
@@ -14,15 +11,28 @@ public class Door : MonoBehaviour
     public List<Sprite> doorSprites;
     public bool willChooseSpecial;
     public BoxCollider2D collider;
+    public GameObject normalDoor1;
+    public GameObject shopDoor1;
+    public GameObject challengeDoor1;
+    public GameObject normalDoor2;
+    public GameObject shopDoor2;
+    public GameObject challengeDoor2;
 
     public enum DoorType
     {
         Normal,
         ToShop,
         ToChallenge1,
-        ToChallenge2,
-        ToChallenge3,
-        ToBoss,
+    }
+
+    public void ResetDoorState()
+    {
+    normalDoor1.SetActive(false);
+    shopDoor1.SetActive(false);
+    challengeDoor1.SetActive(false);
+    normalDoor2.SetActive(false);
+    shopDoor2.SetActive(false);
+    challengeDoor2.SetActive(false);
     }
 
     private void Update()
@@ -32,31 +42,50 @@ public class Door : MonoBehaviour
         {
             case DoorType.Normal:
                 currentSprite.sprite = doorSprites[0];
+                /*if (SalleGennerator.instance.zone2)
+                {
+                    normalDoor2.SetActive(true);
+                    break;
+                }
+                normalDoor1.SetActive(true);*/
                 break;
             case DoorType.ToShop:
+                currentSprite.enabled = true;
+                willChooseSpecial = false;
+                if (SalleGennerator.instance.zone2)
+                {
+                    shopDoor2.SetActive(true);
+                    break;
+                }
+                shopDoor1.SetActive(true);
                 currentSprite.sprite = doorSprites[1];
                 break;
             case DoorType.ToChallenge1:
                 currentSprite.sprite = doorSprites[2];
                 break;
-            case DoorType.ToChallenge2:
-                currentSprite.sprite = doorSprites[3];
-                break;
-            case DoorType.ToChallenge3:
-                currentSprite.sprite = doorSprites[4];
-                break;
-            case DoorType.ToBoss:
-                currentSprite.sprite = doorSprites[5];
-                break;
         }
 
         if (willChooseSpecial && currentDoorType != DoorType.ToShop)
         {
+            if (SalleGennerator.instance.zone2)
+            {
+                challengeDoor2.SetActive(true);
+                return;
+            }
+            challengeDoor1.SetActive(true);
+            currentSprite.enabled = true;
             currentSprite.sprite = doorSprites[2];
         }
-        else
+        else if(currentDoorType == DoorType.Normal)
         {
             currentSprite.sprite = doorSprites[0];
+            if (SalleGennerator.instance.zone2)
+            {
+                normalDoor2.SetActive(true);
+                return;
+            }
+            normalDoor1.SetActive(true);
+            currentSprite.enabled = false;
         }
     }
 
