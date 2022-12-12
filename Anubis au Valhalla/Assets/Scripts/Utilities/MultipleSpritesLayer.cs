@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 public class MultipleSpritesLayer : LayerManager
 {
     // Start is called before the first frame update
-    private SortingGroup srProps;
+    private SortingGroup _srProps;
 
     public override void Start()
     {
@@ -12,18 +12,18 @@ public class MultipleSpritesLayer : LayerManager
         emptyLayerPlayer = GameObject.Find("PlayerEmptyLayer");
         srPlayer = player.GetComponent<MeshRenderer>();
         emptyLayer = GetComponentInChildren<Transform>();
-        srProps = GetComponent<SortingGroup>();
+        _srProps = GetComponent<SortingGroup>();
 
     }
     public override void Update()
     {
         if (emptyLayerPlayer.transform.position.y > emptyLayer.position.y)
         {
-            srProps.sortingOrder = srPlayer.sortingOrder + 1;
+            _srProps.sortingOrder = srPlayer.sortingOrder + 1;
         }
         else
         {
-            srProps.sortingOrder = srPlayer.sortingOrder - 1;
+            _srProps.sortingOrder = srPlayer.sortingOrder - 1;
         }
     }
 }
