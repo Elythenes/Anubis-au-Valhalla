@@ -196,7 +196,8 @@ public class MonsterLifeManager : MonoBehaviour
         if (SalleGennerator.instance.currentRoom.parasites && !isParasite)
         {
             var parasite = Instantiate(SalleGennerator.instance.parasiteToSpawn, transform.position, Quaternion.identity);
-            SalleGennerator.instance.currentRoom.currentEnemies.Add(parasite);
+            var parasiteScript = parasite.GetComponent<MonsterLifeManager>();
+            SalleGennerator.instance.currentRoom.currentEnemies.Add(parasiteScript);
             parasite.GetComponent<MonsterLifeManager>().isParasite = true;
             parasite.GetComponent<MonsterLifeManager>().soulValue =
                 Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
@@ -204,7 +205,7 @@ public class MonsterLifeManager : MonoBehaviour
 
         ScoreManager.instance.currentScore += data.score;
         Souls.instance.CreateSouls(child.transform.position, soulValue);
-        SalleGennerator.instance.currentRoom.currentEnemies.Remove(gameObject);
+        SalleGennerator.instance.currentRoom.currentEnemies.Remove(this);
         SalleGennerator.instance.currentRoom.CheckForEnemies();
         Destroy(gameObject);
     }
