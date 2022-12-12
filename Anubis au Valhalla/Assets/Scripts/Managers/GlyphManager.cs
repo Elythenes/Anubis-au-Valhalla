@@ -98,31 +98,28 @@ public class GlyphManager : MonoBehaviour
         switch (hiero.anubisStat)
         {
             case GlyphObject.AnubisStat.AnubisBaseDamage:   //augmente les débâts de toutes les attaques du combo et le Thrust
-                AnubisCurrentStats.instance.baseDamage += Mathf.RoundToInt(hiero.bonusBasicStat);
-                AnubisCurrentStats.instance.baseDamageForSoul += Mathf.RoundToInt(hiero.bonusBasicStat);
+                //AnubisCurrentStats.instance.baseDamageForSoul += Mathf.RoundToInt(hiero.bonusBasicStat);
+                AnubisCurrentStats.instance.AddBonusDamage(1,hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.AllComboDamage:     //augmente les dégâts de toutes les attaques du combo
-                for (int i = 0; i < 3; i++)
-                {
-                    AnubisCurrentStats.instance.comboDamage[i] += Mathf.RoundToInt(hiero.bonusBasicStat); 
-                }
+                AnubisCurrentStats.instance.AddBonusDamage(2,hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Combo1Damage:       //augmente les dégâts de la 1ère attaque du combo
-                AnubisCurrentStats.instance.comboDamage[0] += Mathf.RoundToInt(hiero.bonusBasicStat);
+                AnubisCurrentStats.instance.AddBonusDamage(3,hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Combo2Damage:       //augmente les dégâts de la 2ème attaque du combo
-                AnubisCurrentStats.instance.comboDamage[1] += Mathf.RoundToInt(hiero.bonusBasicStat);
+                AnubisCurrentStats.instance.AddBonusDamage(4,hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Combo3Damage:       //augmente les dégâts de la 3ème attaque du combo
-                AnubisCurrentStats.instance.comboDamage[2] += Mathf.RoundToInt(hiero.bonusBasicStat);
+                AnubisCurrentStats.instance.AddBonusDamage(5,hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.ThrustDamage:       //augmente les dégâts du Thrust
-                AnubisCurrentStats.instance.thrustDamage += Mathf.RoundToInt(hiero.bonusBasicStat);
+                AnubisCurrentStats.instance.AddBonusDamage(6,hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Range:              //augmente la portée / Range d'Anubis
@@ -270,30 +267,6 @@ public class GlyphManager : MonoBehaviour
 
     void UpdateGlyph()
     {
-        /*for (int i = 0; i < indexActiveGlyphs.Count; i++)
-        {
-            switch (indexActiveGlyphs[i])
-            {
-                case 135: //soul Power Force 1
-                    SoulPower();
-                    Debug.Log("soul force 1");
-                    //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
-                    break;
-                
-                case 136: //soul Power Force 2
-                    SoulPower();
-                    //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
-                    break;
-                
-                case 137: //soul Power Force 3
-                    Debug.Log("soul force 3");
-                    SoulPower();
-                    //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
-                    break;
-            }
-        }*/
-
-
         for (int i = 0; i < arrayLame.Length; i++)
         {
             if (arrayLame[i].glyphObject != null)
@@ -362,18 +335,15 @@ public class GlyphManager : MonoBehaviour
     {
         if (soulPowerForce1)
         {
-            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageForSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
-            //Debug.Log("soul force 1");
+            AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
         }
         if (soulPowerForce2)
         {
-            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageForSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *7);
-            //Debug.Log("soul force 2");
+            AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *7);
         }
         if (soulPowerForce3)
         {
-            AnubisCurrentStats.instance.baseDamage = AnubisCurrentStats.instance.baseDamageForSoul + Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *9);
-            //Debug.Log("soul force 3");
+            AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *9);
         }
     }
 
@@ -450,4 +420,30 @@ public class GlyphManager : MonoBehaviour
         GlyphObject.GlyphEffect gType = new GlyphObject.GlyphEffect();
         return gType;
     }*/
+    
+    
+    /*void UpdateGlyph() //truc ancien (peut servir ptet)
+    {
+        for (int i = 0; i < indexActiveGlyphs.Count; i++)
+        {
+            switch (indexActiveGlyphs[i])
+            {
+                case 135: //soul Power Force 1
+                    SoulPower();
+                    Debug.Log("soul force 1");
+                    //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                    break;
+                
+                case 136: //soul Power Force 2
+                    SoulPower();
+                    //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                    break;
+                
+                case 137: //soul Power Force 3
+                    Debug.Log("soul force 3");
+                    SoulPower();
+                    //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
+                    break;
+            }
+        }*/
 }
