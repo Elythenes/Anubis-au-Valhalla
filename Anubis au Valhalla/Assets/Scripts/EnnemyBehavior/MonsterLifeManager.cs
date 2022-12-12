@@ -25,6 +25,8 @@ public class MonsterLifeManager : MonoBehaviour
     
     public GameObject spawnCircle;
     public GameObject child;
+    public GameObject emptyLayers;
+    public SpriteRenderer sr;
 
     [Header("Alterations d'état")] 
     public float InvincibleTime;
@@ -77,6 +79,16 @@ public class MonsterLifeManager : MonoBehaviour
                 InvincibleTimeTimer = 0;
             }
         }
+        if (CharacterController.instance.transform.position.y >
+            emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
+        {
+            sr.sortingOrder = 2;
+        }
+        else
+        {
+            sr.sortingOrder = 1;
+        }
+
 
         if (isEnvased)
         {
@@ -193,6 +205,14 @@ public class MonsterLifeManager : MonoBehaviour
     
     public virtual void Die()
     {
+        StartCoroutine(DelayedDeath());
+        child.SetActive(false);
+        animator.SetBool("Dead",true);
+    }
+
+    private IEnumerator DelayedDeath()
+    {
+        yield return new WaitForSeconds(0.35f);
         if (SalleGennerator.instance.currentRoom.parasites && !isParasite)
         {
             var parasite = Instantiate(SalleGennerator.instance.parasiteToSpawn, transform.position, Quaternion.identity);

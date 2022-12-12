@@ -4,17 +4,17 @@ using Random = UnityEngine.Random;
 
 public class IA_Corbeau : MonoBehaviour
 {
-    [Header("Vie et visuels")] public GameObject emptyLayers;
+    [Header("Vie et visuels")] 
     public bool isElite;
     private Rigidbody2D rb;
     public LayerMask layerPlayer;
     public MonsterLifeManager life;
+    public Animator anim;
 
     [Header("Déplacements")] public GameObject player;
     public Seeker seeker;
     public AIPath aipath;
     private Path path;
-    private SpriteRenderer sr;
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
     public bool canMove = true;
@@ -47,7 +47,7 @@ public class IA_Corbeau : MonoBehaviour
     
     private void Awake()
     {
-        puissanceAttaque = GetComponentInParent<MonsterLifeManager>().data.damage;
+        puissanceAttaque = life.data.damage;
     }
 
     private void Start()
@@ -56,7 +56,6 @@ public class IA_Corbeau : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
-        sr = GetComponent<SpriteRenderer>();
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
@@ -85,15 +84,6 @@ public class IA_Corbeau : MonoBehaviour
             Destroy(holder);
         }
         
-        if (player.transform.position.y >
-            emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
-        {
-            sr.sortingOrder = 2;
-        }
-        else
-        {
-            sr.sortingOrder = 1;
-        }
 
         if (!isAttacking)
         {
@@ -112,6 +102,7 @@ public class IA_Corbeau : MonoBehaviour
         if (StartUpAttackTimeTimer >= StartUpAttackTime && !life.isMomified)
         {
             AttackTimeTimer += Time.deltaTime;
+            anim.SetBool("WindUp",true);
             
             if (indic)
             {
@@ -139,6 +130,7 @@ public class IA_Corbeau : MonoBehaviour
                 AttackTimeTimer = 0;
                 canMove = true;
                 indic = true;
+                anim.SetBool("WindUp",false);
             }
 
             holder.GetComponent<SpriteRenderer>().color = gradientIndic.Evaluate(AttackTimeTimer);
@@ -152,6 +144,7 @@ public class IA_Corbeau : MonoBehaviour
                 AttackTimeTimer = 0;
                 indic = true;
                 canMove = true;
+                anim.SetBool("WindUp",false);
             }
         }
 
