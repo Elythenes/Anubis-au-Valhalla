@@ -204,7 +204,6 @@ public class CharacterController : MonoBehaviour
       CanvasInteractionCanvas.enabled = true;
       CanvasInteraction.SetActive(true); 
       CanvasInteraction.transform.position = transform.position + offset;
-      CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
       CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
       TextInteraction.SetText("Continuer");
       if (Input.GetKeyDown(KeyCode.F) && currentDoor is not null)
@@ -340,6 +339,7 @@ public class CharacterController : MonoBehaviour
   {
     if (col.CompareTag("Door"))
     {
+      CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
       canInteract = true;
       currentDoor = col;
     }
