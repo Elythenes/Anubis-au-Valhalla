@@ -367,31 +367,35 @@ public class CharacterController : MonoBehaviour
     timerdashCooldown = 0;
     var hitDoor = col.GetComponent<Door>();
     SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
+    if (SalleGennerator.instance.roomsDone == SalleGennerator.instance.dungeonSize +1)
+    {
+      Debug.Log("auuuuugh");
+      SalleGennerator.instance.NewZone(hitDoor.doorOrientation, true, hitDoor);
+    }
     if (hitDoor.willChooseSpecial)
     {
       SalleGennerator.instance.challengeChooser = Random.Range(1, 6);
-      Debug.Log("Challenge chosen is: " + SalleGennerator.instance.challengeChooser);
     }
     else
     {
       SalleGennerator.instance.challengeChooser = 0;
-      Debug.Log("noChallenges");
     }
 
     if (hitDoor.currentDoorType == Door.DoorType.ToShop)
     {
       SalleGennerator.instance.shopsVisited++;
-      SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, true,
+      SalleGennerator.instance.dungeonSize++;
+      SalleGennerator.instance.TransitionToNextRoom(hitDoor.doorOrientation, true,
         hitDoor);
     }
     else if (hitDoor.currentDoorType != Door.DoorType.Normal)
     {
-      SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, true,
+      SalleGennerator.instance.TransitionToNextRoom(hitDoor.doorOrientation, true,
         hitDoor);
     }
     else
     {
-      SalleGennerator.instance.TransitionToNextRoom(col.gameObject.GetComponent<Door>().doorOrientation, false,
+      SalleGennerator.instance.TransitionToNextRoom(hitDoor.doorOrientation, false,
         hitDoor);
     }
 

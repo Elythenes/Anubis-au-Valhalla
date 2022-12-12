@@ -13,6 +13,7 @@ public class Door : MonoBehaviour
     public SpriteRenderer currentSprite;
     public List<Sprite> doorSprites;
     public bool willChooseSpecial;
+    public BoxCollider2D collider;
 
     public enum DoorType
     {
