@@ -21,7 +21,7 @@ public class Salle : MonoBehaviour
     public Vector2 maxPos = Vector2.zero;
     public int spawnBank = 0;
     public int propsAmount = 5;
-    public List<GameObject> currentEnemies = new List<GameObject>();
+    public List<MonsterLifeManager> currentEnemies = new List<MonsterLifeManager>();
     public List<GameObject> discardedPoints = new List<GameObject>();
     public Tilemap tileMap;
     public TilemapRenderer renderer;
@@ -79,25 +79,32 @@ public class Salle : MonoBehaviour
             roomDone = true;
             SalleGennerator.instance.roomsDone++;
         }
-        switch (challengeChosen)
-        {
-            case 1:
-                C1_AllElites();
-                break;
-            case 2:
-                C2_Darkness();
-                break;
-            case 3:
-                C3_TimeAttack();
-                break;
-            case 4:
-                C4_Parasites();
-                break;
-            case 5:
-                C5_Overdose();
-                break;
-        }
 
+        if (SalleGennerator.instance.roomsDone == SalleGennerator.instance.dungeonSize)
+        {
+            
+        }
+        else
+        {
+            switch (challengeChosen)
+            {
+                case 1:
+                    C1_AllElites();
+                    break;
+                case 2:
+                    C2_Darkness();
+                    break;
+                case 3:
+                    C3_TimeAttack();
+                    break;
+                case 4:
+                    C4_Parasites();
+                    break;
+                case 5:
+                    C5_Overdose();
+                    break;
+            }
+        }
         //Debug.Log("challenge chosen " + challengeChosen);
     }
 
@@ -192,14 +199,15 @@ public class Salle : MonoBehaviour
             costList[chosenValue] += SalleGennerator.instance.inflation;
             var chosenPoint = point[Random.Range(0, point.Count)];
             var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
-            currentEnemies.Add(enemyObject);
+            var enemyScript = enemyObject.GetComponent<MonsterLifeManager>();
+            currentEnemies.Add(enemyScript);
             if (chosenEnemy.isElite)
             {
-                enemyObject.GetComponent<MonsterLifeManager>().elite = true;
+                enemyScript.elite = true;
             }
             if (overdose)
             {
-                enemyObject.GetComponent<MonsterLifeManager>().overdose = true;
+                enemyScript.overdose = true;
             }
             //chosenEnemy.prefab.GetComponent<MonsterLifeManager>().data = chosenEnemy;
             discardedPoints.Add(chosenPoint);
@@ -344,9 +352,10 @@ public class Salle : MonoBehaviour
             case 3:
                 if (timer.GetComponent<TimerChallenge>().internalTimer > 0)
                 {
-                    timer.GetComponent<TextMeshProUGUI>().enabled = false;
+
                     //spawn better loot
                 }
+                timer.SetActive(false);
                 break;
             case 4:
                 //spawn better loot
