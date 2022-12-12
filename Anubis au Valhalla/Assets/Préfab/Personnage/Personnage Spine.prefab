@@ -445,6 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 9
+  boost: 0
 --- !u!1 &3239004356962064045
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,9 +516,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1561176513
+  m_SortingLayer: -5
+  m_SortingOrder: 99
   m_Sprite: {fileID: -2413806693520163455, guid: b573fad800f4f0243b66a8d4434a1d3e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -848,7 +849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: e70d99990ae0ab747a577e9c249c4c1a, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: a121c65c26b2d3343be4060ea6243ca8, type: 2}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
@@ -895,6 +896,12 @@ MonoBehaviour:
   speedY: 100
   isAttacking: 0
   facing: 0
+  canInteract: 0
+  currentDoor: {fileID: 0}
+  CanvasInteraction: {fileID: 0}
+  CanvasInteractionCanvas: {fileID: 0}
+  offset: {x: -1.2, y: 2, z: 0}
+  TextInteraction: {fileID: 0}
   debutDash: 0
   finDash: 0
   stopDash: 0
@@ -976,7 +983,8 @@ MonoBehaviour:
   attaque1: 0
   attaque2: 0
   attaque3: 0
-  attaqueSpe: 0
+  attaqueSpeSpell: 0
+  attaqueSpe2: 0
   abandonOn: 0
   canAttack: 1
   comboActuel: 0
@@ -1068,9 +1076,6 @@ MonoBehaviour:
   interaction: 102
   isSpellCollectable: 0
   collectableSpell: {fileID: 0}
-  CanvasInteraction: {fileID: 0}
-  offset: {x: 1.2, y: 1.2, z: 0}
-  TextInteraction: {fileID: 0}
 --- !u!114 &491855228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,9 +1091,6 @@ MonoBehaviour:
   interaction: 102
   isPotionCollectable: 0
   collectablePotion: {fileID: 0}
-  CanvasInteraction: {fileID: 0}
-  offset: {x: 1.2, y: 1.2, z: 0}
-  TextInteraction: {fileID: 0}
 --- !u!1001 &14784199228563454
 PrefabInstance:
   m_ObjectHideFlags: 0
