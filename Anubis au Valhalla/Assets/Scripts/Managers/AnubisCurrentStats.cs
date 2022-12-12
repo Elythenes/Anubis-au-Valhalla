@@ -26,7 +26,7 @@ public class AnubisCurrentStats : MonoBehaviour
 
    //DamageForStat = somme de BaseDamage + BonusDamage, permet de donner les dégâts du personnage pendant toute la run
    [NaughtyAttributes.ReadOnly] public float totalBaseDamageForStat;
-   [NaughtyAttributes.ReadOnly] public List<int> comboDamageForStat = new List<int>();
+   public List<int> comboDamageForStats = new List<int>(3);
    [NaughtyAttributes.ReadOnly] public int thrustDamageForStat;
    [NaughtyAttributes.ReadOnly] public int soulBonusDamageForStat;
 
@@ -106,7 +106,7 @@ public class AnubisCurrentStats : MonoBehaviour
       UpdateDamageForStat();
       atk.hitBoxC = hitBoxC;
       atk.rangeAttaque = rangeAttaque;
-      atk.damage = comboDamageForStat;
+      atk.damage = comboDamageForStats;
       atk.isC = isC;
       atk.criticalRate = criticalRate;
       atk.dureeHitbox = dureeHitbox;
@@ -135,7 +135,7 @@ public class AnubisCurrentStats : MonoBehaviour
       AddBonusDamage(0,0);
       for (int i = 0; i < 3; i++)
       {
-         comboDamageForStat[i] = Mathf.RoundToInt(totalBaseDamage * multiplicateurDamage[i]);
+         comboDamageForStats[i] = Mathf.RoundToInt(totalBaseDamage * multiplicateurDamage[i]);
       }
       thrustDamageForStat = Mathf.RoundToInt(totalBaseDamage * multiplicateurDamage[3]);
    }
@@ -151,7 +151,7 @@ public class AnubisCurrentStats : MonoBehaviour
       
       for (int i = 0; i < 3; i++)
       {
-         comboDamageForStat[i] = comboBaseDamage[i] + comboBaseBonusDamage[i] + soulBonusDamageForStat;
+         comboDamageForStats[i] = comboBaseDamage[i] + comboBaseBonusDamage[i] + soulBonusDamageForStat;
       }
       thrustDamageForStat = thrustBaseDamage + thrustBaseBonusDamage + soulBonusDamageForStat;
    }
