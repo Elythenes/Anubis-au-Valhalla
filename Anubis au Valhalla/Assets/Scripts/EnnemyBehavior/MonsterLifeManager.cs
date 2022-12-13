@@ -206,13 +206,13 @@ public class MonsterLifeManager : MonoBehaviour
     public virtual void Die()
     {
         StartCoroutine(DelayedDeath());
-        child.SetActive(false);
-        animator.SetBool("Dead",true);
+        animator.SetBool("isDead",true);
     }
 
     private IEnumerator DelayedDeath()
     {
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.5f);
+        child.SetActive(false);
         if (SalleGennerator.instance.currentRoom.parasites && !isParasite)
         {
             var parasite = Instantiate(SalleGennerator.instance.parasiteToSpawn, transform.position, Quaternion.identity);
