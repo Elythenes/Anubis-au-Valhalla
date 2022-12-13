@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7988764363769372767
 Transform:
   m_ObjectHideFlags: 0
@@ -44,21 +44,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4fd2b52bbbb8346a9ea36d9fae53aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetUser: {fileID: 2143346890506445695, guid: 644751b813c5d8846a4126e8ca7a78b0, type: 3}
-  spell1: 101
-  spell2: 114
+  targetUser: {fileID: 0}
+  spell1: 0
+  spell2: 0
   layerMonstres:
     serializedVersion: 2
     m_Bits: 64
-  canCastSpells: 1
+  canCastSpells: 0
+  indicDirection: {fileID: 0}
   containerA: {fileID: 0}
   prefabA: {fileID: 0}
   containerB: {fileID: 0}
   prefabB: {fileID: 0}
+  cooldownSlot1: 0
+  cooldownSlotTimer1: 0
+  cooldownSlot2: 0
+  cooldownSlotTimer2: 0
+  spellPFEo: {fileID: 0}
+  spellPFEData: {fileID: 0}
+  spellPPo: {fileID: 0}
+  spellPPData: {fileID: 0}
+  spellPEo: {fileID: 0}
+  spellPEData: {fileID: 0}
+  spellPFOo: {fileID: 0}
+  spellPFOData: {fileID: 0}
+  spellPAo: {fileID: 0}
+  spellPAData: {fileID: 0}
+  spellPMo: {fileID: 0}
+  spellPMData: {fileID: 0}
   spellSAo: {fileID: 0}
   spellFAo: {fileID: 0}
   spellTo: {fileID: 0}
+  spellDo: {fileID: 0}
+  spellSEo: {fileID: 0}
   isSpell1Fill: 0
   isSpell2Fill: 0
-  spriteSpell1: {fileID: 0}
-  spriteSpell2: {fileID: 0}
