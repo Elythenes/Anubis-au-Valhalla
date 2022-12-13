@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GenPro;
 using UnityEngine;
 
 public class CameraMouseControl : MonoBehaviour
@@ -12,7 +13,7 @@ public class CameraMouseControl : MonoBehaviour
     void Update()
     {
         Vector3 charaPos = CharacterController.instance.transform.position;
-        Salle activeRoom = SalleGennerator.instance.currentRoom;
+        Salle activeRoom = SalleGenerator.Instance.currentRoom;
 
         Salle limites = activeRoom.GetComponent<Salle>();
 

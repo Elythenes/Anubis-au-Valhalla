@@ -19,6 +19,7 @@ public class ChestBehaviour : MonoBehaviour
     [Header("Interaction")]
     public bool CanOpen;
     public GameObject CanvasInteraction;
+    public Canvas canvasGné;
     public Vector3 offset;
     public TextMeshProUGUI TextInteraction;
 
@@ -26,6 +27,7 @@ public class ChestBehaviour : MonoBehaviour
     {
         CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
         TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
+        canvasGné = CanvasInteraction.GetComponent<Canvas>();
 
         /*if(Physics2D.Raycast(transform.position,new Vector3(0,0,1),10,groundLayer))
         {
@@ -40,9 +42,9 @@ public class ChestBehaviour : MonoBehaviour
         {
             if (!isOpened)
             {
-                CanvasInteraction.GetComponent<Canvas>().enabled = true;
+                CanvasInteraction.SetActive(true);
+                canvasGné.enabled = true;
                 CanOpen = true;
-                CanvasInteraction.SetActive(true); 
                 CanvasInteraction.transform.position = transform.position + offset;
                 CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
                 CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
@@ -56,7 +58,7 @@ public class ChestBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CanvasInteraction.GetComponent<Canvas>().enabled = false;
+            canvasGné.enabled = false;
             //CanvasInteraction.SetActive(false);
             CanOpen = false;
         }
@@ -69,7 +71,8 @@ public class ChestBehaviour : MonoBehaviour
             StartCoroutine(OpenChest());
             if (CanvasInteraction is not null)
             {
-                CanvasInteraction.GetComponent<Canvas>().enabled = false;
+                
+                canvasGné.enabled = false;
                 //CanvasInteraction.SetActive(false);
             }
         }

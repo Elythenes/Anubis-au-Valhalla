@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using GenPro;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -370,36 +371,36 @@ public class CharacterController : MonoBehaviour
     canDash = true;
     timerdashCooldown = 0;
     var hitDoor = col.GetComponent<Door>();
-    SalleGennerator.instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
-    if (SalleGennerator.instance.roomsDone == SalleGennerator.instance.dungeonSize +1)
+    SalleGenerator.Instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
+    if (SalleGenerator.Instance.roomsDone == SalleGenerator.Instance.dungeonSize +1)
     {
       Debug.Log("auuuuugh");
-      SalleGennerator.instance.NewZone(hitDoor.doorOrientation, true, hitDoor);
+      SalleGenerator.Instance.NewZone(hitDoor.doorOrientation, true, hitDoor);
     }
     if (hitDoor.willChooseSpecial)
     {
-      SalleGennerator.instance.challengeChooser = Random.Range(1, 6);
+      SalleGenerator.Instance.challengeChooser = Random.Range(1, 6);
     }
     else
     {
-      SalleGennerator.instance.challengeChooser = 0;
+      SalleGenerator.Instance.challengeChooser = 0;
     }
 
     if (hitDoor.currentDoorType == Door.DoorType.ToShop)
     {
-      SalleGennerator.instance.shopsVisited++;
-      SalleGennerator.instance.dungeonSize++;
-      SalleGennerator.instance.TransitionToNextRoom(hitDoor.doorOrientation, true,
+      SalleGenerator.Instance.shopsVisited++;
+      SalleGenerator.Instance.dungeonSize++;
+      SalleGenerator.Instance.TransitionToNextRoom(hitDoor.doorOrientation, true,
         hitDoor);
     }
     else if (hitDoor.currentDoorType != Door.DoorType.Normal)
     {
-      SalleGennerator.instance.TransitionToNextRoom(hitDoor.doorOrientation, true,
+      SalleGenerator.Instance.TransitionToNextRoom(hitDoor.doorOrientation, true,
         hitDoor);
     }
     else
     {
-      SalleGennerator.instance.TransitionToNextRoom(hitDoor.doorOrientation, false,
+      SalleGenerator.Instance.TransitionToNextRoom(hitDoor.doorOrientation, false,
         hitDoor);
     }
     hitDoor.willChooseSpecial = false;

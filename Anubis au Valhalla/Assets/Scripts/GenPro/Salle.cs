@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GenPro;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
@@ -12,7 +13,6 @@ using Random = UnityEngine.Random;
 public class Salle : MonoBehaviour
 {
     public bool roomDone = false;
-    public bool isSpecial = false;
     public Transform[] transformReferences;
     public Transform AstarRef;
     public GameObject player;
@@ -54,14 +54,14 @@ public class Salle : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         AstarRef = GameObject.Find("A* Ref").GetComponent<Transform>();
         renderer.enabled = false;
-        spawnBank = SalleGennerator.instance.globalBank;
-        if (SalleGennerator.instance.testBankSystem)
+        spawnBank = SalleGenerator.Instance.globalBank;
+        if (SalleGenerator.Instance.testBankSystem)
         {
-            SalleGennerator.instance.globalBank += SalleGennerator.instance.extraMoneyPerRoom[SalleGennerator.instance.roomsDone];
+            SalleGenerator.Instance.globalBank += SalleGenerator.Instance.extraMoneyPerRoom[SalleGenerator.Instance.roomsDone];
         }
         else
         {
-            SalleGennerator.instance.globalBank = Mathf.RoundToInt(SalleGennerator.instance.globalBank * 1.1f);
+            SalleGenerator.Instance.globalBank = Mathf.RoundToInt(SalleGenerator.Instance.globalBank * 1.1f);
         }
         //CharacterController.instance.ground = GameObject.Find("Ground").GetComponent<TilemapRenderer>();
         RearrangeDoors();
@@ -73,14 +73,14 @@ public class Salle : MonoBehaviour
 
     private void Start()
     {
-        challengeChosen = SalleGennerator.instance.challengeChooser;
+        challengeChosen = SalleGenerator.Instance.challengeChooser;
         if (currentEnemies.Count == 0)
         {
             roomDone = true;
-            SalleGennerator.instance.roomsDone++;
+            SalleGenerator.Instance.roomsDone++;
         }
 
-        if (SalleGennerator.instance.roomsDone == SalleGennerator.instance.dungeonSize)
+        if (SalleGenerator.Instance.roomsDone == SalleGenerator.Instance.dungeonSize)
         {
             
         }
@@ -128,7 +128,7 @@ public class Salle : MonoBehaviour
 
     private void C3_TimeAttack()
     {
-        timer = SalleGennerator.instance.Timer;
+        timer = SalleGenerator.Instance.timer;
         timer.GetComponent<TextMeshProUGUI>().enabled = true;
     }
 
@@ -144,10 +144,10 @@ public class Salle : MonoBehaviour
 
     public void RearrangeDoors()
     {
-        for (int i = 0; i < (int)SalleGennerator.DoorOrientation.West + 1; i++)
+        for (int i = 0; i < (int)SalleGenerator.DoorOrientation.West + 1; i++)
         {
-            SalleGennerator.instance.s_doors[i].transform.position = transformReferences[i].position;
-            //SalleGennerator.instance.s_doors[i].GetComponentInChildren<Animator>().SetBool("Open",false);
+            SalleGenerator.Instance.sDoors[i].transform.position = transformReferences[i].position;
+            //SalleGenerator.instance.s_doors[i].GetComponentInChildren<Animator>().SetBool("Open",false);
         }
         
     }
@@ -181,10 +181,10 @@ public class Salle : MonoBehaviour
     {
         if (point.Count == 0) return;
 
-        var pattern = SalleGennerator.instance.chosenPattern;
+        var pattern = SalleGenerator.Instance.chosenPattern;
         if (costList.Count == 0)
         {    
-            foreach (EnemyData t in SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn)
+            foreach (EnemyData t in SalleGenerator.Instance.spawnGroups[pattern].enemiesToSpawn)
             {
                 int cost = t.cost;
                 costList.Add(cost);
@@ -194,9 +194,9 @@ public class Salle : MonoBehaviour
         {
             var chosenValue = Random.Range(0, costList.Count);
             if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());//if it cant afford the most expensive enemy, it will buy the cheapest one
-            var chosenEnemy = SalleGennerator.instance.spawnGroups[pattern].enemiesToSpawn[chosenValue];
+            var chosenEnemy = SalleGenerator.Instance.spawnGroups[pattern].enemiesToSpawn[chosenValue];
             spawnBank -= costList[chosenValue];
-            costList[chosenValue] += SalleGennerator.instance.inflation;
+            costList[chosenValue] += SalleGenerator.Instance.inflation;
             var chosenPoint = point[Random.Range(0, point.Count)];
             var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
             var enemyScript = enemyObject.GetComponent<MonsterLifeManager>();
@@ -230,7 +230,7 @@ public class Salle : MonoBehaviour
         for (int i = 0; i < Random.Range(1,6); i++)
         {
             var chosenPoint = point[Random.Range(0, point.Count)];
-            Instantiate(SalleGennerator.instance.amphores,chosenPoint.transform);
+            Instantiate(SalleGenerator.Instance.amphores,chosenPoint.transform);
         }
     }
     
@@ -288,7 +288,7 @@ public class Salle : MonoBehaviour
 
     public void GetAvailableTiles()
     {
-        //var doorRef = SalleGennerator.instance.fromDoor;
+        //var doorRef = SalleGenerator.instance.fromDoor;
         //var doorTransformRef = transformReferences[(int)doorRef];
         availableTilePos = new List<Vector3>();
         for (int i = tileMap.cellBounds.xMin; i < tileMap.cellBounds.xMax; i++)
@@ -340,7 +340,8 @@ public class Salle : MonoBehaviour
 
         if (currentEnemies.Count != 0) return;
         roomDone = true;
-        SalleGennerator.instance.roomsDone++;
+        SalleGenerator.Instance.roomsDone++;
+        SalleGenerator.Instance.UnlockDoors();
         switch (challengeChosen)
         {
             case 1:
@@ -368,7 +369,7 @@ public class Salle : MonoBehaviour
     }
     public IEnumerator DelayedSpawns()
     {
-        yield return new WaitForSeconds(SalleGennerator.instance.TimeBetweenWaves);
+        yield return new WaitForSeconds(SalleGenerator.Instance.timeBetweenWaves);
         if (spawnBank > costList.Min())
         {
             var spawnPoints = Random.Range(0, 3);
@@ -411,7 +412,7 @@ public class Salle : MonoBehaviour
     }
 }
 Debug.Log(availableTile.Count);
-                    foreach (Door door in SalleGennerator.instance.s_doors)
+                    foreach (Door door in SalleGenerator.instance.s_doors)
 */
 
 

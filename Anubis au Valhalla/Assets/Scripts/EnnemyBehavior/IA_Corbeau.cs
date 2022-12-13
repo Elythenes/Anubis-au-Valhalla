@@ -1,3 +1,4 @@
+using GenPro;
 using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -70,7 +71,7 @@ public class IA_Corbeau : MonoBehaviour
         
         
 
-       if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
+       if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
         {
             speedTowardPlayer *= 150;
             forceRepulse *= 1.5f;

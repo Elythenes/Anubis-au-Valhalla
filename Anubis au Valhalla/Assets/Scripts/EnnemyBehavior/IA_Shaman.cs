@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using GenPro;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -72,7 +73,7 @@ public class IA_Shaman : MonoBehaviour
         {
             isElite = true;
         }
-        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
+        if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
         {
             ai.maxSpeed *= 1.5f;
             forceRepulse *= 2f;
@@ -226,7 +227,7 @@ public class IA_Shaman : MonoBehaviour
     {
         var summon = Instantiate(corbeau, transform.position + new Vector3(0, 3, 0), Quaternion.identity);
         var summonScript = summon.GetComponent<MonsterLifeManager>();
-        SalleGennerator.instance.currentRoom.currentEnemies.Add(summonScript);
+        SalleGenerator.Instance.currentRoom.currentEnemies.Add(summonScript);
         summonScript.soulValue = corbeauSoulDroped;
         corbeauSoulDroped -= 1;
         if (corbeauSoulDroped < 0)

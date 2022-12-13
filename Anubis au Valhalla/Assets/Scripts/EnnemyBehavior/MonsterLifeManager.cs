@@ -1,5 +1,6 @@
 using System.Collections;
 using DG.Tweening;
+using GenPro;
 using Pathfinding;
 using TMPro;
 using UnityEngine;
@@ -213,11 +214,11 @@ public class MonsterLifeManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         child.SetActive(false);
-        if (SalleGennerator.instance.currentRoom.parasites && !isParasite)
+        if (SalleGenerator.Instance.currentRoom.parasites && !isParasite)
         {
-            var parasite = Instantiate(SalleGennerator.instance.parasiteToSpawn, transform.position, Quaternion.identity);
+            var parasite = Instantiate(SalleGenerator.Instance.parasiteToSpawn, transform.position, Quaternion.identity);
             var parasiteScript = parasite.GetComponent<MonsterLifeManager>();
-            SalleGennerator.instance.currentRoom.currentEnemies.Add(parasiteScript);
+            SalleGenerator.Instance.currentRoom.currentEnemies.Add(parasiteScript);
             parasite.GetComponent<MonsterLifeManager>().isParasite = true;
             parasite.GetComponent<MonsterLifeManager>().soulValue =
                 Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
@@ -225,8 +226,8 @@ public class MonsterLifeManager : MonoBehaviour
 
         ScoreManager.instance.currentScore += data.score;
         Souls.instance.CreateSouls(child.transform.position, soulValue);
-        SalleGennerator.instance.currentRoom.currentEnemies.Remove(this);
-        SalleGennerator.instance.currentRoom.CheckForEnemies();
+        SalleGenerator.Instance.currentRoom.currentEnemies.Remove(this);
+        SalleGenerator.Instance.currentRoom.CheckForEnemies();
         Destroy(gameObject);
     }
 
@@ -239,7 +240,7 @@ public class MonsterLifeManager : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(SalleGennerator.instance.TimeBetweenWaves);
+            yield return new WaitForSeconds(SalleGenerator.Instance.timeBetweenWaves);
         }
         child.SetActive(true);
     }

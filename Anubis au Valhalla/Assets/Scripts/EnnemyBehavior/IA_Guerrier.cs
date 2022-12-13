@@ -1,5 +1,6 @@
 using System.Collections;
 using DG.Tweening;
+using GenPro;
 using Pathfinding;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -64,7 +65,7 @@ public class IA_Guerrier : MonoBehaviour
             puissanceAttaque = damageElite;
         }
         
-        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
+        if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
         {
             WonderingTime *= 0.5f;
             ai.maxSpeed *= 2;
