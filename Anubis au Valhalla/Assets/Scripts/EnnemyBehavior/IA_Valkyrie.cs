@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using GenPro;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -96,7 +97,7 @@ public class IA_Valkyrie : MonoBehaviour
             puissanceAttaqueJavelot *= 2;
                 FallDamage *= 2;
         }
-        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
+        if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
         {
             ai.maxSpeed *= 2;
             javelotSpeed *= 1.5f;

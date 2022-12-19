@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using GenPro;
 using Pathfinding;
 using UnityEngine;
 
@@ -78,7 +79,7 @@ public class IA_Monstre1 : MonoBehaviour
         {
             isElite = true;
         }
-        if (life.overdose || SalleGennerator.instance.currentRoom.overdose)
+        if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
         {
             ai.maxSpeed *= 2;
             dashdurationTimer *= 0.75f;

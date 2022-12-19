@@ -29,7 +29,7 @@ public class PotionBehaviour : MonoBehaviour
    {
       if (timer >= 0)
       {
-         rb.velocity -= rb.velocity * 0.01f;
+         rb.velocity -= rb.velocity * 0.03f;
          timer -= Time.deltaTime;
       }
       

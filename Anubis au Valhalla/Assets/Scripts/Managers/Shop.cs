@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using GenPro;
 using NaughtyAttributes;
 using TMPro;
 using Unity.VisualScripting;
@@ -304,7 +305,7 @@ public class Shop : MonoBehaviour
             {
                 consumablesTitle[i].text = "Soins";
                 consumableDesc[i].text = "Vous soigne de " + Mathf.RoundToInt(DamageManager.instance.vieMax / 3.5f) + " PV";
-                consumablesCost.Add(Mathf.RoundToInt(10 * Mathf.Pow(SalleGennerator.instance.roomsDone, 0.8f)));
+                consumablesCost.Add(Mathf.RoundToInt(10 * Mathf.Pow(SalleGenerator.Instance.roomsDone, 0.8f)));
                 costConsumables[i].text = consumablesCost[i].ToString();
                 continue;
             }

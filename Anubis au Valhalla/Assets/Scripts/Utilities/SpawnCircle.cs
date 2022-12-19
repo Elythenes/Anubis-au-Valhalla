@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GenPro;
 using UnityEngine;
 
 public class SpawnCircle : MonoBehaviour
@@ -12,7 +13,7 @@ public class SpawnCircle : MonoBehaviour
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        Destroy(gameObject, SalleGennerator.instance.TimeBetweenWaves);
+        Destroy(gameObject, SalleGenerator.Instance.timeBetweenWaves);
         _spriteRenderer.color = new Color(_spriteRenderer.color.r,_spriteRenderer.color.g,_spriteRenderer.color.b,0);
     }
 

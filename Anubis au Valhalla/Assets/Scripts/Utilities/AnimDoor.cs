@@ -1,5 +1,8 @@
 
+using System;
+using GenPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class AnimDoor : MonoBehaviour
 {
@@ -13,9 +16,14 @@ public class AnimDoor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SalleGennerator.instance.currentRoom.roomDone)
+        if (SalleGenerator.Instance.currentRoom.roomDone)
         {
             anim.SetBool("Open",true);
         }
+    }
+
+    private void OnDisable()
+    {
+        anim.SetBool("Open",false);
     }
 }
