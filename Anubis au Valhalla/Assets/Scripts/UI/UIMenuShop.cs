@@ -2,96 +2,76 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIMenuShop : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UIMenuShop : MonoBehaviour
 {
-    public Animator anim;
     public Animator animChosePartMenu;
     public Animator animChoseUpgradeMenu;
-    public CanvasGroup choseMenuMenu;
-    public CanvasGroup choseUpgradeMenu;
+    public Animator animChoix1;
+    public Animator animChoix2;
+    public Animator animChoix3;
+    public CanvasGroup UIParent;
     public bool fade;
-    public bool fade2;
+   
     
-    public void OnPointerEnter(PointerEventData pointerEventData)
-    {
-       anim.SetBool("SelectUpgrade",true);
-       anim.SetBool("Idle",false);
-    }
-    
-    public void OnPointerExit(PointerEventData pointerEventData)
-    {
-        anim.SetBool("SelectUpgrade",false);
-        anim.SetBool("Idle",true);
-    }
-
     public void Update()  
     {
-        if (fade)// Gérer le fade in et out du menu de de choix (upgrade - consombales)
+        if (fade)// Gérer le fade in et out de l'entièreté du menu Shop
         {
-            if (choseMenuMenu.alpha > 0)
+            if (UIParent.alpha > 0)
             {
-                choseMenuMenu.alpha -= Time.deltaTime; 
+                UIParent.alpha -= Time.deltaTime; 
             }
         }
         else if(!fade)
         {
-            if (choseMenuMenu.alpha < 1)
+            if (UIParent.alpha < 1)
             {
-                choseMenuMenu.alpha += Time.deltaTime;    
-            }
-        }
-        
-        if (fade2) // Gérer le fade in et out du menu de de choix des upgrades
-        {
-            if (choseUpgradeMenu.alpha > 0)
-            {
-                choseUpgradeMenu.alpha -= Time.deltaTime; 
-            }
-        }
-        else if(!fade2)
-        {
-            if (choseUpgradeMenu.alpha < 1)
-            {
-                choseUpgradeMenu.alpha += Time.deltaTime;    
+                UIParent.alpha += Time.deltaTime;    
             }
         }
     }
 
     public void ResetAllAnimatorMenu()
     {
-        fade2 = false;
         animChoseUpgradeMenu.SetBool("BackIdle",true);
         animChoseUpgradeMenu.SetBool("SpawnChoices",false);
         animChosePartMenu.SetBool("ChoseLame",false);
         animChosePartMenu.SetBool("ChoseHampe",false);
         animChosePartMenu.SetBool("ChosePomeau",false);
     }
+
+    public void MoveOutChoix1()
+    {
+        animChoix1.SetBool("MoveOut",true);
+        animChoix1.SetBool("MoveIn",false);
+    }
+    
+    public void MoveOutChoix2()
+    {
+        animChoix2.SetBool("MoveOut",true);
+        animChoix2.SetBool("MoveIn",false);
+    }
+    
+    public void MoveOutChoix3()
+    {
+        animChoix3.SetBool("MoveOut",true);
+        animChoix3.SetBool("MoveIn",false);
+    }
+    
+    
     public void FadeOut()
     {
         fade = true;
-        choseMenuMenu.interactable = false;
-        choseMenuMenu.blocksRaycasts= false;
+        UIParent.interactable = false;
+        UIParent.blocksRaycasts= false;
 
     }
     
     public void FadeIn()
     {
         fade = false;
-        choseMenuMenu.interactable = true;
-        choseMenuMenu.blocksRaycasts = true;
+        UIParent.interactable = true;
+        UIParent.blocksRaycasts = true;
     }
     
-    public void FadeOutChoseUpgrade()
-    {
-        fade2 = true;
-        choseUpgradeMenu.interactable = false;
-        choseUpgradeMenu.blocksRaycasts= false;
-    }
-    
-    public void FadeInChoseUpgrade()
-    {
-        fade2 = false;
-        choseUpgradeMenu.interactable = true;
-        choseUpgradeMenu.blocksRaycasts= true;
-    }
 }

@@ -96,10 +96,10 @@ public class Shop : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (open && cam.orthographicSize > 2)
+       /* if (open && cam.orthographicSize > 2)
         {
             OpenShop();
-        }
+        }*/
 
         if (cost.Count > 0)
         {
@@ -123,10 +123,10 @@ public class Shop : MonoBehaviour
             }
         }
 
-        if (!open)
+       /* if (!open)
         {
             QuitShop();
-        }
+        }*/
 
         if (canInteract)
         {
@@ -174,7 +174,7 @@ public class Shop : MonoBehaviour
         shopUI.DOFade(1, 1);
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
-    void OpenShop()
+    /*void OpenShop()
     {
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 1.9f, zoomSpeed);
     }
@@ -182,7 +182,7 @@ public class Shop : MonoBehaviour
     void QuitShop()
     {
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, camBaseSize, zoomSpeed);
-    }
+    }*/
 
     public void CloseShop()
     {
