@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: -2538209383442496922}
   - component: {fileID: 4108429935783413611}
   - component: {fileID: 4316487488648072727}
+  - component: {fileID: 5315710199931721985}
+  - component: {fileID: 9060761762294451040}
   m_Layer: 10
   m_Name: East
   m_TagString: Door
@@ -100,7 +102,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2580341452631517689}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -153,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorOrientation: 1
-  roomToSpawn: {fileID: 0}
+  roomToSpawn: {fileID: -3130041957661822193, guid: cfd811be74a6ab54b888fdd952ffacd9, type: 3}
   currentDoorType: 0
   currentSprite: {fileID: 1420662173837023702}
   doorSprites:
@@ -163,7 +165,7 @@ MonoBehaviour:
   - {fileID: 7482667652216324306, guid: 513fe706f0abbab49a8442da85508681, type: 3}
   - {fileID: 7482667652216324306, guid: 513fe706f0abbab49a8442da85508681, type: 3}
   - {fileID: 7482667652216324306, guid: 513fe706f0abbab49a8442da85508681, type: 3}
-  willChooseSpecial: 0
+  willChooseSpecial: 1
   collider: {fileID: -2538209383442496922}
   normalDoor1: {fileID: 5234735160640080000}
   shopDoor1: {fileID: 5234735160640080000}
@@ -171,6 +173,34 @@ MonoBehaviour:
   normalDoor2: {fileID: 5690740408170328768}
   shopDoor2: {fileID: 5690740408170328768}
   challengeDoor2: {fileID: 1620781042351769376}
+--- !u!210 &5315710199931721985
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2580341452631517689}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &9060761762294451040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2580341452631517689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b840a1b17d8ce94fa9b232e012ebcf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  emptyLayerPlayer: {fileID: 0}
+  srPlayer: {fileID: 0}
+  srProps: {fileID: 0}
+  emptyLayer: {fileID: 0}
 --- !u!1 &4140507142594739492
 GameObject:
   m_ObjectHideFlags: 0

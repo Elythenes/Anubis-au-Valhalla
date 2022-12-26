@@ -89,7 +89,10 @@ public class IA_Corbeau : MonoBehaviour
         if (life.vieActuelle <= 0)
         {
             anim.SetBool("isDead",true);
-            Destroy(holder.gameObject);
+            if (holder.gameObject is not null)
+            {
+                Destroy(holder.gameObject);
+            }
         }
         
         if (player.transform.position.y >

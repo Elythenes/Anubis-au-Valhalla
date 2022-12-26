@@ -1,8 +1,6 @@
-
-using System;
 using GenPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
+
 
 public class AnimDoor : MonoBehaviour
 {

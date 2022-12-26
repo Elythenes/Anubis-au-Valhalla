@@ -97,6 +97,8 @@ GameObject:
   - component: {fileID: -9064801749371602632}
   - component: {fileID: 3250319898398415004}
   - component: {fileID: 2047062548982674289}
+  - component: {fileID: 6067065219456931122}
+  - component: {fileID: 1228252833279437612}
   m_Layer: 10
   m_Name: South
   m_TagString: Door
@@ -112,7 +114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2580341452631517689}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.036711, y: 0.14691398, z: 0}
+  m_LocalPosition: {x: 0.184, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -255,6 +257,34 @@ MonoBehaviour:
   normalDoor2: {fileID: 7317537083318802427}
   shopDoor2: {fileID: 7317537083318802427}
   challengeDoor2: {fileID: 618915854542823261}
+--- !u!210 &6067065219456931122
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2580341452631517689}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &1228252833279437612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2580341452631517689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b840a1b17d8ce94fa9b232e012ebcf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  emptyLayerPlayer: {fileID: 0}
+  srPlayer: {fileID: 0}
+  srProps: {fileID: 0}
+  emptyLayer: {fileID: 0}
 --- !u!1 &4451739530309499947
 GameObject:
   m_ObjectHideFlags: 0

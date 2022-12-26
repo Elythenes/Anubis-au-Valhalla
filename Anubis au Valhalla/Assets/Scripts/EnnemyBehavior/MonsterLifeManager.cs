@@ -24,6 +24,7 @@ public class MonsterLifeManager : MonoBehaviour
     public float criticalPick;
     public bool gotHit;
     
+
     public GameObject spawnCircle;
     public GameObject child;
     public GameObject emptyLayers;
@@ -79,15 +80,6 @@ public class MonsterLifeManager : MonoBehaviour
                 isInvincible = false;
                 InvincibleTimeTimer = 0;
             }
-        }
-        if (CharacterController.instance.transform.position.y >
-            emptyLayers.transform.position.y) // Faire en sorte que le perso passe derrière ou devant l'ennemi.
-        {
-            sr.sortingOrder = 2;
-        }
-        else
-        {
-            sr.sortingOrder = 1;
         }
 
 
@@ -178,7 +170,7 @@ public class MonsterLifeManager : MonoBehaviour
         animator.SetBool("IsTouched", false);
     }
 
-    public virtual void OnTriggerEnter2D(Collider2D col)
+  /*  public virtual void OnTriggerEnter2D(Collider2D col)
     {
         Vector2 direction = (transform.position - col.transform.position);
         direction.Normalize();
@@ -188,7 +180,7 @@ public class MonsterLifeManager : MonoBehaviour
             OnBegin?.Invoke();
             StartCoroutine(Reset(0.5f));
         }
-    }
+    }*/
 
     public IEnumerator Reset(float delay)
     {
@@ -206,8 +198,9 @@ public class MonsterLifeManager : MonoBehaviour
     
     public virtual void Die()
     {
-        StartCoroutine(DelayedDeath());
         animator.SetBool("isDead",true);
+        OnBegin.Invoke();
+        StartCoroutine(DelayedDeath());
     }
 
     private IEnumerator DelayedDeath()
@@ -220,8 +213,7 @@ public class MonsterLifeManager : MonoBehaviour
             var parasiteScript = parasite.GetComponent<MonsterLifeManager>();
             SalleGenerator.Instance.currentRoom.currentEnemies.Add(parasiteScript);
             parasite.GetComponent<MonsterLifeManager>().isParasite = true;
-            parasite.GetComponent<MonsterLifeManager>().soulValue =
-                Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
+            parasite.GetComponent<MonsterLifeManager>().soulValue = Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
         }
 
         ScoreManager.instance.currentScore += data.score;

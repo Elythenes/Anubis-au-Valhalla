@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Spine.Unity;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LayerManager : MonoBehaviour

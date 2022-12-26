@@ -13,8 +13,8 @@ public class MultipleSpritesLayer : LayerManager
         srPlayer = player.GetComponent<MeshRenderer>();
         emptyLayer = GetComponentInChildren<Transform>();
         _srProps = GetComponent<SortingGroup>();
-
     }
+    
     public override void Update()
     {
         if (emptyLayerPlayer.transform.position.y > emptyLayer.position.y)
