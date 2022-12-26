@@ -1,13 +1,29 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BoutonPomeau : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class BoutonPomeau : MonoBehaviour
 {
-    public Animator anim;
-    public Animator animMenuPartie;
-    public Animator animMenuChoices;
+    public Animator animPomeau;
+   
     
-    public void OnPointerEnter(PointerEventData pointerEventData)
+    public void SelectPomeau()
+    {
+        animPomeau.SetBool("PomeauUp",true);
+        animPomeau.SetBool("PomeauDown",false);
+    }
+    
+    public void UnselectPomeau()
+    {
+        animPomeau.SetBool("PomeauDown",true);
+        animPomeau.SetBool("PomeauUp",false);
+    }
+    
+    
+    
+    
+    
+    
+    /*public void OnPointerEnter(PointerEventData pointerEventData)
     {
         anim.SetBool("PomeauUp",true);
         anim.SetBool("PomeauDown",false);
@@ -26,5 +42,5 @@ public class BoutonPomeau : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         animMenuPartie.SetBool("ChosePomeau",true);
         animMenuChoices.SetBool("SpawnChoices",true);
         animMenuChoices.SetBool("BackIdle",false);
-    }
+    }*/
 }

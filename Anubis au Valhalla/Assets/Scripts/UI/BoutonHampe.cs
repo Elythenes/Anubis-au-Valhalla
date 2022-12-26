@@ -2,13 +2,31 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class BoutonHampe : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class BoutonHampe : MonoBehaviour
 {
-    public Animator anim;
-    public Animator animMenuPartie;
-    public Animator animMenuChoices;
-
-    public void OnPointerEnter(PointerEventData pointerEventData)
+    public Animator animHampe;
+   
+    public void SelectHampe()
+    {
+        animHampe.SetBool("HampeUp",true);
+        animHampe.SetBool("HampeDown",false);
+    }
+    
+    public void UnselectHampe()
+    {
+        animHampe.SetBool("HampeDown",true);
+        animHampe.SetBool("HampeUp",false);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   /* public void OnPointerEnter(PointerEventData pointerEventData)
     {
         anim.SetBool("HampeUp",true);
         anim.SetBool("HampeDown",false);
@@ -27,5 +45,5 @@ public class BoutonHampe : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         animMenuPartie.SetBool("ChoseHampe",true);
         animMenuChoices.SetBool("SpawnChoices",true);
         animMenuChoices.SetBool("BackIdle",false);
-    }
+    }*/
 }

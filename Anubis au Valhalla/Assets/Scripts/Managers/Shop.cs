@@ -1,26 +1,20 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using GenPro;
 using NaughtyAttributes;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Shop : MonoBehaviour
 {
-    public Camera cam;
-    public float camBaseSize = 7f;
 
-    public float zoomSpeed;
-
-    private bool open = false;
+    bool open = false;
 
     public CanvasGroup shopUI;
+    public UIMenuShop shopUIController;
 
     public GameObject weaponShop;
 
@@ -42,6 +36,12 @@ public class Shop : MonoBehaviour
     public List<PotionObject> consumableObject = new List<PotionObject>();
 
     public List<GlyphObject> choice;
+    public bool choice1Avalable;
+    public bool choice2Avalable;
+    public bool choice3Avalable;
+    public Animator animChoice1;
+    public Animator animChoice2;
+    public Animator animChoice3;
 
     public bool lockInteract;
     public bool canInteract;
@@ -85,7 +85,6 @@ public class Shop : MonoBehaviour
     
     void Awake()
     {
-        cam = Camera.main;
         glyphUpdater = GameObject.Find("GlyphManager").GetComponent<GlyphInventory>();
         Souls.instance.UpdateSoulsShop();
         consumableObject.Add(null);
@@ -122,11 +121,7 @@ public class Shop : MonoBehaviour
                 }
             }
         }
-
-       /* if (!open)
-        {
-            QuitShop();
-        }*/
+        
 
         if (canInteract)
         {
@@ -164,6 +159,9 @@ public class Shop : MonoBehaviour
 
     #region GeneralShopFunctions
 
+    
+    
+    
     void GetShop()
     {
         shopUI.interactable = true;
@@ -172,6 +170,7 @@ public class Shop : MonoBehaviour
         CharacterController.instance.canDash = false;
         AttaquesNormales.instance.canAttack = false;
         shopUI.DOFade(1, 1);
+        shopUIController.fade = false;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
     /*void OpenShop()

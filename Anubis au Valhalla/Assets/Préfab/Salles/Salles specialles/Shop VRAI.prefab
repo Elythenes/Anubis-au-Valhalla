@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.8430786, y: -23.299988}
+  m_AnchoredPosition: {x: -0.8430176, y: -23.299988}
   m_SizeDelta: {x: 47.1361, y: 47.1361}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &176034889
@@ -108,7 +108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.8432007, y: -23.299988}
+  m_AnchoredPosition: {x: -0.8432617, y: -23.299988}
   m_SizeDelta: {x: 47.1361, y: 47.1361}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &247944563
@@ -451,7 +451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.8432007, y: -23.299988}
+  m_AnchoredPosition: {x: -0.8432617, y: -23.299988}
   m_SizeDelta: {x: 46.6647, y: 47.1361}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1271273814
@@ -522,7 +522,7 @@ RectTransform:
   - {fileID: 1271273812}
   - {fileID: 552582747}
   m_Father: {fileID: 2035946689034724572}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1594,7 +1594,7 @@ Transform:
   - {fileID: 6430421298007251780}
   - {fileID: 2099232471005306265}
   m_Father: {fileID: 2035946689034724572}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5531435809914998070
 Animator:
@@ -4167,10 +4167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26fef1a7d97bbb2408ea386805a21614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  camBaseSize: 7
-  zoomSpeed: 0.05
   shopUI: {fileID: 8340794214527784523}
+  shopUIController: {fileID: 6336622088284668539}
   weaponShop: {fileID: 8839094893553521675}
   upgradesList:
     UpsLame:
@@ -4282,6 +4280,12 @@ MonoBehaviour:
   - {fileID: 7196706530785485212}
   consumableObject: []
   choice: []
+  choice1Avalable: 0
+  choice2Avalable: 0
+  choice3Avalable: 0
+  animChoice1: {fileID: 0}
+  animChoice2: {fileID: 0}
+  animChoice3: {fileID: 0}
   lockInteract: 0
   canInteract: 0
   offset: {x: 0, y: 1.2, z: 0}
@@ -4846,7 +4850,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254034606072609099}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1098, y: 67, z: 0}
+  m_LocalPosition: {x: 122.00012, y: 79.87479, z: 0}
   m_LocalScale: {x: 0.8925525, y: 0.8925525, z: 0.8925525}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6149,7 +6153,7 @@ RectTransform:
   - {fileID: 6078058370794758759}
   - {fileID: 1542274238}
   m_Father: {fileID: 2035946689034724572}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9561,9 +9565,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIMenuShop, Assembly-CSharp
-        m_MethodName: FadeIn
+      - m_Target: {fileID: 701104928559473726}
+        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
+        m_MethodName: CloseShop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9573,20 +9577,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6336622088284668539}
         m_TargetAssemblyTypeName: UIMenuShop, Assembly-CSharp
-        m_MethodName: FadeOutChoseUpgrade
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1833672320}
-        m_TargetAssemblyTypeName: BoutonLame, Assembly-CSharp
         m_MethodName: FadeOut
         m_Mode: 1
         m_Arguments:
@@ -10134,7 +10126,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2931296588933438398}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1016, y: -41.87477, z: 0}
+  m_LocalPosition: {x: 40, y: -29, z: 0}
   m_LocalScale: {x: 0.8925525, y: 0.8925525, z: 0.8925525}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11679,11 +11671,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6717336186168469874}
   - {fileID: 5209299655703583259}
   - {fileID: 5222769129760866140}
-  - {fileID: 40432346051656865}
   - {fileID: 1472099902}
+  - {fileID: 40432346051656865}
+  - {fileID: 6717336186168469874}
   m_Father: {fileID: 1337060660815481766}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11700,7 +11692,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3449564956168939925}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -14035,18 +14027,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 4321837732540196625}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 701104928559473726}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
         m_MethodName: ChooseType
@@ -14057,30 +14037,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Lame
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1833672320}
-        m_TargetAssemblyTypeName: BoutonLame, Assembly-CSharp
-        m_MethodName: ChoseLame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2502169572795130187}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1018123372}
@@ -14107,6 +14063,78 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1833672320}
+        m_TargetAssemblyTypeName: BoutonLame, Assembly-CSharp
+        m_MethodName: SelectLame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1253008936}
+        m_TargetAssemblyTypeName: BoutonHampe, Assembly-CSharp
+        m_MethodName: UnselectHampe
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 700348855}
+        m_TargetAssemblyTypeName: BoutonPomeau, Assembly-CSharp
+        m_MethodName: UnselectPomeau
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 4321837732540196625}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7768255235228310370}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6760390593690556332}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1833672320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14119,11 +14147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0106482b17e6b449bf5a2aa202cee3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 2502169572795130187}
-  animMenuPartie: {fileID: 1391970448}
-  animMenuChoices: {fileID: 5531435809914998070}
-  choseMenu: {fileID: 1391970447}
-  fade: 0
+  animLame: {fileID: 2502169572795130187}
 --- !u!1 &3959716691129505099
 GameObject:
   m_ObjectHideFlags: 0
@@ -14149,7 +14173,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3959716691129505099}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1281, y: 328.4783, z: 0}
+  m_LocalPosition: {x: 305.00012, y: 341.3531, z: 0}
   m_LocalScale: {x: 0.8925525, y: 0.8925525, z: 0.8925525}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -26608,18 +26632,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 6760390593690556332}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 701104928559473726}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
         m_MethodName: ChooseType
@@ -26630,30 +26642,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Manche
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 700348855}
-        m_TargetAssemblyTypeName: BoutonPomeau, Assembly-CSharp
-        m_MethodName: ChosePomeau
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6136352962310728389}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1018123372}
@@ -26680,6 +26668,78 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 700348855}
+        m_TargetAssemblyTypeName: BoutonPomeau, Assembly-CSharp
+        m_MethodName: SelectPomeau
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1253008936}
+        m_TargetAssemblyTypeName: BoutonHampe, Assembly-CSharp
+        m_MethodName: UnselectHampe
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1833672320}
+        m_TargetAssemblyTypeName: BoutonLame, Assembly-CSharp
+        m_MethodName: UnselectLame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6760390593690556332}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7768255235228310370}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 4321837732540196625}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &700348855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26692,9 +26752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8431e4674102b344b81e5703120612c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 6136352962310728389}
-  animMenuPartie: {fileID: 1391970448}
-  animMenuChoices: {fileID: 5531435809914998070}
+  animPomeau: {fileID: 6136352962310728389}
 --- !u!1 &7594997995492776934
 GameObject:
   m_ObjectHideFlags: 0
@@ -28204,18 +28262,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 7768255235228310370}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 701104928559473726}
         m_TargetAssemblyTypeName: Shop, Assembly-CSharp
         m_MethodName: ChooseType
@@ -28226,30 +28272,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Hampe
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1253008936}
-        m_TargetAssemblyTypeName: BoutonHampe, Assembly-CSharp
-        m_MethodName: ChoseHampe
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8884269953694940865}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1018123372}
@@ -28276,6 +28298,78 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1253008936}
+        m_TargetAssemblyTypeName: BoutonHampe, Assembly-CSharp
+        m_MethodName: SelectHampe
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 700348855}
+        m_TargetAssemblyTypeName: BoutonPomeau, Assembly-CSharp
+        m_MethodName: UnselectPomeau
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1833672320}
+        m_TargetAssemblyTypeName: BoutonLame, Assembly-CSharp
+        m_MethodName: UnselectLame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 7768255235228310370}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4321837732540196625}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6760390593690556332}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1253008936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28288,9 +28382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2aa308f4295df4fada1363cfd9c12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 8884269953694940865}
-  animMenuPartie: {fileID: 1391970448}
-  animMenuChoices: {fileID: 5531435809914998070}
+  animHampe: {fileID: 8884269953694940865}
 --- !u!1 &8273944698371145520
 GameObject:
   m_ObjectHideFlags: 0
@@ -29929,7 +30021,7 @@ RectTransform:
   - {fileID: 4369904900259546161}
   - {fileID: 8047664787175595321}
   m_Father: {fileID: 2035946689034724572}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -30015,13 +30107,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52db9c6694ff6b4da8b4bb1a5f7f56b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animChosePartMenu: {fileID: 0}
-  animChoseUpgradeMenu: {fileID: 0}
-  animChoix1: {fileID: 0}
-  animChoix2: {fileID: 0}
-  animChoix3: {fileID: 0}
-  UIParent: {fileID: 0}
-  fade: 0
+  animChoix1: {fileID: 7865878608037782939}
+  animChoix2: {fileID: 3219479267417684272}
+  animChoix3: {fileID: 7531858685344561734}
+  UIParent: {fileID: 8340794214527784523}
+  fade: 1
 --- !u!1 &8885926261921199245
 GameObject:
   m_ObjectHideFlags: 0

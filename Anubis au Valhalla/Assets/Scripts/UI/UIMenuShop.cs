@@ -4,8 +4,6 @@ using UnityEngine.EventSystems;
 
 public class UIMenuShop : MonoBehaviour
 {
-    public Animator animChosePartMenu;
-    public Animator animChoseUpgradeMenu;
     public Animator animChoix1;
     public Animator animChoix2;
     public Animator animChoix3;
@@ -30,16 +28,24 @@ public class UIMenuShop : MonoBehaviour
             }
         }
     }
-
-    public void ResetAllAnimatorMenu()
+    
+    public void MoveInChoix1()
     {
-        animChoseUpgradeMenu.SetBool("BackIdle",true);
-        animChoseUpgradeMenu.SetBool("SpawnChoices",false);
-        animChosePartMenu.SetBool("ChoseLame",false);
-        animChosePartMenu.SetBool("ChoseHampe",false);
-        animChosePartMenu.SetBool("ChosePomeau",false);
+        animChoix1.SetBool("MoveOut",false);
+        animChoix1.SetBool("MoveIn",true);
     }
-
+    
+    public void MoveInChoix2()
+    {
+        animChoix2.SetBool("MoveOut",false);
+        animChoix2.SetBool("MoveIn",true);
+    }
+    
+    public void MoveInChoix3()
+    {
+        animChoix3.SetBool("MoveOut",false);
+        animChoix3.SetBool("MoveIn",true);
+    }
     public void MoveOutChoix1()
     {
         animChoix1.SetBool("MoveOut",true);
