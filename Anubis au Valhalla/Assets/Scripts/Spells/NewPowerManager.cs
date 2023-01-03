@@ -249,7 +249,25 @@ public class NewPowerManager : MonoBehaviour
                 //fonction DashContact
             }*/
         }
+        while (isPower2Active)
+        {
+            CooldownManager(1);
+            /*if (an.attaque3) //si attaque smash
+            {
+                //fonction Cone
+            }
+            if (an.thrust) //si thrust
+            {
+                //fonction Ball
+            }
+            if (cc.isDashing) //si dash
+            {
+                //fonction DashContact
+            }*/
+        }
     }
+    
+    
 
     void CooldownManager(int power)
     {
