@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
-using Unity.VisualScripting;
 using UnityEngine;
+
 
 public class NewPowerManager : MonoBehaviour
 {
@@ -22,18 +21,19 @@ public class NewPowerManager : MonoBehaviour
 
     public List<GameObject> powersCollected = new();
 
-    public List<float> p1ComboConeDamages = new(10);
+    public List<int> p1ComboConeDamages = new(10);
     public List<float> p1ComboConeReaches = new(10);
-    public List<float> p1ThrustBallDamages = new(10);
+    public List<float> p1ComboConeDurations = new(10);
+    public List<int> p1ThrustBallDamages = new(10);
     public List<float> p1ThrustBallVelocities = new(10);
-    public List<float> p1DashContactDamages = new(10);
-    public List<float> p1DashContactSlowForces = new(10);
+    public List<int> p1DashContactDamages = new(10);
+    public List<float> p1DashContactStaggers = new(10);
 
-    public List<float> p2ComboWaveDamages = new(10);
+    public List<int> p2ComboWaveDamages = new(10);
     public List<float> p2ComboWaveRadiuses = new(10);
-    public List<float> p2ThrustBandageDamages = new(10);
+    public List<int> p2ThrustBandageDamages = new(10);
     public List<float> p2ThrustBandageSizes = new(10);
-    public List<float> p2DashTrailDamagesPerTick = new(10);
+    public List<int> p2DashTrailDamagesPerTick = new(10);
     public List<float> p2DashTrailDurations = new(10);
 
     [Header("UTILISATION")]
@@ -42,7 +42,7 @@ public class NewPowerManager : MonoBehaviour
     public float currentCooldownPower1;
     
     public float durationPower2 = 8f;
-    public float cooldownPower2;
+    public float cooldownPower2 = 12f;
     public float currentCooldownPower2;
 
     
@@ -62,24 +62,30 @@ public class NewPowerManager : MonoBehaviour
     public bool isPower1Active;
     public bool isPower2Active;
 
-    [Foldout("p1ComboCone")] public float p1ComboConeDamage;
+    [Foldout("p1ComboCone")] public GameObject p1ComboConeHitbox;
+    [Foldout("p1ComboCone")] public int p1ComboConeDamage;
     [Foldout("p1ComboCone")] public float p1ComboConeReach;
+    [Foldout("p1ComboCone")] public float p1ComboConeDuration;
     [Foldout("p1ComboCone")] public bool p1ComboConeStagger;
     [Foldout("p1ComboCone")] public bool p1ComboConeHalfSphere;
     [Foldout("p1ComboCone")] public bool p1ComboConeCenterCone;
     
-    [Foldout("p1TrustBall")] public float p1ThrustBallDamage;
-    [Foldout("p1TrustBall")] public float p1ThrustBallVelocity;
-    [Foldout("p1TrustBall")] public bool p1ThrustBallExplosionSize;
-    [Foldout("p1TrustBall")] public bool p1ThrustBallTriple;
-    [Foldout("p1TrustBall")] public bool p1ThrustBallExecute;
+    [Foldout("p1ThrustBall")] public GameObject p1ThrusrBallHitbox;
+    [Foldout("p1ThrustBall")] public int p1ThrustBallDamage;
+    [Foldout("p1ThrustBall")] public float p1ThrustBallVelocity;
+    [Foldout("p1ThrustBall")] public float p1ThrustBallExplosionSize;
+    [Foldout("p1ThrustBall")] public bool p1ThrustBallTriple;
+    [Foldout("p1ThrustBall")] public bool p1ThrustBallExecute;
     
+    [Foldout("p1DashContact")] public GameObject p1DashContactHitbox;
     [Foldout("p1DashContact")] public float p1DashContactDamage;
     [Foldout("p1DashContact")] public float p1DashContactSlowDuration;
     [Foldout("p1DashContact")] public bool p1DashContactSlowForce;
     [Foldout("p1DashContact")] public bool p1DashContactStagger;
     [Foldout("p1DashContact")] public bool p1DashContactPowerExtend;
     
+    [Foldout("p2ComboWave")] public GameObject p2ComboWaveHitbox;
+    [Foldout("p2ComboWave")] public float p2ComboWaveDuration;
     [Foldout("p2ComboWave")] public float p2ComboWaveDamage;
     [Foldout("p2ComboWave")] public float p2ComboWaveRadius;
     [Foldout("p2ComboWave")] public bool p2ComboWaveDot;
@@ -87,14 +93,20 @@ public class NewPowerManager : MonoBehaviour
     [Foldout("p2ComboWave")] public bool p2ComboWaveDeathExplosion;
     [Foldout("p2ComboWave")] public bool p2ComboWaveDouble;
     
+    [Foldout("p2ThrustBandage")] public GameObject p2ThrustBandageHitbox;
     [Foldout("p2ThrustBandage")] public float p2ThrustBandageDamage;
+    [Foldout("p2ThrustBandage")] public float p2ThrustBandageSpeed;
     [Foldout("p2ThrustBandage")] public float p2ThrustBandageSize;
     [Foldout("p2ThrustBandage")] public int p2ThrustBandageMaxHit = 1;
     [Foldout("p2ThrustBandage")] public bool p2ThrustBandageHoming;
     
+    [Foldout("p2DashTrail")] public GameObject p2DashTrailHitbox;
+    [Foldout("p2DashTrail")] public float timerSpawn;
+    [Foldout("p2DashTrail")] public float timerSpawnMax;
     [Foldout("p2DashTrail")] public float p2DashTrailDamagePerTick;
     [Foldout("p2DashTrail")] public float p2DashTrailDuration;
-    [Foldout("p2DashTrail")] public bool p2DashTrailSize;
+    [Foldout("p2DashTrail")] public float p2DashTrailEspacementDoT;
+    [Foldout("p2DashTrail")] public float p2DashTrailSize;
     [Foldout("p2DashTrail")] public bool p2DashTrailDotStacking;
     [Foldout("p2DashTrail")] public float p2DashTrailDotDamageMultiplier;
     [Foldout("p2DashTrail")] public bool p2DashTrailInfection;
@@ -185,7 +197,7 @@ public class NewPowerManager : MonoBehaviour
         {
             case 3:
                 p1ComboConeStagger = true;
-                p1ThrustBallExplosionSize = true;
+                p1ThrustBallExplosionSize *= 2;
                 p1DashContactSlowForce = true;
                 break;
             
@@ -206,7 +218,7 @@ public class NewPowerManager : MonoBehaviour
             case 3:
                 p2ComboWaveDot = true;
                 p2ThrustBandageMaxHit = 2;
-                p2DashTrailSize = true;
+                p2DashTrailSize *= 2;
                 break;
             
             case 5:
@@ -236,34 +248,53 @@ public class NewPowerManager : MonoBehaviour
         while (isPower1Active)
         {
             CooldownManager(1);
-            /*if (an.attaque3) //si attaque smash
+            if (an.attaque3) //Attaque smash
             {
-                //fonction Cone
+                Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 charaPos = CharacterController.instance.transform.position;
+                float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+                Instantiate(p1ComboConeHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
             }
-            if (an.thrust) //si thrust
+            
+            if (an.attaqueSpeSpell) // Attaque puissante
             {
-                //fonction Ball
+                Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 charaPos = CharacterController.instance.transform.position;
+                float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+                Instantiate(p1ThrusrBallHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
             }
-            if (cc.isDashing) //si dash
+            
+            if (cc.debutDash) // Attaque Dash
             {
-                //fonction DashContact
-            }*/
+                GameObject paralysieHitbox = Instantiate(p1DashContactHitbox, cc.transform.position, Quaternion.identity);
+                paralysieHitbox.transform.parent = cc.transform;
+                Destroy(paralysieHitbox,cc.dashDuration-cc.timerDash);
+            }
         }
+    
         while (isPower2Active)
         {
-            CooldownManager(1);
-            /*if (an.attaque3) //si attaque smash
+            CooldownManager(2);
+            if (an.attaque3) //si attaque smash
             {
-                //fonction Cone
+                Instantiate(p2ComboWaveHitbox, cc.transform.position, Quaternion.identity);
             }
-            if (an.thrust) //si thrust
+            if (an.attaqueSpeSpell) //PLACEHOLDER - REMPLACER PAR LE THRUST
             {
-                //fonction Ball
+                Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector2 charaPos = CharacterController.instance.transform.position;
+                    float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+                    Instantiate(p2ThrustBandageHitbox,transform.position,Quaternion.AngleAxis(angle,Vector3.forward));
             }
             if (cc.isDashing) //si dash
             {
-                //fonction DashContact
-            }*/
+                timerSpawn += Time.deltaTime;
+                if (timerSpawn >= timerSpawnMax)
+                {
+                    GameObject fireZone = Instantiate(p2DashTrailHitbox, cc.transform.position, Quaternion.identity);
+                    timerSpawn = 0;
+                }
+            }
         }
     }
     

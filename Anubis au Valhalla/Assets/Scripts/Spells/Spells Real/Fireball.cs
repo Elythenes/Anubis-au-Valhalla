@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    public PouvoirFeuObject soPouvoirFeu;
+    public NewPowerManager manager;
+    private float bulletSpeed;
     private SpriteRenderer sr;
     private SpriteRenderer srExplo;
     private CircleCollider2D hitbox;
@@ -15,21 +16,26 @@ public class Fireball : MonoBehaviour
 
     private void Start()
     {
+        manager = GameObject.Find("NewPowerManager").GetComponent<NewPowerManager>();
         sr = GetComponent<SpriteRenderer>();
         hitbox = GetComponent<CircleCollider2D>();
         srExplo = hitboxExplosion.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody2D>();
-        Destroy(gameObject,soPouvoirFeu.bulletDuration);
-        transform.localScale = soPouvoirFeu.bulletScale;
+        bulletSpeed = manager.p1ThrustBallVelocities[manager.currentLevelPower1];
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 
     void Update()
     {
         if (!isExploding)
         {
-            rb.velocity = transform.right * soPouvoirFeu.bulletSpeed;
+            rb.velocity = transform.right * bulletSpeed;
         }
-        else
+        else 
         {
             rb.velocity = Vector2.zero;
         }
@@ -37,7 +43,7 @@ public class Fireball : MonoBehaviour
 
         if (isExploding)
         {
-            if (hitboxExplosion.transform.localScale.x < soPouvoirFeu.explosionScale && hitboxExplosion.transform.localScale.y < soPouvoirFeu.explosionScale)
+            if (hitboxExplosion.transform.localScale.x < manager.p1ThrustBallExplosionSize && hitboxExplosion.transform.localScale.y < manager.p1ThrustBallExplosionSize)
             {
                 hitboxExplosion.transform.localScale += new Vector3(0.05f, 0.05f, 0);
                 Vector2 S = srExplo.sprite.bounds.size;
@@ -57,7 +63,7 @@ public class Fireball : MonoBehaviour
             sr.enabled = false;
             hitboxExplosion.SetActive(true);
             isExploding = true;
-            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(soPouvoirFeu.thrustDamage, soPouvoirFeu.stagger);
+            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1], 0.5f);
         }
     }
 }

@@ -6,15 +6,15 @@ using UnityEngine.Serialization;
 
 public class FlameArea : MonoBehaviour
 {
-    [Header("FlameArea")] 
-    public PouvoirFeuObject sOPouvoirFeu;
+    public NewPowerManager manager;
     public float tempsReloadHitFlameAreaTimer;
     public bool stopAttack;
 
     private void Start()
     {
-        Destroy(gameObject,sOPouvoirFeu.hitboxDashDuration);
-        transform.localScale = sOPouvoirFeu.zoneScale;
+        manager = GameObject.Find("NewPowerManager").GetComponent<NewPowerManager>();
+        Destroy(gameObject,manager.p2DashTrailDurations[manager.currentLevelPower2]);
+        transform.localScale = new Vector2(manager.p2DashTrailSize,manager.p2DashTrailSize);
     }
 
     private void OnTriggerStay2D(Collider2D col)
@@ -22,17 +22,16 @@ public class FlameArea : MonoBehaviour
         if (col.gameObject.tag == "Monstre")
         {
             stopAttack = false;
-         for (int i = 0; i < sOPouvoirFeu.nombreOfDot; i++)
+         for (int i = 0; i < 5; i++)
          {
-            if (tempsReloadHitFlameAreaTimer <= sOPouvoirFeu.espacementDoT && stopAttack == false)
+            if (tempsReloadHitFlameAreaTimer <= manager.p2DashTrailEspacementDoT && stopAttack == false)
             {
                 tempsReloadHitFlameAreaTimer += Time.deltaTime;
             }
 
-            if (tempsReloadHitFlameAreaTimer > sOPouvoirFeu.espacementDoT && col.gameObject.tag == "Monstre")
+            if (tempsReloadHitFlameAreaTimer > manager.p2DashTrailEspacementDoT && col.gameObject.tag == "Monstre")
             {
-                Debug.Log("touché");
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(sOPouvoirFeu.dashPuissanceAttaque,sOPouvoirFeu.stagger);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2],0.5f);
                 tempsReloadHitFlameAreaTimer = 0;
             }
          }

@@ -1,22 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Embaumement : MonoBehaviour
 {
-    public PouvoirPlaieObject sOPlaie;
+    public NewPowerManager manager;
     private Rigidbody2D rb;
 
     private void Start()
     {
-        Destroy(gameObject,sOPlaie.bulletDuration);
+        manager = GameObject.Find("NewPowerManager").GetComponent<NewPowerManager>();
+       
         rb = gameObject.GetComponent<Rigidbody2D>();
-        transform.localScale = sOPlaie.bulletScale;
+        transform.localScale= new Vector2(manager.p2ThrustBandageSizes[manager.currentLevelPower2],manager.p2ThrustBandageSizes[manager.currentLevelPower2]);
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 
     void Update()
     {
-        rb.velocity = transform.right * sOPlaie.bulletSpeed;
+        rb.velocity = transform.right * manager.p2ThrustBandageSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -24,9 +31,9 @@ public class Embaumement : MonoBehaviour
         if (col.gameObject.tag == "Monstre")
         {
             MonsterLifeManager monstre = col.GetComponentInParent<MonsterLifeManager>();
-            monstre.TakeDamage(sOPlaie.thrustDamage, sOPlaie.staggerThrust);
+            monstre.TakeDamage(manager.p2ThrustBandageDamages[manager.currentLevelPower2], 0.5f);
             monstre.isMomified = true;
-            monstre.MomifiedTime = sOPlaie.dureeMomification;
+            monstre.MomifiedTime = 0.5f;
         }
     }
 }
