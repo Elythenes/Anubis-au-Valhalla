@@ -33,7 +33,7 @@ public class PouvoirAme : MonoBehaviour
       {
          if (isActive && !lockCast)
          {
-            secondesRestantes -= Time.deltaTime;
+            secondesRestantes -= Time.deltaTime; 
             
             if (anubis.isDashing)  // ATTAQUE DASH
             {

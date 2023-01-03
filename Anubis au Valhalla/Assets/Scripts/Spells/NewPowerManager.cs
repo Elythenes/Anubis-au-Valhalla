@@ -13,6 +13,8 @@ public class NewPowerManager : MonoBehaviour
     public KeyCode keyPower2;
     public LayerMask layerMonstres;
     
+    private CharacterController cc;
+    private AttaquesNormales an;
     
     [Header("SYSTEM")]
     [Range(1,10)] public int currentLevelPower1;
@@ -35,9 +37,12 @@ public class NewPowerManager : MonoBehaviour
     public List<float> p2DashTrailDurations = new(10);
 
     [Header("UTILISATION")]
-    public float cooldownPower1 = 8f;
+    public float durationPower1 = 8f;
+    public float cooldownPower1 = 12f;
     public float currentCooldownPower1;
-    public float cooldownPower2 = 8f;
+    
+    public float durationPower2 = 8f;
+    public float cooldownPower2;
     public float currentCooldownPower2;
 
     
@@ -47,6 +52,7 @@ public class NewPowerManager : MonoBehaviour
 
     public bool testCustomLevel;
     public List<GameObject> testPowersCollected = new();
+    public KeyCode testCustomKey = KeyCode.K;
 
     [Header("DEBUG / Var")] 
     public bool canUsePowers;
@@ -134,8 +140,12 @@ public class NewPowerManager : MonoBehaviour
 
         currentLevelPower1 = startingLevelPower1;
         currentLevelPower2 = startingLevelPower2;
-        
-        if (testCustomLevel)
+    }
+    
+    
+    void Update()
+    {
+        if (testCustomLevel && Input.GetKeyDown(testCustomKey))
         {
             foreach (var gb in testPowersCollected)
             {
@@ -143,14 +153,6 @@ public class NewPowerManager : MonoBehaviour
             }
         }
         
-        Debug.Log("level p1 = " + currentLevelPower1);
-        Debug.Log("level p2 = " + currentLevelPower2);
-        
-    }
-    
-    
-    void Update()
-    {
         UsePower();
     }
 
@@ -226,37 +228,92 @@ public class NewPowerManager : MonoBehaviour
     
     void UsePower()
     {
-        if (canUsePowers && canUsePower1 && Input.GetKeyDown(keyPower1))
+        if (Input.GetKeyDown(keyPower1) && canUsePower1)
         {
             isPower1Active = true;
-            if (isPower2Active)
-            {
-                isPower2Active = false;
-                //faire entrer le power 2 en cooldown
-            }
-            //Fonctions qui utilisent les pouvoirs
-            //
-            //
+            Debug.Log("P1 Actif");
         }
-        
-        if (canUsePowers && canUsePower2 && Input.GetKeyDown(keyPower2))
+        while (isPower1Active)
         {
-            isPower2Active = true;
-            if (isPower1Active)
+            CooldownManager(1);
+            /*if (an.attaque3) //si attaque smash
             {
-                isPower1Active = false;
-                //faire entrer le power 1 en cooldown
+                //fonction Cone
             }
-            //Fonctions qui utilisent les pouvoirs
-            //
-            //
+            if (an.thrust) //si thrust
+            {
+                //fonction Ball
+            }
+            if (cc.isDashing) //si dash
+            {
+                //fonction DashContact
+            }*/
         }
-        
+        while (isPower2Active)
+        {
+            CooldownManager(1);
+            /*if (an.attaque3) //si attaque smash
+            {
+                //fonction Cone
+            }
+            if (an.thrust) //si thrust
+            {
+                //fonction Ball
+            }
+            if (cc.isDashing) //si dash
+            {
+                //fonction DashContact
+            }*/
+        }
     }
     
     
-    
-    
+
+    void CooldownManager(int power)
+    {
+        switch (power)
+        {
+            case 1:
+                if (durationPower1 > 0) //tant qu'on est sous power 1
+                {
+                    //manque la fonction de la duration
+                    Debug.Log("duration est = " + durationPower1);
+                }
+                else //si power entièrement épuisé
+                {
+                    canUsePower1 = false;
+                    isPower1Active = false;
+                    StartCoroutine(CoroutinePower()); //lance la récupération du power
+                }
+                break;
+            
+            case 2:
+                break;
+        }
+    }
+
+    private IEnumerator CoroutinePower()
+    {
+        while (currentCooldownPower1 < cooldownPower1)
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            currentCooldownPower1 += 0.1f;
+            Debug.Log("currentCooldown Power 1 = " + currentCooldownPower1);
+        }
+        canUsePower1 = true;
+    }
+
+    private IEnumerator CoroutineDuration() //faire cette foutue fonction qui enlève de la duration
+    {
+        float compteur = 0f;
+        while (compteur < durationPower1)
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            compteur -= 0.1f;
+            Debug.Log("currentCooldown Power 1 = " + currentCooldownPower1);
+        }
+        
+    }
     
     
     //old Fonctions ****************************************************************************************************
