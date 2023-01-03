@@ -699,6 +699,7 @@ MonoBehaviour:
   gVolumeMort: {fileID: 0}
   ankhShieldData: {fileID: 11400000, guid: 9ce3cadf4eba1454fb02d4e6a2e8974e, type: 2}
   compteurScore: {fileID: 0}
+  particulesHeal: {fileID: 6594238046482527439, guid: 6abf6407450f8dd4aa4bcbd25f5f0308, type: 3}
   knockbackAmount: 5
   stun: 0
   invinsible: 0
@@ -737,6 +738,7 @@ GameObject:
   - component: {fileID: 6322498022790916606}
   - component: {fileID: 6322498022790916607}
   - component: {fileID: 491855228}
+  - component: {fileID: 491855251}
   m_Layer: 8
   m_Name: Personnage Spine
   m_TagString: Untagged
@@ -851,7 +853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 161fb618cd71b3c44807aa1e4e673e7c, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: acec00ffd55d95244bbc75206e98c345, type: 2}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
@@ -1092,6 +1094,18 @@ MonoBehaviour:
   interaction: 102
   isPotionCollectable: 0
   collectablePotion: {fileID: 0}
+--- !u!114 &491855251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6322498022790916544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02c24803b26d1084494be18d2f70aacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &14784199228563454
 PrefabInstance:
   m_ObjectHideFlags: 0
