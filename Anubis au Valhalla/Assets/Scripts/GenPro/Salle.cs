@@ -130,6 +130,7 @@ public class Salle : MonoBehaviour
     {
         timer = SalleGenerator.Instance.timer;
         timer.GetComponent<TextMeshProUGUI>().enabled = true;
+        timer.GetComponent<TimerChallenge>().enabled = true;
     }
 
     private void C4_Parasites()

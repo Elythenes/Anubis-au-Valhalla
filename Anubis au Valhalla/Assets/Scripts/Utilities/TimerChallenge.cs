@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GenPro;
 using TMPro;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ public class TimerChallenge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SalleGenerator.Instance.currentRoom.roomDone) return;
         if (internalTimer >= 0)
         {
             internalTimer -= Time.deltaTime;
