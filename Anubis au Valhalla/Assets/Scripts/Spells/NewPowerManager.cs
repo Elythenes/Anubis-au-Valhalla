@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
@@ -6,6 +7,7 @@ using UnityEngine;
 
 public class NewPowerManager : MonoBehaviour
 {
+    public static NewPowerManager Instance;
     public GameObject targetUser;
     public KeyCode keyPower1;
     public KeyCode keyPower2;
@@ -16,11 +18,21 @@ public class NewPowerManager : MonoBehaviour
     [Range(1,10)] public int currentLevelPower1;
     [Range(1,10)] public int currentLevelPower2;
 
-    public List<NewPowerObject> powersCollected = new();
+    public List<GameObject> powersCollected = new();
 
     public List<float> p1ComboConeDamages = new(10);
     public List<float> p1ComboConeReaches = new(10);
-    
+    public List<float> p1ThrustBallDamages = new(10);
+    public List<float> p1ThrustBallVelocities = new(10);
+    public List<float> p1DashContactDamages = new(10);
+    public List<float> p1DashContactSlowForces = new(10);
+
+    public List<float> p2ComboWaveDamages = new(10);
+    public List<float> p2ComboWaveRadiuses = new(10);
+    public List<float> p2ThrustBandageDamages = new(10);
+    public List<float> p2ThrustBandageSizes = new(10);
+    public List<float> p2DashTrailDamagesPerTick = new(10);
+    public List<float> p2DashTrailDurations = new(10);
 
     [Header("UTILISATION")]
     public float cooldownPower1 = 8f;
@@ -32,10 +44,10 @@ public class NewPowerManager : MonoBehaviour
     [Header("DEBUG / Test")] 
     public int startingLevelPower1 = 1;
     public int startingLevelPower2 = 1;
-    
+
     public bool testCustomLevel;
-    
-    
+    public List<GameObject> testPowersCollected = new();
+
     [Header("DEBUG / Var")] 
     public bool canUsePowers;
     public bool canUsePower1;
@@ -44,19 +56,42 @@ public class NewPowerManager : MonoBehaviour
     public bool isPower1Active;
     public bool isPower2Active;
 
-    public float p1ComboConeDamage;
-    public float p1ComboConeReach;
-    public float p1ThrustBallDamage;
-    public float p1ThrustBallVelocity;
-    public float p1DashContactDamage;
-    public float p1DashContactSlowForce;
-
-    public float p2ComboWaveDamage;
-    public float p2ComboWaveRadius;
-    public float p2ThrustBandageDamage;
-    public float p2ThrustBandageSize;
-    public float p2DashTrailDamagePerTick;
-    public float p2DashTrailDuration;
+    [Foldout("p1ComboCone")] public float p1ComboConeDamage;
+    [Foldout("p1ComboCone")] public float p1ComboConeReach;
+    [Foldout("p1ComboCone")] public bool p1ComboConeStagger;
+    [Foldout("p1ComboCone")] public bool p1ComboConeHalfSphere;
+    [Foldout("p1ComboCone")] public bool p1ComboConeCenterCone;
+    
+    [Foldout("p1TrustBall")] public float p1ThrustBallDamage;
+    [Foldout("p1TrustBall")] public float p1ThrustBallVelocity;
+    [Foldout("p1TrustBall")] public bool p1ThrustBallExplosionSize;
+    [Foldout("p1TrustBall")] public bool p1ThrustBallTriple;
+    [Foldout("p1TrustBall")] public bool p1ThrustBallExecute;
+    
+    [Foldout("p1DashContact")] public float p1DashContactDamage;
+    [Foldout("p1DashContact")] public float p1DashContactSlowDuration;
+    [Foldout("p1DashContact")] public bool p1DashContactSlowForce;
+    [Foldout("p1DashContact")] public bool p1DashContactStagger;
+    [Foldout("p1DashContact")] public bool p1DashContactPowerExtend;
+    
+    [Foldout("p2ComboWave")] public float p2ComboWaveDamage;
+    [Foldout("p2ComboWave")] public float p2ComboWaveRadius;
+    [Foldout("p2ComboWave")] public bool p2ComboWaveDot;
+    [Foldout("p2ComboWave")] public float p2ComboWaveDotDamage;
+    [Foldout("p2ComboWave")] public bool p2ComboWaveDeathExplosion;
+    [Foldout("p2ComboWave")] public bool p2ComboWaveDouble;
+    
+    [Foldout("p2ThrustBandage")] public float p2ThrustBandageDamage;
+    [Foldout("p2ThrustBandage")] public float p2ThrustBandageSize;
+    [Foldout("p2ThrustBandage")] public int p2ThrustBandageMaxHit = 1;
+    [Foldout("p2ThrustBandage")] public bool p2ThrustBandageHoming;
+    
+    [Foldout("p2DashTrail")] public float p2DashTrailDamagePerTick;
+    [Foldout("p2DashTrail")] public float p2DashTrailDuration;
+    [Foldout("p2DashTrail")] public bool p2DashTrailSize;
+    [Foldout("p2DashTrail")] public bool p2DashTrailDotStacking;
+    [Foldout("p2DashTrail")] public float p2DashTrailDotDamageMultiplier;
+    [Foldout("p2DashTrail")] public bool p2DashTrailInfection;
     
     
     [Header("TEXTS")] 
@@ -82,172 +117,112 @@ public class NewPowerManager : MonoBehaviour
     
     
     //Fonctions système ************************************************************************************************
-    
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     void Start()
     {
         canUsePowers = true;
         canUsePower1 = true;
         canUsePower2 = true;
 
+        currentLevelPower1 = startingLevelPower1;
+        currentLevelPower2 = startingLevelPower2;
+        
         if (testCustomLevel)
         {
-            PowerLevelUp(1, startingLevelPower1);
-            PowerLevelUp(2, startingLevelPower2);
+            foreach (var gb in testPowersCollected)
+            {
+                Instantiate(gb);
+            }
         }
-        else
-        {
-            PowerLevelUp(1, 1);
-            PowerLevelUp(2, 1);
-        }
+        
+        Debug.Log("level p1 = " + currentLevelPower1);
+        Debug.Log("level p2 = " + currentLevelPower2);
+        
     }
     
     
     void Update()
     {
         UsePower();
-        
     }
 
 
     //Fonctions Powers *************************************************************************************************
 
-    void PowerLevelUp(int power, int level)
+    public void PowerLevelUp(GameObject powerRepo)
     {
-        switch (level)
+        switch(powerRepo.GetComponent<NewPowerRepository>().newPowerType)
         {
-            case 1:
-                switch (power)
-                {
-                    case 1:
-                        p1ComboConeDamage = p1ComboConeDamages[0];
-                        p1ComboConeReach = p1ComboConeReaches[0];
-                        //mettre à false toutes les verrous des ajouts d'effet
-                        break;
-                    
-                    case 2:
-                        
-                        break;
-                }
+            case NewPowerType.None:
+                Debug.Log("pas de level up si PowerType = None");
                 break;
-
-            case 2:
-                switch (power)
-                {
-                    case 1:
-                        
-                        break;
-                    
-                    case 2:
-                        
-                        break;
-                }
+            
+            case NewPowerType.Power1:
+                currentLevelPower1++;
                 break;
+            
+            case NewPowerType.Power2:
+                currentLevelPower2++;
+                break;
+        }
+        PowerLevelUnlock();
+        
+    }
 
+    void PowerLevelUnlock()
+    {
+        switch (currentLevelPower1)
+        {
             case 3:
-                switch (power)
-                {
-                    case 1:
-                        
-                        break;
-                    
-                    case 2:
-                        
-                        break;
-                }
+                p1ComboConeStagger = true;
+                p1ThrustBallExplosionSize = true;
+                p1DashContactSlowForce = true;
                 break;
-                
-            case 4:
-                switch (power)
-                {
-                    case 1:
-                        
-                        break;
-                    
-                    case 2:
-                        
-                        break;
-                }
-                break;
-                
+            
             case 5:
-                switch (power)
-                {
-                    case 1:
-                        
-                        break;
-                    
-                    case 2:
-                        
-                        break;
-                }
+                p1ComboConeHalfSphere = true;
+                p1ThrustBallTriple = true;
+                p1DashContactStagger = true;
                 break;
-                
-            case 6: 
-                switch (power)
-                {
-                    case 1:
-                        
-                        break;
-                    
-                    case 2:
-                        
-                        break;
-                }
-                break;
-                
-            case 7:
-                switch (power)
-                {
-                    case 1:
-                        
-                        break;
-                    
-                    case 2:
-                        
-                        break;
-                }
-                break;
-                
+            
             case 8:
-                switch (power)
-                {
-                    case 1:
-                        
-                        break;
-                    
-                    case 2:
-                        
-                        break;
-                }
+                p1ComboConeCenterCone = true;
+                p1ThrustBallExecute = true;
+                p1DashContactPowerExtend = true;
                 break;
-                
-            case 9:
-                switch (power)
-                {
-                    case 1:
-                        
-                        break;
-                    
-                    case 2:
-                        
-                        break;
-                }
+        }
+        switch (currentLevelPower2)
+        {
+            case 3:
+                p2ComboWaveDot = true;
+                p2ThrustBandageMaxHit = 2;
+                p2DashTrailSize = true;
                 break;
-                
-            case 10:
-                switch (power)
-                {
-                    case 1:
-                        
-                        break;
-                    
-                    case 2:
-                        
-                        break;
-                }
+            
+            case 5:
+                p2ComboWaveDeathExplosion = true;
+                p2ThrustBandageMaxHit = 100;
+                p2DashTrailDotStacking = true;
+                break;
+            
+            case 8:
+                p2ComboWaveDouble = true;
+                p2ThrustBandageHoming = true;
+                p2DashTrailInfection = true;
                 break;
         }
     }
+    
+    
+    
     
     void UsePower()
     {
