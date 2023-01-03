@@ -14,7 +14,6 @@ public class AnimDoor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!SalleGenerator.Instance.currentRoom) return;
         if (SalleGenerator.Instance.currentRoom.roomDone)
         {
             anim.SetBool("Open",true);
