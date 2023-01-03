@@ -41,7 +41,7 @@ public class Combo1Hitbox : MonoBehaviour
             }
 
 
-            mainCamera.transform.DOShakePosition(0.25f,1f);
+            mainCamera.transform.DOShakePosition(0.2f,1f);
             col.gameObject.GetComponent<AIPath>().canMove = false;
             col.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
             
