@@ -164,7 +164,7 @@ namespace GenPro
                                 if (i == (int) fromDoor) continue;
                                 bool state = Random.value > 0.4f;
                                 EnableDoors((DoorOrientation) i,state);
-                                bool special = Random.value > 0.3f;
+                                bool special = Random.value > 0.7f;
                                 if (special)
                                 {
                                         sDoors[i].willChooseSpecial = true;
@@ -187,7 +187,7 @@ namespace GenPro
                                 }
 
                         }
-                        if (roomsDone == 4)
+                        /*if (roomsDone == 4)
                         {
                                 Door removedDoor = sDoors[(int)fromDoor];
                                 sDoors.RemoveAt((int)fromDoor);
@@ -197,7 +197,7 @@ namespace GenPro
                                 doorToSpecial.ChooseSpecialToSpawn(1);
                                 sDoors.Insert((int)fromDoor, removedDoor);
                                 //return Instantiate(specialRooms[0]);
-                        }
+                        }*/
 
                         if (roomsDone == dungeonSize - 2)
                         {
