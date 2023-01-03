@@ -24,6 +24,7 @@ public class DamageManager : MonoBehaviour
     private ColorAdjustments ca;
     public SpellDefenceObject ankhShieldData;
     public TextMeshProUGUI compteurScore;
+    public GameObject particulesHeal;
 
     [Header("Alterations d'Etat")] 
     public float knockbackAmount;
@@ -139,6 +140,7 @@ public class DamageManager : MonoBehaviour
 
     public void Heal(int healAmount)
     {
+        GameObject particuleSoinOBJ = Instantiate(particulesHeal, transform.position, Quaternion.identity);
         stats.vieActuelle += healAmount;
         GameObject textHealObj = Instantiate(textHealDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
         textHealObj.GetComponentInChildren<TextMeshPro>().SetText((healAmount).ToString());
