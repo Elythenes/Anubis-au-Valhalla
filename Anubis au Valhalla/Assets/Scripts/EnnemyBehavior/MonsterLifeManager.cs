@@ -21,8 +21,10 @@ public class MonsterLifeManager : MonoBehaviour
     public float delay;
     private float forceKnockBack = 10;
     public UnityEvent OnBegin, OnDone;
+    public GameObject canvasLifeBar;
     public float criticalPick;
     public bool gotHit;
+   
     
 
     public GameObject spawnCircle;
@@ -198,6 +200,10 @@ public class MonsterLifeManager : MonoBehaviour
     
     public virtual void Die()
     {
+        canvasLifeBar.SetActive(false);
+        child.GetComponent<AIPath>().canMove = false;
+        child.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        child.GetComponent<Collider2D>().enabled = false;
         animator.SetBool("isDead",true);
         OnBegin.Invoke();
         StartCoroutine(DelayedDeath());
