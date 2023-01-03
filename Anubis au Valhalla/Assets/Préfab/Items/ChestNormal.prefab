@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 4817836997157679521}
   - component: {fileID: 6255592929874078626}
   - component: {fileID: 6752814064110923346}
-  - component: {fileID: 1344702926651671947}
   - component: {fileID: 470964101}
   m_Layer: 0
   m_Name: ChestNormal
@@ -134,7 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74217d4d0f491fe4f8f321d5684a36d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanOpen: 0
   isOpened: 0
   patternList:
   - {fileID: 11400000, guid: c4e53f8d99042774585657d3542fc15a, type: 2}
@@ -152,7 +150,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   openAnim: {fileID: 2362761440379783118}
+  CanOpen: 0
   CanvasInteraction: {fileID: 0}
+  "canvasGn\xE9": {fileID: 0}
   offset: {x: 1.2, y: 1.5, z: 0}
   TextInteraction: {fileID: 0}
 --- !u!61 &6752814064110923346
@@ -181,23 +181,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.382143, y: 2.1827936}
   m_EdgeRadius: 0
---- !u!114 &1344702926651671947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3411506346598688678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b840a1b17d8ce94fa9b232e012ebcf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  emptyLayerPlayer: {fileID: 0}
-  srPlayer: {fileID: 0}
-  srProps: {fileID: 0}
-  emptyLayer: {fileID: 0}
 --- !u!210 &470964101
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -557,20 +540,3 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &8397416001008635985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5863659067916799244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b840a1b17d8ce94fa9b232e012ebcf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  emptyLayerPlayer: {fileID: 0}
-  srPlayer: {fileID: 0}
-  srProps: {fileID: 0}
-  emptyLayer: {fileID: 0}

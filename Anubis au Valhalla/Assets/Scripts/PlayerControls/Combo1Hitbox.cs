@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Pathfinding;
 using UnityEngine;
 
@@ -8,12 +9,14 @@ public class Combo1Hitbox : MonoBehaviour
     public float stagger = 0.2f;
     private bool isShaking;
     private bool isWaiting;
+    public Camera mainCamera;
     public GameObject bloodEffect;
     public bool isStop;
     
 
     public virtual void Start()
     {
+        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         transform.parent = CharacterController.instance.transform;
         Destroy(gameObject, AttaquesNormales.instance.dureeHitbox[comboNumber]);
        transform.localScale *= AttaquesNormales.instance.rangeAttaque[comboNumber];
@@ -36,9 +39,9 @@ public class Combo1Hitbox : MonoBehaviour
                 col.gameObject.GetComponent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
                 return;
             }
-            
-            
-            
+
+
+            mainCamera.transform.DOShakePosition(0.1f,0.2f);
             col.gameObject.GetComponent<AIPath>().canMove = false;
             col.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
             

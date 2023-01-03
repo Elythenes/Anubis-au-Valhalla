@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,11 +7,13 @@ public class DashTracker : MonoBehaviour
 {
     public float distance = 22;
     public CharacterController player;
+    public float diagonalMultiplier;
 
-    public bool boost;
+    public float dashDurationBuffer;
     // Start is called before the first frame update
     void OnEnable()
     {
+        GetComponent<BoxCollider2D>().enabled = true;
         if (CharacterController.instance is null) return;
         switch (CharacterController.instance.facing)
         {
@@ -31,19 +34,19 @@ public class DashTracker : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0,0,270);
                 break;
             case CharacterController.LookingAt.NordEst:
-                transform.position = player.transform.position + new Vector3(0.5f,0.5f,0) * distance;
+                transform.position = player.transform.position + new Vector3(0.5f,0.5f,0) * distance * diagonalMultiplier;
                 transform.rotation = Quaternion.Euler(0,0,45);
                 break;
             case CharacterController.LookingAt.NordOuest:
-                transform.position = player.transform.position + new Vector3(-0.5f,0.5f,0) * distance;
+                transform.position = player.transform.position + new Vector3(-0.5f,0.5f,0) * distance * diagonalMultiplier;
                 transform.rotation = Quaternion.Euler(0,0,135);
                 break;
             case CharacterController.LookingAt.SudEst:
-                transform.position = player.transform.position + new Vector3(0,-3,0) + new Vector3(0.5f,-0.5f,0) * distance;
+                transform.position = player.transform.position + new Vector3(0,-3,0) + new Vector3(0.5f,-0.5f,0) * distance * diagonalMultiplier;
                 transform.rotation = Quaternion.Euler(0,0,315);
                 break;
             case CharacterController.LookingAt.SudOuest:
-                transform.position = player.transform.position + new Vector3(0,-3,0) + new Vector3(-0.5f,-0.5f,0) * distance;
+                transform.position = player.transform.position + new Vector3(0,-3,0) + new Vector3(-0.5f,-0.5f,0) * distance * diagonalMultiplier;
                 transform.rotation = Quaternion.Euler(0,0,235);
                 break;
         }
@@ -54,15 +57,23 @@ public class DashTracker : MonoBehaviour
     {
         transform.position = CharacterController.instance.transform.position;
         transform.rotation = Quaternion.Euler(0,0,0);
-        boost = false;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        boost = true;
+        GetComponent<BoxCollider2D>().enabled = false;
         CharacterController.instance.playerCol.enabled = false;
+        CharacterController.instance.canBuffer = true;
+        CharacterController.instance.dashBuffer = CharacterController.instance.dashDuration + dashDurationBuffer;
         Debug.Log("CA TOUCHE");
+        if (col.gameObject.CompareTag("MurInfranchissable"))
+        {
+            Debug.Log("exeption");
+            CharacterController.instance.playerCol.enabled = true;
+            CharacterController.instance.canBuffer = false;
+        }
     }
+
 
     /*private void Update()
     {
