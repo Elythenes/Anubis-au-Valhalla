@@ -137,9 +137,9 @@ public class NewPowerManager : MonoBehaviour
         
         if (testCustomLevel)
         {
-            foreach (var p in testPowersCollected)
+            foreach (var gb in testPowersCollected)
             {
-                Instantiate(p);
+                Instantiate(gb);
             }
         }
         
