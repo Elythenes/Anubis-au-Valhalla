@@ -416,7 +416,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -4.16144, y: 0}
@@ -444,9 +444,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43dad9e35b5c1a840bf0d483fdb1025b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 9
+  distance: 3.7
   player: {fileID: 6322498022790916602}
-  boost: 0
+  diagonalMultiplier: 1
+  dashDurationBuffer: 0.1
 --- !u!1 &3239004356962064045
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,7 +464,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5910972651797948580
 Transform:
   m_ObjectHideFlags: 0
@@ -909,14 +910,13 @@ MonoBehaviour:
   dashSpeed: 50
   timerDash: 0
   dashDuration: 0.15
+  diagonalSpeedMultiplier: 1.5
+  dashBuffer: 0
+  canBuffer: 0
   dashCooldown: 0.4
   isDashing: 0
   canDash: 1
   ghost: {fileID: 6322498022790916604}
-  roomBorders:
-    serializedVersion: 2
-    m_Bits: 128
-  canPassThrough: 0
   rb: {fileID: 0}
   movement: {x: 0, y: 0}
   astarPathTimer: 0

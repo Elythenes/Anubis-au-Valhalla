@@ -39,12 +39,13 @@ public class CharacterController : MonoBehaviour
   public float timerDash;
   public float dashDuration;
   private float timerdashCooldown;
+  public float diagonalSpeedMultiplier;
+  public float dashBuffer;
+  public bool canBuffer = false;
   [NaughtyAttributes.ReadOnly] public float dashCooldown;
   public bool isDashing;
   public bool canDash;
   public GhostDash ghost;
-  public LayerMask roomBorders;
-  public bool canPassThrough;
 
   [HideInInspector]public Rigidbody2D rb; // ca aussi
   public Vector2 movement;
@@ -165,7 +166,6 @@ public class CharacterController : MonoBehaviour
     {
       anim.SetBool("isDashing",false);
       anim.SetBool("isWalking",true);
-      playerCol.enabled = true;
       dashTracker.SetActive(false);
       allowMovements = true;
       finDash = true;
@@ -175,7 +175,6 @@ public class CharacterController : MonoBehaviour
       isDashing = false;
       timerDash = 0;
       canDash = false;
-      canPassThrough = false;
       if (AttaquesNormales.instance.buffer)
       {
         AttaquesNormales.instance.buffer = false;
@@ -214,6 +213,17 @@ public class CharacterController : MonoBehaviour
         InteractWithDoor(currentDoor);
       }
     }
+
+    if (canBuffer)
+    {
+      dashBuffer -= Time.deltaTime;
+      if (dashBuffer < 0)
+      {
+        Debug.Log("enabled");
+        canBuffer = false;
+        playerCol.enabled = true;
+      }
+    }
   }
 
   void Dashing()
@@ -241,19 +251,19 @@ public class CharacterController : MonoBehaviour
           break;
           
         case LookingAt.NordEst:
-          rb.velocity = (new Vector2(0.5f,0.5f) * dashSpeed);
+          rb.velocity = (new Vector2(0.5f,0.5f) * (dashSpeed * diagonalSpeedMultiplier));
           break;
           
         case LookingAt.NordOuest:
-          rb.velocity = (new Vector2(-0.5f,0.5f) * dashSpeed);
+          rb.velocity = (new Vector2(-0.5f,0.5f) * (dashSpeed * diagonalSpeedMultiplier));
           break;
 
         case LookingAt.SudEst:
-          rb.velocity = (new Vector2(0.5f, -0.5f) * dashSpeed);
+          rb.velocity = (new Vector2(0.5f, -0.5f) * (dashSpeed * diagonalSpeedMultiplier));
           break;
           
         case LookingAt.SudOuest:
-          rb.velocity = (new Vector2(-0.5f,-0.5f) * dashSpeed);
+          rb.velocity = (new Vector2(-0.5f,-0.5f) * (dashSpeed * diagonalSpeedMultiplier));
           break;
       }
     }
@@ -413,4 +423,15 @@ public class CharacterController : MonoBehaviour
     finDash = false;
   }
 
+  public void PlayerHitboxTimer(float timer)
+  {
+    if (timer >= 0)
+    {
+      timer -= Time.deltaTime;
+      Debug.Log(timer);
+      return;
+    }
+    Debug.Log("mais ta mere");
+    playerCol.enabled = true;
+  }
 }
