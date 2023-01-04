@@ -251,6 +251,16 @@ public class NewPowerManager : MonoBehaviour
         {
             if (canUsePower1)
             {
+                if (isPower2Active) //si on switch à p1 alors que p2 était actif
+                {
+                    earlyDisablePower2 = false;
+                    Debug.Log("Early Stop p2 via switch p1");
+                    StopCoroutine(tempsP2);
+                    isPower2Active = false;
+                    StartCoroutine(CooldownPower(2, cooldownPower2 - currentDurationPower2));
+                    currentDurationPower2 = 0f;
+                }
+                
                 canUsePower1 = false;
                 isPower1Active = true;
                 
@@ -261,7 +271,6 @@ public class NewPowerManager : MonoBehaviour
                 
                 if (currentDurationPower1 < durationPower1)
                 {
-                    Debug.Log("coucou 1");
                     StartCoroutine(tempsP1);
                 }
             }
@@ -271,6 +280,7 @@ public class NewPowerManager : MonoBehaviour
                 earlyDisablePower1 = false;
                 Debug.Log("Early Stop p1");
                 StopCoroutine(tempsP1);
+                isPower1Active = false;
                 StartCoroutine(CooldownPower(1, cooldownPower1 - currentDurationPower1));
                 currentDurationPower1 = 0f;
             }
@@ -280,6 +290,16 @@ public class NewPowerManager : MonoBehaviour
         {
             if (canUsePower2)
             {
+                if (isPower1Active)
+                {
+                    earlyDisablePower1 = false;
+                    Debug.Log("Early Stop p1 via switch p2");
+                    StopCoroutine(tempsP1);
+                    isPower1Active = false;
+                    StartCoroutine(CooldownPower(1, cooldownPower1 - currentDurationPower1));
+                    currentDurationPower1 = 0f;
+                }
+
                 canUsePower2 = false;
                 isPower2Active = true;
                 
@@ -299,6 +319,7 @@ public class NewPowerManager : MonoBehaviour
                 earlyDisablePower2 = false;
                 Debug.Log("Early Stop p2");
                 StopCoroutine(tempsP2);
+                isPower2Active = false;
                 StartCoroutine(CooldownPower(2, cooldownPower2 - currentDurationPower2));
                 currentDurationPower2 = 0f;
             }
@@ -371,7 +392,6 @@ public class NewPowerManager : MonoBehaviour
         switch (power)
         {
             case 1:
-                Debug.Log("coucou 2");
                 while (currentDurationPower1 < durationPower1)
                 {
                     yield return new WaitForSecondsRealtime(0.1f);
@@ -431,6 +451,7 @@ public class NewPowerManager : MonoBehaviour
                 Debug.Log("p2 rechargé après " + currentCooldownPower2 + " sec.");
                 currentCooldownPower2 = 0f;
                 canUsePower2 = true;
+                earlyDisablePower2 = false;
                 break;
         }
     }
@@ -466,76 +487,6 @@ public class NewPowerManager : MonoBehaviour
     }
     
     
-    
-    
-    
-    
-    private IEnumerator CoroutineDuration() 
-    {
-        while (currentDurationPower1 < durationPower1)
-        {
-            yield return new WaitForSecondsRealtime(0.1f);
-            currentDurationPower1 += 0.1f;
-            //Debug.Log("current Duration Power 1 = " + currentDurationPower1);
-        }
-        //CooldownManager(1);
-        Debug.Log("full conso");
-        currentDurationPower1 = 0f;
-    }
-    
-    private IEnumerator CoroutinePower(float restant, float max)
-    {
-        while (restant < max)
-        {
-            yield return new WaitForSecondsRealtime(0.1f);
-            restant += 0.1f;
-            currentCooldownPower1 = restant;
-            //Debug.Log("currentCooldown Power 1 = " + currentCooldownPower1);
-        }
-        canUsePower1 = true;
-        currentCooldownPower1 = 0f;
-        earlyDisablePower1 = false;
-    }
-    
-    private IEnumerator CoroutinePEarly()
-    {
-        currentDurationPower1 = 0f;
-        earlyDisablePower1 = false;
-        while (currentCooldownPower1 < cooldownPower1)
-        {
-            yield return new WaitForSecondsRealtime(0.1f);
-            currentCooldownPower1 += 0.1f;
-            //Debug.Log("Early P1 = " + currentCooldownPower1);
-        }
-        canUsePower1 = true;
-        currentCooldownPower1 = 0f;
-        
-    }
-    
-    
-    
-    void CooldownManager(int power)
-    {
-        switch (power)
-        {
-            case 1:
-                if (currentDurationPower1 < durationPower1) //tant qu'on est sous power 1
-                {
-                    canUsePower1 = false;
-                    //StartCoroutine(CoroutineDuration());
-                    //Debug.Log("duration est = " + durationPower1);
-                }
-                else //si power entièrement épuisé
-                {
-                    isPower1Active = false;
-                    //StartCoroutine(CoroutinePower(currentCooldownPower1, cooldownPower1)); //lance la récupération du power
-                }
-                break;
-            
-            case 2:
-                break;
-        }
-    }
     
     
     
