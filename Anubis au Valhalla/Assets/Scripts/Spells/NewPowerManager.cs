@@ -245,7 +245,7 @@ public class NewPowerManager : MonoBehaviour
         }
     }
 
-    void ActivePower()
+    void ActivePower() //sert de base au système de CD, à savoir : activer un power, le désactiver, ou switch un avec l'autre
     {
         if (Input.GetKeyDown(keyPower1))
         {
@@ -254,17 +254,16 @@ public class NewPowerManager : MonoBehaviour
                 if (isPower2Active) //si on switch à p1 alors que p2 était actif
                 {
                     earlyDisablePower2 = false;
-                    Debug.Log("Early Stop p2 via switch p1");
+                    //Debug.Log("Early Stop p2 via switch p1");
                     StopCoroutine(tempsP2);
                     isPower2Active = false;
-                    StartCoroutine(CooldownPower(2, cooldownPower2 - currentDurationPower2));
+                    StartCoroutine(CooldownPower(2, cooldownPower2 * currentDurationPower2 / durationPower2));
                     currentDurationPower2 = 0f;
                 }
                 
                 canUsePower1 = false;
                 isPower1Active = true;
-                
-                Debug.Log("P1 Actif");
+                //Debug.Log("P1 Actif");
                 
                 StartCoroutine(CoroutineTime(1,.3f)); //set earlyDisablePower à false à la fin des .3 secondes
                 tempsP1 = DurationPower(1);
@@ -278,10 +277,10 @@ public class NewPowerManager : MonoBehaviour
             if (!canUsePower1 && earlyDisablePower1)
             {
                 earlyDisablePower1 = false;
-                Debug.Log("Early Stop p1");
+                //Debug.Log("Early Stop p1");
                 StopCoroutine(tempsP1);
                 isPower1Active = false;
-                StartCoroutine(CooldownPower(1, cooldownPower1 - currentDurationPower1));
+                StartCoroutine(CooldownPower(1, cooldownPower1 * currentDurationPower1 / durationPower1));
                 currentDurationPower1 = 0f;
             }
         }
@@ -293,17 +292,16 @@ public class NewPowerManager : MonoBehaviour
                 if (isPower1Active)
                 {
                     earlyDisablePower1 = false;
-                    Debug.Log("Early Stop p1 via switch p2");
+                    //Debug.Log("Early Stop p1 via switch p2");
                     StopCoroutine(tempsP1);
                     isPower1Active = false;
-                    StartCoroutine(CooldownPower(1, cooldownPower1 - currentDurationPower1));
+                    StartCoroutine(CooldownPower(1, cooldownPower1 * currentDurationPower1 / durationPower1));
                     currentDurationPower1 = 0f;
                 }
 
                 canUsePower2 = false;
                 isPower2Active = true;
-                
-                Debug.Log("P2 Actif");
+                //Debug.Log("P2 Actif");
                 
                 StartCoroutine(CoroutineTime(2,.3f)); //set earlyDisablePower à false à la fin des .3 secondes
                 tempsP2 = DurationPower(2);
@@ -317,10 +315,10 @@ public class NewPowerManager : MonoBehaviour
             if (!canUsePower2 && earlyDisablePower2)
             {
                 earlyDisablePower2 = false;
-                Debug.Log("Early Stop p2");
+                //Debug.Log("Early Stop p2");
                 StopCoroutine(tempsP2);
                 isPower2Active = false;
-                StartCoroutine(CooldownPower(2, cooldownPower2 - currentDurationPower2));
+                StartCoroutine(CooldownPower(2, cooldownPower2 * currentDurationPower2 / durationPower2));
                 currentDurationPower2 = 0f;
             }
         }
@@ -328,9 +326,7 @@ public class NewPowerManager : MonoBehaviour
     }
 
     
-
-
-    void CheckPower()
+    void CheckPower() //sert à regarder si un pouvoir est actif et lancer les spells si oui
     {
         if (isPower1Active)
         {
@@ -385,9 +381,7 @@ public class NewPowerManager : MonoBehaviour
     }
     
     
-    
-    
-    private IEnumerator DurationPower(int power)
+    private IEnumerator DurationPower(int power) //sert à calculer le temps actuel de pouvoir restant
     {
         switch (power)
         {
@@ -424,11 +418,13 @@ public class NewPowerManager : MonoBehaviour
         
     }
     
-    private IEnumerator CooldownPower(int power, float max)
+    private IEnumerator CooldownPower(int power, float max) //sert à calculer le temps actuel de recharge du pouvoir
     {
         switch (power)
         {
             case 1:
+                CooldownPowerBar.Instance.sliderP1Max = max;
+                CooldownPowerBar.Instance.p1OnCd = true;
                 while (currentCooldownPower1 < max)
                 {
                     yield return new WaitForSecondsRealtime(0.1f);
@@ -439,6 +435,7 @@ public class NewPowerManager : MonoBehaviour
                 currentCooldownPower1 = 0f;
                 canUsePower1 = true;
                 earlyDisablePower1 = false;
+                CooldownPowerBar.Instance.p1OnCd = false;
                 break;
             
             case 2:
@@ -456,7 +453,7 @@ public class NewPowerManager : MonoBehaviour
         }
     }
     
-    private IEnumerator CoroutineTime(int power, float temps)
+    private IEnumerator CoroutineTime(int power, float temps) //sert à empêcher les gens de spam les pouvoirs ou quoi (car il faut .3 sec après avoir appuyé sur un pouvoir pour pouvoir le désactiver)
     {
         switch (power)
         {
