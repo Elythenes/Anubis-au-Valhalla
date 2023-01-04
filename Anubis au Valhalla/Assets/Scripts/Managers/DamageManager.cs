@@ -33,6 +33,9 @@ public class DamageManager : MonoBehaviour
     public bool isAnkh;
     public Animator animPlayer;
     public bool isAmePowered; // pour le pouvoir spéciale "âme" du dash 
+
+    [Header("Tracking")] 
+    public bool isDodging;
     
     [Header("Feedbacks")]
     public float timeHitStop;
@@ -82,6 +85,11 @@ public class DamageManager : MonoBehaviour
         {
             stats.vieActuelle = stats.vieMax;
         }
+
+        if (isDodging)
+        {
+            isDodging = false;
+        }
     }
 
     public void TakeDamage(int damage, GameObject enemy)
@@ -121,6 +129,7 @@ public class DamageManager : MonoBehaviour
             }
             else if(CharacterController.instance.isDashing)
             {
+                isDodging = true;
                 if (isAmePowered &&  !PouvoirAme.instance.spawnHitboxDash)
                 {
                     PouvoirAme.instance.spawnHitboxDash = true;

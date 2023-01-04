@@ -28,7 +28,10 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense1;
     [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense2;
     [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense3;
-
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool HealDodge1;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool HealDodge2;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool HealDodge3;
+    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool HealDodge4;
     private GlyphObject tempObject;
     
     
@@ -120,6 +123,10 @@ public class GlyphManager : MonoBehaviour
             
             case GlyphObject.AnubisStat.ThrustDamage:       //augmente les dégâts du Thrust
                 AnubisCurrentStats.instance.AddBonusDamage(6,hiero.bonusBasicStat);
+                break;
+            
+            case GlyphObject.AnubisStat.CriticalChances:   //augmente les chances de coup critique de toutes les attaques du combo et le Thrust
+                AnubisCurrentStats.instance.AddBonusDamage(7,hiero.bonusBasicStat);
                 break;
             
             case GlyphObject.AnubisStat.Range:              //augmente la portée / Range d'Anubis
@@ -224,7 +231,27 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
-            case 0:
+            case 334:
+                HealDodge1 = true;
+                break;
+            
+            case 335:
+                HealDodge1 = false;
+                HealDodge2 = true;
+                
+                break;
+            
+            case 336:
+                HealDodge1 = false;
+                HealDodge2 = false;
+                HealDodge3 = true;
+                break;
+            
+            case 337:
+                HealDodge1 = false;
+                HealDodge2 = false;
+                HealDodge3 = false;
+                HealDodge4 = true;
                 break;
         }
     }
@@ -321,7 +348,17 @@ public class GlyphManager : MonoBehaviour
             {
                 switch (arrayPoignee[i].glyphObject.index)
                 {
-                    case 300:
+                    case 334:
+                        HealDodge();
+                        break;
+                    case 335:
+                        HealDodge();
+                        break;
+                    case 336:
+                        HealDodge();
+                        break;
+                    case 337:
+                        HealDodge();
                         break;
                 }
             }
@@ -331,6 +368,29 @@ public class GlyphManager : MonoBehaviour
 
     //Fonctions des Glyphes ********************************************************************************************
 
+    void HealDodge()
+    {
+        if (HealDodge1 && DamageManager.instance.isDodging)
+        {
+            DamageManager.instance.Heal(2);
+        }
+        
+        if (HealDodge2 && DamageManager.instance.isDodging)
+        {
+            DamageManager.instance.Heal(3);
+        }
+        
+        if (HealDodge3 && DamageManager.instance.isDodging)
+        {
+            DamageManager.instance.Heal(4);
+        }
+        
+        if (HealDodge4 && DamageManager.instance.isDodging)
+        {
+            DamageManager.instance.Heal(5);
+        }
+    }
+    
     void SoulPowerForce()
     {
         if (soulPowerForce1)

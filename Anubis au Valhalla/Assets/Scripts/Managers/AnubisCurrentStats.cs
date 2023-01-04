@@ -198,6 +198,10 @@ public class AnubisCurrentStats : MonoBehaviour
          case 6: //Thrust Base Damage
             thrustBaseBonusDamage += Mathf.RoundToInt(value);
             break;
+         
+         case 7: //Thrust Base Damage
+            criticalRate += Mathf.RoundToInt(value);
+            break;
       }
    }
 

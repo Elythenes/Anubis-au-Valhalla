@@ -121,13 +121,12 @@ public class GlyphObject : ScriptableObject
         Combo3Damage,
         ThrustDamage,
         Range,
-        //AttackSpeed,
-        //Knockback,
         HealthPoint,
         Armor,
         Speed,
         DashCd,
         MagicForce,
+        CriticalChances,
         InvincibilityFrames,
         NoneAnubisStat
     }
