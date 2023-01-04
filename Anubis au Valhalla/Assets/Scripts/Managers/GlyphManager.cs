@@ -229,6 +229,7 @@ public class GlyphManager : MonoBehaviour
     
     void SetOnTriggerEffect(GlyphObject hiero)
     {
+        Debug.Log("oui oui c'est ca");
         switch (hiero.index)
         {
             case 334:
@@ -344,7 +345,7 @@ public class GlyphManager : MonoBehaviour
         
         for (int i = 0; i < arrayPoignee.Length; i++)
         {
-            if (arrayPoignee[i].glyphObject != null)
+            if (arrayPoignee[i].glyphObject is not null)
             {
                 switch (arrayPoignee[i].glyphObject.index)
                 {
@@ -387,6 +388,7 @@ public class GlyphManager : MonoBehaviour
         
         if (HealDodge4 && DamageManager.instance.isDodging)
         {
+            
             DamageManager.instance.Heal(5);
         }
     }

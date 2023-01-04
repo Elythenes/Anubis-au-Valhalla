@@ -85,11 +85,6 @@ public class DamageManager : MonoBehaviour
         {
             stats.vieActuelle = stats.vieMax;
         }
-
-        if (isDodging)
-        {
-            isDodging = false;
-        }
     }
 
     public void TakeDamage(int damage, GameObject enemy)
@@ -130,6 +125,7 @@ public class DamageManager : MonoBehaviour
             else if(CharacterController.instance.isDashing)
             {
                 isDodging = true;
+                StartCoroutine(ResetTracking());
                 if (isAmePowered &&  !PouvoirAme.instance.spawnHitboxDash)
                 {
                     PouvoirAme.instance.spawnHitboxDash = true;
@@ -150,6 +146,7 @@ public class DamageManager : MonoBehaviour
     public void Heal(int healAmount)
     {
         GameObject particuleSoinOBJ = Instantiate(particulesHeal, transform.position, Quaternion.identity);
+        particuleSoinOBJ.transform.parent = transform;
         stats.vieActuelle += healAmount;
         GameObject textHealObj = Instantiate(textHealDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
         textHealObj.GetComponentInChildren<TextMeshPro>().SetText((healAmount).ToString());
@@ -219,7 +216,11 @@ public class DamageManager : MonoBehaviour
         gVolume.weight = 0;
     }
 
-   
+    public IEnumerator ResetTracking()
+    {
+        yield return null;
+        isDodging = false;
+    }
 
     public IEnumerator MissScreen(float timeRedScreenC)
     {

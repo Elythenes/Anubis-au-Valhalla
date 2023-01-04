@@ -55,14 +55,14 @@ public class GlyphInventory : MonoBehaviour
         }
         else if (hiero.partie == GlyphObject.GlyphPart.Manche)
         {
-            GlyphManager.Instance.arrayLame[hiero.index-indexConvertorForManche] = wrap;
+            GlyphManager.Instance.arrayManche[hiero.index-indexConvertorForManche] = wrap;
             GlyphManager.Instance.ActiveGlyphInManager(hiero); 
             glyphInventory.Add(hiero); 
             Debug.Log("Glyph added in MancheManager, nom : " + wrap.glyphObject.nom);
         }
         else if (hiero.partie == GlyphObject.GlyphPart.Poignee)
         {
-            GlyphManager.Instance.arrayLame[hiero.index-indexConvertorPoignee] = wrap;
+            GlyphManager.Instance.arrayPoignee[hiero.index-indexConvertorPoignee] = wrap;
             GlyphManager.Instance.ActiveGlyphInManager(hiero);
             glyphInventory.Add(hiero);
             Debug.Log("Glyph added in PoigneeManager, nom : " + wrap.glyphObject.nom);
