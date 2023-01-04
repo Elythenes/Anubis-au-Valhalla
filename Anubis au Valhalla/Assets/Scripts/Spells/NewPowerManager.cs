@@ -39,10 +39,12 @@ public class NewPowerManager : MonoBehaviour
     [Header("UTILISATION")]
     public float durationPower1 = 8f;
     public float cooldownPower1 = 12f;
+    public float currentDurationPower1;
     public float currentCooldownPower1;
     
     public float durationPower2 = 8f;
     public float cooldownPower2 = 12f;
+    public float currentDurationPower2;
     public float currentCooldownPower2;
 
     
@@ -244,13 +246,19 @@ public class NewPowerManager : MonoBehaviour
         {
             isPower1Active = true;
             Debug.Log("P1 Actif");
+            CooldownManager(1);
         }
         while (isPower1Active)
         {
-            CooldownManager(1);
+            if (Input.GetKeyDown(keyPower1))
+            {
+                
+            }
+
+
             if (an.attaque3) //Attaque smash
             {
-                Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 charaPos = CharacterController.instance.transform.position;
                 float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
                 Instantiate(p1ComboConeHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
@@ -274,7 +282,6 @@ public class NewPowerManager : MonoBehaviour
     
         while (isPower2Active)
         {
-            CooldownManager(2);
             if (an.attaque3) //si attaque smash
             {
                 Instantiate(p2ComboWaveHitbox, cc.transform.position, Quaternion.identity);
@@ -305,14 +312,14 @@ public class NewPowerManager : MonoBehaviour
         switch (power)
         {
             case 1:
-                if (durationPower1 > 0) //tant qu'on est sous power 1
+                if (currentDurationPower1 < durationPower1) //tant qu'on est sous power 1
                 {
-                    //manque la fonction de la duration
+                    canUsePower1 = false;
+                    StartCoroutine(CoroutineDuration());
                     Debug.Log("duration est = " + durationPower1);
                 }
                 else //si power entièrement épuisé
                 {
-                    canUsePower1 = false;
                     isPower1Active = false;
                     StartCoroutine(CoroutinePower()); //lance la récupération du power
                 }
@@ -332,18 +339,20 @@ public class NewPowerManager : MonoBehaviour
             Debug.Log("currentCooldown Power 1 = " + currentCooldownPower1);
         }
         canUsePower1 = true;
+        currentCooldownPower1 = 0;
     }
 
     private IEnumerator CoroutineDuration() //faire cette foutue fonction qui enlève de la duration
     {
-        float compteur = 0f;
-        while (compteur < durationPower1)
+        currentDurationPower1 = 0f;
+        while (currentDurationPower1 < durationPower1)
         {
             yield return new WaitForSecondsRealtime(0.1f);
-            compteur -= 0.1f;
-            Debug.Log("currentCooldown Power 1 = " + currentCooldownPower1);
+            currentDurationPower1 += 0.1f;
+            Debug.Log("current Duration Power 1 = " + currentDurationPower1);
         }
-        
+        CooldownManager(1);
+        currentDurationPower1 = 0;
     }
     
     
