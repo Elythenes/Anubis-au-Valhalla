@@ -699,6 +699,7 @@ MonoBehaviour:
   gVolumeMort: {fileID: 0}
   ankhShieldData: {fileID: 11400000, guid: 9ce3cadf4eba1454fb02d4e6a2e8974e, type: 2}
   compteurScore: {fileID: 0}
+  particulesHeal: {fileID: 0}
   knockbackAmount: 5
   stun: 0
   invinsible: 0
@@ -1034,7 +1035,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &6322498022790916606
 BoxCollider2D:
@@ -1075,8 +1076,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interaction: 102
-  isSpellCollectable: 0
-  collectableSpell: {fileID: 0}
+  isPowerCollectable: 0
+  collectablePower: {fileID: 0}
 --- !u!114 &491855228
 MonoBehaviour:
   m_ObjectHideFlags: 0
