@@ -12,8 +12,8 @@ public class NewPowerManager : MonoBehaviour
     public KeyCode keyPower2;
     public LayerMask layerMonstres;
     
-    private CharacterController cc;
-    private AttaquesNormales an;
+    public CharacterController cc;
+    public AttaquesNormales an;
     
     [Header("SYSTEM")]
     [Range(1,10)] public int currentLevelPower1;
@@ -41,11 +41,13 @@ public class NewPowerManager : MonoBehaviour
     public float cooldownPower1 = 12f;
     public float currentDurationPower1;
     public float currentCooldownPower1;
+    private IEnumerator tempsP1;
     
     public float durationPower2 = 8f;
     public float cooldownPower2 = 12f;
     public float currentDurationPower2;
     public float currentCooldownPower2;
+    private IEnumerator tempsP2;
 
     
     [Header("DEBUG / Test")] 
@@ -63,6 +65,9 @@ public class NewPowerManager : MonoBehaviour
 
     public bool isPower1Active;
     public bool isPower2Active;
+
+    public bool earlyDisablePower1;
+    public bool earlyDisablePower2;
 
     [Foldout("p1ComboCone")] public GameObject p1ComboConeHitbox;
     [Foldout("p1ComboCone")] public int p1ComboConeDamage;
@@ -148,6 +153,9 @@ public class NewPowerManager : MonoBehaviour
 
     void Start()
     {
+        cc = CharacterController.instance; //ça fait crash
+        an = AttaquesNormales.instance;
+        
         canUsePowers = true;
         canUsePower1 = true;
         canUsePower2 = true;
@@ -166,8 +174,8 @@ public class NewPowerManager : MonoBehaviour
                 Instantiate(gb);
             }
         }
-        
-        UsePower();
+        ActivePower();
+        CheckPower();
     }
 
 
@@ -236,26 +244,75 @@ public class NewPowerManager : MonoBehaviour
                 break;
         }
     }
-    
-    
-    
-    
-    void UsePower()
+
+    void ActivePower()
     {
-        if (Input.GetKeyDown(keyPower1) && canUsePower1)
+        if (Input.GetKeyDown(keyPower1))
         {
-            isPower1Active = true;
-            Debug.Log("P1 Actif");
-            CooldownManager(1);
-        }
-        while (isPower1Active)
-        {
-            if (Input.GetKeyDown(keyPower1))
+            if (canUsePower1)
             {
+                canUsePower1 = false;
+                isPower1Active = true;
                 
+                Debug.Log("P1 Actif");
+                
+                StartCoroutine(CoroutineTime(1,.3f)); //set earlyDisablePower à false à la fin des .3 secondes
+                tempsP1 = DurationPower(1);
+                
+                if (currentDurationPower1 < durationPower1)
+                {
+                    Debug.Log("coucou 1");
+                    StartCoroutine(tempsP1);
+                }
             }
+            
+            if (!canUsePower1 && earlyDisablePower1)
+            {
+                earlyDisablePower1 = false;
+                Debug.Log("Early Stop p1");
+                StopCoroutine(tempsP1);
+                StartCoroutine(CooldownPower(1, cooldownPower1 - currentDurationPower1));
+                currentDurationPower1 = 0f;
+            }
+        }
+        
+        if (Input.GetKeyDown(keyPower2))
+        {
+            if (canUsePower2)
+            {
+                canUsePower2 = false;
+                isPower2Active = true;
+                
+                Debug.Log("P2 Actif");
+                
+                StartCoroutine(CoroutineTime(2,.3f)); //set earlyDisablePower à false à la fin des .3 secondes
+                tempsP2 = DurationPower(2);
+                
+                if (currentDurationPower2 < durationPower2)
+                {
+                    StartCoroutine(tempsP2);
+                }
+            }
+            
+            if (!canUsePower2 && earlyDisablePower2)
+            {
+                earlyDisablePower2 = false;
+                Debug.Log("Early Stop p2");
+                StopCoroutine(tempsP2);
+                StartCoroutine(CooldownPower(2, cooldownPower2 - currentDurationPower2));
+                currentDurationPower2 = 0f;
+            }
+        }
+        
+    }
+
+    
 
 
+    void CheckPower()
+    {
+        if (isPower1Active)
+        {
             if (an.attaque3) //Attaque smash
             {
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -263,24 +320,25 @@ public class NewPowerManager : MonoBehaviour
                 float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
                 Instantiate(p1ComboConeHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
             }
-            
+
             if (an.attaqueSpeSpell) // Attaque puissante
             {
-                Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 charaPos = CharacterController.instance.transform.position;
                 float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
                 Instantiate(p1ThrusrBallHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
             }
-            
+
             if (cc.debutDash) // Attaque Dash
             {
-                GameObject paralysieHitbox = Instantiate(p1DashContactHitbox, cc.transform.position, Quaternion.identity);
+                GameObject paralysieHitbox =
+                    Instantiate(p1DashContactHitbox, cc.transform.position, Quaternion.identity);
                 paralysieHitbox.transform.parent = cc.transform;
-                Destroy(paralysieHitbox,cc.dashDuration-cc.timerDash);
+                Destroy(paralysieHitbox, cc.dashDuration - cc.timerDash);
             }
         }
-    
-        while (isPower2Active)
+
+        if (isPower2Active)
         {
             if (an.attaque3) //si attaque smash
             {
@@ -306,7 +364,155 @@ public class NewPowerManager : MonoBehaviour
     }
     
     
-
+    
+    
+    private IEnumerator DurationPower(int power)
+    {
+        switch (power)
+        {
+            case 1:
+                Debug.Log("coucou 2");
+                while (currentDurationPower1 < durationPower1)
+                {
+                    yield return new WaitForSecondsRealtime(0.1f);
+                    currentDurationPower1 += 0.1f;
+                    //Debug.Log("dura p1 = " + currentDurationPower1);
+                }
+                Debug.Log("full conso p1");
+                currentDurationPower1 = 0f;
+                isPower1Active = false;
+                StartCoroutine(CooldownPower(1, cooldownPower1));
+                break;
+            
+            case 2:
+                while (currentDurationPower2 < durationPower2)
+                {
+                    yield return new WaitForSecondsRealtime(0.1f);
+                    currentDurationPower2 += 0.1f;
+                    //Debug.Log("dura p2 = " + currentDurationPower2);
+                }
+                Debug.Log("full conso p2");
+                currentDurationPower2 = 0f;
+                isPower2Active = false;
+                StartCoroutine(CooldownPower(2, cooldownPower2));
+                break;
+            
+            default:
+                Debug.Log("non mec");
+                break;
+        }
+        
+    }
+    
+    private IEnumerator CooldownPower(int power, float max)
+    {
+        switch (power)
+        {
+            case 1:
+                while (currentCooldownPower1 < max)
+                {
+                    yield return new WaitForSecondsRealtime(0.1f);
+                    currentCooldownPower1 += 0.1f;
+                    //Debug.Log("cd P1 = " + currentCooldownPower1);
+                }
+                Debug.Log("rechargé après " + currentCooldownPower1 + " sec.");
+                currentCooldownPower1 = 0f;
+                canUsePower1 = true;
+                break;
+            
+            case 2:
+                while (currentCooldownPower2 < max)
+                {
+                    yield return new WaitForSecondsRealtime(0.1f);
+                    currentCooldownPower2 += 0.1f;
+                    //Debug.Log("cd P2 = " + currentCooldownPower2);
+                }
+                Debug.Log("rechargé après " + currentCooldownPower2 + " sec.");
+                currentCooldownPower2 = 0f;
+                canUsePower2 = true;
+                break;
+        }
+    }
+    
+    private IEnumerator CoroutineTime(int power, float temps)
+    {
+        switch (power)
+        {
+            case 1:
+                float compteur1 = 0f;
+                while (compteur1 < temps)
+                {
+                    yield return new WaitForSecondsRealtime(0.1f);
+                    compteur1 += 0.1f;
+                    //Debug.Log("temps 1 = " + compteur);
+                }
+                earlyDisablePower1 = true;
+                break;
+            
+            case 2:
+                float compteur2 = 0f;
+                while (compteur2 < temps)
+                {
+                    yield return new WaitForSecondsRealtime(0.1f);
+                    compteur2 += 0.1f;
+                    //Debug.Log("temps 1 = " + compteur);
+                }
+                earlyDisablePower2 = true;
+                break;
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    private IEnumerator CoroutineDuration() 
+    {
+        while (currentDurationPower1 < durationPower1)
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            currentDurationPower1 += 0.1f;
+            //Debug.Log("current Duration Power 1 = " + currentDurationPower1);
+        }
+        //CooldownManager(1);
+        Debug.Log("full conso");
+        currentDurationPower1 = 0f;
+    }
+    
+    private IEnumerator CoroutinePower(float restant, float max)
+    {
+        while (restant < max)
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            restant += 0.1f;
+            currentCooldownPower1 = restant;
+            //Debug.Log("currentCooldown Power 1 = " + currentCooldownPower1);
+        }
+        canUsePower1 = true;
+        currentCooldownPower1 = 0f;
+        earlyDisablePower1 = false;
+    }
+    
+    private IEnumerator CoroutinePEarly()
+    {
+        currentDurationPower1 = 0f;
+        earlyDisablePower1 = false;
+        while (currentCooldownPower1 < cooldownPower1)
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            currentCooldownPower1 += 0.1f;
+            //Debug.Log("Early P1 = " + currentCooldownPower1);
+        }
+        canUsePower1 = true;
+        currentCooldownPower1 = 0f;
+        
+    }
+    
+    
+    
     void CooldownManager(int power)
     {
         switch (power)
@@ -315,13 +521,13 @@ public class NewPowerManager : MonoBehaviour
                 if (currentDurationPower1 < durationPower1) //tant qu'on est sous power 1
                 {
                     canUsePower1 = false;
-                    StartCoroutine(CoroutineDuration());
-                    Debug.Log("duration est = " + durationPower1);
+                    //StartCoroutine(CoroutineDuration());
+                    //Debug.Log("duration est = " + durationPower1);
                 }
                 else //si power entièrement épuisé
                 {
                     isPower1Active = false;
-                    StartCoroutine(CoroutinePower()); //lance la récupération du power
+                    //StartCoroutine(CoroutinePower(currentCooldownPower1, cooldownPower1)); //lance la récupération du power
                 }
                 break;
             
@@ -329,31 +535,8 @@ public class NewPowerManager : MonoBehaviour
                 break;
         }
     }
-
-    private IEnumerator CoroutinePower()
-    {
-        while (currentCooldownPower1 < cooldownPower1)
-        {
-            yield return new WaitForSecondsRealtime(0.1f);
-            currentCooldownPower1 += 0.1f;
-            Debug.Log("currentCooldown Power 1 = " + currentCooldownPower1);
-        }
-        canUsePower1 = true;
-        currentCooldownPower1 = 0;
-    }
-
-    private IEnumerator CoroutineDuration() //faire cette foutue fonction qui enlève de la duration
-    {
-        currentDurationPower1 = 0f;
-        while (currentDurationPower1 < durationPower1)
-        {
-            yield return new WaitForSecondsRealtime(0.1f);
-            currentDurationPower1 += 0.1f;
-            Debug.Log("current Duration Power 1 = " + currentDurationPower1);
-        }
-        CooldownManager(1);
-        currentDurationPower1 = 0;
-    }
+    
+    
     
     
     //old Fonctions ****************************************************************************************************
