@@ -415,9 +415,10 @@ public class NewPowerManager : MonoBehaviour
                     currentCooldownPower1 += 0.1f;
                     //Debug.Log("cd P1 = " + currentCooldownPower1);
                 }
-                Debug.Log("rechargé après " + currentCooldownPower1 + " sec.");
+                Debug.Log("p1 rechargé après " + currentCooldownPower1 + " sec.");
                 currentCooldownPower1 = 0f;
                 canUsePower1 = true;
+                earlyDisablePower1 = false;
                 break;
             
             case 2:
@@ -427,7 +428,7 @@ public class NewPowerManager : MonoBehaviour
                     currentCooldownPower2 += 0.1f;
                     //Debug.Log("cd P2 = " + currentCooldownPower2);
                 }
-                Debug.Log("rechargé après " + currentCooldownPower2 + " sec.");
+                Debug.Log("p2 rechargé après " + currentCooldownPower2 + " sec.");
                 currentCooldownPower2 = 0f;
                 canUsePower2 = true;
                 break;
