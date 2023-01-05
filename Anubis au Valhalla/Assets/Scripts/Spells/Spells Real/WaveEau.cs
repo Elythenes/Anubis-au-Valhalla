@@ -18,6 +18,7 @@ public class WaveEau : MonoBehaviour
         if (transform.localScale.x < manager.p1ComboConeReaches[manager.currentLevelPower1])
         {
             transform.localScale += new Vector3(0.01f, 0.01f, 0);
+         
         }
     }
 
