@@ -424,6 +424,7 @@ public class NewPowerManager : MonoBehaviour
         {
             case 1:
                 CooldownPowerBar.Instance.sliderP1Max = max;
+                CooldownPowerBar.Instance.durationBeforeCooldownPower1 = durationPower1 - currentDurationPower1;
                 CooldownPowerBar.Instance.p1OnCd = true;
                 while (currentCooldownPower1 < max)
                 {
@@ -439,6 +440,9 @@ public class NewPowerManager : MonoBehaviour
                 break;
             
             case 2:
+                CooldownPowerBar.Instance.sliderP2Max = max;
+                CooldownPowerBar.Instance.durationBeforeCooldownPower2 = durationPower2 - currentDurationPower2;
+                CooldownPowerBar.Instance.p2OnCd = true;
                 while (currentCooldownPower2 < max)
                 {
                     yield return new WaitForSecondsRealtime(0.1f);
@@ -449,6 +453,7 @@ public class NewPowerManager : MonoBehaviour
                 currentCooldownPower2 = 0f;
                 canUsePower2 = true;
                 earlyDisablePower2 = false;
+                CooldownPowerBar.Instance.p2OnCd = false;
                 break;
         }
     }

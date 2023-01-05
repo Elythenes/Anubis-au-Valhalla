@@ -13,20 +13,20 @@ public class CooldownPowerBar : MonoBehaviour
     public Slider sliderPower2;
 
     public bool p1OnCd;
-    //
-
-    public bool activeSlider1;
-    //
-
+    public bool p2OnCd;
+    
     public float sliderP1Max;
+    public float sliderP2Max;
     
     public TextMeshProUGUI compteurCurrentDurationPower1;
     [HideInInspector] public float countdownDurationPower1;
-    [HideInInspector] public float countdownCooldownPower1;
+    [HideInInspector] public float durationBeforeCooldownPower1;
+    //[HideInInspector] public float countdownCooldownPower1;
 
     public TextMeshProUGUI compteurCurrentDurationPower2;
     [HideInInspector] public float countdownDurationPower2;
-    [HideInInspector] public float countdownCooldownPower2;
+    [HideInInspector] public float durationBeforeCooldownPower2;
+    //[HideInInspector] public float countdownCooldownPower2;
     
     
     private void Awake()
@@ -41,12 +41,16 @@ public class CooldownPowerBar : MonoBehaviour
     {
         sliderPower1.maxValue = 0;
         compteurCurrentDurationPower1.enabled = true;
+        
+        sliderPower2.maxValue = 0;
+        compteurCurrentDurationPower2.enabled = true;
     }
     
     void Update()
     {
         CheckSeconds();
         compteurCurrentDurationPower1.SetText(Mathf.RoundToInt(countdownDurationPower1) + "");
+        compteurCurrentDurationPower2.SetText(Mathf.RoundToInt(countdownDurationPower2) + "");
     }
 
     void CheckSeconds()
@@ -55,7 +59,7 @@ public class CooldownPowerBar : MonoBehaviour
         {
             sliderPower1.maxValue = sliderP1Max;
             sliderPower1.value = sliderP1Max - NewPowerManager.Instance.currentCooldownPower1;
-            countdownDurationPower1 = NewPowerManager.Instance.durationPower1 - NewPowerManager.Instance.currentCooldownPower1 / NewPowerManager.Instance.cooldownPower1; //ici, trouver la formule pour afficher le bon temps restants avant d'arriver au max = 5
+            countdownDurationPower1 = durationBeforeCooldownPower1 + NewPowerManager.Instance.currentCooldownPower1 * NewPowerManager.Instance.durationPower1 / NewPowerManager.Instance.cooldownPower1; 
         }
         else
         {
@@ -63,28 +67,16 @@ public class CooldownPowerBar : MonoBehaviour
             countdownDurationPower1 = NewPowerManager.Instance.durationPower1 - NewPowerManager.Instance.currentDurationPower1;
         }
         
-    }
-
-    void ShowSlidebar()
-    {
-
-        //Power2
-        /*sliderPower2.maxValue = sliderP2MaxValue;
-        compteurCurrentCooldownPower2.SetText(Mathf.RoundToInt(countdownCooldownPower2) + "");
-        sliderPower2.value = countdownCooldownPower2;
-        
-        if (countdownCooldownPower2 <= 0)
+        if (p2OnCd)
         {
-            compteurCurrentCooldownPower2.enabled = false;
+            sliderPower2.maxValue = sliderP2Max;
+            sliderPower2.value = sliderP2Max - NewPowerManager.Instance.currentCooldownPower2;
+            countdownDurationPower2 = durationBeforeCooldownPower2 + NewPowerManager.Instance.currentCooldownPower2 * NewPowerManager.Instance.durationPower2 / NewPowerManager.Instance.cooldownPower2; 
         }
         else
         {
-            compteurCurrentCooldownPower2.enabled = true;
+            sliderPower2.value = 0;
+            countdownDurationPower2 = NewPowerManager.Instance.durationPower2 - NewPowerManager.Instance.currentDurationPower2;
         }
-
-        compteurCurrentDurationPower2.enabled = true;
-        compteurCurrentDurationPower2.SetText(Mathf.RoundToInt(countdownDurationPower2) + "");
-        */
-        
     }
 }
