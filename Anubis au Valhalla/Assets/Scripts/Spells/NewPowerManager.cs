@@ -423,9 +423,17 @@ public class NewPowerManager : MonoBehaviour
         switch (power)
         {
             case 1:
+                if (currentDurationPower1 != 0)
+                {
+                    CooldownPowerBar.Instance.durationBeforeCooldownPower1 = durationPower1 - currentDurationPower1;
+                }
+                else
+                {
+                    CooldownPowerBar.Instance.durationBeforeCooldownPower1 = currentDurationPower1;
+                }
                 CooldownPowerBar.Instance.sliderP1Max = max;
-                CooldownPowerBar.Instance.durationBeforeCooldownPower1 = durationPower1 - currentDurationPower1;
                 CooldownPowerBar.Instance.p1OnCd = true;
+                
                 while (currentCooldownPower1 < max)
                 {
                     yield return new WaitForSecondsRealtime(0.1f);
@@ -440,9 +448,17 @@ public class NewPowerManager : MonoBehaviour
                 break;
             
             case 2:
+                if (currentDurationPower2 != 0)
+                {
+                    CooldownPowerBar.Instance.durationBeforeCooldownPower2 = durationPower2 - currentDurationPower2;
+                }
+                else
+                {
+                    CooldownPowerBar.Instance.durationBeforeCooldownPower2 = currentDurationPower2;
+                }
                 CooldownPowerBar.Instance.sliderP2Max = max;
-                CooldownPowerBar.Instance.durationBeforeCooldownPower2 = durationPower2 - currentDurationPower2;
                 CooldownPowerBar.Instance.p2OnCd = true;
+                
                 while (currentCooldownPower2 < max)
                 {
                     yield return new WaitForSecondsRealtime(0.1f);
