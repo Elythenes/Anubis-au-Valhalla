@@ -84,10 +84,9 @@ public class Salle : MonoBehaviour
         {
             
         }
-        else
+        else if(!roomDone)
         {
-            TextMove.instance.title.gameObject.SetActive(true);
-            TextMove.instance.description.gameObject.SetActive(true);
+            TextMove.instance.GetComponent<TextMove>().enabled = true;
             switch (challengeChosen)
             {
                 case 1:
@@ -354,7 +353,7 @@ public class Salle : MonoBehaviour
         roomDone = true;
         SalleGenerator.Instance.roomsDone++;
         SalleGenerator.Instance.UnlockDoors();
-        TextMove.instance.title.gameObject.GetComponent<TextMove2>().FadeOut();
+        TextMove.instance.GetComponent<TextMove>().enabled = false;
         switch (challengeChosen)
         {
             case 1:

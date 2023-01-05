@@ -25,7 +25,7 @@ public class TextMove2 : MonoBehaviour
         transform.LeanScale(new Vector3(0.9f, 0.9f, 0.9f), 0.5f);
         transform.DOShakePosition(1.5f, 0).OnComplete((() =>
         {
-            gameObject.SetActive(false);
+            gameObject.GetComponent<TextMove2>().enabled = false;
         }));
     }
 }

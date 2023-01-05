@@ -15,6 +15,7 @@ public class TextMove : MonoBehaviour
     public CanvasGroup alpha;
 
     public float textDuration;
+    public TextMove script;
 
     public TextMeshProUGUI description;
 
@@ -28,30 +29,33 @@ public class TextMove : MonoBehaviour
             return;
         }
         instance = this;
+        script.enabled = false;
     }
     public void OnEnable()
     {
-        StartCoroutine(FadeOut());
-        Debug.Log("oui");
+        title.GetComponent<TextMove2>().enabled = true;
+        description.enabled = true;
+        title.enabled = true;
         alpha.alpha = 1;
         transform.localPosition = startPos;
         transform.localScale = Vector3.one;
+        transform.DOScale(Vector3.one, textDuration).OnComplete(() =>
+        {
+            Debug.Log("nan mais allo quoi");
+            alpha.LeanAlpha(0, 1).setEaseInCubic();
+            transform.LeanMoveLocal(endPos,1).setEaseInSine();
+            transform.LeanScale(new Vector3(0.9f, 0.9f, 0.9f), 0.5f);
+            
+        });
     }
 
-    IEnumerator FadeOut()
-    {
 
-        yield return new WaitForSeconds(textDuration);
-        Debug.Log("pourquoi");
-        alpha.LeanAlpha(0, 1).setEaseInCubic();
-        transform.LeanMoveLocal(endPos,1).setEaseInSine();
-        transform.LeanScale(new Vector3(0.9f, 0.9f, 0.9f), 0.5f);
-        yield return new WaitForSeconds(1.5f);
-        gameObject.SetActive(false);
-    }
+
+    
 
     private void OnDisable()
     {
-        //title.gameObject.SetActive(false);
+        Debug.Log("AHHHHHHHHHH");
+        title.GetComponent<TextMove2>().FadeOut();
     }
 }
