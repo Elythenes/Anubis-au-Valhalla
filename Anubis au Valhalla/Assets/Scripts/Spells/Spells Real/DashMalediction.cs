@@ -25,7 +25,6 @@ public class DashMalediction : MonoBehaviour
             
             if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= 0)
             {
-                Debug.Log("done");
                 SpellManager.instance.spellPMData.secondesRestantes += soPouvoirMalediction.durationRefiled;
             }
         }

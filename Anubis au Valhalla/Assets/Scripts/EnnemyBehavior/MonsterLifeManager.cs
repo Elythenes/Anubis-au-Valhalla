@@ -137,7 +137,6 @@ public class MonsterLifeManager : MonoBehaviour
             }
             StartCoroutine(HitScanReset());
             gotHit = true;
-            StartCoroutine(AnimationDamaged(staggerDuration));
             transform.DOShakePosition(staggerDuration, 0.5f, 50);/*.OnComplete(() =>
             {
                 ai.canMove = true;
@@ -165,12 +164,6 @@ public class MonsterLifeManager : MonoBehaviour
         }
     }
     
-    IEnumerator AnimationDamaged(float duration)
-    {
-        animator.SetBool("IsTouched", true);
-        yield return new WaitForSeconds(duration);
-        animator.SetBool("IsTouched", false);
-    }
 
   /*  public virtual void OnTriggerEnter2D(Collider2D col)
     {

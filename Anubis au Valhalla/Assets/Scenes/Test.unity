@@ -328,18 +328,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8e0c0b78072424494a1c4476ef16e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &491855251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491855199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02c24803b26d1084494be18d2f70aacf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &511801669 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 511801669, guid: 27dd07aaa84760f48958a7681d3f2264, type: 3}
@@ -1647,6 +1635,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 491855199}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: timerSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustSize1
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustSize2
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: timerSpawnMax
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: cooldownPower1
       value: 8
       objectReference: {fileID: 0}
@@ -1663,6 +1667,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailSize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeHitbox
       value: 
       objectReference: {fileID: 6665802142371134018, guid: 29d1e4087dc1c0445b1237fd4e7a53d2, type: 3}
@@ -1675,17 +1683,69 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2070572112627775315, guid: 79009e25851a7a943892beb5dc33448b, type: 3}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ComboConeStagger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ThrusrBallHitbox
       value: 
       objectReference: {fileID: 3272022552115205699, guid: b89b73c8528437f4583e754e1b240b58, type: 3}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallTriple
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1DashContactHitbox
       value: 
       objectReference: {fileID: 2052899350185052313, guid: 7a0d4b316628d454c990242c6f00616d, type: 3}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallExecute
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDuration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1DashContactStagger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ComboConeHalfSphere
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustExplosionSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p2ThrustBandageHitbox
       value: 
       objectReference: {fileID: 5229445006829840168, guid: 85f5710bff377894b9609517c7af4a5a, type: 3}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1DashContactPowerExtend
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagePerTick
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallExplosionSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveDeathExplosion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: testPowersCollected.Array.size
       value: 2
@@ -1712,7 +1772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeDamages.Array.data[5]
-      value: 10
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeDamages.Array.data[6]
@@ -1724,11 +1784,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeDamages.Array.data[8]
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeDamages.Array.data[9]
-      value: 10
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeReaches.Array.data[0]
@@ -1740,7 +1800,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeReaches.Array.data[2]
-      value: 0.35
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeReaches.Array.data[3]
@@ -1756,7 +1816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeReaches.Array.data[6]
-      value: 0.35
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeReaches.Array.data[7]
@@ -1768,11 +1828,87 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeReaches.Array.data[9]
-      value: 0.35
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1DashContactStaggers.Array.size
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveDamages.Array.data[0]
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveDamages.Array.data[1]
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveDamages.Array.data[2]
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveDamages.Array.data[3]
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveDamages.Array.data[4]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallDamages.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallDamages.Array.data[1]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallDamages.Array.data[2]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallDamages.Array.data[3]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallDamages.Array.data[4]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallDamages.Array.data[5]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallDamages.Array.data[6]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallDamages.Array.data[7]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallDamages.Array.data[8]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1ThrustBallDamages.Array.data[9]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveRadiuses.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveRadiuses.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveRadiuses.Array.data[2]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ComboWaveRadiuses.Array.data[3]
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeDurations.Array.data[0]
@@ -1813,6 +1949,74 @@ PrefabInstance:
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ComboConeDurations.Array.data[9]
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1DashContactDamages.Array.data[0]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1DashContactDamages.Array.data[1]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1DashContactDamages.Array.data[2]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1DashContactDamages.Array.data[3]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p1DashContactDamages.Array.data[4]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDurations.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDurations.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDurations.Array.data[2]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDurations.Array.data[3]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageSizes.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageSizes.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageSizes.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageSizes.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageSizes.Array.data[4]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageSizes.Array.data[5]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageSizes.Array.data[6]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageSizes.Array.data[7]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1DashContactStaggers.Array.data[0]
@@ -1893,6 +2097,70 @@ PrefabInstance:
     - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: p1ThrustBallVelocities.Array.data[9]
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageDamages.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageDamages.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageDamages.Array.data[2]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageDamages.Array.data[3]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageDamages.Array.data[4]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2ThrustBandageDamages.Array.data[5]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagesPerTick.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagesPerTick.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagesPerTick.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagesPerTick.Array.data[3]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagesPerTick.Array.data[4]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagesPerTick.Array.data[5]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagesPerTick.Array.data[6]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagesPerTick.Array.data[7]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagesPerTick.Array.data[8]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255392787119882471, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: p2DashTrailDamagesPerTick.Array.data[9]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: doStartHieroTest

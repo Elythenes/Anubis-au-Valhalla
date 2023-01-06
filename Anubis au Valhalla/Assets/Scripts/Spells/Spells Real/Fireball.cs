@@ -22,12 +22,9 @@ public class Fireball : MonoBehaviour
         srExplo = hitboxExplosion.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         bulletSpeed = manager.p1ThrustBallVelocities[manager.currentLevelPower1];
+        Destroy(gameObject,3f);
     }
-
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
-    }
+    
 
     void Update()
     {
@@ -43,16 +40,34 @@ public class Fireball : MonoBehaviour
 
         if (isExploding)
         {
-            if (hitboxExplosion.transform.localScale.x < manager.p1ThrustBallExplosionSize && hitboxExplosion.transform.localScale.y < manager.p1ThrustBallExplosionSize)
-            {
-                hitboxExplosion.transform.localScale += new Vector3(0.05f, 0.05f, 0);
-                Vector2 S = srExplo.sprite.bounds.size;
-                hitbox.radius = srExplo.transform.localScale.y /2;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            
+                if (!manager.p1ThrustExplosionSize)
+                {
+                    if (hitboxExplosion.transform.localScale.x < manager.p1ThrustSize1)
+                    {
+                        hitboxExplosion.transform.localScale += new Vector3(0.05f, 0.05f, 0);
+                        Vector2 S = srExplo.sprite.bounds.size;
+                        hitbox.radius = srExplo.transform.localScale.y / 2;
+                    }
+                    else
+                    {
+                        Destroy(gameObject);
+                    }
+                }
+                else
+                {
+                    if (hitboxExplosion.transform.localScale.x < manager.p1ThrustSize2)
+                    {
+                        hitboxExplosion.transform.localScale += new Vector3(0.05f, 0.05f, 0);
+                        Vector2 S = srExplo.sprite.bounds.size;
+                        hitbox.radius = srExplo.transform.localScale.y / 2;
+                    }
+                    else
+                    {
+                        Destroy(gameObject);
+                    }
+                }
+                    
         }
     }
 
@@ -63,7 +78,22 @@ public class Fireball : MonoBehaviour
             sr.enabled = false;
             hitboxExplosion.SetActive(true);
             isExploding = true;
-            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1], 0.5f);
+            if (!manager.p1ThrustBallExecute)
+            {
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1], 0.5f);
+            }
+            else
+            {
+                if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= col.GetComponentInParent<MonsterLifeManager>().vieMax * 20 / 100)
+                {
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1]*100, 0.5f);
+                }
+                else
+                {
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1], 0.5f);
+                }
+            }
+           
         }
     }
 }

@@ -80,7 +80,9 @@ public class NewPowerManager : MonoBehaviour
     [Foldout("p1ThrustBall")] public GameObject p1ThrusrBallHitbox;
     [Foldout("p1ThrustBall")] public int p1ThrustBallDamage;
     [Foldout("p1ThrustBall")] public float p1ThrustBallVelocity;
-    [Foldout("p1ThrustBall")] public float p1ThrustBallExplosionSize;
+    [Foldout("p1ThrustBall")] public float p1ThrustSize1;
+    [Foldout("p1ThrustBall")] public float p1ThrustSize2;
+    [Foldout("p1ThrustBall")] public bool p1ThrustExplosionSize;
     [Foldout("p1ThrustBall")] public bool p1ThrustBallTriple;
     [Foldout("p1ThrustBall")] public bool p1ThrustBallExecute;
     
@@ -105,7 +107,7 @@ public class NewPowerManager : MonoBehaviour
     [Foldout("p2ThrustBandage")] public float p2ThrustBandageSpeed;
     [Foldout("p2ThrustBandage")] public float p2ThrustBandageSize;
     [Foldout("p2ThrustBandage")] public int p2ThrustBandageMaxHit = 1;
-    [Foldout("p2ThrustBandage")] public bool p2ThrustBandageHoming;
+    [Foldout("p2ThrustBandage")] public bool p2ThrustBandageStunUp;
     
     [Foldout("p2DashTrail")] public GameObject p2DashTrailHitbox;
     [Foldout("p2DashTrail")] public float timerSpawn;
@@ -206,8 +208,8 @@ public class NewPowerManager : MonoBehaviour
         switch (currentLevelPower1)
         {
             case 3:
+                p1ThrustExplosionSize = true;
                 p1ComboConeStagger = true;
-                p1ThrustBallExplosionSize *= 2;
                 p1DashContactSlowForce = true;
                 break;
             
@@ -239,7 +241,7 @@ public class NewPowerManager : MonoBehaviour
             
             case 8:
                 p2ComboWaveDouble = true;
-                p2ThrustBandageHoming = true;
+                p2ThrustBandageStunUp = true;
                 p2DashTrailInfection = true;
                 break;
         }
@@ -343,7 +345,29 @@ public class NewPowerManager : MonoBehaviour
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 charaPos = CharacterController.instance.transform.position;
                 float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-                Instantiate(p1ThrusrBallHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+                if (!p1ThrustBallTriple)
+                {
+                    Instantiate(p1ThrusrBallHitbox,cc.transform.position,Quaternion.AngleAxis(angle,Vector3.forward));     
+                }
+                else
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (i == 0)
+                        {
+                            angle -= 20;
+                        }
+                        if (i == 1)
+                        {
+                            angle += 20;
+                        }
+                        if (i == 2)
+                        {
+                            angle += 20;
+                        }
+                        Instantiate(p1ThrusrBallHitbox,cc.transform.position,Quaternion.AngleAxis(angle,Vector3.forward));
+                    }
+                }
             }
 
             if (cc.debutDash) // Attaque Dash
@@ -359,14 +383,15 @@ public class NewPowerManager : MonoBehaviour
         {
             if (an.attaque3) //si attaque smash
             {
+                Debug.Log("oioio");
                 Instantiate(p2ComboWaveHitbox, cc.transform.position, Quaternion.identity);
             }
-            if (an.attaqueSpeSpell) //PLACEHOLDER - REMPLACER PAR LE THRUST
+            if (an.attaqueSpeSpell)
             {
                 Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     Vector2 charaPos = CharacterController.instance.transform.position;
                     float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-                    Instantiate(p2ThrustBandageHitbox,transform.position,Quaternion.AngleAxis(angle,Vector3.forward));
+                    Instantiate(p2ThrustBandageHitbox,cc.transform.position,Quaternion.AngleAxis(angle,Vector3.forward));
             }
             if (cc.isDashing) //si dash
             {

@@ -100,8 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3717e5b436191e140979759832641d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soPouvoirFeu: {fileID: 11400000, guid: 6d98dde1010a8f6499eac06099a7a425, type: 2}
+  manager: {fileID: 0}
   hitboxExplosion: {fileID: 4615535302069985153}
+  isExploding: 0
 --- !u!58 &6587923681567925786
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -155,7 +156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7492393917303830399
 Transform:
   m_ObjectHideFlags: 0

@@ -27,14 +27,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5229445006829840168}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.0002617804, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5120896, y: 2.4181416, z: 0.42895132}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.42895132}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0.03, z: 180}
 --- !u!212 &4468083802338968388
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: f0e02cf85af00184b968ff3e957eb361, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: d96fa4c68cd9ce24a9bf7a02f342ab83, type: 3}
   m_Color: {r: 0.8207547, g: 0.7032313, b: 0.36779103, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,10 +100,10 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.5}
+  m_Offset: {x: 0, y: 0.00058716536}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 1}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -111,7 +111,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.99746513}
   m_EdgeRadius: 0
 --- !u!114 &-8920739150258545077
 MonoBehaviour:
@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10f7c4258423b441a689fe53cfcac55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sOPlaie: {fileID: 11400000, guid: dd8ee4e5352837d47b73810dc4c3af2d, type: 2}
+  manager: {fileID: 0}
+  touchedEnemys: 0
 --- !u!50 &60499751478769881
 Rigidbody2D:
   serializedVersion: 4
@@ -141,7 +142,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
