@@ -38,6 +38,7 @@ public class Salle : MonoBehaviour
     private GameObject timer;
     public bool parasites = false;
     public bool overdose = true;
+    [HideInInspector] public TextMove text;
     [Serializable]
     public class Props
     {
@@ -74,6 +75,7 @@ public class Salle : MonoBehaviour
     private void Start()
     {
         challengeChosen = SalleGenerator.Instance.challengeChooser;
+        text = TextMove.instance;
         if (currentEnemies.Count == 0)
         {
             roomDone = true;
@@ -86,7 +88,6 @@ public class Salle : MonoBehaviour
         }
         else if(!roomDone)
         {
-            TextMove.instance.GetComponent<TextMove>().enabled = true;
             switch (challengeChosen)
             {
                 case 1:
@@ -116,8 +117,11 @@ public class Salle : MonoBehaviour
 
     private void C1_AllElites()
     {
-        TextMove.instance.title.text = "Ennemis vicieux";
-        TextMove.instance.description.text = "Tous les ennemis sont des élites";
+        text.Appear(text.titleAlpha,text.titleStartPos,text.title);
+        text.Appear(text.descAlpha,text.descStartPos,text.description);
+        StartCoroutine(DelayedFade());
+        text.title.text = "Ennemis vicieux";
+        text.description.text = "Tous les ennemis sont des élites";
         foreach (var enemy in currentEnemies)
         {
             enemy.GetComponent<MonsterLifeManager>().elite = true;
@@ -126,13 +130,21 @@ public class Salle : MonoBehaviour
 
     private void C2_Darkness()
     {
-        
+        text.Appear(text.titleAlpha,text.titleStartPos,text.title);
+        text.Appear(text.descAlpha,text.descStartPos,text.description);
+        text.title.text = "Overdose";
+        text.description.text = "Les ennemis sont bien plus rapides, mais aussi plus fragile";
+        StartCoroutine(DelayedFade());
+        overdose = true;
     }
 
     private void C3_TimeAttack()
     {
-        TextMove.instance.title.text = "Course contre la montre";
-        TextMove.instance.description.text = "Tuer tous les ennemis avant la fin du temps imparti donnera une meilleure récompense";
+        text.Appear(text.titleAlpha,text.titleStartPos,text.title);
+        text.Appear(text.descAlpha,text.descStartPos,text.description);
+        text.title.text = "Course contre la montre";
+        text.description.text = "Tuer tous les ennemis avant la fin du temps imparti donnera une meilleure récompense";
+        StartCoroutine(DelayedFade());
         timer = SalleGenerator.Instance.timer;
         timer.GetComponent<TextMeshProUGUI>().enabled = true;
         timer.GetComponent<TimerChallenge>().enabled = true;
@@ -140,15 +152,21 @@ public class Salle : MonoBehaviour
 
     private void C4_Parasites()
     {
-        TextMove.instance.title.text = "Parasites";
-        TextMove.instance.description.text = "Des corbeaux naissent de la carcasse de vos ennemis";
+        text.Appear(text.titleAlpha,text.titleStartPos,text.title);
+        text.Appear(text.descAlpha,text.descStartPos,text.description);
+        text.title.text = "Parasites";
+        text.description.text = "Des corbeaux naissent de la carcasse de vos ennemis";
+        StartCoroutine(DelayedFade());
         parasites = true;
     }
 
     private void C5_Overdose()
     {
-        TextMove.instance.title.text = "Overdose";
-        TextMove.instance.description.text = "Les ennemis sont bien plus rapides, mais aussi plus fragile";
+        text.Appear(text.titleAlpha,text.titleStartPos,text.title);
+        text.Appear(text.descAlpha,text.descStartPos,text.description);
+        text.title.text = "Overdose";
+        text.description.text = "Les ennemis sont bien plus rapides, mais aussi plus fragile";
+        StartCoroutine(DelayedFade());
         overdose = true;
     }
 
@@ -353,7 +371,7 @@ public class Salle : MonoBehaviour
         roomDone = true;
         SalleGenerator.Instance.roomsDone++;
         SalleGenerator.Instance.UnlockDoors();
-        TextMove.instance.GetComponent<TextMove>().enabled = false;
+        text.FadeOut(text.titleAlpha,text.titleEndPos,text.title);
         switch (challengeChosen)
         {
             case 1:
@@ -398,6 +416,12 @@ public class Salle : MonoBehaviour
                 SpawnEnemies(availableSpawnC);
             }
         }
+    }
+
+    public IEnumerator DelayedFade()
+    {
+        yield return new WaitForSeconds(text.textDuration);
+        text.FadeOut(text.descAlpha, text.descEndPos, text.description);
     }
 }
 

@@ -9,13 +9,15 @@ using UnityEngine.Rendering.PostProcessing;
 public class TextMove : MonoBehaviour
 {
     public static TextMove instance; 
-    public Vector2 startPos;
-    public Vector2 endPos;
+    public Vector2 titleStartPos;
+    public Vector2 titleEndPos;
+    public Vector2 descStartPos;
+    public Vector2 descEndPos;
 
-    public CanvasGroup alpha;
+    public CanvasGroup titleAlpha;
+    public CanvasGroup descAlpha;
 
     public float textDuration;
-    public TextMove script;
 
     public TextMeshProUGUI description;
 
@@ -29,33 +31,22 @@ public class TextMove : MonoBehaviour
             return;
         }
         instance = this;
-        script.enabled = false;
+
     }
-    public void OnEnable()
+
+    public void Appear(CanvasGroup alpha, Vector2 start, TextMeshProUGUI text)
     {
-        title.GetComponent<TextMove2>().enabled = true;
-        description.enabled = true;
-        title.enabled = true;
+        Debug.Log("Here");
         alpha.alpha = 1;
-        transform.localPosition = startPos;
-        transform.localScale = Vector3.one;
-        transform.DOScale(Vector3.one, textDuration).OnComplete(() =>
-        {
-            Debug.Log("nan mais allo quoi");
-            alpha.LeanAlpha(0, 1).setEaseInCubic();
-            transform.LeanMoveLocal(endPos,1).setEaseInSine();
-            transform.LeanScale(new Vector3(0.9f, 0.9f, 0.9f), 0.5f);
-            
-        });
+        text.transform.localPosition = start;
+        text.transform.localScale = Vector3.one;
+        text.enabled = true;
     }
-
-
-
-    
-
-    private void OnDisable()
+    public void FadeOut(CanvasGroup alpha, Vector2 end, TextMeshProUGUI text)
     {
-        Debug.Log("AHHHHHHHHHH");
-        title.GetComponent<TextMove2>().FadeOut();
+        alpha.LeanAlpha(0, 1).setEaseInCubic();
+        text.transform.LeanMoveLocal(end,1).setEaseInSine();
+        text.transform.LeanScale(new Vector3(0.9f, 0.9f, 0.9f), 0.5f);
+        text.enabled = false;
     }
 }
