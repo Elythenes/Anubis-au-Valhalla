@@ -173,15 +173,6 @@ public class Shop : MonoBehaviour
         shopUIController.fade = false;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }
-    /*void OpenShop()
-    {
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 1.9f, zoomSpeed);
-    }
-
-    void QuitShop()
-    {
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, camBaseSize, zoomSpeed);
-    }*/
 
     public void CloseShop()
     {
@@ -190,6 +181,7 @@ public class Shop : MonoBehaviour
         CharacterController.instance.canDash = true;
         AttaquesNormales.instance.canAttack = true;
         shopUI.interactable = false;
+        SalleGenerator.Instance.UnlockDoors();
         shopUI.DOFade(0, 1).OnComplete(() =>
         {
             //shopUI.gameObject.SetActive(false);
