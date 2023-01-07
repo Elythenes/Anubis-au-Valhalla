@@ -11,6 +11,7 @@ public class MonsterLifeManager : MonoBehaviour
 {
     public EnemyData data;
     public GameObject textDamage;
+    public GameObject textCriticalDamage;
     public Animator animator;
     public Rigidbody2D rb;
     public HealthBarMonstre healthBar;
@@ -159,7 +160,7 @@ public class MonsterLifeManager : MonoBehaviour
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
                 textDamage.GetComponentInChildren<TextMeshPro>().SetText((damage * 2).ToString());
-                GameObject textOBJ = Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
+                GameObject textOBJ = Instantiate(textCriticalDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
                 textOBJ.transform.localScale *= 2;
 
             }
