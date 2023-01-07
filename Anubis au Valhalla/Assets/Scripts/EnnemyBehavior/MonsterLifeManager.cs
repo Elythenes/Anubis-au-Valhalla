@@ -24,6 +24,10 @@ public class MonsterLifeManager : MonoBehaviour
     public GameObject canvasLifeBar;
     public float criticalPick;
     public bool gotHit;
+    public IA_Monstre1 IALoup;
+    public IA_Guerrier IAGuerrier;
+    public IA_Corbeau IACorbeau;
+    
    
     
 
@@ -33,18 +37,28 @@ public class MonsterLifeManager : MonoBehaviour
     public SpriteRenderer sr;
 
     [Header("Alterations d'état")] 
+    public bool FlameInfected;
+    public float FlameInfectedTimer;
+    public float FlameInfectedTimerMax;
+    public float spawnTimer;
+    public float spawnTimerMax;
+    public NewPowerManager flameManager;
+    
     public float InvincibleTime;
     public float InvincibleTimeTimer;
     public bool isInvincible;
+    
     public float MomifiedTime = 3;
     public float MomifiedTimeTimer;
     public bool isMomified;
     public GameObject bandelettesMomie;
     private bool activeBandelettes;
+    
     public bool isEnvased;
     public float EnvasedTime = 5;
     public float EnvasedTimeTimer;
     private float demiSpeed;
+    
     public bool elite = false;
     public bool isParasite = false;
     public bool overdose = false;
@@ -114,6 +128,25 @@ public class MonsterLifeManager : MonoBehaviour
                 bandelettesMomie.SetActive(false);
                 ai.canMove = true;
                 MomifiedTimeTimer = 0;
+            }
+        }
+
+        if (FlameInfected)
+        {
+            FlameInfectedTimer += Time.deltaTime;
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer >= spawnTimerMax)
+            {
+                GameObject miniflame = Instantiate(flameManager.p2DashTrailHitbox,child.transform.position,Quaternion.identity);
+                miniflame.GetComponent<FlameArea>().isMiniFlame = true;
+                miniflame.transform.localScale = new Vector2(flameManager.p2DashTrailSize /3,flameManager.p2DashTrailSize /3);
+                spawnTimer = 0;
+            }
+
+            if (FlameInfectedTimer >= FlameInfectedTimerMax)
+            {
+                FlameInfectedTimer = 0;
+                FlameInfected = false;
             }
         }
     }
@@ -193,10 +226,24 @@ public class MonsterLifeManager : MonoBehaviour
     
     public virtual void Die()
     {
+        child.GetComponent<Collider2D>().enabled = false;
+        
+        if (IACorbeau is not null)
+        {
+            IACorbeau.enabled = false;
+        }
+        else if (IALoup is not null)
+        {
+            IALoup.enabled = false;
+        }
+        else if (IAGuerrier is not null)
+        {
+            IAGuerrier.enabled = false;
+        }
+       
         canvasLifeBar.SetActive(false);
         child.GetComponent<AIPath>().canMove = false;
         child.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        child.GetComponent<Collider2D>().enabled = false;
         animator.SetBool("isDead",true);
         OnBegin.Invoke();
         StartCoroutine(DelayedDeath());
@@ -213,6 +260,7 @@ public class MonsterLifeManager : MonoBehaviour
             SalleGenerator.Instance.currentRoom.currentEnemies.Add(parasiteScript);
             parasite.GetComponent<MonsterLifeManager>().isParasite = true;
             parasite.GetComponent<MonsterLifeManager>().soulValue = Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
+            parasite.transform.localScale /= 2;
         }
 
         ScoreManager.instance.currentScore += data.score;
