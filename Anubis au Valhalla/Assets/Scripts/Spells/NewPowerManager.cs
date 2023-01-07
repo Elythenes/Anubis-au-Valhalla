@@ -75,7 +75,7 @@ public class NewPowerManager : MonoBehaviour
     [Foldout("p1ComboCone")] public float p1ComboConeDuration;
     [Foldout("p1ComboCone")] public bool p1ComboConeStagger;
     [Foldout("p1ComboCone")] public bool p1ComboConeHalfSphere;
-    [Foldout("p1ComboCone")] public bool p1ComboConeCenterCone;
+    [Foldout("p1ComboCone")] public bool p1ComboConeInversedCone;
     
     [Foldout("p1ThrustBall")] public GameObject p1ThrusrBallHitbox;
     [Foldout("p1ThrustBall")] public int p1ThrustBallDamage;
@@ -97,8 +97,7 @@ public class NewPowerManager : MonoBehaviour
     [Foldout("p2ComboWave")] public float p2ComboWaveDuration;
     [Foldout("p2ComboWave")] public float p2ComboWaveDamage;
     [Foldout("p2ComboWave")] public float p2ComboWaveRadius;
-    [Foldout("p2ComboWave")] public bool p2ComboWaveDot;
-    [Foldout("p2ComboWave")] public float p2ComboWaveDotDamage;
+    [Foldout("p2ComboWave")] public bool p2ComboWaveSoul;
     [Foldout("p2ComboWave")] public bool p2ComboWaveDeathExplosion;
     [Foldout("p2ComboWave")] public bool p2ComboWaveDouble;
     
@@ -116,8 +115,7 @@ public class NewPowerManager : MonoBehaviour
     [Foldout("p2DashTrail")] public float p2DashTrailDuration;
     [Foldout("p2DashTrail")] public float p2DashTrailEspacementDoT;
     [Foldout("p2DashTrail")] public float p2DashTrailSize;
-    [Foldout("p2DashTrail")] public bool p2DashTrailDotStacking;
-    [Foldout("p2DashTrail")] public float p2DashTrailDotDamageMultiplier;
+    [Foldout("p2DashTrail")] public bool p2DashTrailMiniStagger;
     [Foldout("p2DashTrail")] public bool p2DashTrailInfection;
     
     
@@ -220,7 +218,7 @@ public class NewPowerManager : MonoBehaviour
                 break;
             
             case 8:
-                p1ComboConeCenterCone = true;
+                p1ComboConeInversedCone = true;
                 p1ThrustBallExecute = true;
                 p1DashContactPowerExtend = true;
                 break;
@@ -228,7 +226,7 @@ public class NewPowerManager : MonoBehaviour
         switch (currentLevelPower2)
         {
             case 3:
-                p2ComboWaveDot = true;
+                p2ComboWaveSoul = true;
                 p2ThrustBandageMaxHit = 2;
                 p2DashTrailSize *= 2;
                 break;
@@ -236,7 +234,7 @@ public class NewPowerManager : MonoBehaviour
             case 5:
                 p2ComboWaveDeathExplosion = true;
                 p2ThrustBandageMaxHit = 100;
-                p2DashTrailDotStacking = true;
+                p2DashTrailMiniStagger = true;
                 break;
             
             case 8:
@@ -337,7 +335,13 @@ public class NewPowerManager : MonoBehaviour
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 charaPos = CharacterController.instance.transform.position;
                 float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+                float angleInversé = Mathf.Atan2(charaPos.y - mousePos.y ,charaPos.x - mousePos.x ) * Mathf.Rad2Deg;
                 Instantiate(p1ComboConeHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+                
+                if (p1ComboConeInversedCone)
+                {
+                    Instantiate(p1ComboConeHitbox, cc.transform.position, Quaternion.AngleAxis(angleInversé, Vector3.forward));
+                }
             }
 
             if (an.attaqueSpeSpell) // Attaque puissante
@@ -383,8 +387,12 @@ public class NewPowerManager : MonoBehaviour
         {
             if (an.attaque3) //si attaque smash
             {
-                Debug.Log("oioio");
                 Instantiate(p2ComboWaveHitbox, cc.transform.position, Quaternion.identity);
+
+                if (p2ComboWaveDouble)
+                {
+                    StartCoroutine(doubleWave());
+                }
             }
             if (an.attaqueSpeSpell)
             {
@@ -527,6 +535,12 @@ public class NewPowerManager : MonoBehaviour
         }
         
         
+    }
+
+    IEnumerator doubleWave()
+    {
+        yield return new WaitForSeconds(0.25f);
+        Instantiate(p2ComboWaveHitbox, cc.transform.position, Quaternion.identity);
     }
     
     

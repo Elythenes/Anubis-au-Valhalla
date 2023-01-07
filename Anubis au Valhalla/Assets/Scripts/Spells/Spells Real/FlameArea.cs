@@ -9,6 +9,7 @@ public class FlameArea : MonoBehaviour
     public NewPowerManager manager;
     public float tempsReloadHitFlameAreaTimer;
     public bool stopAttack;
+    public bool isMiniFlame;
 
     private void Start()
     {
@@ -31,7 +32,22 @@ public class FlameArea : MonoBehaviour
 
             if (tempsReloadHitFlameAreaTimer > manager.p2DashTrailEspacementDoT && col.gameObject.tag == "Monstre")
             {
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2],0.5f);
+                if (manager.p2DashTrailInfection && !isMiniFlame)
+                {
+                    col.GetComponentInParent<MonsterLifeManager>().flameManager = manager;
+                    col.GetComponentInParent<MonsterLifeManager>().FlameInfected = true;
+
+                }
+
+                if (!manager.p2DashTrailMiniStagger)
+                {
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2],0f);
+                }
+                else
+                {
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2],0.15f);
+                }
+               
                 tempsReloadHitFlameAreaTimer = 0;
             }
          }

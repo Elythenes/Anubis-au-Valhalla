@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 113979252704646240}
   - component: {fileID: 979668013263010877}
   - component: {fileID: 8500718336999298599}
+  - component: {fileID: 8611265251276748385}
   m_Layer: 0
   m_Name: FireCircleExplo
   m_TagString: Untagged
@@ -95,9 +96,23 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.0001
+--- !u!114 &8611265251276748385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2766080931585375390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40757b954f81f214ca1ac496b83b82f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exploSR: {fileID: 979668013263010877}
+  exploCollider: {fileID: 8500718336999298599}
