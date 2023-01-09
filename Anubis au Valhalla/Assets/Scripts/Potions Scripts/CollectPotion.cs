@@ -6,7 +6,6 @@ public class CollectPotion : MonoBehaviour
 {
   
     public KeyCode interaction;
-    //pas oublier de faire la référence avec le skillManager pour pas lancer de spell quand on en ramasse
     
     [Header("DEBUG")]
     public bool isPotionCollectable = false;

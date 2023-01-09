@@ -210,7 +210,9 @@ public class UiManager : MonoBehaviour
     {
         PotionManager.Instance.isPotionSlotFill = true;
         spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 1);
     }
+    
 
     public void ActivateMenuPotion()
     {
@@ -221,7 +223,6 @@ public class UiManager : MonoBehaviour
     
     void FillMenuPotion()
     {
-        Debug.Log("fonction fillMenuPotion utilisée");
         if (PotionManager.Instance.currentPotion == null)
         {
             buttonPrendre.SetActive(true);

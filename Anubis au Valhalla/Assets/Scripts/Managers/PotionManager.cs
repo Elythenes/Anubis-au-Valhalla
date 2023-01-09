@@ -79,17 +79,18 @@ public class PotionManager : MonoBehaviour
 
    void DrinkPotion(PotionObject glou)
    {
-      Debug.Log("Drink" + glou.nom);
+      Debug.Log("Drink " + glou.nom);
       SaveStatBeforePotion();
+      
+      UiManager.instance.spritePotion.GetComponent<RawImage>().color = new Color(255,255,255,0);
+      UiManager.instance.panelPotion.SetActive(true); //à enlever quand on aura les vfx
+      
       if (glou.type == PotionObject.PotionType.StatBasicPotion 
           || glou.type == PotionObject.PotionType.StatSpecificPotion)
       {
-         UiManager.instance.panelPotion.SetActive(true);
-         
-         AnubisCurrentStats.instance.totalBaseBonusDamage += AnubisCurrentStats.instance.totalBaseBonusDamage * glou.damage/100;
-         AnubisCurrentStats.instance.totalBaseBonusDamage += AnubisCurrentStats.instance.totalBaseBonusDamage * glou.damage/100;
+         AnubisCurrentStats.instance.totalBaseBonusDamage += AnubisCurrentStats.instance.totalBaseDamage * glou.damage/100;
 
-         //DamageManager.instance.Heal(glouglou.heal);
+         DamageManager.instance.Heal(glou.heal);
          
          AnubisCurrentStats.instance.damageReduction *= glou.armor;
          if (glou.wArmor != 0)
@@ -167,8 +168,7 @@ public class PotionManager : MonoBehaviour
    void RevokePotion12(PotionObject glou)
    {
       UiManager.instance.panelPotion.SetActive(false);
-      UiManager.instance.spritePotion.GetComponent<RawImage>().texture = null;
-      
+
       if (glou.type == PotionObject.PotionType.StatBasicPotion 
           || glou.type == PotionObject.PotionType.StatSpecificPotion)
       {
@@ -205,7 +205,7 @@ public class PotionManager : MonoBehaviour
 
    void SaveStatBeforePotion()
    {
-      baseDamageBeforePotion = AnubisCurrentStats.instance.totalBaseDamage;
+      baseDamageBeforePotion = AnubisCurrentStats.instance.totalBaseBonusDamage;
       baseDamageForSoulBeforePotion = AnubisCurrentStats.instance.baseDamageForSoul;
       armorBeforePotion = AnubisCurrentStats.instance.damageReduction;
       speedXBeforePotion = AnubisCurrentStats.instance.speedX;

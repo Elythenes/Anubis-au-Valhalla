@@ -26,16 +26,12 @@ public class AnubisCurrentStats : MonoBehaviour
 
    //DamageForStat = somme de BaseDamage + BonusDamage, permet de donner les dégâts du personnage pendant toute la run
    [NaughtyAttributes.ReadOnly] public float totalBaseDamageForStat;
-   public List<int> comboDamageForStats = new List<int>(3);
+   [NaughtyAttributes.ReadOnly] public List<int> comboDamageForStats = new List<int>(3);
    [NaughtyAttributes.ReadOnly] public int thrustDamageForStat;
    [NaughtyAttributes.ReadOnly] public int soulBonusDamageForStat;
 
    public float baseDamageForSoul;
    public List<float> multiplicateurDamage = new(4){.5f,.75f,1,1.3f};
-   
-   public List<int> comboDamage = new List<int>();
-   public int thrustDamage = 10;
-   
    
    public int criticalRate = 5;
    public List<float> dureeHitbox = new List<float>();
@@ -85,7 +81,6 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.dashImpulse = dashImpulse;
       atk.timeForCanDash = timeForCanDash;
       atk.dashTimers = dashTimers;
-      atk.specialDmg = thrustDamage;
 
       // pour la vie
       life.vieActuelle = vieActuelle;
@@ -107,6 +102,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.hitBoxC = hitBoxC;
       atk.rangeAttaque = rangeAttaque;
       atk.damage = comboDamageForStats;
+      atk.specialDmg = thrustDamageForStat;
       atk.isC = isC;
       atk.criticalRate = criticalRate;
       atk.dureeHitbox = dureeHitbox;
