@@ -144,16 +144,19 @@ public class DamageManager : MonoBehaviour
 
     public void Heal(int healAmount)
     {
-        GameObject particuleSoinOBJ = Instantiate(particulesHeal, transform.position, Quaternion.identity);
-        particuleSoinOBJ.transform.parent = transform;
-        stats.vieActuelle += healAmount;
-        GameObject textHealObj = Instantiate(textHealDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
-        textHealObj.GetComponentInChildren<TextMeshPro>().SetText((healAmount).ToString());
-        if (stats.vieActuelle >= 100)
+        if (healAmount > 0)
         {
-            stats.vieActuelle = 100;
+            GameObject particuleSoinOBJ = Instantiate(particulesHeal, transform.position, Quaternion.identity);
+            particuleSoinOBJ.transform.parent = transform;
+            stats.vieActuelle += healAmount;
+            GameObject textHealObj = Instantiate(textHealDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
+            textHealObj.GetComponentInChildren<TextMeshPro>().SetText((healAmount).ToString());
+            if (stats.vieActuelle >= 100)
+            {
+                stats.vieActuelle = 100;
+            }
+            LifeBarManager.instance.SetHealth(stats.vieActuelle);
         }
-        LifeBarManager.instance.SetHealth(stats.vieActuelle);
     }
 
     public void HitStop(float duration, bool miss)
