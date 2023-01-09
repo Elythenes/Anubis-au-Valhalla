@@ -346,40 +346,12 @@ public class Shop : MonoBehaviour
     }
 
     #endregion
+
+    public void InstantHeal(int percentHeal)
+    {
+        DamageManager.instance.vieActuelle += Mathf.RoundToInt(DamageManager.instance.vieMax * (percentHeal / 100));
+    }
     
-    public void GenerateConsumables()
-    {
-        for (int i = 0; i < consumablesButton.Count; i++)
-        {
-            var potionToSell = PotionManager.Instance.potionsForShop[Random.Range(0, PotionManager.Instance.potionsForShop.Count)];
-            consumablesTitle[i].text = potionToSell.nom;
-            consumableDesc[i].text = potionToSell.description;
-            consumablesCost.Add(potionToSell.prix);
-            costConsumables[i].text = consumablesCost[i].ToString();
-            consumableObject.Add(potionToSell);
-            consumableSprites[i].texture = potionToSell.sprite;
-        }
-    }
-
-    public void InstantHeal()
-    {
-        DamageManager.instance.vieActuelle += Mathf.RoundToInt(DamageManager.instance.vieMax / 3.5f);
-        Souls.instance.soulBank -= consumablesCost[0];
-        consumablesCost.Clear();
-        Souls.instance.UpdateSoulsShop();
-    }
-
-    public void GetConsumable(int index)
-    {
-        PotionManager.Instance.currentPotion = consumableObject[index];
-        UiManager.instance.spritePotion.GetComponent<RawImage>().texture = consumableObject[index].sprite;
-        Souls.instance.soulBank -= consumablesCost[index];
-        Souls.instance.UpdateSoulsShop();
-        consumablesCost.Clear();
-        consumableObject.Clear();
-        consumableObject.Add(null);
-        
-    }
 }
 
 
