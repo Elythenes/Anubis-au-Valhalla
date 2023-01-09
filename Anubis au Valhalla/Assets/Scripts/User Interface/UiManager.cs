@@ -11,30 +11,16 @@ using Image = UnityEngine.UIElements.Image;
 public class UiManager : MonoBehaviour
 {
     public GameObject anubis;
+
     public static UiManager instance; //singleton
+
     //public CollectSpell cS;
     public CollectPower cP;
 
     [Foldout("GENERAL")] public GameObject spriteSpell1;
     [Foldout("GENERAL")] public GameObject spriteSpell2;
-    [Foldout("GENERAL")] public GameObject currentSpell1;
-    [Foldout("GENERAL")] public GameObject currentSpell2;
     [Foldout("GENERAL")] public GameObject currentSpell1Holder;
     [Foldout("GENERAL")] public GameObject currentSpell2Holder;
-
-    [Foldout("COLLECTED SPELL MENU")] public GameObject menuCollectSpell;
-    [Foldout("COLLECTED SPELL MENU")] public GameObject spriteCs;
-    [Foldout("COLLECTED SPELL MENU")] public GameObject textCsName;
-    [Foldout("COLLECTED SPELL MENU")] public GameObject textCsDescription;
-    [Foldout("COLLECTED SPELL MENU")] public GameObject textCsCitation;
-    
-    [Foldout("OWNED SPELL MENU 1")] public GameObject spriteOs1;
-    [Foldout("OWNED SPELL MENU 1")] public GameObject textOs1Name;
-    [Foldout("OWNED SPELL MENU 1")]public GameObject textOs1Description;
-    
-    [Foldout("OWNED SPELL MENU 2")] public GameObject spriteOs2;
-    [Foldout("OWNED SPELL MENU 2")] public GameObject textOs2Name;
-    [Foldout("OWNED SPELL MENU 2")] public GameObject textOs2Description;
 
     [Foldout("POTION MENU")] public GameObject menuCollectPotion;
     [Foldout("POTION MENU")] public GameObject spritePotion;
@@ -59,31 +45,31 @@ public class UiManager : MonoBehaviour
     [Foldout("PAUSE MENU")] public GameObject buttonCheatMenu;
     [Foldout("PAUSE MENU")] public GameObject buttonOptions;
     [Foldout("PAUSE MENU")] public GameObject buttonQuit;
-    
+
     [Foldout("INVENTORY")] public List<GameObject> listBoxInventaire;
     [Foldout("INVENTORY")] public GameObject boxInvTitre;
     [Foldout("INVENTORY")] public GameObject boxInvDescription;
-    
-    
-    
-    
+
+
+
+
     //Fonctions systèmes ***********************************************************************************************
-    
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
-        
-        spriteSpell1.GetComponent<RawImage>().color = new Color(255,255,255,0);
-        spriteSpell2.GetComponent<RawImage>().color = new Color(255,255,255,0);
+
+        spriteSpell1.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+        spriteSpell2.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
         spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
     }
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
@@ -96,12 +82,12 @@ public class UiManager : MonoBehaviour
     {
         Debug.Log("boop");
     }
-    
+
     public void Pause()
     {
         Time.timeScale = 0;
     }
-    
+
     public void TimeBack()
     {
         Time.timeScale = 1;
@@ -111,9 +97,9 @@ public class UiManager : MonoBehaviour
     {
         Application.Quit();
     }
-    
-    
-    
+
+
+
     //Fonctions : Pause ************************************************************************************************************************************************************************************
 
     public void ControlPause()
@@ -137,7 +123,7 @@ public class UiManager : MonoBehaviour
         menuPause.SetActive(false);
         isPause = false;
     }
-    
+
     public void ActivatePause()
     {
         Pause();
@@ -145,17 +131,18 @@ public class UiManager : MonoBehaviour
         FillBoxInventory();
         isPause = true;
     }
-    
-    
-    
-    
+
+
+
+
     //Fonctions : Inventaire ************************************************************************************************************************************************************************************
 
     public void FillBoxInventory()
     {
         for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
         {
-            listBoxInventaire[i].GetComponentInChildren<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
+            listBoxInventaire[i].GetComponentInChildren<RawImage>().texture =
+                GlyphInventory.Instance.glyphInventory[i].icone;
         }
     }
 
@@ -164,14 +151,15 @@ public class UiManager : MonoBehaviour
         Debug.Log(boxPos);
         if (GlyphInventory.Instance.glyphInventory[boxPos - 1].nom is not null)
         {
-            boxInvTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos-1].nom;
+            boxInvTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].nom;
         }
 
         if (GlyphInventory.Instance.glyphInventory[boxPos - 1].description is not null)
         {
-            boxInvDescription.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos-1].description;
+            boxInvDescription.GetComponent<TextMeshProUGUI>().text =
+                GlyphInventory.Instance.glyphInventory[boxPos - 1].description;
         }
-        
+
     }
 
     public void SetBoxInventoryPositions()
@@ -181,7 +169,7 @@ public class UiManager : MonoBehaviour
             listBoxInventaire[i].GetComponent<BoxInventory>().inventoryPosition = i;
         }
     }
-    
+
     //Fonctions : Pouvoirs ***********************************************************************************************************************************************************************************
 
     public void CollectPower(GameObject gb)
@@ -189,12 +177,12 @@ public class UiManager : MonoBehaviour
         NewPowerManager.Instance.powersCollected.Add(gb);
         NewPowerManager.Instance.PowerLevelUp(gb);
     }
-    
-    
-    
-    
+
+
+
+
     //Fonctions : Potions ***********************************************************************************************************************************************************************************
-    
+
     public void CollectPotion()
     {
         //Debug.Log("entrée dans la fonction CollectPotion");
@@ -212,7 +200,7 @@ public class UiManager : MonoBehaviour
         spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
         spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 1);
     }
-    
+
 
     public void ActivateMenuPotion()
     {
@@ -220,21 +208,22 @@ public class UiManager : MonoBehaviour
         menuCollectPotion.SetActive(true);
         FillMenuPotion();
     }
-    
+
     void FillMenuPotion()
     {
         if (PotionManager.Instance.currentPotion == null)
         {
             buttonPrendre.SetActive(true);
             buttonSwitch.SetActive(false);
-            
+
             currentPotionName.SetActive(false);
             currentPotionDescription.GetComponent<TextMeshProUGUI>().text = "Je ne possède pas de potion actuellement.";
             currentPotionCitation.SetActive(false);
             currentPotionSprite.SetActive(false);
-            
+
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
-            newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
+            newPotionDescription.GetComponent<TextMeshProUGUI>().text =
+                PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
             newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
         }
@@ -242,26 +231,32 @@ public class UiManager : MonoBehaviour
         {
             buttonPrendre.SetActive(false);
             buttonSwitch.SetActive(true);
-            
+
             currentPotionName.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
-            currentPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
+            currentPotionDescription.GetComponent<TextMeshProUGUI>().text =
+                PotionManager.Instance.currentPotion.description;
             currentPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.citation;
             currentPotionSprite.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
-            
+
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
-            newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
+            newPotionDescription.GetComponent<TextMeshProUGUI>().text =
+                PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
             newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
         }
-        
+
     }
+
     
     
     
-    //Fonctions autres ***********************************************************************************************************************************************************************************
     
 
-    void FillLittleMenu(SpellObject sO, int slot)
+
+    //Fonctions autres ***********************************************************************************************************************************************************************************
+
+
+    /*void FillLittleMenu(SpellObject sO, int slot)
     {
         switch (slot)
         {
@@ -278,32 +273,15 @@ public class UiManager : MonoBehaviour
                 spriteOs2.GetComponent<RawImage>().texture = sO.sprite;
                 break;
         }
-    }
+    }*/
+
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
     //Fonctions : Spells ************************************************************************************************************************************************************************************
-    
+
     /*public void CollectSpell(int spellSlot)
     {
         switch (spellSlot)
@@ -365,6 +343,8 @@ public class UiManager : MonoBehaviour
         textCsCitation.GetComponent<TextMeshProUGUI>().text = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.citation;
         spriteCs.GetComponent<RawImage>().texture = cS.collectableSpell.GetComponent<ContainScriptableObject>().spellInside.sprite; 
     }*/
-
+    
+    
+    
     
 }
