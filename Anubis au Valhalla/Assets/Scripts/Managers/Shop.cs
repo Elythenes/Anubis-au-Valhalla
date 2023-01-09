@@ -49,6 +49,11 @@ public class Shop : MonoBehaviour
     public GameObject CanvasInteraction;
     public TextMeshProUGUI TextInteraction;
 
+    private bool hasgenerated = false;
+    public bool[] boughtUpgrades;
+    private int currentType;
+    public List<int> indexes;
+
     public enum UpsTypes
     {
         Lame,
@@ -95,21 +100,7 @@ public class Shop : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-       /* if (open && cam.orthographicSize > 2)
-        {
-            OpenShop();
-        }*/
-
-        if (cost.Count > 0)
-        {
-            for (int i = 0; i < cost.Count; i++)
-            {
-                if (cost[i] > Souls.instance.soulBank)
-                {
-                    upsButton[i].interactable = false;
-                }
-            }
-        }
+        
 
         if (consumablesCost.Count > 0)
         {
@@ -170,8 +161,10 @@ public class Shop : MonoBehaviour
         CharacterController.instance.canDash = false;
         AttaquesNormales.instance.canAttack = false;
         shopUI.DOFade(1, 1);
+        shopUI.blocksRaycasts = true;
         shopUIController.fade = false;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        GetAvailableUpgrades();
     }
 
     public void CloseShop()
@@ -187,14 +180,58 @@ public class Shop : MonoBehaviour
             //shopUI.gameObject.SetActive(false);
             weaponShop.transform.localScale = Vector3.one;
         });
-        weaponShop.SetActive(false);
-
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        lockInteract = false;
     }
 
     #endregion
 
     #region WeaponShop
 
+    public void GetAvailableUpgrades()
+    {
+        if (hasgenerated)
+        {
+            return;
+        }
+
+        hasgenerated = true;
+        for (int i = 0; i <= 8; i++)
+        {
+            Debug.Log("Wassup baby");
+            if (i <= 2)
+            {
+                var index = Random.Range(0, upgradesList.UpsLame.Count);
+                var lame = upgradesList.UpsLame[index].Lames[0];
+                var itemCost = Mathf.RoundToInt(100 * 
+                                                Mathf.Pow((((int)lame.level+1) * lame.tier), (1+(int)lame.level) / 14)); //Multiplicator, based on the upgrades tier and level
+                choice.Add(lame);
+                cost.Add(itemCost);
+                indexes.Add(index);
+            }
+            else if (i <= 5)
+            {
+                var index = Random.Range(0, upgradesList.UpsHampe.Count);
+                var hampe = upgradesList.UpsHampe[index].Hampes[0];
+                var itemCost = Mathf.RoundToInt(100 * 
+                                                Mathf.Pow((((int)hampe.level+1) * hampe.tier), ((int)hampe.level+1)/ 14)); //Multiplicator, based on the upgrades tier and level
+                choice.Add(hampe);
+                cost.Add(itemCost);
+                indexes.Add(index);
+            }
+            else
+            {
+                var index = Random.Range(0, upgradesList.UpsManche.Count);
+                var manche = upgradesList.UpsManche[index].Manches[0];
+                var itemCost = Mathf.RoundToInt(100 * 
+                                                Mathf.Pow((((int)manche.level+1) * manche.tier), ((int)manche.level+1) / 14)); //Multiplicator, based on the upgrades tier and level
+                choice.Add(manche);
+                cost.Add(itemCost);
+                indexes.Add(index);
+            }
+
+        }
+    }
     public void ChooseType(string chosenType)
     {
         switch (chosenType)
@@ -216,73 +253,95 @@ public class Shop : MonoBehaviour
         switch (type)
         {
             case 0:
+                currentType = 0;
                 for (int i = 0; i < upsButton.Count; i++)
                 {
-                    var index = Random.Range(0, upgradesList.UpsLame.Count);
-                    var lame = upgradesList.UpsLame[index].Lames[0];
-                    Debug.Log(lame.price);
-                    Debug.Log((int)lame.level);
-                    var itemCost = Mathf.RoundToInt(100 * 
-                                                    Mathf.Pow((((int)lame.level+1) * lame.tier), (1+(int)lame.level) / 14)); //Multiplicator, based on the upgrades tier and level
-                    choice.Add(lame);
-                    cost.Add(itemCost);
-                    costText[i].text = "" + itemCost;
-                    buttonText[i].text = "" + lame.nom;
-                    description[i].text = "" + lame.description;
+                    if (boughtUpgrades[currentType + i])
+                    {
+                        costText[i].text = "Vendu";
+                        buttonText[i].text = "" + choice[currentType + i].nom;
+                        description[i].text = "" + choice[currentType + i].description;
+                        upsButton[i].interactable = false;
+                        continue;
+                    }
+                    upsButton[i].interactable = true;
+                    costText[i].text = "" + cost[currentType + i];
+                    buttonText[i].text = "" + choice[currentType + i].nom;
+                    description[i].text = "" + choice[currentType + i].description;
+                    if (cost[currentType + i] > Souls.instance.soulBank)
+                    {
+                        upsButton[i].interactable = false;
+                    }
                 }
                 break;
             case 1:
+                currentType = 3;
                 for (int i = 0; i < upsButton.Count; i++)
                 {
-                    var index = Random.Range(0, upgradesList.UpsHampe.Count);
-                    var hampe = upgradesList.UpsHampe[index].Hampes[0];
-                    var itemCost = Mathf.RoundToInt(100 * 
-                                                    Mathf.Pow((((int)hampe.level+1) * hampe.tier), ((int)hampe.level+1)/ 14)); //Multiplicator, based on the upgrades tier and level
-                    choice.Add(hampe);
-                    cost.Add(itemCost);
-                    costText[i].text = "" + itemCost;
-                    buttonText[i].text = "" + hampe.nom;
-                    description[i].text = "" + hampe.description;
-                    
+                    if (boughtUpgrades[currentType + i])
+                    {
+                        costText[i].text = "Vendu";
+                        buttonText[i].text = "" + choice[currentType + i].nom;
+                        description[i].text = "" + choice[currentType + i].description;
+                        upsButton[i].interactable = false;
+                        continue;
+                    }
+                    upsButton[i].interactable = true;
+                    costText[i].text = "" + cost[currentType + i];
+                    buttonText[i].text = "" + choice[currentType + i].nom;
+                    description[i].text = "" + choice[currentType + i].description;
+                    if (cost[currentType + i] > Souls.instance.soulBank)
+                    {
+                        upsButton[i].interactable = false;
+                    }
                 }
                 break;
             case 2:
+                currentType = 6;
                 for (int i = 0; i < upsButton.Count; i++)
                 {
-                    var index = Random.Range(0, upgradesList.UpsManche.Count);
-                    var manche = upgradesList.UpsManche[index].Manches[0];
-                    var itemCost = Mathf.RoundToInt(100 * 
-                                                    Mathf.Pow((((int)manche.level+1) * manche.tier), ((int)manche.level+1) / 14)); //Multiplicator, based on the upgrades tier and level
-                    choice.Add(manche);
-                    cost.Add(itemCost);
-                    costText[i].text = "" + itemCost;
-                    buttonText[i].text = "" + manche.nom;
-                    description[i].text = "" + manche.description;
+                    if (boughtUpgrades[currentType + i])
+                    {
+                        costText[i].text = "Vendu";
+                        buttonText[i].text = "" + choice[currentType + i].nom;
+                        description[i].text = "" + choice[currentType + i].description;
+                        upsButton[i].interactable = false;
+                        continue;
+                    }
+                    upsButton[i].interactable = true;
+                    costText[i].text = "" + cost[currentType + i];
+                    buttonText[i].text = "" + choice[currentType + i].nom;
+                    description[i].text = "" + choice[currentType + i].description;
+                    if (cost[currentType + i] > Souls.instance.soulBank)
+                    {
+                        upsButton[i].interactable = false;
+                    }
                 }
-                Debug.Log(cost.Count);
                 break;
         }
     }
 
     public void OnClickUpgrade(int buttonType)
     {
-        glyphUpdater.AddGlyph(choice[buttonType]);
-        switch (buttonType)
+        glyphUpdater.AddGlyph(choice[buttonType + currentType]);
+        switch (currentType)
         {
             case 0:
-                upgradesList.UpsLame[buttonType].Lames.Remove(choice[buttonType]);
+                upgradesList.UpsLame[indexes[buttonType + currentType]].Lames.Remove(choice[buttonType + currentType]);
                 break;
-            case 1:
-                upgradesList.UpsHampe[buttonType].Hampes.Remove(choice[buttonType]);
+            case 3:
+                upgradesList.UpsHampe[indexes[buttonType + currentType]].Hampes.Remove(choice[buttonType + currentType]);
                 break;
-            case 2:
-                upgradesList.UpsManche[buttonType].Manches.Remove(choice[buttonType]);
+            case 6:
+                upgradesList.UpsManche[indexes[buttonType + currentType]].Manches.Remove(choice[buttonType + currentType]);
                 break;
         }
+
+        costText[buttonType].text = "Vendu";
+        boughtUpgrades[currentType + buttonType] = true;
+        upsButton[buttonType].interactable = false;
         Souls.instance.soulBank -= cost[buttonType];
         Souls.instance.UpdateSoulsShop();
-        choice.Clear();
-        cost.Clear();
         Debug.Log(cost.Count);
     }
 
@@ -292,15 +351,6 @@ public class Shop : MonoBehaviour
     {
         for (int i = 0; i < consumablesButton.Count; i++)
         {
-            if (i == 0)
-            {
-                consumablesTitle[i].text = "Soins";
-                consumableDesc[i].text = "Vous soigne de " + Mathf.RoundToInt(DamageManager.instance.vieMax / 3.5f) + " PV";
-                consumablesCost.Add(Mathf.RoundToInt(10 * Mathf.Pow(SalleGenerator.Instance.roomsDone, 0.8f)));
-                costConsumables[i].text = consumablesCost[i].ToString();
-                continue;
-            }
-
             var potionToSell = PotionManager.Instance.potionsForShop[Random.Range(0, PotionManager.Instance.potionsForShop.Count)];
             consumablesTitle[i].text = potionToSell.nom;
             consumableDesc[i].text = potionToSell.description;

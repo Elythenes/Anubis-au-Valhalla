@@ -56,7 +56,7 @@ public class IA_Corbeau : MonoBehaviour
     private void Start()
     {
         anim.SetBool("isAttacking",true);
-        StartUpAttackTime = Random.Range(3, 6);
+        StartUpAttackTime = Random.Range(0.8f, 1.6f);
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
         seeker = GetComponent<Seeker>();
@@ -73,7 +73,7 @@ public class IA_Corbeau : MonoBehaviour
 
        if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
         {
-            speedTowardPlayer *= 150;
+            speedTowardPlayer *= 100;
             forceRepulse *= 1.5f;
             rotationSpeed *= 2;
             rotationSpeedSlown *= 2;
@@ -86,6 +86,8 @@ public class IA_Corbeau : MonoBehaviour
 
     public void Update()
     {
+        StartUpAttackTimeTimer += Time.deltaTime;
+        
         if (life.vieActuelle <= 0)
         {
             anim.SetBool("isDead",true);
@@ -182,7 +184,7 @@ public class IA_Corbeau : MonoBehaviour
         {
             isRotating = true;
             isChasing = false;
-            StartUpAttackTimeTimer += Time.deltaTime;
+            
                         
            
             

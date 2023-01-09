@@ -66,7 +66,7 @@ public class IA_Monstre1 : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         
-        anim.SetBool("isIdle", true);
+        anim.SetBool("IsIdle", true);
         player = GameObject.FindGameObjectWithTag("Player");
         
         playerFollow.enabled = true;

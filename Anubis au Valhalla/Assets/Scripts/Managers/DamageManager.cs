@@ -16,13 +16,13 @@ public class DamageManager : MonoBehaviour
     public GameObject deathMenu;
     public GameObject GameUI;
     public Camera mainCamera;
-    public GameObject player;
+    public MeshRenderer playerMaterial;
+    public Material deathDisolve;
     public static DamageManager instance;
     public Volume gVolume;
     public Volume gVolumeMiss;
     public Volume gVolumeMort;
     private ColorAdjustments ca;
-    public SpellDefenceObject ankhShieldData;
     public TextMeshProUGUI compteurScore;
     public GameObject particulesHeal;
 
@@ -30,7 +30,6 @@ public class DamageManager : MonoBehaviour
     public float knockbackAmount;
     public bool stun;
     public bool invinsible;
-    public bool isAnkh;
     public Animator animPlayer;
     public bool isAmePowered; // pour le pouvoir spéciale "âme" du dash 
 
@@ -300,6 +299,7 @@ public class DamageManager : MonoBehaviour
         GameUI.SetActive(false);
         yield return new WaitForSeconds(3f);
         deathMenu.SetActive(true);
+        playerMaterial.material = deathDisolve;
         Time.timeScale = 0;
     }
 }

@@ -159,9 +159,10 @@ public class MonsterLifeManager : MonoBehaviour
             criticalPick = Random.Range(0,100);
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
-                textDamage.GetComponentInChildren<TextMeshPro>().SetText((damage * 2).ToString());
+                textCriticalDamage.GetComponentInChildren<TextMeshPro>().SetText((damage * 2).ToString());
                 GameObject textOBJ = Instantiate(textCriticalDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
                 textOBJ.transform.localScale *= 2;
+                textOBJ.GetComponentInChildren<DamagePopUp>().isCritique = true;
 
             }
             else
@@ -281,6 +282,7 @@ public class MonsterLifeManager : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(SalleGenerator.Instance.timeBetweenWaves);
+            canvasLifeBar.SetActive(true);
         }
         child.SetActive(true);
     }
