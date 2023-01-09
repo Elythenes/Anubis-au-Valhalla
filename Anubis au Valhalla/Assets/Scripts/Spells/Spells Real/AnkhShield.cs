@@ -11,7 +11,7 @@ public class AnkhShield : MonoBehaviour
     public float secondesRestantes;
     
 
-    private void Start()
+ /*   private void Start()
     {
         if (instance = null)
         {
@@ -31,5 +31,5 @@ public class AnkhShield : MonoBehaviour
             gameObject.SetActive(false);
             DamageManager.instance.isAnkh = false;
         }
-    }
+    }*/
 }

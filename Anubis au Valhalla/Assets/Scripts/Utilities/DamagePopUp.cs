@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using TMPro;
 
 public class DamagePopUp : MonoBehaviour
 {
-    private TextMeshPro textMesh;
     public static DamagePopUp instance;
+    public bool isCritique;
     
     private void Awake()
     {
@@ -14,8 +15,12 @@ public class DamagePopUp : MonoBehaviour
         {
             instance = this;
         }
+        
 
-        textMesh = transform.GetComponent<TextMeshPro>();
+        if (isCritique)
+        {
+            transform.DOShakePosition(1, 1.5f);
+        }
     }
     
     private void Update()
