@@ -8,6 +8,9 @@
         },
         {
             "m_Id": "f1a1189fc4d44f1393810d0dd1871f7d"
+        },
+        {
+            "m_Id": "e65ddde19dbe4ff69bd1718357ade53b"
         }
     ],
     "m_Keywords": [],
@@ -95,6 +98,9 @@
         },
         {
             "m_Id": "f94880b1a9da48c28578a640cd0fb59f"
+        },
+        {
+            "m_Id": "3c14e656dd5c49ec87e02b5a2015e7ff"
         }
     ],
     "m_GroupDatas": [],
@@ -126,6 +132,20 @@
                     "m_Id": "12902a29a6934e4a84783cb8a079798e"
                 },
                 "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "3c14e656dd5c49ec87e02b5a2015e7ff"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "71e0db50cba745a08af3dd67eef84698"
+                },
+                "m_SlotId": 2
             }
         },
         {
@@ -1010,6 +1030,56 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "3c14e656dd5c49ec87e02b5a2015e7ff",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -1008.0,
+            "y": -124.99999237060547,
+            "width": 142.0,
+            "height": 33.99998474121094
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "3d560d03607747ef91d93f41d4070d58"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "e65ddde19dbe4ff69bd1718357ade53b"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "3d560d03607747ef91d93f41d4070d58",
+    "m_Id": 0,
+    "m_DisplayName": "taille voronoi",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -2631,6 +2701,9 @@
         },
         {
             "m_Id": "f1a1189fc4d44f1393810d0dd1871f7d"
+        },
+        {
+            "m_Id": "e65ddde19dbe4ff69bd1718357ade53b"
         }
     ]
 }
@@ -3023,6 +3096,33 @@
         "e31": 0.0,
         "e32": 0.0,
         "e33": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "e65ddde19dbe4ff69bd1718357ade53b",
+    "m_Guid": {
+        "m_GuidSerialized": "642cf760-dbbc-4523-b97f-bfa7413de3a0"
+    },
+    "m_Name": "taille voronoi",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "taille voronoi",
+    "m_DefaultReferenceName": "_taille_voronoi",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 1.6799999475479127,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
     }
 }
 
