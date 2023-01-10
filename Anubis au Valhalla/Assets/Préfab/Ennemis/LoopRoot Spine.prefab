@@ -31,6 +31,90 @@ Transform:
   m_Father: {fileID: 6226055761027756327}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &437658715127272755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6972738216061267747}
+  - component: {fileID: 8151167642434157205}
+  m_Layer: 0
+  m_Name: Sprite2DSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6972738216061267747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437658715127272755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.003, y: -0.008, z: 0}
+  m_LocalScale: {x: 0.3970029, y: 0.39700294, z: 0.3970029}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8929337161420169337}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &8151167642434157205
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437658715127272755}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 3057b68079779474c8a52b5938792377, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 20
+  m_Sprite: {fileID: 21300000, guid: d1d9e81d4af01204cbf9937ca3151e4f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &891809629507938652
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,6 +372,7 @@ Transform:
   m_LocalScale: {x: 1.1944174, y: 1.1944174, z: 1.1944174}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6972738216061267747}
   - {fileID: 6226055761027756327}
   - {fileID: 2404942791149293728}
   m_Father: {fileID: 0}
@@ -400,10 +485,13 @@ MonoBehaviour:
   IALoup: {fileID: 8037972104814536641}
   IAGuerrier: {fileID: 0}
   IACorbeau: {fileID: 0}
+  isDisolve: 0
+  sprite2DRend: {fileID: 8151167642434157205}
+  disolveValue: 0
+  disolveValueAmount: 0.00501
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 5482979424132028281}
   emptyLayers: {fileID: 6448416740321806631}
-  sr: {fileID: 0}
   FlameInfected: 0
   FlameInfectedTimer: 0
   FlameInfectedTimerMax: 2.5
@@ -594,7 +682,7 @@ RectTransform:
   m_Children:
   - {fileID: 7958930966070714015}
   m_Father: {fileID: 8929337161420169337}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -722,7 +810,7 @@ Transform:
   - {fileID: 2202323990130674939}
   - {fileID: 2483317889821999418}
   m_Father: {fileID: 8929337161420169337}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3751603445994706705
 MeshFilter:
@@ -960,6 +1048,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 379b2dac0c81e524a82d1cbf46aee52b, type: 3}
   - {fileID: 8300000, guid: 213981fb475cda14ba861094f93c0b21, type: 3}
   - {fileID: 8300000, guid: 79b4c7ea86d9d6744ac1944fc004e12f, type: 3}
+  DoOnce: 0
   canDash: 0
   isChasing: 1
   isPreparing: 0

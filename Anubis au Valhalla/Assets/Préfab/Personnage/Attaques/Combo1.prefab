@@ -42,7 +42,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6343942413881442319}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -131,8 +131,6 @@ MonoBehaviour:
   bloodEffect: {fileID: 5952496126455136815, guid: 5c893befa8372574f8ffb1594532f5dc, type: 3}
   isStop: 0
   SlashVFX: {fileID: 7580245206465011459}
-  audioSource: {fileID: 0}
-  audioClipArray: []
 --- !u!1001 &3536212667844609030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -146,11 +144,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995588, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995588, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995588, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -202,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995589, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: InitialModule.rotation3D
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995589, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
@@ -267,6 +265,10 @@ PrefabInstance:
     - target: {fileID: 6350452014184995590, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_RenderMode
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350452014184995590, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
+      propertyPath: m_RenderAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995591, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_Name
