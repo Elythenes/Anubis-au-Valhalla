@@ -33,6 +33,10 @@ public class PotionManager : MonoBehaviour
    
    [Header("SHOP")]
    [Expandable] public List<PotionObject> potionsForShop = new();
+   
+   [Header("Audio")]
+   public AudioSource audioSource;
+   public AudioClip[] audioClipArray;
 
 
    private void Awake()
@@ -79,6 +83,8 @@ public class PotionManager : MonoBehaviour
 
    void DrinkPotion(PotionObject glou)
    {
+      audioSource.pitch = 1;
+      audioSource.PlayOneShot(audioClipArray[0]);
       Debug.Log("Drink " + glou.nom);
       SaveStatBeforePotion();
       

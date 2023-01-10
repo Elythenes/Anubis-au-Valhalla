@@ -33,6 +33,10 @@ public class DamageManager : MonoBehaviour
     public Animator animPlayer;
     public bool isAmePowered; // pour le pouvoir spéciale "âme" du dash 
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] audioClipArray;
+    
     [Header("Tracking")] 
     public bool isDodging;
     
@@ -285,6 +289,8 @@ public class DamageManager : MonoBehaviour
     
     void Die()
     {
+        audioSource.pitch = 1;
+        audioSource.PlayOneShot(audioClipArray[0]);
         compteurScore.text = ScoreManager.instance.currentScore.ToString();
         CharacterController.instance.allowMovements = false;
         CharacterController.instance.movement = Vector2.zero;
@@ -304,5 +310,11 @@ public class DamageManager : MonoBehaviour
         deathMenu.SetActive(true);
         playerMaterial.material = deathDisolve;
         Time.timeScale = 0;
+    }
+
+    public void PlayDisolveSound()
+    {
+        audioSource.pitch = 1;
+        audioSource.PlayOneShot(audioClipArray[1]);
     }
 }

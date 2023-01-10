@@ -34,6 +34,10 @@ public class AttaquesNormales : MonoBehaviour
     public bool attaque3;
     public bool attaqueSpeSpell;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] audioClipArray;
+    
     [Header("Général")]
     public bool attaqueSpe2;
     public bool abandonOn;
@@ -213,6 +217,8 @@ public class AttaquesNormales : MonoBehaviour
     //<Combo 3>/ La même chose mais hitbox est plus alongée et le dash plus long et rapide
     public void Combo(int index) 
     {
+        audioSource.pitch = 1;
+        audioSource.PlayOneShot(audioClipArray[index]);
         abandonOn = true;
         isC[index] = true;
         canAttack = false;
@@ -312,6 +318,8 @@ public class AttaquesNormales : MonoBehaviour
 
     public void SpecialAttack()
     {
+        audioSource.pitch = 1;
+        audioSource.PlayOneShot(audioClipArray[3]);
         Vector2 charaPos = CharacterController.instance.transform.position;
         Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float angle2 = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;

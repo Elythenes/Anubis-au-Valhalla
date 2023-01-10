@@ -50,7 +50,7 @@ public class PauseMenu : MonoBehaviour
         while (timeElapsed < timeToLastStep)
         {
             disolveValue = Mathf.Lerp(1, 0, timeElapsed / timeToLastStep);
-            timeElapsed += 1 * Time.deltaTime;
+            timeElapsed += 0.5f * Time.deltaTime;
             yield return null;
         }
     }

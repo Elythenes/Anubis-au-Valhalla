@@ -28,6 +28,9 @@ public class IA_Corbeau : MonoBehaviour
     public float radiusFleeing;
     public float speedTowardPlayer;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] audioClipArray;
 
     [Header("Attaque")] public bool isAttacking;
     public float rotationSpeed;
@@ -87,8 +90,19 @@ public class IA_Corbeau : MonoBehaviour
     public void Update()
     {
         StartUpAttackTimeTimer += Time.deltaTime;
-        
-        if (life.vieActuelle <= 0)
+
+        if (life.gotHit)
+        {
+            if (life.gotHit)
+            {
+                audioSource.Stop();
+                audioSource.pitch = Random.Range(0.8f, 1.2f);
+                audioSource.PlayOneShot(audioClipArray[2]);
+                ai.canMove = true;
+            }
+        }
+
+            if (life.vieActuelle <= 0)
         {
             anim.SetBool("isDead",true);
             if (holder.gameObject is not null)
@@ -167,6 +181,8 @@ public class IA_Corbeau : MonoBehaviour
             
             if (AttackTimeTimer >= AttackTime && !life.isMomified)
             {
+                audioSource.pitch = 1;
+                audioSource.PlayOneShot(audioClipArray[1]);
                 anim.SetBool("isAttacking",true);
                 anim.SetBool("StartUpAttaque",false);
                 aipath.canMove = true;

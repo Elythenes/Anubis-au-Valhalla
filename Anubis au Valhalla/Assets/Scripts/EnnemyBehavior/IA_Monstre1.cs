@@ -26,6 +26,10 @@ public class IA_Monstre1 : MonoBehaviour
     public float speedX;
     public float speedY;
     
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] audioClipArray;
+    public bool DoOnce;
 
     [Header("Dash")] 
     public bool canDash;
@@ -162,6 +166,7 @@ public class IA_Monstre1 : MonoBehaviour
              canDash = true;
              CooldownDashTimer = 0;
              ShakeEnable = true;
+             DoOnce = true;
          }
 
          if (canDash)
@@ -175,6 +180,7 @@ public class IA_Monstre1 : MonoBehaviour
                  }
 
                  isPreparing = true;
+             
                  anim.SetBool("StartDash", true);
                  anim.SetBool("IsIdle", false);
                  anim.SetBool("IsRuning", false);
@@ -182,6 +188,13 @@ public class IA_Monstre1 : MonoBehaviour
 
              if (isPreparing)
              {
+                 if (DoOnce)
+                 {
+                     audioSource.pitch = 1;
+                     audioSource.PlayOneShot(audioClipArray[1]);
+                     DoOnce = false;
+                 }
+                 
                  LagDebutDashTimer += Time.deltaTime;
                  
                  
@@ -205,6 +218,12 @@ public class IA_Monstre1 : MonoBehaviour
          }
          #endregion
 
+         if (life.gotHit)
+         {
+             audioSource.pitch = Random.Range(0.8f, 1.2f);
+             audioSource.PlayOneShot(audioClipArray[2]);
+         }
+         
          if (hitboxActive&& !life.isMomified) // Active la hitbox et fait des dégâts
         {
             Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);

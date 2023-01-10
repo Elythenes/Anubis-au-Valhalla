@@ -222,7 +222,7 @@ public class MonsterLifeManager : MonoBehaviour
     private IEnumerator HitScanReset()
     {
         gotHit = true;
-        yield return new WaitForSeconds(InvincibleTime);
+        yield return null;
         gotHit = false;
     }
     
@@ -232,28 +232,38 @@ public class MonsterLifeManager : MonoBehaviour
         
         if (IACorbeau is not null)
         {
+            animator.SetBool("isDead",true);
+            IACorbeau.audioSource.pitch = 1;
+            IACorbeau.audioSource.PlayOneShot(IACorbeau.audioClipArray[3]);
             IACorbeau.enabled = false;
         }
         else if (IALoup is not null)
         {
+            animator.SetBool("isDead",true);
+            IALoup.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            IALoup.audioSource.Stop();
+            IALoup.audioSource.pitch = 1;
+            IALoup.audioSource.PlayOneShot(IALoup.audioClipArray[3]);
             IALoup.enabled = false;
         }
         else if (IAGuerrier is not null)
         {
+            animator.SetBool("isIdle",true);
+            IAGuerrier.audioSource.pitch = 1;
+            IAGuerrier.audioSource.PlayOneShot(IAGuerrier.audioClipArray[3]);
             IAGuerrier.enabled = false;
         }
        
         canvasLifeBar.SetActive(false);
         child.GetComponent<AIPath>().canMove = false;
         child.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        animator.SetBool("isDead",true);
         OnBegin.Invoke();
         StartCoroutine(DelayedDeath());
     }
 
     private IEnumerator DelayedDeath()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         child.SetActive(false);
         if (SalleGenerator.Instance.currentRoom.parasites && !isParasite)
         {

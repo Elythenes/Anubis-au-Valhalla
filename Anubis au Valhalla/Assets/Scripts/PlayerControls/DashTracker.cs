@@ -65,10 +65,8 @@ public class DashTracker : MonoBehaviour
         CharacterController.instance.playerCol.enabled = false;
         CharacterController.instance.canBuffer = true;
         CharacterController.instance.dashBuffer = CharacterController.instance.dashDuration + dashDurationBuffer;
-        Debug.Log("CA TOUCHE");
         if (col.gameObject.CompareTag("MurInfranchissable"))
         {
-            Debug.Log("exeption");
             CharacterController.instance.playerCol.enabled = true;
             CharacterController.instance.canBuffer = false;
         }

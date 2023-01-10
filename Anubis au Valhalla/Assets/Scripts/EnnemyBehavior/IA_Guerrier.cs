@@ -24,6 +24,9 @@ public class IA_Guerrier : MonoBehaviour
     public float radiusWondering;
     public bool isWondering;
    
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] audioClipArray;
 
     [Header("Attaque")] public GameObject swing;
     public bool isAttacking;
@@ -94,9 +97,12 @@ public class IA_Guerrier : MonoBehaviour
 
         if (life.gotHit)
         {
+            audioSource.Stop();
+            audioSource.pitch = Random.Range(0.8f, 1.2f);
+            audioSource.PlayOneShot(audioClipArray[2]);
             ai.canMove = true;
         }
-        
+
         if (aipath.reachedDestination && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
             if (isWondering)
@@ -144,7 +150,8 @@ public class IA_Guerrier : MonoBehaviour
 
         if (StartUpAttackTimeTimer >= StartUpAttackTime&& !life.isMomified)
         {
-            Debug.Log("attaque");
+            audioSource.pitch = 1;
+            audioSource.PlayOneShot(audioClipArray[1]);
             anim.SetBool("isIdle",false);
             anim.SetBool("PrepareAttack",false);
             anim.SetBool("isAttacking",true);
@@ -166,7 +173,6 @@ public class IA_Guerrier : MonoBehaviour
         if (isWondering&& !life.isMomified)
         {
             anim.SetBool("isIdle",false);
-             anim.SetBool("isRunning",true);
             WonderingTimeTimer += Time.deltaTime;
             if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath) 
             {

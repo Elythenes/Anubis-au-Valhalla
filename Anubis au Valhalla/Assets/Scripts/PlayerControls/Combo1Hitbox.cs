@@ -1,5 +1,7 @@
+using System.Collections;
 using DG.Tweening;
 using Pathfinding;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -14,6 +16,7 @@ public class Combo1Hitbox : MonoBehaviour
     public bool isStop;
     public ParticleSystem SlashVFX;
     
+
 
     public virtual void Start()
     {
@@ -35,6 +38,12 @@ public class Combo1Hitbox : MonoBehaviour
     {
         if (col.CompareTag("Monstre"))
         {
+            if (CharacterController.instance.isHiting == false && col.gameObject.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
+            {
+                CharacterController.instance.isHiting = true; 
+            }
+            
+            StartCoroutine(ResetTracking());
             float angle = Mathf.Atan2(transform.parent.position.y - col.transform.position.y,transform.parent.position.x - col.transform.position.x ) * Mathf.Rad2Deg;
             GameObject effetSang = Instantiate(bloodEffect, col.transform.position, Quaternion.identity);
             effetSang.transform.rotation = Quaternion.Euler(0,0,angle);
@@ -59,8 +68,12 @@ public class Combo1Hitbox : MonoBehaviour
             //col.GetComponentInParent<MonsterLifeManager>().ai.Move(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber]);
         }
     }
-    
 
+    IEnumerator ResetTracking()
+    {
+        yield return null;
+        CharacterController.instance.isHiting = false;
+    }
     /*IEnumerator HitStop(float duration)
     {
         isStop = true;

@@ -27,6 +27,16 @@ public class CharacterController : MonoBehaviour
   public Vector3 offset;
   public TextMeshProUGUI TextInteraction;
 
+  [Header("Audio")]
+  public AudioSource audioSource;
+  public AudioClip[] audioClipArray;
+  public float timeBetweenSteps;
+  public float timeBetweenStepsTimer;
+  public bool isHiting;
+  public bool isHitingSoundOn;
+  public float HittingSoundLenght;
+  public float HittingSoundLenghtTimer;
+  
   [Header("Valeurs tracking pour les pouvoirs")] 
   public bool debutDash;
   public bool finDash;
@@ -135,6 +145,13 @@ public class CharacterController : MonoBehaviour
       {
         anim.SetBool("isIdle", false);
         anim.SetBool("isWalking", true);
+        timeBetweenSteps += Time.deltaTime;
+        if (timeBetweenSteps >= timeBetweenStepsTimer)
+        {
+          audioSource.pitch = Random.Range(0.8f,1.2f);
+          audioSource.PlayOneShot(audioClipArray[Random.Range(1, 3)],0.5f);
+          timeBetweenSteps = 0;
+        }
       }
       else if (movement == Vector2.zero)
       {
@@ -143,8 +160,27 @@ public class CharacterController : MonoBehaviour
       }
     }
 
+    if (isHiting && isHitingSoundOn)
+    {
+      audioSource.pitch = Random.Range(0.8f,1.2f);
+      audioSource.PlayOneShot(audioClipArray[4]);
+      isHitingSoundOn = false;
+    }
+
+   if (!isHitingSoundOn)
+    {
+      HittingSoundLenghtTimer += Time.deltaTime;
+      if (HittingSoundLenghtTimer >= HittingSoundLenght)
+      {
+        isHitingSoundOn = true;
+        HittingSoundLenghtTimer = 0;
+      }
+    }
+
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash && allowMovements)
     {
+      audioSource.pitch = 1;
+      audioSource.PlayOneShot(audioClipArray[0]);
       dashTracker.SetActive(true);
       stopDash = false;
       allowMovements = false;
@@ -415,7 +451,8 @@ public class CharacterController : MonoBehaviour
     }
     hitDoor.willChooseSpecial = false;
   }
-
+  
+  
   IEnumerator ResetTracking()
   {
     yield return null;
@@ -431,7 +468,6 @@ public class CharacterController : MonoBehaviour
       Debug.Log(timer);
       return;
     }
-    Debug.Log("mais ta mere");
     playerCol.enabled = true;
   }
 }
