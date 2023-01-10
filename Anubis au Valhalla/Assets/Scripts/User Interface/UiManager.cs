@@ -56,7 +56,8 @@ public class UiManager : MonoBehaviour
     [Foldout("INVENTORY")] public List<GameObject> boxPowerTextesNiveaux;
     [Foldout("INVENTORY")] public List<GameObject> listBoxPowerType = new(3);
     
-
+    [Header("Audio")]
+    public AudioSource audioSource;
 
 
 
@@ -277,13 +278,19 @@ public class UiManager : MonoBehaviour
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
             newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
         }
-
+        
+    }
+       
+    //Fonctions : Son ***********************************************************************************************************************************************************************************
+    
+    public void PlayButtonSound()
+    {
+        audioSource.Play();
     }
 
-    
-    
-    
-    
+
+
+
 
 
     //Fonctions autres ***********************************************************************************************************************************************************************************
