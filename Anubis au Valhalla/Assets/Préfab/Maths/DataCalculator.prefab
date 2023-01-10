@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2414322532945037288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6314629554626443520}
+  - component: {fileID: 663874085276454271}
+  m_Layer: 0
+  m_Name: DataCalculator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6314629554626443520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2414322532945037288}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &663874085276454271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2414322532945037288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d7575be4f9f0048ada90891d892982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doCalcul: 1
+  priceGuerrier: {x: 2, y: 6}
+  priceLoup: {x: 3, y: 9}
+  priceCorbeau: {x: 3, y: 6}
+  priceChaman: {x: 6, y: 18}
+  priceValkyrie: {x: 16, y: 32}
+  wallets: 
+  addToWallet: 0e00000003000000030000000000000005000000050000000600000000000000000000000700000000000000080000000900000009000000000000000c0000000e000000100000000000000000000000
+  potentielGuerrier: []
+  potentielLoup: []
+  potentielCorbeau: []
+  potentielChaman: []
+  potentielValkyrie: []
+  guerrier: {fileID: 11400000, guid: 943d79b16daaccc438230030c79e2db0, type: 2}
+  loup: {fileID: 11400000, guid: 8231ebc60a3f99e45b7fca9b2f408305, type: 2}
+  corbeau: {fileID: 11400000, guid: d6cfa380a3dfc774390d61c906c1f584, type: 2}
+  chaman: {fileID: 11400000, guid: c706441dc6bc46444aeb920aaf7e3b04, type: 2}
+  valkyrie: {fileID: 11400000, guid: 058d990f10900274c8b30744cc0ac3c3, type: 2}
+  guerrierElite: {fileID: 11400000, guid: f3eaabb806c1fd645ad9281739e2b7d5, type: 2}
+  loupElite: {fileID: 11400000, guid: da4735a595f90124697ed343ccc397aa, type: 2}
+  corbeauElite: {fileID: 11400000, guid: edd6ee4c73c1270488510db160508561, type: 2}
+  chamanElite: {fileID: 11400000, guid: 540002fa65b33834baad3ad9ec2a0e54, type: 2}
+  valkyrieElite: {fileID: 11400000, guid: 73d96893bcacbd04fa816c680f1b0c74, type: 2}

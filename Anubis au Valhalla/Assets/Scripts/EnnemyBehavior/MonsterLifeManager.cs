@@ -1,0 +1,300 @@
+using System.Collections;
+using DG.Tweening;
+using GenPro;
+using Pathfinding;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
+using Random = UnityEngine.Random;
+
+public class MonsterLifeManager : MonoBehaviour
+{
+    public EnemyData data;
+    public GameObject textDamage;
+    public GameObject textCriticalDamage;
+    public Animator animator;
+    public Rigidbody2D rb;
+    public HealthBarMonstre healthBar;
+    public AIPath ai;
+    [NaughtyAttributes.ReadOnly] public int vieMax;
+    public int vieActuelle;
+    [NaughtyAttributes.ReadOnly] public int soulValue = 4;
+    public float delay;
+    private float forceKnockBack = 10;
+    public UnityEvent OnBegin, OnDone;
+    public GameObject canvasLifeBar;
+    public float criticalPick;
+    public bool gotHit;
+    public IA_Monstre1 IALoup;
+    public IA_Guerrier IAGuerrier;
+    public IA_Corbeau IACorbeau;
+    
+   
+    
+
+    public GameObject spawnCircle;
+    public GameObject child;
+    public GameObject emptyLayers;
+    public SpriteRenderer sr;
+
+    [Header("Alterations d'état")] 
+    public bool FlameInfected;
+    public float FlameInfectedTimer;
+    public float FlameInfectedTimerMax;
+    public float spawnTimer;
+    public float spawnTimerMax;
+    public NewPowerManager flameManager;
+    
+    public float InvincibleTime;
+    public float InvincibleTimeTimer;
+    public bool isInvincible;
+    
+    public float MomifiedTime = 3;
+    public float MomifiedTimeTimer;
+    public bool isMomified;
+    public GameObject bandelettesMomie;
+    private bool activeBandelettes;
+    
+    public bool isEnvased;
+    public float EnvasedTime = 5;
+    public float EnvasedTimeTimer;
+    private float demiSpeed;
+    
+    public bool elite = false;
+    public bool isParasite = false;
+    public bool overdose = false;
+    
+
+    private void Awake()
+    {
+        vieMax = data.maxHealth;
+        soulValue = data.soulValue;
+    }
+
+    public virtual void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        if (overdose)
+        {
+            vieMax = Mathf.RoundToInt(vieMax * 0.3f);
+        }
+        vieActuelle = vieMax;
+        demiSpeed = ai.maxSpeed / 2;
+        child.SetActive(false);
+        StartCoroutine(DelayedSpawn());
+
+    }
+
+    public virtual void Update()
+    {
+        transform.localRotation = Quaternion.identity;
+        if (isInvincible)
+        {
+            InvincibleTimeTimer += Time.deltaTime;
+
+            if (InvincibleTimeTimer >= InvincibleTime)
+            {
+                isInvincible = false;
+                InvincibleTimeTimer = 0;
+            }
+        }
+
+
+        if (isEnvased)
+        {
+            EnvasedTimeTimer += Time.deltaTime;
+            ai.maxSpeed = demiSpeed;
+            
+            if (EnvasedTimeTimer >= EnvasedTime)
+            {
+                ai.maxSpeed *= 2;
+                EnvasedTimeTimer = 0;
+                isEnvased = false;
+                
+            }
+        }
+        
+        if (isMomified)
+        {
+            MomifiedTimeTimer += Time.deltaTime;
+            OnBegin.Invoke();
+            ai.canMove = false; 
+           bandelettesMomie.SetActive(true);
+            
+            if (MomifiedTimeTimer >= MomifiedTime)
+            {
+                OnDone.Invoke();
+                activeBandelettes = true;
+                isMomified = false;
+                bandelettesMomie.SetActive(false);
+                ai.canMove = true;
+                MomifiedTimeTimer = 0;
+            }
+        }
+
+        if (FlameInfected)
+        {
+            FlameInfectedTimer += Time.deltaTime;
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer >= spawnTimerMax)
+            {
+                GameObject miniflame = Instantiate(flameManager.p2DashTrailHitbox,child.transform.position,Quaternion.identity);
+                miniflame.GetComponent<FlameArea>().isMiniFlame = true;
+                miniflame.transform.localScale = new Vector2(flameManager.p2DashTrailSize /3,flameManager.p2DashTrailSize /3);
+                spawnTimer = 0;
+            }
+
+            if (FlameInfectedTimer >= FlameInfectedTimerMax)
+            {
+                FlameInfectedTimer = 0;
+                FlameInfected = false;
+            }
+        }
+    }
+
+    public virtual void TakeDamage(int damage, float staggerDuration)
+    {
+        if (!isInvincible)
+        {
+            criticalPick = Random.Range(0,100);
+            if (criticalPick <= AttaquesNormales.instance.criticalRate)
+            {
+                textCriticalDamage.GetComponentInChildren<TextMeshPro>().SetText((damage * 2).ToString());
+                GameObject textOBJ = Instantiate(textCriticalDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
+                textOBJ.transform.localScale *= 2;
+                textOBJ.GetComponentInChildren<DamagePopUp>().isCritique = true;
+
+            }
+            else
+            {
+                textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
+                Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
+            }
+            StartCoroutine(HitScanReset());
+            gotHit = true;
+            transform.DOShakePosition(staggerDuration, 0.5f, 50);/*.OnComplete(() =>
+            {
+                ai.canMove = true;
+            });*/
+            
+            if (criticalPick <= AttaquesNormales.instance.criticalRate)
+            {
+                damage *= 2;
+                vieActuelle -= damage; 
+                healthBar.SetHealth(vieActuelle);
+                isInvincible = true;
+            }
+            else
+            {
+                vieActuelle -= damage; 
+                healthBar.SetHealth(vieActuelle);
+                isInvincible = true;
+            }
+        
+        }
+        
+        if (vieActuelle <= 0)
+        {
+            Die();
+        }
+    }
+    
+
+  /*  public virtual void OnTriggerEnter2D(Collider2D col)
+    {
+        Vector2 direction = (transform.position - col.transform.position);
+        direction.Normalize();
+        if (col.CompareTag("AttaqueNormale"))
+        {
+            //StopAllCoroutines();
+            OnBegin?.Invoke();
+            StartCoroutine(Reset(0.5f));
+        }
+    }*/
+
+    public IEnumerator Reset(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        rb.velocity = Vector3.zero;
+        OnDone?.Invoke();
+    }
+
+    private IEnumerator HitScanReset()
+    {
+        gotHit = true;
+        yield return null;
+        gotHit = false;
+    }
+    
+    public virtual void Die()
+    {
+        child.GetComponent<Collider2D>().enabled = false;
+        
+        if (IACorbeau is not null)
+        {
+            animator.SetBool("isDead",true);
+            IACorbeau.audioSource.pitch = 1;
+            IACorbeau.audioSource.PlayOneShot(IACorbeau.audioClipArray[3]);
+            IACorbeau.enabled = false;
+        }
+        else if (IALoup is not null)
+        {
+            animator.SetBool("isDead",true);
+            IALoup.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            IALoup.audioSource.Stop();
+            IALoup.audioSource.pitch = 1;
+            IALoup.audioSource.PlayOneShot(IALoup.audioClipArray[3]);
+            IALoup.enabled = false;
+        }
+        else if (IAGuerrier is not null)
+        {
+            animator.SetBool("isIdle",true);
+            IAGuerrier.audioSource.pitch = 1;
+            IAGuerrier.audioSource.PlayOneShot(IAGuerrier.audioClipArray[3]);
+            IAGuerrier.enabled = false;
+        }
+       
+        canvasLifeBar.SetActive(false);
+        child.GetComponent<AIPath>().canMove = false;
+        child.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        OnBegin.Invoke();
+        StartCoroutine(DelayedDeath());
+    }
+
+    private IEnumerator DelayedDeath()
+    {
+        yield return new WaitForSeconds(1f);
+        child.SetActive(false);
+        if (SalleGenerator.Instance.currentRoom.parasites && !isParasite)
+        {
+            var parasite = Instantiate(SalleGenerator.Instance.parasiteToSpawn, transform.position, Quaternion.identity);
+            var parasiteScript = parasite.GetComponent<MonsterLifeManager>();
+            SalleGenerator.Instance.currentRoom.currentEnemies.Add(parasiteScript);
+            parasite.GetComponent<MonsterLifeManager>().isParasite = true;
+            parasite.GetComponent<MonsterLifeManager>().soulValue = Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
+            parasite.transform.localScale /= 2;
+        }
+
+        ScoreManager.instance.currentScore += data.score;
+        Souls.instance.CreateSouls(child.transform.position, soulValue);
+        SalleGenerator.Instance.currentRoom.currentEnemies.Remove(this);
+        SalleGenerator.Instance.currentRoom.CheckForEnemies();
+        Destroy(gameObject);
+    }
+
+    IEnumerator DelayedSpawn()
+    {
+        Instantiate(spawnCircle, transform.position, Quaternion.identity);
+        if (isParasite)
+        {
+            yield return new WaitForSeconds(0.5f);
+            canvasLifeBar.SetActive(true);
+        }
+        else
+        {
+            yield return new WaitForSeconds(SalleGenerator.Instance.timeBetweenWaves);
+            canvasLifeBar.SetActive(true);
+        }
+        child.SetActive(true);
+    }
+}
