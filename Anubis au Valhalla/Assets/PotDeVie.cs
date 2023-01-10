@@ -85,13 +85,19 @@ public class PotDeVie : MonoBehaviour
                 switch (currentType)
                 {
                     case Type.First:
-                        shop.InstantHeal(healValues[0],costValues[0]);
+                        DamageManager.instance.Heal(healValues[0]);
+                        Souls.instance.soulBank -= costValues[0];
+                        Souls.instance.UpdateSoulsCounter();
                         break;
                     case Type.Second:
-                        shop.InstantHeal(healValues[1],costValues[1]);
+                        DamageManager.instance.Heal(healValues[1]);
+                        Souls.instance.soulBank -= costValues[1];
+                        Souls.instance.UpdateSoulsCounter();
                         break;
                     case Type.Third:
-                        shop.InstantHeal(healValues[2],costValues[2]);
+                        DamageManager.instance.Heal(healValues[2]);
+                        Souls.instance.soulBank -= costValues[2];
+                        Souls.instance.UpdateSoulsCounter();
                         break;
                 }
             }
