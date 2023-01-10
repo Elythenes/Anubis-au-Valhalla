@@ -15,19 +15,30 @@ public class Combo1Hitbox : MonoBehaviour
     public GameObject bloodEffect;
     public bool isStop;
     public ParticleSystem SlashVFX;
-    
+
 
 
     public virtual void Start()
     {
-        Vector2 charaPos = CharacterController.instance.transform.position.normalized;
-        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition).normalized;
+        Vector2 charaPos = CharacterController.instance.transform.position;
+        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-        var main = SlashVFX.main;
-        main.startRotation3D = true;
-        main.startRotationX = transform.rotation.x;
-        main.startRotationY = transform.rotation.y;
-        main.startRotationZ = transform.rotation.z;
+       SlashVFX.transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
+       if (SlashVFX.transform.position.x - CharacterController.instance.transform.position.x > 0)
+       {
+           Debug.Log("ceszfzefezfezfzefzfzfzefzef");
+           var transform1 = SlashVFX.transform;
+           var localScale = transform1.localScale;
+           localScale = new Vector3(localScale.x, localScale.y, localScale.z);
+           transform1.localScale = localScale;
+       }
+       else
+       {
+           var transform1 = SlashVFX.transform;
+           var localScale = transform1.localScale;
+           localScale = new Vector3(localScale.x, -localScale.y, localScale.z);
+           transform1.localScale = localScale;
+       }
         mainCamera = GameObject.Find("CameraHolder");
         transform.parent = CharacterController.instance.transform;
         Destroy(gameObject, AttaquesNormales.instance.dureeHitbox[comboNumber]);

@@ -232,10 +232,19 @@ public class AttaquesNormales : MonoBehaviour
 
         if (index == 0)
         {
-            CharacterController.instance.rb.AddForce(CharacterController.instance.movement * dashImpulse[0], ForceMode2D.Impulse);
+            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[0], ForceMode2D.Force);
+        }
+        if (index == 1)
+        {
+            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[1], ForceMode2D.Force);
         }
 
         #region Gestion des animations
+
+       /* if (angle < 45 && angle > -45)
+        {
+            swordObj.GetComponent<Combo1Hitbox>().SlashVFX.
+        }*/
         
         if (angle > 45 && angle < 135) // attaque vers le haut
         {

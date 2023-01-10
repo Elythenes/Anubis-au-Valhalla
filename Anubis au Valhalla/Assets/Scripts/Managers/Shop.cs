@@ -347,9 +347,15 @@ public class Shop : MonoBehaviour
 
     #endregion
 
-    public void InstantHeal(int percentHeal)
+    public void InstantHeal(float percentHeal, int price)
     {
-        DamageManager.instance.vieActuelle += Mathf.RoundToInt(DamageManager.instance.vieMax * (percentHeal / 100));
+        AnubisCurrentStats.instance.vieActuelle += Mathf.RoundToInt(AnubisCurrentStats.instance.vieMax * (percentHeal / 100));
+        Debug.Log("ca devrai heal tant de pv:" + AnubisCurrentStats.instance.vieMax * (percentHeal / 100));
+        if (AnubisCurrentStats.instance.vieActuelle > AnubisCurrentStats.instance.vieMax)
+            AnubisCurrentStats.instance.vieActuelle = AnubisCurrentStats.instance.vieMax;
+        LifeBarManager.instance.SetHealth(AnubisCurrentStats.instance.vieActuelle);
+        Souls.instance.soulBank -= price;
+        Souls.instance.UpdateSoulsCounter();
     }
     
 }
