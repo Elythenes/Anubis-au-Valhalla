@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 using Image = UnityEngine.UIElements.Image;
@@ -47,8 +48,14 @@ public class UiManager : MonoBehaviour
     [Foldout("PAUSE MENU")] public GameObject buttonQuit;
 
     [Foldout("INVENTORY")] public List<GameObject> listBoxInventaire;
-    [Foldout("INVENTORY")] public GameObject boxInvTitre;
-    [Foldout("INVENTORY")] public GameObject boxInvDescription;
+    [Foldout("INVENTORY")] public GameObject boxGlyphTitre;
+    [Foldout("INVENTORY")] public GameObject boxGlyphTexte;
+    [Foldout("INVENTORY")] public GameObject boxGlyphImage;
+    [Foldout("INVENTORY")] public GameObject boxPowerTitre;
+    [Foldout("INVENTORY")] public GameObject boxPowerGif;
+    [Foldout("INVENTORY")] public List<GameObject> boxPowerTextesNiveaux;
+    [Foldout("INVENTORY")] public List<GameObject> listBoxPowerType = new(3);
+    
 
 
 
@@ -128,7 +135,7 @@ public class UiManager : MonoBehaviour
     {
         Pause();
         menuPause.SetActive((true));
-        FillBoxInventory();
+        FillBoxInventoryForGlyphs();
         isPause = true;
     }
 
@@ -137,38 +144,64 @@ public class UiManager : MonoBehaviour
 
     //Fonctions : Inventaire ************************************************************************************************************************************************************************************
 
-    public void FillBoxInventory()
+    public void FillBoxInventoryForGlyphs() //met les icônes des glyphes de l'inventaire système dans le menu inventaire
     {
         for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
         {
-            listBoxInventaire[i].GetComponentInChildren<RawImage>().texture =
-                GlyphInventory.Instance.glyphInventory[i].icone;
+            listBoxInventaire[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
+            listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Button>().enabled = true;
+        }
+
+        if (GlyphInventory.Instance.glyphInventory.Count < listBoxInventaire.Count)
+        {
+            int difference = listBoxInventaire.Count - GlyphInventory.Instance.glyphInventory.Count;
+            for (int i = 0; i < difference; i++)
+            {
+                listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Button>().enabled = false;
+            }
         }
     }
 
-    public void FillDescriptionInventory(int boxPos)
+    public void FillDescriptionInventory(int boxPos) //change le titre et la description dans les box à droite du livre
     {
         Debug.Log(boxPos);
-        if (GlyphInventory.Instance.glyphInventory[boxPos - 1].nom is not null)
-        {
-            boxInvTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].nom;
-        }
-
-        if (GlyphInventory.Instance.glyphInventory[boxPos - 1].description is not null)
-        {
-            boxInvDescription.GetComponent<TextMeshProUGUI>().text =
-                GlyphInventory.Instance.glyphInventory[boxPos - 1].description;
-        }
-
+        boxGlyphTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].nom;
+        boxGlyphTexte.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].description;
+        boxGlyphImage.GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[boxPos - 1].icone;
     }
 
-    public void SetBoxInventoryPositions()
+    public void FillDescriptionPowers()
+    {
+        
+    }
+
+    void DisablePageDroite(string page)
+    {
+        switch (page)
+        {
+            case "glyph":
+                
+                break;
+            
+            case "power":
+                break;
+            
+            case "potion":
+                break;
+            
+            default:
+                Debug.Log("NON LA PAGE DROITE MARCHE PAS");
+                break;
+        }
+    }
+
+    /*public void SetBoxInventoryPositions()
     {
         for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
         {
             listBoxInventaire[i].GetComponent<BoxInventory>().inventoryPosition = i;
         }
-    }
+    }*/
 
     //Fonctions : Pouvoirs ***********************************************************************************************************************************************************************************
 
