@@ -32,7 +32,8 @@ public class IA_Corbeau : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] audioClipArray;
 
-    [Header("Attaque")] public bool isAttacking;
+    [Header("Attaque")] public float disolveValue;
+    public bool isAttacking;
     public float rotationSpeed;
     public float rotationSpeedSlown;
     [NaughtyAttributes.ReadOnly] public int puissanceAttaque;
@@ -176,11 +177,21 @@ public class IA_Corbeau : MonoBehaviour
                 canMove = true;
                 indic = true;
             }
-
-            holder.GetComponent<SpriteRenderer>().color = gradientIndic.Evaluate(AttackTimeTimer);
+            
+           
+            if (holder is not null)
+            {
+                if (disolveValue < 70)
+                {
+                    disolveValue += 0.1f;
+                    holder.GetComponent<SpriteRenderer>().material.SetFloat("_Force_rayon",disolveValue);
+                }
+            }
+            
             
             if (AttackTimeTimer >= AttackTime && !life.isMomified)
             {
+                disolveValue = 9;
                 audioSource.pitch = 1;
                 audioSource.PlayOneShot(audioClipArray[1]);
                 anim.SetBool("isAttacking",true);
