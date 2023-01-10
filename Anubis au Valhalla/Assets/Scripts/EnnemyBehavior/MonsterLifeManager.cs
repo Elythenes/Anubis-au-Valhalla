@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using GenPro;
 using Pathfinding;
 using TMPro;
+using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -28,14 +30,15 @@ public class MonsterLifeManager : MonoBehaviour
     public IA_Monstre1 IALoup;
     public IA_Guerrier IAGuerrier;
     public IA_Corbeau IACorbeau;
-    
-   
-    
 
+
+    public bool isDisolve;
+    public SpriteRenderer sprite2DRend;
+    public float disolveValue;
+    public float disolveValueAmount;
     public GameObject spawnCircle;
     public GameObject child;
     public GameObject emptyLayers;
-    public SpriteRenderer sr;
 
     [Header("Alterations d'état")] 
     public bool FlameInfected;
@@ -85,6 +88,34 @@ public class MonsterLifeManager : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if (isDisolve)
+        {
+            if (CharacterController.instance.transform.position.x > transform.position.x)
+            {
+                Debug.Log("droite");
+                var localRotation = sprite2DRend.transform.localRotation;
+                localRotation = Quaternion.Euler(localRotation.x, 0, localRotation.z);
+                sprite2DRend.transform.localRotation = localRotation;
+            }
+            else if (CharacterController.instance.transform.position.x < transform.position.x)
+            {
+                Debug.Log("gauche");
+                var localRotation = sprite2DRend.transform.localRotation;
+                localRotation = Quaternion.Euler(localRotation.x, -180, localRotation.z);
+                sprite2DRend.transform.localRotation = localRotation;
+            }
+            disolveValue += disolveValueAmount;
+            sprite2DRend.material.SetFloat("_Step", disolveValue);
+            if (disolveValue >= 1)
+            {
+                isDisolve = false;
+                Destroy(sprite2DRend.gameObject);
+            }
+        }
+    }
+
     public virtual void Update()
     {
         transform.localRotation = Quaternion.identity;
@@ -99,6 +130,7 @@ public class MonsterLifeManager : MonoBehaviour
             }
         }
 
+       
 
         if (isEnvased)
         {
@@ -292,6 +324,7 @@ public class MonsterLifeManager : MonoBehaviour
         }
         else
         {
+            isDisolve = true;
             yield return new WaitForSeconds(SalleGenerator.Instance.timeBetweenWaves);
             canvasLifeBar.SetActive(true);
         }
