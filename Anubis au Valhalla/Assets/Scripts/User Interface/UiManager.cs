@@ -85,9 +85,9 @@ public class UiManager : MonoBehaviour
 
     private void Start()
     {
-        //globalBoxGlyph.SetActive(false);
-        //globalBoxPotion.SetActive(false);
-        //globalBoxPowers.SetActive(false);
+        globalBoxGlyph.SetActive(false);
+        globalBoxPotion.SetActive(false);
+        globalBoxPowers.SetActive(false);
     }
 
     private void Update()
