@@ -26,7 +26,6 @@ public class Combo1Hitbox : MonoBehaviour
        SlashVFX.transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
        if (SlashVFX.transform.position.x - CharacterController.instance.transform.position.x > 0)
        {
-           Debug.Log("ceszfzefezfezfzefzfzfzefzef");
            var transform1 = SlashVFX.transform;
            var localScale = transform1.localScale;
            localScale = new Vector3(localScale.x, localScale.y, localScale.z);
@@ -41,6 +40,11 @@ public class Combo1Hitbox : MonoBehaviour
        }
         mainCamera = GameObject.Find("CameraHolder");
         transform.parent = CharacterController.instance.transform;
+        if (AttaquesNormales.instance.buffer)
+        {
+            Vector2 dashBoost = new Vector2(transform.position.x + angle * 100,transform.position.y + angle * 100);
+            transform.position = dashBoost;
+        }
         Destroy(gameObject, AttaquesNormales.instance.dureeHitbox[comboNumber]);
        transform.localScale *= AttaquesNormales.instance.rangeAttaque[comboNumber];
     }
@@ -75,10 +79,9 @@ public class Combo1Hitbox : MonoBehaviour
             col.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
             
             
-            //col.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber],ForceMode2D.Impulse);
-            //col.GetComponentInParent<MonsterLifeManager>().ai.Move(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber]);
+            //col.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber]);
         }
-    }
+    } 
 
     IEnumerator ResetTracking()
     {

@@ -229,15 +229,19 @@ public class AttaquesNormales : MonoBehaviour
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
-
-        if (index == 0)
+        if (!CharacterController.instance.isDashing)
         {
-            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[0], ForceMode2D.Force);
+            if (index == 0)
+            {
+                CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[0], ForceMode2D.Force);
+           
+            }
+            if (index == 1)
+            {
+                CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[1], ForceMode2D.Force);
+            }
         }
-        if (index == 1)
-        {
-            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[1], ForceMode2D.Force);
-        }
+       
 
         #region Gestion des animations
 
@@ -318,6 +322,15 @@ public class AttaquesNormales : MonoBehaviour
         }
 
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
+        /*   if (index == 0)
+           {
+               swordObj.transform.Translate(new Vector2(moveDirection.x * dashImpulse[0],moveDirection.y * dashImpulse[0]));
+              
+           }
+           if (index == 1)
+           {
+               swordObj.transform.Translate(new Vector2(moveDirection.x * dashImpulse[1],moveDirection.y * dashImpulse[1]));
+           }*/
         swordObj.transform.position = CharacterController.instance.transform.position;
         if (index == 0 || index == 1)
         {
