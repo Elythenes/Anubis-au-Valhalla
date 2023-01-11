@@ -94,14 +94,14 @@ public class MonsterLifeManager : MonoBehaviour
         {
             if (CharacterController.instance.transform.position.x > transform.position.x)
             {
-                Debug.Log("droite");
+                //Debug.Log("droite");
                 var localRotation = sprite2DRend.transform.localRotation;
                 localRotation = Quaternion.Euler(localRotation.x, 0, localRotation.z);
                 sprite2DRend.transform.localRotation = localRotation;
             }
             else if (CharacterController.instance.transform.position.x < transform.position.x)
             {
-                Debug.Log("gauche");
+                //Debug.Log("gauche");
                 var localRotation = sprite2DRend.transform.localRotation;
                 localRotation = Quaternion.Euler(localRotation.x, -180, localRotation.z);
                 sprite2DRend.transform.localRotation = localRotation;

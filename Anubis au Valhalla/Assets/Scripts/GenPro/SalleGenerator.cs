@@ -184,30 +184,38 @@ namespace GenPro
                                         doorToShop.ChooseSpecialToSpawn(0);
                                         doorToShop.willChooseSpecial = false;
                                         sDoors.Insert((int)fromDoor, removedDoor);
+                                        for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
+                                        {
+                                                if (i == (int) fromDoor)continue;
+                                                if (i == sDoors.IndexOf(doorToShop))continue;
+                                                sDoors[i].willChooseSpecial = true;
+                                                sDoors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+                                        }
                                 }
 
                         }
-                        /*if (roomsDone == 4)
-                        {
-                                Door removedDoor = sDoors[(int)fromDoor];
-                                sDoors.RemoveAt((int)fromDoor);
-                                Door doorToSpecial = sDoors[Random.Range(0, sDoors.Count)];
-                                doorToSpecial.currentDoorType = Door.DoorType.ToChallenge1;
-                                //if (doorToSpecial.doorOrientation == fromDoor) doorToSpecial.doorOrientation = toDoor;
-                                doorToSpecial.ChooseSpecialToSpawn(1);
-                                sDoors.Insert((int)fromDoor, removedDoor);
-                                //return Instantiate(specialRooms[0]);
-                        }*/
-
                         if (roomsDone == dungeonSize - 2)
                         {
-                                Door removedDoor = sDoors[(int)fromDoor];
-                                sDoors.RemoveAt((int)fromDoor);
-                                Door doorToShop = sDoors[Random.Range(0, sDoors.Count)];
-                                doorToShop.currentDoorType = Door.DoorType.ToShop;
-                                doorToShop.ChooseSpecialToSpawn(0);
-                                doorToShop.willChooseSpecial = false;
-                                sDoors.Insert((int)fromDoor, removedDoor);
+                                for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
+                                {
+                                        if (i == (int) fromDoor) continue;
+                                        if(i == (int)DoorOrientation.South)EnableDoors(DoorOrientation.South,false);
+                                        bool state = Random.value > 0.4f;
+                                        EnableDoors((DoorOrientation) i,state);
+                                        sDoors[i].currentDoorType = Door.DoorType.ToShop;
+                                        sDoors[i].ChooseSpecialToSpawn(0);
+                                        sDoors[i].willChooseSpecial = false;
+                                }
+                        }
+                        if (roomsDone == dungeonSize - 2)
+                        {
+                                for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
+                                {
+                                        if (i == (int) fromDoor) continue;
+                                        sDoors[i].willChooseSpecial = false;
+                                        if(i == (int)DoorOrientation.North)EnableDoors(DoorOrientation.North, true);
+                                        else EnableDoors((DoorOrientation)i,false);
+                                }
                         }
                         if (roomsDone == dungeonSize)
                         {
