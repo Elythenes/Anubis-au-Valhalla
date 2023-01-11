@@ -10,6 +10,7 @@ public class MenuTriche : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             gameObject.SetActive(false);
+            UiManager.instance.ActivatePause();
             UiManager.instance.isSousMenu = false;
             UiManager.instance.PlayButtonSound();
         }
