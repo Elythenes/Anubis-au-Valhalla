@@ -52,13 +52,12 @@ public class UiManager : MonoBehaviour
     [Foldout("INVENTORY")] public GameObject boxGlyphTitre;
     [Foldout("INVENTORY")] public GameObject boxGlyphTexte;
     [Foldout("INVENTORY")] public GameObject boxGlyphImage;
+    
     [Foldout("INVENTORY")] public GameObject boxPotionTitre;
     [Foldout("INVENTORY")] public GameObject boxPotionTexte;
     [Foldout("INVENTORY")] public GameObject boxPotionImage;
-    [Foldout("INVENTORY")] public GameObject boxPowerTitre;
-    [Foldout("INVENTORY")] public GameObject boxPowerGif;
-    [Foldout("INVENTORY")] public List<GameObject> boxPowerTextesNiveaux;
-    [Foldout("INVENTORY")] public List<GameObject> listBoxPowerType = new(3);
+    [Foldout("INVENTORY")] public GameObject interacteurPotion;
+    
     [Foldout("INVENTORY")] public GameObject globalBoxGlyph;
     [Foldout("INVENTORY")] public GameObject globalBoxPotion;
     [Foldout("INVENTORY")] public GameObject globalBoxPowers;
@@ -147,6 +146,10 @@ public class UiManager : MonoBehaviour
         Pause();
         menuPause.SetActive((true));
         FillBoxInventoryForGlyphs();
+        if (PotionManager.Instance.currentPotion is not null)
+        {
+            interacteurPotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        }
         isPause = true;
     }
 
@@ -301,6 +304,34 @@ public class UiManager : MonoBehaviour
             newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
         }
         
+    }
+    
+    public void FillDescriptionPotion() 
+    {
+        if (PotionManager.Instance.currentPotion is not null)
+        {
+            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.name;
+            boxPotionTexte.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
+            boxPotionImage.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        }
+        else
+        {
+            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = "";
+            boxPotionTexte.GetComponent<TextMeshProUGUI>().text = "Je n'ai pas de potion actuellement";
+            boxPotionImage.GetComponent<RawImage>().color = new Color(255,255,255,0);
+        }
+    }
+
+    void FillPotionInteracteur()
+    {
+        if (PotionManager.Instance.currentPotion is not null)
+        {
+            interacteurPotion.GetComponent<RawImage>().color = new Color(89, 89, 89);
+        }
+        else
+        {
+            
+        }
     }
        
     //Fonctions : Son ***********************************************************************************************************************************************************************************
