@@ -35,6 +35,7 @@ public class AnubisCurrentStats : MonoBehaviour
    
    public int criticalRate = 5;
    public List<float> dureeHitbox = new List<float>();
+   public List<float> duréeAbandon = new List<float>();
    public List<float> stunDuration = new List<float>();
    public List<float> forceKnockback = new List<float>();
    public List<float> stunDurationMax = new List<float>();

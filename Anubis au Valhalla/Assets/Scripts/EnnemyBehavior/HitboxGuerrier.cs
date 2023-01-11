@@ -14,7 +14,6 @@ public class HitboxGuerrier : MonoBehaviour
         effetSlash.transform.rotation = transform.rotation;
         if (effetSlash.transform.position.x - ia.transform.position.x > 0)
         {
-          Debug.Log("ceszfzefezfezfzefzfzfzefzef");
             var transform1 = effetSlash.transform;
             var localScale = transform1.localScale;
             localScale = new Vector3(localScale.x, -0.5f, localScale.z);
