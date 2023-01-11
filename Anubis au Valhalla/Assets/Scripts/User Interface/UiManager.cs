@@ -78,8 +78,8 @@ public class UiManager : MonoBehaviour
             instance = this;
         }
 
-        spriteSpell1.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
-        spriteSpell2.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+        //spriteSpell1.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+        //spriteSpell2.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
         spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
     }
 

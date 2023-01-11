@@ -153,7 +153,7 @@ public class NewPowerManager : MonoBehaviour
 
     void Start()
     {
-        cc = CharacterController.instance; //ça fait crash
+        cc = CharacterController.instance; 
         an = AttaquesNormales.instance;
         
         canUsePowers = true;
