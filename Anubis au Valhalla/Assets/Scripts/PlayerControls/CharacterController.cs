@@ -122,10 +122,14 @@ public class CharacterController : MonoBehaviour
 
   private void Update()
   {
-    Flip();
+    if (Time.timeScale != 0)
+    {
+      Flip();
+    }
+   
     Keyboard kb = InputSystem.GetDevice<Keyboard>();
 
-    if (allowMovements)
+    if (allowMovements &&  Time.timeScale != 0)
     {
       Vector2 directionIndic = Camera.main.ScreenToWorldPoint(Input.mousePosition) - indicationDirection.transform.position;
       float angleIndic = Mathf.Atan2(directionIndic.y, directionIndic.x) * Mathf.Rad2Deg;
@@ -177,10 +181,15 @@ public class CharacterController : MonoBehaviour
       }
     }
 
-    if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash && allowMovements)
+   if (debutDash)
+   {
+     audioSource.pitch = 1;
+     audioSource.PlayOneShot(audioClipArray[0]);
+   }
+   
+    if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash && allowMovements && Time.timeScale != 0)
     {
-      audioSource.pitch = 1;
-      audioSource.PlayOneShot(audioClipArray[0]);
+    
       dashTracker.SetActive(true);
       stopDash = false;
       allowMovements = false;

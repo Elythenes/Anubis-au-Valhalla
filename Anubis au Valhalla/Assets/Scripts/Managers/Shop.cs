@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 public class Shop : MonoBehaviour
 {
 
-    bool open = false;
+    public bool open = false;
 
     public CanvasGroup shopUI;
     public UIMenuShop shopUIController;
@@ -97,11 +97,26 @@ public class Shop : MonoBehaviour
         TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
+
+    private void Update()
+    {
+        if (open)
+        {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                CloseShop();
+                shopUIController.FadeOut();
+                UiManager.instance.isSousMenu = false;
+            }
+            
+       
+        }
+
+    }
+
     void FixedUpdate()
     {
-        
-
+       
         if (consumablesCost.Count > 0)
         {
             for (int i = 0; i < consumablesCost.Count; i++)
@@ -113,7 +128,6 @@ public class Shop : MonoBehaviour
             }
         }
         
-
         if (canInteract)
         {
             if (Input.GetKeyDown(KeyCode.F))
@@ -123,6 +137,8 @@ public class Shop : MonoBehaviour
                 GetShop();
             }
         }
+
+     
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -155,6 +171,8 @@ public class Shop : MonoBehaviour
     
     void GetShop()
     {
+        Time.timeScale = 0;
+        UiManager.instance.EnterSousMenu();
         shopUI.interactable = true;
         open = true;
         CharacterController.instance.controls.Disable();
@@ -169,6 +187,7 @@ public class Shop : MonoBehaviour
 
     public void CloseShop()
     {
+        Time.timeScale = 1;
         open = false;
         CharacterController.instance.controls.Enable();
         CharacterController.instance.canDash = true;

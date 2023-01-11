@@ -17,6 +17,7 @@ public class UiManager : MonoBehaviour
 
     //public CollectSpell cS;
     public CollectPower cP;
+    public bool isSousMenu;
 
     [Foldout("GENERAL")] public GameObject spriteSpell1;
     [Foldout("GENERAL")] public GameObject spriteSpell2;
@@ -114,11 +115,11 @@ public class UiManager : MonoBehaviour
     {
         if (Input.GetKeyDown(buttonPause))
         {
-            if (isPause) //quand on "Echap" depuis le menu Pause
+            if (isPause && !isSousMenu) //quand on "Echap" depuis le menu Pause
             {
                 DeActivatePause();
             }
-            else //quand on pause avec "Echap"
+            else if(!isSousMenu)//quand on pause avec "Echap"
             {
                 ActivatePause();
             }
@@ -288,9 +289,17 @@ public class UiManager : MonoBehaviour
         audioSource.Play();
     }
 
+    //Fonctions : MenuPause et Option ***********************************************************************************************************************************************************************************
 
-
-
+    public void ExitSousMenu()
+    {
+        isSousMenu = false;
+    }
+    
+    public void EnterSousMenu()
+    {
+        isSousMenu = true;
+    }
 
 
     //Fonctions autres ***********************************************************************************************************************************************************************************

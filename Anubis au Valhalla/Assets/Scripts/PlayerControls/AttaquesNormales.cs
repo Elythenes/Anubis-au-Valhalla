@@ -76,7 +76,7 @@ public class AttaquesNormales : MonoBehaviour
 
         #region Attaques Normalles
         
-        if (mouse.leftButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements) // Execute l'attaque selon l'avancement du combo
+        if (mouse.leftButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements&& Time.timeScale != 0) // Execute l'attaque selon l'avancement du combo
         {
             ExecuteAttack();
         }
@@ -138,7 +138,7 @@ public class AttaquesNormales : MonoBehaviour
 
         #endregion
 
-        if (mouse.rightButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements)
+        if (mouse.rightButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements && Time.timeScale != 0)
         {
             SpecialAttack();
         }
