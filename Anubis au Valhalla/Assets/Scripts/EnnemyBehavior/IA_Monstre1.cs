@@ -111,7 +111,6 @@ public class IA_Monstre1 : MonoBehaviour
             }
             else
             {
-                anim.SetBool("StopDash", true);
                 anim.SetBool("Dash",false);
                 rb.velocity = Vector2.zero;
                 dashdurationTimer = 0;
@@ -200,7 +199,8 @@ public class IA_Monstre1 : MonoBehaviour
                  
                  if (ShakeEnable)
                  {
-                     transform.DOShakePosition(LagDebutDashMax, 0.4f);
+                    rb.velocity = Vector2.zero;
+                     life.transform.DOShakePosition(LagDebutDashMax, 0.4f);
                      ShakeEnable = false;
                  }
                  

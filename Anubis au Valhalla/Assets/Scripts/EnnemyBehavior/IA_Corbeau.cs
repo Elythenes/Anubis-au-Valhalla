@@ -1,5 +1,6 @@
 using GenPro;
 using Pathfinding;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -94,13 +95,16 @@ public class IA_Corbeau : MonoBehaviour
 
         if (life.gotHit)
         {
-            if (life.gotHit)
-            {
+            life.OnBegin.Invoke();
+            aipath.canMove = false;
                 audioSource.Stop();
                 audioSource.pitch = Random.Range(0.8f, 1.2f);
                 audioSource.PlayOneShot(audioClipArray[2]);
                 ai.canMove = true;
-            }
+        }
+        else
+        {
+            life.OnDone.Invoke(); 
         }
 
             if (life.vieActuelle <= 0)
@@ -158,6 +162,7 @@ public class IA_Corbeau : MonoBehaviour
                     CharacterController.instance.transform.position.y - transform.position.y);
                 float angle = Mathf.Atan2(directionProj.y, directionProj.x) * Mathf.Rad2Deg;
                GameObject indicOBJ = Instantiate(indicationAttaque,transform.position,  Quaternion.Euler(0,0,angle));
+               //indicOBJ.transform.parent = emptyLayers.transform;
                holder = indicOBJ;
                Destroy(indicOBJ,AttackTime+0.1f);
                indic = false;
@@ -215,12 +220,12 @@ public class IA_Corbeau : MonoBehaviour
                         
            
             
-            if (life.isEnvased && canMove)
+            if (life.isEnvased && canMove && !life.gotHit)
             {
                 transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeedSlown * Time.deltaTime);
                 //rb.AddForce(Vector2.Perpendicular(transform.position - player.transform.position * rotationSpeedSlown ),ForceMode2D.Force);
             }
-            else if(canMove)
+            else if(canMove && !life.gotHit)
             {
                 //rb.AddForce(Vector2.Perpendicular(transform.position - player.transform.position* rotationSpeed),ForceMode2D.Force);
                 transform.RotateAround(player.transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);

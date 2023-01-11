@@ -22,14 +22,20 @@ public class IA_Guerrier : MonoBehaviour
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
     public float radiusWondering;
-    public bool isWondering;
+   
    
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip[] audioClipArray;
 
-    [Header("Attaque")] public GameObject swing;
+    [Header("States")]
     public bool isAttacking;
+    public bool isChasing;
+    public bool chasingTrigger;
+    public bool isWondering;
+    
+    [Header("Attaque")]
+    public GameObject swing;
     public Transform pointAttaque;
     public LayerMask HitboxPlayer;
     public float dureeAttaque;
@@ -95,7 +101,7 @@ public class IA_Guerrier : MonoBehaviour
             }  
         }
 
-        if (life.gotHit)
+        if (life.gotHit)  // Son
         {
             audioSource.Stop();
             audioSource.pitch = Random.Range(0.8f, 1.2f);
@@ -105,15 +111,11 @@ public class IA_Guerrier : MonoBehaviour
 
         if (aipath.reachedDestination && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
-            if (isWondering)
-            {
-                //StartCoroutine(WaitMove());
-            }
-            else
+            if (!isWondering && isChasing)
             {
                 isAttacking = true;
+                isChasing = false;
             }
-
         }
 
         if (life.vieActuelle <= 0)
@@ -121,7 +123,7 @@ public class IA_Guerrier : MonoBehaviour
             anim.SetBool("isDead",true);
         }
 
-        if (isAttacking&& !life.isMomified)
+        if (isAttacking && !life.isMomified)
         {
             anim.SetBool("isRuning",false);
             anim.SetBool("isIdle",false);
@@ -138,7 +140,7 @@ public class IA_Guerrier : MonoBehaviour
             hasShaked = true;
         }
         
-        IEnumerator WaitMove()
+        IEnumerator Attaque() 
         {
             yield return new WaitForSeconds(0.3f);
             GameObject swingOj = Instantiate(swing, pointAttaque.position, Quaternion.identity);
@@ -155,14 +157,8 @@ public class IA_Guerrier : MonoBehaviour
             anim.SetBool("isIdle",false);
             anim.SetBool("PrepareAttack",false);
             anim.SetBool("isAttacking",true);
-            StartCoroutine(WaitMove());
-           // Collider2D[] toucheJoueur = Physics2D.OverlapCircleAll(pointAttaque.position, rangeAttaque, HitboxPlayer);
-           
-            //foreach (Collider2D joueur in toucheJoueur)
-           // {
-                //Debug.Log("touché");
-               // joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque);
-           // }
+            StartCoroutine(Attaque());
+          
 
             aipath.canMove = true;
             isWondering = true;
@@ -182,15 +178,23 @@ public class IA_Guerrier : MonoBehaviour
             }
         }
         
-        if (WonderingTimeTimer >= WonderingTime&& !life.isMomified)
+        if (WonderingTimeTimer >= WonderingTime&& !life.isMomified && !isChasing)
         {
-            isAttacking = false;
             isWondering = false;
-            playerFollow.enabled = true;
-            ai.SearchPath();
+            isAttacking = false;
+            chasingTrigger = true;
             WonderingTimeTimer = 0;
             StartUpAttackTimeTimer = 0;
         }
+
+        if (chasingTrigger && !life.isMomified)
+        {
+            chasingTrigger = false;
+            isChasing = true;
+            playerFollow.enabled = true;
+            ai.SearchPath();
+        }
+        
     }
     
     Vector2 PickRandomPoint() 

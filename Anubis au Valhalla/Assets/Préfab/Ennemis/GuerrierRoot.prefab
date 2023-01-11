@@ -344,15 +344,17 @@ MonoBehaviour:
   aipath: {fileID: 9159485445415123201}
   playerFollow: {fileID: 5017381031638931851}
   radiusWondering: 5
-  isWondering: 0
   audioSource: {fileID: 6302253623280085079}
   audioClipArray:
   - {fileID: 8300000, guid: ee202b3a22b026d4595dcc026a90ddce, type: 3}
   - {fileID: 8300000, guid: aeae5c0279eadd347ae1ed5c8e1998f0, type: 3}
   - {fileID: 8300000, guid: 2a743e41591bd914bb3bc35528104407, type: 3}
   - {fileID: 8300000, guid: b21e65a00b8f48d4484cceccc33ea1b5, type: 3}
-  swing: {fileID: 6343942413881442319, guid: ecad9cf076c952944a7713325d0d5750, type: 3}
   isAttacking: 0
+  isChasing: 0
+  chasingTrigger: 0
+  isWondering: 1
+  swing: {fileID: 6343942413881442319, guid: ecad9cf076c952944a7713325d0d5750, type: 3}
   pointAttaque: {fileID: 3748801516527011793}
   HitboxPlayer:
     serializedVersion: 2
@@ -515,8 +517,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 1.52
-  height: 2
+  radius: 0.91
+  height: 3.87
   canMove: 1
   maxSpeed: 5
   gravity: {x: 0, y: 0, z: 0}
@@ -537,9 +539,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 0
-  slowdownDistance: 2.97
-  pickNextWaypointDist: 2
-  endReachedDistance: 2.96
+  slowdownDistance: 1.54
+  pickNextWaypointDist: 2.33
+  endReachedDistance: 2.13
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -571,7 +573,7 @@ MonoBehaviour:
   traversableTags: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
-    value: -1
+    value: 1
 --- !u!114 &5017381031638931851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,7 +601,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.19799948, y: -1.7148589}
+  m_Offset: {x: 0.16780877, y: 0.36851466}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -610,7 +612,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.5185542, y: 3.7161896}
+  m_Size: {x: 3.4581728, y: 6.1105328}
   m_EdgeRadius: 0
 --- !u!50 &642168697668192080
 Rigidbody2D:

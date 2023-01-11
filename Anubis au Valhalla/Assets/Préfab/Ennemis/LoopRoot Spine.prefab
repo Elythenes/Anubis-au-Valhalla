@@ -776,6 +776,7 @@ GameObject:
   - component: {fileID: 3751603445994706705}
   - component: {fileID: 9010193272512883140}
   - component: {fileID: 2586112859335582019}
+  - component: {fileID: 8456394730367107423}
   - component: {fileID: 3566458979740476649}
   - component: {fileID: 7892702257020375616}
   - component: {fileID: 8037972104814536641}
@@ -783,7 +784,6 @@ GameObject:
   - component: {fileID: 4853048369012106615}
   - component: {fileID: 3870873888449813251}
   - component: {fileID: 8889322730559377196}
-  - component: {fileID: 8456394730367107423}
   - component: {fileID: 8435842971667459551}
   m_Layer: 6
   m_Name: Wolf Spine
@@ -882,6 +882,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &8456394730367107423
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482979424132028281}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.7
+  m_LinearDrag: 1
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!114 &3566458979740476649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1040,8 +1061,8 @@ MonoBehaviour:
   player: {fileID: 0}
   aipath: {fileID: 4853048369012106615}
   playerFollow: {fileID: 3870873888449813251}
-  speedX: 500
-  speedY: 500
+  speedX: 750
+  speedY: 750
   audioSource: {fileID: 7892702257020375616}
   audioClipArray:
   - {fileID: 8300000, guid: 758294ab30913af4e9cc6e55ff6bf5ab, type: 3}
@@ -1181,27 +1202,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.7478604, y: 4.1729584}
   m_EdgeRadius: 0
---- !u!50 &8456394730367107423
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5482979424132028281}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0.1
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 0
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!210 &8435842971667459551
 SortingGroup:
   m_ObjectHideFlags: 0
