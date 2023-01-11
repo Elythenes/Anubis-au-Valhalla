@@ -52,10 +52,17 @@ public class UiManager : MonoBehaviour
     [Foldout("INVENTORY")] public GameObject boxGlyphTitre;
     [Foldout("INVENTORY")] public GameObject boxGlyphTexte;
     [Foldout("INVENTORY")] public GameObject boxGlyphImage;
+    [Foldout("INVENTORY")] public GameObject boxPotionTitre;
+    [Foldout("INVENTORY")] public GameObject boxPotionTexte;
+    [Foldout("INVENTORY")] public GameObject boxPotionImage;
     [Foldout("INVENTORY")] public GameObject boxPowerTitre;
     [Foldout("INVENTORY")] public GameObject boxPowerGif;
     [Foldout("INVENTORY")] public List<GameObject> boxPowerTextesNiveaux;
     [Foldout("INVENTORY")] public List<GameObject> listBoxPowerType = new(3);
+    [Foldout("INVENTORY")] public GameObject globalBoxGlyph;
+    [Foldout("INVENTORY")] public GameObject globalBoxPotion;
+    [Foldout("INVENTORY")] public GameObject globalBoxPowers;
+    
     
     [Header("Audio")]
     public AudioSource audioSource;
@@ -78,7 +85,9 @@ public class UiManager : MonoBehaviour
 
     private void Start()
     {
-
+        //globalBoxGlyph.SetActive(false);
+        //globalBoxPotion.SetActive(false);
+        //globalBoxPowers.SetActive(false);
     }
 
     private void Update()
@@ -177,18 +186,30 @@ public class UiManager : MonoBehaviour
         
     }
 
-    void DisablePageDroite(string page)
+    public void DisablePageDroite(string page)
     {
+        Debug.Log("oui");
         switch (page)
         {
             case "glyph":
-                
-                break;
-            
-            case "power":
+                globalBoxGlyph.SetActive(true);
+                globalBoxPotion.SetActive(false);
+                globalBoxPowers.SetActive(false);
+                Debug.Log("box glyph");
                 break;
             
             case "potion":
+                globalBoxGlyph.SetActive(false);
+                globalBoxPotion.SetActive(true);
+                globalBoxPowers.SetActive(false);
+                Debug.Log("box potion");
+                break;
+            
+            case "powers":
+                globalBoxGlyph.SetActive(false);
+                globalBoxPotion.SetActive(false);
+                globalBoxPowers.SetActive(true);
+                Debug.Log("box powers");
                 break;
             
             default:

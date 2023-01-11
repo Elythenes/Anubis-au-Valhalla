@@ -167,7 +167,6 @@ public class AnubisCurrentStats : MonoBehaviour
             break;
          
          case 1: //Total Base Damage
-            Debug.Log("glyph marchent");
             totalBaseBonusDamage += value;
             break;
          
