@@ -323,7 +323,7 @@ public class CharacterController : MonoBehaviour
     bool isOUEST;
 
     
-      if (movement.x > 0 && !isAttacking) // Le personnage s'oriente vers la direction où il marche. 
+      if (movement.x > 0 && !isAttacking && AttaquesNormales.instance.blockFlip) // Le personnage s'oriente vers la direction où il marche. 
       {
         isEST = true;
         facing = LookingAt.Est;
@@ -336,7 +336,7 @@ public class CharacterController : MonoBehaviour
 
       }
 
-      if (movement.x < 0 && !isAttacking)
+      if (movement.x < 0 && !isAttacking && AttaquesNormales.instance.blockFlip)
       {
       
         isOUEST= true;

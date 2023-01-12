@@ -37,8 +37,9 @@ public class AttaquesNormales : MonoBehaviour
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip[] audioClipArray;
-    
-    [Header("Général")]
+
+    [Header("Général")] 
+    public bool blockFlip;
     public bool attaqueSpe2;
     public bool abandonOn;
     public bool canAttack;
@@ -99,6 +100,7 @@ public class AttaquesNormales : MonoBehaviour
         
         if (cooldownAbandonComboTimer >= cooldownAbandonCombo) // Condition de retour à l'idle
         {
+            blockFlip = true;
             anim.SetBool("StopCombo",true);
             abandonOn = false;
             comboActuel = 0;
@@ -165,6 +167,7 @@ public class AttaquesNormales : MonoBehaviour
     {
         CharacterController.instance.stopDash = true;
         anim.SetBool("StopCombo",false);
+        blockFlip = false;
         switch (comboActuel)
         {
             case 0:
