@@ -195,9 +195,9 @@ public class IA_Corbeau : MonoBehaviour
            
             if (holder is not null)
             {
-                if (disolveValue < 70)
+                if (disolveValue < 30)
                 {
-                    disolveValue += 0.1f;
+                    disolveValue += 0.05f;
                     holder.GetComponent<SpriteRenderer>().material.SetFloat("_Force_rayon",disolveValue);
                 }
             }

@@ -34,11 +34,17 @@ public class ThrustHitbox : Combo1Hitbox
                 other.gameObject.GetComponent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg), stagger);
                 return;
             }
-            
-            
-            
-            other.gameObject.GetComponent<AIPath>().canMove = false;
-            other.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg), stagger);
+
+
+            if (other.gameObject.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
+            {
+                other.gameObject.GetComponent<AIPath>().canMove = false;
+                other.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg), stagger);
+                if (!other.gameObject.GetComponentInParent<MonsterLifeManager>().elite)
+                {
+                    other.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized * AttaquesNormales.instance.forceKnockback[3], ForceMode2D.Impulse);
+                }
+            }
         }
     }
     

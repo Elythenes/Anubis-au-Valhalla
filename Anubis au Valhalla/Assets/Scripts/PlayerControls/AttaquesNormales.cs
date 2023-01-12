@@ -86,10 +86,10 @@ public class AttaquesNormales : MonoBehaviour
             buffer = true;
         }
 
-        if (mouse.rightButton.wasPressedThisFrame && CharacterController.instance.isDashing)
+        /*if (mouse.rightButton.wasPressedThisFrame && CharacterController.instance.isDashing)
         {
             buffer2 = true;
-        }
+        }*/
 
         // ------------------ Gestion Abandon du Combo ---------------
         if (abandonOn)
@@ -138,7 +138,7 @@ public class AttaquesNormales : MonoBehaviour
 
         #endregion
 
-        if (mouse.rightButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements && Time.timeScale != 0)
+        if (mouse.rightButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements && !CharacterController.instance.isDashing && Time.timeScale != 0)
         {
             SpecialAttack();
         }
@@ -249,17 +249,32 @@ public class AttaquesNormales : MonoBehaviour
 
         #region Gestion des animations
 
-       /* if (angle < 45 && angle > -45)
-        {
-            swordObj.GetComponent<Combo1Hitbox>().SlashVFX.
-        }*/
-        
         if (angle > 45 && angle < 135) // attaque vers le haut
         {
+            if (CharacterController.instance.movement == Vector2.zero)
+            {
+                CharacterController.instance.facing = CharacterController.LookingAt.Nord;
+            }
+            
            // SetBool les animation vers le haut
         }
-        else if (angle < 45 && angle > -45 || angle > 135 && angle < 180 || angle > -180 && angle < -135) // attaque à gauche ou à droite
+        else if (angle < 45 && angle > -45 /*gauche*/|| angle > 135 && angle < 180 /*droite-haut*/|| angle > -180 && angle < -135/*droite-bas*/) // attaque à gauche ou à droite
         {
+            if (angle < 45 && angle > -45) // gauche = dash vers la gauche
+            {
+                if (CharacterController.instance.movement == Vector2.zero)               
+                {
+                    CharacterController.instance.facing = CharacterController.LookingAt.Est;
+                }
+            }
+            else if (angle > 135 && angle < 180  || angle > -180 && angle < -135) // droite = dash vers la droite
+            {
+                if (CharacterController.instance.movement == Vector2.zero)         
+                {
+                    CharacterController.instance.facing = CharacterController.LookingAt.Ouest;
+                }    
+            }
+     
             if (index == 0)
             {
                 anim.SetBool("isAttacking1",true);
@@ -288,6 +303,10 @@ public class AttaquesNormales : MonoBehaviour
         }
         else if (angle > -135 && angle < -45) // attaque vers le bas
         {
+            if (CharacterController.instance.movement == Vector2.zero)       
+            {
+                CharacterController.instance.facing = CharacterController.LookingAt.Sud;
+            }      
             if (index == 0)
             {
                 anim.SetBool("isAttacking1Down",true);
@@ -346,10 +365,28 @@ public class AttaquesNormales : MonoBehaviour
         
         if (angle2 > 45 && angle2 < 135) // attaque vers le haut
         {
-           // SetBool les animation vers le haut
+            if (CharacterController.instance.movement == Vector2.zero)
+            {
+                CharacterController.instance.facing = CharacterController.LookingAt.Nord;
+            }
         }
         else if (angle2 < 45 && angle2 > -45 || angle2 > 135 && angle2 < 180 || angle2 > -180 && angle2 < -135) // attaque à gauche ou à droite
         {
+            if (angle2 < 45 && angle2 > -45) // gauche = dash vers la gauche
+            {
+                if (CharacterController.instance.movement == Vector2.zero)               
+                {
+                    CharacterController.instance.facing = CharacterController.LookingAt.Est;
+                }
+            }
+            else if (angle2 > 135 && angle2 < 180  || angle2 > -180 && angle2 < -135) // droite = dash vers la droite
+            {
+                if (CharacterController.instance.movement == Vector2.zero)         
+                {
+                    CharacterController.instance.facing = CharacterController.LookingAt.Ouest;
+                }    
+            }
+            
             anim.SetBool("isAttackingSpe",true);
             anim.SetBool("isAttacking1",false);
             anim.SetBool("isAttacking2",false);
@@ -359,6 +396,10 @@ public class AttaquesNormales : MonoBehaviour
         }
         else if (angle2 > -135 && angle2 < -45) // attaque vers le bas
         {
+            if (CharacterController.instance.movement == Vector2.zero)       
+            {
+                CharacterController.instance.facing = CharacterController.LookingAt.Sud;
+            }      
             anim.SetBool("isAttackingSpeDown",true);
             anim.SetBool("isAttacking1Down",false);
             anim.SetBool("isAttacking2Down",false);
