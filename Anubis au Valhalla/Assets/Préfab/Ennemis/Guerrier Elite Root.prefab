@@ -30,12 +30,12 @@ RectTransform:
   m_LocalScale: {x: 1.0752674, y: 1.0752069, z: 1.0752674}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4873547501407545026}
-  m_RootOrder: 1
+  m_Father: {fileID: 4873547502329376987}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00049996, y: -0.19085}
+  m_AnchoredPosition: {x: 0, y: -0.38685003}
   m_SizeDelta: {x: 0.3817, y: 0.3817}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8634255387585136130
@@ -318,8 +318,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2377570479194186109}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.07, y: 0.58, z: 0}
-  m_LocalScale: {x: 0.46670824, y: 0.46670824, z: 0.46670824}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5775981, y: 0.5775981, z: 0.5775981}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4839264729322054630}
@@ -417,11 +417,15 @@ MonoBehaviour:
   isElite: 1
   life: {fileID: 1296807130581861709}
   isDead: 0
+  speedX: 100
+  speedY: 100
+  radiusWondering: 5
+  pointToWonder: {x: 0, y: 0}
   player: {fileID: 0}
+  rb: {fileID: 642168697668192080}
   seeker: {fileID: 4015336488210272568}
   aipath: {fileID: 9159485445415123201}
   playerFollow: {fileID: 5017381031638931851}
-  radiusWondering: 5
   audioSource: {fileID: 6302253623280085079}
   audioClipArray:
   - {fileID: 8300000, guid: ee202b3a22b026d4595dcc026a90ddce, type: 3}
@@ -437,14 +441,15 @@ MonoBehaviour:
   HitboxPlayer:
     serializedVersion: 2
     m_Bits: 512
+  puissanceAttaque: 12
+  damageElite: 25
   dureeAttaque: 0.2
   rangeAttaque: 2
-  puissanceAttaque: 12
+  radiusAttack: 3
   StartUpAttackTime: 0.5
   StartUpAttackTimeTimer: 0
   WonderingTime: 3
   WonderingTimeTimer: 0
-  damageElite: 25
 --- !u!82 &6302253623280085079
 AudioSource:
   m_ObjectHideFlags: 0
@@ -705,7 +710,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -830,7 +835,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4873547502329376987}
-  - {fileID: 7706483199672475695}
   m_Father: {fileID: 661344730335221767}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1099,6 +1103,7 @@ RectTransform:
   - {fileID: 3865809136657914279}
   - {fileID: 4873547501444878009}
   - {fileID: 4873547501950284807}
+  - {fileID: 7706483199672475695}
   m_Father: {fileID: 4873547501407545026}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1361,7 +1366,7 @@ SpriteRenderer:
   m_SortingLayer: -5
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: b573fad800f4f0243b66a8d4434a1d3e, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.68073237, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
