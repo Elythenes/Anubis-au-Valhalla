@@ -187,7 +187,7 @@ public class CharacterController : MonoBehaviour
      audioSource.PlayOneShot(audioClipArray[0]);
    }
    
-    if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash && allowMovements && Time.timeScale != 0)
+    if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash && allowMovements && !AttaquesNormales.instance.attaqueSpe2 && Time.timeScale != 0)
     {
     
       dashTracker.SetActive(true);
@@ -321,75 +321,76 @@ public class CharacterController : MonoBehaviour
     bool isNORD;
     bool isSUD;
     bool isOUEST;
-    
-    
-    if (movement.x > 0 && !isAttacking) // Le personnage s'oriente vers la direction où il marche. 
-    {
-      isEST = true;
-      facing = LookingAt.Est;
-      transform.localRotation = Quaternion.Euler(0, 0,0);
-      doorUITransform.rotation = new Quaternion(0, 0, 0, 0);
-    }
-    else
-    {
-      isEST = false;
 
-    }
+    
+      if (movement.x > 0 && !isAttacking) // Le personnage s'oriente vers la direction où il marche. 
+      {
+        isEST = true;
+        facing = LookingAt.Est;
+        transform.localRotation = Quaternion.Euler(0, 0,0);
+        doorUITransform.rotation = new Quaternion(0, 0, 0, 0);
+      }
+      else
+      {
+        isEST = false;
 
-    if (movement.x < 0 && !isAttacking)
-    {
+      }
+
+      if (movement.x < 0 && !isAttacking)
+      {
       
-      isOUEST= true;
-      facing = LookingAt.Ouest;
-      transform.localRotation = Quaternion.Euler(0, 180,0);
-      doorUITransform.rotation = new Quaternion(0,180,0, 0);
-    }
-    else
-    {
-      isOUEST = false;
-    }
+        isOUEST= true;
+        facing = LookingAt.Ouest;
+        transform.localRotation = Quaternion.Euler(0, 180,0);
+        doorUITransform.rotation = new Quaternion(0,180,0, 0);
+      }
+      else
+      {
+        isOUEST = false;
+      }
     
-    if (movement.y < 0 && !isAttacking)
-    {
-      isSUD = true;
-      facing = LookingAt.Sud;
-      float face = transform.localScale.x;
-      face = 1;
-    }
-    else
-    {
-      isSUD = false;
-    }
+      if (movement.y < 0 && !isAttacking)
+      {
+        isSUD = true;
+        facing = LookingAt.Sud;
+        float face = transform.localScale.x;
+        face = 1;
+      }
+      else
+      {
+        isSUD = false;
+      }
     
-    if (movement.y > 0 && !isAttacking)
-    {
-      isNORD = true;
-      facing = LookingAt.Nord;
-      float face = transform.localScale.x;
-      face = 1;
-    }
-    else
-    {
-      isNORD = false;
-    }
+      if (movement.y > 0 && !isAttacking)
+      {
+        isNORD = true;
+        facing = LookingAt.Nord;
+        float face = transform.localScale.x;
+        face = 1;
+      }
+      else
+      {
+        isNORD = false;
+      }
 
-    if (isEST && isSUD)
-    {
-      facing = LookingAt.SudEst;
-    }
-    if (isEST && isNORD)
-    {
-      facing = LookingAt.NordEst;
-    }
-    if (isOUEST && isSUD)
-    {
-      facing = LookingAt.SudOuest;
-    }
-    if (isOUEST && isNORD)
-    {
-      facing = LookingAt.NordOuest;
-    }
+      if (isEST && isSUD)
+      {
+        facing = LookingAt.SudEst;
+      }
+      if (isEST && isNORD)
+      {
+        facing = LookingAt.NordEst;
+      }
+      if (isOUEST && isSUD)
+      {
+        facing = LookingAt.SudOuest;
+      }
+      if (isOUEST && isNORD)
+      {
+        facing = LookingAt.NordOuest;
+      }
   }
+    
   #endregion
   
   // ---TRUC POUR GENERER LA PROCHAINE SALLE---
