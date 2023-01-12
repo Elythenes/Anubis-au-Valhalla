@@ -41,6 +41,7 @@ public class IA_Guerrier : MonoBehaviour
     public bool isWondering;
 
     [Header("Attaque")] 
+    public bool doOnce;
     public GameObject swing;
     public Transform pointAttaque;
     public LayerMask HitboxPlayer;
@@ -95,18 +96,23 @@ public class IA_Guerrier : MonoBehaviour
 
     private void FixedUpdate() // Les AddForce
     {
-        if (isWondering&& !life.isMomified)
+        if (isWondering && !life.isMomified)
         {
             anim.SetBool("isIdle",false);
             anim.SetBool("isRuning",true);
             WonderingTimeTimer += Time.deltaTime;
-            ai.destination = PickRandomPoint();
+            if (doOnce)
+            {
+                StartCoroutine(FindWonderPosition());
+                doOnce = false;
+            }
             rb.AddForce(new Vector2(aipath.targetDirection.x * speedX,aipath.targetDirection.y * speedY) * Time.deltaTime);
         }
         
         
         if (isChasing && !life.isMomified && !isWondering)
         {
+            doOnce = false;
             anim.SetBool("isIdle",false);
             anim.SetBool("isRuning",true);
             ai.destination = player.transform.position;
@@ -197,8 +203,8 @@ public class IA_Guerrier : MonoBehaviour
             anim.SetBool("PrepareAttack",false);
             anim.SetBool("isAttacking",true);
             StartCoroutine(Attaque());
-          
-            
+
+            doOnce = true;
             isWondering = true;
             isAttacking = false;
             StartUpAttackTimeTimer = 0;
@@ -217,6 +223,7 @@ public class IA_Guerrier : MonoBehaviour
 
         if (chasingTrigger && !life.isMomified)
         {
+            doOnce = false;
             chasingTrigger = false;
             isChasing = true;
         }
@@ -224,11 +231,21 @@ public class IA_Guerrier : MonoBehaviour
         
     }
 
+    IEnumerator FindWonderPosition()
+    {
+        yield return new WaitForSeconds(0.8f);
+        ai.destination = PickRandomPoint();
+        doOnce = true;
+    }
+
     IEnumerator RestartScripts()
     {
-        yield return new WaitForSeconds(0.3f);
-        this.enabled = true;
-        aipath.canMove = true;
+        if (!isDead)
+        {
+            yield return new WaitForSeconds(0.3f);
+            this.enabled = true;
+            aipath.canMove = true;
+        }
     }
     
     Vector2 PickRandomPoint()

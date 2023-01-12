@@ -33,6 +33,8 @@ public class Combo3 : MonoBehaviour
             {
                 GameObject effetSang = Instantiate(bloodEffect, col.transform.position, Quaternion.identity);
                 effetSang.transform.rotation = Quaternion.Euler(0,0,angle);
+                col.gameObject.GetComponentInParent<MonsterLifeManager>()
+                    .TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
             }
             Vector3 angleKnockback = col.transform.position - transform.position;
             Vector3 angleNormalized = angleKnockback.normalized;
@@ -48,11 +50,11 @@ public class Combo3 : MonoBehaviour
             
             
             col.gameObject.GetComponent<AIPath>().canMove = false;
-
+         
+            
             if (!col.gameObject.GetComponentInParent<MonsterLifeManager>().elite)
             {
-                col.gameObject.GetComponentInParent<MonsterLifeManager>()
-                    .TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
+              
                 col.gameObject.GetComponent<Rigidbody2D>().AddForce(
                     angleNormalized * AttaquesNormales.instance.forceKnockback[comboNumber], ForceMode2D.Impulse);
             }

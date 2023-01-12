@@ -25,5 +25,6 @@ public class MultipleSpritesLayer : LayerManager
         {
             _srProps.sortingOrder = srPlayer.sortingOrder - 1;
         }
+      
     }
 }
