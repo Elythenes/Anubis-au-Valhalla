@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class LifeBarManager : MonoBehaviour
 {
+    public AnubisCurrentStats manager;
     public static LifeBarManager instance;
     public Slider slider;
     public Gradient gradient;
@@ -21,20 +22,13 @@ public class LifeBarManager : MonoBehaviour
         }
     }
 
-    public void SetMaxHealth(int health)
+    private void Update()
     {
-        slider.maxValue = health;
-        slider.value = health;
+        slider.value = manager.vieActuelle;
+        slider.maxValue = manager.vieMax;
         textPV.SetText(AnubisCurrentStats.instance.vieActuelle + " / " + AnubisCurrentStats.instance.vieMax);
-
         fill.color = gradient.Evaluate(1f);
     }
 
-    public void SetHealth(int health)
-    {
-        slider.value = health;
-        textPV.SetText(AnubisCurrentStats.instance.vieActuelle + " / " + AnubisCurrentStats.instance.vieMax);
-
-        fill.color = gradient.Evaluate(slider.normalizedValue);
-    }
+   
 }
