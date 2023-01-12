@@ -229,15 +229,23 @@ public class AttaquesNormales : MonoBehaviour
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
-
-        if (index == 0)
+        if (!CharacterController.instance.isDashing)
         {
-            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[0], ForceMode2D.Force);
+            if (index == 0)
+            {
+                CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[0], ForceMode2D.Force);
+           
+            }
+            if (index == 1)
+            {
+                CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[1], ForceMode2D.Force);
+            }
+            if (index == 2)
+            {
+                CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[2], ForceMode2D.Force);
+            }
         }
-        if (index == 1)
-        {
-            CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[1], ForceMode2D.Force);
-        }
+       
 
         #region Gestion des animations
 

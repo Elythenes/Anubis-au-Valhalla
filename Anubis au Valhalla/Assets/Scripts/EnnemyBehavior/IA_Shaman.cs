@@ -69,7 +69,7 @@ public class IA_Shaman : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         ai = GetComponent<IAstarAI>();
         playerFollow = GetComponent<AIDestinationSetter>();
-        if (life.elite)
+        if (life.eliteChallenge)
         {
             isElite = true;
         }

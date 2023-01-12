@@ -177,6 +177,7 @@ MonoBehaviour:
   canvasLifeBar: {fileID: 4873547501407545037}
   criticalPick: 0
   gotHit: 0
+  elite: 0
   IALoup: {fileID: 0}
   IAGuerrier: {fileID: 2976812609861208792}
   IACorbeau: {fileID: 0}
@@ -203,7 +204,7 @@ MonoBehaviour:
   isEnvased: 0
   EnvasedTime: 5
   EnvasedTimeTimer: 0
-  elite: 0
+  eliteChallenge: 0
   isParasite: 0
   overdose: 0
 --- !u!1 &2377570479194186109
@@ -220,12 +221,12 @@ GameObject:
   - component: {fileID: 5147432525602143642}
   - component: {fileID: 2976812609861208792}
   - component: {fileID: 6302253623280085079}
+  - component: {fileID: 642168697668192080}
   - component: {fileID: 1697767715843941360}
   - component: {fileID: 9159485445415123201}
   - component: {fileID: 4015336488210272568}
   - component: {fileID: 5017381031638931851}
   - component: {fileID: 6128679316332557466}
-  - component: {fileID: 642168697668192080}
   m_Layer: 6
   m_Name: Soldat Spine
   m_TagString: Monstre
@@ -339,32 +340,39 @@ MonoBehaviour:
   emptyLayers: {fileID: 1959525455894448424}
   isElite: 0
   life: {fileID: 1296807130581861709}
+  isDead: 0
+  speedX: 100
+  speedY: 100
+  radiusWondering: 5
   player: {fileID: 0}
+  rb: {fileID: 642168697668192080}
   seeker: {fileID: 4015336488210272568}
   aipath: {fileID: 9159485445415123201}
   playerFollow: {fileID: 5017381031638931851}
-  radiusWondering: 5
-  isWondering: 0
   audioSource: {fileID: 6302253623280085079}
   audioClipArray:
   - {fileID: 8300000, guid: ee202b3a22b026d4595dcc026a90ddce, type: 3}
   - {fileID: 8300000, guid: aeae5c0279eadd347ae1ed5c8e1998f0, type: 3}
   - {fileID: 8300000, guid: 2a743e41591bd914bb3bc35528104407, type: 3}
   - {fileID: 8300000, guid: b21e65a00b8f48d4484cceccc33ea1b5, type: 3}
-  swing: {fileID: 6343942413881442319, guid: ecad9cf076c952944a7713325d0d5750, type: 3}
   isAttacking: 0
+  isChasing: 1
+  chasingTrigger: 0
+  isWondering: 0
+  swing: {fileID: 6343942413881442319, guid: ecad9cf076c952944a7713325d0d5750, type: 3}
   pointAttaque: {fileID: 3748801516527011793}
   HitboxPlayer:
     serializedVersion: 2
     m_Bits: 512
+  puissanceAttaque: 12
+  damageElite: 25
   dureeAttaque: 0.2
   rangeAttaque: 2
-  puissanceAttaque: 12
+  radiusAttack: 3
   StartUpAttackTime: 0.5
   StartUpAttackTimeTimer: 0
   WonderingTime: 3
   WonderingTimeTimer: 0
-  damageElite: 25
 --- !u!82 &6302253623280085079
 AudioSource:
   m_ObjectHideFlags: 0
@@ -461,6 +469,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!50 &642168697668192080
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377570479194186109}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 2
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!114 &1697767715843941360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,8 +544,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 1.52
-  height: 2
+  radius: 1.58
+  height: 1.78
   canMove: 1
   maxSpeed: 5
   gravity: {x: 0, y: 0, z: 0}
@@ -537,9 +566,9 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 0
-  slowdownDistance: 2.97
-  pickNextWaypointDist: 2
-  endReachedDistance: 2.96
+  slowdownDistance: 1.54
+  pickNextWaypointDist: 2.33
+  endReachedDistance: 0.21
   alwaysDrawGizmos: 1
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -571,7 +600,7 @@ MonoBehaviour:
   traversableTags: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
-    value: -1
+    value: 1
 --- !u!114 &5017381031638931851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,7 +628,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.19799948, y: -1.7148589}
+  m_Offset: {x: 0.16780877, y: 0.36851466}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -610,29 +639,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.5185542, y: 3.7161896}
+  m_Size: {x: 3.4581728, y: 6.1105328}
   m_EdgeRadius: 0
---- !u!50 &642168697668192080
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2377570479194186109}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 0
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!1 &2533242942561510635
 GameObject:
   m_ObjectHideFlags: 0

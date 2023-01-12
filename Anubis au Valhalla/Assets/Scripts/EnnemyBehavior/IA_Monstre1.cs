@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+
 using DG.Tweening;
 using GenPro;
 using Pathfinding;
@@ -16,8 +15,12 @@ public class IA_Monstre1 : MonoBehaviour
     public GameObject emptyLayers;
     public MonsterLifeManager life;
     public bool isElite;
+    public bool isDead;
 
-    [Header("Déplacements")]
+    [Header("Déplacements")] 
+    public bool stopMove;
+    public float stopDrag;
+    public float moveDrag;
     private Rigidbody2D rb;
     public GameObject player;
     public AIPath aipath;
@@ -78,8 +81,13 @@ public class IA_Monstre1 : MonoBehaviour
         
         vieActuelle = life.vieMax;
         CooldownDashTimer = CooldownDash;
-        
+
         if (life.elite)
+        {
+            isElite = true;
+        }
+        
+        if (life.eliteChallenge)
         {
             isElite = true;
         }
@@ -94,8 +102,9 @@ public class IA_Monstre1 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isChasing && !isDashing)
+        if (isChasing && !isDashing && !stopMove)
         {
+            rb.drag = moveDrag;
             rb.AddForce(new Vector2(aipath.targetDirection.x * speedX,aipath.targetDirection.y * speedY) * Time.deltaTime);
             anim.SetBool("IsRuning", true);
             anim.SetBool("StopDash", false);
@@ -105,13 +114,12 @@ public class IA_Monstre1 : MonoBehaviour
         {
             dashdurationTimer += Time.deltaTime;
   
-            if (dashdurationTimer <= dashDuration)
+            if (dashdurationTimer <= dashDuration && !stopMove)
             {
                 rb.AddForce(targetPlayer.normalized * (dashSpeed * Time.deltaTime),ForceMode2D.Impulse);
             }
             else
             {
-                anim.SetBool("StopDash", true);
                 anim.SetBool("Dash",false);
                 rb.velocity = Vector2.zero;
                 dashdurationTimer = 0;
@@ -163,6 +171,7 @@ public class IA_Monstre1 : MonoBehaviour
 
          if (CooldownDashTimer >= CooldownDash)
          {
+             rb.drag = stopDrag;
              canDash = true;
              CooldownDashTimer = 0;
              ShakeEnable = true;
@@ -200,7 +209,8 @@ public class IA_Monstre1 : MonoBehaviour
                  
                  if (ShakeEnable)
                  {
-                     transform.DOShakePosition(LagDebutDashMax, 0.4f);
+                    rb.velocity = Vector2.zero;
+                     life.transform.DOShakePosition(LagDebutDashMax, 0.4f);
                      ShakeEnable = false;
                  }
                  
@@ -220,8 +230,20 @@ public class IA_Monstre1 : MonoBehaviour
 
          if (life.gotHit)
          {
+             stopMove = true;
+             ai.destination = Vector2.zero;
              audioSource.pitch = Random.Range(0.8f, 1.2f);
              audioSource.PlayOneShot(audioClipArray[2]);
+         }
+         else
+         {
+             stopMove = false;
+         }
+
+         if (isDead)
+         {
+             ai.destination = Vector2.zero;
+             this.enabled = false;
          }
          
          if (hitboxActive&& !life.isMomified) // Active la hitbox et fait des dégâts
