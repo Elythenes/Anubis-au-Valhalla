@@ -1,3 +1,4 @@
+using System.Collections;
 using GenPro;
 using Pathfinding;
 using Unity.VisualScripting;
@@ -13,8 +14,10 @@ public class IA_Corbeau : MonoBehaviour
     private Rigidbody2D rb;
     public LayerMask layerPlayer;
     public MonsterLifeManager life;
+    public bool isDead;
 
-    [Header("Déplacements")] public GameObject player;
+    [Header("Déplacements")] 
+    public GameObject player;
     public Seeker seeker;
     public AIPath aipath;
     private Path path;
@@ -69,14 +72,17 @@ public class IA_Corbeau : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
-        if (life.elite)
+        if (life.eliteChallenge)
         {
             isElite = true;
         }
         
-        
+        if (life.elite)
+        {
+            isElite = true;
+        }
 
-       if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
+        if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
         {
             speedTowardPlayer *= 100;
             forceRepulse *= 1.5f;
@@ -95,19 +101,22 @@ public class IA_Corbeau : MonoBehaviour
 
         if (life.gotHit)
         {
-            life.OnBegin.Invoke();
+            audioSource.Stop();
+            audioSource.pitch = Random.Range(0.8f, 1.2f);
+            audioSource.PlayOneShot(audioClipArray[2]);
+            this.enabled = false;
             aipath.canMove = false;
-                audioSource.Stop();
-                audioSource.pitch = Random.Range(0.8f, 1.2f);
-                audioSource.PlayOneShot(audioClipArray[2]);
-                ai.canMove = true;
-        }
-        else
-        {
-            life.OnDone.Invoke(); 
+            StartCoroutine(RestartScripts());
         }
 
-            if (life.vieActuelle <= 0)
+        if (isDead)
+        {
+            ai.destination = Vector2.zero;
+            canMove = false;
+            this.enabled = false;
+        }
+
+        if (life.vieActuelle <= 0)
         {
             anim.SetBool("isDead",true);
             if (holder.gameObject is not null)
@@ -237,18 +246,6 @@ public class IA_Corbeau : MonoBehaviour
             isRotating = false;
         }
         
-        /*if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing && !isChasing && canMove)
-        {
-            isChasing = false;
-            isRotating = false;
-            isFleeing = true;
-            Vector2 angle = transform.position - player.transform.position;
-            rb.AddForce(angle.normalized * forceRepulse);
-        }
-        else
-        {
-            isFleeing = false;
-        }*/
             
         if(Vector3.Distance(player.transform.position, transform.position) >= radiusFleeing*3 && !isFleeing && !isRotating && canMove)
         {
@@ -261,6 +258,13 @@ public class IA_Corbeau : MonoBehaviour
         {
             isChasing = false;
         }
+    }
+
+    IEnumerator RestartScripts()
+    {
+        yield return new WaitForSeconds(0.3f);
+        this.enabled = true;
+        aipath.canMove = true;
     }
     
 }

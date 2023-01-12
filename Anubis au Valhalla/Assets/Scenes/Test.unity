@@ -999,7 +999,7 @@ Transform:
   - {fileID: 177818328}
   - {fileID: 1442403477}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1566058830 stripped
 GameObject:
@@ -1247,7 +1247,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2051964226
 GameObject:
@@ -2314,7 +2314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: doStartHieroTest
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: hieroTest.Array.size
@@ -2506,15 +2506,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: dashImpulse.Array.data[0]
-      value: 1500
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: dashImpulse.Array.data[1]
-      value: 1500
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: dashImpulse.Array.data[2]
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: dashImpulse.Array.data[3]
@@ -2535,6 +2535,18 @@ PrefabInstance:
     - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: dureeHitbox.Array.data[3]
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: forceKnockback.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: forceKnockback.Array.data[1]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: forceKnockback.Array.data[2]
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: stunDurationMax.Array.data[0]
@@ -2607,7 +2619,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8408649044173976234, guid: 27dd07aaa84760f48958a7681d3f2264, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8408649044173976234, guid: 27dd07aaa84760f48958a7681d3f2264, type: 3}
       propertyPath: m_AnchorMax.x

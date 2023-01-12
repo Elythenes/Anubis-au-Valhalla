@@ -124,9 +124,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1176065865194384233}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   canvasLifeBar: {fileID: 4519160662856714929}
   criticalPick: 100
   gotHit: 0
+  elite: 0
   IALoup: {fileID: 0}
   IAGuerrier: {fileID: 0}
   IACorbeau: {fileID: 1176065865194384233}
@@ -153,7 +166,7 @@ MonoBehaviour:
   isEnvased: 0
   EnvasedTime: 5
   EnvasedTimeTimer: 0
-  elite: 0
+  eliteChallenge: 0
   isParasite: 0
   overdose: 0
 --- !u!1 &638852872317677006
@@ -475,6 +488,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   life: {fileID: 4028649741203113495}
+  isDead: 0
   player: {fileID: 0}
   seeker: {fileID: 893181608378371501}
   aipath: {fileID: 893181608378371502}
@@ -631,7 +645,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.57900894, y: -0.57463694}
+  m_Offset: {x: -0.23394978, y: -0.23939562}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -642,7 +656,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.855548, y: 4.1843204}
+  m_Size: {x: 7.1268187, y: 6.04677}
   m_EdgeRadius: 0
 --- !u!50 &893181608378371498
 Rigidbody2D:
@@ -657,7 +671,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0.7
+  m_LinearDrag: 3
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

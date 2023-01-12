@@ -77,10 +77,13 @@ public class Combo1Hitbox : MonoBehaviour
             mainCamera.transform.DOShakePosition(0.2f,1f);
             col.gameObject.GetComponent<AIPath>().canMove = false;
             col.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
-            
-            Debug.Log(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber]);
-            col.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            col.gameObject.GetComponent<Rigidbody2D>().AddForce(angleKnockback*AttaquesNormales.instance.forceKnockback[comboNumber],ForceMode2D.Force);
+
+            if (!col.gameObject.GetComponentInParent<MonsterLifeManager>().elite)
+            {
+                col.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber],ForceMode2D.Impulse);
+            }
+          
         }
     } 
 

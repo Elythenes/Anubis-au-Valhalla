@@ -12,6 +12,7 @@ public class IA_Guerrier : MonoBehaviour
     public GameObject emptyLayers;
     public bool isElite;
     public MonsterLifeManager life;
+    public bool isDead;
 
     [Header("Déplacements")]
     public GameObject player;
@@ -65,7 +66,7 @@ public class IA_Guerrier : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
-        if (life.elite)
+        if (life.eliteChallenge)
         {
             isElite = true;
         }
@@ -79,6 +80,11 @@ public class IA_Guerrier : MonoBehaviour
             WonderingTime *= 0.5f;
             ai.maxSpeed *= 2;
             StartUpAttackTime *= 0.25f;
+        }
+        
+        if (life.elite)
+        {
+            isElite = true;
         }
     }
 
@@ -107,6 +113,13 @@ public class IA_Guerrier : MonoBehaviour
             audioSource.pitch = Random.Range(0.8f, 1.2f);
             audioSource.PlayOneShot(audioClipArray[2]);
             ai.canMove = true;
+        }
+
+        if (isDead)
+        {
+            ai.destination = Vector2.zero;
+            //rb.velocity = Vector2.zero;
+            this.enabled = false;
         }
 
         if (aipath.reachedDestination && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer

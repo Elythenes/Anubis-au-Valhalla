@@ -48,11 +48,14 @@ public class Combo3 : MonoBehaviour
             
             
             col.gameObject.GetComponent<AIPath>().canMove = false;
-          
-            col.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
-            col.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber],ForceMode2D.Impulse);
-            
-            //col.GetComponentInParent<MonsterLifeManager>().ai.Move(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber]);
+
+            if (!col.gameObject.GetComponentInParent<MonsterLifeManager>().elite)
+            {
+                col.gameObject.GetComponentInParent<MonsterLifeManager>()
+                    .TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(
+                    angleNormalized * AttaquesNormales.instance.forceKnockback[comboNumber], ForceMode2D.Impulse);
+            }
         }
     }
 
