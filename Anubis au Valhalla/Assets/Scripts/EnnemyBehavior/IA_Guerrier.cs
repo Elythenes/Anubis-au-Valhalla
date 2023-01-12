@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using GenPro;
@@ -14,15 +15,19 @@ public class IA_Guerrier : MonoBehaviour
     public MonsterLifeManager life;
     public bool isDead;
 
-    [Header("Déplacements")]
+    [Header("Déplacements")] 
+    public float speedX;
+    public float speedY;
+    public float radiusWondering;
+    public Vector2 pointToWonder;
     public GameObject player;
+    public Rigidbody2D rb;
     public Seeker seeker;
     public AIPath aipath;
     private Path path;
     private SpriteRenderer sr;
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
-    public float radiusWondering;
    
    
     [Header("Audio")]
@@ -34,19 +39,20 @@ public class IA_Guerrier : MonoBehaviour
     public bool isChasing;
     public bool chasingTrigger;
     public bool isWondering;
-    
-    [Header("Attaque")]
+
+    [Header("Attaque")] 
     public GameObject swing;
     public Transform pointAttaque;
     public LayerMask HitboxPlayer;
+    [NaughtyAttributes.ReadOnly] public int puissanceAttaque;
+    public int damageElite;
     public float dureeAttaque;
     public float rangeAttaque;
-    [NaughtyAttributes.ReadOnly] public int puissanceAttaque;
+    public float radiusAttack;
     public float StartUpAttackTime;
     public float StartUpAttackTimeTimer;
     public float WonderingTime;
     public float WonderingTimeTimer;
-    public int damageElite;
     private bool hasShaked;
 
     
@@ -64,8 +70,7 @@ public class IA_Guerrier : MonoBehaviour
         seeker = GetComponent<Seeker>();
         sr = GetComponent<SpriteRenderer>();
         ai = GetComponent<IAstarAI>();
-        playerFollow.enabled = true;
-        playerFollow.target = player.transform;
+        
         if (life.eliteChallenge)
         {
             isElite = true;
@@ -88,6 +93,26 @@ public class IA_Guerrier : MonoBehaviour
         }
     }
 
+    private void FixedUpdate() // Les AddForce
+    {
+        if (isWondering&& !life.isMomified)
+        {
+            anim.SetBool("isIdle",false);
+            anim.SetBool("isRuning",true);
+            WonderingTimeTimer += Time.deltaTime;
+            ai.destination = PickRandomPoint();
+            rb.AddForce(new Vector2(aipath.targetDirection.x * speedX,aipath.targetDirection.y * speedY) * Time.deltaTime);
+        }
+        
+        
+        if (isChasing && !life.isMomified && !isWondering)
+        {
+            anim.SetBool("isIdle",false);
+            anim.SetBool("isRuning",true);
+            ai.destination = player.transform.position;
+            rb.AddForce(new Vector2(aipath.targetDirection.x * speedX,aipath.targetDirection.y * speedY) * Time.deltaTime);
+        }
+    }
 
     public void Update()
     {
@@ -112,17 +137,19 @@ public class IA_Guerrier : MonoBehaviour
             audioSource.Stop();
             audioSource.pitch = Random.Range(0.8f, 1.2f);
             audioSource.PlayOneShot(audioClipArray[2]);
-            ai.canMove = true;
+            this.enabled = false;
+            aipath.canMove = false;
+            StartCoroutine(RestartScripts());
         }
 
-        if (isDead)
+        if (isDead) // Mort
         {
             ai.destination = Vector2.zero;
             //rb.velocity = Vector2.zero;
             this.enabled = false;
         }
 
-        if (aipath.reachedDestination && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
+        if ((Vector3.Distance(aipath.destination, transform.position) <= radiusAttack) && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
             if (!isWondering && isChasing)
             {
@@ -136,13 +163,12 @@ public class IA_Guerrier : MonoBehaviour
             anim.SetBool("isDead",true);
         }
 
-        if (isAttacking && !life.isMomified)
+        if (isAttacking && !life.isMomified)  // L'attaque
         {
             anim.SetBool("isRuning",false);
             anim.SetBool("isIdle",false);
             anim.SetBool("PrepareAttack",true);
             anim.SetBool("isAttacking",false);
-            aipath.canMove = false;
             StartUpAttackTimeTimer += Time.deltaTime;
             hasShaked = false;
         }
@@ -155,7 +181,7 @@ public class IA_Guerrier : MonoBehaviour
         
         IEnumerator Attaque() 
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.27f);
             GameObject swingOj = Instantiate(swing, pointAttaque.position, Quaternion.identity);
             swingOj.GetComponent<HitboxGuerrier>().ia = this;
             swingOj.transform.localScale = new Vector2(rangeAttaque,rangeAttaque);
@@ -172,24 +198,13 @@ public class IA_Guerrier : MonoBehaviour
             anim.SetBool("isAttacking",true);
             StartCoroutine(Attaque());
           
-
-            aipath.canMove = true;
+            
             isWondering = true;
             isAttacking = false;
             StartUpAttackTimeTimer = 0;
         }
 
-        if (isWondering&& !life.isMomified)
-        {
-            anim.SetBool("isIdle",false);
-            WonderingTimeTimer += Time.deltaTime;
-            if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath) 
-            {
-                playerFollow.enabled = false;
-                ai.destination = PickRandomPoint();
-                ai.SearchPath();
-            }
-        }
+       
         
         if (WonderingTimeTimer >= WonderingTime&& !life.isMomified && !isChasing)
         {
@@ -204,17 +219,23 @@ public class IA_Guerrier : MonoBehaviour
         {
             chasingTrigger = false;
             isChasing = true;
-            playerFollow.enabled = true;
-            ai.SearchPath();
         }
+
         
     }
+
+    IEnumerator RestartScripts()
+    {
+        yield return new WaitForSeconds(0.3f);
+        this.enabled = true;
+        aipath.canMove = true;
+    }
     
-    Vector2 PickRandomPoint() 
+    Vector2 PickRandomPoint()
     {
         var point = Random.insideUnitCircle * radiusWondering;
-        point.x += ai.position.x;
-        point.y += ai.position.y;
-        return point;
+            point.x += ai.position.x;
+            point.y += ai.position.y;
+            return point;
     }
 }
