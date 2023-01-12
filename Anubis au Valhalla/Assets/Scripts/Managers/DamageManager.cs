@@ -76,8 +76,6 @@ public class DamageManager : MonoBehaviour
         tempsInvinsibleAfterHit = stats.tempsInvinsbleAfterHit;
         stunAfterHit = stats.stunAfterHit;*/
         vieActuelle = vieMax;
-        LifeBarManager.instance.SetMaxHealth(vieMax);
-        Time.timeScale = 1;
         Time.fixedDeltaTime = 0.01F * Time.timeScale;
         stopWaiting = false;
     }
@@ -107,7 +105,7 @@ public class DamageManager : MonoBehaviour
                 PotionManager.Instance.tookDamage = true;
                 GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
                 textObj.GetComponentInChildren<TextMeshPro>().SetText((damage - damageReduction/100 * damage).ToString());
-                LifeBarManager.instance.SetHealth(stats.vieActuelle);
+             
                 
                 if (stats.vieActuelle <= 0)
                 {
@@ -159,7 +157,6 @@ public class DamageManager : MonoBehaviour
             {
                 stats.vieActuelle = 100;
             }
-            LifeBarManager.instance.SetHealth(stats.vieActuelle);
         }
     }
 

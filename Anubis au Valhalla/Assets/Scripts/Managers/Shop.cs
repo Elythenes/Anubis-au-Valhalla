@@ -372,7 +372,6 @@ public class Shop : MonoBehaviour
         Debug.Log("ca devrai heal tant de pv:" + AnubisCurrentStats.instance.vieMax * (percentHeal / 100));
         if (AnubisCurrentStats.instance.vieActuelle > AnubisCurrentStats.instance.vieMax)
             AnubisCurrentStats.instance.vieActuelle = AnubisCurrentStats.instance.vieMax;
-        LifeBarManager.instance.SetHealth(AnubisCurrentStats.instance.vieActuelle);
         Souls.instance.soulBank -= price;
         Souls.instance.UpdateSoulsCounter();
     }
