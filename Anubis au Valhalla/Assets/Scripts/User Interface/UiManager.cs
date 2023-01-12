@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 using Image = UnityEngine.UIElements.Image;
@@ -16,6 +17,7 @@ public class UiManager : MonoBehaviour
 
     //public CollectSpell cS;
     public CollectPower cP;
+    public bool isSousMenu;
 
     [Foldout("GENERAL")] public GameObject spriteSpell1;
     [Foldout("GENERAL")] public GameObject spriteSpell2;
@@ -47,9 +49,22 @@ public class UiManager : MonoBehaviour
     [Foldout("PAUSE MENU")] public GameObject buttonQuit;
 
     [Foldout("INVENTORY")] public List<GameObject> listBoxInventaire;
-    [Foldout("INVENTORY")] public GameObject boxInvTitre;
-    [Foldout("INVENTORY")] public GameObject boxInvDescription;
-
+    [Foldout("INVENTORY")] public GameObject boxGlyphTitre;
+    [Foldout("INVENTORY")] public GameObject boxGlyphTexte;
+    [Foldout("INVENTORY")] public GameObject boxGlyphImage;
+    
+    [Foldout("INVENTORY")] public GameObject boxPotionTitre;
+    [Foldout("INVENTORY")] public GameObject boxPotionTexte;
+    [Foldout("INVENTORY")] public GameObject boxPotionImage;
+    [Foldout("INVENTORY")] public GameObject interacteurPotion;
+    
+    [Foldout("INVENTORY")] public GameObject globalBoxGlyph;
+    [Foldout("INVENTORY")] public GameObject globalBoxPotion;
+    [Foldout("INVENTORY")] public GameObject globalBoxPowers;
+    
+    
+    [Header("Audio")]
+    public AudioSource audioSource;
 
 
 
@@ -62,14 +77,16 @@ public class UiManager : MonoBehaviour
             instance = this;
         }
 
-        spriteSpell1.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
-        spriteSpell2.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+        //spriteSpell1.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+        //spriteSpell2.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
         spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
     }
 
     private void Start()
     {
-
+        globalBoxGlyph.SetActive(false);
+        globalBoxPotion.SetActive(false);
+        globalBoxPowers.SetActive(false);
     }
 
     private void Update()
@@ -106,11 +123,11 @@ public class UiManager : MonoBehaviour
     {
         if (Input.GetKeyDown(buttonPause))
         {
-            if (isPause) //quand on "Echap" depuis le menu Pause
+            if (isPause && !isSousMenu) //quand on "Echap" depuis le menu Pause
             {
                 DeActivatePause();
             }
-            else //quand on pause avec "Echap"
+            else if(!isSousMenu)//quand on pause avec "Echap"
             {
                 ActivatePause();
             }
@@ -128,7 +145,11 @@ public class UiManager : MonoBehaviour
     {
         Pause();
         menuPause.SetActive((true));
-        FillBoxInventory();
+        FillBoxInventoryForGlyphs();
+        if (PotionManager.Instance.currentPotion is not null)
+        {
+            interacteurPotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        }
         isPause = true;
     }
 
@@ -137,38 +158,76 @@ public class UiManager : MonoBehaviour
 
     //Fonctions : Inventaire ************************************************************************************************************************************************************************************
 
-    public void FillBoxInventory()
+    public void FillBoxInventoryForGlyphs() //met les icônes des glyphes de l'inventaire système dans le menu inventaire
     {
         for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
         {
-            listBoxInventaire[i].GetComponentInChildren<RawImage>().texture =
-                GlyphInventory.Instance.glyphInventory[i].icone;
+            listBoxInventaire[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
+            listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Button>().enabled = true;
+        }
+
+        if (GlyphInventory.Instance.glyphInventory.Count < listBoxInventaire.Count)
+        {
+            int difference = listBoxInventaire.Count - GlyphInventory.Instance.glyphInventory.Count;
+            for (int i = 0; i < difference; i++)
+            {
+                listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Button>().enabled = false;
+            }
         }
     }
 
-    public void FillDescriptionInventory(int boxPos)
+    public void FillDescriptionInventory(int boxPos) //change le titre et la description dans les box à droite du livre
     {
         Debug.Log(boxPos);
-        if (GlyphInventory.Instance.glyphInventory[boxPos - 1].nom is not null)
-        {
-            boxInvTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].nom;
-        }
-
-        if (GlyphInventory.Instance.glyphInventory[boxPos - 1].description is not null)
-        {
-            boxInvDescription.GetComponent<TextMeshProUGUI>().text =
-                GlyphInventory.Instance.glyphInventory[boxPos - 1].description;
-        }
-
+        boxGlyphTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].nom;
+        boxGlyphTexte.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].description;
+        boxGlyphImage.GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[boxPos - 1].icone;
     }
 
-    public void SetBoxInventoryPositions()
+    public void FillDescriptionPowers()
+    {
+        
+    }
+
+    public void DisablePageDroite(string page)
+    {
+        Debug.Log("oui");
+        switch (page)
+        {
+            case "glyph":
+                globalBoxGlyph.SetActive(true);
+                globalBoxPotion.SetActive(false);
+                globalBoxPowers.SetActive(false);
+                Debug.Log("box glyph");
+                break;
+            
+            case "potion":
+                globalBoxGlyph.SetActive(false);
+                globalBoxPotion.SetActive(true);
+                globalBoxPowers.SetActive(false);
+                Debug.Log("box potion");
+                break;
+            
+            case "powers":
+                globalBoxGlyph.SetActive(false);
+                globalBoxPotion.SetActive(false);
+                globalBoxPowers.SetActive(true);
+                Debug.Log("box powers");
+                break;
+            
+            default:
+                Debug.Log("NON LA PAGE DROITE MARCHE PAS");
+                break;
+        }
+    }
+
+    /*public void SetBoxInventoryPositions()
     {
         for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
         {
             listBoxInventaire[i].GetComponent<BoxInventory>().inventoryPosition = i;
         }
-    }
+    }*/
 
     //Fonctions : Pouvoirs ***********************************************************************************************************************************************************************************
 
@@ -244,13 +303,55 @@ public class UiManager : MonoBehaviour
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
             newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
         }
-
+        
+    }
+    
+    public void FillDescriptionPotion() 
+    {
+        if (PotionManager.Instance.currentPotion is not null)
+        {
+            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.name;
+            boxPotionTexte.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
+            boxPotionImage.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        }
+        else
+        {
+            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = "";
+            boxPotionTexte.GetComponent<TextMeshProUGUI>().text = "Je n'ai pas de potion actuellement";
+            boxPotionImage.GetComponent<RawImage>().color = new Color(255,255,255,0);
+        }
     }
 
+    void FillPotionInteracteur()
+    {
+        if (PotionManager.Instance.currentPotion is not null)
+        {
+            interacteurPotion.GetComponent<RawImage>().color = new Color(89, 89, 89);
+        }
+        else
+        {
+            
+        }
+    }
+       
+    //Fonctions : Son ***********************************************************************************************************************************************************************************
     
+    public void PlayButtonSound()
+    {
+        audioSource.Play();
+    }
+
+    //Fonctions : MenuPause et Option ***********************************************************************************************************************************************************************************
+
+    public void ExitSousMenu()
+    {
+        isSousMenu = false;
+    }
     
-    
-    
+    public void EnterSousMenu()
+    {
+        isSousMenu = true;
+    }
 
 
     //Fonctions autres ***********************************************************************************************************************************************************************************

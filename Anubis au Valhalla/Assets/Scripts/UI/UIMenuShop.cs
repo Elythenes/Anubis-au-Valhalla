@@ -17,14 +17,14 @@ public class UIMenuShop : MonoBehaviour
         {
             if (UIParent.alpha > 0)
             {
-                UIParent.alpha -= Time.deltaTime; 
+                UIParent.alpha -= Time.unscaledDeltaTime; 
             }
         }
         else if(!fade)
         {
             if (UIParent.alpha < 1)
             {
-                UIParent.alpha += Time.deltaTime;    
+                UIParent.alpha += Time.unscaledDeltaTime;    
             }
         }
     }

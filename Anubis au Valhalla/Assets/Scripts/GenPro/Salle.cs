@@ -124,7 +124,7 @@ public class Salle : MonoBehaviour
         text.description.text = "Tous les ennemis sont des élites";
         foreach (var enemy in currentEnemies)
         {
-            enemy.GetComponent<MonsterLifeManager>().elite = true;
+            enemy.GetComponent<MonsterLifeManager>().eliteChallenge = true;
         }
     }
 
@@ -231,7 +231,7 @@ public class Salle : MonoBehaviour
             currentEnemies.Add(enemyScript);
             if (chosenEnemy.isElite)
             {
-                enemyScript.elite = true;
+                enemyScript.eliteChallenge = true;
             }
             if (overdose)
             {

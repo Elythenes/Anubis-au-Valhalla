@@ -87,7 +87,7 @@ public class IA_Valkyrie : MonoBehaviour
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
         
-        if (life.elite)
+        if (life.eliteChallenge)
         {
             isElite = true;
         }

@@ -42,7 +42,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6343942413881442319}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -100,7 +100,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.361696, y: -0.049431562}
+  m_Offset: {x: 1.81, y: 0.18606293}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0.5}
@@ -111,7 +111,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.3703132, y: 3.7363641}
+  m_Size: {x: 2.9825978, y: 4.5605946}
   m_EdgeRadius: 0
 --- !u!114 &4035716111860237164
 MonoBehaviour:
@@ -131,8 +131,6 @@ MonoBehaviour:
   bloodEffect: {fileID: 5952496126455136815, guid: 5c893befa8372574f8ffb1594532f5dc, type: 3}
   isStop: 0
   SlashVFX: {fileID: 7580245206465011459}
-  audioSource: {fileID: 0}
-  audioClipArray: []
 --- !u!1001 &3536212667844609030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -146,19 +144,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995588, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995588, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995588, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.92
+      value: 1.94
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995588, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.06
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995588, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -202,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995589, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: InitialModule.rotation3D
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995589, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
@@ -242,7 +240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995590, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_Flip.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995590, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_Flip.y
@@ -258,7 +256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995590, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_Pivot.y
-      value: -0.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995590, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_Pivot.z
@@ -267,6 +265,14 @@ PrefabInstance:
     - target: {fileID: 6350452014184995590, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_RenderMode
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350452014184995590, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
+      propertyPath: m_SortingOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6350452014184995590, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
+      propertyPath: m_RenderAlignment
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6350452014184995591, guid: 0054dedde43a9dc4eb6a4b70cb880ae8, type: 3}
       propertyPath: m_Name

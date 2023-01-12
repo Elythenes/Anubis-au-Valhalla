@@ -76,7 +76,7 @@ public class AttaquesNormales : MonoBehaviour
 
         #region Attaques Normalles
         
-        if (mouse.leftButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements) // Execute l'attaque selon l'avancement du combo
+        if (mouse.leftButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements&& Time.timeScale != 0) // Execute l'attaque selon l'avancement du combo
         {
             ExecuteAttack();
         }
@@ -138,7 +138,7 @@ public class AttaquesNormales : MonoBehaviour
 
         #endregion
 
-        if (mouse.rightButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements)
+        if (mouse.rightButton.wasPressedThisFrame && canAttack && CharacterController.instance.allowMovements && Time.timeScale != 0)
         {
             SpecialAttack();
         }
@@ -229,13 +229,30 @@ public class AttaquesNormales : MonoBehaviour
         Vector3 moveDirection = (mousePos - charaPos);
         moveDirection.z = 0;
         moveDirection.Normalize();
-
-        if (index == 0)
+        if (!CharacterController.instance.isDashing)
         {
-            CharacterController.instance.rb.AddForce(CharacterController.instance.movement * dashImpulse[0], ForceMode2D.Impulse);
+            if (index == 0)
+            {
+                CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[0], ForceMode2D.Force);
+           
+            }
+            if (index == 1)
+            {
+                CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[1], ForceMode2D.Force);
+            }
+            if (index == 2)
+            {
+                CharacterController.instance.rb.AddForce(moveDirection * dashImpulse[2], ForceMode2D.Force);
+            }
         }
+       
 
         #region Gestion des animations
+
+       /* if (angle < 45 && angle > -45)
+        {
+            swordObj.GetComponent<Combo1Hitbox>().SlashVFX.
+        }*/
         
         if (angle > 45 && angle < 135) // attaque vers le haut
         {

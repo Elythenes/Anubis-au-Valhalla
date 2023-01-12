@@ -227,7 +227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.023900032, y: -0.0024000034}
+  m_AnchoredPosition: {x: 0.023900032, y: -0.0024000108}
   m_SizeDelta: {x: 0.0479, y: -0.0335}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1290762258753242531
@@ -746,13 +746,17 @@ MonoBehaviour:
   canvasLifeBar: {fileID: 1290762258720828881}
   criticalPick: 0
   gotHit: 0
+  elite: 0
   IALoup: {fileID: 0}
   IAGuerrier: {fileID: 0}
   IACorbeau: {fileID: 0}
+  isDisolve: 0
+  sprite2DRend: {fileID: 0}
+  disolveValue: 0
+  disolveValueAmount: 0
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 2627684247506676290}
   emptyLayers: {fileID: 6835188342299557291}
-  sr: {fileID: 0}
   FlameInfected: 0
   FlameInfectedTimer: 0
   FlameInfectedTimerMax: 0
@@ -769,7 +773,7 @@ MonoBehaviour:
   isEnvased: 0
   EnvasedTime: 5
   EnvasedTimeTimer: 0
-  elite: 0
+  eliteChallenge: 0
   isParasite: 0
   overdose: 0
 --- !u!1001 &2562732052841024511
@@ -911,7 +915,7 @@ Animator:
   m_GameObject: {fileID: 2627684247506676290}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3496cff5d2cad7b478a28156c954f157, type: 2}
+  m_Controller: {fileID: 9100000, guid: cb7cfafd242f21f4a824e5e6ced1632f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

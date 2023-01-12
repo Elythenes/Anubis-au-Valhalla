@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using GenPro;
 using Pathfinding;
 using TMPro;
+using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -25,17 +27,19 @@ public class MonsterLifeManager : MonoBehaviour
     public GameObject canvasLifeBar;
     public float criticalPick;
     public bool gotHit;
+    public bool elite;
     public IA_Monstre1 IALoup;
     public IA_Guerrier IAGuerrier;
     public IA_Corbeau IACorbeau;
-    
-   
-    
 
+
+    public bool isDisolve;
+    public SpriteRenderer sprite2DRend;
+    public float disolveValue;
+    public float disolveValueAmount;
     public GameObject spawnCircle;
     public GameObject child;
     public GameObject emptyLayers;
-    public SpriteRenderer sr;
 
     [Header("Alterations d'état")] 
     public bool FlameInfected;
@@ -60,7 +64,8 @@ public class MonsterLifeManager : MonoBehaviour
     public float EnvasedTimeTimer;
     private float demiSpeed;
     
-    public bool elite = false;
+    [Header("Challenges")] 
+    public bool eliteChallenge = false;
     public bool isParasite = false;
     public bool overdose = false;
     
@@ -85,6 +90,34 @@ public class MonsterLifeManager : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if (isDisolve)
+        {
+            if (CharacterController.instance.transform.position.x > transform.position.x)
+            {
+                //Debug.Log("droite");
+                var localRotation = sprite2DRend.transform.localRotation;
+                localRotation = Quaternion.Euler(localRotation.x, 0, localRotation.z);
+                sprite2DRend.transform.localRotation = localRotation;
+            }
+            else if (CharacterController.instance.transform.position.x < transform.position.x)
+            {
+                //Debug.Log("gauche");
+                var localRotation = sprite2DRend.transform.localRotation;
+                localRotation = Quaternion.Euler(localRotation.x, -180, localRotation.z);
+                sprite2DRend.transform.localRotation = localRotation;
+            }
+            disolveValue += disolveValueAmount;
+            sprite2DRend.material.SetFloat("_Step", disolveValue);
+            if (disolveValue >= 1)
+            {
+                isDisolve = false;
+                Destroy(sprite2DRend.gameObject);
+            }
+        }
+    }
+
     public virtual void Update()
     {
         transform.localRotation = Quaternion.identity;
@@ -99,6 +132,7 @@ public class MonsterLifeManager : MonoBehaviour
             }
         }
 
+       
 
         if (isEnvased)
         {
@@ -117,13 +151,11 @@ public class MonsterLifeManager : MonoBehaviour
         if (isMomified)
         {
             MomifiedTimeTimer += Time.deltaTime;
-            OnBegin.Invoke();
             ai.canMove = false; 
            bandelettesMomie.SetActive(true);
             
             if (MomifiedTimeTimer >= MomifiedTime)
             {
-                OnDone.Invoke();
                 activeBandelettes = true;
                 isMomified = false;
                 bandelettesMomie.SetActive(false);
@@ -198,26 +230,6 @@ public class MonsterLifeManager : MonoBehaviour
             Die();
         }
     }
-    
-
-  /*  public virtual void OnTriggerEnter2D(Collider2D col)
-    {
-        Vector2 direction = (transform.position - col.transform.position);
-        direction.Normalize();
-        if (col.CompareTag("AttaqueNormale"))
-        {
-            //StopAllCoroutines();
-            OnBegin?.Invoke();
-            StartCoroutine(Reset(0.5f));
-        }
-    }*/
-
-    public IEnumerator Reset(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        rb.velocity = Vector3.zero;
-        OnDone?.Invoke();
-    }
 
     private IEnumerator HitScanReset()
     {
@@ -228,36 +240,37 @@ public class MonsterLifeManager : MonoBehaviour
     
     public virtual void Die()
     {
-        child.GetComponent<Collider2D>().enabled = false;
+        isInvincible = true;
+        InvincibleTime = 99;
         
         if (IACorbeau is not null)
         {
             animator.SetBool("isDead",true);
             IACorbeau.audioSource.pitch = 1;
             IACorbeau.audioSource.PlayOneShot(IACorbeau.audioClipArray[3]);
-            IACorbeau.enabled = false;
+            IACorbeau.isDead = true;
         }
         else if (IALoup is not null)
         {
+            Debug.Log("loup mort");
             animator.SetBool("isDead",true);
             IALoup.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             IALoup.audioSource.Stop();
             IALoup.audioSource.pitch = 1;
             IALoup.audioSource.PlayOneShot(IALoup.audioClipArray[3]);
-            IALoup.enabled = false;
+            IALoup.isDead = true;
         }
         else if (IAGuerrier is not null)
         {
             animator.SetBool("isIdle",true);
             IAGuerrier.audioSource.pitch = 1;
             IAGuerrier.audioSource.PlayOneShot(IAGuerrier.audioClipArray[3]);
-            IAGuerrier.enabled = false;
+            IAGuerrier.isDead = true;
         }
        
         canvasLifeBar.SetActive(false);
         child.GetComponent<AIPath>().canMove = false;
         child.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        OnBegin.Invoke();
         StartCoroutine(DelayedDeath());
     }
 
@@ -292,6 +305,7 @@ public class MonsterLifeManager : MonoBehaviour
         }
         else
         {
+            isDisolve = true;
             yield return new WaitForSeconds(SalleGenerator.Instance.timeBetweenWaves);
             canvasLifeBar.SetActive(true);
         }

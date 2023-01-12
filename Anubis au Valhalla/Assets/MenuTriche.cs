@@ -1,9 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuTriche : MonoBehaviour
 {
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameObject.SetActive(false);
+            UiManager.instance.ActivatePause();
+            UiManager.instance.isSousMenu = false;
+            UiManager.instance.PlayButtonSound();
+        }
+    }
+
     public void ResetInvinsible()
     {
         DamageManager.instance.invinsible = false;

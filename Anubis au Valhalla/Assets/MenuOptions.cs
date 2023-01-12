@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,6 +16,18 @@ public class MenuOptions : MonoBehaviour
   public Slider sliderMusic;
   public Slider sliderSFX;
   public TextMeshProUGUI textMaster, textMusic, textSFX;
+
+
+  private void Update()
+  {
+      if (Input.GetKeyDown(KeyCode.Escape))
+      {
+        gameObject.SetActive(false);
+        UiManager.instance.ActivatePause();
+        UiManager.instance.isSousMenu = false;
+        UiManager.instance.PlayButtonSound();
+      }
+  }
 
   public void SetScreenSize(int index)
   {

@@ -1,3 +1,4 @@
+using System.Collections;
 using Pathfinding;
 using UnityEngine;
 
@@ -14,6 +15,12 @@ public class ThrustHitbox : Combo1Hitbox
     {
         if (other.CompareTag("Monstre"))
         {
+            if (CharacterController.instance.isHiting == false && other.gameObject.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
+            {
+                CharacterController.instance.isHiting = true; 
+            }
+            
+            StartCoroutine(ResetTracking());
             Vector3 angleKnockback = other.transform.position - transform.parent.position;
             Vector3 angleNormalized = angleKnockback.normalized;
             float angle = Mathf.Atan2(transform.parent.position.y - other.transform.position.y,transform.parent.position.x - other.transform.position.x ) * Mathf.Rad2Deg;
@@ -33,5 +40,11 @@ public class ThrustHitbox : Combo1Hitbox
             other.gameObject.GetComponent<AIPath>().canMove = false;
             other.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg), stagger);
         }
+    }
+    
+    IEnumerator ResetTracking()
+    {
+        yield return null;
+        CharacterController.instance.isHiting = false;
     }
 }

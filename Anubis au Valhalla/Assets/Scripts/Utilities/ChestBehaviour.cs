@@ -15,6 +15,7 @@ public class ChestBehaviour : MonoBehaviour
     private Rigidbody2D rbItem;
     public LayerMask groundLayer;
     public Animator openAnim;
+    public ParticleSystem OuvertureVFX;
     
     [Header("Interaction")]
     public bool CanOpen;
@@ -80,6 +81,7 @@ public class ChestBehaviour : MonoBehaviour
 
     public IEnumerator OpenChest()
     {
+        OuvertureVFX.Play();
         isOpened = true;
         openAnim.enabled = true;
         yield return new WaitForSeconds(1.3f);

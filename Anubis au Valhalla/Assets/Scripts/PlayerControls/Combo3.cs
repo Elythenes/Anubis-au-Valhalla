@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using Pathfinding;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class Combo3 : MonoBehaviour
     private bool isWaiting;
     public GameObject mainCamera;
     public GameObject bloodEffect;
+    public PolygonCollider2D collider;
 
 
     public virtual void Start()
@@ -19,6 +21,7 @@ public class Combo3 : MonoBehaviour
         mainCamera.transform.DOShakePosition(0.2f,1.5f);
         Destroy(gameObject, AttaquesNormales.instance.dureeHitbox[3]);
        transform.localScale *= AttaquesNormales.instance.rangeAttaque[3];
+       StartCoroutine(StopHitbox());
     }
 
     public virtual void OnTriggerEnter2D(Collider2D col)
@@ -45,11 +48,20 @@ public class Combo3 : MonoBehaviour
             
             
             col.gameObject.GetComponent<AIPath>().canMove = false;
-          
-            col.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
-            col.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber],ForceMode2D.Impulse);
-            
-            //col.GetComponentInParent<MonsterLifeManager>().ai.Move(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber]);
+
+            if (!col.gameObject.GetComponentInParent<MonsterLifeManager>().elite)
+            {
+                col.gameObject.GetComponentInParent<MonsterLifeManager>()
+                    .TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(
+                    angleNormalized * AttaquesNormales.instance.forceKnockback[comboNumber], ForceMode2D.Impulse);
+            }
         }
+    }
+
+    IEnumerator StopHitbox()
+    {
+        yield return new WaitForSeconds(0.1f);
+        collider.enabled = false;
     }
 }
