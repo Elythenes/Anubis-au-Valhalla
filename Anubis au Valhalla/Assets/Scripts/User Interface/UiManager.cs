@@ -1,22 +1,17 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
-using Image = UnityEngine.UIElements.Image;
 
 public class UiManager : MonoBehaviour
 {
     public GameObject anubis;
 
     public static UiManager instance; //singleton
-
-    //public CollectSpell cS;
-    public CollectPower cP;
+    
     public bool isSousMenu;
 
     [Foldout("GENERAL")] public GameObject spriteSpell1;
@@ -92,12 +87,6 @@ public class UiManager : MonoBehaviour
     private void Update()
     {
         ControlPause();
-    }
-
-
-    public void DebugButton()
-    {
-        Debug.Log("boop");
     }
 
     public void Pause()
@@ -281,8 +270,7 @@ public class UiManager : MonoBehaviour
             currentPotionSprite.SetActive(false);
 
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
-            newPotionDescription.GetComponent<TextMeshProUGUI>().text =
-                PotionRepository.Instance.potionInside.description;
+            newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
             newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
         }
@@ -292,14 +280,12 @@ public class UiManager : MonoBehaviour
             buttonSwitch.SetActive(true);
 
             currentPotionName.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
-            currentPotionDescription.GetComponent<TextMeshProUGUI>().text =
-                PotionManager.Instance.currentPotion.description;
+            currentPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
             currentPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.citation;
             currentPotionSprite.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
 
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
-            newPotionDescription.GetComponent<TextMeshProUGUI>().text =
-                PotionRepository.Instance.potionInside.description;
+            newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
             newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
         }
