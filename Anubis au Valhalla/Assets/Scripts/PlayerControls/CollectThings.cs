@@ -3,39 +3,27 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class CollectPower : MonoBehaviour
+public class CollectThings : MonoBehaviour
 {
     public KeyCode interaction;
-    //pas oublier de faire la référence avec le skillManager pour pas lancer de spell quand on en ramasse
-    
+
     [Header("DEBUG")]
     public bool isPowerCollectable = false;
     public GameObject collectablePower;
+    
+    public bool isPotionCollectable = false;
+    public GameObject collectablePotion;
 
+    
+    
+    //Fonction : Systèmes *******************************************************************************************************************
     void Start()
     {
         isPowerCollectable = false;
+        isPotionCollectable = false;
     }
     
-    private void OnTriggerStay2D(Collider2D other) //détecte si un spell est sur le joueur
-    {
-        if (other.gameObject.CompareTag("CollectableSpell"))
-        {
-            isPowerCollectable = true;
-            collectablePower = other.gameObject;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other) //c'est du Debug, ne sert pas vraiment
-    { 
-        if (other.gameObject.CompareTag("CollectableSpell"))
-        {
-            isPowerCollectable = false;
-            collectablePower = null;
-        }
-    }
-    
-    private void Update()
+    void Update()
     {
         if (isPowerCollectable)
         {
@@ -46,10 +34,47 @@ public class CollectPower : MonoBehaviour
                 collectablePower.SetActive(false);
             }
         }
+        
+        if (isPotionCollectable)
+        {
+            if (Input.GetKeyDown(interaction))
+            {
+                UiManager.instance.ActivateMenuPotion();
+            }
+        }
+    }
+    
+    
+    //Fonction *******************************************************************************************************************
+    private void OnTriggerStay2D(Collider2D other) //détecte si un spell est sur le joueur
+    {
+        if (other.gameObject.CompareTag("CollectableSpell"))
+        {
+            isPowerCollectable = true;
+            collectablePower = other.gameObject;
+        }
+        
+        if (other.gameObject.CompareTag("CollectablePotion"))
+        {
+            isPotionCollectable = true;
+            collectablePotion = other.gameObject;
+        }
     }
 
-    
-    
+    private void OnTriggerExit2D(Collider2D other) //c'est du Debug, ne sert pas vraiment
+    { 
+        if (other.gameObject.CompareTag("CollectableSpell"))
+        {
+            isPowerCollectable = false;
+            collectablePower = null;
+        }
+        
+        if (other.gameObject.CompareTag("CollectablePotion"))
+        {
+            isPotionCollectable = false;
+            collectablePotion = null;
+        }
+    }
     
     
     
