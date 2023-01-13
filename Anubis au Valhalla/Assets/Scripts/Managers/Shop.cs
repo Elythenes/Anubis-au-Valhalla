@@ -36,12 +36,6 @@ public class Shop : MonoBehaviour
     public List<PotionObject> consumableObject = new List<PotionObject>();
 
     public List<GlyphObject> choice;
-    public bool choice1Avalable;
-    public bool choice2Avalable;
-    public bool choice3Avalable;
-    public Animator animChoice1;
-    public Animator animChoice2;
-    public Animator animChoice3;
 
     public bool lockInteract;
     public bool canInteract;
@@ -164,6 +158,7 @@ public class Shop : MonoBehaviour
         shopUIController.fade = false;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         GetAvailableUpgrades();
+        Souls.instance.UpdateSoulsShop();
     }
 
     public void CloseShop()
@@ -192,6 +187,27 @@ public class Shop : MonoBehaviour
     {
         if (hasgenerated)
         {
+            switch (currentType)
+            {
+                case 0:
+                    for (int i = 0; i < upsButton.Count; i++)
+                    {
+                        upsButton[i].interactable = cost[currentType + i] <= Souls.instance.soulBank;
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i < upsButton.Count; i++)
+                    {
+                        upsButton[i].interactable = cost[currentType + i] <= Souls.instance.soulBank;
+                    }
+                    break;
+                case 6:
+                    for (int i = 0; i < upsButton.Count; i++)
+                    {
+                        upsButton[i].interactable = cost[currentType + i] <= Souls.instance.soulBank;
+                    }
+                    break;
+            }
             return;
         }
 
@@ -327,7 +343,7 @@ public class Shop : MonoBehaviour
         boughtUpgrades[currentType + buttonType] = true;
         upsButton[buttonType].interactable = false;
         shopUIController.hasMovedOut[buttonType] = true;
-        Souls.instance.soulBank -= cost[buttonType];
+        Souls.instance.soulBank -= cost[buttonType+ + currentType];
         Souls.instance.UpdateSoulsShop();
         switch (currentType)
         {
