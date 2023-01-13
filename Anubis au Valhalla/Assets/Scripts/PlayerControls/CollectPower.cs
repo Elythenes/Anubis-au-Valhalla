@@ -41,6 +41,7 @@ public class CollectPower : MonoBehaviour
         {
             if (Input.GetKeyDown(interaction))
             {
+                UiThotManager.Instance.MoveIn = true;
                 UiManager.instance.CollectPower(collectablePower);
                 collectablePower.SetActive(false);
             }
