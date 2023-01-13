@@ -98,21 +98,19 @@ public class IA_Guerrier : MonoBehaviour
     {
         if (isWondering && !life.isMomified)
         {
-            anim.SetBool("isIdle",false);
-            anim.SetBool("isRuning",true);
-            WonderingTimeTimer += Time.deltaTime;
-            if (doOnce)
-            {
-                StartCoroutine(FindWonderPosition());
-                doOnce = false;
-            }
             rb.AddForce(new Vector2(aipath.targetDirection.x * speedX,aipath.targetDirection.y * speedY) * Time.deltaTime);
+        }
+        else
+        {
+            doOnce = false;
+            ai.destination = player.transform.position;
         }
         
         
         if (isChasing && !life.isMomified && !isWondering)
         {
             doOnce = false;
+            aipath.destination = player.transform.position;
             anim.SetBool("isIdle",false);
             anim.SetBool("isRuning",true);
             ai.destination = player.transform.position;
@@ -122,6 +120,18 @@ public class IA_Guerrier : MonoBehaviour
 
     public void Update()
     {
+        if (isWondering && !life.isMomified)
+        {
+            anim.SetBool("isIdle",false);
+            anim.SetBool("isRuning",true);
+            WonderingTimeTimer += Time.deltaTime;
+            if (doOnce && isWondering && !isChasing)
+            {
+                StartCoroutine(FindWonderPosition());
+                doOnce = false;
+            }
+        }
+        
         if (!isAttacking && !life.isMomified)
         {
             if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
@@ -150,19 +160,21 @@ public class IA_Guerrier : MonoBehaviour
 
         if (isDead) // Mort
         {
-            ai.destination = Vector2.zero;
+            aipath.destination = Vector2.zero;
             //rb.velocity = Vector2.zero;
             this.enabled = false;
         }
 
+      
         if ((Vector3.Distance(aipath.destination, transform.position) <= radiusAttack) && !life.isMomified) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
-            if (!isWondering && isChasing)
-            {
-                isAttacking = true;
-                isChasing = false;
-            }
+                if (!isWondering && isChasing && !doOnce)
+                {
+                    isAttacking = true;
+                    isChasing = false;
+                }
         }
+
 
         if (life.vieActuelle <= 0)
         {
@@ -204,8 +216,8 @@ public class IA_Guerrier : MonoBehaviour
             anim.SetBool("isAttacking",true);
             StartCoroutine(Attaque());
 
-            doOnce = true;
             isWondering = true;
+            doOnce = true;
             isAttacking = false;
             StartUpAttackTimeTimer = 0;
         }
@@ -214,6 +226,9 @@ public class IA_Guerrier : MonoBehaviour
         
         if (WonderingTimeTimer >= WonderingTime&& !life.isMomified && !isChasing)
         {
+            StopCoroutine(FindWonderPosition());
+            doOnce = false;
+            ai.destination = player.transform.position;
             isWondering = false;
             isAttacking = false;
             chasingTrigger = true;
@@ -223,19 +238,27 @@ public class IA_Guerrier : MonoBehaviour
 
         if (chasingTrigger && !life.isMomified)
         {
+            StopCoroutine(FindWonderPosition());
             doOnce = false;
             chasingTrigger = false;
             isChasing = true;
         }
-
-        
     }
 
     IEnumerator FindWonderPosition()
     {
-        yield return new WaitForSeconds(0.8f);
-        ai.destination = PickRandomPoint();
-        doOnce = true;
+        if (doOnce && isWondering)
+        {
+            yield return new WaitForSeconds(0.8f);
+            aipath.destination = PickRandomPoint();
+            doOnce = true;
+        }
+        else
+        {
+            StopCoroutine(FindWonderPosition());
+            aipath.destination = player.transform.position;
+        }
+            
     }
 
     IEnumerator RestartScripts()

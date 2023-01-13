@@ -1,5 +1,7 @@
 
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -58,6 +60,8 @@ public class DamageManager : MonoBehaviour
 
     [Header("Variables de tracking")] 
     public bool isHurt;
+
+    private LayerMask murMask;
     
     private void Awake()
     {
@@ -78,6 +82,8 @@ public class DamageManager : MonoBehaviour
         vieActuelle = vieMax;
         Time.fixedDeltaTime = 0.01F * Time.timeScale;
         stopWaiting = false;
+        murMask = LayerMask.GetMask("CollisionEnvironement");
+        Debug.Log(murMask.value);
     }
 
     private void Update()
@@ -86,6 +92,26 @@ public class DamageManager : MonoBehaviour
         {
             stats.vieActuelle = stats.vieMax;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        var g = CharacterController.instance;
+        if (g.canBoost && !g.isDashing)
+        {
+            if (!g.rb.IsTouchingLayers(128))
+            {
+                Debug.Log("On est très cringe");
+                g.canBuffer = false;
+                g.canBoost = false;
+                g.playerCol.enabled = true;
+                g.allowMovements = true;
+                g.stopDash = false;
+                g.anim.SetBool("isDashing",false);
+                g.anim.SetBool("isWalking",true);
+            }
+        }
+        //Debug.Log(g.rb.IsTouchingLayers(128));
     }
 
     public void TakeDamage(int damage, GameObject enemy)
@@ -314,4 +340,42 @@ public class DamageManager : MonoBehaviour
         audioSource.pitch = 1;
         audioSource.PlayOneShot(audioClipArray[1]);
     }
+
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        var g = CharacterController.instance;
+        if (col.gameObject.layer == 7 && !g.isDashing && (g.canBuffer || g.canBoost))
+        {
+            Debug.Log(g.rb.GetContacts(new List<Collider2D>()));
+            if (g.rb.GetContacts(new List<Collider2D>()) >= 1)
+            {
+                g.canBoost = true;
+
+                g.playerCol.enabled = false; 
+                g.Dashing();
+                g.allowMovements = false;
+                Debug.Log("Givin' it a little push");
+                
+            }
+            else
+            {
+                Debug.Log("Bah alors on est cringe?");
+                g.canBuffer = false;
+                g.canBoost = false;
+                g.playerCol.enabled = true;
+                g.allowMovements = true;
+                g.stopDash = false;
+            }
+        }
+    }
+
+    /*private void OnTriggerExit2D(Collider2D col)
+    {
+        var g = CharacterController.instance;
+        if (col.gameObject.layer == 7 && !g.isDashing && (g.canBuffer || g.canBoost) && g.rb.GetContacts(new List<Collider2D>()) < 1)
+        {
+
+        }
+
+    }*/
 }

@@ -53,6 +53,8 @@ public class Shop : MonoBehaviour
     public bool[] boughtUpgrades;
     private int currentType;
     public List<int> indexes;
+    private int soldOut = 0;
+
 
     public enum UpsTypes
     {
@@ -108,26 +110,7 @@ public class Shop : MonoBehaviour
                 shopUIController.FadeOut();
                 UiManager.instance.isSousMenu = false;
             }
-            
-       
         }
-
-    }
-
-    void FixedUpdate()
-    {
-       
-        if (consumablesCost.Count > 0)
-        {
-            for (int i = 0; i < consumablesCost.Count; i++)
-            {
-                if (consumablesCost[i] > Souls.instance.soulBank)
-                {
-                    consumablesButton[i].interactable = false;
-                }
-            }
-        }
-        
         if (canInteract)
         {
             if (Input.GetKeyDown(KeyCode.F))
@@ -138,9 +121,7 @@ public class Shop : MonoBehaviour
             }
         }
 
-     
     }
-
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player") && !lockInteract)
@@ -222,8 +203,7 @@ public class Shop : MonoBehaviour
             {
                 var index = Random.Range(0, upgradesList.UpsLame.Count);
                 var lame = upgradesList.UpsLame[index].Lames[0];
-                var itemCost = Mathf.RoundToInt(100 * 
-                                                Mathf.Pow((((int)lame.level+1) * lame.tier), (1+(int)lame.level) / 14)); //Multiplicator, based on the upgrades tier and level
+                var itemCost = Mathf.RoundToInt(100 * lame.tier); //Multiplicator, based on the upgrades tier and level
                 choice.Add(lame);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -232,8 +212,7 @@ public class Shop : MonoBehaviour
             {
                 var index = Random.Range(0, upgradesList.UpsHampe.Count);
                 var hampe = upgradesList.UpsHampe[index].Hampes[0];
-                var itemCost = Mathf.RoundToInt(100 * 
-                                                Mathf.Pow((((int)hampe.level+1) * hampe.tier), ((int)hampe.level+1)/ 14)); //Multiplicator, based on the upgrades tier and level
+                var itemCost = Mathf.RoundToInt(100 * hampe.tier); //Multiplicator, based on the upgrades tier and level
                 choice.Add(hampe);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -242,8 +221,7 @@ public class Shop : MonoBehaviour
             {
                 var index = Random.Range(0, upgradesList.UpsManche.Count);
                 var manche = upgradesList.UpsManche[index].Manches[0];
-                var itemCost = Mathf.RoundToInt(100 * 
-                                                Mathf.Pow((((int)manche.level+1) * manche.tier), ((int)manche.level+1) / 14)); //Multiplicator, based on the upgrades tier and level
+                var itemCost = Mathf.RoundToInt(100 * manche.tier); //Multiplicator, based on the upgrades tier and level
                 choice.Add(manche);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -343,25 +321,58 @@ public class Shop : MonoBehaviour
     public void OnClickUpgrade(int buttonType)
     {
         glyphUpdater.AddGlyph(choice[buttonType + currentType]);
-        switch (currentType)
-        {
-            case 0:
-                upgradesList.UpsLame[indexes[buttonType + currentType]].Lames.Remove(choice[buttonType + currentType]);
-                break;
-            case 3:
-                upgradesList.UpsHampe[indexes[buttonType + currentType]].Hampes.Remove(choice[buttonType + currentType]);
-                break;
-            case 6:
-                upgradesList.UpsManche[indexes[buttonType + currentType]].Manches.Remove(choice[buttonType + currentType]);
-                break;
-        }
+
 
         costText[buttonType].text = "Vendu";
         boughtUpgrades[currentType + buttonType] = true;
         upsButton[buttonType].interactable = false;
+        shopUIController.hasMovedOut[buttonType] = true;
         Souls.instance.soulBank -= cost[buttonType];
         Souls.instance.UpdateSoulsShop();
+        switch (currentType)
+        {
+            case 0:
+                for (int i = 0; i < upsButton.Count; i++)
+                {
+                    if (cost[currentType + i] > Souls.instance.soulBank)
+                    {
+                        upsButton[i].interactable = false;
+                    }
+                }
+                break;
+            case 3:
+                for (int i = 0; i < upsButton.Count; i++)
+                {
+                    if (cost[currentType + i] > Souls.instance.soulBank)
+                    {
+                        upsButton[i].interactable = false;
+                    }
+                }
+                break;
+            case 6:
+                for (int i = 0; i < upsButton.Count; i++)
+                {
+                    if (cost[currentType + i] > Souls.instance.soulBank)
+                    {
+                        upsButton[i].interactable = false;
+                    }
+                }
+                break;
+        }
         Debug.Log(cost.Count);
+        soldOut = 0;
+        foreach (var bought in boughtUpgrades)
+        {
+            if (bought)
+            {
+                soldOut++;
+            }
+
+            if (soldOut == 3)
+            {
+                shopUIController.FadeInOther(shopUIController.soldOutText);
+            }
+        }
     }
 
     #endregion
@@ -369,13 +380,12 @@ public class Shop : MonoBehaviour
     public void InstantHeal(float percentHeal, int price)
     {
         AnubisCurrentStats.instance.vieActuelle += Mathf.RoundToInt(AnubisCurrentStats.instance.vieMax * (percentHeal / 100));
-        Debug.Log("ca devrai heal tant de pv:" + AnubisCurrentStats.instance.vieMax * (percentHeal / 100));
+        Debug.Log("ca devrait heal tant de pv:" + AnubisCurrentStats.instance.vieMax * (percentHeal / 100));
         if (AnubisCurrentStats.instance.vieActuelle > AnubisCurrentStats.instance.vieMax)
             AnubisCurrentStats.instance.vieActuelle = AnubisCurrentStats.instance.vieMax;
         Souls.instance.soulBank -= price;
         Souls.instance.UpdateSoulsCounter();
     }
-    
 }
 
 

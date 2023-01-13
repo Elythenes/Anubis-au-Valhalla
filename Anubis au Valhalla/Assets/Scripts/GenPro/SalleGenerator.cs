@@ -199,22 +199,22 @@ namespace GenPro
                                 for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                 {
                                         if (i == (int) fromDoor) continue;
-                                        if(i == (int)DoorOrientation.South)EnableDoors(DoorOrientation.South,false);
                                         bool state = Random.value > 0.4f;
                                         EnableDoors((DoorOrientation) i,state);
+                                        if(i == (int)DoorOrientation.South)EnableDoors(DoorOrientation.South,false);
                                         sDoors[i].currentDoorType = Door.DoorType.ToShop;
                                         sDoors[i].ChooseSpecialToSpawn(0);
                                         sDoors[i].willChooseSpecial = false;
                                 }
                         }
-                        if (roomsDone == dungeonSize - 2)
+                        if (roomsDone == dungeonSize - 1)
                         {
                                 for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                 {
                                         if (i == (int) fromDoor) continue;
                                         sDoors[i].willChooseSpecial = false;
+                                        EnableDoors((DoorOrientation)i,false);
                                         if(i == (int)DoorOrientation.North)EnableDoors(DoorOrientation.North, true);
-                                        else EnableDoors((DoorOrientation)i,false);
                                 }
                         }
                         if (roomsDone == dungeonSize)
@@ -354,7 +354,9 @@ namespace GenPro
                         foreach (var soul in Souls.instance.soulsInScene)
                         {
                                 Souls.instance.CollectSouls(soul,1);
+                                
                         }
+                        Souls.instance.soulsInScene.Clear();
                         amount.Clear();
                         if (TothBehiavour.instance != null && roomsDone != 0)
                         {

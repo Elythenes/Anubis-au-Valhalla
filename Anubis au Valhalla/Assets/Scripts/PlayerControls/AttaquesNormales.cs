@@ -33,7 +33,8 @@ public class AttaquesNormales : MonoBehaviour
     public bool attaque2;
     public bool attaque3;
     public bool attaqueSpeSpell;
-
+    
+    
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip[] audioClipArray;
@@ -59,6 +60,7 @@ public class AttaquesNormales : MonoBehaviour
         }
 
         controls = new InputManager();
+        
     }
 
     private void OnEnable()
