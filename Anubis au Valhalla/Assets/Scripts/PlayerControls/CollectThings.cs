@@ -75,7 +75,12 @@ public class CollectThings : MonoBehaviour
             collectablePotion = null;
         }
     }
-    
+
+
+    public void KillPotion()
+    {
+        Destroy(collectablePotion);
+    }
     
     
     /* ancien code de ses morts (je le garde, on sait jamais :D)
