@@ -13,10 +13,16 @@ public class Combo3 : MonoBehaviour
     public GameObject mainCamera;
     public GameObject bloodEffect;
     public PolygonCollider2D collider;
+    
+    [Header("Effet Smash")]
+    public Material cracksMeshRenderer;
+    public float disolveValue = 1;
+    public float amountReducedByFrame;
 
 
     public virtual void Start()
     {
+        disolveValue = 1;
         mainCamera = GameObject.Find("CameraHolder");
         mainCamera.transform.DOShakePosition(0.2f,1.5f);
         Destroy(gameObject, AttaquesNormales.instance.dureeHitbox[3]);
@@ -24,6 +30,11 @@ public class Combo3 : MonoBehaviour
        StartCoroutine(StopHitbox());
     }
 
+    void Update()
+    {
+        disolveValue -= amountReducedByFrame;
+        cracksMeshRenderer.SetFloat("_step", disolveValue);
+    }
     public virtual void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Monstre"))
