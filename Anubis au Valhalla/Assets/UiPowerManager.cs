@@ -20,6 +20,8 @@ public class UiPowerManager : MonoBehaviour
     public List<TextMeshProUGUI> boxPowerTexts = new(3);
     public List<TextMeshProUGUI> boxPowerLevels = new(3);
 
+    public List<GameObject> fondForLevel = new(3);
+
     
     [Header("TEXTES POWER 1")]
     public List<string> p1TextsSmash = new(10);
@@ -51,6 +53,12 @@ public class UiPowerManager : MonoBehaviour
         isPower1 = false;
         isPower2 = false;
         powerLevelIndexForUi = 1;
+
+        for (int i = 0; i < 3; i++)
+        {
+            fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 0);
+        }
+
     }
 
     
@@ -58,12 +66,82 @@ public class UiPowerManager : MonoBehaviour
     {
         ChangeTextBoxDependsOnLevel();
         DisableFleche();
+        HighlightIfLevel(NewPowerManager.Instance.currentLevelPower1, NewPowerManager.Instance.currentLevelPower2);
     }
 
 
+    //Fonctions ************************************************************************************************************************
+
+    public void SetDefaultText(int power) //pour set le texte de smash par défaut
+    {
+        switch (power)
+        {
+            case 1 :
+                for (int i = 0; i < 3; i++)
+                {
+                    if (powerLevelIndexForUi <= 8)
+                    {
+                        boxPowerTexts[i].SetText(p1TextsSmash[powerLevelIndexForUi - 1 + i] + "");
+                    }
+                    else
+                    {
+                        boxPowerTexts[i].SetText(p1TextsSmash[powerLevelIndexForUi - 1 + i] + "");
+                    }
+                }
+                break;
+            
+            case 2 :
+                for (int i = 0; i < 3; i++)
+                {
+                    if (powerLevelIndexForUi <= 8)
+                    {
+                        boxPowerTexts[i].SetText(p2TextsSmash[powerLevelIndexForUi - 1 + i] + "");
+                    }
+                    else
+                    {
+                        boxPowerTexts[i].SetText(p2TextsSmash[powerLevelIndexForUi - 1 + i] + "");
+                    }
+                }
+                break;
+        }
+    }
+    
+    
+    
+    void HighlightIfLevel(int niveauP1, int niveauP2) //surligne en fond les cases quand le niveau est acquis
+    { //oskour mon crâne a explosé, mais ça va mieux :D
+        if (isPower1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (niveauP1 >= powerLevelIndexForUi + i)
+                {
+                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 255);
+                }
+                else //(niveauP1 < powerLevelIndexForUi + i) 
+                { 
+                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 0);
+                }
+            }
+        }
+        if (isPower2)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (niveauP2 == powerLevelIndexForUi + i)
+                {
+                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 255);
+                }
+                if (niveauP2 < powerLevelIndexForUi + i) //casse si changement de niveau plus que +1
+                { 
+                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 0);
+                }
+            }
+        }
+    }
 
 
-    void DisableFleche()
+    void DisableFleche() //pour afficher ou non les flèches en fonction des 3 bos présentes
     {
         if (powerLevelIndexForUi == 8)
         {
@@ -96,7 +174,6 @@ public class UiPowerManager : MonoBehaviour
         }
     }
     
-
     
     void ChangeTextBoxDependsOnLevel() //change la série de 3 text box en fonction de l'indicateur powerLevelForUi
     {
@@ -238,7 +315,7 @@ public class UiPowerManager : MonoBehaviour
         }
     }
 
-    public void ChangePower(int i)
+    public void ChangePower(int i) //permet de changer le pouvoir expliqué 
     {
         switch (i)
         {
@@ -255,7 +332,8 @@ public class UiPowerManager : MonoBehaviour
                 break;
         }
     }
-
+    
+    
     public void DebugButton()
     {
         Debug.Log("ploc");
