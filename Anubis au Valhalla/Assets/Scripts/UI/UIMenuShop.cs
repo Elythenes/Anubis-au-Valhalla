@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,9 +9,16 @@ public class UIMenuShop : MonoBehaviour
     public Animator animChoix2;
     public Animator animChoix3;
     public CanvasGroup UIParent;
+    public CanvasGroup soldOutText;
     public bool fade;
-   
-    
+    public bool[] hasMovedOut;
+
+    private void Start()
+    {
+        MoveOutAll();
+        FadeOutOther(soldOutText);
+    }
+
     public void Update()  
     {
         if (fade)// Gérer le fade in et out de l'entièreté du menu Shop
@@ -28,21 +36,37 @@ public class UIMenuShop : MonoBehaviour
             }
         }
     }
-    
+
+    public void MoveOutAll()
+    {
+        MoveOutChoix1();
+        MoveOutChoix2();
+        MoveOutChoix3();
+    }
+
+    public void MoveInAll()
+    {
+        MoveInChoix1();
+        MoveInChoix2();
+        MoveInChoix3();
+    }
     public void MoveInChoix1()
     {
+        if (hasMovedOut[0]) return;
         animChoix1.SetBool("MoveOut",false);
         animChoix1.SetBool("MoveIn",true);
     }
     
     public void MoveInChoix2()
     {
+        if (hasMovedOut[1]) return;
         animChoix2.SetBool("MoveOut",false);
         animChoix2.SetBool("MoveIn",true);
     }
     
     public void MoveInChoix3()
     {
+        if (hasMovedOut[2]) return;
         animChoix3.SetBool("MoveOut",false);
         animChoix3.SetBool("MoveIn",true);
     }
@@ -78,6 +102,20 @@ public class UIMenuShop : MonoBehaviour
         fade = false;
         UIParent.interactable = true;
         UIParent.blocksRaycasts = true;
+    }
+
+    public void FadeOutOther(CanvasGroup otherObject)
+    {
+        otherObject.alpha = 0;
+        otherObject.interactable = false;
+        otherObject.blocksRaycasts = false;
+    }
+
+    public void FadeInOther(CanvasGroup otherObject)
+    {
+        otherObject.alpha = 1;
+        otherObject.interactable = true;
+        otherObject.blocksRaycasts = true;
     }
     
 }
