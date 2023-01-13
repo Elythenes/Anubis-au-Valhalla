@@ -45,8 +45,12 @@ public class CollectPotion : MonoBehaviour
             if (Input.GetKeyDown(interaction))
             {
                 UiManager.instance.ActivateMenuPotion();
-                Destroy(collectablePotion);
             }
         }
+    }
+
+    public void KillPotion()
+    {
+        Destroy(collectablePotion);
     }
 }

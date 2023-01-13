@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
-using Image = UnityEngine.UIElements.Image;
 
 public class UiManager : MonoBehaviour
 {
@@ -92,12 +89,6 @@ public class UiManager : MonoBehaviour
     private void Update()
     {
         ControlPause();
-    }
-
-
-    public void DebugButton()
-    {
-        Debug.Log("boop");
     }
 
     public void Pause()

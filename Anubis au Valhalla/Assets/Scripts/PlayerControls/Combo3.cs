@@ -33,7 +33,7 @@ public class Combo3 : MonoBehaviour
     void Update()
     {
         disolveValue -= amountReducedByFrame;
-        cracksMeshRenderer.SetFloat("_step", disolveValue);
+//        cracksMeshRenderer.SetFloat("_step", disolveValue);
     }
     public virtual void OnTriggerEnter2D(Collider2D col)
     {
