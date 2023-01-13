@@ -52,6 +52,7 @@ public class CharacterController : MonoBehaviour
   public float diagonalSpeedMultiplier;
   public float dashBuffer;
   public bool canBuffer = false;
+  public bool canBoost = false;
   [NaughtyAttributes.ReadOnly] public float dashCooldown;
   public bool isDashing;
   public bool canDash;
@@ -83,7 +84,6 @@ public class CharacterController : MonoBehaviour
     {
       instance = this;
     }
-
     rb = gameObject.GetComponent<Rigidbody2D>();
     playerCol = GetComponent<BoxCollider2D>();
     controls = new InputManager();
@@ -205,7 +205,7 @@ public class CharacterController : MonoBehaviour
     {
       Dashing();
     }
-    
+
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
@@ -259,19 +259,18 @@ public class CharacterController : MonoBehaviour
       }
     }
 
-    if (canBuffer)
+    /*if (canBuffer)
     {
       dashBuffer -= Time.deltaTime;
       if (dashBuffer < 0)
       {
-        Debug.Log("enabled");
         canBuffer = false;
         playerCol.enabled = true;
       }
-    }
+    }*/
   }
 
-  void Dashing()
+  public void Dashing()
   {
     timerDash += Time.deltaTime;
     {
@@ -483,7 +482,10 @@ public class CharacterController : MonoBehaviour
     if (hitDoor.currentDoorType == Door.DoorType.ToShop)
     {
       SalleGenerator.Instance.shopsVisited++;
-      SalleGenerator.Instance.dungeonSize++;
+      if (SalleGenerator.Instance.roomsDone < SalleGenerator.Instance.dungeonSize - 2)
+      { 
+        SalleGenerator.Instance.dungeonSize++;
+      }
       SalleGenerator.Instance.TransitionToNextRoom(hitDoor.doorOrientation, true,
         hitDoor);
     }
