@@ -252,32 +252,78 @@ public class AttaquesNormales : MonoBehaviour
 
         #region Gestion des animations
 
-        if (angle > 45 && angle < 135) // attaque vers le haut
+        if (angle > 67.5f && angle < 112.5f) // Nord
         {
-            if (CharacterController.instance.movement == Vector2.zero)
+            if (CharacterController.instance.movement == Vector2.zero && !Input.GetKeyDown(KeyCode.S))
             {
                 CharacterController.instance.facing = CharacterController.LookingAt.Nord;
             }
-            
-           // SetBool les animation vers le haut
         }
-        else if (angle < 45 && angle > -45 /*gauche*/|| angle > 135 && angle < 180 /*droite-haut*/|| angle > -180 && angle < -135/*droite-bas*/) // attaque à gauche ou à droite
+
+        if (angle > -22.5f && angle < 22.5f) // Est
         {
-            if (angle < 45 && angle > -45) // gauche = dash vers la gauche
+            if (CharacterController.instance.movement == Vector2.zero && !Input.GetKeyDown(KeyCode.Q))
             {
-                if (CharacterController.instance.movement == Vector2.zero)               
-                {
-                    CharacterController.instance.facing = CharacterController.LookingAt.Est;
-                }
+                CharacterController.instance.facing = CharacterController.LookingAt.Est;
             }
-            else if (angle > 135 && angle < 180  || angle > -180 && angle < -135) // droite = dash vers la droite
+        }
+
+
+        if (angle > 157.5f && angle < 180 || angle > -180f && angle < -157.5f) // Ouest
+        {
+            if (CharacterController.instance.movement == Vector2.zero && !Input.GetKeyDown(KeyCode.D))    
             {
-                if (CharacterController.instance.movement == Vector2.zero)         
-                {
-                    CharacterController.instance.facing = CharacterController.LookingAt.Ouest;
-                }    
-            }
-     
+                CharacterController.instance.facing = CharacterController.LookingAt.Ouest;
+            } 
+        }
+
+        if (angle > -112.5f && angle < -67.5f) // Sud
+        {
+            if (CharacterController.instance.movement == Vector2.zero && !Input.GetKeyDown(KeyCode.Z))       
+            {
+                CharacterController.instance.facing = CharacterController.LookingAt.Sud;
+            }      
+        }
+        
+        if (angle > 22.5f && angle < 67.5f) // Nord Est
+        {
+            if (CharacterController.instance.movement == Vector2.zero && !Input.GetKeyDown(KeyCode.S) && !Input.GetKeyDown(KeyCode.D))       
+            {
+                CharacterController.instance.facing = CharacterController.LookingAt.NordEst;
+            }      
+        }
+        
+        if (angle > 112.5f && angle < 157.5f) // Nord Ouest
+        {
+            if (CharacterController.instance.movement == Vector2.zero && !Input.GetKeyDown(KeyCode.S) && !Input.GetKeyDown(KeyCode.Q))       
+            {
+                CharacterController.instance.facing = CharacterController.LookingAt.NordOuest;
+            }      
+        }
+        
+        if (angle > -67.5f && angle < -22.5f) // Sud Est
+        {
+            if (CharacterController.instance.movement == Vector2.zero && !Input.GetKeyDown(KeyCode.S) && !Input.GetKeyDown(KeyCode.Z) && !Input.GetKeyDown(KeyCode.Q))       
+            {
+                CharacterController.instance.facing = CharacterController.LookingAt.SudEst;
+            }      
+        }
+        
+        if (angle > -157.5f && angle < -112.5f) // Sud Ouest
+        {
+            if (CharacterController.instance.movement == Vector2.zero && !Input.GetKeyDown(KeyCode.S) && !Input.GetKeyDown(KeyCode.Z) && !Input.GetKeyDown(KeyCode.D))       
+            {
+                CharacterController.instance.facing = CharacterController.LookingAt.SudOuest;
+            }      
+        }
+
+        
+        if (angle > 45 && angle < 135) // attaque vers le haut
+        {
+            // SetBool les animation vers le haut
+        }
+        else if (angle < 45 && angle > -45 /*droite*/|| angle > 135 && angle < 180 /*gauche-haut*/|| angle > -180 && angle < -135/*gauche-bas*/) // attaque à gauche ou à droite
+        {
             if (index == 0)
             {
                 anim.SetBool("isAttacking1",true);
@@ -306,10 +352,6 @@ public class AttaquesNormales : MonoBehaviour
         }
         else if (angle > -135 && angle < -45) // attaque vers le bas
         {
-            if (CharacterController.instance.movement == Vector2.zero)       
-            {
-                CharacterController.instance.facing = CharacterController.LookingAt.Sud;
-            }      
             if (index == 0)
             {
                 anim.SetBool("isAttacking1Down",true);
@@ -370,6 +412,7 @@ public class AttaquesNormales : MonoBehaviour
         {
             if (CharacterController.instance.movement == Vector2.zero)
             {
+                Debug.Log("attaqueSpéNorth");
                 CharacterController.instance.facing = CharacterController.LookingAt.Nord;
             }
         }

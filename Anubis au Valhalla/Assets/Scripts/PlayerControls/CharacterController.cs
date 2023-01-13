@@ -322,13 +322,49 @@ public class CharacterController : MonoBehaviour
     bool isSUD;
     bool isOUEST;
 
+    if (Input.GetKeyDown(KeyCode.Q) && !AttaquesNormales.instance.blockFlip && !isDashing)
+    {
+      facing = LookingAt.Ouest;
+    }
+    if (Input.GetKeyDown(KeyCode.D) && !AttaquesNormales.instance.blockFlip && !isDashing)
+    {
+      facing = LookingAt.Est;
+    }
+    if (Input.GetKeyDown(KeyCode.Z) && !AttaquesNormales.instance.blockFlip && !isDashing)
+    {
+      facing = LookingAt.Nord;
+    }
+    if (Input.GetKeyDown(KeyCode.S) && !AttaquesNormales.instance.blockFlip && !isDashing)
+    {
+      facing = LookingAt.Sud;
+    }
+    if (Input.GetKeyDown(KeyCode.S) && Input.GetKeyDown(KeyCode.Q) &&!AttaquesNormales.instance.blockFlip && !isDashing)
+    {
+      facing = LookingAt.SudOuest;
+    }
+    if (Input.GetKeyDown(KeyCode.S) && Input.GetKeyDown(KeyCode.D) && !AttaquesNormales.instance.blockFlip && !isDashing)
+    {
+      facing = LookingAt.SudEst;
+    }
+    if (Input.GetKeyDown(KeyCode.Z) && Input.GetKeyDown(KeyCode.Q) && !AttaquesNormales.instance.blockFlip && !isDashing)
+    {
+      facing = LookingAt.NordOuest;
+    }
+    if (Input.GetKeyDown(KeyCode.Z) && Input.GetKeyDown(KeyCode.D) && !AttaquesNormales.instance.blockFlip && !isDashing)
+    {
+      facing = LookingAt.NordEst;
+    }
     
-      if (movement.x > 0 && !isAttacking && AttaquesNormales.instance.blockFlip) // Le personnage s'oriente vers la direction où il marche. 
+      if (movement.x > 0 && !isAttacking /*&& AttaquesNormales.instance.blockFlip*/) // Le personnage s'oriente vers la direction où il marche. 
       {
         isEST = true;
         facing = LookingAt.Est;
-        transform.localRotation = Quaternion.Euler(0, 0,0);
-        doorUITransform.rotation = new Quaternion(0, 0, 0, 0);
+        if (AttaquesNormales.instance.blockFlip)
+        {
+          transform.localRotation = Quaternion.Euler(0, 0,0);
+          doorUITransform.rotation = new Quaternion(0, 0, 0, 0);
+        }
+       
       }
       else
       {
@@ -336,13 +372,15 @@ public class CharacterController : MonoBehaviour
 
       }
 
-      if (movement.x < 0 && !isAttacking && AttaquesNormales.instance.blockFlip)
+      if (movement.x < 0 && !isAttacking /*&& AttaquesNormales.instance.blockFlip*/)
       {
-      
         isOUEST= true;
         facing = LookingAt.Ouest;
-        transform.localRotation = Quaternion.Euler(0, 180,0);
-        doorUITransform.rotation = new Quaternion(0,180,0, 0);
+        if (AttaquesNormales.instance.blockFlip)
+        {
+          transform.localRotation = Quaternion.Euler(0, 180,0);
+          doorUITransform.rotation = new Quaternion(0,180,0, 0);
+        }
       }
       else
       {
@@ -373,19 +411,19 @@ public class CharacterController : MonoBehaviour
         isNORD = false;
       }
 
-      if (isEST && isSUD)
+      if (movement.y < 0 && movement.x > 0 && !isAttacking && isSUD && isEST)
       {
         facing = LookingAt.SudEst;
       }
-      if (isEST && isNORD)
+      if (movement.y > 0 && movement.x > 0 && !isAttacking && isNORD && isEST)
       {
         facing = LookingAt.NordEst;
       }
-      if (isOUEST && isSUD)
+      if (movement.y < 0 && movement.x < 0 && !isAttacking && isSUD && isOUEST)
       {
         facing = LookingAt.SudOuest;
       }
-      if (isOUEST && isNORD)
+      if (movement.y > 0 && movement.x < 0 && !isAttacking && isNORD && isOUEST)
       {
         facing = LookingAt.NordOuest;
       }
