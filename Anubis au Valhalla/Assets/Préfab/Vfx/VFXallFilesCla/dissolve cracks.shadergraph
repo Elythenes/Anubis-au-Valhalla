@@ -8,6 +8,9 @@
         },
         {
             "m_Id": "bd1db4efa1374e0ca285132717c342df"
+        },
+        {
+            "m_Id": "034da67f15d2422b8a81c003c19a8d11"
         }
     ],
     "m_Keywords": [],
@@ -62,6 +65,9 @@
         },
         {
             "m_Id": "f60d4ba12d2d4a118b70938bf07c3ec4"
+        },
+        {
+            "m_Id": "706a9c0d2c1f41f68e1d63362fa93e51"
         }
     ],
     "m_GroupDatas": [],
@@ -105,6 +111,20 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "a4b3b48e9e644db8ab4f7f68cdfa0299"
+                },
+                "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "706a9c0d2c1f41f68e1d63362fa93e51"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "0c0266d965c4453298638658a36f8008"
                 },
                 "m_SlotId": 1
             }
@@ -178,20 +198,6 @@
                 },
                 "m_SlotId": 0
             }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "f60d4ba12d2d4a118b70938bf07c3ec4"
-                },
-                "m_SlotId": 1
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "0c0266d965c4453298638658a36f8008"
-                },
-                "m_SlotId": 1
-            }
         }
     ],
     "m_VertexContext": {
@@ -249,6 +255,33 @@
             "m_Id": "b3d609a10256412f8b8720a095f3040e"
         }
     ]
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "034da67f15d2422b8a81c003c19a8d11",
+    "m_Guid": {
+        "m_GuidSerialized": "981a320d-35b9-4dff-adda-9440e23896dd"
+    },
+    "m_Name": "Step",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Step",
+    "m_DefaultReferenceName": "_Step",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 1,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 0.9900000095367432
+    }
 }
 
 {
@@ -866,6 +899,41 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "706a9c0d2c1f41f68e1d63362fa93e51",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -767.9998779296875,
+            "y": 585.9999389648438,
+            "width": 99.99993896484375,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "9685d48518904163866616c850dc3648"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "034da67f15d2422b8a81c003c19a8d11"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "77912036efbc4acfa0f8472645a9c38d",
     "m_Id": 1,
@@ -1048,6 +1116,21 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "9685d48518904163866616c850dc3648",
+    "m_Id": 0,
+    "m_DisplayName": "Step",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "979c20367c0e4146a6bb609149f692bb",
     "m_Id": 1,
     "m_DisplayName": "Sine Time",
@@ -1086,6 +1169,9 @@
         },
         {
             "m_Id": "bd1db4efa1374e0ca285132717c342df"
+        },
+        {
+            "m_Id": "034da67f15d2422b8a81c003c19a8d11"
         }
     ]
 }
