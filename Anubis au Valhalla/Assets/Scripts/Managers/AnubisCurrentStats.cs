@@ -139,19 +139,20 @@ public class AnubisCurrentStats : MonoBehaviour
    
    public void UpdateDamageForStat() //fonction souvent appelée pour faire le point au niveau des dégâts d'Anubis
    {
-      totalBaseDamageForStat = totalBaseDamage + totalBaseBonusDamage;
       for (int i = 0; i < 3; i++)
       {
-         comboBaseDamage[i] = Mathf.RoundToInt(totalBaseDamageForStat * multiplicateurDamage[i]);
+         comboBaseDamage[i] = Mathf.RoundToInt(totalBaseDamage * multiplicateurDamage[i]);
       }
-      thrustBaseDamage = Mathf.RoundToInt(totalBaseDamageForStat * multiplicateurDamage[3]);
+      thrustBaseDamage = Mathf.RoundToInt(totalBaseDamage * multiplicateurDamage[3]);
       
       for (int i = 0; i < 3; i++)
       {
-         comboDamageForStats[i] = comboBaseDamage[i] + comboBaseBonusDamage[i] + soulBonusDamageForStat;
+         comboDamageForStats[i] = comboBaseDamage[i] + comboBaseBonusDamage[i] + Mathf.RoundToInt(totalBaseBonusDamage) + soulBonusDamageForStat;
       }
-      thrustDamageForStat = thrustBaseDamage + thrustBaseBonusDamage + soulBonusDamageForStat;
+      thrustDamageForStat = thrustBaseDamage + thrustBaseBonusDamage + Mathf.RoundToInt(totalBaseBonusDamage) + soulBonusDamageForStat;
    }
+   
+   
 
 
    public void AddBonusDamage(int tague, float value)
@@ -195,7 +196,7 @@ public class AnubisCurrentStats : MonoBehaviour
             thrustBaseBonusDamage += Mathf.RoundToInt(value);
             break;
          
-         case 7: //Thrust Base Damage
+         case 7: //Critical Rate
             criticalRate += Mathf.RoundToInt(value);
             break;
       }
