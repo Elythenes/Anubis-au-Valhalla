@@ -8,22 +8,19 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CRACKS_main
-  m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
-  m_ValidKeywords:
+  m_Shader: {fileID: -6465566751694194690, guid: 4861d79d659374a428a4b8d7c80a61a3, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _EMISSION
+  - _FLIPBOOKBLENDING_OFF
   - _NORMALMAP
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords:
-  - _FLIPBOOKBLENDING_OFF
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
-  disabledShaderPasses:
-  - DepthOnly
-  - SHADOWCASTER
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -44,7 +41,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e5a2db41f9678ae4a83bcf13ffecbc73, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -56,6 +53,26 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_3494acf5a36741fcbd6557db2482e314_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 1ac0aabd3ca68134da9f1be82feb9eb5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_9a3b17b41fd24e2bab6fba4605679927_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 1ac0aabd3ca68134da9f1be82feb9eb5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -82,15 +99,19 @@ Material:
     - _Glossiness: 0
     - _Metallic: 0
     - _Mode: 0
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
+    - _Speed: 1
     - _SrcBlend: 5
+    - _Step: 0.99
     - _Surface: 1
     - _ZWrite: 0
+    - _step: 0.1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorAddSubDiff: {r: -1, g: 1, b: 0, a: 0}
@@ -98,6 +119,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.56334066, g: 0.11957705, b: 0.24048913, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _Maincolo: {r: 0.14778234, g: 0, b: 0.024245467, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

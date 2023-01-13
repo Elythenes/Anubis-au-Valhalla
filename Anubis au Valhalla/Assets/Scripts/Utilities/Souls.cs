@@ -50,6 +50,7 @@ public class Souls : MonoBehaviour
     {
         Destroy(collectedSoul);
         soulBank += value;
+        soulsInScene.Remove(collectedSoul);
         UpdateSoulsCounter();
     }
 
