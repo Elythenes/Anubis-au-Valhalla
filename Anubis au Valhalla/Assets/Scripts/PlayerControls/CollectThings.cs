@@ -14,6 +14,9 @@ public class CollectThings : MonoBehaviour
     public bool isPotionCollectable = false;
     public GameObject collectablePotion;
 
+    public bool isGlyphCollectable = false;
+    public GameObject collectableGlyph;
+
     
     
     //Fonction : Systèmes *******************************************************************************************************************
@@ -25,23 +28,27 @@ public class CollectThings : MonoBehaviour
     
     void Update()
     {
-        if (isPowerCollectable)
+        if (Input.GetKeyDown(interaction))
         {
-            if (Input.GetKeyDown(interaction))
+            if (isPowerCollectable)
             {
                 UiThotManager.Instance.MoveIn = true;
                 UiManager.instance.CollectPower(collectablePower);
                 collectablePower.SetActive(false);
             }
-        }
-        
-        if (isPotionCollectable)
-        {
-            if (Input.GetKeyDown(interaction))
+
+            if (isPotionCollectable)
             {
                 UiManager.instance.ActivateMenuPotion();
             }
+            
+            if (isGlyphCollectable)
+            {
+                //ramasser la glyph
+            }
         }
+
+        
     }
     
     
@@ -59,6 +66,12 @@ public class CollectThings : MonoBehaviour
             isPotionCollectable = true;
             collectablePotion = other.gameObject;
         }
+        
+        if (other.gameObject.CompareTag("CollectableGlyph"))
+        {
+            isGlyphCollectable = true;
+            collectableGlyph = other.gameObject;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other) //c'est du Debug, ne sert pas vraiment
@@ -74,6 +87,12 @@ public class CollectThings : MonoBehaviour
             isPotionCollectable = false;
             collectablePotion = null;
         }
+        
+        if (other.gameObject.CompareTag("CollectableGlyph"))
+        {
+            isGlyphCollectable = false;
+            collectableGlyph = null;
+        }
     }
 
 
@@ -81,6 +100,18 @@ public class CollectThings : MonoBehaviour
     {
         Destroy(collectablePotion);
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     /* ancien code de ses morts (je le garde, on sait jamais :D)
