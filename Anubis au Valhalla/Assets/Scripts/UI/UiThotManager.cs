@@ -11,6 +11,8 @@ public class UiThotManager : MonoBehaviour
 
     public GameObject boxThot;
     public TextMeshProUGUI boxTextThot;
+    public Animator anim;
+    public bool MoveIn;
 
     public KeyCode keySkipThot = KeyCode.V;
 
@@ -19,7 +21,6 @@ public class UiThotManager : MonoBehaviour
     public string generalAmorce;
 
     [Header("DEBUG")]
-    private IEnumerator Thot;
     public bool isThotHere;
     
     
@@ -33,23 +34,14 @@ public class UiThotManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        Thot = ThotReste();
-    }
-
-    
     void Update()
     {
-        if (Input.GetKeyDown(keySkipThot))
-        {
-            KillThotEarlier();
-        }
-
-        if (Input.GetKeyDown(KeyCode.C))
+        if (MoveIn)
         {
             SummonThot();
         }
+
+      
     }
     
     
@@ -57,34 +49,20 @@ public class UiThotManager : MonoBehaviour
     
     public void SummonThot() //appelé quand on monte de level
     {
-        Debug.Log("Yé soui là");
+        boxTextThot.text = generalAmorce;
+        anim.SetBool("MoveOut",false);
+        anim.SetBool("MoveIn",true);
         isThotHere = true;
-        boxThot.SetActive(true);
-        StartCoroutine(Thot);
-    }
-
-    public void KillThotEarlier()
-    {
-        if (isThotHere)
-        {
-            Debug.Log("ARG");
-            boxThot.SetActive(false);
-            isThotHere = false;
-            StopCoroutine(Thot);
-        }
-        else
-        {
-            Debug.Log("Comment tu peux me tuer, je suis pas là");
-        }
+        StartCoroutine(ThotReste());
     }
 
     private IEnumerator ThotReste()
     {
         yield return new WaitForSecondsRealtime(tempsRestantsThot);
-        Debug.Log("bye bye");
-        boxThot.SetActive(false);
+        anim.SetBool("MoveOut",true);
+        anim.SetBool("MoveIn",false);
         isThotHere = false;
-        
+        MoveIn = false;
     }
     
 }
