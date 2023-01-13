@@ -354,7 +354,9 @@ namespace GenPro
                         foreach (var soul in Souls.instance.soulsInScene)
                         {
                                 Souls.instance.CollectSouls(soul,1);
+                                
                         }
+                        Souls.instance.soulsInScene.Clear();
                         amount.Clear();
                         if (TothBehiavour.instance != null && roomsDone != 0)
                         {

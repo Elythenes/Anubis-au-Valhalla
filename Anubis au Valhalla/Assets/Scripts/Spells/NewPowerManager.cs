@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -205,42 +206,86 @@ public class NewPowerManager : MonoBehaviour
     {
         switch (currentLevelPower1)
         {
+            case 1:
+                UiThotManager.Instance.generalAmorce = "Pouvoir du Sable Amélioré \n \nAugmente les dégats du pouvoir.";
+                break;
+            case 2:
+                UiThotManager.Instance.generalAmorce = "Pouvoir du Sable Amélioré \n \nAugmente les dégats du pouvoir.";
+                break;
             case 3:
+                UiThotManager.Instance.generalAmorce = "Pouvoir du Sable Amélioré \n \nEffets supplémentaires, consulter l'inventaire.";
                 p1ThrustExplosionSize = true;
                 p1ComboConeStagger = true;
                 p1DashContactSlowForce = true;
                 break;
-            
+            case 4:
+                UiThotManager.Instance.generalAmorce = "Pouvoir du Sable Amélioré \n \nAugmente la portée du pouvoir.";
+                break;
             case 5:
+                UiThotManager.Instance.generalAmorce = "Pouvoir du Sable Amélioré \n \nNouveaux effets spéciaux, consulter l'inventaire.";
                 p1ComboConeHalfSphere = true;
                 p1ThrustBallTriple = true;
                 p1DashContactStagger = true;
                 break;
-            
+            case 6:
+                UiThotManager.Instance.generalAmorce = "Pouvoir du Sable Amélioré \n \nAugmente les dégats du pouvoir.";
+                break;
+            case 7:
+                UiThotManager.Instance.generalAmorce = "Pouvoir du Sable Amélioré \n \nAugmente la portée du pouvoir.";
+                break;
             case 8:
+                UiThotManager.Instance.generalAmorce = "Pouvoir du Sable Amélioré \n \nNouveaux effets spéciaux, consulter l'inventaire.";
                 p1ComboConeInversedCone = true;
                 p1ThrustBallExecute = true;
                 p1DashContactPowerExtend = true;
                 break;
+            case 9:
+                UiThotManager.Instance.generalAmorce = "Pouvoir du Sable Amélioré \n \nAugmente les dégats du pouvoir.";
+                break;
+            case 10:
+                UiThotManager.Instance.generalAmorce = "Pouvoir du Sable Amélioré \n \nAugmente les dégats et la portée du pouvoir.";
+                break;
         }
         switch (currentLevelPower2)
         {
+            case 1:
+                UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nAugmente les dégats du pouvoir.";
+                break;
+            case 2:
+                UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nAugmente les dégats du pouvoir.";
+                break;
             case 3:
+                UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nNouveaux effets spéciaux, consulter l'inventaire.";
                 p2ComboWaveSoul = true;
                 p2ThrustBandageMaxHit = 2;
                 p2DashTrailSize *= 2;
                 break;
-            
+            case 4:
+                UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nAugmente la portée du pouvoir.";
+                break;
             case 5:
+                UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nNouveaux effets spéciaux, consulter l'inventaire.";
                 p2ComboWaveDeathExplosion = true;
                 p2ThrustBandageMaxHit = 100;
                 p2DashTrailMiniStagger = true;
                 break;
-            
+            case 6:
+                UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nAugmente les dégats du pouvoir.";
+                break;
+            case 7:
+                UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nAugmente la portée du pouvoir.";
+                break;
             case 8:
+                UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nNouveaux effets spéciaux, consulter l'inventaire.";
                 p2ComboWaveDouble = true;
                 p2ThrustBandageStunUp = true;
                 p2DashTrailInfection = true;
+                break;
+            case 9:
+                UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nAugmente les dégats du pouvoir.";
+                break;
+            case 10:
+                UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nAugmente les dégats et la portée du pouvoir.";
                 break;
         }
     }

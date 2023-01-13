@@ -203,8 +203,7 @@ public class Shop : MonoBehaviour
             {
                 var index = Random.Range(0, upgradesList.UpsLame.Count);
                 var lame = upgradesList.UpsLame[index].Lames[0];
-                var itemCost = Mathf.RoundToInt(100 * 
-                                                Mathf.Pow((((int)lame.level+1) * lame.tier), (1+(int)lame.level) / 14)); //Multiplicator, based on the upgrades tier and level
+                var itemCost = Mathf.RoundToInt(100 * lame.tier); //Multiplicator, based on the upgrades tier and level
                 choice.Add(lame);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -213,8 +212,7 @@ public class Shop : MonoBehaviour
             {
                 var index = Random.Range(0, upgradesList.UpsHampe.Count);
                 var hampe = upgradesList.UpsHampe[index].Hampes[0];
-                var itemCost = Mathf.RoundToInt(100 * 
-                                                Mathf.Pow((((int)hampe.level+1) * hampe.tier), ((int)hampe.level+1)/ 14)); //Multiplicator, based on the upgrades tier and level
+                var itemCost = Mathf.RoundToInt(100 * hampe.tier); //Multiplicator, based on the upgrades tier and level
                 choice.Add(hampe);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -223,8 +221,7 @@ public class Shop : MonoBehaviour
             {
                 var index = Random.Range(0, upgradesList.UpsManche.Count);
                 var manche = upgradesList.UpsManche[index].Manches[0];
-                var itemCost = Mathf.RoundToInt(100 * 
-                                                Mathf.Pow((((int)manche.level+1) * manche.tier), ((int)manche.level+1) / 14)); //Multiplicator, based on the upgrades tier and level
+                var itemCost = Mathf.RoundToInt(100 * manche.tier); //Multiplicator, based on the upgrades tier and level
                 choice.Add(manche);
                 cost.Add(itemCost);
                 indexes.Add(index);
