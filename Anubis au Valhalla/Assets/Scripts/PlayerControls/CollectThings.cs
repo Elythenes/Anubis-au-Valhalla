@@ -3,26 +3,74 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class CollectPower : MonoBehaviour
+public class CollectThings : MonoBehaviour
 {
     public KeyCode interaction;
-    //pas oublier de faire la référence avec le skillManager pour pas lancer de spell quand on en ramasse
-    
+
     [Header("DEBUG")]
     public bool isPowerCollectable = false;
     public GameObject collectablePower;
+    
+    public bool isPotionCollectable = false;
+    public GameObject collectablePotion;
 
+    public bool isGlyphCollectable = false;
+    public GameObject collectableGlyph;
+
+    
+    
+    //Fonction : Systèmes *******************************************************************************************************************
     void Start()
     {
         isPowerCollectable = false;
+        isPotionCollectable = false;
     }
     
+    void Update()
+    {
+        if (Input.GetKeyDown(interaction))
+        {
+            if (isPowerCollectable)
+            {
+                UiThotManager.Instance.MoveIn = true;
+                UiManager.instance.CollectPower(collectablePower);
+                collectablePower.SetActive(false);
+            }
+
+            if (isPotionCollectable)
+            {
+                UiManager.instance.ActivateMenuPotion();
+            }
+            
+            if (isGlyphCollectable)
+            {
+                //ramasser la glyph
+            }
+        }
+
+        
+    }
+    
+    
+    //Fonction *******************************************************************************************************************
     private void OnTriggerStay2D(Collider2D other) //détecte si un spell est sur le joueur
     {
         if (other.gameObject.CompareTag("CollectableSpell"))
         {
             isPowerCollectable = true;
             collectablePower = other.gameObject;
+        }
+        
+        if (other.gameObject.CompareTag("CollectablePotion"))
+        {
+            isPotionCollectable = true;
+            collectablePotion = other.gameObject;
+        }
+        
+        if (other.gameObject.CompareTag("CollectableGlyph"))
+        {
+            isGlyphCollectable = true;
+            collectableGlyph = other.gameObject;
         }
     }
 
@@ -33,21 +81,34 @@ public class CollectPower : MonoBehaviour
             isPowerCollectable = false;
             collectablePower = null;
         }
-    }
-    
-    private void Update()
-    {
-        if (isPowerCollectable)
+        
+        if (other.gameObject.CompareTag("CollectablePotion"))
         {
-            if (Input.GetKeyDown(interaction))
-            {
-                UiThotManager.Instance.MoveIn = true;
-                UiManager.instance.CollectPower(collectablePower);
-                collectablePower.SetActive(false);
-            }
+            isPotionCollectable = false;
+            collectablePotion = null;
+        }
+        
+        if (other.gameObject.CompareTag("CollectableGlyph"))
+        {
+            isGlyphCollectable = false;
+            collectableGlyph = null;
         }
     }
 
+
+    public void KillPotion()
+    {
+        Destroy(collectablePotion);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
