@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using DG.Tweening;
 using NaughtyAttributes;
 using TMPro;
@@ -79,6 +80,7 @@ public class ChestBehaviour : MonoBehaviour
         }
     }
 
+    [SuppressMessage("ReSharper", "Unity.InefficientPropertyAccess")]
     public IEnumerator OpenChest()
     {
         OuvertureVFX.Play();
@@ -90,7 +92,7 @@ public class ChestBehaviour : MonoBehaviour
         
         for (int i = 0; i < patternLooted.chestContent.Count; i++)
         {
-           Instantiate(patternLooted.chestContent[i], transform.position, Quaternion.identity);
+            Instantiate(patternLooted.chestContent[i], transform.position, Quaternion.identity, transform);
         }
     }
 }

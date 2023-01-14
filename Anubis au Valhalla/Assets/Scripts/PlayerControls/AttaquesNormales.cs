@@ -85,15 +85,15 @@ public class AttaquesNormales : MonoBehaviour
             ExecuteAttack();
         }
 
-        if (mouse.leftButton.wasPressedThisFrame && CharacterController.instance.isDashing)
+        if (mouse.leftButton.wasPressedThisFrame && (CharacterController.instance.isDashing || CharacterController.instance.canBoost))
         {
             buffer = true;
         }
 
-        /*if (mouse.rightButton.wasPressedThisFrame && CharacterController.instance.isDashing)
+        if (mouse.rightButton.wasPressedThisFrame && (CharacterController.instance.isDashing || CharacterController.instance.canBoost))
         {
             buffer2 = true;
-        }*/
+        }
 
         // ------------------ Gestion Abandon du Combo ---------------
         if (abandonOn)
@@ -171,6 +171,7 @@ public class AttaquesNormales : MonoBehaviour
         CharacterController.instance.stopDash = true;
         anim.SetBool("StopCombo",false);
         blockFlip = false;
+        CharacterController.instance.canBuffer = false;
         switch (comboActuel)
         {
             case 0:

@@ -43,12 +43,7 @@ public class TothBehiavour : MonoBehaviour
 
    private void Start()
    {
-      CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
-      TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
-      dialogueMenu = GameObject.Find("MenuDialogues");
-      textDialogues = GameObject.Find("TextDialogues").GetComponent<TextMeshProUGUI>();
-      BlackScreen = GameObject.Find("TransitionFonduDialogues").GetComponent<CanvasGroup>();
-
+      StartCoroutine(GetData());
 
       if (!firstTime)
       {
@@ -181,7 +176,7 @@ public class TothBehiavour : MonoBehaviour
          case OptionChoisie.A:
             if (activeSituation == Situation.isHub)
             {
-               SceneManager.LoadScene("Tuto");
+               SceneManager.LoadScene("Tuto Combat");
             }
             if (activeSituation == Situation.isTutoCombat)
             {
@@ -317,5 +312,16 @@ public class TothBehiavour : MonoBehaviour
       StopAllCoroutines();
       textDialogues.text = String.Empty.Substring(0);
       
+   }
+
+
+   IEnumerator GetData()
+   {
+      yield return new WaitForSeconds(0.1f);
+      CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
+      TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
+      dialogueMenu = GameObject.Find("MenuDialogues");
+      textDialogues = GameObject.Find("TextDialogues").GetComponent<TextMeshProUGUI>();
+      BlackScreen = GameObject.Find("TransitionFonduDialogues").GetComponent<CanvasGroup>();
    }
 }

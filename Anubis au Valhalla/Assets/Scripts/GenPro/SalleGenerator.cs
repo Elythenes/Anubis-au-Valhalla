@@ -35,6 +35,7 @@ namespace GenPro
                 [Header("PATTERNES")]
                 public List<SalleContent_Ennemies> spawnGroups = new List<SalleContent_Ennemies>();
                 public List<SalleContent_Ennemies> spawnGroupsLevel2 = new List<SalleContent_Ennemies>();
+                public SalleContent_Ennemies eliteChallenge;
         
                 [Header("VARIABLES INTERNES POUR DEBUG")]
                 [SerializeField] public int roomsDone = -1;
@@ -266,7 +267,7 @@ namespace GenPro
                                         MovePlayerToDoor(fromDoor);
                                 }
                                 Souls.instance.ClearOfSouls();
-                                ClearRoom();
+                                ClearRoom(); 
                                 if(currentRoom != startRoom)currentRoom.GetSpawnPoints(Random.Range(0, 3));
                                 _moveGrid.target = currentRoom.AstarRef;
                                 transitionCanvas.DOFade(0, 0.25f);
@@ -334,18 +335,8 @@ namespace GenPro
                 /// </summary>
                 public void ClearRoom()
                 {
-                        player.trail.Clear();
-                        foreach(GameObject item in GameObject.FindGameObjectsWithTag("Item"))
-                        {
-                                Destroy(item);
-                        }
-                
-                        foreach(GameObject item in GameObject.FindGameObjectsWithTag("CollectableSpell"))
-                        {
-                                Destroy(item);
-                        }
-
-                        List<GameObject> amount = CharacterController.instance.ghost.tousLesSprites;
+                        player.trail.Clear(); 
+                        var amount = CharacterController.instance.ghost.tousLesSprites;
                         for (int i = 0; i < amount.Count; i++)
                         {
                                 Destroy(CharacterController.instance.ghost.tousLesSprites[i].gameObject);
