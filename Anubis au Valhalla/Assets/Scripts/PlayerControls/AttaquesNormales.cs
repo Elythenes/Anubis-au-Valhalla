@@ -90,10 +90,10 @@ public class AttaquesNormales : MonoBehaviour
             buffer = true;
         }
 
-        /*if (mouse.rightButton.wasPressedThisFrame && CharacterController.instance.isDashing)
+        if (mouse.rightButton.wasPressedThisFrame && (CharacterController.instance.isDashing || CharacterController.instance.canBoost))
         {
             buffer2 = true;
-        }*/
+        }
 
         // ------------------ Gestion Abandon du Combo ---------------
         if (abandonOn)

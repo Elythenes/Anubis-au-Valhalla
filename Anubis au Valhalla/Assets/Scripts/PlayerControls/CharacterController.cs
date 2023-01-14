@@ -492,6 +492,10 @@ public class CharacterController : MonoBehaviour
         hitDoor);
     }
     hitDoor.willChooseSpecial = false;
+    for (int i = 0; i < (int)SalleGenerator.DoorOrientation.West + 1; i++)
+    {
+      SalleGenerator.Instance.OpenDoors((SalleGenerator.DoorOrientation)i,false);
+    }
   }
   
   

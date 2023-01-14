@@ -108,12 +108,7 @@ public class Salle : MonoBehaviour
             }
         }
     }
-
-    private void Update()
-    {
-
-    }
-
+    
     private void C1_AllElites()
     {
         text.Appear(text.titleAlpha,text.titleStartPos,text.title);
@@ -174,7 +169,6 @@ public class Salle : MonoBehaviour
         for (int i = 0; i < (int)SalleGenerator.DoorOrientation.West + 1; i++)
         {
             SalleGenerator.Instance.sDoors[i].transform.position = transformReferences[i].position;
-            //SalleGenerator.instance.s_doors[i].GetComponentInChildren<Animator>().SetBool("Open",false);
         }
         
     }
@@ -393,7 +387,7 @@ public class Salle : MonoBehaviour
                 //spawn better loot
                 break;
         }
-        Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity);
+        Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
     }
     public IEnumerator DelayedSpawns()
     {
