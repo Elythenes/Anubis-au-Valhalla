@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
-
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
+using UnityEngine.SceneManagement;
 
 public class TothBehiavour : MonoBehaviour
 {
    public bool isTalkable;
+   public bool firstTime;
    public float menuSpeed;
    public float textSpeed;
    public int isFade;
@@ -19,6 +22,14 @@ public class TothBehiavour : MonoBehaviour
    public TextMeshProUGUI textDialogues;
    public CanvasGroup BlackScreen;
    public static TothBehiavour instance;
+   public TextMeshProUGUI eyeCatcher;
+
+   public enum Situation {isHub,isTutoPouvoirs,isTutoCombat,isTutoLD,isTutoShop}
+   public Situation activeSituation;
+   public List<TextMeshProUGUI> listeTextBouton = new List<TextMeshProUGUI>();
+   public enum OptionChoisie {A,B,C,D}
+   public OptionChoisie boutonPressed;
+   
 
    private void Awake()
    {
@@ -34,9 +45,15 @@ public class TothBehiavour : MonoBehaviour
    {
       CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
       TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
-      dialogueMenu = GameObject.Find("MenuTuto");
+      dialogueMenu = GameObject.Find("MenuDialogues");
       textDialogues = GameObject.Find("TextDialogues").GetComponent<TextMeshProUGUI>();
       BlackScreen = GameObject.Find("TransitionFonduDialogues").GetComponent<CanvasGroup>();
+
+
+      if (!firstTime)
+      {
+         Destroy(eyeCatcher);
+      }
    }
 
    private void Update()
@@ -72,10 +89,19 @@ public class TothBehiavour : MonoBehaviour
          {
             isFade = 1;
             isTalkable = false;
+            ChangeText();
             DialogueUP();
             CharacterController.instance.allowMovements = false;
          }
+
+         if (firstTime)
+         {
+            Destroy(eyeCatcher);
+            firstTime = false;
+         }
       }
+      
+   
    }
 
    private void OnTriggerEnter2D(Collider2D col)
@@ -101,12 +127,160 @@ public class TothBehiavour : MonoBehaviour
          isTalkable = false;
       }
    }
+   
+   
+   // ******************************* Fonction Situations **************************************************************************************
 
+   
+   public void ChangeText()
+   {
+      switch (activeSituation)
+      { 
+         case Situation.isHub:
+            StartCoroutine(Type("Bonjour Anubis, je peux te guider dans ta quête de vangeance."));
+            listeTextBouton[0].text = ("Commencer le tutoriel");
+            listeTextBouton[1].text = ("Consulter le Tableau des scores");
+            listeTextBouton[2].text = ("Revoir l'introduction");
+            listeTextBouton[3].text = ("Au revoir Thot");
+            break;
+         case Situation.isTutoCombat: 
+            StartCoroutine(Type("Tu rencontreras de puissants ennemis dans le Valhalla. Tu devras les vaincre comme le dieu de la mort que tu es."));
+            listeTextBouton[0].text = ("Comment combattre mes adversaires ?");
+            listeTextBouton[1].text = ("Quelles sont les menaces ?");
+            listeTextBouton[2].text = ("Les ennemis élites ?");
+            listeTextBouton[3].text = ("C'est compris.");
+            break;
+         case Situation.isTutoPouvoirs: 
+            StartCoroutine(Type("Regardons maintenant la magie que je t'ai enseigné, elle te sera utile pour vaincre tes adversaires."));
+            listeTextBouton[0].text = ("Rappel moi en quoi consiste la magie.");
+            listeTextBouton[1].text = ("Comment utiliser cette magie ?");
+            listeTextBouton[2].text = ("Puis-je améliorer ma magie ?");
+            listeTextBouton[3].text = ("Je tâcherais de m'en rappeler");
+            break;
+         case Situation.isTutoShop: 
+            StartCoroutine(Type("Dans le Valhalla, tu trouveras des salles dans lesquelles mon influence est grande. Apporte moi les ames que tu récolteras et je les changerais en de nouveaux pouvoirs."));
+            listeTextBouton[0].text = ("Comment récolter des âmes ?");
+            listeTextBouton[1].text = ("Quelles pouvoirs pourras tu m'offrir ?");
+            listeTextBouton[2].text = ("Peut-tu soigner mes blessures ?");
+            listeTextBouton[3].text = ("Merci pour ton assistance Thot.");
+            break;
+         case Situation.isTutoLD: 
+            StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les differentes portes, elles t'indiqueront le chemin à suivre."));
+            listeTextBouton[0].text = ("Les salles normales ?");
+            listeTextBouton[1].text = ("Les salles challenges ?");
+            listeTextBouton[2].text = ("Les salles Ethérées ?");
+            listeTextBouton[3].text = ("C'est d'accord, merci pour tes conseils.");
+            break;
+      }
+   }
+   
+   public void UpdateSituation()
+   {
+      switch (boutonPressed)
+      {
+         case OptionChoisie.A:
+            if (activeSituation == Situation.isHub)
+            {
+               SceneManager.LoadScene("Tuto");
+            }
+            if (activeSituation == Situation.isTutoCombat)
+            {
+               StopDialogue();
+               StartCoroutine(Type("Souvient toi de ton entrainement au Sceptre. Tu peut frapper les ennemis avec ton arme en utilisant le Clique Gauche. Avec le clique droit, tu pourras les repousser avec. Reste en mouvement en appuyant sur Espace pour effectuer un dash."));
+            }
+            if (activeSituation == Situation.isTutoPouvoirs)
+            {
+               StopDialogue();
+               StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les differentes portes, elles t'indiqueront le chemin à suivre."));
+            }
+            if (activeSituation == Situation.isTutoShop)
+            {
+               StopDialogue();
+               StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les differentes portes, elles t'indiqueront le chemin à suivre."));
+            }
+            if (activeSituation == Situation.isTutoLD)
+            {
+               StopDialogue();
+               StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les differentes portes, elles t'indiqueront le chemin à suivre."));
+            }
+            break;
+         case OptionChoisie.B:
+            if (activeSituation == Situation.isHub)
+            {
+               // Ouvrir tableau des scores
+            }
+            if (activeSituation == Situation.isTutoCombat)
+            {
+               StopDialogue();
+               StartCoroutine(Type("Tu rencontreras les guerries morts-vivants, très résistants mais peu mobiles. Les loups eux sont très rapides, leur charge oblige à rester en mouvment. Les corbeaux eux sont plus faibles, mais gardent leur distances pour attaquer. "));
+            }
+            if (activeSituation == Situation.isTutoPouvoirs)
+            {
+               
+            }
+            if (activeSituation == Situation.isTutoShop)
+            {
+               
+            }
+            if (activeSituation == Situation.isTutoLD)
+            {
+               
+            }
+            break;
+         case OptionChoisie.C:
+            if (activeSituation == Situation.isHub)
+            {
+               SceneManager.LoadScene("CinématiqueIntro");
+            }
+            if (activeSituation == Situation.isTutoCombat)
+            {
+               StopDialogue();
+               StartCoroutine(Type("Les ennemis élites sont des ennemis plus puissantes et résistants de le autres. Ils sont insensibles au repoussements et attaquent rapidement."));
+            }
+            if (activeSituation == Situation.isTutoPouvoirs)
+            {
+               
+            }
+            if (activeSituation == Situation.isTutoShop)
+            {
+               
+            }
+            if (activeSituation == Situation.isTutoLD)
+            {
+               
+            }
+            break;
+         case OptionChoisie.D:
+            DialogueDOWN();
+            break;
+         
+      }
+   }
+
+
+   public void ChoseA()
+   {
+      boutonPressed = OptionChoisie.A;
+   }
+   public void ChoseB()
+   {
+      boutonPressed = OptionChoisie.B;
+   }
+   public void ChoseC()
+   {
+      boutonPressed = OptionChoisie.C;
+   }
+   public void ChoseD()
+   {
+      boutonPressed = OptionChoisie.D;
+   }
+
+   // ******************************* Fonction Maîtres **************************************************************************************
+   
    public void DialogueUP()
    {
       dialogueMenu.SetActive(true);
       dialogueMenu.transform.DOLocalMove(new Vector3(transform.position.x,upDownY,transform.position.z),menuSpeed);
-      StartCoroutine(Type("Bonjour Anubis, si tu as la moindre question, je suis pret à y répondre."));
    }
    
    public void DialogueDOWN()
@@ -114,28 +288,10 @@ public class TothBehiavour : MonoBehaviour
       isTalkable = true;
       StopDialogue();
       isFade = 2;
-      StartCoroutine(Type("Bonne chance Anubis, je veillerais sur toi."));
+      //StartCoroutine(Type("Bonne chance Anubis, je veillerais sur toi."));
       dialogueMenu.transform.DOLocalMove(new Vector3(transform.position.x,upDownY - 440,transform.position.z),menuSpeed);
       CharacterController.instance.allowMovements = true;
       dialogueMenu.SetActive(false);
-   }
-
-   public void DialogueSorts()
-   {
-      StopDialogue();
-      StartCoroutine(Type("Les pouvoirs sont des abilités puissantes que tu trouvera dans des coffres en terminant des salles. Tu peux en porter 2 à la fois et les utiliser aves les touches E et R. Une fois un pouvoir activé, tes attaques aurons des propriétés particulières."));
-   }
-   
-   public void DialogueShop()
-   {
-      StopDialogue();
-      StartCoroutine(Type("Tu trouveras dans le Valhalla, des endrois propice à la médiatation. Dans ceux-ci, utilise les âmes aquises au combat pour améliorer ton arme. Tu pouras choisir d'améliorer la lame, la hampe ou la poignée qui proposent respectivement des améliorations offensives, défensives ou de mobilité."));
-   }
-   
-   public void DialogueLD()
-   {
-      StopDialogue();
-      StartCoroutine(Type("Dans le Valhalla, tu trouveras differents types de salles. Les salles normales qui renferment des ennemis et des récompences basiques, les salles Challenge, qui contiennent de grands dangers mais aussi de plus grandes récompences et enfin les salles de méditation qui te permettrons d'améliorer ton arme."));
    }
 
    IEnumerator Type(string textToType)
@@ -159,6 +315,7 @@ public class TothBehiavour : MonoBehaviour
    void StopDialogue()
    {
       StopAllCoroutines();
-      textDialogues.text = String.Empty;
+      textDialogues.text = String.Empty.Substring(0);
+      
    }
 }

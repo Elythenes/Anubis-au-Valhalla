@@ -227,7 +227,6 @@ namespace GenPro
 
                                 if (zone2)
                                 {
-                                        Debug.Log("el cringo");
                                         return Instantiate(endRoom2);
                                 }
                                 EnableDoors(fromDoor,true);
@@ -266,6 +265,7 @@ namespace GenPro
                                 {
                                         MovePlayerToDoor(fromDoor);
                                 }
+                                Souls.instance.ClearOfSouls();
                                 ClearRoom();
                                 if(currentRoom != startRoom)currentRoom.GetSpawnPoints(Random.Range(0, 3));
                                 _moveGrid.target = currentRoom.AstarRef;
@@ -351,13 +351,9 @@ namespace GenPro
                                 Destroy(CharacterController.instance.ghost.tousLesSprites[i].gameObject);
                         }
 
-                        foreach (var soul in Souls.instance.soulsInScene)
-                        {
-                                Souls.instance.CollectSouls(soul,1);
-                                
-                        }
-                        Souls.instance.soulsInScene.Clear();
+
                         amount.Clear();
+
                         if (TothBehiavour.instance != null && roomsDone != 0)
                         {
                                 DestroyImmediate(TothBehiavour.instance.gameObject);

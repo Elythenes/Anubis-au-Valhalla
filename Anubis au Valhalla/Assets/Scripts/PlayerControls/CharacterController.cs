@@ -50,7 +50,6 @@ public class CharacterController : MonoBehaviour
   public float dashDuration;
   private float timerdashCooldown;
   public float diagonalSpeedMultiplier;
-  public float dashBuffer;
   public bool canBuffer = false;
   public bool canBoost = false;
   [NaughtyAttributes.ReadOnly] public float dashCooldown;
@@ -60,8 +59,6 @@ public class CharacterController : MonoBehaviour
 
   [HideInInspector]public Rigidbody2D rb; // ca aussi
   public Vector2 movement;
-  public float astarPathTimer = 0f;
-  public float astarPathTimerMax = 1f;
 
   [Header("Utilitaires")] 
   public KeyCode interaction;
@@ -189,7 +186,7 @@ public class CharacterController : MonoBehaviour
    
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash && allowMovements && !AttaquesNormales.instance.attaqueSpe2 && Time.timeScale != 0)
     {
-    
+      timerDash = 0;
       dashTracker.SetActive(true);
       stopDash = false;
       allowMovements = false;
@@ -258,16 +255,7 @@ public class CharacterController : MonoBehaviour
         InteractWithDoor(currentDoor);
       }
     }
-
-    /*if (canBuffer)
-    {
-      dashBuffer -= Time.deltaTime;
-      if (dashBuffer < 0)
-      {
-        canBuffer = false;
-        playerCol.enabled = true;
-      }
-    }*/
+    
   }
 
   public void Dashing()

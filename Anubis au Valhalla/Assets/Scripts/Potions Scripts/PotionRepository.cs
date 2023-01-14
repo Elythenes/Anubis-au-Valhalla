@@ -46,7 +46,8 @@ public class PotionRepository : MonoBehaviour
             int numberGot = Random.Range(0, potionsList.Count);
             potionInside = potionsList[numberGot];
         }
-        
+
+        //GetComponent<SpriteRenderer>().sprite = potionInside.sprite;
         
         if (isMoving)
         {

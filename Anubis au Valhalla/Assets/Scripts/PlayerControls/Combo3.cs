@@ -12,28 +12,44 @@ public class Combo3 : MonoBehaviour
     private bool isWaiting;
     public GameObject mainCamera;
     public GameObject bloodEffect;
-    public PolygonCollider2D collider;
-    
+    public GameObject parent;
+
     [Header("Effet Smash")]
-    public Material cracksMeshRenderer;
+    public ParticleSystem cracksMeshRenderer;
+    public Material particulesMaterial;
     public float disolveValue = 1;
-    public float amountReducedByFrame;
+    public float disolveGainedByFrame;
+    public GameObject collider;
+    public float scaleGainedByFrame;
 
 
     public virtual void Start()
     {
-        disolveValue = 1;
+        Destroy(parent,AnubisCurrentStats.instance.dureeHitbox[2]);
+        disolveValue = 0;
+        particulesMaterial = cracksMeshRenderer.GetComponent<Renderer>().material;
         mainCamera = GameObject.Find("CameraHolder");
         mainCamera.transform.DOShakePosition(0.2f,1.5f);
-        Destroy(gameObject, AttaquesNormales.instance.dureeHitbox[3]);
        transform.localScale *= AttaquesNormales.instance.rangeAttaque[3];
        StartCoroutine(StopHitbox());
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        disolveValue -= amountReducedByFrame;
-//        cracksMeshRenderer.SetFloat("_step", disolveValue);
+        if (disolveValue < 0.99f)
+        {
+            disolveValue += disolveGainedByFrame;
+            particulesMaterial.SetFloat("_Step", disolveValue);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        if (collider.transform.localScale.x < 0.15f && collider.transform.localScale.y < 0.15f)
+        { 
+            collider.transform.localScale += new Vector3(scaleGainedByFrame, scaleGainedByFrame, 0); 
+        }
     }
     public virtual void OnTriggerEnter2D(Collider2D col)
     {
@@ -75,6 +91,5 @@ public class Combo3 : MonoBehaviour
     IEnumerator StopHitbox()
     {
         yield return new WaitForSeconds(0.1f);
-        collider.enabled = false;
     }
 }

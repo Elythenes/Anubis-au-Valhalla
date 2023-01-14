@@ -107,7 +107,6 @@ public class Salle : MonoBehaviour
                     break;
             }
         }
-        //Debug.Log("challenge chosen " + challengeChosen);
     }
 
     private void Update()
@@ -336,7 +335,6 @@ public class Salle : MonoBehaviour
                             (localTile.y >= door.y - 2 &&
                              localTile.y <= door.y + 2))
                         {
-                                Debug.Log("true");
                                 //Instantiate(fill, localTile, quaternion.identity);
                                 availableTilePos.Remove(localTile); 
                         }
@@ -395,7 +393,7 @@ public class Salle : MonoBehaviour
                 //spawn better loot
                 break;
         }
-        Instantiate(coffre,player.transform.position,Quaternion.identity);
+        Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity);
     }
     public IEnumerator DelayedSpawns()
     {

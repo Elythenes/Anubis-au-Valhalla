@@ -13,23 +13,8 @@ public class GlyphInventory : MonoBehaviour
     public bool doStartHieroTest;
     [Expandable] public List<GlyphObject> hieroTest;
 
-    [NaughtyAttributes.ReadOnly] public int indexConvertorForLame = 100;
-    [NaughtyAttributes.ReadOnly] public int indexConvertorForManche = 200;
-    [NaughtyAttributes.ReadOnly] public int indexConvertorPoignee = 300;
     
-
-
-    void Start()
-    {
-        if (doStartHieroTest)
-        {
-            for (int i = 0; i < hieroTest.Count; i++)
-            {
-                AddGlyph(hieroTest[i]);
-            }
-        }
-    }
-
+    //Fonction : Systèmes *******************************************************************************************************************
     private void Awake()
     {
         if (Instance == null)
@@ -37,8 +22,72 @@ public class GlyphInventory : MonoBehaviour
             Instance = this;
         }
     }
+    
+    void Start()
+    {
+        if (doStartHieroTest)
+        {
+            foreach (var hiero in hieroTest)
+            {
+                AddNewGlyph(hiero);
+            }
+        }
+    }
+    
+    
+    public void AddNewGlyph(GlyphObject hiero)
+    {
+        Debug.Log("call AddNewGlyph");
 
-    public void AddGlyph(GlyphObject hiero) 
+        switch (hiero.partie)
+        {
+            case GlyphObject.GlyphPart.Lame:
+                GlyphManager.Instance.listLame.Add(hiero);              //ajoute dans la liste en fonction de la partie de l'arme affecté par la glyphe
+                GlyphManager.Instance.ActiveGlyphInManager(hiero);      //update les variables qui sont liée au glyphe en fonction de la rareté
+                glyphInventory.Add(hiero);                              //ajoute dans l'inventaire pour l'UI
+                break;
+            
+            case GlyphObject.GlyphPart.Manche:
+                GlyphManager.Instance.listManche.Add(hiero);
+                GlyphManager.Instance.ActiveGlyphInManager(hiero);
+                glyphInventory.Add(hiero);
+                break;
+            
+            case GlyphObject.GlyphPart.Poignee:
+                GlyphManager.Instance.listPoignee.Add(hiero);
+                GlyphManager.Instance.ActiveGlyphInManager(hiero);
+                glyphInventory.Add(hiero);
+                break;
+            
+            default:
+                Debug.LogError("Frérot, t'as pas mis de partie associée à la glyphe : " + hiero.name + ".");
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+     [NaughtyAttributes.ReadOnly] public int indexConvertorForLame = 100;
+    [NaughtyAttributes.ReadOnly] public int indexConvertorForManche = 200;
+    [NaughtyAttributes.ReadOnly] public int indexConvertorPoignee = 300;
+     
+     
+     public void AddGlyph(GlyphObject hiero) 
     {
         GlyphWrap wrap = new GlyphWrap();                                               //définition d'une variable pour la fonction qui va contenir le glyphe et sa State
         wrap.glyphObject = hiero;                                                       //attache du GlypheObject en soi
@@ -73,10 +122,11 @@ public class GlyphInventory : MonoBehaviour
             return;
         }
         
-    }
+    }*/
     
     
     
+    /*
     void AddInInventory(GlyphObject glyphObject)
     {
         glyphInventory.Add(glyphObject);
@@ -102,4 +152,7 @@ public class GlyphInventory : MonoBehaviour
     {
         
     }
+    
+    */
+    
 }

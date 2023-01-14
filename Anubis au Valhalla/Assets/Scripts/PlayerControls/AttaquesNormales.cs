@@ -47,6 +47,7 @@ public class AttaquesNormales : MonoBehaviour
     public int comboActuel;
     public float cooldownAbandonCombo;
     public float cooldownAbandonComboTimer;
+    public float offsetAtk3;
     public bool buffer;
     public bool buffer2;
     public GameObject swordObj;
@@ -396,6 +397,11 @@ public class AttaquesNormales : MonoBehaviour
         if (index == 0 || index == 1)
         {
             swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+        }
+
+        if (index == 2)
+        {
+            swordObj.transform.position = transform.position + (moveDirection * offsetAtk3);
         }
     }
 

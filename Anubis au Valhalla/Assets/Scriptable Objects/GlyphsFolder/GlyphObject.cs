@@ -8,19 +8,18 @@ public class GlyphObject : ScriptableObject
 {
     [Header("GENERAL")]
     public string nom;
-    public GlyphPart partie;
-    //public GlyphType type;
-    [HideInInspector] public GlyphLevel level;
-    public float price;
-    public int index;
     [TextArea(6,20)] public string description;
-    //[TextArea(5, 10)] public string citation;
-    //public GlyphElement element;
-    [Range(1, 4)] public int tier = 1;
-    //public GlyphEffect effectType;
-    [BoxGroup("GRAPH")] public Texture icone;
-    [BoxGroup("GRAPH")] public Texture iconeElement; // (visible à côté / dans l'icone) pour indiquer l'élément dans le Shop
-    [BoxGroup("GRAPH")] public Texture fondElement; // (visible dans l'Inventaire) pour savoir s'il est associé à un élément 
+    
+    public GlyphPart partie;
+    public int index;
+    
+    [Header("SHOP")]
+    [Range(1, 3)] public int rarity = 1;
+    public bool unique;
+    public float price;
+    
+    [Header("GRAPH")] 
+    public Texture icone;
 
     [BoxGroup("SHOW VALUES")] public bool isBasicStatUp;
     [BoxGroup("SHOW VALUES")] public bool isSituationalStatUp;
@@ -76,42 +75,6 @@ public class GlyphObject : ScriptableObject
         Poignee
     }
 
-    public enum GlyphEffect
-    {
-        BasicStatUp,
-        SituationalStatUp,
-        SpecialStat,
-        //Elemental,
-        AdditionalDamage,
-        TriggerEffect,
-        Charge,
-        TimeBased,
-        BoolEffect,
-        Others
-    }
-
-    /*public enum GlyphElement
-    {
-        None,
-        Bandage,
-        Water,
-        Fire,
-        SpiritualFire,
-        Thunder,
-        Curse,
-        Sand,
-        Bleeding,
-        Wind
-    }*/
-
-    public enum GlyphLevel
-    {
-        Unique,
-        MinimumLevel,
-        MiddleLevel,
-        MaximumLevel
-    }
-    
     public enum AnubisStat
     {
         AnubisBaseDamage,

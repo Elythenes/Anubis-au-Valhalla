@@ -20,10 +20,10 @@ public class ProjectileCorbeau : MonoBehaviour
         Destroy(gameObject,5f);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         transform.position = new Vector3(transform.position.x + dir.x * ia.plumeSpeed, transform.position.y + dir.y * ia.plumeSpeed, 0);
-        
+       
     }
 
     private void OnTriggerEnter2D(Collider2D col)
