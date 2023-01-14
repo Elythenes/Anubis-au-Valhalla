@@ -1,9 +1,7 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class UiPowerManager : MonoBehaviour
