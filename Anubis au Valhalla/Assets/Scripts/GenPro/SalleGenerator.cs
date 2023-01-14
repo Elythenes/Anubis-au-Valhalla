@@ -35,6 +35,7 @@ namespace GenPro
                 [Header("PATTERNES")]
                 public List<SalleContent_Ennemies> spawnGroups = new List<SalleContent_Ennemies>();
                 public List<SalleContent_Ennemies> spawnGroupsLevel2 = new List<SalleContent_Ennemies>();
+                public SalleContent_Ennemies eliteChallenge;
         
                 [Header("VARIABLES INTERNES POUR DEBUG")]
                 [SerializeField] public int roomsDone = -1;
