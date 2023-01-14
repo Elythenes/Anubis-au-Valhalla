@@ -107,7 +107,6 @@ public class Salle : MonoBehaviour
                     break;
             }
         }
-        //Debug.Log("challenge chosen " + challengeChosen);
     }
 
     private void Update()
@@ -336,7 +335,6 @@ public class Salle : MonoBehaviour
                             (localTile.y >= door.y - 2 &&
                              localTile.y <= door.y + 2))
                         {
-                                Debug.Log("true");
                                 //Instantiate(fill, localTile, quaternion.identity);
                                 availableTilePos.Remove(localTile); 
                         }

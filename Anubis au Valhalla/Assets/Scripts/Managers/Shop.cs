@@ -214,7 +214,6 @@ public class Shop : MonoBehaviour
         hasgenerated = true;
         for (int i = 0; i <= 8; i++)
         {
-            Debug.Log("Wassup baby");
             if (i <= 2)
             {
                 var index = Random.Range(0, upgradesList.UpsLame.Count);
@@ -375,7 +374,6 @@ public class Shop : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log(cost.Count);
         soldOut = 0;
         foreach (var bought in boughtUpgrades)
         {
@@ -396,7 +394,6 @@ public class Shop : MonoBehaviour
     public void InstantHeal(float percentHeal, int price)
     {
         AnubisCurrentStats.instance.vieActuelle += Mathf.RoundToInt(AnubisCurrentStats.instance.vieMax * (percentHeal / 100));
-        Debug.Log("ca devrait heal tant de pv:" + AnubisCurrentStats.instance.vieMax * (percentHeal / 100));
         if (AnubisCurrentStats.instance.vieActuelle > AnubisCurrentStats.instance.vieMax)
             AnubisCurrentStats.instance.vieActuelle = AnubisCurrentStats.instance.vieMax;
         Souls.instance.soulBank -= price;
