@@ -11,12 +11,41 @@ public class MenuOptions : MonoBehaviour
   private List<int> widths = new List<int>() { 568, 960, 1280, 1920};
   private List<int> heights = new List<int>() {320,540,800,1080};
 
+  public TMP_Dropdown resolutionDropdown;
+  private Resolution[] resolutions;
+  
   public AudioMixer audioMixer;
   public Slider sliderMaster;
   public Slider sliderMusic;
   public Slider sliderSFX;
   public TextMeshProUGUI textMaster, textMusic, textSFX;
 
+  private void Start()
+  {
+    resolutions = Screen.resolutions;
+
+    resolutionDropdown.ClearOptions();
+
+    List<string> options = new List<string>();
+
+    int currentResolutionIndex = 0;
+
+    for (int i = 0; i < resolutions.Length; i++)
+    {
+      string option = resolutions[i].width + "x" + resolutions[i].height;
+      options.Add(option);
+
+      if (resolutions[i].width == Screen.currentResolution.width
+          && resolutions[i].height == Screen.currentResolution.height)
+      {
+        currentResolutionIndex = i;
+      }
+    }
+    
+    resolutionDropdown.AddOptions(options);
+    resolutionDropdown.value = currentResolutionIndex;
+    resolutionDropdown.RefreshShownValue();
+  }
 
   private void Update()
   {
@@ -29,12 +58,10 @@ public class MenuOptions : MonoBehaviour
       }
   }
 
-  public void SetScreenSize(int index)
+  public void SetScreenSize(int resolutionIndex)
   {
-    bool fullscreen = Screen.fullScreen;
-    int width = widths[index];
-    int height = heights[index];
-    Screen.SetResolution(width,height,fullscreen);
+    Resolution resolution = resolutions[resolutionIndex];
+    Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
   }
 
   public void SetMasterVolume()
