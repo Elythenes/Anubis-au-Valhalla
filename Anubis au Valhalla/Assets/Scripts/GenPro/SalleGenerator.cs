@@ -35,7 +35,16 @@ namespace GenPro
                 [Header("PATTERNES")]
                 public List<SalleContent_Ennemies> spawnGroups = new List<SalleContent_Ennemies>();
                 public List<SalleContent_Ennemies> spawnGroupsLevel2 = new List<SalleContent_Ennemies>();
-        
+                public SalleContent_Ennemies eliteChallenge;
+                [Header("CALCULS DE RARETE DU SHOP")] 
+                public int spawnedShops;
+
+                public List<float> chancePharaon = new List<float>(7) { 40, 45, 60, 65, 75, 90, 90};
+                public List<float> chanceDivinité = new List<float>(7) { 0, 0, 20, 30, 40, 50, 60};
+
+                public List<int> nbMaxPharaon = new List<int>(7) { 3, 4, 5, 6, 7, 8, 9 };
+                public List<int> nbMaxDivinite = new List<int>(7) { 0, 0, 1, 2, 3, 4, 5 };
+
                 [Header("VARIABLES INTERNES POUR DEBUG")]
                 [SerializeField] public int roomsDone = -1;
                 public DoorOrientation fromDoor = DoorOrientation.West;
@@ -177,6 +186,7 @@ namespace GenPro
                                 var shopspawn = Random.value;
                                 if (shopspawn >= shopSpawnChance)
                                 {
+                                        spawnedShops++;
                                         Door removedDoor = sDoors[(int)fromDoor];
                                         sDoors.RemoveAt((int)fromDoor);
                                         Door doorToShop = sDoors[Random.Range(0, sDoors.Count)];
@@ -205,6 +215,7 @@ namespace GenPro
                                         sDoors[i].currentDoorType = Door.DoorType.ToShop;
                                         sDoors[i].ChooseSpecialToSpawn(0);
                                         sDoors[i].willChooseSpecial = false;
+                                        spawnedShops++;
                                 }
                         }
                         if (roomsDone == dungeonSize - 1)
