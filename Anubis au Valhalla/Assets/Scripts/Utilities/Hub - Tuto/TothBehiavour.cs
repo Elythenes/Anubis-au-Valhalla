@@ -185,23 +185,23 @@ public class TothBehiavour : MonoBehaviour
             }
             if (activeSituation == Situation.isTutoCombat)
             {
+               StopDialogue();
                StartCoroutine(Type("Souvient toi de ton entrainement au Sceptre. Tu peut frapper les ennemis avec ton arme en utilisant le Clique Gauche. Avec le clique droit, tu pourras les repousser avec. Reste en mouvement en appuyant sur Espace pour effectuer un dash."));
-
             }
             if (activeSituation == Situation.isTutoPouvoirs)
             {
+               StopDialogue();
                StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les differentes portes, elles t'indiqueront le chemin à suivre."));
-
             }
             if (activeSituation == Situation.isTutoShop)
             {
+               StopDialogue();
                StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les differentes portes, elles t'indiqueront le chemin à suivre."));
-
             }
             if (activeSituation == Situation.isTutoLD)
             {
+               StopDialogue();
                StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les differentes portes, elles t'indiqueront le chemin à suivre."));
-
             }
             break;
          case OptionChoisie.B:
@@ -211,8 +211,8 @@ public class TothBehiavour : MonoBehaviour
             }
             if (activeSituation == Situation.isTutoCombat)
             {
+               StopDialogue();
                StartCoroutine(Type("Tu rencontreras les guerries morts-vivants, très résistants mais peu mobiles. Les loups eux sont très rapides, leur charge oblige à rester en mouvment. Les corbeaux eux sont plus faibles, mais gardent leur distances pour attaquer. "));
-
             }
             if (activeSituation == Situation.isTutoPouvoirs)
             {
@@ -234,8 +234,8 @@ public class TothBehiavour : MonoBehaviour
             }
             if (activeSituation == Situation.isTutoCombat)
             {
+               StopDialogue();
                StartCoroutine(Type("Les ennemis élites sont des ennemis plus puissantes et résistants de le autres. Ils sont insensibles au repoussements et attaquent rapidement."));
-
             }
             if (activeSituation == Situation.isTutoPouvoirs)
             {
@@ -274,29 +274,7 @@ public class TothBehiavour : MonoBehaviour
    {
       boutonPressed = OptionChoisie.D;
    }
-  
 
-   // ******************************* Fonction Fonctionnelles **************************************************************************************
-   
-   public void DialogueSorts()
-   {
-      StopDialogue();
-      StartCoroutine(Type("Les pouvoirs sont des abilités puissantes que tu trouvera dans des coffres en terminant des salles. Tu peux en porter 2 à la fois et les utiliser aves les touches E et R. Une fois un pouvoir activé, tes attaques aurons des propriétés particulières."));
-   }
-   
-   public void DialogueShop()
-   {
-      StopDialogue();
-      StartCoroutine(Type("Tu trouveras dans le Valhalla, des endrois propice à la médiatation. Dans ceux-ci, utilise les âmes aquises au combat pour améliorer ton arme. Tu pouras choisir d'améliorer la lame, la hampe ou la poignée qui proposent respectivement des améliorations offensives, défensives ou de mobilité."));
-   }
-   
-   public void DialogueLD()
-   {
-      StopDialogue();
-      StartCoroutine(Type("Dans le Valhalla, tu trouveras differents types de salles. Les salles normales qui renferment des ennemis et des récompences basiques, les salles Challenge, qui contiennent de grands dangers mais aussi de plus grandes récompences et enfin les salles de méditation qui te permettrons d'améliorer ton arme."));
-   }
-   
-   
    // ******************************* Fonction Maîtres **************************************************************************************
    
    public void DialogueUP()
@@ -337,6 +315,7 @@ public class TothBehiavour : MonoBehaviour
    void StopDialogue()
    {
       StopAllCoroutines();
-      textDialogues.text = String.Empty;
+      textDialogues.text = String.Empty.Substring(0);
+      
    }
 }

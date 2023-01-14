@@ -206,27 +206,31 @@ public class CharacterController : MonoBehaviour
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
-      anim.SetBool("isDashing",false);
-      anim.SetBool("isWalking",true);
-      dashTracker.SetActive(false);
-      allowMovements = true;
-      finDash = true;
-      StartCoroutine(ResetTracking());
-      rb.velocity *= 0.85f;
-      AttaquesNormales.instance.canAttack = true;
-      isDashing = false;
-      timerDash = 0;
-      canDash = false;
-      if (AttaquesNormales.instance.buffer)
+      if (!canBoost)
       {
-        AttaquesNormales.instance.buffer = false;
-        AttaquesNormales.instance.ExecuteAttack();
-      }
+        playerCol.enabled = true;
+        timerDash = 0;
+        anim.SetBool("isDashing",false);
+        anim.SetBool("isWalking",true);
+        dashTracker.SetActive(false);
+        allowMovements = true;
+        finDash = true;
+        StartCoroutine(ResetTracking());
+        rb.velocity *= 0.85f;
+        AttaquesNormales.instance.canAttack = true;
+        isDashing = false;
+        canDash = false;
+        if (AttaquesNormales.instance.buffer)
+        {
+          AttaquesNormales.instance.buffer = false;
+          AttaquesNormales.instance.ExecuteAttack();
+        }
 
-      if (AttaquesNormales.instance.buffer2)
-      {
-        AttaquesNormales.instance.buffer2 = false;
-        AttaquesNormales.instance.SpecialAttack();
+        if (AttaquesNormales.instance.buffer2)
+        {
+          AttaquesNormales.instance.buffer2 = false;
+          AttaquesNormales.instance.SpecialAttack();
+        }
       }
     }
 

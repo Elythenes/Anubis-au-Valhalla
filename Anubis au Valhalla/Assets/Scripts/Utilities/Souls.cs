@@ -54,6 +54,15 @@ public class Souls : MonoBehaviour
         UpdateSoulsCounter();
     }
 
+    public void ClearOfSouls()
+    {
+        List<GameObject> souls = soulsInScene;
+        for (int i = 0; i < souls.Count; i++)
+        {
+            CollectSouls(soulsInScene[0],1);
+        }
+    }
+
     public void UpdateSoulsCounter()
     {
         soulText.text = soulBank.ToString();
