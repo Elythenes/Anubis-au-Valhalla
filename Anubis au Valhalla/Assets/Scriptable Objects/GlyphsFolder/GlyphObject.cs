@@ -16,6 +16,7 @@ public class GlyphObject : ScriptableObject
     [Header("SHOP")]
     [Range(1, 3)] public int rarity = 1;
     public bool unique;
+    public Rarity rare = Rarity.Prêtre; 
     public float price;
     
     [Header("GRAPH")] 
@@ -130,4 +131,12 @@ public class GlyphObject : ScriptableObject
         Periodic,
         NoneTimeType
     }
+}
+
+public enum Rarity
+{
+    Prêtre,
+    Pharaon,
+    Divinité,
+    Unique,
 }

@@ -214,12 +214,11 @@ public class Shop : MonoBehaviour
         hasgenerated = true;
         for (int i = 0; i <= 8; i++)
         {
-            Debug.Log("Wassup baby");
             if (i <= 2)
             {
                 var index = Random.Range(0, upgradesList.UpsLame.Count);
                 var lame = upgradesList.UpsLame[index].Lames[0];
-                var itemCost = Mathf.RoundToInt(100 * lame.rarity); //Multiplicator, based on the upgrades tier and level
+                var itemCost = Mathf.RoundToInt(100 * lame.rarity);
                 choice.Add(lame);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -228,7 +227,7 @@ public class Shop : MonoBehaviour
             {
                 var index = Random.Range(0, upgradesList.UpsHampe.Count);
                 var hampe = upgradesList.UpsHampe[index].Hampes[0];
-                var itemCost = Mathf.RoundToInt(100 * hampe.rarity); //Multiplicator, based on the upgrades tier and level
+                var itemCost = Mathf.RoundToInt(100 * hampe.rarity);
                 choice.Add(hampe);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -237,7 +236,7 @@ public class Shop : MonoBehaviour
             {
                 var index = Random.Range(0, upgradesList.UpsManche.Count);
                 var manche = upgradesList.UpsManche[index].Manches[0];
-                var itemCost = Mathf.RoundToInt(100 * manche.rarity); //Multiplicator, based on the upgrades tier and level
+                var itemCost = Mathf.RoundToInt(100 * manche.rarity);
                 choice.Add(manche);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -375,7 +374,6 @@ public class Shop : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log(cost.Count);
         soldOut = 0;
         foreach (var bought in boughtUpgrades)
         {
@@ -396,7 +394,6 @@ public class Shop : MonoBehaviour
     public void InstantHeal(float percentHeal, int price)
     {
         AnubisCurrentStats.instance.vieActuelle += Mathf.RoundToInt(AnubisCurrentStats.instance.vieMax * (percentHeal / 100));
-        Debug.Log("ca devrait heal tant de pv:" + AnubisCurrentStats.instance.vieMax * (percentHeal / 100));
         if (AnubisCurrentStats.instance.vieActuelle > AnubisCurrentStats.instance.vieMax)
             AnubisCurrentStats.instance.vieActuelle = AnubisCurrentStats.instance.vieMax;
         Souls.instance.soulBank -= price;

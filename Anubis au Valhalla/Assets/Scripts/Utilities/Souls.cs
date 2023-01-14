@@ -48,10 +48,19 @@ public class Souls : MonoBehaviour
 
     public void CollectSouls(GameObject collectedSoul, int value)
     {
+        soulsInScene.Remove(collectedSoul);
         Destroy(collectedSoul);
         soulBank += value;
-        soulsInScene.Remove(collectedSoul);
         UpdateSoulsCounter();
+    }
+
+    public void ClearOfSouls()
+    {
+        List<GameObject> souls = soulsInScene;
+        for (int i = 0; i < souls.Count; i++)
+        {
+            CollectSouls(soulsInScene[0],1);
+        }
     }
 
     public void UpdateSoulsCounter()

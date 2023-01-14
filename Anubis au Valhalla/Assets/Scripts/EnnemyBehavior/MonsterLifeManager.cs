@@ -245,15 +245,12 @@ public class MonsterLifeManager : MonoBehaviour
         
         if (IACorbeau is not null)
         {
-            animator.SetBool("isDead",true);
             IACorbeau.audioSource.pitch = 1;
             IACorbeau.audioSource.PlayOneShot(IACorbeau.audioClipArray[3]);
             IACorbeau.isDead = true;
         }
         else if (IALoup is not null)
         {
-            Debug.Log("loup mort");
-            animator.SetBool("isDead",true);
             IALoup.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             IALoup.audioSource.Stop();
             IALoup.audioSource.pitch = 1;

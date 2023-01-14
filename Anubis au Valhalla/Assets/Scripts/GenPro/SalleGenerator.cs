@@ -227,7 +227,6 @@ namespace GenPro
 
                                 if (zone2)
                                 {
-                                        Debug.Log("el cringo");
                                         return Instantiate(endRoom2);
                                 }
                                 EnableDoors(fromDoor,true);
@@ -266,7 +265,8 @@ namespace GenPro
                                 {
                                         MovePlayerToDoor(fromDoor);
                                 }
-                                ClearRoom();
+                                Souls.instance.ClearOfSouls();
+                                ClearRoom(); 
                                 if(currentRoom != startRoom)currentRoom.GetSpawnPoints(Random.Range(0, 3));
                                 _moveGrid.target = currentRoom.AstarRef;
                                 transitionCanvas.DOFade(0, 0.25f);
@@ -334,30 +334,16 @@ namespace GenPro
                 /// </summary>
                 public void ClearRoom()
                 {
-                        player.trail.Clear();
-                        foreach(GameObject item in GameObject.FindGameObjectsWithTag("Item"))
-                        {
-                                Destroy(item);
-                        }
-                
-                        foreach(GameObject item in GameObject.FindGameObjectsWithTag("CollectableSpell"))
-                        {
-                                Destroy(item);
-                        }
-
-                        List<GameObject> amount = CharacterController.instance.ghost.tousLesSprites;
+                        player.trail.Clear(); 
+                        var amount = CharacterController.instance.ghost.tousLesSprites;
                         for (int i = 0; i < amount.Count; i++)
                         {
                                 Destroy(CharacterController.instance.ghost.tousLesSprites[i].gameObject);
                         }
 
-                        foreach (var soul in Souls.instance.soulsInScene)
-                        {
-                                Souls.instance.CollectSouls(soul,1);
-                                
-                        }
-                        Souls.instance.soulsInScene.Clear();
+
                         amount.Clear();
+
                         if (TothBehiavour.instance != null && roomsDone != 0)
                         {
                                 DestroyImmediate(TothBehiavour.instance.gameObject);
