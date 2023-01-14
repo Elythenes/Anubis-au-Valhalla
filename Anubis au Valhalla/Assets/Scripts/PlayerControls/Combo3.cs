@@ -25,7 +25,6 @@ public class Combo3 : MonoBehaviour
 
     public virtual void Start()
     {
-        Destroy(gameObject,AnubisCurrentStats.instance.dureeHitbox[2]-0.7f);
         Destroy(parent,AnubisCurrentStats.instance.dureeHitbox[2]);
         disolveValue = 0;
         particulesMaterial = cracksMeshRenderer.GetComponent<Renderer>().material;
@@ -41,6 +40,10 @@ public class Combo3 : MonoBehaviour
         {
             disolveValue += disolveGainedByFrame;
             particulesMaterial.SetFloat("_Step", disolveValue);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
 
         if (collider.transform.localScale.x < 0.15f && collider.transform.localScale.y < 0.15f)

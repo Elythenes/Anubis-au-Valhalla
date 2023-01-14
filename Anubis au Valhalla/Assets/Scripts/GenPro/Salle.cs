@@ -395,7 +395,7 @@ public class Salle : MonoBehaviour
                 //spawn better loot
                 break;
         }
-        Instantiate(coffre,player.transform.position,Quaternion.identity);
+        Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity);
     }
     public IEnumerator DelayedSpawns()
     {
