@@ -21,6 +21,7 @@ public class CharacterController : MonoBehaviour
 
   [Header("Interactions")] 
   public bool canInteract;
+  public bool canInteractTuto;
   public Collider2D currentDoor;
   public GameObject CanvasInteraction;
   public Canvas CanvasInteractionCanvas;
@@ -260,6 +261,19 @@ public class CharacterController : MonoBehaviour
       }
     }
     
+    if (canInteractTuto)
+    {
+      CanvasInteractionCanvas.enabled = true;
+      CanvasInteraction.SetActive(true); 
+      CanvasInteraction.transform.position = transform.position + offset;
+      CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
+      TextInteraction.SetText("Continuer");
+      if (Input.GetKeyDown(KeyCode.F) && currentDoor is not null)
+      {
+        InteractWithDoorTuto(currentDoor);
+      }
+    }
+    
   }
 
   public void Dashing()
@@ -433,6 +447,13 @@ public class CharacterController : MonoBehaviour
       canInteract = true;
       currentDoor = col;
     }
+
+    if (col.CompareTag("DoorTuto"))
+    {
+      CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
+      canInteractTuto = true;
+      currentDoor = col;
+    }
   }
   
   private void OnTriggerExit2D(Collider2D col)
@@ -445,6 +466,15 @@ public class CharacterController : MonoBehaviour
         //CanvasInteraction.SetActive(false);
       }
       canInteract = false;
+      currentDoor = null;
+    }
+    if (col.gameObject.CompareTag("DoorTuto"))
+    {
+      if (CanvasInteraction is not null)
+      {
+        CanvasInteractionCanvas.enabled = false;
+      }
+      canInteractTuto = false;
       currentDoor = null;
     }
   }
@@ -496,6 +526,17 @@ public class CharacterController : MonoBehaviour
     {
       SalleGenerator.Instance.OpenDoors((SalleGenerator.DoorOrientation)i,false);
     }
+  }
+  
+  private void InteractWithDoorTuto(Collider2D col)
+  {
+    allowMovements = true;
+    ghost.activerEffet = false;
+    isDashing = false;
+    canDash = true;
+    timerdashCooldown = 0;
+    var hitDoor = col.GetComponent<DoorTuto>();
+    hitDoor.NextRoom();
   }
   
   

@@ -20,6 +20,8 @@ public class LifeBarManager : MonoBehaviour
         {
             instance = this;
         }
+
+        manager = GameObject.Find("StatManager").GetComponent<AnubisCurrentStats>();
     }
 
     private void Update()
