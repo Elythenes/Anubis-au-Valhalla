@@ -74,16 +74,10 @@ public class DamageManager : MonoBehaviour
     void Start()
     {
         stats = AnubisCurrentStats.instance;
-        /*vieActuelle = stats.vieActuelle;
-        vieMax = stats.vieMax;
-        damageReduction = stats.damageReduction;
-        tempsInvinsibleAfterHit = stats.tempsInvinsbleAfterHit;
-        stunAfterHit = stats.stunAfterHit;*/
         vieActuelle = vieMax;
         Time.fixedDeltaTime = 0.01F * Time.timeScale;
         stopWaiting = false;
         murMask = LayerMask.GetMask("CollisionEnvironement");
-        Debug.Log(murMask.value);
     }
 
     private void Update()
@@ -111,7 +105,6 @@ public class DamageManager : MonoBehaviour
                 g.anim.SetBool("isWalking",true);
             }
         }
-        //Debug.Log(g.rb.IsTouchingLayers(128));
     }
 
     public void TakeDamage(int damage, GameObject enemy)
@@ -346,7 +339,6 @@ public class DamageManager : MonoBehaviour
         var g = CharacterController.instance;
         if (col.gameObject.layer == 7 && !g.isDashing && (g.canBuffer || g.canBoost))
         {
-            Debug.Log(g.rb.GetContacts(new List<Collider2D>()));
             if (g.rb.GetContacts(new List<Collider2D>()) >= 1)
             {
                 g.canBoost = true;
@@ -359,7 +351,6 @@ public class DamageManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Bah alors on est cringe?");
                 g.canBuffer = false;
                 g.canBoost = false;
                 g.playerCol.enabled = true;
@@ -368,14 +359,4 @@ public class DamageManager : MonoBehaviour
             }
         }
     }
-
-    /*private void OnTriggerExit2D(Collider2D col)
-    {
-        var g = CharacterController.instance;
-        if (col.gameObject.layer == 7 && !g.isDashing && (g.canBuffer || g.canBoost) && g.rb.GetContacts(new List<Collider2D>()) < 1)
-        {
-
-        }
-
-    }*/
 }

@@ -47,6 +47,7 @@ public class GlyphRepository : MonoBehaviour
             glyphInside = glyphsList[numberGot];
         }
         
+        //GetComponent<SpriteRenderer>().sprite = new Rect(0, 0, glyphInside.icone.width, glyphInside.icone.height);
         
         if (isMoving)
         {

@@ -21,6 +21,7 @@ public class CharacterController : MonoBehaviour
 
   [Header("Interactions")] 
   public bool canInteract;
+  public bool canInteractTuto;
   public Collider2D currentDoor;
   public GameObject CanvasInteraction;
   public Canvas CanvasInteractionCanvas;
@@ -206,27 +207,31 @@ public class CharacterController : MonoBehaviour
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
-      anim.SetBool("isDashing",false);
-      anim.SetBool("isWalking",true);
-      dashTracker.SetActive(false);
-      allowMovements = true;
-      finDash = true;
-      StartCoroutine(ResetTracking());
-      rb.velocity *= 0.85f;
-      AttaquesNormales.instance.canAttack = true;
-      isDashing = false;
-      timerDash = 0;
-      canDash = false;
-      if (AttaquesNormales.instance.buffer)
+      if (!canBoost)
       {
-        AttaquesNormales.instance.buffer = false;
-        AttaquesNormales.instance.ExecuteAttack();
-      }
+        playerCol.enabled = true;
+        timerDash = 0;
+        anim.SetBool("isDashing",false);
+        anim.SetBool("isWalking",true);
+        dashTracker.SetActive(false);
+        allowMovements = true;
+        finDash = true;
+        StartCoroutine(ResetTracking());
+        rb.velocity *= 0.85f;
+        AttaquesNormales.instance.canAttack = true;
+        isDashing = false;
+        canDash = false;
+        if (AttaquesNormales.instance.buffer)
+        {
+          AttaquesNormales.instance.buffer = false;
+          AttaquesNormales.instance.ExecuteAttack();
+        }
 
-      if (AttaquesNormales.instance.buffer2)
-      {
-        AttaquesNormales.instance.buffer2 = false;
-        AttaquesNormales.instance.SpecialAttack();
+        if (AttaquesNormales.instance.buffer2)
+        {
+          AttaquesNormales.instance.buffer2 = false;
+          AttaquesNormales.instance.SpecialAttack();
+        }
       }
     }
 
@@ -253,6 +258,19 @@ public class CharacterController : MonoBehaviour
       if (Input.GetKeyDown(KeyCode.F) && currentDoor is not null)
       {
         InteractWithDoor(currentDoor);
+      }
+    }
+    
+    if (canInteractTuto)
+    {
+      CanvasInteractionCanvas.enabled = true;
+      CanvasInteraction.SetActive(true); 
+      CanvasInteraction.transform.position = transform.position + offset;
+      CanvasInteraction.transform.DOScale(new Vector3(1, 1, CanvasInteraction.transform.localScale.z),0.25f);
+      TextInteraction.SetText("Continuer");
+      if (Input.GetKeyDown(KeyCode.F) && currentDoor is not null)
+      {
+        InteractWithDoorTuto(currentDoor);
       }
     }
     
@@ -429,6 +447,13 @@ public class CharacterController : MonoBehaviour
       canInteract = true;
       currentDoor = col;
     }
+
+    if (col.CompareTag("DoorTuto"))
+    {
+      CanvasInteraction.transform.localScale = new Vector3(0,0,CanvasInteraction.transform.localScale.z);
+      canInteractTuto = true;
+      currentDoor = col;
+    }
   }
   
   private void OnTriggerExit2D(Collider2D col)
@@ -441,6 +466,15 @@ public class CharacterController : MonoBehaviour
         //CanvasInteraction.SetActive(false);
       }
       canInteract = false;
+      currentDoor = null;
+    }
+    if (col.gameObject.CompareTag("DoorTuto"))
+    {
+      if (CanvasInteraction is not null)
+      {
+        CanvasInteractionCanvas.enabled = false;
+      }
+      canInteractTuto = false;
       currentDoor = null;
     }
   }
@@ -488,6 +522,21 @@ public class CharacterController : MonoBehaviour
         hitDoor);
     }
     hitDoor.willChooseSpecial = false;
+    for (int i = 0; i < (int)SalleGenerator.DoorOrientation.West + 1; i++)
+    {
+      SalleGenerator.Instance.OpenDoors((SalleGenerator.DoorOrientation)i,false);
+    }
+  }
+  
+  private void InteractWithDoorTuto(Collider2D col)
+  {
+    allowMovements = true;
+    ghost.activerEffet = false;
+    isDashing = false;
+    canDash = true;
+    timerdashCooldown = 0;
+    var hitDoor = col.GetComponent<DoorTuto>();
+    hitDoor.NextRoom();
   }
   
   

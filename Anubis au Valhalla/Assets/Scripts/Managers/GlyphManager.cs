@@ -8,33 +8,25 @@ using Debug = UnityEngine.Debug;
 public class GlyphManager : MonoBehaviour
 {
     public static GlyphManager Instance; //singleton
-    [NaughtyAttributes.ReadOnly] public List<int> indexActiveGlyphs = new();
 
-    [Header("LAME")]
-    public GlyphWrap[] arrayLame = new GlyphWrap[60];
-
-    [Header("MANCHE")] 
-    public GlyphWrap[] arrayManche = new GlyphWrap[60];
+    public List<GlyphObject> listLame = new List<GlyphObject>(0);
+    public List<GlyphObject> listManche = new List<GlyphObject>(0);
+    public List<GlyphObject> listPoignee = new List<GlyphObject>(0);
     
-    [Header("POIGNEE")]
-    public GlyphWrap[] arrayPoignee = new GlyphWrap[60];
+    public bool showBools = false; //Liste de bool pour les fonctions
 
-    //Liste de bool pour les fonctions
-    public bool showBools = false;
+    [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerForce1;
+    [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerForce2;
+    [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerForce3;
+    [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerDefense1;
+    [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerDefense2;
+    [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerDefense3;
+    
+    [ShowIf("showBools")] [BoxGroup("Heal Dodge")] public bool HealDodge1;
+    [ShowIf("showBools")] [BoxGroup("Heal Dodge")] public bool HealDodge2;
+    [ShowIf("showBools")] [BoxGroup("Heal Dodge")] public bool HealDodge3;
 
-    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerForce1;
-    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerForce2;
-    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerForce3;
-    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense1;
-    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense2;
-    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool soulPowerDefense3;
-    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool HealDodge1;
-    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool HealDodge2;
-    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool HealDodge3;
-    [ShowIf("showBools")] [BoxGroup("SOUL POWER")] public bool HealDodge4;
-    private GlyphObject tempObject;
-    
-    
+
 
     //Fonctions Système ************************************************************************************************
     
@@ -44,6 +36,8 @@ public class GlyphManager : MonoBehaviour
         {
             Instance = this;
         }
+        
+        DisableAllGlyphsBooleans();
     }
 
     void Start()
@@ -55,6 +49,23 @@ public class GlyphManager : MonoBehaviour
     {
         UpdateGlyph();
     }
+    
+    
+    //Fonctions *********************************************************************************************************
+    
+    void DisableAllGlyphsBooleans()
+    {
+        soulPowerForce1 = false;
+        soulPowerForce2 = false;
+        soulPowerForce3 = false;
+        soulPowerDefense1 = false;
+        soulPowerDefense2 = false;
+        soulPowerDefense3 = false;
+        HealDodge1 = false;
+        HealDodge2 = false;
+        HealDodge3 = false;
+    }
+    
     
     public void ActiveGlyphInManager(GlyphObject hiero)
     {
@@ -247,13 +258,6 @@ public class GlyphManager : MonoBehaviour
                 HealDodge2 = false;
                 HealDodge3 = true;
                 break;
-            
-            case 337:
-                HealDodge1 = false;
-                HealDodge2 = false;
-                HealDodge3 = false;
-                HealDodge4 = true;
-                break;
         }
     }
     
@@ -295,76 +299,63 @@ public class GlyphManager : MonoBehaviour
 
     void UpdateGlyph()
     {
-        for (int i = 0; i < arrayLame.Length; i++)
+        foreach (var hiero in listLame)
         {
-            if (arrayLame[i].glyphObject != null)
+            switch (hiero.index)
             {
-                switch (arrayLame[i].glyphObject.index)
-                {
-                    case 135: //soul Power Force 1
-                        SoulPowerForce();
-                        //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
-                        break;
+                case 135: //soul Power Force 1
+                    SoulPowerForce();
+                    break;
                 
-                    case 136: //soul Power Force 2
-                        SoulPowerForce();
-                        //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
-                        break;
+                case 136: //soul Power Force 2
+                    SoulPowerForce();
+                    break;
                 
-                    case 137: //soul Power Force 3
-                        SoulPowerForce();
-                        //soulPowerForce1 = false; //on ne met pas le false car on calcule la fonction SoulPower() tout le temps
-                        break;
-                }
+                case 137: //soul Power Force 3
+                    SoulPowerForce();
+                    break;
             }
         }
 
-        for (int i = 0; i < arrayManche.Length; i++)
+        foreach (var hiero in listManche)
         {
-            if (arrayManche[i].glyphObject != null)
+            switch (hiero.index)
             {
-                switch (arrayManche[i].glyphObject.index)
-                {
-                    case 221:
-                        soulPowerDefense1 = true;
-                        break;
+                case 221:
+                    soulPowerDefense1 = true;
+                    break;
             
-                    case 222:
-                        soulPowerDefense1 = false;
-                        soulPowerDefense2 = true;
-                        break;
+                case 222:
+                    soulPowerDefense1 = false;
+                    soulPowerDefense2 = true;
+                    break;
             
-                    case 223:
-                        soulPowerDefense1 = false;
-                        soulPowerDefense2 = false;
-                        soulPowerDefense3 = true;
-                        break;
-                }
+                case 223:
+                    soulPowerDefense1 = false;
+                    soulPowerDefense2 = false;
+                    soulPowerDefense3 = true;
+                    break;
             }
         }
-        
-        for (int i = 0; i < arrayPoignee.Length; i++)
+
+        foreach (var hiero in listManche)
         {
-            if (arrayPoignee[i].glyphObject is not null)
+            switch (hiero.index)
             {
-                switch (arrayPoignee[i].glyphObject.index)
-                {
-                    case 334:
-                        HealDodge();
-                        break;
-                    case 335:
-                        HealDodge();
-                        break;
-                    case 336:
-                        HealDodge();
-                        break;
-                    case 337:
-                        HealDodge();
-                        break;
-                }
+                case 334:
+                    HealDodge();
+                    break;
+                case 335:
+                    HealDodge();
+                    break;
+                case 336:
+                    HealDodge();
+                    break;
             }
         }
     }
+
+
     
 
     //Fonctions des Glyphes ********************************************************************************************
@@ -384,12 +375,6 @@ public class GlyphManager : MonoBehaviour
         if (HealDodge3 && DamageManager.instance.isDodging)
         {
             DamageManager.instance.Heal(4);
-        }
-        
-        if (HealDodge4 && DamageManager.instance.isDodging)
-        {
-            
-            DamageManager.instance.Heal(5);
         }
     }
     

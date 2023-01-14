@@ -107,14 +107,8 @@ public class Salle : MonoBehaviour
                     break;
             }
         }
-        //Debug.Log("challenge chosen " + challengeChosen);
     }
-
-    private void Update()
-    {
-
-    }
-
+    
     private void C1_AllElites()
     {
         text.Appear(text.titleAlpha,text.titleStartPos,text.title);
@@ -122,10 +116,6 @@ public class Salle : MonoBehaviour
         StartCoroutine(DelayedFade());
         text.title.text = "Ennemis vicieux";
         text.description.text = "Tous les ennemis sont des élites";
-        foreach (var enemy in currentEnemies)
-        {
-            enemy.GetComponent<MonsterLifeManager>().eliteChallenge = true;
-        }
     }
 
     private void C2_Darkness()
@@ -175,9 +165,7 @@ public class Salle : MonoBehaviour
         for (int i = 0; i < (int)SalleGenerator.DoorOrientation.West + 1; i++)
         {
             SalleGenerator.Instance.sDoors[i].transform.position = transformReferences[i].position;
-            //SalleGenerator.instance.s_doors[i].GetComponentInChildren<Animator>().SetBool("Open",false);
         }
-        
     }
 
     public void AdjustCameraConstraints()
@@ -208,20 +196,55 @@ public class Salle : MonoBehaviour
     public void SpawnEnemies(List<GameObject> point)
     {
         if (point.Count == 0) return;
-
         var pattern = SalleGenerator.Instance.chosenPattern;
-        if (costList.Count == 0)
-        {    
-            foreach (EnemyData t in SalleGenerator.Instance.spawnGroups[pattern].enemiesToSpawn)
-            {
-                int cost = t.cost;
-                costList.Add(cost);
+        if (SalleGenerator.Instance.challengeChooser != 1)
+        {
+            if (costList.Count == 0)
+            {    
+                foreach (var t in SalleGenerator.Instance.spawnGroups[pattern].enemiesToSpawn)
+                {
+                    int cost = t.cost;
+                    costList.Add(cost);
+                }
             }
         }
-        while (spawnBank > costList.Min()) //tries to buy enemies as long as it can afford at least one of them
+        else
+        {
+            if (costList.Count == 0)
+            {
+                foreach (var t in SalleGenerator.Instance.eliteChallenge.enemiesToSpawn)
+                {
+                    int cost = t.cost;
+                    costList.Add(cost);
+                }
+            }
+            
+            while (spawnBank > costList.Min()) //tries to buy enemies as long as it can afford at least one of them
+            {
+                var chosenValue = Random.Range(0, costList.Count);
+                if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());//if it cant afford the most expensive enemy, it will buy the cheapest one
+                var chosenEnemy = SalleGenerator.Instance.eliteChallenge.enemiesToSpawn[chosenValue];
+                spawnBank -= costList[chosenValue];
+                costList[chosenValue] += SalleGenerator.Instance.inflation;
+                var chosenPoint = point[Random.Range(0, point.Count)];
+                var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
+                var enemyScript = enemyObject.GetComponent<MonsterLifeManager>();
+                currentEnemies.Add(enemyScript);
+                discardedPoints.Add(chosenPoint);
+                point.Remove(chosenPoint); // Get the spawner to spawn in waves if theres too many enemies to to spawn
+                if (point.Count == 0)
+                {
+                    point.AddRange(discardedPoints);
+                    discardedPoints.Clear();
+                    return;
+                }
+            }
+            return;
+        }
+        while (spawnBank > costList.Min())
         {
             var chosenValue = Random.Range(0, costList.Count);
-            if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());//if it cant afford the most expensive enemy, it will buy the cheapest one
+            if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());
             var chosenEnemy = SalleGenerator.Instance.spawnGroups[pattern].enemiesToSpawn[chosenValue];
             spawnBank -= costList[chosenValue];
             costList[chosenValue] += SalleGenerator.Instance.inflation;
@@ -229,17 +252,12 @@ public class Salle : MonoBehaviour
             var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
             var enemyScript = enemyObject.GetComponent<MonsterLifeManager>();
             currentEnemies.Add(enemyScript);
-            if (chosenEnemy.isElite)
-            {
-                enemyScript.eliteChallenge = true;
-            }
             if (overdose)
             {
                 enemyScript.overdose = true;
             }
-            //chosenEnemy.prefab.GetComponent<MonsterLifeManager>().data = chosenEnemy;
             discardedPoints.Add(chosenPoint);
-            point.Remove(chosenPoint); // Get the spawner to spawn in waves if theres too many enemies to to spawn
+            point.Remove(chosenPoint);
             if (point.Count == 0)
             {
                 point.AddRange(discardedPoints);
@@ -336,7 +354,6 @@ public class Salle : MonoBehaviour
                             (localTile.y >= door.y - 2 &&
                              localTile.y <= door.y + 2))
                         {
-                                Debug.Log("true");
                                 //Instantiate(fill, localTile, quaternion.identity);
                                 availableTilePos.Remove(localTile); 
                         }
@@ -395,7 +412,7 @@ public class Salle : MonoBehaviour
                 //spawn better loot
                 break;
         }
-        Instantiate(coffre,player.transform.position,Quaternion.identity);
+        Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
     }
     public IEnumerator DelayedSpawns()
     {

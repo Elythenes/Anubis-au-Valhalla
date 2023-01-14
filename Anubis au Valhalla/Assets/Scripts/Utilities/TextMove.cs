@@ -36,7 +36,6 @@ public class TextMove : MonoBehaviour
 
     public void Appear(CanvasGroup alpha, Vector2 start, TextMeshProUGUI text)
     {
-        Debug.Log("Here");
         alpha.alpha = 1;
         text.transform.localPosition = start;
         text.transform.localScale = Vector3.one;
