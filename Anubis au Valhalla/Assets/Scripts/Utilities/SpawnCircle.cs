@@ -13,7 +13,7 @@ public class SpawnCircle : MonoBehaviour
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        Destroy(gameObject, SalleGenerator.Instance.timeBetweenWaves);
+        Destroy(gameObject, 1.9f);
         _spriteRenderer.color = new Color(_spriteRenderer.color.r,_spriteRenderer.color.g,_spriteRenderer.color.b,0);
     }
 
