@@ -291,6 +291,12 @@ namespace GenPro
                                 if(currentRoom != startRoom)currentRoom.GetSpawnPoints(Random.Range(0, 3));
                                 _moveGrid.target = currentRoom.AstarRef;
                                 transitionCanvas.DOFade(0, 0.25f);
+                                if (currentRoom == endRoom)
+                                {
+                                        Debug.Log("Gros challenge spécial");
+                                        challengeChooser = 2;
+                                        currentRoom.overdose = true;
+                                }
                         });
                 }
                 /// <summary>
