@@ -254,10 +254,7 @@ public class GlyphManager : MonoBehaviour
             case 334:
             case 335:
             case 336:
-                if (dodgeHeal < Mathf.RoundToInt(hiero.specialTriggerValue))
-                {
-                    dodgeHeal = Mathf.RoundToInt(hiero.specialTriggerValue);
-                }
+                dodgeHeal += Mathf.RoundToInt(hiero.specialTriggerValue);
                 break;
         }
     }
