@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using GenPro;
+using Pathfinding;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -65,13 +66,10 @@ public class CharacterController : MonoBehaviour
   public KeyCode interaction;
   public GameObject indicationDirection;
   public TrailRenderer trail;
-
+  public Collider2D collisionPathfinding;
   public GameObject doorInteractUI;
-
   public RectTransform doorUITransform;
-
   public GameObject dashTracker;
-
   [HideInInspector] public BoxCollider2D playerCol;
   //public TilemapRenderer ground;
 
@@ -92,6 +90,10 @@ public class CharacterController : MonoBehaviour
     CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
     TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
     CanvasInteractionCanvas = CanvasInteraction.GetComponent<Canvas>();
+    
+    var guo = new GraphUpdateObject(collisionPathfinding.bounds);
+    guo.updatePhysics = true;
+    AstarPath.active.UpdateGraphs (guo);
   }
 
   private void OnEnable()
@@ -258,6 +260,9 @@ public class CharacterController : MonoBehaviour
       TextInteraction.SetText("Continuer");
       if (Input.GetKeyDown(KeyCode.F) && currentDoor is not null)
       {
+        var guo = new GraphUpdateObject(collisionPathfinding.bounds);
+        guo.updatePhysics = true;
+        AstarPath.active.UpdateGraphs (guo);
         InteractWithDoor(currentDoor);
       }
     }

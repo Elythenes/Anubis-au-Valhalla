@@ -15,6 +15,7 @@ public class TothBehiavour : MonoBehaviour
    public float textSpeed;
    public int isFade;
    private float upDownY;
+   private bool menuState;
    public Vector3 offset;
    public GameObject CanvasInteraction;
    public TextMeshProUGUI TextInteraction;
@@ -83,6 +84,7 @@ public class TothBehiavour : MonoBehaviour
       {
          if(isTalkable)
          {
+            UiManager.instance.isSousMenu = true;
             isFade = 1;
             isTalkable = false;
             ChangeText();
@@ -96,7 +98,12 @@ public class TothBehiavour : MonoBehaviour
             firstTime = false;
          }
       }
-      
+
+
+      if (Input.GetKeyDown(KeyCode.Escape) && menuState)
+      {
+         DialogueDOWN();
+      }
    
    }
 
@@ -277,12 +284,15 @@ public class TothBehiavour : MonoBehaviour
    
    public void DialogueUP()
    {
+      menuState = true;
       dialogueMenu.SetActive(true);
       dialogueMenu.transform.DOLocalMove(new Vector3(transform.position.x,upDownY,transform.position.z),menuSpeed);
    }
    
    public void DialogueDOWN()
    {
+      menuState = false;
+      UiManager.instance.isSousMenu = false;
       isTalkable = true;
       StopDialogue();
       isFade = 2;

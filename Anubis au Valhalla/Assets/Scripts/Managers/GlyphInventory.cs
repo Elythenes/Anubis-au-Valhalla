@@ -43,7 +43,7 @@ public class GlyphInventory : MonoBehaviour
         {
             case GlyphObject.GlyphPart.Lame:
                 GlyphManager.Instance.listLame.Add(hiero);              //ajoute dans la liste en fonction de la partie de l'arme affecté par la glyphe
-                GlyphManager.Instance.ActiveGlyphInManager(hiero);      //update les variables qui sont liée au glyphe en fonction de la rareté
+                GlyphManager.Instance.ActiveGlyphInManager(hiero);      //update les variables qui sont liée au glyphe en fonction de son type d'effet
                 glyphInventory.Add(hiero);                              //ajoute dans l'inventaire pour l'UI
                 break;
             

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,10 +26,10 @@ public class AnubisCurrentStats : MonoBehaviour
    public int thrustBaseBonusDamage;
 
    //DamageForStat = somme de BaseDamage + BonusDamage, permet de donner les dégâts du personnage pendant toute la run
-   [NaughtyAttributes.ReadOnly] public float totalBaseDamageForStat;
-   [NaughtyAttributes.ReadOnly] public List<int> comboDamageForStats = new List<int>(3);
-   [NaughtyAttributes.ReadOnly] public int thrustDamageForStat;
-   [NaughtyAttributes.ReadOnly] public int soulBonusDamageForStat;
+   [ReadOnly] public float totalBaseDamageForStat;
+   [ReadOnly] public List<int> comboDamageForStats = new List<int>(3);
+   [ReadOnly] public int thrustDamageForStat;
+   [ReadOnly] public int soulBonusDamageForStat;
 
    public float baseDamageForSoul;
    public List<float> multiplicateurDamage = new(4){.5f,.75f,1,1.3f};
@@ -48,6 +49,8 @@ public class AnubisCurrentStats : MonoBehaviour
    public int vieActuelle;
    public int vieMax = 100;
    public int damageReduction;
+   public int soulBonusDamageReductionForStat;
+   [ReadOnly] public int damageReductionForStat;
    public float tempsInvinsbleAfterHit = 2f;
    public float stunAfterHit = 0.2f;
 
@@ -66,7 +69,7 @@ public class AnubisCurrentStats : MonoBehaviour
       {
          instance = this;
       }
-      StartDamageForStat();
+      StartParameterForStat();
    }
 
    private void Start()
@@ -86,7 +89,7 @@ public class AnubisCurrentStats : MonoBehaviour
       // pour la vie
       life.vieActuelle = vieActuelle;
       life.vieMax = vieMax;
-      life.damageReduction = damageReduction;
+      life.damageReduction = damageReductionForStat;
       life.tempsInvinsibleAfterHit = tempsInvinsbleAfterHit;
       life.stunAfterHit = stunAfterHit;
 
@@ -99,7 +102,7 @@ public class AnubisCurrentStats : MonoBehaviour
    private void Update()
    {
       // pour les attaques
-      UpdateDamageForStat();
+      UpdateParameterForStat();
       atk.hitBoxC = hitBoxC;
       atk.rangeAttaque = rangeAttaque;
       atk.damage = comboDamageForStats;
@@ -116,7 +119,7 @@ public class AnubisCurrentStats : MonoBehaviour
       // pour la vie
       life.vieActuelle = vieActuelle;
       life.vieMax = vieMax;
-      life.damageReduction = damageReduction;
+      life.damageReduction = damageReductionForStat;
       life.tempsInvinsibleAfterHit = tempsInvinsbleAfterHit;
       life.stunAfterHit = stunAfterHit;
 
@@ -127,7 +130,7 @@ public class AnubisCurrentStats : MonoBehaviour
    }
 
 
-   public void StartDamageForStat()
+   public void StartParameterForStat()
    {
       AddBonusDamage(0,0);
       for (int i = 0; i < 3; i++)
@@ -137,7 +140,7 @@ public class AnubisCurrentStats : MonoBehaviour
       thrustDamageForStat = Mathf.RoundToInt(totalBaseDamage * multiplicateurDamage[3]);
    }
    
-   public void UpdateDamageForStat() //fonction souvent appelée pour faire le point au niveau des dégâts d'Anubis
+   public void UpdateParameterForStat() //fonction souvent appelée pour faire le point au niveau des paramètres d'Anubis
    {
       for (int i = 0; i < 3; i++)
       {
@@ -150,6 +153,8 @@ public class AnubisCurrentStats : MonoBehaviour
          comboDamageForStats[i] = comboBaseDamage[i] + comboBaseBonusDamage[i] + Mathf.RoundToInt(totalBaseBonusDamage) + soulBonusDamageForStat;
       }
       thrustDamageForStat = thrustBaseDamage + thrustBaseBonusDamage + Mathf.RoundToInt(totalBaseBonusDamage) + soulBonusDamageForStat;
+
+      damageReductionForStat = damageReduction + soulBonusDamageReductionForStat;
    }
    
    
