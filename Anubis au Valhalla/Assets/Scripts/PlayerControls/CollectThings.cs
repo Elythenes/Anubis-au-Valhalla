@@ -6,7 +6,7 @@ using UnityEngine;
 public class CollectThings : MonoBehaviour
 {
     public KeyCode interaction;
-
+    public static CollectThings instance;
     [Header("DEBUG")]
     public bool isPowerCollectable = false;
     public GameObject collectablePower;
@@ -16,10 +16,16 @@ public class CollectThings : MonoBehaviour
 
     public bool isGlyphCollectable = false;
     public GameObject collectableGlyph;
-    
 
-    
-    
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     //Fonction : Systèmes *******************************************************************************************************************
     void Start()
     {
@@ -47,6 +53,7 @@ public class CollectThings : MonoBehaviour
             if (isGlyphCollectable)
             {
                 GlyphInventory.Instance.AddNewGlyph(collectableGlyph.GetComponent<GlyphRepository>().glyphInside);
+                UINewGlyphManager.instance.gameObject.SetActive(true);
                 UINewGlyphManager.instance.NewGlyph();
                 Destroy(collectableGlyph);
             }

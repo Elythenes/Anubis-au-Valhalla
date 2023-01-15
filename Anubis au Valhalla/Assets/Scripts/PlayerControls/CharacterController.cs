@@ -85,7 +85,7 @@ public class CharacterController : MonoBehaviour
     playerCol = GetComponent<BoxCollider2D>();
     controls = new InputManager();
     PivotTo(transform.position);
-    doorUITransform = doorInteractUI.GetComponent<RectTransform>();
+    //doorUITransform = doorInteractUI.GetComponent<RectTransform>();
     dashTracker.SetActive(false);
     CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
     TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
@@ -373,7 +373,7 @@ public class CharacterController : MonoBehaviour
         if (AttaquesNormales.instance.blockFlip)
         {
           transform.localRotation = Quaternion.Euler(0, 0,0);
-          doorUITransform.rotation = new Quaternion(0, 0, 0, 0);
+          //doorUITransform.rotation = new Quaternion(0, 0, 0, 0);
         }
        
       }
@@ -390,7 +390,7 @@ public class CharacterController : MonoBehaviour
         if (AttaquesNormales.instance.blockFlip)
         {
           transform.localRotation = Quaternion.Euler(0, 180,0);
-          doorUITransform.rotation = new Quaternion(0,180,0, 0);
+          //doorUITransform.rotation = new Quaternion(0,180,0, 0);
         }
       }
       else
@@ -500,7 +500,8 @@ public class CharacterController : MonoBehaviour
     }
     if (hitDoor.willChooseSpecial)
     {
-      SalleGenerator.Instance.challengeChooser = Random.Range(1, 6);
+      //SalleGenerator.Instance.challengeChooser = Random.Range(1, 6);
+      SalleGenerator.Instance.challengeChooser = 2;
     }
     else
     {

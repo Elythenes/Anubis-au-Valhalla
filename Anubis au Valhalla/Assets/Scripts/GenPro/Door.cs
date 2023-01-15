@@ -12,19 +12,23 @@ public class Door : MonoBehaviour
     public SpriteRenderer currentSprite;
     public List<Sprite> doorSprites;
     public bool willChooseSpecial;
-    public BoxCollider2D collider;
+    public BoxCollider2D doorCollider;
     public GameObject normalDoor1;
     public GameObject shopDoor1;
     public GameObject challengeDoor1;
     public GameObject normalDoor2;
     public GameObject shopDoor2;
     public GameObject challengeDoor2;
+    public GameObject bossDoor;
+    public GameObject broken;
 
     public enum DoorType
     {
         Normal,
         ToShop,
         ToChallenge1,
+        ToBoss,
+        Broken
     }
 
     public void ResetDoorState()
@@ -35,6 +39,8 @@ public class Door : MonoBehaviour
     normalDoor2.SetActive(false);
     shopDoor2.SetActive(false);
     challengeDoor2.SetActive(false);
+    bossDoor.SetActive(false);
+    broken.SetActive(false);
     }
 
     private void Awake()
@@ -62,6 +68,12 @@ public class Door : MonoBehaviour
                 break;
             case DoorType.ToChallenge1:
                 currentSprite.sprite = doorSprites[2];
+                break;
+            case DoorType.ToBoss:
+                bossDoor.SetActive(true);
+                break;
+            case DoorType.Broken:
+                broken.SetActive(true);
                 break;
         }
 

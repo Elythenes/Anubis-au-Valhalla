@@ -1,15 +1,16 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
+using Image = UnityEngine.UI.Image;
 
 public class UINewGlyphManager : MonoBehaviour
 {
     public CanvasGroup myCanvas;
     public float alphaGained;
     public float textDuration;
-    public TextMeshProUGUI mytext;
+    public GameObject popUp;
     public bool fadeIn;
     public static UINewGlyphManager instance;
 
@@ -23,6 +24,7 @@ public class UINewGlyphManager : MonoBehaviour
 
     private void Update()
     {
+        transform.position = CharacterController.instance.transform.position + new Vector3(0, 2, 0);
         if (fadeIn)
         {
             if (myCanvas.alpha < 1)
@@ -42,6 +44,9 @@ public class UINewGlyphManager : MonoBehaviour
     public void NewGlyph()
     {
         StartCoroutine(ActivateDesactivate());
+        popUp.GetComponentInChildren<Image>().sprite = CollectThings.instance.collectableGlyph.GetComponent<SpriteRenderer>().sprite;
+        GameObject textNewGlyph = Instantiate(popUp, transform.position + new Vector3(0,1,0),quaternion.identity);
+        Destroy(textNewGlyph,1f);
     }
 
 
@@ -51,5 +56,7 @@ public class UINewGlyphManager : MonoBehaviour
         fadeIn = true;
         yield return new WaitForSeconds(textDuration);
         fadeIn = false;
+        yield return new WaitForSeconds(textDuration/3);
+        gameObject.SetActive(false);
     }
 }
