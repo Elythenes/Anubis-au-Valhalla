@@ -479,7 +479,6 @@ MonoBehaviour:
   distance: 3.7
   player: {fileID: 6322498022790916602}
   diagonalMultiplier: 1
-  dashDurationBuffer: 0.1
 --- !u!1 &1363658261256551440
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,7 +901,6 @@ GameObject:
   - component: {fileID: 6322498022790916605}
   - component: {fileID: 6322498022790916606}
   - component: {fileID: 6322498022790916607}
-  - component: {fileID: 491855228}
   m_Layer: 8
   m_Name: Personnage Spine
   m_TagString: Untagged
@@ -1063,6 +1061,7 @@ MonoBehaviour:
   isAttacking: 0
   facing: 0
   canInteract: 0
+  canInteractTuto: 0
   currentDoor: {fileID: 0}
   CanvasInteraction: {fileID: 0}
   CanvasInteractionCanvas: {fileID: 0}
@@ -1088,7 +1087,6 @@ MonoBehaviour:
   timerDash: 0
   dashDuration: 0.15
   diagonalSpeedMultiplier: 1
-  dashBuffer: 0
   canBuffer: 0
   canBoost: 0
   dashCooldown: 0.4
@@ -1097,8 +1095,6 @@ MonoBehaviour:
   ghost: {fileID: 6322498022790916604}
   rb: {fileID: 0}
   movement: {x: 0, y: 0}
-  astarPathTimer: 0
-  astarPathTimerMax: 1
   interaction: 97
   indicationDirection: {fileID: 526205203}
   trail: {fileID: 9122345098059221511}
@@ -1272,6 +1268,7 @@ MonoBehaviour:
   comboActuel: 0
   cooldownAbandonCombo: 0.7
   cooldownAbandonComboTimer: 0
+  offsetAtk3: 0
   buffer: 0
   buffer2: 0
   swordObj: {fileID: 0}
@@ -1358,21 +1355,10 @@ MonoBehaviour:
   interaction: 102
   isPowerCollectable: 0
   collectablePower: {fileID: 0}
---- !u!114 &491855228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6322498022790916544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07e7b7dda1b434a48bd4a61e35e8b992, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interaction: 102
   isPotionCollectable: 0
   collectablePotion: {fileID: 0}
+  isGlyphCollectable: 0
+  collectableGlyph: {fileID: 0}
 --- !u!1001 &6469074454168213299
 PrefabInstance:
   m_ObjectHideFlags: 0

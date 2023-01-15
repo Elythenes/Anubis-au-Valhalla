@@ -57,6 +57,7 @@ public class DeathMenu : MonoBehaviour
     
     IEnumerator Restart()
     {
+        ScoreManager.instance.currentScore = 0;
         yield return new WaitForSecondsRealtime(timeToLastStep);
         SceneManager.LoadScene("Test");
     }
@@ -64,6 +65,9 @@ public class DeathMenu : MonoBehaviour
     IEnumerator BackHubTimer()
     {
         yield return new WaitForSecondsRealtime(timeToLastStep);
+        MenuHighScore.instance.AddHighScoreEntry(ScoreManager.instance.currentScore);
+        ScoreManager.instance.currentScore = 0;
+        Time.timeScale = 1;
         SceneManager.LoadScene("Hub");
     }
     
