@@ -20,11 +20,6 @@ public class UiPowerManager : MonoBehaviour
 
     public List<GameObject> fondForLevel = new(3);
 
-    public float axeR = 190;
-    public float axeG = 185;
-    public float axeB = 165;
-    public float alphaPowerTextBox = 80f;
-    
     [Header("TEXTES POWER 1")]
     public List<string> p1TextsSmash = new(10);
     public List<string> p1TextsThrust = new(10);
@@ -58,7 +53,7 @@ public class UiPowerManager : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 0);
+            fondForLevel[i].SetActive(false);
         }
 
     }
@@ -118,11 +113,11 @@ public class UiPowerManager : MonoBehaviour
             {
                 if (niveauP1 >= powerLevelIndexForUi + i)
                 {
-                    fondForLevel[i].GetComponent<Image>().color = new Color(axeR, axeG, axeB, alphaPowerTextBox);
+                    fondForLevel[i].SetActive(true);
                 }
                 else //(niveauP1 < powerLevelIndexForUi + i) 
                 { 
-                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 0);
+                    fondForLevel[i].SetActive(false);
                 }
             }
         }
@@ -132,11 +127,11 @@ public class UiPowerManager : MonoBehaviour
             {
                 if (niveauP2 == powerLevelIndexForUi + i)
                 {
-                    fondForLevel[i].GetComponent<Image>().color = new Color(axeR, axeG, axeB, alphaPowerTextBox);
+                    fondForLevel[i].SetActive(true);
                 }
                 if (niveauP2 < powerLevelIndexForUi + i) //casse si changement de niveau plus que +1
                 { 
-                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 0);
+                    fondForLevel[i].SetActive(false);
                 }
             }
         }
