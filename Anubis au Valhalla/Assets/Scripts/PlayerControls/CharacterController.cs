@@ -58,11 +58,13 @@ public class CharacterController : MonoBehaviour
   public bool isDashing;
   public bool canDash;
   public GhostDash ghost;
+  public GameObject FXDash;
 
   [HideInInspector]public Rigidbody2D rb; // ca aussi
   public Vector2 movement;
 
-  [Header("Utilitaires")] 
+  [Header("Utilitaires")]
+  public bool isHub;
   public KeyCode interaction;
   public GameObject indicationDirection;
   public TrailRenderer trail;
@@ -90,10 +92,13 @@ public class CharacterController : MonoBehaviour
     CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
     TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
     CanvasInteractionCanvas = CanvasInteraction.GetComponent<Canvas>();
-    
-    var guo = new GraphUpdateObject(collisionPathfinding.bounds);
-    guo.updatePhysics = true;
-    AstarPath.active.UpdateGraphs (guo);
+
+    if (!isHub)
+    {
+      var guo = new GraphUpdateObject(collisionPathfinding.bounds);
+      guo.updatePhysics = true;
+      AstarPath.active.UpdateGraphs (guo);
+    }
   }
 
   private void OnEnable()
@@ -292,34 +297,50 @@ public class CharacterController : MonoBehaviour
        
         case LookingAt.Nord:
           rb.velocity = (new Vector2(0,1) * dashSpeed);
+          GameObject fxOBJ1 =Instantiate(FXDash, transform.position, Quaternion.identity);
+          fxOBJ1.transform.rotation = new Quaternion(-90,90,-90,0);
           break;
           
         case LookingAt.Sud:
           rb.velocity = (new Vector2(0,-1) * dashSpeed);
+          GameObject fxOBJ2 =Instantiate(FXDash, transform.position, Quaternion.identity);
+          fxOBJ2.transform.rotation = new Quaternion(90,90,-90,0);
           break;
           
         case LookingAt.Est:
           rb.velocity = (new Vector2(1,0) * dashSpeed);
+          GameObject fxOBJ3 =Instantiate(FXDash, transform.position, Quaternion.identity);
+          fxOBJ3.transform.rotation = Quaternion.identity;
           break;
           
         case LookingAt.Ouest:
           rb.velocity = (new Vector2(-1,0) * dashSpeed);
+          GameObject fxOBJ4 =Instantiate(FXDash, transform.position, Quaternion.identity);
+          fxOBJ4.transform.rotation = Quaternion.identity;
           break;
           
         case LookingAt.NordEst:
           rb.velocity = (new Vector2(0.5f,0.5f) * (dashSpeed * diagonalSpeedMultiplier));
+          GameObject fxOBJ5 =Instantiate(FXDash, transform.position, Quaternion.identity);
+          fxOBJ5.transform.rotation = Quaternion.identity;
           break;
           
         case LookingAt.NordOuest:
           rb.velocity = (new Vector2(-0.5f,0.5f) * (dashSpeed * diagonalSpeedMultiplier));
+          GameObject fxOBJ6 =Instantiate(FXDash, transform.position, Quaternion.identity);
+          fxOBJ6.transform.rotation = Quaternion.identity;
           break;
 
         case LookingAt.SudEst:
           rb.velocity = (new Vector2(0.5f, -0.5f) * (dashSpeed * diagonalSpeedMultiplier));
+          GameObject fxOBJ7 =Instantiate(FXDash, transform.position, Quaternion.identity);
+          fxOBJ7.transform.rotation = Quaternion.identity;
           break;
           
         case LookingAt.SudOuest:
           rb.velocity = (new Vector2(-0.5f,-0.5f) * (dashSpeed * diagonalSpeedMultiplier));
+          GameObject fxOBJ8 =Instantiate(FXDash, transform.position, Quaternion.identity);
+          fxOBJ8.transform.rotation = Quaternion.identity;
           break;
       }
     }

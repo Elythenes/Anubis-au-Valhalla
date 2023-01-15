@@ -12,7 +12,7 @@ public class MenuHighScore : MonoBehaviour
     public List<HighScoreEntry> HighScoreEntrieList;
     public List<Transform> highscoreEntryTransformList;
     public static MenuHighScore instance;
-
+    public GameObject noScoreText;
 
     void Awake()
     {
@@ -34,6 +34,7 @@ public class MenuHighScore : MonoBehaviour
       AddHighScoreEntry(999);
       Debug.Log(json);*/
       
+   
       
         DontDestroyOnLoad(gameObject);
         
@@ -44,6 +45,15 @@ public class MenuHighScore : MonoBehaviour
        if (highscores.HighScoreEntrieList is not null)
        {
            HighScoreEntrieList = highscores.HighScoreEntrieList;
+       }
+
+       if (highscores.HighScoreEntrieList is null)
+       {
+           noScoreText.SetActive(true);
+       }
+       else
+       {
+           noScoreText.SetActive(false);
        }
 
        Debug.Log(jsonString);
