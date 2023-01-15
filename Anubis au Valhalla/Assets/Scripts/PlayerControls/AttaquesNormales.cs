@@ -158,6 +158,7 @@ public class AttaquesNormales : MonoBehaviour
                 anim.SetBool("isWalking",false);
                 anim.SetBool("isIdle",true);
                 attaqueSpe2 = false;
+                stunDuration[2] = 0;
                 canAttack = true;
                 CharacterController.instance.isAttacking = false;
             }
@@ -475,7 +476,6 @@ public class AttaquesNormales : MonoBehaviour
         attaqueSpeSpell = true;
         attaqueSpe2 = true;
         StartCoroutine(ResetTracking());
-        //StartCoroutine(ResetState());
         comboActuel = 0;
         canAttack = false;
         stunDuration[2] = 0;
@@ -484,7 +484,7 @@ public class AttaquesNormales : MonoBehaviour
         GameObject thrustObj = Instantiate(thrust, charaPos, Quaternion.AngleAxis(angle2, Vector3.forward));
     }
 
-    IEnumerator ResetState()
+    /*IEnumerator ResetState()
     {
         yield return new WaitForSeconds(stunDurationMax[3]);
         anim.SetBool("isAttackingSpe",false);
@@ -494,7 +494,7 @@ public class AttaquesNormales : MonoBehaviour
         attaqueSpe2 = false;
         canAttack = true;
         CharacterController.instance.isAttacking = false;
-    }
+    }*/
     
     public void Slide(CharacterController.LookingAt dir)
     {
@@ -537,7 +537,7 @@ public class AttaquesNormales : MonoBehaviour
 
     IEnumerator ResetTracking()
     {
-        yield return new WaitForSeconds(0.0000001f);
+        yield return null;
         attaque1 = false;
         attaque2 = false;
         attaque3 = false;
