@@ -19,7 +19,8 @@ public class UiPowerManager : MonoBehaviour
     public List<TextMeshProUGUI> boxPowerLevels = new(3);
 
     public List<GameObject> fondForLevel = new(3);
-
+    
+    public float alphaPowerTextBox = 80f;
     
     [Header("TEXTES POWER 1")]
     public List<string> p1TextsSmash = new(10);
@@ -114,7 +115,7 @@ public class UiPowerManager : MonoBehaviour
             {
                 if (niveauP1 >= powerLevelIndexForUi + i)
                 {
-                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 255);
+                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, alphaPowerTextBox);
                 }
                 else //(niveauP1 < powerLevelIndexForUi + i) 
                 { 
@@ -128,7 +129,7 @@ public class UiPowerManager : MonoBehaviour
             {
                 if (niveauP2 == powerLevelIndexForUi + i)
                 {
-                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 255);
+                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, alphaPowerTextBox);
                 }
                 if (niveauP2 < powerLevelIndexForUi + i) //casse si changement de niveau plus que +1
                 { 
