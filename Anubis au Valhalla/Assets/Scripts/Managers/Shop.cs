@@ -42,6 +42,8 @@ public class Shop : MonoBehaviour
     public Vector3 offset;
     public GameObject CanvasInteraction;
     public TextMeshProUGUI TextInteraction;
+    public int generatedPharaon;
+    public int generatedDivine;
 
     private bool hasgenerated = false;
     public bool[] boughtUpgrades;
@@ -217,8 +219,8 @@ public class Shop : MonoBehaviour
             if (i <= 2)
             {
                 var index = Random.Range(0, upgradesList.UpsLame.Count);
-                var lame = upgradesList.UpsLame[index].Lames[0];
-                var itemCost = Mathf.RoundToInt(100 * lame.rarity);
+                var lame = upgradesList.UpsLame[index].Lames[UpgradeRarity()];
+                var itemCost = Mathf.RoundToInt(lame.price);
                 choice.Add(lame);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -226,8 +228,8 @@ public class Shop : MonoBehaviour
             else if (i <= 5)
             {
                 var index = Random.Range(0, upgradesList.UpsHampe.Count);
-                var hampe = upgradesList.UpsHampe[index].Hampes[0];
-                var itemCost = Mathf.RoundToInt(100 * hampe.rarity);
+                var hampe = upgradesList.UpsHampe[index].Hampes[UpgradeRarity()];
+                var itemCost = Mathf.RoundToInt(hampe.price);
                 choice.Add(hampe);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -235,8 +237,8 @@ public class Shop : MonoBehaviour
             else
             {
                 var index = Random.Range(0, upgradesList.UpsManche.Count);
-                var manche = upgradesList.UpsManche[index].Manches[0];
-                var itemCost = Mathf.RoundToInt(100 * manche.rarity);
+                var manche = upgradesList.UpsManche[index].Manches[UpgradeRarity()];
+                var itemCost = Mathf.RoundToInt(manche.price);
                 choice.Add(manche);
                 cost.Add(itemCost);
                 indexes.Add(index);
@@ -398,6 +400,29 @@ public class Shop : MonoBehaviour
             AnubisCurrentStats.instance.vieActuelle = AnubisCurrentStats.instance.vieMax;
         Souls.instance.soulBank -= price;
         Souls.instance.UpdateSoulsCounter();
+    }
+
+    private int UpgradeRarity()
+    {
+        var sg = SalleGenerator.Instance;
+        var randomValue = Random.Range(0, 101);
+        if (randomValue <= sg.chancePharaon[sg.spawnedShops])
+        {
+            if (randomValue <= sg.chanceDivinité[sg.spawnedShops] && generatedDivine < sg.nbMaxDivinite[sg.spawnedShops])
+            {
+                generatedDivine++;
+                return 2;
+            }
+            if (generatedPharaon < sg.nbMaxPharaon[sg.spawnedShops])
+            {
+                generatedPharaon++;
+                return 1;
+            }
+
+            return 0;
+        }
+
+        return 0;
     }
 }
 
