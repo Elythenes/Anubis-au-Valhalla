@@ -42,8 +42,10 @@ namespace GenPro
                 public List<SalleContent_Ennemies> spawnGroups = new List<SalleContent_Ennemies>();
                 public List<SalleContent_Ennemies> spawnGroupsLevel2 = new List<SalleContent_Ennemies>();
                 public SalleContent_Ennemies eliteChallenge;
-
-
+                public int maxEnemiesPerSmallWave;
+                public int maxEnemiesPerBigWave;
+                public float timeBetweenWaves;
+                public List<int> maxElitesPerRoom = new List<int>();
 
                 [Header("VARIABLES INTERNES POUR DEBUG")]
                 [SerializeField] public int roomsDone = -1;
@@ -55,7 +57,7 @@ namespace GenPro
                 public List<int> extraMoneyPerRoom = new List<int>(){0,0,3,3,0,5,5,6,0,0,7,0,8,9,9,0,12,14,16,0,0};
                 public int inflation = 1;
         
-                public float timeBetweenWaves;
+
                 public CanvasGroup transitionCanvas;
                 public int shopsVisited;
                 private ProceduralGridMover _moveGrid;
@@ -66,6 +68,7 @@ namespace GenPro
                 public GameObject timer;
                 public GameObject parasiteToSpawn;
                 public bool zone2;
+                
 
                 public enum DoorOrientation
                 {
@@ -115,6 +118,8 @@ namespace GenPro
                         endRoom = endRoom2;
                         roomPrefab.Clear();
                         roomPrefab.AddRange(roomPrefab2);
+                        extraMoneyPerRoom.RemoveRange(0,roomsDone);
+                        maxElitesPerRoom.RemoveRange(0,roomsDone);
                         roomsDone = 0;
                         dungeonSize -= shopsVisited;
                         shopsVisited = 0;
@@ -225,7 +230,11 @@ namespace GenPro
                                         if (i == (int) fromDoor) continue;
                                         sDoors[i].willChooseSpecial = false;
                                         EnableDoors((DoorOrientation)i,false);
-                                        if(i == (int)DoorOrientation.North)EnableDoors(DoorOrientation.North, true);
+                                        if (i == (int)DoorOrientation.North)
+                                        {
+                                                EnableDoors(DoorOrientation.North, true);
+                                                sDoors[i].currentDoorType = Door.DoorType.ToBoss;
+                                        }
                                 }
                         }
                         if (roomsDone == dungeonSize)
@@ -245,6 +254,7 @@ namespace GenPro
                                 return Instantiate(endRoom);
                         }
                         EnableDoors(fromDoor,true);
+                        sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
                         EnableDoors(toDoor,true);
                         return (Salle)FindObjectOfType(typeof(Salle));
                 }
@@ -281,6 +291,12 @@ namespace GenPro
                                 if(currentRoom != startRoom)currentRoom.GetSpawnPoints(Random.Range(0, 3));
                                 _moveGrid.target = currentRoom.AstarRef;
                                 transitionCanvas.DOFade(0, 0.25f);
+                                if (currentRoom == endRoom)
+                                {
+                                        Debug.Log("Gros challenge spécial");
+                                        challengeChooser = 2;
+                                        currentRoom.overdose = true;
+                                }
                         });
                 }
                 /// <summary>
@@ -323,7 +339,7 @@ namespace GenPro
                 /// </summary>
                 public void OpenDoors(DoorOrientation index, bool state)
                 {
-                        sDoors[(int)index].collider.enabled = state;
+                        sDoors[(int)index].doorCollider.enabled = state;
                         //s_doors[(int)index].GetComponentInChildren<Animator>().SetBool("Open",state);
                 }
                 /// <summary>

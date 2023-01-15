@@ -303,7 +303,7 @@ public class MonsterLifeManager : MonoBehaviour
         else
         {
             isDisolve = true;
-            yield return new WaitForSeconds(SalleGenerator.Instance.timeBetweenWaves);
+            yield return new WaitForSeconds(1.9f);
             canvasLifeBar.SetActive(true);
         }
         child.SetActive(true);

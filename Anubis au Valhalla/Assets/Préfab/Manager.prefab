@@ -138,7 +138,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   startRoom: {fileID: -3130041957661822193, guid: 275dbe2f5663ba9409d64c44049cb9e4, type: 3}
-  endRoom: {fileID: -3130041957661822193, guid: dbfc59af419f1e54a976416c5e178cad, type: 3}
+  endRoom: {fileID: 849478512648400581, guid: a6e64fd5ce5462248bb5f715417843bb, type: 3}
   startRoom2: {fileID: -3130041957661822193, guid: 161a70554ced512459ab8d6a488e8f4d, type: 3}
   endRoom2: {fileID: 3715075073974218515, guid: 2281b36d8fb28334b8aeba157f68ebb7, type: 3}
   challengeCoffre: {fileID: 0}
@@ -237,6 +237,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5221264247949ec41877299b593df6c2, type: 2}
   - {fileID: 11400000, guid: 4bed7ab8250d5e644aec6df6d6e13f50, type: 2}
   eliteChallenge: {fileID: 11400000, guid: 6ab2c68afc6bb334694be1081f6a1f64, type: 2}
+  maxEnemiesPerSmallWave: 2
+  maxEnemiesPerBigWave: 4
+  timeBetweenWaves: 1.9
+  maxElitesPerRoom: 00000000000000000000000000000000010000000100000001000000010000000100000002000000020000000200000003000000030000000400000004000000
   roomsDone: 0
   fromDoor: 3
   toDoor: 1
@@ -244,7 +248,6 @@ MonoBehaviour:
   testBankSystem: 1
   extraMoneyPerRoom: 000000000000000003000000030000000000000005000000050000000600000000000000000000000700000000000000080000000900000009000000000000000c0000000e000000100000000000000000000000
   inflation: 1
-  timeBetweenWaves: 1.9
   transitionCanvas: {fileID: 0}
   shopsVisited: 0
   spawnDoor: 1
@@ -267,6 +270,7 @@ GameObject:
   - component: {fileID: 8073836599889937228}
   - component: {fileID: 399184039}
   - component: {fileID: 5843924502278280389}
+  - component: {fileID: 3994243074089661803}
   m_Layer: 0
   m_Name: PathfindingManager
   m_TagString: Untagged
@@ -438,6 +442,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   uniqueID: 1016298342852006008
+  points:
+  - {x: -4, y: -4, z: 0}
+  - {x: 4, y: 4, z: 0}
+  convex: 1
+  minBoundsHeight: 1
+  penaltyDelta: 0
+  modifyWalkability: 0
+  setWalkability: 0
+  applyOnStart: 1
+  applyOnScan: 1
+  updatePhysics: 0
+  resetPenaltyOnPhysics: 1
+  updateErosion: 1
+  modifyTag: 0
+  setTag: 0
+  legacyMode: 0
+  serializedVersion: 1
+  legacyUseWorldSpace: 0
+--- !u!114 &3994243074089661803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8073836599889937231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efee954c69f0d421086729bb8df1137f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  uniqueID: 3987474452488687990
   points:
   - {x: -4, y: -4, z: 0}
   - {x: 4, y: 4, z: 0}
@@ -1938,7 +1974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6761814157336263990, guid: 1b184e452e7efa6449443a7ded3bc7c3, type: 3}
       propertyPath: hieroTest.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6761814157336263990, guid: 1b184e452e7efa6449443a7ded3bc7c3, type: 3}
       propertyPath: hieroTest.Array.data[0]
