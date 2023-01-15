@@ -389,30 +389,35 @@ public class Salle : MonoBehaviour
         SalleGenerator.Instance.roomsDone++;
         SalleGenerator.Instance.UnlockDoors();
         text.FadeOut(text.titleAlpha,text.titleEndPos,text.title);
-        switch (challengeChosen)
+        switch (SalleGenerator.Instance.challengeChooser)
         {
+            case  0:
+                Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
+                break;
             case 1:
-                //spawn better loot
+                Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
                 break;
             case 2:
-                //spawn better loot
+                Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
                 break;
             case 3:
                 if (timer.GetComponent<TimerChallenge>().internalTimer > 0)
                 {
-
-                    //spawn better loot
+                    Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
+                }
+                else
+                {
+                    Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
                 }
                 timer.SetActive(false);
                 break;
             case 4:
-                //spawn better loot
+                Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
                 break;
             case 5:
-                //spawn better loot
+                Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
                 break;
         }
-        Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
     }
     public IEnumerator DelayedSpawns()
     {
