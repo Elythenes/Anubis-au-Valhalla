@@ -21,6 +21,7 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Dodge")] public bool dashForce;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dashForceValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeHealValue;
+    [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeForceValue;
 
 
 
@@ -55,6 +56,7 @@ public class GlyphManager : MonoBehaviour
         soulPowerDefenseValue = 0;
         dodgeHealValue = 0;
         dashForceValue = 0;
+        dodgeForceValue = 0;
 
         dashForce = false;
     }
@@ -215,7 +217,6 @@ public class GlyphManager : MonoBehaviour
     
     void SetOnTriggerEffect(GlyphObject hiero)
     {
-        Debug.Log("oui oui c'est ca");
         switch (hiero.index)
         {
             case 309:
@@ -229,6 +230,12 @@ public class GlyphManager : MonoBehaviour
             case 335:
             case 336:
                 dodgeHealValue += Mathf.RoundToInt(hiero.specialTriggerValue);
+                break;
+            
+            case 337:
+            case 338:
+            case 339:
+                dodgeForceValue += Mathf.RoundToInt(hiero.additionalDamage);
                 break;
         }
     }
@@ -310,6 +317,12 @@ public class GlyphManager : MonoBehaviour
                 case 336:
                     HealDodge();
                     break;
+                
+                case 337:
+                case 338:
+                case 339:
+                    DodgeForce();
+                    break;
             }
         }
     }
@@ -342,12 +355,10 @@ public class GlyphManager : MonoBehaviour
     {
         if (dashForce && CharacterController.instance.debutDash)
         {
-            Debug.Log("ouiouoi");
             dashForce = false;
             StartCoroutine(DashForceCoroutine(2));
         }
     }
-
     private IEnumerator DashForceCoroutine(float duration)
     {
         AnubisCurrentStats.instance.totalBaseBonusDamage += dashForceValue;
@@ -355,15 +366,32 @@ public class GlyphManager : MonoBehaviour
         while (compteur < duration)
         {
             compteur += 0.1f;
-            Debug.Log(compteur);
             yield return new WaitForSecondsRealtime(0.1f);
         }
         AnubisCurrentStats.instance.totalBaseBonusDamage -= dashForceValue;
         dashForce = true;
     }
-    
-    
-    
+
+    void DodgeForce()
+    {
+        Debug.Log("dodge force");
+        if (DamageManager.instance.isDodging)
+        {
+            Debug.Log("is dodging");
+            StartCoroutine(DodgeForceCoroutine(2));
+        }
+    }
+    private IEnumerator DodgeForceCoroutine(float duration)
+    {
+        AnubisCurrentStats.instance.totalBaseBonusDamage += dodgeForceValue;
+        float compteur = 0f;
+        while (compteur < duration)
+        {
+            compteur += 0.1f;
+            yield return new WaitForSecondsRealtime(0.1f);
+        }
+        AnubisCurrentStats.instance.totalBaseBonusDamage -= dodgeForceValue;
+    }
     
     
     
