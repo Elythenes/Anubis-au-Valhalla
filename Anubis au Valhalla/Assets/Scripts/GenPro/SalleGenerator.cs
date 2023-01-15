@@ -21,6 +21,7 @@ namespace GenPro
                 [SerializeField] public Salle endRoom;
                 [SerializeField] public Salle startRoom2;
                 [SerializeField] private Salle endRoom2;
+                public GameObject challengeCoffre;
 
                 [Header("CONTENU DU DONJON")]
                 public List<Salle> roomPrefab = new List<Salle>();
