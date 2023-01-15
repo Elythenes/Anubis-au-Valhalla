@@ -16,6 +16,7 @@ public class CollectThings : MonoBehaviour
 
     public bool isGlyphCollectable = false;
     public GameObject collectableGlyph;
+    
 
     
     
@@ -24,6 +25,7 @@ public class CollectThings : MonoBehaviour
     {
         isPowerCollectable = false;
         isPotionCollectable = false;
+        isGlyphCollectable = false;
     }
     
     void Update()
