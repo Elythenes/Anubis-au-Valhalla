@@ -78,6 +78,7 @@ public class CharacterController : MonoBehaviour
 
   private void Awake()
   {
+    Time.timeScale = 1;
     if (instance == null)
     {
       instance = this;

@@ -23,6 +23,7 @@ public class TothBehiavour : MonoBehaviour
    public CanvasGroup BlackScreen;
    public static TothBehiavour instance;
    public TextMeshProUGUI eyeCatcher;
+   public GameObject tableauDesScores;
 
    public enum Situation {isHub,isTutoPouvoirs,isTutoCombat,isTutoLD,isTutoShop}
    public Situation activeSituation;
@@ -202,7 +203,9 @@ public class TothBehiavour : MonoBehaviour
          case OptionChoisie.B:
             if (activeSituation == Situation.isHub)
             {
-               // Ouvrir tableau des scores
+               DialogueDOWN();
+               tableauDesScores.SetActive(true);
+               CharacterController.instance.allowMovements = false;
             }
             if (activeSituation == Situation.isTutoCombat)
             {

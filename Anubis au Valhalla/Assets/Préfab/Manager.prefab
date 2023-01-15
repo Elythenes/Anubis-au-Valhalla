@@ -1,50 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1887789526
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1887789527}
-  - component: {fileID: 1887789528}
-  m_Layer: 5
-  m_Name: ScoreManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1887789527
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887789526}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8073836599328315930}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1887789528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887789526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa861c1bcb7f014984221d58202369a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentScore: 0
 --- !u!1 &8073836598578214144
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +114,6 @@ Transform:
   - {fileID: 8073836600493889085}
   - {fileID: 2208207674967088067}
   - {fileID: 2670374917511593723}
-  - {fileID: 1887789527}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -262,6 +216,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d091adf4cb4f33846b5ffadb19d3f8f2, type: 2}
   - {fileID: 11400000, guid: 5221264247949ec41877299b593df6c2, type: 2}
   - {fileID: 11400000, guid: 4bed7ab8250d5e644aec6df6d6e13f50, type: 2}
+  eliteChallenge: {fileID: 0}
+  spawnedShops: 0
+  chancePharaon:
+  - 40
+  - 45
+  - 60
+  - 65
+  - 75
+  - 90
+  - 90
+  "chanceDivinit\xE9":
+  - 0
+  - 0
+  - 20
+  - 30
+  - 40
+  - 50
+  - 60
+  nbMaxPharaon: 03000000040000000500000006000000070000000800000009000000
+  nbMaxDivinite: 00000000000000000100000002000000030000000400000005000000
   roomsDone: 0
   fromDoor: 3
   toDoor: 1
