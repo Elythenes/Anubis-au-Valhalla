@@ -48,7 +48,7 @@ public class MainMenuManager : MonoBehaviour
 
    public void StartGame()
    {
-      SceneManager.LoadScene("Hub");
+      SceneManager.LoadScene("Cinematique Intro");
    }
 
 

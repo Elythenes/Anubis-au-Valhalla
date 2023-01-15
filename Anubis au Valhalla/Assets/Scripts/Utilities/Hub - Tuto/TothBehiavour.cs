@@ -228,7 +228,7 @@ public class TothBehiavour : MonoBehaviour
          case OptionChoisie.C:
             if (activeSituation == Situation.isHub)
             {
-               SceneManager.LoadScene("CinématiqueIntro");
+               SceneManager.LoadScene("Cinematique Intro");
             }
             if (activeSituation == Situation.isTutoCombat)
             {
