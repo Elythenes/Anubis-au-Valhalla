@@ -295,7 +295,7 @@ public class GlyphManager : MonoBehaviour
             }
         }
 
-        foreach (var hiero in listManche)
+        foreach (var hiero in listPoignee)
         {
             switch (hiero.index)
             {
@@ -342,22 +342,24 @@ public class GlyphManager : MonoBehaviour
     {
         if (dashForce && CharacterController.instance.debutDash)
         {
+            Debug.Log("ouiouoi");
             dashForce = false;
-            AnubisCurrentStats.instance.totalBaseBonusDamage += dashForceValue;
-            StartCoroutine(TimeCoroutine(2));
-            AnubisCurrentStats.instance.totalBaseBonusDamage -= dashForceValue;
-            dashForce = true;
+            StartCoroutine(DashForceCoroutine(2));
         }
     }
 
-    private IEnumerator TimeCoroutine(float duration)
+    private IEnumerator DashForceCoroutine(float duration)
     {
+        AnubisCurrentStats.instance.totalBaseBonusDamage += dashForceValue;
         float compteur = 0f;
         while (compteur < duration)
         {
             compteur += 0.1f;
+            Debug.Log(compteur);
             yield return new WaitForSecondsRealtime(0.1f);
         }
+        AnubisCurrentStats.instance.totalBaseBonusDamage -= dashForceValue;
+        dashForce = true;
     }
     
     
