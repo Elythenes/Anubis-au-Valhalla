@@ -122,7 +122,7 @@ public class UiPowerManager : MonoBehaviour
                 }
                 else //(niveauP1 < powerLevelIndexForUi + i) 
                 { 
-                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 0);
+                    fondForLevel[i].GetComponent<Image>().color = new Color(axeR, axeG, axeB, 0);
                 }
             }
         }
@@ -136,7 +136,7 @@ public class UiPowerManager : MonoBehaviour
                 }
                 if (niveauP2 < powerLevelIndexForUi + i) //casse si changement de niveau plus que +1
                 { 
-                    fondForLevel[i].GetComponent<Image>().color = new Color(255, 255, 255, 0);
+                    fondForLevel[i].GetComponent<Image>().color = new Color(axeR, axeG, axeB, 0);
                 }
             }
         }
