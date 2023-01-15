@@ -47,7 +47,7 @@ public class CollectThings : MonoBehaviour
             if (isGlyphCollectable)
             {
                 GlyphInventory.Instance.AddNewGlyph(collectableGlyph.GetComponent<GlyphRepository>().glyphInside);
-                //play UI for that 
+                UINewGlyphManager.instance.NewGlyph();
                 Destroy(collectableGlyph);
             }
         }
