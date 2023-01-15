@@ -18,13 +18,14 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerForce1;
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerForce2;
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerForce3;
+    [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerForce;
+    
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerDefense1;
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerDefense2;
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public bool soulPowerDefense3;
+    [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerDefense;
     
-    [ShowIf("showBools")] [BoxGroup("Heal Dodge")] public bool HealDodge1;
-    [ShowIf("showBools")] [BoxGroup("Heal Dodge")] public bool HealDodge2;
-    [ShowIf("showBools")] [BoxGroup("Heal Dodge")] public bool HealDodge3;
+    [ShowIf("showBools")] [BoxGroup("Heal Dodge")] public int dodgeHeal;
 
 
 
@@ -61,9 +62,10 @@ public class GlyphManager : MonoBehaviour
         soulPowerDefense1 = false;
         soulPowerDefense2 = false;
         soulPowerDefense3 = false;
-        HealDodge1 = false;
-        HealDodge2 = false;
-        HealDodge3 = false;
+
+        soulPowerForce = 0;
+        soulPowerDefense = 0;
+        dodgeHeal = 0;
     }
     
     
@@ -190,32 +192,38 @@ public class GlyphManager : MonoBehaviour
         {
             case 135:
                 soulPowerForce1 = true;
+                soulPowerForce += Mathf.RoundToInt(hiero.bonusSituationalStat);
                 break;
             
             case 136:
                 soulPowerForce1 = false;
                 soulPowerForce2 = true;
+                soulPowerForce += Mathf.RoundToInt(hiero.bonusSituationalStat);
                 break;
             
             case 137:
                 soulPowerForce1 = false;
                 soulPowerForce2 = false;
                 soulPowerForce3 = true;
+                soulPowerForce += Mathf.RoundToInt(hiero.bonusSituationalStat);
                 break;
             
             case 221:
                 soulPowerDefense1 = true;
+                soulPowerDefense += Mathf.RoundToInt(hiero.bonusSituationalStat);
                 break;
             
             case 222:
                 soulPowerDefense1 = false;
                 soulPowerDefense2 = true;
+                soulPowerDefense += Mathf.RoundToInt(hiero.bonusSituationalStat);
                 break;
             
             case 223:
                 soulPowerDefense1 = false;
                 soulPowerDefense2 = false;
                 soulPowerDefense3 = true;
+                soulPowerDefense += Mathf.RoundToInt(hiero.bonusSituationalStat);
                 break;
         }
     }
@@ -244,19 +252,12 @@ public class GlyphManager : MonoBehaviour
         switch (hiero.index)
         {
             case 334:
-                HealDodge1 = true;
-                break;
-            
             case 335:
-                HealDodge1 = false;
-                HealDodge2 = true;
-                
-                break;
-            
             case 336:
-                HealDodge1 = false;
-                HealDodge2 = false;
-                HealDodge3 = true;
+                if (dodgeHeal < Mathf.RoundToInt(hiero.specialTriggerValue))
+                {
+                    dodgeHeal = Mathf.RoundToInt(hiero.specialTriggerValue);
+                }
                 break;
         }
     }
@@ -303,15 +304,9 @@ public class GlyphManager : MonoBehaviour
         {
             switch (hiero.index)
             {
-                case 135: //soul Power Force 1
-                    SoulPowerForce();
-                    break;
-                
-                case 136: //soul Power Force 2
-                    SoulPowerForce();
-                    break;
-                
-                case 137: //soul Power Force 3
+                case 135: 
+                case 136:
+                case 137: 
                     SoulPowerForce();
                     break;
             }
@@ -322,18 +317,9 @@ public class GlyphManager : MonoBehaviour
             switch (hiero.index)
             {
                 case 221:
-                    soulPowerDefense1 = true;
-                    break;
-            
                 case 222:
-                    soulPowerDefense1 = false;
-                    soulPowerDefense2 = true;
-                    break;
-            
                 case 223:
-                    soulPowerDefense1 = false;
-                    soulPowerDefense2 = false;
-                    soulPowerDefense3 = true;
+                    SoulPowerDefense();
                     break;
             }
         }
@@ -343,11 +329,7 @@ public class GlyphManager : MonoBehaviour
             switch (hiero.index)
             {
                 case 334:
-                    HealDodge();
-                    break;
                 case 335:
-                    HealDodge();
-                    break;
                 case 336:
                     HealDodge();
                     break;
@@ -362,51 +344,41 @@ public class GlyphManager : MonoBehaviour
 
     void HealDodge()
     {
-        if (HealDodge1 && DamageManager.instance.isDodging)
+        if (DamageManager.instance.isDodging)
         {
-            DamageManager.instance.Heal(2);
-        }
-        
-        if (HealDodge2 && DamageManager.instance.isDodging)
-        {
-            DamageManager.instance.Heal(3);
-        }
-        
-        if (HealDodge3 && DamageManager.instance.isDodging)
-        {
-            DamageManager.instance.Heal(4);
+            DamageManager.instance.Heal(dodgeHeal);
         }
     }
     
-    void SoulPowerForce()
+    void SoulPowerForce() //s'active plusieurs fois mais pas grave en soi, à régler ptet ?
     {
         if (soulPowerForce1)
         {
-            AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *5);
+            AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * soulPowerForce);
         }
         if (soulPowerForce2)
         {
-            AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *7);
+            AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * soulPowerForce);
         }
         if (soulPowerForce3)
         {
-            AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) *9);
+            AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * soulPowerForce);
         }
     }
 
-    void SoulPowerDefense()
+    void SoulPowerDefense() //s'active plusieurs fois mais pas grave en soi, à régler ptet ?
     {
         if (soulPowerDefense1)
         {
-            
+            AnubisCurrentStats.instance.soulBonusDamageReductionForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * soulPowerDefense);
         }
         if (soulPowerDefense2)
         {
-            
+            AnubisCurrentStats.instance.soulBonusDamageReductionForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * soulPowerDefense);
         }
         if (soulPowerDefense3)
         {
-            
+            AnubisCurrentStats.instance.soulBonusDamageReductionForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * soulPowerDefense);
         }
     }
     
