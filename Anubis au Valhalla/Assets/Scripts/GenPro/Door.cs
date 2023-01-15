@@ -19,6 +19,7 @@ public class Door : MonoBehaviour
     public GameObject normalDoor2;
     public GameObject shopDoor2;
     public GameObject challengeDoor2;
+    public GameObject transitionDoor;
     public GameObject bossDoor;
     public GameObject broken;
 
@@ -70,7 +71,12 @@ public class Door : MonoBehaviour
                 currentSprite.sprite = doorSprites[2];
                 break;
             case DoorType.ToBoss:
-                bossDoor.SetActive(true);
+                if (SalleGenerator.Instance.zone2)
+                {
+                    bossDoor.SetActive(true);
+                    break;
+                }
+                transitionDoor.SetActive(true);
                 break;
             case DoorType.Broken:
                 broken.SetActive(true);
