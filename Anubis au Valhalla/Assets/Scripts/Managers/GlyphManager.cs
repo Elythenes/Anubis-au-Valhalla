@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GenPro;
 using NaughtyAttributes;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -13,7 +14,7 @@ public class GlyphManager : MonoBehaviour
     public List<GlyphObject> listManche = new List<GlyphObject>(0);
     public List<GlyphObject> listPoignee = new List<GlyphObject>(0);
     
-    public bool showBools = false; //Liste de bool pour les fonctions
+    public bool showBools = false; //Liste de variables pour les fonctions
     
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerForceValue;
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerDefenseValue;
@@ -22,7 +23,10 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dashForceValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeHealValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeForceValue;
-
+    
+    [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public GameObject currentRoom;
+    [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public bool stillEnemies;
+    [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public int takeDamageInflictValue;
 
 
     //Fonctions Système ************************************************************************************************
@@ -45,6 +49,7 @@ public class GlyphManager : MonoBehaviour
     void Update()
     {
         UpdateGlyph();
+        DetectEnemies();
     }
     
     
@@ -392,8 +397,27 @@ public class GlyphManager : MonoBehaviour
         }
         AnubisCurrentStats.instance.totalBaseBonusDamage -= dodgeForceValue;
     }
+
+    void DetectEnemies()
+    {
+        //Debug.Log(currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies.Count);
+        if (SalleGenerator.Instance.currentRoom.GetComponent<Salle>().currentEnemies.Count != 0)
+        {
+            stillEnemies = true;
+        }
+        else
+        {
+            stillEnemies = false;
+        }
+    }
     
-    
+    void TakeDamageInflictDamage()
+    {
+        if (stillEnemies)
+        {
+            
+        }
+    }
     
     
     

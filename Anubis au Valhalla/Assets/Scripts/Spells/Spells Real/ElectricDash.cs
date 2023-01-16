@@ -21,11 +21,11 @@ public class ElectricDash : MonoBehaviour
         {
             if (!manager.p1DashContactStagger)
             {
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1DashContactDamages[manager.currentLevelPower1], manager.p1DashContactStaggers[manager.currentLevelPower1]);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1DashContactDamages[manager.currentLevelPower1] + (int)AnubisCurrentStats.instance.magicForce, manager.p1DashContactStaggers[manager.currentLevelPower1]);
             }
             else
             {
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1DashContactDamages[manager.currentLevelPower1], manager.p1DashContactStaggers[manager.currentLevelPower1]*1.5f);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1DashContactDamages[manager.currentLevelPower1] + (int)AnubisCurrentStats.instance.magicForce, manager.p1DashContactStaggers[manager.currentLevelPower1]*1.5f);
             }
            
         }

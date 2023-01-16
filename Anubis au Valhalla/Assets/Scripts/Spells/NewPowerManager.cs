@@ -470,7 +470,7 @@ public class NewPowerManager : MonoBehaviour
                     currentDurationPower1 += 0.1f;
                     //Debug.Log("dura p1 = " + currentDurationPower1);
                 }
-                Debug.Log("full conso p1");
+                //Debug.Log("full conso p1");
                 currentDurationPower1 = 0f;
                 isPower1Active = false;
                 StartCoroutine(CooldownPower(1, cooldownPower1));
@@ -483,7 +483,7 @@ public class NewPowerManager : MonoBehaviour
                     currentDurationPower2 += 0.1f;
                     //Debug.Log("dura p2 = " + currentDurationPower2);
                 }
-                Debug.Log("full conso p2");
+                //Debug.Log("full conso p2");
                 currentDurationPower2 = 0f;
                 isPower2Active = false;
                 StartCoroutine(CooldownPower(2, cooldownPower2));
@@ -518,7 +518,7 @@ public class NewPowerManager : MonoBehaviour
                     currentCooldownPower1 += 0.1f;
                     //Debug.Log("cd P1 = " + currentCooldownPower1);
                 }
-                Debug.Log("p1 rechargé après " + currentCooldownPower1 + " sec.");
+                //Debug.Log("p1 rechargé après " + currentCooldownPower1 + " sec.");
                 currentCooldownPower1 = 0f;
                 canUsePower1 = true;
                 earlyDisablePower1 = false;
@@ -543,7 +543,7 @@ public class NewPowerManager : MonoBehaviour
                     currentCooldownPower2 += 0.1f;
                     //Debug.Log("cd P2 = " + currentCooldownPower2);
                 }
-                Debug.Log("p2 rechargé après " + currentCooldownPower2 + " sec.");
+                //Debug.Log("p2 rechargé après " + currentCooldownPower2 + " sec.");
                 currentCooldownPower2 = 0f;
                 canUsePower2 = true;
                 earlyDisablePower2 = false;

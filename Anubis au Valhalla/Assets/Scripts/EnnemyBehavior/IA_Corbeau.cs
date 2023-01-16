@@ -53,7 +53,13 @@ public class IA_Corbeau : MonoBehaviour
     public Vector2 directionProj;
     public Gradient gradientIndic;
     
-    
+    [Header("Stats Overdose")] 
+    public float OvAttackTime = 0.3f;
+    public float OvSpeed = 2;
+    public float OvStartUpAttackTime = 0.25f;
+    public float OvSpeedTowardPlayer = 100f;
+
+
     //Fonctions ******************************************************************************************************************************************************
     
     private void Awake()
@@ -84,12 +90,11 @@ public class IA_Corbeau : MonoBehaviour
 
         if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
         {
-            speedTowardPlayer *= 100;
-            forceRepulse *= 1.5f;
-            rotationSpeed *= 2;
-            rotationSpeedSlown *= 2;
-            StartUpAttackTime *= 0.25f;
-            AttackTime *= 0.3f;
+            speedTowardPlayer *= OvSpeedTowardPlayer;
+            rotationSpeed *= OvSpeed;
+            rotationSpeedSlown *= OvSpeed;
+            StartUpAttackTime *= OvStartUpAttackTime;
+            AttackTime *= OvAttackTime;
         }
         
     }

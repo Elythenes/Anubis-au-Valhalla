@@ -80,7 +80,7 @@ public class Fireball : MonoBehaviour
             isExploding = true;
             if (!manager.p1ThrustBallExecute)
             {
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1], 0.5f);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1] + (int)AnubisCurrentStats.instance.magicForce, 0.5f);
             }
             else
             {
@@ -90,7 +90,7 @@ public class Fireball : MonoBehaviour
                 }
                 else
                 {
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1], 0.5f);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1] + (int)AnubisCurrentStats.instance.magicForce, 0.5f);
                 }
             }
            

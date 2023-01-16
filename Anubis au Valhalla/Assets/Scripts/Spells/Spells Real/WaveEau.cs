@@ -37,11 +37,11 @@ public class WaveEau : MonoBehaviour
         {
             if (!manager.p1ComboConeStagger)
             {
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(manager.p1ComboConeDamages[manager.currentLevelPower1]),0.5f);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(manager.p1ComboConeDamages[manager.currentLevelPower1] + AnubisCurrentStats.instance.magicForce),0.5f);
             }
             else
             {
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(manager.p1ComboConeDamages[manager.currentLevelPower1]),9f);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(manager.p1ComboConeDamages[manager.currentLevelPower1]+ AnubisCurrentStats.instance.magicForce),9f);
             }
           
         }
