@@ -92,6 +92,11 @@ namespace GenPro
 
                 void Start()
                 {
+                        if (zone2)
+                        {
+                                NewZone(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
+                                return;
+                        }
                         TransitionToNextRoom(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
                 }
                 /// <summary>
@@ -123,6 +128,7 @@ namespace GenPro
                         roomsDone = 0;
                         dungeonSize -= shopsVisited;
                         shopsVisited = 0;
+                        spawnedShops = 0;
                         TransitionToNextRoom(door,switchDoor,type);
 
                 }
@@ -339,7 +345,6 @@ namespace GenPro
                 public void OpenDoors(DoorOrientation index, bool state)
                 {
                         sDoors[(int)index].doorCollider.enabled = state;
-                        //s_doors[(int)index].GetComponentInChildren<Animator>().SetBool("Open",state);
                 }
                 /// <summary>
                 /// TP la caméra au joueur
