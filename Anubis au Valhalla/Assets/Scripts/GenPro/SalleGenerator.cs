@@ -189,6 +189,7 @@ namespace GenPro
                         if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.x) && roomsDone <= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y))
                         {
                                 var shopspawn = Random.value;
+                                if (roomsDone == Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y)) shopspawn = 1;
                                 if (shopspawn >= shopSpawnChance)
                                 {
                                         spawnedShops++;
@@ -288,6 +289,7 @@ namespace GenPro
                                 else if (zone2)
                                 {
                                         MovePlayerToDoor(fromDoor);
+                                        UnlockDoors();
                                 }
                                 Souls.instance.ClearOfSouls();
                                 ClearRoom(); 

@@ -56,6 +56,11 @@ public class IA_Guerrier : MonoBehaviour
     public float WonderingTimeTimer;
     private bool hasShaked;
 
+    [Header("Stats Overdose")] 
+    public float OvWonderingTime = 0.5f;
+    public float OvSpeed = 2;
+    public float OvStartUpAttackTime = 0.25f;
+
     
     //Fonctions ******************************************************************************************************************************************************
     
@@ -83,9 +88,9 @@ public class IA_Guerrier : MonoBehaviour
         
         if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
         {
-            WonderingTime *= 0.5f;
-            ai.maxSpeed *= 2;
-            StartUpAttackTime *= 0.25f;
+            WonderingTime *= OvWonderingTime;
+            ai.maxSpeed *= OvSpeed;
+            StartUpAttackTime *= OvStartUpAttackTime;
         }
         
         if (life.elite)
