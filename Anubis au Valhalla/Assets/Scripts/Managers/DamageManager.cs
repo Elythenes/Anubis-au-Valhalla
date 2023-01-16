@@ -101,10 +101,10 @@ public class DamageManager : MonoBehaviour
                 CharacterController.instance.rb.AddForce(angle * (damage * knockbackAmount), ForceMode2D.Impulse);
                 StartCoroutine(RedScreenStart(timeRedScreen));
                 HitStop(timeHitStop,false);
-                stats.vieActuelle -= damage - damageReduction/100 * damage;
+                stats.vieActuelle -= (damage - damage * damageReduction/100);  
                 PotionManager.Instance.tookDamage = true;
                 GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
-                textObj.GetComponentInChildren<TextMeshPro>().SetText((damage - damageReduction/100 * damage).ToString());
+                textObj.GetComponentInChildren<TextMeshPro>().SetText((damage - damage * damageReduction/100).ToString());
              
                 
                 if (stats.vieActuelle <= 0)

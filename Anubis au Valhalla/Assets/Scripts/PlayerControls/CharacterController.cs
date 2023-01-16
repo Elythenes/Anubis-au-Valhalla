@@ -523,6 +523,7 @@ public class CharacterController : MonoBehaviour
     isDashing = false;
     canDash = true;
     timerdashCooldown = 0;
+    GlyphManager.Instance.enterNewRoom = true;
     var hitDoor = col.GetComponent<Door>();
     SalleGenerator.Instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
     SalleGenerator.Instance.SwapDoorType(SalleGenerator.Instance.sDoors[(int)SalleGenerator.Instance.fromDoor]);

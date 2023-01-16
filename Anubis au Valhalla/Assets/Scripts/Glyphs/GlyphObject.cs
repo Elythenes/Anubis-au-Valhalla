@@ -64,6 +64,7 @@ public class GlyphObject : ScriptableObject
 
     [ShowIf("isBoolEffect")] [BoxGroup("BOOL EFFECT")] public bool startsActive = true;
     [ShowIf("isBoolEffect")] [BoxGroup("BOOL EFFECT")] public string boolTrigger;
+    [ShowIf("isBoolEffect")] [BoxGroup("BOOL EFFECT")] public float boolValue;
     [ShowIf("isBoolEffect")] [BoxGroup("BOOL EFFECT")] public string revokeBool;
 
     [ShowIf("isOther")] [BoxGroup("OTHER")] public string otherEffect;
