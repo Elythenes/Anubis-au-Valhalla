@@ -912,6 +912,51 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4525204574490373731, guid: 137d469ee02d15a4fa3139540e91d8bf, type: 3}
   m_PrefabInstance: {fileID: 4525204575341938624}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1403819609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1403819611}
+  - component: {fileID: 1403819610}
+  m_Layer: 5
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1403819610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403819609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa861c1bcb7f014984221d58202369a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScore: 0
+--- !u!4 &1403819611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403819609}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -297.5, y: -209, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1442403476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1635,6 +1680,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 491855216}
     - target: {fileID: 8073836599328315931, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: challengeCoffre
+      value: 
+      objectReference: {fileID: 3411506346598688678, guid: c77dac3eaddbceb4ebc4804f2ace72f6, type: 3}
+    - target: {fileID: 8073836599328315931, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: transitionCanvas
       value: 
       objectReference: {fileID: 865683844}
@@ -1700,7 +1749,7 @@ PrefabInstance:
       objectReference: {fileID: 491855216}
     - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: totalBaseDamage
-      value: 999
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3994243074089661803, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
