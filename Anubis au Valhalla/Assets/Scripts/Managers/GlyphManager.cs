@@ -36,6 +36,8 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Enter Room")] public bool enterNewRoom;
     [ShowIf("showBools")] [BoxGroup("Enter Room")] public int doRegenOnEnterValue;
     
+    [ShowIf("showBools")] [BoxGroup("Other")] public float healBoost;
+    
 
     //Fonctions Système ************************************************************************************************
     
@@ -80,6 +82,8 @@ public class GlyphManager : MonoBehaviour
 
         enterNewRoom = false;
         doRegenOnEnterValue = 0;
+
+        healBoost = 0;
     }
     
     
@@ -321,7 +325,10 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
-            case 0:
+            case 295:
+            case 296:
+            case 297:
+                healBoost *= hiero.otherBonusBasicStat;
                 break;
         }
     }
@@ -423,7 +430,7 @@ public class GlyphManager : MonoBehaviour
     void DetectEnemies()
     {
         //Debug.Log(currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies.Count);
-        if (SalleGenerator.Instance.currentRoom.GetComponent<Salle>().currentEnemies.Count != 0)
+        if (SalleGenerator.Instance.currentRoom.currentEnemies.Count != 0)
         {
             stillEnemies = true;
         }
@@ -523,7 +530,7 @@ public class GlyphManager : MonoBehaviour
     {
         if (stillEnemies)
         {
-            foreach (var enemy in currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies)
+            foreach (var enemy in SalleGenerator.Instance.currentRoom.currentEnemies)
             {
                 Debug.Log("tiens dans ta gueule");
                 enemy.TakeDamage(damage,stagger);
