@@ -12,6 +12,8 @@ public class SoulBehavior : MonoBehaviour
     [SerializeField] private float poofForce = 3f;
     private bool haspoofed = false;
 
+  
+
     public Rigidbody2D rb;
     // Start is called before the first frame update
     void Awake()
@@ -27,7 +29,8 @@ public class SoulBehavior : MonoBehaviour
         playerPos = CharacterController.instance.transform.position;
         Vector3 dir = playerPos - transform.position;
         Vector3 dirNormalised = dir.normalized;
-
+        
+        
         if (timer >= 0)
         {
             rb.velocity -= rb.velocity * 0.03f;

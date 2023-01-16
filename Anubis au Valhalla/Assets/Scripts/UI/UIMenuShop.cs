@@ -12,6 +12,9 @@ public class UIMenuShop : MonoBehaviour
     public CanvasGroup soldOutText;
     public bool fade;
     public bool[] hasMovedOut;
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] audioClipArray;
 
     private void Start()
     {
@@ -35,6 +38,11 @@ public class UIMenuShop : MonoBehaviour
                 UIParent.alpha += Time.unscaledDeltaTime;    
             }
         }
+    }
+
+    public void PlayBuyShop()
+    {
+        audioSource.PlayOneShot(audioClipArray[0]);
     }
 
     public void MoveOutAll()

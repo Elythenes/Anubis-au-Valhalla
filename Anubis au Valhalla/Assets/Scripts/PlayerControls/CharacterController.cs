@@ -21,6 +21,7 @@ public class CharacterController : MonoBehaviour
   public LookingAt facing;
 
   [Header("Interactions")] 
+  public bool isInteracting;
   public bool canInteract;
   public bool canInteractTuto;
   public Collider2D currentDoor;
@@ -34,6 +35,7 @@ public class CharacterController : MonoBehaviour
   public AudioClip[] audioClipArray;
   public float timeBetweenSteps;
   public float timeBetweenStepsTimer;
+  public bool HurtOnce;
   public bool isHiting;
   public bool isHitingSoundOn;
   public float HittingSoundLenght;
@@ -158,7 +160,7 @@ public class CharacterController : MonoBehaviour
         timeBetweenSteps += Time.deltaTime;
         if (timeBetweenSteps >= timeBetweenStepsTimer)
         {
-          audioSource.pitch = Random.Range(0.8f,1.2f);
+          //audioSource.pitch = Random.Range(0.8f,1.2f);
           audioSource.PlayOneShot(audioClipArray[Random.Range(1, 3)],0.5f);
           timeBetweenSteps = 0;
         }
@@ -177,7 +179,16 @@ public class CharacterController : MonoBehaviour
       isHitingSoundOn = false;
     }
 
-   if (!isHitingSoundOn)
+    if (DamageManager.instance.isHurt && HurtOnce)
+    {
+      Debug.Log("Hurt");
+      audioSource.pitch = 1;
+      audioSource.PlayOneShot(audioClipArray[5],0.8f);
+      HurtOnce = false;
+      StartCoroutine(ResetTracking());
+    }
+
+    if (!isHitingSoundOn)
     {
       HittingSoundLenghtTimer += Time.deltaTime;
       if (HittingSoundLenghtTimer >= HittingSoundLenght)
@@ -537,7 +548,7 @@ public class CharacterController : MonoBehaviour
 
     if (hitDoor.currentDoorType == Door.DoorType.ToBoss && !SalleGenerator.Instance.zone2)
     {
-      SalleGenerator.Instance.challengeChooser = 2;
+      SalleGenerator.Instance.morbinTime = true;
     }
     if (hitDoor.currentDoorType == Door.DoorType.ToShop)
     {
@@ -581,6 +592,7 @@ public class CharacterController : MonoBehaviour
   IEnumerator ResetTracking()
   {
     yield return null;
+    HurtOnce = true;
     debutDash = false;
     finDash = false;
   }

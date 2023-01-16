@@ -35,6 +35,10 @@ public class Shop : MonoBehaviour
     private List<int> consumablesCost = new List<int>();
     public List<PotionObject> consumableObject = new List<PotionObject>();
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] audioClipArray;
+    
     public List<GlyphObject> choice;
 
     public bool lockInteract;
@@ -111,6 +115,8 @@ public class Shop : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
+                audioSource.pitch = 1;
+                audioSource.PlayOneShot(audioClipArray[0],0.8f);
                 CanvasInteraction.GetComponent<Canvas>().enabled = false;
                 lockInteract = true;
                 GetShop();
@@ -165,6 +171,9 @@ public class Shop : MonoBehaviour
 
     public void CloseShop()
     {
+        UiManager.instance.ExitSousMenu();
+        audioSource.pitch = 0.5f;
+        audioSource.PlayOneShot(audioClipArray[1],0.8f);
         Time.timeScale = 1;
         open = false;
         CharacterController.instance.controls.Enable();

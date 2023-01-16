@@ -16,7 +16,7 @@ public class GlyphRepository : MonoBehaviour
     [Header("TESTING")] 
     public bool doGlyphTest;
     [Expandable] public GlyphObject glyphTest;
-    
+
     [Header("Force Au Spawn")]
     public bool isMoving;
     [SerializeField] private float force = 3f;

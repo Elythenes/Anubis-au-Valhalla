@@ -68,6 +68,7 @@ namespace GenPro
                 public GameObject timer;
                 public GameObject parasiteToSpawn;
                 public bool zone2;
+                public bool morbinTime;
                 
 
                 public enum DoorOrientation
@@ -185,10 +186,10 @@ namespace GenPro
                                 sDoors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
                         }
 
-                        if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.x) && roomsDone <= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y))
+                        if (spawnedShops < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.x) && roomsDone <= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y))
                         {
                                 var shopspawn = Random.value;
-                                if (roomsDone == Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y)) shopspawn = 1;
+                                if (roomsDone == Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y) && spawnedShops < 1) shopspawn = 1;
                                 if (shopspawn >= shopSpawnChance)
                                 {
                                         spawnedShops++;
