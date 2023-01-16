@@ -23,10 +23,15 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dashForceValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeHealValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeForceValue;
-
+    [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeArmorValue;
+    [ShowIf("showBools")] [BoxGroup("Dodge")] public float dodgeStaggerTime;
+    
+    
+    [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public GameObject currentRoom;
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public bool stillEnemies;
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public int takeDamageInflictValue;
-
+    [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public float takeDamageStaggerTime;
+    
 
     //Fonctions Système ************************************************************************************************
     
@@ -58,12 +63,16 @@ public class GlyphManager : MonoBehaviour
     {
         soulPowerForceValue = 0;
         soulPowerDefenseValue = 0;
+        
         dodgeHealValue = 0;
         dashForceValue = 0;
-        dodgeForceValue = 0;
-        takeDamageInflictValue = 0;
-
         dashForce = false;
+        dodgeForceValue = 0;
+        
+        takeDamageInflictValue = 0;
+        takeDamageStaggerTime = 0f;
+
+
     }
     
     
@@ -230,6 +239,10 @@ public class GlyphManager : MonoBehaviour
                 takeDamageInflictValue += Mathf.RoundToInt(hiero.specialTriggerValue);
                 break;
             
+            case 215:
+                takeDamageStaggerTime = hiero.specialTriggerValue;
+                break;
+
             case 309:
             case 310:
             case 311:
@@ -247,6 +260,16 @@ public class GlyphManager : MonoBehaviour
             case 338:
             case 339:
                 dodgeForceValue += Mathf.RoundToInt(hiero.additionalDamage);
+                break;
+            
+            case 340:
+            case 341:
+            case 342:
+                dodgeArmorValue += Mathf.RoundToInt(hiero.additionalDamage);
+                break;
+            
+            case 346:
+                dodgeStaggerTime = hiero.specialTriggerValue;
                 break;
         }
     }
@@ -311,6 +334,10 @@ public class GlyphManager : MonoBehaviour
                     DoEffectToEnemies(takeDamageInflictValue,0.2f);
                     break;
                 
+                case 215:
+                    DoEffectToEnemies(0,takeDamageStaggerTime);
+                    break;
+                
                 case 221:
                 case 222:
                 case 223:
@@ -339,6 +366,16 @@ public class GlyphManager : MonoBehaviour
                 case 338:
                 case 339:
                     DodgeForce();
+                    break;
+                
+                case 340:
+                case 341:
+                case 342:
+                    DodgeArmor();
+                    break;
+                
+                case 346:
+                    DodgeStagger(dodgeStaggerTime);
                     break;
             }
         }
@@ -391,10 +428,10 @@ public class GlyphManager : MonoBehaviour
 
     void DodgeForce()
     {
-        Debug.Log("dodge force");
+        //Debug.Log("dodge force");
         if (DamageManager.instance.isDodging)
         {
-            Debug.Log("is dodging");
+            //Debug.Log("is dodging");
             StartCoroutine(DodgeForceCoroutine(2));
         }
     }
@@ -410,11 +447,32 @@ public class GlyphManager : MonoBehaviour
         AnubisCurrentStats.instance.totalBaseBonusDamage -= dodgeForceValue;
     }
 
+    void DodgeArmor()
+    {
+        Debug.Log("dodge armor");
+        if (DamageManager.instance.isDodging)
+        {
+            Debug.Log("is dodging");
+            StartCoroutine(DodgeArmorCoroutine(2));
+        }
+    }
+    private IEnumerator DodgeArmorCoroutine(float duration)
+    {
+        AnubisCurrentStats.instance.damageReduction += dodgeArmorValue;
+        float compteur = 0f;
+        while (compteur < duration)
+        {
+            compteur += 0.1f;
+            yield return new WaitForSecondsRealtime(0.1f);
+        }
+        AnubisCurrentStats.instance.damageReduction-= dodgeArmorValue;
+    }
+    
+
     void DetectEnemies()
     {
         //Debug.Log(currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies.Count);
-        if (!SalleGenerator.Instance.currentRoom)return;
-        if (SalleGenerator.Instance.currentRoom.currentEnemies.Count != 0)
+        if (SalleGenerator.Instance.currentRoom.GetComponent<Salle>().currentEnemies.Count != 0)
         {
             stillEnemies = true;
         }
@@ -430,11 +488,24 @@ public class GlyphManager : MonoBehaviour
         {
             if (DamageManager.instance.isHurt)
             {
-                foreach (var enemy in SalleGenerator.Instance.currentRoom.currentEnemies)
+                foreach (var enemy in currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies)
                 {
                     Debug.Log("tiens dans ta gueule");
                     enemy.TakeDamage(damage,stagger);
                 }
+            }
+        }
+    }
+
+    void DodgeStagger(float stagger)
+    {
+        if (DamageManager.instance.isDodging)
+        {
+            Debug.Log("opuoiouioi");
+            foreach (var enemy in currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies)
+            {
+                Debug.Log("tiens dans ta gueule");
+                enemy.TakeDamage(0,stagger);
             }
         }
     }
