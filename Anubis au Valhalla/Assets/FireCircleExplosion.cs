@@ -26,7 +26,7 @@ public class FireCircleExplosion : MonoBehaviour
     {
         if (col.gameObject.tag == "Monstre")
         {
-            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(30, 0.5f);
+            col.GetComponentInParent<MonsterLifeManager>().TakeDamage(30 + (int)AnubisCurrentStats.instance.magicForce, 0.5f);
         }
     }
 }

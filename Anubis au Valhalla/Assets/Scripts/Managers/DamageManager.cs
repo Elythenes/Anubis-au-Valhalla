@@ -114,7 +114,7 @@ public class DamageManager : MonoBehaviour
             if (!CharacterController.instance.isDashing)
             {
                 isHurt = true;
-                isHurt = false;
+                StartCoroutine(ResetTracking());
                 var angle = CharacterController.instance.transform.position - enemy.transform.position;
                 angle.Normalize();
                 CharacterController.instance.rb.AddForce(angle * (damage * knockbackAmount), ForceMode2D.Impulse);
@@ -138,9 +138,6 @@ public class DamageManager : MonoBehaviour
                     StartCoroutine(TempsInvinsibilité(2f));
                     StartCoroutine(TempsStun());
                 }
-                
-              
-                
             }
             else if(CharacterController.instance.isDashing)
             {
@@ -241,6 +238,7 @@ public class DamageManager : MonoBehaviour
     public IEnumerator ResetTracking()
     {
         yield return null;
+        isHurt = false;
         isDodging = false;
     }
 

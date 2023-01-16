@@ -41,11 +41,11 @@ public class FlameArea : MonoBehaviour
 
                 if (!manager.p2DashTrailMiniStagger)
                 {
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2],0f);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2] + (int)AnubisCurrentStats.instance.magicForce/10,0f);
                 }
                 else
                 {
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2],0.15f);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2] + (int)AnubisCurrentStats.instance.magicForce/10,0.15f);
                 }
                
                 tempsReloadHitFlameAreaTimer = 0;
