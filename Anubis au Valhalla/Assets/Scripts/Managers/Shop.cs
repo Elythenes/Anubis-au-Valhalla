@@ -171,6 +171,7 @@ public class Shop : MonoBehaviour
 
     public void CloseShop()
     {
+        UiManager.instance.ExitSousMenu();
         audioSource.pitch = 0.5f;
         audioSource.PlayOneShot(audioClipArray[1],0.8f);
         Time.timeScale = 1;
