@@ -31,8 +31,7 @@ public class MonsterLifeManager : MonoBehaviour
     public IA_Monstre1 IALoup;
     public IA_Guerrier IAGuerrier;
     public IA_Corbeau IACorbeau;
-
-
+    
     public bool isDisolve;
     public SpriteRenderer sprite2DRend;
     public float disolveValue;
@@ -56,7 +55,7 @@ public class MonsterLifeManager : MonoBehaviour
     public float MomifiedTime = 3;
     public float MomifiedTimeTimer;
     public bool isMomified;
-    public GameObject bandelettesMomie;
+    public Material momieShader;
     private bool activeBandelettes;
     
     public bool isEnvased;
@@ -113,7 +112,8 @@ public class MonsterLifeManager : MonoBehaviour
             if (disolveValue >= 1)
             {
                 isDisolve = false;
-                Destroy(sprite2DRend.gameObject);
+                //Destroy(sprite2DRend.gameObject);
+                sprite2DRend.enabled = false;
             }
         }
     }
@@ -150,15 +150,31 @@ public class MonsterLifeManager : MonoBehaviour
         
         if (isMomified)
         {
-            MomifiedTimeTimer += Time.deltaTime;
-            ai.canMove = false; 
-           bandelettesMomie.SetActive(true);
+            sprite2DRend.gameObject.transform.position = child.transform.position;
+            if (CharacterController.instance.transform.position.x > transform.position.x)
+            {
+                //Debug.Log("droite");
+                var localRotation = sprite2DRend.transform.localRotation;
+                localRotation = Quaternion.Euler(localRotation.x, 0, localRotation.z);
+                sprite2DRend.transform.localRotation = localRotation;
+            }
+            else if (CharacterController.instance.transform.position.x < transform.position.x)
+            {
+                //Debug.Log("gauche");
+                var localRotation = sprite2DRend.transform.localRotation;
+                localRotation = Quaternion.Euler(localRotation.x, -180, localRotation.z);
+                sprite2DRend.transform.localRotation = localRotation;
+            }
             
+            MomifiedTimeTimer += Time.deltaTime;
+            ai.canMove = false;
+            sprite2DRend.enabled = true;
+            sprite2DRend.material = momieShader;
             if (MomifiedTimeTimer >= MomifiedTime)
             {
                 activeBandelettes = true;
                 isMomified = false;
-                bandelettesMomie.SetActive(false);
+                sprite2DRend.enabled = false;
                 ai.canMove = true;
                 MomifiedTimeTimer = 0;
             }
