@@ -518,6 +518,12 @@ public class CharacterController : MonoBehaviour
     {
       Debug.Log("auuuuugh");
       SalleGenerator.Instance.NewZone(hitDoor.doorOrientation, true, hitDoor);
+      hitDoor.willChooseSpecial = false;
+      for (int i = 0; i < (int)SalleGenerator.DoorOrientation.West + 1; i++)
+      {
+        SalleGenerator.Instance.OpenDoors((SalleGenerator.DoorOrientation)i,false);
+      }
+      return;
     }
     if (hitDoor.willChooseSpecial)
     {

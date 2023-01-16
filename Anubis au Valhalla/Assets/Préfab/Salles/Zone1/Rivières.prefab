@@ -2720,6 +2720,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &338587954939715674
 GameObject:
   m_ObjectHideFlags: 0
@@ -3425,6 +3426,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!61 &4710804782242000440
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3835,6 +3837,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &1191100589086225234
 GameObject:
   m_ObjectHideFlags: 0
@@ -3939,6 +3942,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!61 &51277667716978383
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6332,6 +6336,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!61 &1852417023293509843
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8208,6 +8213,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!61 &4071961803172097552
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10859,6 +10865,7 @@ MonoBehaviour:
       - {fileID: 788445584946821892, guid: e17d5b7555e8890429c63ea5914057a4, type: 3}
   parasites: 0
   overdose: 0
+  spawnedElites: 0
   text: {fileID: 0}
 --- !u!1 &2599815774552982569
 GameObject:
@@ -15418,6 +15425,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!61 &5482703895361397403
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16192,6 +16200,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &3669710298219850475
 GameObject:
   m_ObjectHideFlags: 0
@@ -17154,6 +17163,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!61 &1427868036442140958
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21231,6 +21241,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &4376577734814272555
 GameObject:
   m_ObjectHideFlags: 0
@@ -21731,6 +21742,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &4540810391131400122
 GameObject:
   m_ObjectHideFlags: 0
@@ -21961,6 +21973,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!61 &4187352463673410763
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22174,6 +22187,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &4644148747005421237
 GameObject:
   m_ObjectHideFlags: 0
@@ -22613,6 +22627,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!61 &4935878929141016546
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22827,6 +22842,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!61 &2070463408075746137
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -24083,16 +24099,6 @@ Tilemap:
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: -4, y: -3, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 26
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: -3, y: -3, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 1
@@ -26516,7 +26522,7 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 353
+  - m_RefCount: 352
     m_Data: {fileID: 11400000, guid: 71662ece0fe63d043aabc48f174b8678, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
@@ -26571,10 +26577,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 353
+  - m_RefCount: 352
     m_Data: {fileID: 7482667652216324306, guid: 513fe706f0abbab49a8442da85508681, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 353
+  - m_RefCount: 352
     m_Data:
       e00: 1
       e01: 0
@@ -26593,7 +26599,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 353
+  - m_RefCount: 352
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -27001,10 +27007,18 @@ CompositeCollider2D:
         Y: -29644784
       - X: -29644684
         Y: -22233688
-      - X: -14822351
+      - X: -22233629
         Y: -22233688
-      - X: -14822292
+      - X: -22233688
         Y: -22233629
+      - X: -22233688
+        Y: -14822351
+      - X: -22233629
+        Y: -14822292
+      - X: -14822351
+        Y: -14822292
+      - X: -14822292
+        Y: -14822351
       - X: -14822292
         Y: -14822492
       - X: 41
@@ -27448,8 +27462,8 @@ CompositeCollider2D:
       - {x: -2.223388, y: -2.9644785}
       - {x: -2.9644685, y: -2.964449}
       - {x: -2.9644392, y: -2.223369}
-      - {x: -1.4822292, y: -2.2233336}
-      - {x: -1.4821998, y: -1.4822493}
+      - {x: -2.223369, y: -2.2233336}
+      - {x: -2.2233336, y: -1.4822292}
       - {x: 0.00001, y: -1.482214}
       - {x: -0.0000252, y: -0.7411096}
       - {x: -6.6700864, y: -0.74114484}
@@ -41539,6 +41553,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &7387440504703894501
 GameObject:
   m_ObjectHideFlags: 0
@@ -41725,6 +41740,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &7472055110527484680
 GameObject:
   m_ObjectHideFlags: 0
@@ -42530,6 +42546,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &7831426058828648325
 GameObject:
   m_ObjectHideFlags: 0
@@ -42886,6 +42903,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!61 &8534076040845948197
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45469,6 +45487,7 @@ MonoBehaviour:
   srPlayer: {fileID: 0}
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &8659664656473473361
 GameObject:
   m_ObjectHideFlags: 0

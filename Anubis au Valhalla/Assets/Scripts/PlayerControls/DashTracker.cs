@@ -59,14 +59,16 @@ public class DashTracker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        CharacterController.instance.playerCol.enabled = false;
-        CharacterController.instance.canBuffer = true;
         if (col.gameObject.CompareTag("MurInfranchissable"))
         {
             Debug.Log("mais what");
             gameObject.SetActive(false);
             CharacterController.instance.playerCol.enabled = true;
             CharacterController.instance.canBuffer = false;
+            return;
         }
+        CharacterController.instance.playerCol.enabled = false;
+        CharacterController.instance.canBuffer = true;
+        gameObject.SetActive(false);
     }
 }
