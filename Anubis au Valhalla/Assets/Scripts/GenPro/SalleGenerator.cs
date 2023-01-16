@@ -92,7 +92,6 @@ namespace GenPro
                 void Start()
                 {
                         TransitionToNextRoom(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
-                        //Debug.Log(GameObject.Find("East").GetComponent<Door>());
                 }
                 /// <summary>
                 /// Méthode qui ouvre toutes les portes actives
@@ -189,6 +188,7 @@ namespace GenPro
                         if (shopsVisited < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.x) && roomsDone <= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y))
                         {
                                 var shopspawn = Random.value;
+                                if (roomsDone == Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y)) shopspawn = 1;
                                 if (shopspawn >= shopSpawnChance)
                                 {
                                         spawnedShops++;
@@ -288,6 +288,7 @@ namespace GenPro
                                 else if (zone2)
                                 {
                                         MovePlayerToDoor(fromDoor);
+                                        UnlockDoors();
                                 }
                                 Souls.instance.ClearOfSouls();
                                 ClearRoom(); 

@@ -525,7 +525,8 @@ public class CharacterController : MonoBehaviour
     timerdashCooldown = 0;
     var hitDoor = col.GetComponent<Door>();
     SalleGenerator.Instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
-    if (SalleGenerator.Instance.roomsDone == SalleGenerator.Instance.dungeonSize +1)
+    SalleGenerator.Instance.SwapDoorType(SalleGenerator.Instance.sDoors[(int)SalleGenerator.Instance.fromDoor]);
+    if (SalleGenerator.Instance.roomsDone >= SalleGenerator.Instance.dungeonSize +1)
     {
       Debug.Log("auuuuugh");
       SalleGenerator.Instance.NewZone(hitDoor.doorOrientation, true, hitDoor);
@@ -545,6 +546,10 @@ public class CharacterController : MonoBehaviour
       SalleGenerator.Instance.challengeChooser = 0;
     }
 
+    if (hitDoor.currentDoorType == Door.DoorType.ToBoss && !SalleGenerator.Instance.zone2)
+    {
+      SalleGenerator.Instance.challengeChooser = 2;
+    }
     if (hitDoor.currentDoorType == Door.DoorType.ToShop)
     {
       SalleGenerator.Instance.shopsVisited++;
