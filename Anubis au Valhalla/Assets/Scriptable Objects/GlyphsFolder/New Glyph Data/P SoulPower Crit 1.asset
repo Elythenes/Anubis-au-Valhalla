@@ -10,42 +10,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef86e0de87d28c040b0645b7b0fd60f8, type: 3}
-  m_Name: M Soul Power Defense 2
+  m_Name: P SoulPower Crit 1
   m_EditorClassIdentifier: 
-  nom: "Puissance des \xE2mes : D\xE9fense"
-  description: "En fonction du nombre d'\xE2mes poss\xE9d\xE9s, augmente la r\xE9duction
-    des d\xE9g\xE2ts subis par Anubis. Valeur : +?"
-  partie: 1
-  index: 222
-  rarity: 2
+  nom: "Puissance des \xE2mes : Chance"
+  description: "En fonction du nombre d'\xE2mes poss\xE9d\xE9s, augmente les chances
+    d'infliger un coup critique sur toutes les attaques au Ziouf (Combo et Estoc).
+    Facteur : +3"
+  partie: 2
+  index: 321
+  rarity: 1
   unique: 0
-  rare: 1
+  rare: 0
   price: 300
-  icone: {fileID: 2800000, guid: a469ced2a9370d940adc09c829d250b6, type: 3}
+  icone: {fileID: 2800000, guid: 8be1fbf4b24de44c99840805bdae9e40, type: 3}
   isBasicStatUp: 0
-  isSituationalStatUp: 1
+  isSituationalStatUp: 0
   isSpecialStatUp: 0
   isAdditionalEffect: 0
-  isTriggerEffect: 0
+  isTriggerEffect: 1
   isChargeBased: 0
   isTimeBased: 0
   isBoolEffect: 0
   isOther: 0
-  anubisStat: 13
+  anubisStat: 14
   bonusBasicStat: 5
-  otherStat: 13
+  otherStat: 14
   otherBonusBasicStat: 0
-  situationalStat: 8
-  bonusSituationalStat: 3
-  dependsOnSoulCount: 1
+  situationalStat: 14
+  bonusSituationalStat: 0
+  dependsOnSoulCount: 0
   specialStat: 11
   specialStatValue: 0
   specialAdditionalEffect: 11
   specialAdditionalValue: 0
-  triggerMove: 9
+  triggerMove: 3
   revokeTrigger: 
-  triggerStat: 13
-  additionalDamage: 0
+  triggerStat: 12
+  additionalDamage: 3
   specialTriggerEffect: 11
   specialTriggerValue: 0
   chargeBase: 0
@@ -54,5 +55,6 @@ MonoBehaviour:
   periodicTimeValue: 0
   startsActive: 1
   boolTrigger: 
+  boolValue: 0
   revokeBool: 
-  otherEffect: 
+  otherValue: 0
