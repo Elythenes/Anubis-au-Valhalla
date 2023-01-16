@@ -84,7 +84,7 @@ public class Door : MonoBehaviour
                 break;
         }
 
-        if (willChooseSpecial && currentDoorType != DoorType.ToShop)
+        if (willChooseSpecial && currentDoorType != DoorType.ToShop && currentDoorType != DoorType.Broken)
         {
             if (SalleGenerator.Instance.zone2)
             {
