@@ -430,7 +430,7 @@ public class GlyphManager : MonoBehaviour
     void DetectEnemies()
     {
         //Debug.Log(currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies.Count);
-        if (SalleGenerator.Instance.currentRoom.GetComponent<Salle>().currentEnemies.Count != 0)
+        if (SalleGenerator.Instance.currentRoom.currentEnemies.Count != 0)
         {
             stillEnemies = true;
         }
@@ -530,7 +530,7 @@ public class GlyphManager : MonoBehaviour
     {
         if (stillEnemies)
         {
-            foreach (var enemy in currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies)
+            foreach (var enemy in SalleGenerator.Instance.currentRoom.currentEnemies)
             {
                 Debug.Log("tiens dans ta gueule");
                 enemy.TakeDamage(damage,stagger);
