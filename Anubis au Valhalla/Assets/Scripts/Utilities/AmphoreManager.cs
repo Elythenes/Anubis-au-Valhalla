@@ -9,6 +9,7 @@ public class AmphoreManager : MonoBehaviour
     public ParticleSystem partculesAmphores;
     public SpriteRenderer sr;
     public BoxCollider2D box;
+    public GameObject ombre;
     public float timeToKill;
     [Header("Audio")]
     public AudioSource audioSource;
@@ -20,6 +21,7 @@ public class AmphoreManager : MonoBehaviour
             audioSource.PlayOneShot(audioClipBreak);
             Souls.instance.CreateSouls(transform.position, Random.Range(0,4));
             Instantiate(partculesAmphores, transform.position,Quaternion.identity);
+            Destroy(ombre);
             StartCoroutine(WaitKill());
             sr.enabled = false;
             box.enabled = false;

@@ -6,7 +6,7 @@ using UnityEngine;
 public class DashTracker : MonoBehaviour
 {
     public float distance = 22;
-    public CharacterController player;
+    public GameObject player;
     public float diagonalMultiplier;
     // Start is called before the first frame update
     void OnEnable()
@@ -20,11 +20,11 @@ public class DashTracker : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0,0,90);
                 break;
             case CharacterController.LookingAt.Est:
-                transform.position = player.transform.position + Vector3.right * distance;
+                transform.position = player.transform.position + Vector3.right * distance - new Vector3(0,0.75f,0);
                 transform.rotation = Quaternion.Euler(0,0,0);
                 break;
             case CharacterController.LookingAt.Ouest:
-                transform.position = player.transform.position + Vector3.left * distance;
+                transform.position = player.transform.position + Vector3.left * distance - new Vector3(0,0.75f,0);
                 transform.rotation = Quaternion.Euler(0,0,180);
                 break;
             case CharacterController.LookingAt.Sud:
