@@ -92,7 +92,6 @@ namespace GenPro
                 void Start()
                 {
                         TransitionToNextRoom(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
-                        //Debug.Log(GameObject.Find("East").GetComponent<Door>());
                 }
                 /// <summary>
                 /// Méthode qui ouvre toutes les portes actives

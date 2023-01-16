@@ -530,6 +530,14 @@ public class Salle : MonoBehaviour
                 Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
                 break;
         }
+
+        if (SalleGenerator.Instance.roomsDone == SalleGenerator.Instance.dungeonSize)
+        {
+            Debug.Log("will spawn boss");
+            timer.enabled = false;
+            timer.timer.enabled = false;
+            text.FadeOut(text.descAlpha, text.descEndPos, text.description);
+        }
     }
     public IEnumerator DelayedSpawns()
     {
