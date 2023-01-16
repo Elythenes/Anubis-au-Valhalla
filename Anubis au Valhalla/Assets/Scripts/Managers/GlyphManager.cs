@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GenPro;
 using NaughtyAttributes;
+using Unity.Mathematics;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -26,12 +27,14 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeArmorValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeInflictValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public float dodgeStaggerTime;
-    
-    
+
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public GameObject currentRoom;
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public bool stillEnemies;
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public int takeDamageInflictValue;
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public float takeDamageStaggerTime;
+
+    [ShowIf("showBools")] [BoxGroup("Enter Room")] public bool enterNewRoom;
+    [ShowIf("showBools")] [BoxGroup("Enter Room")] public int doRegenOnEnterValue;
     
 
     //Fonctions Système ************************************************************************************************
@@ -65,15 +68,18 @@ public class GlyphManager : MonoBehaviour
         soulPowerForceValue = 0;
         soulPowerDefenseValue = 0;
         
-        dodgeHealValue = 0;
         dashForceValue = 0;
         dashForce = false;
-        dodgeForceValue = 0;
+        dodgeHealValue = 0;
+        dodgeArmorValue = 0;
+        dodgeInflictValue = 0;
+        dodgeStaggerTime = 0;
         
         takeDamageInflictValue = 0;
         takeDamageStaggerTime = 0f;
 
-
+        enterNewRoom = false;
+        doRegenOnEnterValue = 0;
     }
     
     
@@ -303,7 +309,10 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
-            case 0:
+            case 251:
+            case 252:
+            case 253:
+                doRegenOnEnterValue += Mathf.RoundToInt(hiero.boolValue);
                 break;
         }
     }
@@ -337,7 +346,7 @@ public class GlyphManager : MonoBehaviour
             {
                 case 212:
                 case 213:
-                case 214 :
+                case 214:
                     if (DamageManager.instance.isHurt)
                     {
                         DoEffectToEnemies(takeDamageInflictValue, 0.2f);
@@ -345,13 +354,22 @@ public class GlyphManager : MonoBehaviour
                     break;
                 
                 case 215:
-                    DoEffectToEnemies(0,takeDamageStaggerTime);
+                    if (DamageManager.instance.isHurt)
+                    {
+                        DoEffectToEnemies(0, takeDamageStaggerTime);
+                    }
                     break;
                 
                 case 221:
                 case 222:
                 case 223:
                     SoulPowerDefense();
+                    break;
+                
+                case 251:
+                case 252:
+                case 253:
+                    OnEnterRoom(0);
                     break;
             }
         }
@@ -399,10 +417,27 @@ public class GlyphManager : MonoBehaviour
 
 
     
+    
+    //Fonctions système des Glyphes ********************************************************************************************
+    
+    void DetectEnemies()
+    {
+        //Debug.Log(currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies.Count);
+        if (SalleGenerator.Instance.currentRoom.GetComponent<Salle>().currentEnemies.Count != 0)
+        {
+            stillEnemies = true;
+        }
+        else
+        {
+            stillEnemies = false;
+        }
+    }
 
+    
+    
     //Fonctions des Glyphes ********************************************************************************************
 
-    void HealDodge()
+    void HealDodge() //344,345,346,
     {
         if (DamageManager.instance.isDodging)
         {
@@ -410,18 +445,18 @@ public class GlyphManager : MonoBehaviour
         }
     }
     
-    void SoulPowerForce() //s'active plusieurs fois mais pas grave en soi, à régler ptet ?
+    void SoulPowerForce() //135,136,137,
     {
         AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * soulPowerForceValue);
     }
 
-    void SoulPowerDefense() //s'active plusieurs fois mais pas grave en soi, à régler ptet ?
+    void SoulPowerDefense() //221,222,223,
     {
         AnubisCurrentStats.instance.soulBonusDamageReductionForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * soulPowerDefenseValue);
         
     }
-
-    void DashForce()
+    
+    void DashForce() //309,310,311,
     {
         if (dashForce && CharacterController.instance.debutDash)
         {
@@ -442,7 +477,7 @@ public class GlyphManager : MonoBehaviour
         dashForce = true;
     }
 
-    void DodgeForce()
+    void DodgeForce() //337,338,339,
     {
         //Debug.Log("dodge force");
         if (DamageManager.instance.isDodging)
@@ -463,12 +498,12 @@ public class GlyphManager : MonoBehaviour
         AnubisCurrentStats.instance.totalBaseBonusDamage -= dodgeForceValue;
     }
 
-    void DodgeArmor()
+    void DodgeArmor() //340,341,342
     {
-        Debug.Log("dodge armor");
+        //Debug.Log("dodge armor");
         if (DamageManager.instance.isDodging)
         {
-            Debug.Log("is dodging");
+            //Debug.Log("is dodging");
             StartCoroutine(DodgeArmorCoroutine(2));
         }
     }
@@ -484,21 +519,7 @@ public class GlyphManager : MonoBehaviour
         AnubisCurrentStats.instance.damageReduction-= dodgeArmorValue;
     }
     
-
-    void DetectEnemies()
-    {
-        //Debug.Log(currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies.Count);
-        if (SalleGenerator.Instance.currentRoom.GetComponent<Salle>().currentEnemies.Count != 0)
-        {
-            stillEnemies = true;
-        }
-        else
-        {
-            stillEnemies = false;
-        }
-    }
-    
-    void DoEffectToEnemies(int damage, float stagger)
+    void DoEffectToEnemies(int damage, float stagger) //212,213,214,215,
     {
         if (stillEnemies)
         {
@@ -510,15 +531,27 @@ public class GlyphManager : MonoBehaviour
         }
     }
 
-    void DodgeDoEffect(int damage, float stagger)
+    void DodgeDoEffect(int damage, float stagger) //343,344,345,346
     {
         if (DamageManager.instance.isDodging)
         {
             DoEffectToEnemies(damage,stagger);
         }
     }
-    
-    
+
+    void OnEnterRoom(int cas) //251,252,253,
+    {
+        switch (cas)
+        {
+            case 0: //Regen
+                if (enterNewRoom)
+                {
+                    DamageManager.instance.Heal(doRegenOnEnterValue);
+                }
+                break;
+        }
+        enterNewRoom = false;
+    }
     
     
     
