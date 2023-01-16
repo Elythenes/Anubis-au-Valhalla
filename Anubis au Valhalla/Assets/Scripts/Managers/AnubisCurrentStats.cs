@@ -35,6 +35,8 @@ public class AnubisCurrentStats : MonoBehaviour
    public List<float> multiplicateurDamage = new(4){.5f,.75f,1,1.3f};
    
    public int criticalRate = 5;
+   [ReadOnly] public int criticalRateForStat;
+   public int soulBonusCriticalRate;
    public List<float> dureeHitbox = new List<float>();
    public List<float> duréeAbandon = new List<float>();
    public List<float> stunDuration = new List<float>();
@@ -78,7 +80,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.hitBoxC = hitBoxC;
       atk.rangeAttaque = rangeAttaque;
       atk.isC = isC;
-      atk.criticalRate = criticalRate;
+      atk.criticalRate = criticalRateForStat;
       atk.dureeHitbox = dureeHitbox;
       atk.forceKnockback = forceKnockback;
       atk.stunDurationMax = stunDurationMax;
@@ -108,7 +110,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.damage = comboDamageForStats;
       atk.specialDmg = thrustDamageForStat;
       atk.isC = isC;
-      atk.criticalRate = criticalRate;
+      atk.criticalRate = criticalRateForStat;
       atk.dureeHitbox = dureeHitbox;
       atk.forceKnockback = forceKnockback;
       atk.stunDurationMax = stunDurationMax;
@@ -162,6 +164,8 @@ public class AnubisCurrentStats : MonoBehaviour
       {
          damageReductionForStat = 100;
       }
+
+      criticalRateForStat = criticalRate + soulBonusCriticalRate;
    }
    
    

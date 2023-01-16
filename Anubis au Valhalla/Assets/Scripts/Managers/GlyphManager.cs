@@ -19,6 +19,7 @@ public class GlyphManager : MonoBehaviour
     
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerForceValue;
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerDefenseValue;
+    [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerCritValue;
 
     [ShowIf("showBools")] [BoxGroup("Dodge")] public bool dashForce;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dashForceValue;
@@ -263,6 +264,12 @@ public class GlyphManager : MonoBehaviour
                 dashForceValue += Mathf.RoundToInt(hiero.additionalDamage);
                     break;
             
+            case 321:
+            case 322:
+            case 323:
+                soulPowerCritValue += Mathf.RoundToInt(hiero.additionalDamage);
+                break;
+            
             case 334:
             case 335:
             case 336:
@@ -399,6 +406,12 @@ public class GlyphManager : MonoBehaviour
                     DashForce();
                     break;
                 
+                case 321:
+                case 322:
+                case 323:
+                    SoulPowerCrit();
+                    break;
+                
                 case 334:
                 case 335:
                 case 336:
@@ -467,13 +480,15 @@ public class GlyphManager : MonoBehaviour
     
     void SoulPowerForce() //135,136,137,
     {
-        AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * soulPowerForceValue);
+        AnubisCurrentStats.instance.soulBonusDamageForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank) * soulPowerForceValue);
     }
-
     void SoulPowerDefense() //221,222,223,
     {
-        AnubisCurrentStats.instance.soulBonusDamageReductionForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank + 1) * soulPowerDefenseValue);
-        
+        AnubisCurrentStats.instance.soulBonusDamageReductionForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank) * soulPowerDefenseValue);
+    }
+    void SoulPowerCrit()
+    {
+        AnubisCurrentStats.instance.soulBonusCriticalRate = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank) * soulPowerCritValue);
     }
     
     void DashForce() //309,310,311,
