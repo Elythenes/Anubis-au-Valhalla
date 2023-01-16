@@ -62,6 +62,7 @@ public class GlyphManager : MonoBehaviour
         dodgeHealValue = 0;
         dashForceValue = 0;
         dodgeForceValue = 0;
+        takeDamageInflictValue = 0;
 
         dashForce = false;
     }
@@ -224,6 +225,12 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
+            case 212:
+            case 213:
+            case 214 :
+                takeDamageInflictValue += Mathf.RoundToInt(hiero.specialTriggerValue);
+                break;
+            
             case 309:
             case 310:
             case 311:
@@ -299,6 +306,12 @@ public class GlyphManager : MonoBehaviour
         {
             switch (hiero.index)
             {
+                case 212:
+                case 213:
+                case 214 :
+                    DoEffectToEnemies(takeDamageInflictValue,0.2f);
+                    break;
+                
                 case 221:
                 case 222:
                 case 223:
@@ -411,11 +424,18 @@ public class GlyphManager : MonoBehaviour
         }
     }
     
-    void TakeDamageInflictDamage()
+    void DoEffectToEnemies(int damage, float stagger)
     {
         if (stillEnemies)
         {
-            
+            if (DamageManager.instance.isHurt)
+            {
+                foreach (var enemy in currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies)
+                {
+                    Debug.Log("tiens dans ta gueule");
+                    enemy.TakeDamage(damage,stagger);
+                }
+            }
         }
     }
     
