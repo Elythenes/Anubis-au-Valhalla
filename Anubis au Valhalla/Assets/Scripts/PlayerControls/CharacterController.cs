@@ -518,6 +518,19 @@ public class CharacterController : MonoBehaviour
   }
   private void InteractWithDoor(Collider2D col)
   {
+    if (SoundManager.instance.isShop)
+    {
+      if (SalleGenerator.Instance.zone2)
+      {
+        SoundManager.instance.ChangeToZone2();
+        SoundManager.instance.PlayZone2();
+      }
+      else
+      {
+        SoundManager.instance.ChangeToZone1();
+        SoundManager.instance.PlayZone1();
+      }
+    }
     allowMovements = true;
     ghost.activerEffet = false;
     isDashing = false;
@@ -549,10 +562,14 @@ public class CharacterController : MonoBehaviour
 
     if (hitDoor.currentDoorType == Door.DoorType.ToBoss && !SalleGenerator.Instance.zone2)
     {
+      SoundManager.instance.ChangeToBoss();
+      SoundManager.instance.PlayBoss();
       SalleGenerator.Instance.morbinTime = true;
     }
     if (hitDoor.currentDoorType == Door.DoorType.ToShop)
     {
+      SoundManager.instance.ChangeToShop();
+      SoundManager.instance.PlayShop();
       SalleGenerator.Instance.shopsVisited++;
       if (SalleGenerator.Instance.roomsDone < SalleGenerator.Instance.dungeonSize - 2)
       { 

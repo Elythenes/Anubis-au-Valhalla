@@ -118,6 +118,8 @@ namespace GenPro
 
                 public void NewZone(DoorOrientation door, bool switchDoor, Door type)
                 {
+                        SoundManager.instance.PlayZone2();
+                        SoundManager.instance.ChangeToZone2();
                         zone2 = true;
                         startRoom = startRoom2;
                         endRoom = endRoom2;
