@@ -59,7 +59,12 @@ public class IA_Monstre1 : MonoBehaviour
     public LayerMask HitboxPlayer;
     public float rangeAttaque;
     public int puissanceAttaque;
-
+    
+    [Header("Stats Overdose")] 
+    public float OvCooldownDash = 0.2f;
+    public float OvLagDebutDash = 0.3f;
+    public float OvSpeed = 2;
+    public float OvDashDuration = 0.75f;
 
     //Fonctions ******************************************************************************************************************************************************
     
@@ -93,10 +98,10 @@ public class IA_Monstre1 : MonoBehaviour
         }
         if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
         {
-            ai.maxSpeed *= 2;
-            dashdurationTimer *= 0.75f;
-            LagDebutDashTimer *= 0.3f;
-            CooldownDash *= 0.2f;
+            ai.maxSpeed *= OvSpeed;
+            dashdurationTimer *= OvDashDuration;
+            LagDebutDashTimer *= OvLagDebutDash;
+            CooldownDash *= OvCooldownDash;
         }
     }
 
