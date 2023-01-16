@@ -59,6 +59,8 @@ public class DeathMenu : MonoBehaviour
     {
         ScoreManager.instance.currentScore = 0;
         yield return new WaitForSecondsRealtime(timeToLastStep);
+        SoundManager.instance.ChangeToZone1();
+        SoundManager.instance.PlayZone1();
         SceneManager.LoadScene("Test");
     }
     
@@ -66,6 +68,8 @@ public class DeathMenu : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(timeToLastStep);
         MenuHighScore.instance.AddHighScoreEntry(ScoreManager.instance.currentScore);
+        SoundManager.instance.ChangeToHub();
+        SoundManager.instance.PlayHub();
         ScoreManager.instance.currentScore = 0;
         Time.timeScale = 1;
         SceneManager.LoadScene("Hub");

@@ -48,7 +48,7 @@ public class CollectThings : MonoBehaviour
                 UiManager.instance.CollectPower(collectablePower);
                 collectablePower.SetActive(false);
                 audioSource.pitch = 1;
-                audioSource.PlayOneShot(audioClipArray[0]);
+                audioSource.PlayOneShot(audioClipArray[0],2);
             }
 
             if (isPotionCollectable)
@@ -62,7 +62,7 @@ public class CollectThings : MonoBehaviour
                 UINewGlyphManager.instance.gameObject.SetActive(true);
                 UINewGlyphManager.instance.NewGlyph();
                 audioSource.pitch = 1;
-                audioSource.PlayOneShot(audioClipArray[2]);
+                audioSource.PlayOneShot(audioClipArray[2],2);
                 Destroy(collectableGlyph);
             }
         }
@@ -118,7 +118,7 @@ public class CollectThings : MonoBehaviour
     public void KillPotion()
     {
         audioSource.pitch = 0.7f;
-        audioSource.PlayOneShot(audioClipArray[1],0.5f);
+        audioSource.PlayOneShot(audioClipArray[1],0.6f);
         Destroy(collectablePotion);
     }
     

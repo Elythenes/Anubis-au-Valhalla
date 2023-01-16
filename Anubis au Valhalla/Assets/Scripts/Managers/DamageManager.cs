@@ -287,6 +287,7 @@ public class DamageManager : MonoBehaviour
         audioSource.pitch = 1;
         audioSource.PlayOneShot(audioClipArray[0]);
         compteurScore.text = ScoreManager.instance.currentScore.ToString();
+        SoundManager.instance.audioSource.Stop();
         CharacterController.instance.allowMovements = false;
         CharacterController.instance.movement = Vector2.zero;
         CharacterController.instance.rb.velocity = Vector2.zero;
