@@ -43,6 +43,7 @@ public class UINewGlyphManager : MonoBehaviour
 
     public void NewGlyph()
     {
+        StopAllCoroutines();
         StartCoroutine(ActivateDesactivate());
         popUp.GetComponentInChildren<Image>().sprite = CollectThings.instance.collectableGlyph.GetComponent<SpriteRenderer>().sprite;
         GameObject textNewGlyph = Instantiate(popUp, transform.position + new Vector3(0,1,0),quaternion.identity);

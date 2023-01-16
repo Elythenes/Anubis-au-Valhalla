@@ -24,6 +24,10 @@ public class ChestBehaviour : MonoBehaviour
     public Canvas canvasGné;
     public Vector3 offset;
     public TextMeshProUGUI TextInteraction;
+    
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip audioClipOpen;
 
     private void Start()
     {
@@ -73,7 +77,8 @@ public class ChestBehaviour : MonoBehaviour
             StartCoroutine(OpenChest());
             if (CanvasInteraction is not null)
             {
-                
+                audioSource.pitch = 1;
+                audioSource.PlayOneShot(audioClipOpen);
                 canvasGné.enabled = false;
                 //CanvasInteraction.SetActive(false);
             }
