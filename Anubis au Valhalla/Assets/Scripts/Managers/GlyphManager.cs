@@ -27,6 +27,7 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeArmorValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeInflictValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public float dodgeStaggerTime;
+    [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeCritValue;
 
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public GameObject currentRoom;
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public bool stillEnemies;
@@ -76,6 +77,7 @@ public class GlyphManager : MonoBehaviour
         dodgeArmorValue = 0;
         dodgeInflictValue = 0;
         dodgeStaggerTime = 0;
+        dodgeCritValue = 0;
         
         takeDamageInflictValue = 0;
         takeDamageStaggerTime = 0f;
@@ -288,6 +290,12 @@ public class GlyphManager : MonoBehaviour
             case 346:
                 dodgeStaggerTime = hiero.specialTriggerValue;
                 break;
+            
+            case 347:
+            case 348:
+            case 349:
+                dodgeCritValue += Mathf.RoundToInt(hiero.additionalDamage);
+                break;
         }
     }
     
@@ -328,7 +336,7 @@ public class GlyphManager : MonoBehaviour
             case 295:
             case 296:
             case 297:
-                healBoost *= hiero.otherBonusBasicStat;
+                healBoost += hiero.otherValue;
                 break;
         }
     }
@@ -417,6 +425,12 @@ public class GlyphManager : MonoBehaviour
                 
                 case 346:
                     DodgeDoEffect(0,dodgeStaggerTime);
+                    break;
+                
+                case 347:
+                case 348:
+                case 349:
+                    DodgeCrit();
                     break;
             }
         }
@@ -522,7 +536,7 @@ public class GlyphManager : MonoBehaviour
             compteur += 0.1f;
             yield return new WaitForSecondsRealtime(0.1f);
         }
-        AnubisCurrentStats.instance.damageReduction-= dodgeArmorValue;
+        AnubisCurrentStats.instance.damageReduction -= dodgeArmorValue;
     }
     
     void DoEffectToEnemies(int damage, float stagger) //212,213,214,215,
@@ -557,6 +571,27 @@ public class GlyphManager : MonoBehaviour
                 break;
         }
         enterNewRoom = false;
+    }
+    
+    void DodgeCrit() //347,348,349,
+    {
+        //Debug.Log("dodge crit");
+        if (DamageManager.instance.isDodging)
+        {
+            //Debug.Log("is dodging");
+            StartCoroutine(DodgeCritCoroutine(2));
+        }
+    }
+    private IEnumerator DodgeCritCoroutine(float duration)
+    {
+        AnubisCurrentStats.instance.criticalRate += dodgeCritValue;
+        float compteur = 0f;
+        while (compteur < duration)
+        {
+            compteur += 0.1f;
+            yield return new WaitForSecondsRealtime(0.1f);
+        }
+        AnubisCurrentStats.instance.criticalRate -= dodgeCritValue;
     }
     
     
