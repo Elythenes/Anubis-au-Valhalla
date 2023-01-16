@@ -56,6 +56,8 @@ public class BarqueHub : MonoBehaviour
 
     void TakeBarque()
     {
+        SoundManager.instance.ChangeToZone1();
+        SoundManager.instance.PlayZone1();
         SceneManager.LoadScene("Test");
     }
 }

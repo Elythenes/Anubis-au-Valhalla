@@ -1,4 +1,5 @@
 
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class NewPowerRepository : MonoBehaviour
 {
     public NewPowerType newPowerType = NewPowerType.None;
     public Texture sprite;
+    public GameObject orbeViolette;
+    public GameObject orbeJaune;
     
       
     [Header("Force Au Spawn")]
@@ -55,9 +58,23 @@ public class NewPowerRepository : MonoBehaviour
              rb.AddForce(explode, ForceMode2D.Impulse);
              rb.drag = deceleration;
         }
-        
+
         CanvasInteraction = GameObject.FindWithTag("CanvasInteraction");
         TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
+    }
+
+    private void Start()
+    {
+        if (newPowerType == NewPowerType.Power1)
+        {
+            orbeViolette.SetActive(true);
+        }
+        
+        if (newPowerType == NewPowerType.Power2)
+        {
+            orbeJaune.SetActive(true);
+
+        }
     }
 
     private void Update()
