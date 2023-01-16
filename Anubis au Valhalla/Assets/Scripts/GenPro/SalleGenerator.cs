@@ -220,8 +220,8 @@ namespace GenPro
                                         sDoors[i].currentDoorType = Door.DoorType.ToShop;
                                         sDoors[i].ChooseSpecialToSpawn(0);
                                         sDoors[i].willChooseSpecial = false;
-                                        spawnedShops++;
                                 }
+                                spawnedShops++;
                         }
                         if (roomsDone == dungeonSize - 1)
                         {
@@ -247,9 +247,12 @@ namespace GenPro
 
                                 if (zone2)
                                 {
+                                        EnableDoors(fromDoor,true);
+                                        sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
                                         return Instantiate(endRoom2);
                                 }
                                 EnableDoors(fromDoor,true);
+                                sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
                                 EnableDoors(toDoor,true);
                                 return Instantiate(endRoom);
                         }
@@ -291,12 +294,6 @@ namespace GenPro
                                 if(currentRoom != startRoom)currentRoom.GetSpawnPoints(Random.Range(0, 3));
                                 _moveGrid.target = currentRoom.AstarRef;
                                 transitionCanvas.DOFade(0, 0.25f);
-                                if (currentRoom == endRoom)
-                                {
-                                        Debug.Log("Gros challenge spécial");
-                                        challengeChooser = 2;
-                                        currentRoom.overdose = true;
-                                }
                         });
                 }
                 /// <summary>

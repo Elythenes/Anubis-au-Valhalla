@@ -70,17 +70,22 @@ public class Salle : MonoBehaviour
         {
             SalleGenerator.Instance.globalBank = Mathf.RoundToInt(SalleGenerator.Instance.globalBank * 1.1f);
         }
-
-        if (SalleGenerator.Instance.challengeChooser == 2) infiniteBank = true;
         RearrangeDoors();
         AdjustCameraConstraints();
         GetAvailableTiles();
         AstarPath.active.Scan(AstarPath.active.data.graphs);
-        
     }
 
     private void Start()
     {
+        if (SalleGenerator.Instance.roomsDone == SalleGenerator.Instance.dungeonSize)
+        {
+            Debug.Log("Gros challenge spécial");
+            C2_Survive();
+            overdose = true;
+            SalleGenerator.Instance.challengeChooser = 2;
+        }
+        if (SalleGenerator.Instance.challengeChooser == 2) infiniteBank = true;
         challengeChosen = SalleGenerator.Instance.challengeChooser;
         text = TextMove.instance;
         if (currentEnemies.Count == 0)
@@ -118,8 +123,25 @@ public class Salle : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (infiniteBank)
+        if (infiniteBank && timer.enabled)
         {
+            if (timer.internalTimer < 0)
+            {
+                Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
+                foreach (var enemy in currentEnemies)
+                {
+                    enemy.soulValue = 1;
+                    enemy.Die();
+                }
+                timer.enabled = false;
+                timer.timer.enabled = false;
+                roomDone = true;
+                SalleGenerator.Instance.roomsDone++;
+                SalleGenerator.Instance.UnlockDoors();
+                text.FadeOut(text.titleAlpha,text.titleEndPos,text.title);
+                return;
+            }
+            
             waveTimer -= Time.deltaTime;
             if (waveTimer < 0)
             {
@@ -138,18 +160,6 @@ public class Salle : MonoBehaviour
                     SpawnEnemies(availableSpawnC);
                 }
             }
-
-            if (timer.internalTimer < 0 && timer.enabled)
-            {
-                Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
-                foreach (var enemy in currentEnemies)
-                {
-                    enemy.soulValue = 1;
-                    enemy.Die();
-                }
-                timer.enabled = false;
-                timer.timer.enabled = false;
-            }
         }
     }
 
@@ -164,15 +174,26 @@ public class Salle : MonoBehaviour
 
     private void C2_Survive()
     {
+        Debug.Log("mais fais le challenge connard");
         text.Appear(text.titleAlpha,text.titleStartPos,text.title);
         text.Appear(text.descAlpha,text.descStartPos,text.description);
-        text.title.text = "Survie";
-        text.description.text = "Survivez à la horde!";
-        StartCoroutine(DelayedFade());
         timer.timer.enabled = true;
         timer.enabled = true;
         waveTimer = SalleGenerator.Instance.timeBetweenWaves;
-        timer.internalTimer = 20;
+        if (overdose)
+        {
+            text.title.text = "Survie";
+            text.description.text = "Survivez à la horde!";
+            timer.internalTimer = 30;
+        }
+        else
+        {
+            text.title.text = "Survie";
+            text.description.text = "Survivez jusqu'au temps imparti";
+            timer.internalTimer = 20;
+        }
+        StartCoroutine(DelayedFade());
+
     }
 
     private void C3_TimeAttack()
@@ -294,11 +315,9 @@ public class Salle : MonoBehaviour
         }
         if(infiniteBank)
         {
-            Debug.Log("Oui1");
             if(timer.internalTimer > 0 && (currentEnemies.Count == 0|| !hasElited))
             {
                 hasElited = true;
-                Debug.Log("Oui2");
                 for (int i = 0; i < SalleGenerator.Instance.maxEnemiesPerBigWave; i++)
                 {
                     var chosenValue = Random.Range(0, costList.Count);
@@ -317,7 +336,6 @@ public class Salle : MonoBehaviour
             }
             if (timer.internalTimer > 0 && currentEnemies.Count > 0)
             {
-                Debug.Log("Oui3");
                 for (int i = 0; i < SalleGenerator.Instance.maxEnemiesPerSmallWave; i++)
                 {
                     var chosenValue = Random.Range(0, costList.Count);
@@ -339,7 +357,6 @@ public class Salle : MonoBehaviour
         }
         while (spawnBank > costList.Min())
         {
-            Debug.Log("Point d'interrogation");
             var chosenValue = Random.Range(0, costList.Count);
             if(spawnBank < costList.Max()) chosenValue = costList.IndexOf(costList.Min());
             var chosenEnemy = SalleGenerator.Instance.spawnGroups[pattern].enemiesToSpawn[chosenValue];
@@ -482,7 +499,8 @@ public class Salle : MonoBehaviour
         }
 
         if (currentEnemies.Count != 0) return;
-        if(!infiniteBank) roomDone = true;
+        if (infiniteBank && timer.internalTimer > 0) return;
+        roomDone = true;
         SalleGenerator.Instance.roomsDone++;
         SalleGenerator.Instance.UnlockDoors();
         text.FadeOut(text.titleAlpha,text.titleEndPos,text.title);
@@ -495,13 +513,6 @@ public class Salle : MonoBehaviour
                 Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
                 break;
             case 2:
-                if (timer.internalTimer < 0)
-                {
-                    roomDone = true;
-                    SalleGenerator.Instance.roomsDone++;
-                    SalleGenerator.Instance.UnlockDoors();
-                    text.FadeOut(text.titleAlpha,text.titleEndPos,text.title);
-                }
                 break;
             case 3:
                 if (timer.internalTimer > 0)
