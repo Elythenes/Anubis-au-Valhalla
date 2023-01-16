@@ -87,7 +87,7 @@ public class Salle : MonoBehaviour
             SalleGenerator.Instance.roomsDone++;
         }
 
-        if (SalleGenerator.Instance.roomsDone == SalleGenerator.Instance.dungeonSize)
+        if (SalleGenerator.Instance.morbinTime)
         {
             Debug.Log("Gros challenge spécial");
             overdose = true;
@@ -136,6 +136,7 @@ public class Salle : MonoBehaviour
                 SalleGenerator.Instance.roomsDone++;
                 SalleGenerator.Instance.UnlockDoors();
                 text.FadeOut(text.titleAlpha,text.titleEndPos,text.title);
+                SalleGenerator.Instance.morbinTime = false;
                 return;
             }
             

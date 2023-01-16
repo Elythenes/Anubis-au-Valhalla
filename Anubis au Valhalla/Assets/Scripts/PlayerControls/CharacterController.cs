@@ -537,7 +537,7 @@ public class CharacterController : MonoBehaviour
 
     if (hitDoor.currentDoorType == Door.DoorType.ToBoss && !SalleGenerator.Instance.zone2)
     {
-      SalleGenerator.Instance.challengeChooser = 2;
+      SalleGenerator.Instance.morbinTime = true;
     }
     if (hitDoor.currentDoorType == Door.DoorType.ToShop)
     {

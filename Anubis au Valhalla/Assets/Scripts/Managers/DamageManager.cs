@@ -95,7 +95,6 @@ public class DamageManager : MonoBehaviour
         {
             if (!g.rb.IsTouchingLayers(128))
             {
-                Debug.Log("On est très cringe");
                 g.canBuffer = false;
                 g.canBoost = false;
                 g.playerCol.enabled = true;
