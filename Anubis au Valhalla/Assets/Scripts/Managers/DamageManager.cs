@@ -147,9 +147,9 @@ public class DamageManager : MonoBehaviour
         {
             GameObject particuleSoinOBJ = Instantiate(particulesHeal, transform.position, Quaternion.identity);
             particuleSoinOBJ.transform.parent = transform;
-            stats.vieActuelle += healAmount;
+            stats.vieActuelle += Mathf.RoundToInt(healAmount + healAmount * GlyphManager.Instance.healBoost);
             GameObject textHealObj = Instantiate(textHealDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
-            textHealObj.GetComponentInChildren<TextMeshPro>().SetText((healAmount).ToString());
+            textHealObj.GetComponentInChildren<TextMeshPro>().SetText((Mathf.RoundToInt(healAmount + healAmount * GlyphManager.Instance.healBoost)).ToString());
             if (stats.vieActuelle >= 100)
             {
                 stats.vieActuelle = 100;
