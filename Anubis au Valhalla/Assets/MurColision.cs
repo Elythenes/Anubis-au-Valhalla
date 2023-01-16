@@ -9,6 +9,7 @@ public class MurColision : MonoBehaviour
         var g = CharacterController.instance;
         if (g.canBoost && !g.isDashing)
         {
+            Debug.Log(g.playerCol.enabled);
             if (!g.rb.IsTouchingLayers(128))
             {
                 g.canBuffer = false;
