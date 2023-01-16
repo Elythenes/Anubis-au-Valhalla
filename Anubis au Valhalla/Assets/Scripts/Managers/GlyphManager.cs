@@ -414,7 +414,7 @@ public class GlyphManager : MonoBehaviour
     void DetectEnemies()
     {
         //Debug.Log(currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies.Count);
-        if (currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies.Count != 0)
+        if (SalleGenerator.Instance.currentRoom.GetComponent<Salle>().currentEnemies.Count != 0)
         {
             stillEnemies = true;
         }

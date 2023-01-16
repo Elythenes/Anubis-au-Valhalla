@@ -42,6 +42,7 @@ public class Door : MonoBehaviour
     challengeDoor2.SetActive(false);
     bossDoor.SetActive(false);
     broken.SetActive(false);
+    transitionDoor.SetActive(false);
     }
 
     private void Awake()
