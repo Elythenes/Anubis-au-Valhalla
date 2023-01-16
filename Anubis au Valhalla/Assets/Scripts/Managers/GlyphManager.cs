@@ -24,6 +24,7 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeHealValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeForceValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeArmorValue;
+    [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeInflictValue;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public float dodgeStaggerTime;
     
     
@@ -268,6 +269,12 @@ public class GlyphManager : MonoBehaviour
                 dodgeArmorValue += Mathf.RoundToInt(hiero.additionalDamage);
                 break;
             
+            case 343:
+            case 344:
+            case 345:
+                dodgeInflictValue += Mathf.RoundToInt(hiero.specialTriggerValue);
+                break;
+
             case 346:
                 dodgeStaggerTime = hiero.specialTriggerValue;
                 break;
@@ -331,7 +338,10 @@ public class GlyphManager : MonoBehaviour
                 case 212:
                 case 213:
                 case 214 :
-                    DoEffectToEnemies(takeDamageInflictValue,0.2f);
+                    if (DamageManager.instance.isHurt)
+                    {
+                        DoEffectToEnemies(takeDamageInflictValue, 0.2f);
+                    }
                     break;
                 
                 case 215:
@@ -374,8 +384,14 @@ public class GlyphManager : MonoBehaviour
                     DodgeArmor();
                     break;
                 
+                case 343:
+                case 344:
+                case 345:
+                    DodgeDoEffect(dodgeInflictValue,0.2f);
+                    break;
+                
                 case 346:
-                    DodgeStagger(dodgeStaggerTime);
+                    DodgeDoEffect(0,dodgeStaggerTime);
                     break;
             }
         }
@@ -472,7 +488,7 @@ public class GlyphManager : MonoBehaviour
     void DetectEnemies()
     {
         //Debug.Log(currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies.Count);
-        if (SalleGenerator.Instance.currentRoom.currentEnemies.Count != 0)
+        if (SalleGenerator.Instance.currentRoom.GetComponent<Salle>().currentEnemies.Count != 0)
         {
             stillEnemies = true;
         }
@@ -486,27 +502,19 @@ public class GlyphManager : MonoBehaviour
     {
         if (stillEnemies)
         {
-            if (DamageManager.instance.isHurt)
+            foreach (var enemy in currentRoom.GetComponent<SalleGenerator>().currentRoom.currentEnemies)
             {
-                foreach (var enemy in SalleGenerator.Instance.currentRoom.currentEnemies)
-                {
-                    Debug.Log("tiens dans ta gueule");
-                    enemy.TakeDamage(damage,stagger);
-                }
+                Debug.Log("tiens dans ta gueule");
+                enemy.TakeDamage(damage,stagger);
             }
         }
     }
 
-    void DodgeStagger(float stagger)
+    void DodgeDoEffect(int damage, float stagger)
     {
         if (DamageManager.instance.isDodging)
         {
-            Debug.Log("opuoiouioi");
-            foreach (var enemy in SalleGenerator.Instance.currentRoom.currentEnemies)
-            {
-                Debug.Log("tiens dans ta gueule");
-                enemy.TakeDamage(0,stagger);
-            }
+            DoEffectToEnemies(damage,stagger);
         }
     }
     
