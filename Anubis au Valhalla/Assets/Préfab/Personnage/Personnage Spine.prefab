@@ -301,6 +301,77 @@ MonoBehaviour:
   distance: 3.7
   player: {fileID: 6322498022790916602}
   diagonalMultiplier: 1
+--- !u!1 &902330019525635674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8103480108196106927}
+  - component: {fileID: 5485129394971238968}
+  - component: {fileID: 1109904974807816173}
+  m_Layer: 7
+  m_Name: murColision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8103480108196106927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902330019525635674}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6322498022790916597}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &5485129394971238968
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902330019525635674}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0002296567, y: -3.6267014}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.4319772, y: 0.8995354}
+  m_EdgeRadius: 0
+--- !u!114 &1109904974807816173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902330019525635674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036eb1b426fe35a43bcc355184e91e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1363658261256551440
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,6 +821,7 @@ Transform:
   - {fileID: 2068793103}
   - {fileID: 5474678595897878289}
   - {fileID: 544739986}
+  - {fileID: 8103480108196106927}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -882,6 +954,7 @@ MonoBehaviour:
   speedY: 100
   isAttacking: 0
   facing: 0
+  isInteracting: 0
   canInteract: 0
   canInteractTuto: 0
   currentDoor: {fileID: 0}
@@ -896,8 +969,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6021c809d29629d41b234d8759855ef6, type: 3}
   - {fileID: 8300000, guid: 8fbf8d11ab8e3534886c9892d7f32d1a, type: 3}
   - {fileID: 8300000, guid: 19daf1090b94da349a99b336affcfa95, type: 3}
+  - {fileID: 8300000, guid: c36801d17a5d8c24193119d745c764b2, type: 3}
   timeBetweenSteps: 0
   timeBetweenStepsTimer: 0.5
+  HurtOnce: 1
   isHiting: 0
   isHitingSoundOn: 0
   HittingSoundLenght: 0.1
@@ -915,12 +990,14 @@ MonoBehaviour:
   isDashing: 0
   canDash: 1
   ghost: {fileID: 6322498022790916604}
+  FXDash: {fileID: 0}
   rb: {fileID: 0}
   movement: {x: 0, y: 0}
+  isHub: 0
   interaction: 97
   indicationDirection: {fileID: 526205203}
   trail: {fileID: 9122345098059221511}
-  collisionPathfinding: {fileID: 544739987}
+  collisionPathfinding: {fileID: 5485129394971238968}
   doorInteractUI: {fileID: 0}
   doorUITransform: {fileID: 0}
   dashTracker: {fileID: 2068793102}
@@ -937,7 +1014,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 5928205741059234103, guid: 812b10468a7815e47843a40a56d565f7, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.7
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1178,6 +1255,11 @@ MonoBehaviour:
   interaction: 102
   isPowerCollectable: 0
   collectablePower: {fileID: 0}
+  audioSource: {fileID: 367431123413964990}
+  audioClipArray:
+  - {fileID: 8300000, guid: 5190df34c7d87434d99ac2d8361d5223, type: 3}
+  - {fileID: 8300000, guid: 83038f069f5049946a433a1a1710cb49, type: 3}
+  - {fileID: 8300000, guid: 08934d59a627ae74aad76d8d02ec85db, type: 3}
   isPotionCollectable: 0
   collectablePotion: {fileID: 0}
   isGlyphCollectable: 0

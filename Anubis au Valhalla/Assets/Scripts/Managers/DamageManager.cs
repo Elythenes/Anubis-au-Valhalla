@@ -88,25 +88,6 @@ public class DamageManager : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        var g = CharacterController.instance;
-        if (g.canBoost && !g.isDashing)
-        {
-            if (!g.rb.IsTouchingLayers(128))
-            {
-                Debug.Log("On est très cringe");
-                g.canBuffer = false;
-                g.canBoost = false;
-                g.playerCol.enabled = true;
-                g.allowMovements = true;
-                g.stopDash = false;
-                g.anim.SetBool("isDashing",false);
-                g.anim.SetBool("isWalking",true);
-            }
-        }
-    }
-
     public void TakeDamage(int damage, GameObject enemy)
     {
         if (!invinsible)
@@ -330,31 +311,5 @@ public class DamageManager : MonoBehaviour
     {
         audioSource.pitch = 1;
         audioSource.PlayOneShot(audioClipArray[1]);
-    }
-
-    private void OnTriggerStay2D(Collider2D col)
-    {
-        var g = CharacterController.instance;
-        if (col.gameObject.layer == 7 && !g.isDashing && (g.canBuffer || g.canBoost))
-        {
-            if (g.rb.GetContacts(new List<Collider2D>()) >= 1)
-            {
-                g.canBoost = true;
-
-                g.playerCol.enabled = false; 
-                g.Dashing();
-                g.allowMovements = false;
-                Debug.Log("Givin' it a little push");
-                
-            }
-            else
-            {
-                g.canBuffer = false;
-                g.canBoost = false;
-                g.playerCol.enabled = true;
-                g.allowMovements = true;
-                g.stopDash = false;
-            }
-        }
     }
 }
