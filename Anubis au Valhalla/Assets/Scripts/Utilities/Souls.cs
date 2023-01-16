@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -17,6 +18,11 @@ public class Souls : MonoBehaviour
     private RectTransform baseTextTransform;
     public float shakeIntensity;
     public List<GameObject> soulsInScene;
+    public AudioSource audiosource;
+    public AudioClip getSoul;
+    public bool isSoundOn;
+    public float soundTime;
+    public float soundTimeTimer;
 
     void Awake()
     {
@@ -33,9 +39,17 @@ public class Souls : MonoBehaviour
         UpdateSoulsCounter();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        if (isSoundOn)
+        {
+            soundTimeTimer += Time.timeScale;
+            if (soundTimeTimer >= soundTime)
+            {
+                isSoundOn = false;
+                soundTimeTimer = 0;
+            }
+        }
     }
 
     public void CreateSouls(Vector2 ennemyPos, int soulAmount)
@@ -48,6 +62,11 @@ public class Souls : MonoBehaviour
 
     public void CollectSouls(GameObject collectedSoul, int value)
     {
+        if (!isSoundOn)
+        {
+            audiosource.PlayOneShot(getSoul,0.3f);
+            isSoundOn = true;
+        }
         soulsInScene.Remove(collectedSoul);
         Destroy(collectedSoul);
         soulBank += value;

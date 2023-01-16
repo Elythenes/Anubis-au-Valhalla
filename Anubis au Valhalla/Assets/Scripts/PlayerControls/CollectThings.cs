@@ -11,6 +11,10 @@ public class CollectThings : MonoBehaviour
     public bool isPowerCollectable = false;
     public GameObject collectablePower;
     
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] audioClipArray;
+    
     public bool isPotionCollectable = false;
     public GameObject collectablePotion;
 
@@ -43,6 +47,8 @@ public class CollectThings : MonoBehaviour
                 UiThotManager.Instance.MoveIn = true;
                 UiManager.instance.CollectPower(collectablePower);
                 collectablePower.SetActive(false);
+                audioSource.pitch = 1;
+                audioSource.PlayOneShot(audioClipArray[0]);
             }
 
             if (isPotionCollectable)
@@ -55,6 +61,8 @@ public class CollectThings : MonoBehaviour
                 GlyphInventory.Instance.AddNewGlyph(collectableGlyph.GetComponent<GlyphRepository>().glyphInside);
                 UINewGlyphManager.instance.gameObject.SetActive(true);
                 UINewGlyphManager.instance.NewGlyph();
+                audioSource.pitch = 1;
+                audioSource.PlayOneShot(audioClipArray[2]);
                 Destroy(collectableGlyph);
             }
         }
@@ -109,6 +117,8 @@ public class CollectThings : MonoBehaviour
 
     public void KillPotion()
     {
+        audioSource.pitch = 0.7f;
+        audioSource.PlayOneShot(audioClipArray[1],0.5f);
         Destroy(collectablePotion);
     }
     
