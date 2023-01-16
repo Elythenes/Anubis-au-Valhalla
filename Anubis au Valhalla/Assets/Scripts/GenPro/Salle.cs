@@ -78,13 +78,6 @@ public class Salle : MonoBehaviour
 
     private void Start()
     {
-        if (SalleGenerator.Instance.roomsDone == SalleGenerator.Instance.dungeonSize)
-        {
-            Debug.Log("Gros challenge spécial");
-            C2_Survive();
-            overdose = true;
-            SalleGenerator.Instance.challengeChooser = 2;
-        }
         if (SalleGenerator.Instance.challengeChooser == 2) infiniteBank = true;
         challengeChosen = SalleGenerator.Instance.challengeChooser;
         text = TextMove.instance;
@@ -96,7 +89,11 @@ public class Salle : MonoBehaviour
 
         if (SalleGenerator.Instance.roomsDone == SalleGenerator.Instance.dungeonSize)
         {
-            
+            Debug.Log("Gros challenge spécial");
+            overdose = true;
+            infiniteBank = true;
+            challengeChosen = 2;
+            C2_Survive();
         }
         else if(!roomDone)
         {
@@ -532,6 +529,14 @@ public class Salle : MonoBehaviour
             case 5:
                 Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
                 break;
+        }
+
+        if (SalleGenerator.Instance.roomsDone == SalleGenerator.Instance.dungeonSize)
+        {
+            Debug.Log("will spawn boss");
+            timer.enabled = false;
+            timer.timer.enabled = false;
+            text.FadeOut(text.descAlpha, text.descEndPos, text.description);
         }
     }
     public IEnumerator DelayedSpawns()

@@ -293,21 +293,21 @@ public class UiPowerManager : MonoBehaviour
                 isSmashTexts = true;
                 isThrustTexts = false;
                 isDashTexts = false;
-                Debug.Log("samsh");
+                //Debug.Log("samsh");
                 break;
             
             case 1:
                 isSmashTexts = false;
                 isThrustTexts = true;
                 isDashTexts = false;
-                Debug.Log("thrust");
+                //Debug.Log("thrust");
                 break;
             
             case 2:
                 isSmashTexts = false;
                 isThrustTexts = false;
                 isDashTexts = true;
-                Debug.Log("dash");
+                //Debug.Log("dash");
                 break;
         }
     }
