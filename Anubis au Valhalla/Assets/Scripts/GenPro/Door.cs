@@ -9,8 +9,6 @@ public class Door : MonoBehaviour
     public SalleGenerator.DoorOrientation doorOrientation;
     public Salle roomToSpawn;
     public DoorType currentDoorType;
-    public SpriteRenderer currentSprite;
-    public List<Sprite> doorSprites;
     public bool willChooseSpecial;
     public BoxCollider2D doorCollider;
     public GameObject normalDoor1;
@@ -45,20 +43,26 @@ public class Door : MonoBehaviour
     transitionDoor.SetActive(false);
     }
 
-    private void Awake()
+    public void OnEnable()
     {
-        currentSprite = GetComponent<SpriteRenderer>();
+        ResetDoorState();
     }
+
 
     private void Update()
     {
-        
+        if (currentDoorType != DoorType.ToChallenge1) willChooseSpecial = false;
         switch (currentDoorType)
         {
             case DoorType.Normal:
+                if (SalleGenerator.Instance.zone2)
+                {
+                    normalDoor2.SetActive(true);
+                    break;
+                }
+                normalDoor1.SetActive(true);
                 break;
             case DoorType.ToShop:
-                currentSprite.enabled = true;
                 willChooseSpecial = false;
                 if (SalleGenerator.Instance.zone2)
                 {
@@ -66,10 +70,15 @@ public class Door : MonoBehaviour
                     break;
                 }
                 shopDoor1.SetActive(true);
-                currentSprite.sprite = doorSprites[1];
                 break;
             case DoorType.ToChallenge1:
-                currentSprite.sprite = doorSprites[2];
+                willChooseSpecial = true;
+                if (SalleGenerator.Instance.zone2)
+                {
+                    challengeDoor2.SetActive(true);
+                    return;
+                }
+                challengeDoor1.SetActive(true);
                 break;
             case DoorType.ToBoss:
                 if (SalleGenerator.Instance.zone2)
@@ -82,29 +91,6 @@ public class Door : MonoBehaviour
             case DoorType.Broken:
                 broken.SetActive(true);
                 break;
-        }
-
-        if (willChooseSpecial && currentDoorType != DoorType.ToShop && currentDoorType != DoorType.Broken)
-        {
-            if (SalleGenerator.Instance.zone2)
-            {
-                challengeDoor2.SetActive(true);
-                return;
-            }
-            challengeDoor1.SetActive(true);
-            currentSprite.enabled = true;
-            currentSprite.sprite = doorSprites[2];
-        }
-        else if(currentDoorType == DoorType.Normal)
-        {
-            currentSprite.sprite = doorSprites[0];
-            if (SalleGenerator.Instance.zone2)
-            {
-                normalDoor2.SetActive(true);
-                return;
-            }
-            normalDoor1.SetActive(true);
-            currentSprite.enabled = false;
         }
     }
 

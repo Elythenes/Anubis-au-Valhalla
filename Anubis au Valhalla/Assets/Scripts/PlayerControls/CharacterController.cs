@@ -226,6 +226,8 @@ public class CharacterController : MonoBehaviour
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
+      
+      isDashing = false;
       if (!canBoost)
       {
         playerCol.enabled = true;
@@ -238,7 +240,6 @@ public class CharacterController : MonoBehaviour
         StartCoroutine(ResetTracking());
         rb.velocity *= 0.85f;
         AttaquesNormales.instance.canAttack = true;
-        isDashing = false;
         canDash = false;
         if (AttaquesNormales.instance.buffer)
         {

@@ -16,7 +16,7 @@ public class MurColision : MonoBehaviour
                 g.canBoost = false;
                 g.playerCol.enabled = true;
                 g.allowMovements = true;
-                g.stopDash = false;
+                g.stopDash = true;
                 g.anim.SetBool("isDashing",false);
                 g.anim.SetBool("isWalking",true);
             }
@@ -25,11 +25,13 @@ public class MurColision : MonoBehaviour
         {
             if (!g.rb.IsTouchingLayers(128))
             {
+                
+                g.isDashing = false;
                 g.canBuffer = false;
                 g.canBoost = false;
                 g.playerCol.enabled = true;
                 g.allowMovements = true;
-                g.stopDash = false;
+                g.stopDash = true;
                 g.anim.SetBool("isDashing",false);
                 g.anim.SetBool("isWalking",true);
             }
@@ -43,6 +45,7 @@ public class MurColision : MonoBehaviour
             if (g.rb.GetContacts(new List<Collider2D>()) >= 1)
             {
                 g.canBoost = true;
+                g.stopDash = false;
 
                 g.playerCol.enabled = false; 
                 g.Dashing();
@@ -56,7 +59,7 @@ public class MurColision : MonoBehaviour
                 g.canBoost = false;
                 g.playerCol.enabled = true;
                 g.allowMovements = true;
-                g.stopDash = false;
+                g.stopDash = true;
             }
         }
     }
