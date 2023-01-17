@@ -81,10 +81,9 @@ public class Salle : MonoBehaviour
         if (SalleGenerator.Instance.challengeChooser == 2) infiniteBank = true;
         challengeChosen = SalleGenerator.Instance.challengeChooser;
         text = TextMove.instance;
-        if (currentEnemies.Count == 0)
+        if (SalleGenerator.Instance.roomsDone == 0)
         {
-            roomDone = true;
-            SalleGenerator.Instance.roomsDone++;
+            SalleGenerator.Instance.UnlockDoors();
         }
 
         if (SalleGenerator.Instance.morbinTime)
@@ -132,8 +131,6 @@ public class Salle : MonoBehaviour
                 }
                 timer.enabled = false;
                 timer.timer.enabled = false;
-                roomDone = true;
-                SalleGenerator.Instance.roomsDone++;
                 SalleGenerator.Instance.UnlockDoors();
                 text.FadeOut(text.titleAlpha,text.titleEndPos,text.title);
                 SalleGenerator.Instance.morbinTime = false;
@@ -498,8 +495,6 @@ public class Salle : MonoBehaviour
 
         if (currentEnemies.Count != 0) return;
         if (infiniteBank && timer.internalTimer > 0) return;
-        roomDone = true;
-        SalleGenerator.Instance.roomsDone++;
         SalleGenerator.Instance.UnlockDoors();
         text.FadeOut(text.titleAlpha,text.titleEndPos,text.title);
         switch (SalleGenerator.Instance.challengeChooser)

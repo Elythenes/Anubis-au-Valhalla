@@ -110,6 +110,8 @@ namespace GenPro
                         
                                 OpenDoors((DoorOrientation)i,true);
                         }
+                        roomsDone++;
+                        currentRoom.roomDone = true;
                 }
 
                 /// <summary>
@@ -195,6 +197,7 @@ namespace GenPro
                                         Door doorToShop = sDoors[Random.Range(0, sDoors.Count)];
                                         doorToShop.currentDoorType = Door.DoorType.ToShop;
                                         doorToShop.ChooseSpecialToSpawn(0);
+                                        EnableDoors((DoorOrientation)sDoors.IndexOf(doorToShop),true);
                                         sDoors.Insert((int)fromDoor, removedDoor);
                                         for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                         {
@@ -202,6 +205,7 @@ namespace GenPro
                                                 if (i == sDoors.IndexOf(doorToShop))continue;
                                                 sDoors[i].currentDoorType = Door.DoorType.ToChallenge1;
                                                 sDoors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+                                                EnableDoors((DoorOrientation)i,true);
                                         }
                                         EnableDoors(fromDoor,true);
                                         sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;

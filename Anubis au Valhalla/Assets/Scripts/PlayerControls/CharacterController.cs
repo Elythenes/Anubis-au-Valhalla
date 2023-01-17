@@ -541,7 +541,7 @@ public class CharacterController : MonoBehaviour
     var hitDoor = col.GetComponent<Door>();
     SalleGenerator.Instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
     SalleGenerator.Instance.SwapDoorType(SalleGenerator.Instance.sDoors[(int)SalleGenerator.Instance.fromDoor]);
-    if (SalleGenerator.Instance.roomsDone >= SalleGenerator.Instance.dungeonSize +1)
+    if (SalleGenerator.Instance.roomsDone > SalleGenerator.Instance.dungeonSize +1)
     {
       Debug.Log("auuuuugh");
       SalleGenerator.Instance.NewZone(hitDoor.doorOrientation, true, hitDoor);
