@@ -37,6 +37,7 @@ public class AnubisCurrentStats : MonoBehaviour
    public int criticalRate = 5;
    [ReadOnly] public int criticalRateForStat;
    public int soulBonusCriticalRate;
+   public float criticalBonusDamage;
    public List<float> dureeHitbox = new List<float>();
    public List<float> duréeAbandon = new List<float>();
    public List<float> stunDuration = new List<float>();
@@ -81,6 +82,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.rangeAttaque = rangeAttaque;
       atk.isC = isC;
       atk.criticalRate = criticalRateForStat;
+      criticalBonusDamage = GlyphManager.Instance.criticalBoost;
       atk.dureeHitbox = dureeHitbox;
       atk.forceKnockback = forceKnockback;
       atk.stunDurationMax = stunDurationMax;
@@ -111,6 +113,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.specialDmg = thrustDamageForStat;
       atk.isC = isC;
       atk.criticalRate = criticalRateForStat;
+      criticalBonusDamage = GlyphManager.Instance.criticalBoost;
       atk.dureeHitbox = dureeHitbox;
       atk.forceKnockback = forceKnockback;
       atk.stunDurationMax = stunDurationMax;
@@ -164,7 +167,6 @@ public class AnubisCurrentStats : MonoBehaviour
       {
          damageReductionForStat = 100;
       }
-
       criticalRateForStat = criticalRate + soulBonusCriticalRate;
    }
    

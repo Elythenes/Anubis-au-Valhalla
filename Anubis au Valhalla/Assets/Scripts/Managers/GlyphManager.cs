@@ -40,6 +40,7 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Enter Room")] public int doRegenOnEnterValue;
     
     [ShowIf("showBools")] [BoxGroup("Other")] public float healBoost;
+    [ShowIf("showBools")] [BoxGroup("Other")] public float criticalBoost;
     
 
     //Fonctions Système ************************************************************************************************
@@ -91,6 +92,7 @@ public class GlyphManager : MonoBehaviour
         doRegenOnEnterValue = 0;
 
         healBoost = 0;
+        criticalBoost = 2;
     }
     
     
@@ -344,6 +346,12 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
+            case 124:
+            case 125:
+            case 126:
+                criticalBoost += hiero.otherValue;
+                break;
+            
             case 295:
             case 296:
             case 297:
