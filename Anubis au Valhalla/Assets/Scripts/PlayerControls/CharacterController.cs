@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 public class CharacterController : MonoBehaviour
 {
-  [Header("Déplacements")] 
+  [Header("Déplacements")] public bool isCinematic;
   public bool allowMovements;
   public Animator anim;
   public InputManager controls;
@@ -137,8 +137,18 @@ public class CharacterController : MonoBehaviour
    
     Keyboard kb = InputSystem.GetDevice<Keyboard>();
 
+    if (isCinematic)
+    {
+      movement = Vector2.zero;
+      rb.velocity = Vector2.zero;
+      rb.constraints = RigidbodyConstraints2D.FreezePosition;
+      anim.SetBool("isIdle",true);
+      anim.SetBool("isWalking",false);
+    }
+    
     if (allowMovements &&  Time.timeScale != 0)
     {
+      rb.constraints = RigidbodyConstraints2D.FreezeRotation;
       Vector2 directionIndic = Camera.main.ScreenToWorldPoint(Input.mousePosition) - indicationDirection.transform.position;
       float angleIndic = Mathf.Atan2(directionIndic.y, directionIndic.x) * Mathf.Rad2Deg;
       Quaternion rotationIndic = Quaternion.AngleAxis(angleIndic, Vector3.forward);

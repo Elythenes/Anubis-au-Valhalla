@@ -148,20 +148,20 @@ public class TothBehiavour : MonoBehaviour
             break;
          case Situation.isTutoCombat: 
             StartCoroutine(Type("Loki a assemblé une puissante armée de morts avec les âmes qu'il t'as volées. Tu devras te préparer à les affronter pour obtenir ta vengeance."));
-            listeTextBouton[0].text = ("Rappel moi mon entraînement au sceptre.");
+            listeTextBouton[0].text = ("Rappelle-moi mon entraînement au sceptre.");
             listeTextBouton[1].text = ("Des conseils pour mieux combattre ?");
             listeTextBouton[2].text = ("Les ennemis élites ?");
             listeTextBouton[3].text = ("Très bien, je serais prêt.");
             break;
          case Situation.isTutoPouvoirs: 
             StartCoroutine(Type("Voyons maintenant la magie que je t'ai enseignée, elle te sera utile pour vaincre tes adversaires."));
-            listeTextBouton[0].text = ("Rappel moi en quoi consiste la magie.");
+            listeTextBouton[0].text = ("Rappelle-moi en quoi consiste la magie.");
             listeTextBouton[1].text = ("Comment puis-je l'utiliser ?");
             listeTextBouton[2].text = ("Puis-je améliorer ma magie ?");
             listeTextBouton[3].text = ("Je tâcherais de m'en rappeler");
             break;
          case Situation.isTutoShop: 
-            StartCoroutine(Type("Dans les salles éthérées comme celle-ci, tu pourras me contacter pour échanger des âmes et améliorer ton arme. Tu peux les consulter tes améliorations avec la touche Echap. Voici quelques âmes, essaye de les dépenser à l'autel."));
+            StartCoroutine(Type("Dans les salles éthérées comme celle-ci, tu pourras me contacter pour échanger des âmes et améliorer ton arme. Tu peux consulter tes améliorations avec la touche Echap. Voici quelques âmes, essaye de les dépenser à l'autel."));
             listeTextBouton[0].text = ("Comment récolter des âmes ?");
             listeTextBouton[1].text = ("Quelles améliorations peut-tu m'offrir ?");
             listeTextBouton[2].text = ("Peut-tu soigner mes blessures ?");
@@ -171,7 +171,7 @@ public class TothBehiavour : MonoBehaviour
             StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les différentes portes, elles t'indiqueront le chemin à suivre."));
             listeTextBouton[0].text = ("Les salles normales ?");
             listeTextBouton[1].text = ("Les salles challenges ?");
-            listeTextBouton[2].text = ("Les salles Ethérées ?");
+            listeTextBouton[2].text = ("Les salles éthérées ?");
             listeTextBouton[3].text = ("C'est d'accord, merci pour tes conseils.");
             break;
       }
@@ -227,7 +227,7 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isTutoShop)
             {
                StopDialogue();
-               StartCoroutine(Type("Dans les autels, tu auras le choix d'améliorer la lame, la hampe ou la poignée de ton arme. Tu auras le choix entre 3 améliorations par autel. Celles-ci sont divisée en 3 raretés : Prêtre, Pharaon et Divinité, qui correspondent à 3 niveaux de puissance."));
+               StartCoroutine(Type("Dans les autels, tu peux améliorer les différentes parties de ton arme. Parmi les 9 choix, tu ne pourras en acheter que 3. Les glyphes sont divisées en 3 raretés qui reflètent leur puissance: Prêtre, Pharaon et Divinité."));
             }
             if (activeSituation == Situation.isTutoLD)
             {
@@ -243,18 +243,18 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isTutoCombat)
             {
                StopDialogue();
-               StartCoroutine(Type("Les ennemis élites sont des ennemis rendus plus puissants par l'influence de Loki. Ils sont plus puissants et résistants et sont insensibles aux repoussements."));
+               StartCoroutine(Type("Les ennemis élites sont des ennemis rendus plus dangereux par l'influence de Loki. Ils sont plus puissants et résistants et sont insensibles aux repoussements."));
             }
             if (activeSituation == Situation.isTutoPouvoirs)
             {
                StopDialogue();
-               StartCoroutine(Type("Dans les coffres du Valhalla, tu trouveras des orbes de pouvoir qui amélioreront les effets de tes magies. Les orbes violets amélioreront ton pouvoir d'âme et les jaunes, ton pouvoir de sable. Tu peux consulter leurs améliorations actives en appuyant sur Echap."));
+               StartCoroutine(Type("Dans les coffres, tu trouveras des orbes qui amélioreront les effets de tes magies. Les orbes violets amélioreront ton pouvoir d'âme et les jaunes, ton pouvoir de sable. Tu peux consulter leurs améliorations actives en appuyant sur Echap."));
 
             }
             if (activeSituation == Situation.isTutoShop)
             {
                StopDialogue();
-               StartCoroutine(Type("Tu peux utiliser l'énergie des âmes pour regagner de la santé. Utilise l'un des trois vases Canopes sur la droite. Ils te rendront respectivement 10, 25 ou 50% de ta santé si tu y dépose des âmes."));
+               StartCoroutine(Type("Tu peux utiliser l'énergie des âmes pour regagner de la santé. Utilise l'un des trois vases canopes sur la droite. Ils te rendront respectivement 10, 25 ou 50% de ta santé si tu y déposes des âmes."));
 
             }
             if (activeSituation == Situation.isTutoLD)

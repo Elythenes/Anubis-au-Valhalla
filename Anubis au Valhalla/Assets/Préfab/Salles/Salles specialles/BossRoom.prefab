@@ -7559,7 +7559,7 @@ GameObject:
   - component: {fileID: 3373721581025610109}
   - component: {fileID: 3715075073974218515}
   m_Layer: 0
-  m_Name: FenrirRoom
+  m_Name: BossRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7573,7 +7573,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3553072622727957457}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.12, y: -1.63, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7601,7 +7601,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomDone: 0
-  isSpecial: 0
   transformReferences:
   - {fileID: 5262343560680896301, guid: dbfc59af419f1e54a976416c5e178cad, type: 3}
   - {fileID: 4867368931691066523, guid: dbfc59af419f1e54a976416c5e178cad, type: 3}
@@ -7627,6 +7626,8 @@ MonoBehaviour:
     PropsList: []
   parasites: 0
   overdose: 1
+  spawnedElites: 0
+  text: {fileID: 0}
 --- !u!1 &4968949514408392113
 GameObject:
   m_ObjectHideFlags: 0
@@ -9080,6 +9081,10 @@ PrefabInstance:
     - target: {fileID: 6164769398596336692, guid: 4097cabf2b0129347b3243921085ee83, type: 3}
       propertyPath: m_Name
       value: Fenrir
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164769398596336692, guid: 4097cabf2b0129347b3243921085ee83, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4097cabf2b0129347b3243921085ee83, type: 3}

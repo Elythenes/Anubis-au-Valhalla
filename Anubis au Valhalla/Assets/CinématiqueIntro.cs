@@ -40,6 +40,7 @@ public class CinématiqueIntro : MonoBehaviour
         {
             if (canvas2.alpha < 1)
             {
+                
                 canvas2.alpha += alphaGained;
             }
             if (canvas.alpha < 1)
