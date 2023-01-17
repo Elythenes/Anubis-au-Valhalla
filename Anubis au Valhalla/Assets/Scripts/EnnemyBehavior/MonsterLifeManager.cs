@@ -207,6 +207,7 @@ public class MonsterLifeManager : MonoBehaviour
             criticalPick = Random.Range(0,100);
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
+                GlyphManager.Instance.doCrit = true;
                 textCriticalDamage.GetComponentInChildren<TextMeshPro>().SetText((Mathf.RoundToInt(damage * AnubisCurrentStats.instance.criticalBonusDamage)).ToString());
                 GameObject textOBJ = Instantiate(textCriticalDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
                 textOBJ.transform.localScale *= 2;
