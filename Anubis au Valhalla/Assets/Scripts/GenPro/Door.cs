@@ -18,7 +18,8 @@ public class Door : MonoBehaviour
     public GameObject shopDoor2;
     public GameObject challengeDoor2;
     public GameObject transitionDoor;
-    public GameObject bossDoor;
+    public GameObject bossDoor1;
+    public GameObject bossDoor2;
     public GameObject broken;
 
     public enum DoorType
@@ -26,6 +27,7 @@ public class Door : MonoBehaviour
         Normal,
         ToShop,
         ToChallenge1,
+        Transition,
         ToBoss,
         Broken
     }
@@ -38,7 +40,8 @@ public class Door : MonoBehaviour
     normalDoor2.SetActive(false);
     shopDoor2.SetActive(false);
     challengeDoor2.SetActive(false);
-    bossDoor.SetActive(false);
+    bossDoor1.SetActive(false);
+    bossDoor2.SetActive(false);
     broken.SetActive(false);
     transitionDoor.SetActive(false);
     }
@@ -83,13 +86,16 @@ public class Door : MonoBehaviour
             case DoorType.ToBoss:
                 if (SalleGenerator.Instance.zone2)
                 {
-                    bossDoor.SetActive(true);
+                    bossDoor2.SetActive(true);
                     break;
                 }
-                transitionDoor.SetActive(true);
+                bossDoor1.SetActive(true);
                 break;
             case DoorType.Broken:
                 broken.SetActive(true);
+                break;
+            case DoorType.Transition:
+                
                 break;
         }
     }

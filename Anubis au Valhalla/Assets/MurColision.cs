@@ -4,36 +4,27 @@ using UnityEngine;
 
 public class MurColision : MonoBehaviour
 {
-    private void FixedUpdate()
+    private void Update()
     {
         var g = CharacterController.instance;
         if (g.canBoost && !g.isDashing)
         {
-            Debug.Log(g.playerCol.enabled);
             if (!g.rb.IsTouchingLayers(128))
             {
-                g.canBuffer = false;
                 g.canBoost = false;
-                g.playerCol.enabled = true;
-                g.allowMovements = true;
-                g.stopDash = true;
-                g.anim.SetBool("isDashing",false);
-                g.anim.SetBool("isWalking",true);
+                g.canBuffer = false;
+                g.rb.velocity *= 0.5f;
+                g.QuitDash();
             }
         }
         if (g.canBuffer && g.timerDash > g.dashDuration * 0.3f)
         {
             if (!g.rb.IsTouchingLayers(128))
             {
-                
-                g.isDashing = false;
-                g.canBuffer = false;
                 g.canBoost = false;
-                g.playerCol.enabled = true;
-                g.allowMovements = true;
-                g.stopDash = true;
-                g.anim.SetBool("isDashing",false);
-                g.anim.SetBool("isWalking",true);
+                g.canBuffer = false;
+                //g.rb.velocity *= 0.5f;
+                g.QuitDash();
             }
         }
     }
@@ -55,11 +46,9 @@ public class MurColision : MonoBehaviour
             }
             else
             {
-                g.canBuffer = false;
                 g.canBoost = false;
-                g.playerCol.enabled = true;
-                g.allowMovements = true;
-                g.stopDash = true;
+                g.canBuffer = false;
+                g.QuitDash();
             }
         }
     }

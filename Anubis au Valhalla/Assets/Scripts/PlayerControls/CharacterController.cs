@@ -228,30 +228,9 @@ public class CharacterController : MonoBehaviour
     {
       
       isDashing = false;
-      if (!canBoost)
+      if (!canBoost && !canBuffer)
       {
-        playerCol.enabled = true;
-        timerDash = 0;
-        anim.SetBool("isDashing",false);
-        anim.SetBool("isWalking",true);
-        dashTracker.SetActive(false);
-        allowMovements = true;
-        finDash = true;
-        StartCoroutine(ResetTracking());
-        rb.velocity *= 0.85f;
-        AttaquesNormales.instance.canAttack = true;
-        canDash = false;
-        if (AttaquesNormales.instance.buffer)
-        {
-          AttaquesNormales.instance.buffer = false;
-          AttaquesNormales.instance.ExecuteAttack();
-        }
-
-        if (AttaquesNormales.instance.buffer2)
-        {
-          AttaquesNormales.instance.buffer2 = false;
-          AttaquesNormales.instance.SpecialAttack();
-        }
+        QuitDash();
       }
     }
 
@@ -608,7 +587,7 @@ public class CharacterController : MonoBehaviour
   }
   
   
-  IEnumerator ResetTracking()
+  public IEnumerator ResetTracking()
   {
     yield return null;
     HurtOnce = true;
@@ -625,5 +604,33 @@ public class CharacterController : MonoBehaviour
       return;
     }
     playerCol.enabled = true;
+  }
+
+  public void QuitDash()
+  {
+    Debug.Log("jarrete de dash");
+    isDashing = false;
+    playerCol.enabled = true;
+    timerDash = 0;
+    anim.SetBool("isDashing",false);
+    anim.SetBool("isWalking",true);
+    dashTracker.SetActive(false);
+    allowMovements = true;
+    finDash = true;
+    StartCoroutine(ResetTracking());
+    rb.velocity *= 0.85f;
+    AttaquesNormales.instance.canAttack = true;
+    canDash = false;
+    if (AttaquesNormales.instance.buffer)
+    {
+      AttaquesNormales.instance.buffer = false;
+      AttaquesNormales.instance.ExecuteAttack();
+    }
+
+    if (AttaquesNormales.instance.buffer2)
+    {
+      AttaquesNormales.instance.buffer2 = false;
+      AttaquesNormales.instance.SpecialAttack();
+    }
   }
 }

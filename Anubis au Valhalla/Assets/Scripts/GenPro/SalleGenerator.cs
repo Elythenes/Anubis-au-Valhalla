@@ -195,7 +195,7 @@ namespace GenPro
                         {
                                 Debug.Log("va essayer de spawn un shop");
                                 var shopspawn = Random.value;
-                                if (roomsDone == Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y) && spawnedShops < 1) shopspawn = 1;
+                                if (roomsDone == Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y) && spawnedShops < 1) shopspawn = 1; Debug.Log("Forcé le spawn du shop");
                                 if (shopspawn >= shopSpawnChance)
                                 {
                                         Debug.Log("Réussi le spawn un shop");
@@ -274,6 +274,7 @@ namespace GenPro
                                 EnableDoors(fromDoor,true);
                                 sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
                                 EnableDoors(toDoor,true);
+                                sDoors[(int)toDoor].currentDoorType = Door.DoorType.Transition;
                                 return Instantiate(endRoom);
                         }
                         for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
