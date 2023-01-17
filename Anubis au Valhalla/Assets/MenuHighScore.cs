@@ -104,17 +104,17 @@ public class MenuHighScore : MonoBehaviour
            if (rank == 1)
            {
                entryRectTransform.Find("PositionTexte").GetComponent<TextMeshProUGUI>().color =
-                   new Color32(229, 219, 122,255);
+                   new Color32(255, 189, 75,255);
            }
            if (rank == 2)
            {
                entryRectTransform.Find("PositionTexte").GetComponent<TextMeshProUGUI>().color =
-                   Color.white;
+                   new Color32(117, 126, 145,255);
            }
            if (rank == 3)
            {
                entryRectTransform.Find("PositionTexte").GetComponent<TextMeshProUGUI>().color =
-                  new Color32(140,108,60,255);
+                  new Color32(163,84,63,255);
            }
             transformList.Add(templateObj);
     }

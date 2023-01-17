@@ -10,6 +10,7 @@ using Debug = UnityEngine.Debug;
 public class GlyphManager : MonoBehaviour
 {
     public static GlyphManager Instance; //singleton
+    public bool isTuto;
 
     public List<GlyphObject> listLame = new List<GlyphObject>(0);
     public List<GlyphObject> listManche = new List<GlyphObject>(0);
@@ -61,7 +62,10 @@ public class GlyphManager : MonoBehaviour
     void Update()
     {
         UpdateGlyph();
-        DetectEnemies();
+        if (!isTuto)
+        {
+            DetectEnemies();
+        }
     }
     
     
