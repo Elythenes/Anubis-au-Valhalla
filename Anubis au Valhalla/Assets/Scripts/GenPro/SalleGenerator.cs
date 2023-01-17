@@ -96,6 +96,7 @@ namespace GenPro
 
                 void Start()
                 {
+                        Debug.Log(Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y));
                         if (zone2)
                         {
                                 NewZone(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
@@ -165,6 +166,10 @@ namespace GenPro
                 /// </summary>
                 private Salle GenerateDungeon2()
                 {
+                        for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
+                        {
+                                sDoors[i].currentDoorType = Door.DoorType.Normal;
+                        }
                         if (roomsDone == 0 )
                         {
                                 if (zone2)
@@ -195,7 +200,7 @@ namespace GenPro
                         {
                                 Debug.Log("va essayer de spawn un shop");
                                 var shopspawn = Random.value;
-                                if (roomsDone == Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y) && spawnedShops < 1) shopspawn = 1; Debug.Log("Forcé le spawn du shop");
+                                if (roomsDone == 4 && spawnedShops < 1) shopspawn = 1; Debug.Log("Forcé le spawn du shop");
                                 if (shopspawn >= shopSpawnChance)
                                 {
                                         Debug.Log("Réussi le spawn un shop");
@@ -235,6 +240,7 @@ namespace GenPro
                                 }
                                 spawnedShops++;
                                 EnableDoors(fromDoor,true);
+                                EnableDoors(toDoor,true);
                                 sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
                                 return (Salle)FindObjectOfType(typeof(Salle));
                         }

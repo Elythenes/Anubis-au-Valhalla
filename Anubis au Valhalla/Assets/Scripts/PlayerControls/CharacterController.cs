@@ -608,7 +608,6 @@ public class CharacterController : MonoBehaviour
 
   public void QuitDash()
   {
-    Debug.Log("jarrete de dash");
     isDashing = false;
     playerCol.enabled = true;
     timerDash = 0;

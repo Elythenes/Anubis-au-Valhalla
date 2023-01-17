@@ -95,7 +95,7 @@ public class Door : MonoBehaviour
                 broken.SetActive(true);
                 break;
             case DoorType.Transition:
-                
+                transitionDoor.SetActive(true);
                 break;
         }
     }
