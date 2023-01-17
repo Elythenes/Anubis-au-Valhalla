@@ -145,7 +145,7 @@ public class DamageManager : MonoBehaviour
     {
         if (healAmount > 0)
         {
-            GameObject particuleSoinOBJ = Instantiate(particulesHeal, transform.position, Quaternion.identity);
+            GameObject particuleSoinOBJ = Instantiate(particulesHeal, transform.position - new Vector3(0,1,0), Quaternion.identity);
             particuleSoinOBJ.transform.parent = transform;
             stats.vieActuelle += Mathf.RoundToInt(healAmount + healAmount * GlyphManager.Instance.healBoost);
             GameObject textHealObj = Instantiate(textHealDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);

@@ -224,6 +224,7 @@ public class UiManager : MonoBehaviour
     {
         NewPowerManager.Instance.powersCollected.Add(gb);
         NewPowerManager.Instance.PowerLevelUp(gb);
+        
     }
 
 

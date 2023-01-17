@@ -19,7 +19,7 @@ public class ThrustHitbox : Combo1Hitbox
             {
                 CharacterController.instance.isHiting = true; 
             }
-            
+            Instantiate(Impact, other.transform.position, Quaternion.identity);
             StartCoroutine(ResetTracking());
             Vector3 angleKnockback = other.transform.position - transform.parent.position;
             Vector3 angleNormalized = angleKnockback.normalized;

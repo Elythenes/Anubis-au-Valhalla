@@ -506,12 +506,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9510dc58347821f42a36e04127ff35da, type: 3}
   - {fileID: 8300000, guid: bc6b183c4accb70429b0320a3c700afe, type: 3}
   - {fileID: 8300000, guid: 80816f904f67d1549aca36cfe348a523, type: 3}
+  speedX: 100
+  speedY: 100
   disolveValue: 0
   isAttacking: 0
-  rotationSpeed: 50
+  rotationSpeed: 30
   rotationSpeedSlown: 20
   puissanceAttaque: 25
-  StartUpAttackTime: 1.5
+  StartUpAttackTime: 3
   StartUpAttackTimeTimer: 0
   AttackTime: 1.5
   AttackTimeTimer: 0
@@ -567,7 +569,7 @@ MonoBehaviour:
   version: 5
   radius: 1.52
   height: 2
-  canMove: 1
+  canMove: 0
   maxSpeed: 5
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
@@ -675,7 +677,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 3
+  m_LinearDrag: 0.4
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
