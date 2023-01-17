@@ -15,6 +15,7 @@ public class Combo1Hitbox : MonoBehaviour
     public GameObject bloodEffect;
     public bool isStop;
     public ParticleSystem SlashVFX;
+    public GameObject Impact;
 
 
 
@@ -51,13 +52,16 @@ public class Combo1Hitbox : MonoBehaviour
 
     public virtual void OnTriggerEnter2D(Collider2D col)
     {
+        
         if (col.CompareTag("Monstre"))
         {
+            
             if (CharacterController.instance.isHiting == false && col.gameObject.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
             {
                 CharacterController.instance.isHiting = true; 
             }
-            
+
+            Instantiate(Impact, col.transform.position, Quaternion.identity);
             StartCoroutine(ResetTracking());
             float angle = Mathf.Atan2(transform.parent.position.y - col.transform.position.y,transform.parent.position.x - col.transform.position.x ) * Mathf.Rad2Deg;
             GameObject effetSang = Instantiate(bloodEffect, col.transform.position, Quaternion.identity);

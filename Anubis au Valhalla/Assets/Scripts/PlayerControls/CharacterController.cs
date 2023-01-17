@@ -226,6 +226,8 @@ public class CharacterController : MonoBehaviour
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
+      
+      isDashing = false;
       if (!canBoost)
       {
         playerCol.enabled = true;
@@ -238,7 +240,6 @@ public class CharacterController : MonoBehaviour
         StartCoroutine(ResetTracking());
         rb.velocity *= 0.85f;
         AttaquesNormales.instance.canAttack = true;
-        isDashing = false;
         canDash = false;
         if (AttaquesNormales.instance.buffer)
         {
@@ -518,6 +519,19 @@ public class CharacterController : MonoBehaviour
   }
   private void InteractWithDoor(Collider2D col)
   {
+    if (SoundManager.instance.isShop)
+    {
+      if (SalleGenerator.Instance.zone2)
+      {
+        SoundManager.instance.ChangeToZone2();
+        SoundManager.instance.PlayZone2();
+      }
+      else
+      {
+        SoundManager.instance.ChangeToZone1();
+        SoundManager.instance.PlayZone1();
+      }
+    }
     allowMovements = true;
     ghost.activerEffet = false;
     isDashing = false;
@@ -527,7 +541,7 @@ public class CharacterController : MonoBehaviour
     var hitDoor = col.GetComponent<Door>();
     SalleGenerator.Instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
     SalleGenerator.Instance.SwapDoorType(SalleGenerator.Instance.sDoors[(int)SalleGenerator.Instance.fromDoor]);
-    if (SalleGenerator.Instance.roomsDone >= SalleGenerator.Instance.dungeonSize +1)
+    if (SalleGenerator.Instance.roomsDone > SalleGenerator.Instance.dungeonSize +1)
     {
       Debug.Log("auuuuugh");
       SalleGenerator.Instance.NewZone(hitDoor.doorOrientation, true, hitDoor);
@@ -549,10 +563,14 @@ public class CharacterController : MonoBehaviour
 
     if (hitDoor.currentDoorType == Door.DoorType.ToBoss && !SalleGenerator.Instance.zone2)
     {
+      SoundManager.instance.ChangeToBoss();
+      SoundManager.instance.PlayBoss();
       SalleGenerator.Instance.morbinTime = true;
     }
     if (hitDoor.currentDoorType == Door.DoorType.ToShop)
     {
+      SoundManager.instance.ChangeToShop();
+      SoundManager.instance.PlayShop();
       SalleGenerator.Instance.shopsVisited++;
       if (SalleGenerator.Instance.roomsDone < SalleGenerator.Instance.dungeonSize - 2)
       { 

@@ -145,11 +145,11 @@ public class DamageManager : MonoBehaviour
     {
         if (healAmount > 0)
         {
-            GameObject particuleSoinOBJ = Instantiate(particulesHeal, transform.position, Quaternion.identity);
+            GameObject particuleSoinOBJ = Instantiate(particulesHeal, transform.position - new Vector3(0,1,0), Quaternion.identity);
             particuleSoinOBJ.transform.parent = transform;
-            stats.vieActuelle += healAmount;
+            stats.vieActuelle += Mathf.RoundToInt(healAmount + healAmount * GlyphManager.Instance.healBoost);
             GameObject textHealObj = Instantiate(textHealDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
-            textHealObj.GetComponentInChildren<TextMeshPro>().SetText((healAmount).ToString());
+            textHealObj.GetComponentInChildren<TextMeshPro>().SetText((Mathf.RoundToInt(healAmount + healAmount * GlyphManager.Instance.healBoost)).ToString());
             if (stats.vieActuelle >= 100)
             {
                 stats.vieActuelle = 100;
@@ -287,6 +287,7 @@ public class DamageManager : MonoBehaviour
         audioSource.pitch = 1;
         audioSource.PlayOneShot(audioClipArray[0]);
         compteurScore.text = ScoreManager.instance.currentScore.ToString();
+        SoundManager.instance.audioSource.Stop();
         CharacterController.instance.allowMovements = false;
         CharacterController.instance.movement = Vector2.zero;
         CharacterController.instance.rb.velocity = Vector2.zero;

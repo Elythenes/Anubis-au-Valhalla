@@ -36,7 +36,9 @@ public class IA_Corbeau : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] audioClipArray;
 
-    [Header("Attaque")] public float disolveValue;
+    [Header("Attaque")] public float speedX;
+    public float speedY;
+    public float disolveValue;
     public bool isAttacking;
     public float rotationSpeed;
     public float rotationSpeedSlown;
@@ -99,7 +101,27 @@ public class IA_Corbeau : MonoBehaviour
         
     }
 
+    private void FixedUpdate()
+    {
+        if (isChasing && !life.isMomified && canMove)
+        {
+            aipath.destination = player.transform.position;
+            anim.SetBool("isIdle",false);
+            anim.SetBool("isRuning",true);
+            ai.destination = player.transform.position;
+            rb.AddForce(new Vector2(aipath.targetDirection.x * speedX,aipath.targetDirection.y * speedY) * Time.deltaTime);
+        }
+        
+        if (isFleeing && !life.isMomified && canMove)
+        {
+            Vector2 fuite = player.transform.position - transform.position;
+            anim.SetBool("isIdle",false);
+            anim.SetBool("isRuning",true);
+            rb.AddForce(new Vector2(fuite.x * speedX,fuite.y * speedY) * Time.deltaTime);
+        }
+    }
 
+    
     public void Update()
     {
         StartUpAttackTimeTimer += Time.deltaTime;
@@ -252,11 +274,10 @@ public class IA_Corbeau : MonoBehaviour
         }
         
             
+       
         if(Vector3.Distance(player.transform.position, transform.position) >= radiusFleeing*3 && !isFleeing && !isRotating && canMove)
         {
             isChasing = true;
-            Vector2 angleTowardPlayer = player.transform.position - transform.position;
-            rb.AddForce(angleTowardPlayer.normalized * speedTowardPlayer);
             isFleeing = false;
         }
         else

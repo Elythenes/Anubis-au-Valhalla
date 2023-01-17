@@ -51,6 +51,7 @@ namespace GenPro
                 [SerializeField] public int roomsDone = -1;
                 public DoorOrientation fromDoor = DoorOrientation.West;
                 [SerializeField] private DoorOrientation toDoor;
+                public bool isTuto;
         
                 public int globalBank = 14;
                 public bool testBankSystem;
@@ -86,7 +87,10 @@ namespace GenPro
                                 return;
                         }
                         Instance = this;
-                        _moveGrid = AstarPath.active.gameObject.GetComponent<ProceduralGridMover>();
+                        if (!isTuto)
+                        { 
+                                _moveGrid = AstarPath.active.gameObject.GetComponent<ProceduralGridMover>();
+                        }
                         timer = GameObject.FindWithTag("Timer");
                 }
 
@@ -97,7 +101,11 @@ namespace GenPro
                                 NewZone(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
                                 return;
                         }
-                        TransitionToNextRoom(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
+
+                        if (!isTuto)
+                        {
+                                TransitionToNextRoom(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
+                        }
                 }
                 /// <summary>
                 /// Méthode qui ouvre toutes les portes actives
@@ -110,6 +118,8 @@ namespace GenPro
                         
                                 OpenDoors((DoorOrientation)i,true);
                         }
+                        roomsDone++;
+                        currentRoom.roomDone = true;
                 }
 
                 /// <summary>
@@ -118,6 +128,8 @@ namespace GenPro
 
                 public void NewZone(DoorOrientation door, bool switchDoor, Door type)
                 {
+                        SoundManager.instance.PlayZone2();
+                        SoundManager.instance.ChangeToZone2();
                         zone2 = true;
                         startRoom = startRoom2;
                         endRoom = endRoom2;
@@ -165,7 +177,7 @@ namespace GenPro
                                                 bool special = Random.value > 0.3f;
                                                 if (special)
                                                 {
-                                                        sDoors[i].willChooseSpecial = true;
+                                                        sDoors[i].currentDoorType = Door.DoorType.ToChallenge1;
                                                 }
                                                 sDoors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
                                         }
@@ -179,45 +191,39 @@ namespace GenPro
                                 }
                                 return Instantiate(startRoom);
                         }
-                        for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
-                        {
-                                if (i == (int) fromDoor) continue;
-                                bool state = Random.value > 0.4f;
-                                EnableDoors((DoorOrientation) i,state);
-                                bool special = Random.value > 0.7f;
-                                if (special)
-                                {
-                                        sDoors[i].willChooseSpecial = true;
-                                }
-                                sDoors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
-                        }
-
                         if (spawnedShops < 1 && roomsDone >= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.x) && roomsDone <= Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y))
                         {
+                                Debug.Log("va essayer de spawn un shop");
                                 var shopspawn = Random.value;
                                 if (roomsDone == Mathf.RoundToInt(dungeonSize * minMaxShopThreshold.y) && spawnedShops < 1) shopspawn = 1;
                                 if (shopspawn >= shopSpawnChance)
                                 {
+                                        Debug.Log("Réussi le spawn un shop");
                                         spawnedShops++;
                                         Door removedDoor = sDoors[(int)fromDoor];
                                         sDoors.RemoveAt((int)fromDoor);
                                         Door doorToShop = sDoors[Random.Range(0, sDoors.Count)];
                                         doorToShop.currentDoorType = Door.DoorType.ToShop;
                                         doorToShop.ChooseSpecialToSpawn(0);
-                                        doorToShop.willChooseSpecial = false;
+                                        EnableDoors((DoorOrientation)sDoors.IndexOf(doorToShop),true);
                                         sDoors.Insert((int)fromDoor, removedDoor);
                                         for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                         {
                                                 if (i == (int) fromDoor)continue;
                                                 if (i == sDoors.IndexOf(doorToShop))continue;
-                                                sDoors[i].willChooseSpecial = true;
+                                                sDoors[i].currentDoorType = Door.DoorType.ToChallenge1;
                                                 sDoors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+                                                EnableDoors((DoorOrientation)i,true);
                                         }
+                                        EnableDoors(fromDoor,true);
+                                        sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
+                                        return (Salle)FindObjectOfType(typeof(Salle));
                                 }
 
                         }
                         if (roomsDone == dungeonSize - 2)
                         {
+                                Debug.Log("spawn garanti du shop");
                                 for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                 {
                                         if (i == (int) fromDoor) continue;
@@ -226,16 +232,19 @@ namespace GenPro
                                         if(i == (int)DoorOrientation.South)EnableDoors(DoorOrientation.South,false);
                                         sDoors[i].currentDoorType = Door.DoorType.ToShop;
                                         sDoors[i].ChooseSpecialToSpawn(0);
-                                        sDoors[i].willChooseSpecial = false;
                                 }
                                 spawnedShops++;
+                                EnableDoors(fromDoor,true);
+                                sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
+                                return (Salle)FindObjectOfType(typeof(Salle));
                         }
                         if (roomsDone == dungeonSize - 1)
                         {
+                                Debug.Log("spawn porte boss");
                                 for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                 {
                                         if (i == (int) fromDoor) continue;
-                                        sDoors[i].willChooseSpecial = false;
+                                        sDoors[i].currentDoorType = Door.DoorType.Normal;
                                         EnableDoors((DoorOrientation)i,false);
                                         if (i == (int)DoorOrientation.North)
                                         {
@@ -243,13 +252,17 @@ namespace GenPro
                                                 sDoors[i].currentDoorType = Door.DoorType.ToBoss;
                                         }
                                 }
+                                EnableDoors(fromDoor,true);
+                                sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
+                                return (Salle)FindObjectOfType(typeof(Salle));
                         }
                         if (roomsDone == dungeonSize)
                         {
+                                Debug.Log("spawn salle boss");
                                 for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                 {
                                         EnableDoors((DoorOrientation) i ,false);
-                                        sDoors[i].willChooseSpecial = false;
+                                        sDoors[i].currentDoorType = Door.DoorType.Normal;
                                 }
 
                                 if (zone2)
@@ -263,6 +276,19 @@ namespace GenPro
                                 EnableDoors(toDoor,true);
                                 return Instantiate(endRoom);
                         }
+                        for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
+                        {
+                                if (i == (int) fromDoor) continue;
+                                bool state = Random.value > 0.4f;
+                                EnableDoors((DoorOrientation) i,state);
+                                bool special = Random.value > 0.7f;
+                                if (special)
+                                {
+                                        sDoors[i].currentDoorType = Door.DoorType.ToChallenge1;
+                                }
+                                sDoors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
+                        }
+
                         EnableDoors(fromDoor,true);
                         sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
                         EnableDoors(toDoor,true);
@@ -344,7 +370,11 @@ namespace GenPro
                 /// </summary>
                 public void OpenDoors(DoorOrientation index, bool state)
                 {
-                        sDoors[(int)index].doorCollider.enabled = state;
+                        if (!isTuto)
+                        {
+                                sDoors[(int)index].doorCollider.enabled = state;
+                        }
+                       
                 }
                 /// <summary>
                 /// TP la caméra au joueur
@@ -384,8 +414,8 @@ namespace GenPro
 
                 public void SwapDoorType(Door type)
                 {
-                        type.currentSprite.sprite = type.doorSprites[0];
                         type.currentDoorType = Door.DoorType.Normal;
+                        type.willChooseSpecial = false;
                 }
         }
 }

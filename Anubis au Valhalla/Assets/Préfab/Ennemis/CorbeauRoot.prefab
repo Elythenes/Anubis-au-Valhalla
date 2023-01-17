@@ -162,7 +162,7 @@ MonoBehaviour:
   MomifiedTime: 3
   MomifiedTimeTimer: 0
   isMomified: 0
-  bandelettesMomie: {fileID: 840371217462830169}
+  momieShader: {fileID: 2100000, guid: c43c868e866276f4bb5e3729b3ce0d08, type: 2}
   isEnvased: 0
   EnvasedTime: 5
   EnvasedTimeTimer: 0
@@ -506,12 +506,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9510dc58347821f42a36e04127ff35da, type: 3}
   - {fileID: 8300000, guid: bc6b183c4accb70429b0320a3c700afe, type: 3}
   - {fileID: 8300000, guid: 80816f904f67d1549aca36cfe348a523, type: 3}
+  speedX: 100
+  speedY: 100
   disolveValue: 0
   isAttacking: 0
-  rotationSpeed: 50
+  rotationSpeed: 30
   rotationSpeedSlown: 20
   puissanceAttaque: 25
-  StartUpAttackTime: 1.5
+  StartUpAttackTime: 3
   StartUpAttackTimeTimer: 0
   AttackTime: 1.5
   AttackTimeTimer: 0
@@ -552,7 +554,6 @@ MonoBehaviour:
   OvSpeed: 1.5
   OvStartUpAttackTime: 0.5
   OvSpeedTowardPlayer: 75
-  OvForceRepulse: 1.5
 --- !u!114 &893181608378371502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,7 +569,7 @@ MonoBehaviour:
   version: 5
   radius: 1.52
   height: 2
-  canMove: 1
+  canMove: 0
   maxSpeed: 5
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
@@ -676,7 +677,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 3
+  m_LinearDrag: 0.4
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -1461,11 +1462,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0ce4c45d1cdc5f468a4f7668414d476, type: 3}
---- !u!1 &840371217462830169 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5105585978381247783, guid: a0ce4c45d1cdc5f468a4f7668414d476, type: 3}
-  m_PrefabInstance: {fileID: 5580864075836195198}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4304282808473670875 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8559324352163632549, guid: a0ce4c45d1cdc5f468a4f7668414d476, type: 3}

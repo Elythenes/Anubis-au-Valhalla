@@ -63,12 +63,16 @@ public class CinématiqueIntro : MonoBehaviour
     IEnumerator Scene()
     {
         yield return new WaitForSeconds(2f);
+        SoundManager.instance.ChangeToHub();
+        SoundManager.instance.PlayHub();
         SceneManager.LoadScene("Hub");
     }
     
     IEnumerator TimerCinematique()
     {
         yield return new WaitForSeconds(cinematiqueDuration);
+        SoundManager.instance.ChangeToHub();
+        SoundManager.instance.PlayHub();
         SceneManager.LoadScene("Hub");
     }
     
