@@ -51,6 +51,7 @@ namespace GenPro
                 [SerializeField] public int roomsDone = -1;
                 public DoorOrientation fromDoor = DoorOrientation.West;
                 [SerializeField] private DoorOrientation toDoor;
+                public bool isTuto;
         
                 public int globalBank = 14;
                 public bool testBankSystem;
@@ -86,7 +87,10 @@ namespace GenPro
                                 return;
                         }
                         Instance = this;
-                        _moveGrid = AstarPath.active.gameObject.GetComponent<ProceduralGridMover>();
+                        if (!isTuto)
+                        { 
+                                _moveGrid = AstarPath.active.gameObject.GetComponent<ProceduralGridMover>();
+                        }
                         timer = GameObject.FindWithTag("Timer");
                 }
 
@@ -97,7 +101,11 @@ namespace GenPro
                                 NewZone(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
                                 return;
                         }
-                        TransitionToNextRoom(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
+
+                        if (!isTuto)
+                        {
+                                TransitionToNextRoom(DoorOrientation.West, false, GameObject.Find("East").GetComponent<Door>());
+                        }
                 }
                 /// <summary>
                 /// Méthode qui ouvre toutes les portes actives
@@ -346,7 +354,11 @@ namespace GenPro
                 /// </summary>
                 public void OpenDoors(DoorOrientation index, bool state)
                 {
-                        sDoors[(int)index].doorCollider.enabled = state;
+                        if (!isTuto)
+                        {
+                                sDoors[(int)index].doorCollider.enabled = state;
+                        }
+                       
                 }
                 /// <summary>
                 /// TP la caméra au joueur

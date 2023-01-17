@@ -154,6 +154,7 @@ public class Shop : MonoBehaviour
     
     void GetShop()
     {
+        shopUI.GetComponent<CanvasGroup>().blocksRaycasts = true;
         Time.timeScale = 0;
         UiManager.instance.EnterSousMenu();
         shopUI.interactable = true;
@@ -171,6 +172,7 @@ public class Shop : MonoBehaviour
 
     public void CloseShop()
     {
+        shopUI.GetComponent<CanvasGroup>().blocksRaycasts = false;
         UiManager.instance.ExitSousMenu();
         audioSource.pitch = 0.5f;
         audioSource.PlayOneShot(audioClipArray[1],0.8f);
