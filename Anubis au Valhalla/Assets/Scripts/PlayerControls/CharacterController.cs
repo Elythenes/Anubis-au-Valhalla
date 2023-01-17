@@ -238,30 +238,9 @@ public class CharacterController : MonoBehaviour
     {
       
       isDashing = false;
-      if (!canBoost)
+      if (!canBoost && !canBuffer)
       {
-        playerCol.enabled = true;
-        timerDash = 0;
-        anim.SetBool("isDashing",false);
-        anim.SetBool("isWalking",true);
-        dashTracker.SetActive(false);
-        allowMovements = true;
-        finDash = true;
-        StartCoroutine(ResetTracking());
-        rb.velocity *= 0.85f;
-        AttaquesNormales.instance.canAttack = true;
-        canDash = false;
-        if (AttaquesNormales.instance.buffer)
-        {
-          AttaquesNormales.instance.buffer = false;
-          AttaquesNormales.instance.ExecuteAttack();
-        }
-
-        if (AttaquesNormales.instance.buffer2)
-        {
-          AttaquesNormales.instance.buffer2 = false;
-          AttaquesNormales.instance.SpecialAttack();
-        }
+        QuitDash();
       }
     }
 
@@ -551,7 +530,7 @@ public class CharacterController : MonoBehaviour
     var hitDoor = col.GetComponent<Door>();
     SalleGenerator.Instance.spawnDoor = col.gameObject.GetComponent<Door>().doorOrientation;
     SalleGenerator.Instance.SwapDoorType(SalleGenerator.Instance.sDoors[(int)SalleGenerator.Instance.fromDoor]);
-    if (SalleGenerator.Instance.roomsDone >= SalleGenerator.Instance.dungeonSize +1)
+    if (SalleGenerator.Instance.roomsDone > SalleGenerator.Instance.dungeonSize +1)
     {
       Debug.Log("auuuuugh");
       SalleGenerator.Instance.NewZone(hitDoor.doorOrientation, true, hitDoor);
@@ -618,7 +597,7 @@ public class CharacterController : MonoBehaviour
   }
   
   
-  IEnumerator ResetTracking()
+  public IEnumerator ResetTracking()
   {
     yield return null;
     HurtOnce = true;
@@ -635,5 +614,32 @@ public class CharacterController : MonoBehaviour
       return;
     }
     playerCol.enabled = true;
+  }
+
+  public void QuitDash()
+  {
+    isDashing = false;
+    playerCol.enabled = true;
+    timerDash = 0;
+    anim.SetBool("isDashing",false);
+    anim.SetBool("isWalking",true);
+    dashTracker.SetActive(false);
+    allowMovements = true;
+    finDash = true;
+    StartCoroutine(ResetTracking());
+    rb.velocity *= 0.85f;
+    AttaquesNormales.instance.canAttack = true;
+    canDash = false;
+    if (AttaquesNormales.instance.buffer)
+    {
+      AttaquesNormales.instance.buffer = false;
+      AttaquesNormales.instance.ExecuteAttack();
+    }
+
+    if (AttaquesNormales.instance.buffer2)
+    {
+      AttaquesNormales.instance.buffer2 = false;
+      AttaquesNormales.instance.SpecialAttack();
+    }
   }
 }
