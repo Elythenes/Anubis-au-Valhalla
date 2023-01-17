@@ -161,14 +161,14 @@ public class TothBehiavour : MonoBehaviour
             listeTextBouton[3].text = ("Je tâcherais de m'en rappeler");
             break;
          case Situation.isTutoShop: 
-            StartCoroutine(Type("Dans le Valhalla, tu trouveras des salles dans lesquelles mon influence est grande. Apporte moi les ames que tu récolteras et je les changerais en de nouveaux pouvoirs."));
+            StartCoroutine(Type("Dans le Valhalla, tu trouveras des salles dans lesquelles mon influence est grande. Apportemoi les âmes que tu récolteras et je les changerais en de nouveaux pouvoirs."));
             listeTextBouton[0].text = ("Comment récolter des âmes ?");
             listeTextBouton[1].text = ("Quelles pouvoirs pourras tu m'offrir ?");
             listeTextBouton[2].text = ("Peut-tu soigner mes blessures ?");
             listeTextBouton[3].text = ("Merci pour ton assistance Thot.");
             break;
          case Situation.isTutoLD: 
-            StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les differentes portes, elles t'indiqueront le chemin à suivre."));
+            StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les différentes portes, elles t'indiqueront le chemin à suivre."));
             listeTextBouton[0].text = ("Les salles normales ?");
             listeTextBouton[1].text = ("Les salles challenges ?");
             listeTextBouton[2].text = ("Les salles Ethérées ?");
@@ -204,7 +204,7 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isTutoLD)
             {
                StopDialogue();
-               StartCoroutine(Type("Pour te repérer dans le royaume des morts, observe bien les differentes portes, elles t'indiqueront le chemin à suivre."));
+               StartCoroutine(Type("Les salles normales sont indiquées par les portes avec un glyphe en forme de Y. Elles contiennent des dangers et des récompenses standards."));
             }
             break;
          case OptionChoisie.B:
@@ -229,7 +229,8 @@ public class TothBehiavour : MonoBehaviour
             }
             if (activeSituation == Situation.isTutoLD)
             {
-               
+               StopDialogue();
+               StartCoroutine(Type("Les salles Challenge sont indiquées par les portes avec un glyphe en forme de H. Elles contiennent de grands dangers mais promettent des récompenses importantes à la clé. Soit sûr que tu es prêt avant d'entrer dans une de ces salles."));
             }
             break;
          case OptionChoisie.C:
@@ -240,7 +241,7 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isTutoCombat)
             {
                StopDialogue();
-               StartCoroutine(Type("Les ennemis élites sont des ennemis plus puissantes et résistants de le autres. Ils sont insensibles au repoussements et attaquent rapidement."));
+               StartCoroutine(Type("Les ennemis élites sont des ennemis rendus plus puissants par l'influence de Loki. Ils sont insensibles aux repoussements et infligent de plus gros dégâts."));
             }
             if (activeSituation == Situation.isTutoPouvoirs)
             {
@@ -252,7 +253,8 @@ public class TothBehiavour : MonoBehaviour
             }
             if (activeSituation == Situation.isTutoLD)
             {
-               
+               StopDialogue();
+               StartCoroutine(Type("Tu pourras trouver les salles éthérées en passant par les portails violets. Dans ces salles, tu pourras communiquer avec moi. Ramène-moi les âmes que tu récupères pour que je les transforme en améliorations pour ton arme."));
             }
             break;
          case OptionChoisie.D:
