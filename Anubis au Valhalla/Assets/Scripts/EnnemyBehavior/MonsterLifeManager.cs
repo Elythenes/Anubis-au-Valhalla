@@ -225,7 +225,7 @@ public class MonsterLifeManager : MonoBehaviour
             {
                 ai.canMove = true;
             });*/
-            
+            GlyphManager.Instance.didAttack = true;
             if (criticalPick <= AttaquesNormales.instance.criticalRate)
             {
                 damage = Mathf.RoundToInt(damage * AnubisCurrentStats.instance.criticalBonusDamage);

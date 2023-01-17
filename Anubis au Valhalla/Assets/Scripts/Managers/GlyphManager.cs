@@ -39,6 +39,11 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Enter Room")] public bool enterNewRoom;
     [ShowIf("showBools")] [BoxGroup("Enter Room")] public int doRegenOnEnterValue;
     
+    [ShowIf("showBools")] [BoxGroup("Bool")] public bool getHeal;
+    [ShowIf("showBools")] [BoxGroup("Other")] public float bonusCritNeithGlyph;
+    [ShowIf("showBools")] [BoxGroup("Other")] public bool didAttack;
+    [ShowIf("showBools")] [BoxGroup("Other")] public bool hadHeal;
+    
     [ShowIf("showBools")] [BoxGroup("Other")] public float healBoost;
     [ShowIf("showBools")] [BoxGroup("Other")] public float criticalBoost;
     [ShowIf("showBools")] [BoxGroup("Other")] public bool doCrit;
@@ -91,6 +96,10 @@ public class GlyphManager : MonoBehaviour
 
         enterNewRoom = false;
         doRegenOnEnterValue = 0;
+
+        getHeal = false;
+        bonusCritNeithGlyph = 0;
+        didAttack = false;
 
         healBoost = 0;
         criticalBoost = 2;
@@ -337,6 +346,10 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
+            case 130:
+                bonusCritNeithGlyph = hiero.boolValue;
+                break;
+            
             case 251:
             case 252:
             case 253:
@@ -379,6 +392,10 @@ public class GlyphManager : MonoBehaviour
                 case 128:
                 case 129:
                     HealWhenCrit();
+                    break;
+                
+                case 130:
+                    CritBoostWhenHeal();
                     break;
                 
                 case 135: 
@@ -644,7 +661,24 @@ public class GlyphManager : MonoBehaviour
             DamageManager.instance.Heal(doCritHealValue);
         }
     }
-    
+
+    void CritBoostWhenHeal()
+    {
+        if (getHeal)
+        {
+            getHeal = false;
+            hadHeal = true;
+            AnubisCurrentStats.instance.criticalRate *= Mathf.RoundToInt(bonusCritNeithGlyph);
+        }
+
+        if (didAttack && hadHeal)
+        {
+            didAttack = false;
+            hadHeal = false;
+            AnubisCurrentStats.instance.criticalRate /= Mathf.RoundToInt(bonusCritNeithGlyph);
+        }
+        
+    }
     
     
     
