@@ -1,14 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using GenPro;
-using NaughtyAttributes;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 public class IA_Valkyrie : MonoBehaviour
 {
@@ -32,49 +29,41 @@ public class IA_Valkyrie : MonoBehaviour
     public bool isFleeing;
     public float radiusWondering;
     public Vector2 pointToGo;
-    public State currentState;
-    public enum State
-    {
-        FullHp = 0,
-        TroisQuarts = 1,
-        Moitié = 2,
-        UnQuart = 3
-    }
 
 
 
-    [BoxGroup("Attaque - Javelot")] public bool isAttacking;
-    [BoxGroup("Attaque - Javelot")] public int puissanceAttaqueJavelot;
-    [BoxGroup("Attaque - Javelot")] public float javelotSpeed;
-    [BoxGroup("Attaque - Javelot")] public float StartUpJavelotTime;
-    [BoxGroup("Attaque - Javelot")] public float StartUpJavelotTimeTimer;
-    [BoxGroup("Attaque - Javelot")] public bool isJavelotIndic;
-    [BoxGroup("Attaque - Javelot")] public float IndicJavelotTime;
-    [BoxGroup("Attaque - Javelot")] public float IndicJavelotTimeTimer;
-    [BoxGroup("Attaque - Javelot")] public List<int> javelotsToSpawn = new List<int>();
-    [BoxGroup("Attaque - Javelot")] public List<float> javelotInterval = new List<float>();
-    [Header("Refs et visus")]
-    [BoxGroup("Attaque - Javelot")] public JavelotValkyrie projectilJavelot;
-    [BoxGroup("Attaque - Javelot")] [HideInInspector] public Vector2 dir;
-    [BoxGroup("Attaque - Javelot")] public Transform[] restingPosList;
-    
-    [BoxGroup("Attaque - Jump")] [NaughtyAttributes.ReadOnly] public int FallDamage;
-    [BoxGroup("Attaque - Jump")] public float fallDamageMultiplier = 1.5f;
-    [BoxGroup("Attaque - Jump")] public float pushForce;
-    [BoxGroup("Attaque - Jump")] public bool hasShaked;
-    [BoxGroup("Attaque - Jump")] public bool hasFallen;
-    [BoxGroup("Attaque - Jump")] public float TriggerJumpTime;
-    [BoxGroup("Attaque - Jump")] public float TriggerJumpTimeTimer;     // Le temps que met l'attaque à se tick
-    [BoxGroup("Attaque - Jump")] public float JumpTime;
-    [BoxGroup("Attaque - Jump")] public float JumpTimeTimer;            // Le temps que met la valkyrie à sauter et disparaitre
-    [BoxGroup("Attaque - Jump")] public float IndicationTime;
-    [BoxGroup("Attaque - Jump")] public float IndicationTimeTimer;           // Le temps que met la valkyrie entre l'indication de l'attaque (zone rouge) et la retombée
-    [BoxGroup("Attaque - Jump")] public float FallTime;
-    [BoxGroup("Attaque - Jump")] public float FallTimeTimer;           // Le temps que met la valkyrie entre la retombée et le retour à son etat normal.
-    [Header("Refs et visus")]
-    [BoxGroup("Attaque - Jump")] public GameObject indicationFall;
-    [BoxGroup("Attaque - Jump")] public GameObject hitboxFall;
-    [BoxGroup("Attaque - Jump")] private Vector2 fallPos;
+    [Header("Attaque - Javelot")] 
+    public bool isAttacking;
+    [NaughtyAttributes.ReadOnly] public int puissanceAttaqueJavelot;
+    public float javelotSpeed;
+    public float StartUpJavelotTime;
+    public float StartUpJavelotTimeTimer;
+    public bool isJavelotIndic;
+    public float IndicJavelotTime;
+    public float IndicJavelotTimeTimer;
+    public GameObject projectilJavelot;
+    public GameObject indicationJavelot;
+    [HideInInspector] public Vector2 dir;
+    public Gradient gradientIndic;
+    public GameObject indicHolder;
+
+    [Header("Attaque - Jump")]
+    public GameObject indicationFall;
+    public GameObject hitboxFall;
+    private Vector2 fallPos;
+    [NaughtyAttributes.ReadOnly] public int FallDamage;
+    public float fallDamageMultiplier = 1.5f;
+    public float pushForce;
+    public bool hasShaked;
+    public bool hasFallen;
+    public float TriggerJumpTime;
+    public float TriggerJumpTimeTimer;     // Le temps que met l'attaque à se tick
+    public float JumpTime;
+    public float JumpTimeTimer;            // Le temps que met la valkyrie à sauter et disparaitre
+    public float IndicationTime;
+    public float IndicationTimeTimer;           // Le temps que met la valkyrie entre l'indication de l'attaque (zone rouge) et la retombée
+    public float FallTime;
+    public float FallTimeTimer;           // Le temps que met la valkyrie entre la retombée et le retour à son etat normal.
     
     
     //Fonctions ******************************************************************************************************************************************************
@@ -97,21 +86,34 @@ public class IA_Valkyrie : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
+        
+        if (life.eliteChallenge)
+        {
+            isElite = true;
+        }
+
+        if (isElite)
+        {
+            puissanceAttaqueJavelot *= 2;
+                FallDamage *= 2;
+        }
+        if (life.overdose || SalleGenerator.Instance.currentRoom.overdose)
+        {
+            ai.maxSpeed *= 2;
+            javelotSpeed *= 1.5f;
+            StartUpJavelotTime *= 0.4f;
+            JumpTime *= 0.4f;
+            IndicationTime *= 0.5f;
+            FallTime *= 0.5f;
+        }
     }
 
-    void UpdateCurrentState()
-    {
-        if (life.vieActuelle > life.vieMax * 0.75f) currentState = State.FullHp;
-        else if (life.vieActuelle > life.vieMax * 0.5f) currentState = State.TroisQuarts;
-        else if (life.vieActuelle > life.vieMax * 0.25f) currentState = State.Moitié;
-        else currentState = State.UnQuart;
-    }
+
     public void Update()
     {
         if (life.gotHit)
         {
             aipath.canMove = true;
-            UpdateCurrentState();
         }
         
         if(!isAttacking&& !life.isMomified) // Cooldwn des attaques;
@@ -151,7 +153,7 @@ public class IA_Valkyrie : MonoBehaviour
             attaqueJavelot();
         }
 
-        /*if (isJavelotIndic)
+        if (isJavelotIndic)
         {
             IndicJavelotTimeTimer += Time.deltaTime;
             if (indicHolder is not null)
@@ -165,13 +167,20 @@ public class IA_Valkyrie : MonoBehaviour
                 StartUpJavelot();
                 IndicJavelotTimeTimer = 0;
             }
-        }*/
+        }
         
         if (!isFleeing&& !life.isMomified) // Déplacements
         {
             deplacement();
         }
-        
+
+        if (life.vieActuelle <= 0)
+        {
+            if (indicHolder is not null)
+            {
+                Destroy(indicHolder.gameObject);
+            }
+        }
     }
 
     void TriggerSaut()
@@ -226,26 +235,24 @@ public class IA_Valkyrie : MonoBehaviour
 
     void attaqueJavelot()
     {
+        dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,
+            CharacterController.instance.transform.position.y - transform.position.y);
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        
+        GameObject indicJavelot = Instantiate(indicationJavelot,transform.position,  Quaternion.Euler(0,0,angle));
+        Destroy(indicJavelot,IndicJavelotTime+0.1f);
+        indicHolder = indicJavelot;
+        isJavelotIndic = true;
+        transform.DOShakePosition(IndicJavelotTime,1);
         isAttacking = true;
         StartUpJavelotTimeTimer = 0;
-        for (int i = 0; i < javelotsToSpawn[(int)currentState]; i++)
-        {
-            var projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
-            projJavelot.ia = this;
-            projJavelot.restingPos = restingPosList[i];
-            projJavelot.timeForAim += javelotInterval[(int)currentState] * i;
-
-        }
-        transform.DOShakePosition(IndicJavelotTime,1).OnComplete(() =>
-        {
-            StartUpJavelot();
-        });
     }
     
   
     void StartUpJavelot() // Au début de l'attaque du javelot
     {
-
+        GameObject projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
+        projJavelot.GetComponent<JavelotValkyrie>().ia = this;
         isAttacking = false;
         isJavelotIndic = false;
     }
