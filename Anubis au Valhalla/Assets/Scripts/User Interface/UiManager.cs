@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
@@ -47,6 +48,8 @@ public class UiManager : MonoBehaviour
     [Foldout("PAUSE MENU")] public GameObject buttonQuit;
 
     [Foldout("INVENTORY")] public List<GameObject> listBoxInventaire;
+    [Foldout("INVENTORY")] public List<Sprite> boxGlyphBordures;
+    [Foldout("INVENTORY")] public List<RawImage> boxGlyphIcones;
     [Foldout("INVENTORY")] public GameObject boxGlyphTitre;
     [Foldout("INVENTORY")] public GameObject boxGlyphTexte;
     [Foldout("INVENTORY")] public GameObject boxGlyphImage;
@@ -158,9 +161,40 @@ public class UiManager : MonoBehaviour
     {
         for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
         {
-            listBoxInventaire[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
+            //listBoxInventaire[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
+            
+            //boxGlyphIcones[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
             listBoxInventaire[i].GetComponent<Button>().enabled = true;
-            Debug.Log(i);
+            switch (GlyphInventory.Instance.glyphInventory[i].rare)
+            {
+                case Rarity.Prêtre:
+                    if (GlyphInventory.Instance.glyphInventory[i].price == 0)
+                    {
+                        listBoxInventaire[i].GetComponent<RawImage>().color = new Color(120,120,120,255);
+                        Debug.Log("is minor");
+                    }
+                    else
+                    {
+                        listBoxInventaire[i].GetComponent<RawImage>().color = new Color(163,84,63,255);
+                        Debug.Log("is prêtre");
+                    }
+                    break;
+                case Rarity.Pharaon:
+                    listBoxInventaire[i].GetComponent<RawImage>().color = new Color(117,126,145,255);
+                    Debug.Log("is pharaon");
+                    break;
+                case Rarity.Divinité:
+                    listBoxInventaire[i].GetComponent<RawImage>().color = new Color(255,189,75,255);
+                    Debug.Log("is divinité");
+                    break;
+                case Rarity.Unique:
+                    listBoxInventaire[i].GetComponent<RawImage>().color = new Color(157,23,188,255);
+                    Debug.Log("is unique");
+                    break;
+                default:
+                    Debug.Log("NON");
+                    break;
+            }
         }
 
         if (GlyphInventory.Instance.glyphInventory.Count < listBoxInventaire.Count)
