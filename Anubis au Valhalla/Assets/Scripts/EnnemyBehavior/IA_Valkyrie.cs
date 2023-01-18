@@ -31,6 +31,7 @@ public class IA_Valkyrie : MonoBehaviour
     public GameObject canvasLifeBar;
     private Rigidbody2D rb;
     private Collider2D collider;
+    public Animator anim;
     IAstarAI ai;
     public AIDestinationSetter playerFollow;
     public bool isFleeing;
@@ -52,9 +53,7 @@ public class IA_Valkyrie : MonoBehaviour
     [BoxGroup("Attaque - Javelot")] public float javelotSpeed;
     [BoxGroup("Attaque - Javelot")] public float StartUpJavelotTime;
     [BoxGroup("Attaque - Javelot")] public float StartUpJavelotTimeTimer;
-    [BoxGroup("Attaque - Javelot")] public bool isJavelotIndic;
     [BoxGroup("Attaque - Javelot")] public float IndicJavelotTime;
-    [BoxGroup("Attaque - Javelot")] public float IndicJavelotTimeTimer;
     [BoxGroup("Attaque - Javelot")] public List<int> javelotsToSpawn = new List<int>();
     [BoxGroup("Attaque - Javelot")] public List<float> javelotInterval = new List<float>();
     [Header("Refs et visus")]
@@ -64,8 +63,11 @@ public class IA_Valkyrie : MonoBehaviour
     
     [BoxGroup("Attaque - Jump")] [NaughtyAttributes.ReadOnly] public int FallDamage;
     [BoxGroup("Attaque - Jump")] public float fallDamageMultiplier = 1.5f;
+    [BoxGroup("Attaque - Jump")] public float jumpSpeed;
+    [BoxGroup("Attaque - Jump")] public float airTravelSpeed;
     [BoxGroup("Attaque - Jump")] public float pushForce;
     [BoxGroup("Attaque - Jump")] public bool hasShaked;
+    [BoxGroup("Attaque - Jump")] public bool isSeeking;
     [BoxGroup("Attaque - Jump")] public bool hasFallen;
     [BoxGroup("Attaque - Jump")] public float TriggerJumpTime;
     [BoxGroup("Attaque - Jump")] public float TriggerJumpTimeTimer;     // Le temps que met l'attaque à se tick
@@ -79,12 +81,18 @@ public class IA_Valkyrie : MonoBehaviour
     [BoxGroup("Attaque - Jump")] public GameObject indicationFall;
     [BoxGroup("Attaque - Jump")] public GameObject hitboxFall;
     [BoxGroup("Attaque - Jump")] private Vector2 fallPos;
+    [BoxGroup("Attaque - Jump")] public GameObject SpriteObj;
+    [BoxGroup("Attaque - Jump")] public GameObject ombreObj;
+    [BoxGroup("Attaque - Jump")] public GameObject activeOmbre;
+    [BoxGroup("Attaque - Jump")] public Vector3 stretchAmount;
+    private float distanceWithPlayer;
     
     
     //Fonctions ******************************************************************************************************************************************************
     
     private void Awake()
     {
+        DOTween.SetTweensCapacity(500,50);
         puissanceAttaqueJavelot = GetComponentInParent<MonsterLifeManager>().data.damage;
         FallDamage = Mathf.RoundToInt(puissanceAttaqueJavelot * fallDamageMultiplier);
 
@@ -92,7 +100,6 @@ public class IA_Valkyrie : MonoBehaviour
     
     private void Start()
     {
-        TriggerJumpTime = Random.Range(8, 13);
         spriteArray = GetComponentsInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -120,7 +127,7 @@ public class IA_Valkyrie : MonoBehaviour
             UpdateCurrentState();
         }
         
-        if(!isAttacking&& !life.isMomified) // Cooldwn des attaques;
+        if(!isAttacking&& !life.isMomified) // Cooldown des attaques;
         {
             StartUpJavelotTimeTimer += Time.deltaTime;
             TriggerJumpTimeTimer += Time.deltaTime;
@@ -128,30 +135,32 @@ public class IA_Valkyrie : MonoBehaviour
         
         if (TriggerJumpTimeTimer >= TriggerJumpTime) // Attaque saut
         {
-            JumpTimeTimer += Time.deltaTime;
             TriggerSaut();
+            JumpTimeTimer += Time.deltaTime;
         }
-        
-        if (JumpTimeTimer >= JumpTime)
+        if (JumpTimeTimer >= JumpTime) // Déplacement dans les airs
         {
-                TriggerJumpTimeTimer = 0;
-                hasShaked = false;
-                canvasLifeBar.SetActive(false);
-                foreach (SpriteRenderer sprite in spriteArray)
-                {
-                    sprite.enabled = false;
-                }
-                collider.enabled = false;
-                IndicationTimeTimer += Time.deltaTime;
-            
+            IndicationTimeTimer += Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position,
+                CharacterController.instance.transform.position, airTravelSpeed);
+            distanceWithPlayer = Vector2.Distance(CharacterController.instance.transform.position,transform.position);
+
         }
-        
-        if (IndicationTimeTimer >= IndicationTime)
+        if (!hasFallen && (IndicationTimeTimer > IndicationTime || distanceWithPlayer <= 2))
         {
-            indicatorAndFall();
-            FallTimeTimer += Time.deltaTime;
+            Debug.Log("hein?");
+            hasFallen = true;
+            var hitboxFall = Instantiate(indicationFall);
+            Destroy(hitboxFall, jumpSpeed);
+            transform.DOShakePosition(jumpSpeed).OnComplete(() => 
+            {
+                SpriteObj.transform.DOMove(SpriteObj.transform.position + Vector3.down * 100, jumpSpeed);
+            });
         }
-        
+
+
+
+
         if (StartUpJavelotTimeTimer >= StartUpJavelotTime) // Attaque javelot
         {
             attaqueJavelot();
@@ -163,45 +172,22 @@ public class IA_Valkyrie : MonoBehaviour
         
     }
 
-    void TriggerSaut()
+    #region Mouvement
+    void PickRandomPoint() 
     {
-        FallTimeTimer = 0;
-        hasFallen = false;
-        isAttacking = true;
-        ai.canMove = false;
-            
-        if (!hasShaked)
-        {
-            transform.DOShakePosition(1f, 1);
-            hasShaked = true;
-        }
-    }
-    void indicatorAndFall()
-    {
-        JumpTimeTimer = 0;
-        if (!hasFallen)
-        {
-            fallPos = player.transform.position;
-            hasFallen = true;
-            GameObject indicationObj = Instantiate(indicationFall, player.transform.position, Quaternion.identity);
-            Destroy(indicationObj,FallTime);
-        }
+        var point = Random.insideUnitCircle * radiusWondering;
+        point.x += ai.position.x;
+        point.y += ai.position.y;
         
-        if (FallTimeTimer >= FallTime)
+        if (Vector3.Distance(player.transform.position, point) !<= radiusWondering)
         {
-            IndicationTimeTimer = 0;
-            FallTimeTimer = 0;
-            transform.position = fallPos;
-            canvasLifeBar.SetActive(true);
-            foreach (SpriteRenderer sprite in spriteArray)
-            {
-                sprite.enabled = true;
-            }
-            collider.enabled = true;
-            StartCoroutine(LagFall());
-        }             
+            PickRandomPoint();
+        }
+        else
+        {
+            pointToGo = point;
+        }
     }
-    
     void deplacement()
     {
         if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath)
@@ -217,31 +203,64 @@ public class IA_Valkyrie : MonoBehaviour
             }
         }
     }
+    #endregion
+
+
+    #region Javelot
 
     void attaqueJavelot()
     {
         isAttacking = true;
+        anim.SetBool("isAttacking",true);
         StartUpJavelotTimeTimer = 0;
-        for (int i = 0; i < javelotsToSpawn[(int)currentState]; i++)
-        {
-            var projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
-            projJavelot.ia = this;
-            projJavelot.restingPos = restingPosList[i];
-            projJavelot.timeForAim += javelotInterval[(int)currentState] * i;
-
-        }
         transform.DOShakePosition(IndicJavelotTime,1).OnComplete(() =>
         {
-            StartUpJavelot();
+            for (int i = 0; i < javelotsToSpawn[(int)currentState]; i++)
+            {
+                var projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
+                projJavelot.ia = this;
+                projJavelot.restingPos = restingPosList[i];
+                projJavelot.timeForAim += javelotInterval[(int)currentState] * i;
+
+            }
+            isAttacking = false;
+            anim.SetBool("isAttacking",false);
         });
     }
-    
-  
-    void StartUpJavelot() // Au début de l'attaque du javelot
-    {
 
-        isAttacking = false;
-        isJavelotIndic = false;
+    #endregion
+    
+    #region Charge au sol
+    void TriggerSaut()
+    {
+        FallTimeTimer = 0;
+        hasFallen = false;
+        isAttacking = true;
+        ai.canMove = false;
+            
+        if (!hasShaked)
+        {
+            hasShaked = true;
+            anim.SetBool("isJumping",true);
+            for (int i = 0; i < javelotsToSpawn[(int)currentState] - 2; i++)
+            {
+                var projJavelot = Instantiate(projectilJavelot, transform.position, Quaternion.identity);
+                projJavelot.ia = this;
+                projJavelot.timeForAim += javelotInterval[(int)currentState] * i;
+                projJavelot.restingPos = restingPosList[i];
+                projJavelot.skyFall = true;
+            }
+            transform.DOShakePosition(1.1f,0.2f,50).OnComplete(() =>
+            {
+                activeOmbre = Instantiate(ombreObj, transform);
+                activeOmbre.transform.localScale = new Vector3(0.36f,0.36f,0.36f);
+                ombreObj.SetActive(false);
+                activeOmbre.transform.DOScale(Vector3.one * 0.2f, 0.5f);
+                SpriteObj.transform.DOScale(stretchAmount, 0.2f);
+                SpriteObj.transform.DOMove(SpriteObj.transform.position + Vector3.up * 100, jumpSpeed);
+                anim.SetBool("isJumping",false);
+            });
+        }
     }
 
     IEnumerator LagFall() // A la fin de l'attaque du saut
@@ -254,22 +273,11 @@ public class IA_Valkyrie : MonoBehaviour
         ai.canMove = true;
         IndicationTimeTimer = 0;
         isAttacking = false;
-    }    
-    void PickRandomPoint() 
-    {
-        var point = Random.insideUnitCircle * radiusWondering;
-        point.x += ai.position.x;
-        point.y += ai.position.y;
-        
-        if (Vector3.Distance((Vector3)player.transform.position, point) !<= radiusWondering)
-        {
-            PickRandomPoint();
-        }
-        else
-        {
-            pointToGo = point; 
-            return;
-        }
     }
+    
+    #endregion
+
+
+
 }
 

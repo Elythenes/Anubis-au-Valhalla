@@ -28,6 +28,7 @@ public class JavelotValkyrie : MonoBehaviour
     public float restingPosLatency;
     public GameObject indicationJavelot;
     public GameObject indicHolder;
+    public bool skyFall;
 
     private void Start()
     {
@@ -36,23 +37,40 @@ public class JavelotValkyrie : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (aimTimer < timeForAim)
+        if (!skyFall)
         {
-            aimTimer += Time.deltaTime;
-            MoveTowardsRestingPos();
-            if (aimTimer > 1f) AimAtPlayer();
+            if (aimTimer < timeForAim)
+            {
+                aimTimer += Time.deltaTime;
+                MoveTowardsRestingPos();
+                if (aimTimer > 1f) AimAtPlayer();
+            }
+            /*else if (indicTimer < timeForIndic)
+            {
+                indicTimer += Time.deltaTime;
+    
+            }*/
+            else if(!launching)
+            {
+                ShowIndicator();
+                launching = true;
+                indicHolder.transform.DOShakePosition(timeForLaunch, 0.5f, 30,0).OnComplete(Launch);
+                launchTimer += Time.deltaTime;
+            }
         }
-        /*else if (indicTimer < timeForIndic)
+        else
         {
-            indicTimer += Time.deltaTime;
+            AimAtPlayer();
+            if (aimTimer < 1.3f)
+            {
+                MoveTowardsRestingPos();
+                aimTimer += Time.deltaTime;
+            }
+            else
+            {
+                transform.DOMove(transform.position + Vector3.up * 100, ia.jumpSpeed);
+            }
 
-        }*/
-        else if(!launching)
-        {
-            ShowIndicator();
-            launching = true;
-            indicHolder.transform.DOShakePosition(timeForLaunch, 0.5f, 30,0).OnComplete(Launch);
-            launchTimer += Time.deltaTime;
         }
     }
 
@@ -63,6 +81,14 @@ public class JavelotValkyrie : MonoBehaviour
 
     void AimAtPlayer()
     {
+        if (skyFall)
+        {
+            dir = Vector2.up;
+            dir.Normalize();
+            angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.localRotation = Quaternion.RotateTowards(transform.localRotation,Quaternion.AngleAxis(angle, Vector3.forward), TurningSpeed/2);
+            return;
+        }
         dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,CharacterController.instance.transform.position.y - transform.position.y);
         dir.Normalize();
         angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

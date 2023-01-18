@@ -193,7 +193,6 @@ public class CharacterController : MonoBehaviour
 
     if (DamageManager.instance.isHurt && HurtOnce)
     {
-      Debug.Log("Hurt");
       audioSource.pitch = 1;
       audioSource.PlayOneShot(audioClipArray[5],0.8f);
       HurtOnce = false;

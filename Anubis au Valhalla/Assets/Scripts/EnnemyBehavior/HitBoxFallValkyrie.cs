@@ -6,11 +6,12 @@ using UnityEngine;
 public class HitBoxFallValkyrie : MonoBehaviour
 {
     public IA_Valkyrie ia;
+    public float expandSpeed;
 
     // Update is called once per frame
     void Update()
     {
-        transform.localScale += new Vector3(0.006f, 0.006f, 0);
+        transform.localScale += new Vector3(expandSpeed, expandSpeed, 0);
 
         if (ia == null)
         {
