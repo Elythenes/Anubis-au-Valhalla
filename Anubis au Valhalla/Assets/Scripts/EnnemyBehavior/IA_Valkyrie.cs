@@ -17,9 +17,13 @@ public class IA_Valkyrie : MonoBehaviour
     public GameObject emptyLayers;
     public MonsterLifeManager life;
     public SpriteRenderer[] spriteArray;
+    public float moveSpeed;
+    public float idleTimeMax;
+    public float idleTimeMin;
+    private float currentIdleTime;
 
 
-    [Header("Déplacements")]
+        [Header("Déplacements")]
     public GameObject player;
     public Seeker seeker;
     public AIPath aipath;
@@ -83,11 +87,11 @@ public class IA_Valkyrie : MonoBehaviour
     {
         puissanceAttaqueJavelot = GetComponentInParent<MonsterLifeManager>().data.damage;
         FallDamage = Mathf.RoundToInt(puissanceAttaqueJavelot * fallDamageMultiplier);
+
     }
     
     private void Start()
     {
-        StartUpJavelotTime = Random.Range(5, 9);
         TriggerJumpTime = Random.Range(8, 13);
         spriteArray = GetComponentsInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -97,6 +101,8 @@ public class IA_Valkyrie : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
+        Debug.Log(ai.maxSpeed);
+        ai.maxSpeed = moveSpeed;
     }
 
     void UpdateCurrentState()
@@ -150,23 +156,6 @@ public class IA_Valkyrie : MonoBehaviour
         {
             attaqueJavelot();
         }
-
-        /*if (isJavelotIndic)
-        {
-            IndicJavelotTimeTimer += Time.deltaTime;
-            if (indicHolder is not null)
-            {
-                Debug.Log("ouiqdqdd");
-                indicHolder.GetComponent<SpriteRenderer>().color = gradientIndic.Evaluate(IndicJavelotTimeTimer);
-            }
-            
-            if (IndicJavelotTimeTimer >= IndicJavelotTime)
-            {
-                StartUpJavelot();
-                IndicJavelotTimeTimer = 0;
-            }
-        }*/
-        
         if (!isFleeing&& !life.isMomified) // Déplacements
         {
             deplacement();
@@ -215,12 +204,17 @@ public class IA_Valkyrie : MonoBehaviour
     
     void deplacement()
     {
-        if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath) 
+        if (!ai.pathPending && ai.reachedEndOfPath || !ai.hasPath)
         {
-            playerFollow.enabled = false;
-            PickRandomPoint();
-            ai.destination = pointToGo;
-            ai.SearchPath();
+            currentIdleTime -= Time.deltaTime;
+            if (currentIdleTime < 0)
+            {
+                currentIdleTime = idleTimeMin;
+                playerFollow.enabled = false;
+                PickRandomPoint();
+                ai.destination = pointToGo;
+                ai.SearchPath();
+            }
         }
     }
 

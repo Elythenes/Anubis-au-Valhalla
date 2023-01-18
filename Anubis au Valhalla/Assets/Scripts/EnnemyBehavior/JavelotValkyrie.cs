@@ -51,7 +51,7 @@ public class JavelotValkyrie : MonoBehaviour
         {
             ShowIndicator();
             launching = true;
-            transform.DOShakePosition(timeForLaunch, 0.5f, 30).OnComplete(Launch);
+            indicHolder.transform.DOShakePosition(timeForLaunch, 0.5f, 30,0).OnComplete(Launch);
             launchTimer += Time.deltaTime;
         }
     }
@@ -72,8 +72,8 @@ public class JavelotValkyrie : MonoBehaviour
     void ShowIndicator()
     {
         if (showingIndic)return;
-        GameObject indic = Instantiate(indicationJavelot,transform.position,  transform.localRotation);
-        Destroy(indic,timeForLaunch + 0.1f);
+        indicationJavelot.SetActive(true);
+        Destroy(indicationJavelot,timeForLaunch + 0.1f);
         showingIndic = true;
     }
 
