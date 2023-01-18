@@ -80,7 +80,7 @@ public class PotDeVie : MonoBehaviour
         }
         if (canInteract)
         {
-            if (Input.GetKeyDown(KeyCode.F)&& AnubisCurrentStats.instance.vieActuelle != AnubisCurrentStats.instance.vieMax )
+            if (Input.GetKeyDown(KeyCode.F)&& AnubisCurrentStats.instance.vieActuelle < AnubisCurrentStats.instance.vieMax )
             {
                 switch (currentType)
                 {

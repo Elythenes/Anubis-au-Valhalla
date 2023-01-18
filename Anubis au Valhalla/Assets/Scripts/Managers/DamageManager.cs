@@ -100,7 +100,7 @@ public class DamageManager : MonoBehaviour
                 angle.Normalize();
                 CharacterController.instance.rb.AddForce(angle * (damage * knockbackAmount), ForceMode2D.Impulse);
                 StartCoroutine(RedScreenStart(timeRedScreen));
-                HitStop(timeHitStop,false);
+                //HitStop(timeHitStop,false);
                 stats.vieActuelle -= (damage - damage * damageReduction/100);  
                 PotionManager.Instance.tookDamage = true;
                 GameObject textObj = Instantiate(textDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);

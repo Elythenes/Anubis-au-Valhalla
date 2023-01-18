@@ -1,8 +1,10 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
@@ -11,7 +13,8 @@ public class UiManager : MonoBehaviour
     public GameObject anubis;
 
     public static UiManager instance; //singleton
-    
+    public EventSystem eventSystem;
+    public Button boutonSmash;
     public bool isSousMenu;
 
     [Foldout("GENERAL")] public GameObject spriteSpell1;
@@ -340,6 +343,17 @@ public class UiManager : MonoBehaviour
         isSousMenu = true;
     }
 
+    public void SelectSmashButton()
+    {
+        StartCoroutine(SelectContinueButtonLater());
+    }
+    
+    IEnumerator SelectContinueButtonLater()
+    {
+        yield return null;
+        eventSystem.SetSelectedGameObject(null);
+        eventSystem.SetSelectedGameObject(boutonSmash.gameObject);
+    }
 
     //Fonctions autres ***********************************************************************************************************************************************************************************
 

@@ -319,13 +319,16 @@ public class UiPowerManager : MonoBehaviour
             case 1:
                 isPower1 = true;
                 isPower2 = false;
-                boxPowerTitre.SetText("Pouvoir Âmalediction");
+                boxPowerTitre.SetText("Malédiction Spirituelle");
+                boxPowerDescription.SetText("Utilise le pouvoir des âmes pour maudire les ennemis.");
                 break;
             
             case 2:
                 isPower1 = false;
                 isPower2 = true;
-                boxPowerTitre.SetText("Pouvoir Sablandage");
+                boxPowerTitre.SetText("Plaie d'Égypte");
+                boxPowerDescription.SetText("Anéantis les adversaires avec la force du désert et de l'embaumement.");
+
                 break;
         }
     }

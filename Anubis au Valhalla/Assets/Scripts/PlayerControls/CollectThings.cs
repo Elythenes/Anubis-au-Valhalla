@@ -44,8 +44,9 @@ public class CollectThings : MonoBehaviour
         {
             if (isPowerCollectable)
             {
-                UiThotManager.Instance.MoveIn = true;
                 UiManager.instance.CollectPower(collectablePower);
+                UINewGlyphManager.instance.gameObject.SetActive(true);
+                UINewGlyphManager.instance.NewPower();
                 collectablePower.SetActive(false);
                 audioSource.pitch = 1;
                 audioSource.PlayOneShot(audioClipArray[0],2);

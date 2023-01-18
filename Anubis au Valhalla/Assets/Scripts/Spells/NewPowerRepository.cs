@@ -43,12 +43,10 @@ public class NewPowerRepository : MonoBehaviour
             if (range == 0)
             {
                 newPowerType = NewPowerType.Power1;
-                UiThotManager.Instance.generalAmorce = "Power des Ames Amélioré \n";
             }
             else
             {
                 newPowerType = NewPowerType.Power2;
-                UiThotManager.Instance.generalAmorce = "Power du Sable Amélioré \n";
             }
         }
         
