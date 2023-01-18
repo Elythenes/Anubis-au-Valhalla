@@ -125,12 +125,12 @@ public class CharacterController : MonoBehaviour
 
   private void Update()
   {
-    if (!isHub)
+    /*if (!isHub)  // A réactiver pour un pathfinding qui s'update en temps réel
     {
       var guo = new GraphUpdateObject(collisionPathfinding.bounds);
       guo.updatePhysics = true;
       AstarPath.active.UpdateGraphs (guo);
-    }
+    }*/
     
     if (Time.timeScale != 0)
     {

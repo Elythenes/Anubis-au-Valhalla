@@ -24,7 +24,7 @@ public class SoulBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         playerPos = CharacterController.instance.transform.position;
         Vector3 dir = playerPos - transform.position;
@@ -43,7 +43,7 @@ public class SoulBehavior : MonoBehaviour
                 PoofAway(dirNormalised);
                 haspoofed = true;
             }
-            if (Vector3.Distance(playerPos, transform.position) >= 4)
+            if (Vector3.Distance(playerPos, transform.position) >= 5)
             {
                 rb.AddForce(dirNormalised + dirNormalised * (force * deceleration * (1/Vector2.Distance(transform.position,playerPos))),ForceMode2D.Force);
             }
