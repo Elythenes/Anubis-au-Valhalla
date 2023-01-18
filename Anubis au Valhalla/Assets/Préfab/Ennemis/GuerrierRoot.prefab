@@ -188,6 +188,9 @@ MonoBehaviour:
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 2377570479194186109}
   emptyLayers: {fileID: 1296937079694720217}
+  isSmashInvinsible: 0
+  isSmashInvinsibleTime: 0.5
+  isSmashInvinsibleTimer: 0
   FlameInfected: 0
   FlameInfectedTimer: 0
   FlameInfectedTimerMax: 2.5
@@ -343,8 +346,8 @@ MonoBehaviour:
   isElite: 0
   life: {fileID: 1296807130581861709}
   isDead: 0
-  speedX: 100
-  speedY: 100
+  speedX: 150
+  speedY: 150
   radiusWondering: 5
   pointToWonder: {x: 0, y: 0}
   player: {fileID: 0}
@@ -489,7 +492,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 2
+  m_LinearDrag: 0.3
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

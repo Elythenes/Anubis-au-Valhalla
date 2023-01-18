@@ -62,7 +62,7 @@ public class ChestBehaviour : MonoBehaviour
     
     private void OnTriggerExit2D(Collider2D other) //c'est du Debug, ne sert pas vraiment
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && isOpened == false)
         {
             canvasGné.enabled = false;
             //CanvasInteraction.SetActive(false);

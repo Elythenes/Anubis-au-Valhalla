@@ -55,13 +55,14 @@ public class Combo3 : MonoBehaviour
     {
         if (col.CompareTag("Monstre"))
         {
+         
             float angle = Mathf.Atan2(transform.position.y - col.transform.position.y,transform.position.x - col.transform.position.x ) * Mathf.Rad2Deg;
-            if (col.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
+            if (col.GetComponentInParent<MonsterLifeManager>().isInvincible == false && col.GetComponentInParent<MonsterLifeManager>().isSmashInvinsible == false)
             {
                 GameObject effetSang = Instantiate(bloodEffect, col.transform.position, Quaternion.identity);
                 effetSang.transform.rotation = Quaternion.Euler(0,0,angle);
                 col.gameObject.GetComponentInParent<MonsterLifeManager>()
-                    .TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
+                    .TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), 0);
             }
             Vector3 angleKnockback = col.transform.position - transform.position;
             Vector3 angleNormalized = angleKnockback.normalized;
@@ -85,6 +86,7 @@ public class Combo3 : MonoBehaviour
                 col.gameObject.GetComponent<Rigidbody2D>().AddForce(
                     angleNormalized * AttaquesNormales.instance.forceKnockback[comboNumber], ForceMode2D.Impulse);
             }
+            col.gameObject.GetComponentInParent<MonsterLifeManager>().isSmashInvinsible = true;
         }
     }
 

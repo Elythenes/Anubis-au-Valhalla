@@ -56,7 +56,7 @@ public class Combo1Hitbox : MonoBehaviour
         if (col.CompareTag("Monstre"))
         {
             
-            if (CharacterController.instance.isHiting == false && col.gameObject.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
+            if (/*CharacterController.instance.isHiting == false &&*/ col.gameObject.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
             {
                 CharacterController.instance.isHiting = true; 
             }

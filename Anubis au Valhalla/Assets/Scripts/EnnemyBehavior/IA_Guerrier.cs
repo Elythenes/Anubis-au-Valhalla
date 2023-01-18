@@ -14,6 +14,7 @@ public class IA_Guerrier : MonoBehaviour
     public bool isElite;
     public MonsterLifeManager life;
     public bool isDead;
+    public Tween shake;
 
     [Header("Déplacements")] 
     public float speedX;
@@ -198,7 +199,7 @@ public class IA_Guerrier : MonoBehaviour
 
         if (!hasShaked&& !life.isMomified)
         {
-            transform.DOShakePosition(0.2f, 0.3f);
+            shake = transform.DOShakePosition(0.2f, 0.3f);
             hasShaked = true;
         }
         
@@ -282,5 +283,10 @@ public class IA_Guerrier : MonoBehaviour
             point.x += ai.position.x;
             point.y += ai.position.y;
             return point;
+    }
+
+    public void StopShake()
+    {
+        shake.Kill();
     }
 }

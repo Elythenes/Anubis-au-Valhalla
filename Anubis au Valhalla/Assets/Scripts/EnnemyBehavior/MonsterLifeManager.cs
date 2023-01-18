@@ -41,6 +41,9 @@ public class MonsterLifeManager : MonoBehaviour
     public GameObject emptyLayers;
 
     [Header("Alterations d'état")] 
+    public bool isSmashInvinsible;
+    public float isSmashInvinsibleTime;
+    public float isSmashInvinsibleTimer;
     public bool FlameInfected;
     public float FlameInfectedTimer;
     public float FlameInfectedTimerMax;
@@ -132,7 +135,15 @@ public class MonsterLifeManager : MonoBehaviour
             }
         }
 
-       
+        if (isSmashInvinsible)
+        {
+            isSmashInvinsibleTimer += Time.deltaTime;
+            if (isSmashInvinsibleTimer >= isSmashInvinsibleTime)
+            {
+                isSmashInvinsibleTimer = 0;
+                isSmashInvinsible = false;
+            }
+        }
 
         if (isEnvased)
         {
@@ -202,6 +213,11 @@ public class MonsterLifeManager : MonoBehaviour
 
     public virtual void TakeDamage(int damage, float staggerDuration)
     {
+        if (IAGuerrier is not null)
+        {
+            IAGuerrier.StopShake();
+
+        }
         if (!isInvincible)
         {
             criticalPick = Random.Range(0,100);
