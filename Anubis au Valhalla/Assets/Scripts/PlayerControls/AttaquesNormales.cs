@@ -481,7 +481,23 @@ public class AttaquesNormales : MonoBehaviour
         stunDuration[2] = 0;
         CharacterController.instance.isAttacking = true;
         CharacterController.instance.rb.AddForce(moveDirection2 * dashImpulse[3], ForceMode2D.Impulse);
-        GameObject thrustObj = Instantiate(thrust, charaPos, Quaternion.AngleAxis(angle2, Vector3.forward));
+        GameObject thrustObj = Instantiate(thrust, charaPos, Quaternion.identity);
+        if (angle2 < 45 && angle2 > -45) // gauche
+        {
+            thrustObj.transform.rotation = Quaternion.Euler(0,0,0);
+        }
+        else if(angle2 > 135 && angle2 < 180 || angle2 > -180 && angle2 < -135) // droite
+        {
+            thrustObj.transform.rotation = Quaternion.Euler(0,0,180);
+        }
+        else if (angle2 > 45 && angle2 < 135) // haut
+        {
+            thrustObj.transform.rotation = Quaternion.Euler(0,0,90);
+        }
+        else if (angle2 > -135 && angle2 < -45) // bas
+        {
+            thrustObj.transform.rotation = Quaternion.Euler(0,0,-90);
+        }
     }
 
     /*IEnumerator ResetState()
