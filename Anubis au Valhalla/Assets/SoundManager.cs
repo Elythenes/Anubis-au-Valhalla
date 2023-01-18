@@ -76,6 +76,7 @@ public class SoundManager : MonoBehaviour
         }
         
     }
+    
 
     public void PlayMainMenu()
     {

@@ -44,6 +44,11 @@ public class UIMenuShop : MonoBehaviour
     {
         audioSource.PlayOneShot(audioClipArray[0]);
     }
+    
+    public void PlayButtonSound()
+    {
+        audioSource.PlayOneShot(audioClipArray[1]);
+    }
 
     public void MoveOutAll()
     {
