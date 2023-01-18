@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18d63abdff74c0418f7e556b9b351b9, type: 3}
+  m_Name: Pouvoir Foudre LVL3
+  m_EditorClassIdentifier: 
+  type: 8
+  nom: Pouvoir Foudre LVL3
+  spellIndex: 14
+  description: "Conf\xE8re \xE0 Anubis des pouvoir tr\xE8s rapides infl\xE9geant
+    des d\xE9gats aux ennemis en zone."
+  citation: "\"La foudre est l'\xE9l\xE9ment de puissance pure\""
+  sprite: {fileID: 2800000, guid: aa0da7a1c78fd5a48929be94037c3616, type: 3}
+  canCast: 1
+  duration: 10
+  hitboxAttaqueNormale: {fileID: 2070572112627775315, guid: 8f1761c5cb5e3064aa1ca0ca338dc30a, type: 3}
+  hitboxThrust: {fileID: 4344678159390435016, guid: 65e474466735929448ab47e3b27fc95f, type: 3}
+  hitboxDash: {fileID: 2052899350185052313, guid: f0d0c98eeb866594a9e8ae7f874c9ff8, type: 3}
+  stagger: 0
+  attaqueNormaleDamage: 7
+  attaqueNormaleDuration: 10
+  attaqueNormaleScale: {x: 5, y: 5, z: 0}
+  nombreOfDot: 8
+  espacementDoT: 0.2
+  staggerDash: 5
+  dashSpawnRate: 0.1
+  dashPuissanceAttaque: 15
+  thrustDamage: 20
+  bulletSpeed: 12
+  bulletDuration: 6
+  bulletScale: {x: 2.5, y: 2.5, z: 0}
+  maxBounce: 15

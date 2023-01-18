@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7589ce3bd74f35a48b69638d54ee343d, type: 3}
+  m_Name: Pouvoir Eau LVL1
+  m_EditorClassIdentifier: 
+  type: 7
+  nom: Pouvoir eau LVL1
+  spellIndex: 13
+  description: "Donne des propori\xE9t\xE9s aux attaques d'Anubis qui rendent des
+    PV. Certaines capacit\xE9s feront plus de d\xE9gats plus Anubis n'as de vie."
+  citation: "\"L'eau est la source de vie du d\xE9sert\""
+  sprite: {fileID: 2800000, guid: b42e1b89403ac444eb780ea7fb32e1fa, type: 3}
+  canCast: 1
+  duration: 5
+  hitboxAttaqueNormale: {fileID: 6665802142371134018, guid: 29d1e4087dc1c0445b1237fd4e7a53d2, type: 3}
+  hitboxThrust: {fileID: 2563157444610368081, guid: c1dbb12e5d249234fa583c00f57c4a79, type: 3}
+  hitboxDash: {fileID: 5960957066020024626, guid: 838ca50d4cefc0446ad0d51ec24df0e6, type: 3}
+  dammageWave: 5
+  durationDamageScale: 5
+  durationWave: 3
+  maxScaleWave: {x: 0.5, y: 0.5, z: 0}
+  nbOfDotRayon: 5
+  espacementDoTRayon: 0.2
+  staggerRayon: 0.2
+  rayonDamage: 2
+  rayonScale: {x: 0, y: 3, z: 0}
+  thrustDamage: 15
+  bulletSpeed: 5
+  bulletDuration: 2.5
+  bulletHeal: 5
+  staggerThrust: 0.3
+  bulletScale: {x: 1.5, y: 1.5, z: 0}

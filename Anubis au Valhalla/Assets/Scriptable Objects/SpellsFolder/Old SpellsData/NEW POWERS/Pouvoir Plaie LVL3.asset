@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b5342874c5b584494bb1d0aa6cc690, type: 3}
+  m_Name: Pouvoir Plaie LVL3
+  m_EditorClassIdentifier: 
+  type: 6
+  nom: Povoir Plaie LVL3
+  spellIndex: 12
+  description: "Donne des propori\xE9t\xE9s aux attaques d'Anubis qui ralentissent
+    ou entravent les ennemis."
+  citation: "\"Le sable du d\xE9sert absorbe l'energie avec sa chaleur\""
+  sprite: {fileID: 2800000, guid: bc48568a2c219c84291e5978a869aea2, type: 3}
+  canCast: 1
+  duration: 11
+  hitboxAttaqueNormale: {fileID: 1583822756971804013, guid: e24a3ff879d400c42b0d87daf3bf89a8, type: 3}
+  hitboxThrust: {fileID: 5229445006829840168, guid: da8b333136ca2974194d9e0796f4b9b5, type: 3}
+  hitboxDash: {fileID: 555738509962139763, guid: 17cd86a347ece3f40b8711ffc097eb25, type: 3}
+  damageAttaqueNormale: 20
+  durationAttaqueNormale: 5
+  durationStunAttaqueNormale: 3.5
+  staggerAttaqueNormale: 0.1
+  dashHitboxDuration: 10
+  dashSpawnRate: 0.01
+  thrustDamage: 15
+  bulletSpeed: 7
+  bulletDuration: 3
+  nuberOfBullets: 3
+  staggerThrust: 0
+  dureeMomification: 5
+  bulletScale: {x: 3, y: 1.5, z: 0}
