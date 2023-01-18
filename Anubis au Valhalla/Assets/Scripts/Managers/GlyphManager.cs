@@ -39,8 +39,15 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Enter Room")] public bool enterNewRoom;
     [ShowIf("showBools")] [BoxGroup("Enter Room")] public int doRegenOnEnterValue;
     
-    [ShowIf("showBools")] [BoxGroup("Other")] public float healBoost;
+    [ShowIf("showBools")] [BoxGroup("Bool")] public bool getHeal;
+    [ShowIf("showBools")] [BoxGroup("Other")] public float bonusCritNeithGlyph;
+    [ShowIf("showBools")] [BoxGroup("Other")] public bool didAttack;
+    [ShowIf("showBools")] [BoxGroup("Other")] public bool hadHeal;
     
+    [ShowIf("showBools")] [BoxGroup("Other")] public float healBoost;
+    [ShowIf("showBools")] [BoxGroup("Other")] public float criticalBoost;
+    [ShowIf("showBools")] [BoxGroup("Other")] public bool doCrit;
+    [ShowIf("showBools")] [BoxGroup("Other")] public int doCritHealValue;
 
     //Fonctions Système ************************************************************************************************
     
@@ -90,7 +97,14 @@ public class GlyphManager : MonoBehaviour
         enterNewRoom = false;
         doRegenOnEnterValue = 0;
 
+        getHeal = false;
+        bonusCritNeithGlyph = 0;
+        didAttack = false;
+
         healBoost = 0;
+        criticalBoost = 2;
+        doCrit = false;
+        doCritHealValue = 0;
     }
     
     
@@ -332,6 +346,10 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
+            case 130:
+                bonusCritNeithGlyph = hiero.boolValue;
+                break;
+            
             case 251:
             case 252:
             case 253:
@@ -344,6 +362,18 @@ public class GlyphManager : MonoBehaviour
     {
         switch (hiero.index)
         {
+            case 124:
+            case 125:
+            case 126:
+                criticalBoost += hiero.otherValue;
+                break;
+            
+            case 127:
+            case 128:
+            case 129:
+                doCritHealValue += Mathf.RoundToInt(hiero.otherValue);
+                break;
+            
             case 295:
             case 296:
             case 297:
@@ -358,6 +388,16 @@ public class GlyphManager : MonoBehaviour
         {
             switch (hiero.index)
             {
+                case 127:
+                case 128:
+                case 129:
+                    HealWhenCrit();
+                    break;
+                
+                case 130:
+                    CritBoostWhenHeal();
+                    break;
+                
                 case 135: 
                 case 136:
                 case 137: 
@@ -612,9 +652,33 @@ public class GlyphManager : MonoBehaviour
         }
         AnubisCurrentStats.instance.criticalRate -= dodgeCritValue;
     }
-    
-    
-    
+
+    void HealWhenCrit() //127,128,129,
+    {
+        if (doCrit)
+        {
+            doCrit = false;
+            DamageManager.instance.Heal(doCritHealValue);
+        }
+    }
+
+    void CritBoostWhenHeal()
+    {
+        if (getHeal)
+        {
+            getHeal = false;
+            hadHeal = true;
+            AnubisCurrentStats.instance.criticalRate *= Mathf.RoundToInt(bonusCritNeithGlyph);
+        }
+
+        if (didAttack && hadHeal)
+        {
+            didAttack = false;
+            hadHeal = false;
+            AnubisCurrentStats.instance.criticalRate /= Mathf.RoundToInt(bonusCritNeithGlyph);
+        }
+        
+    }
     
     
     

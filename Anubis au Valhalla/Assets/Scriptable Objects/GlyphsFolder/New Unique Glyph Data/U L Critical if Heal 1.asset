@@ -10,32 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef86e0de87d28c040b0645b7b0fd60f8, type: 3}
-  m_Name: L Crit. Chance 1
+  m_Name: U L Critical if Heal 1
   m_EditorClassIdentifier: 
-  nom: "Chance l\xE9thale"
-  description: "Augmente les chances d'infliger un coup critique (d\xE9g\xE2ts +100%)
-    sur toutes les attaques au Ziouf (Combo et Estoc). Valeur : +5%"
+  nom: Chance de Neith
+  description: "Se soigner double les chances de coups critiques (d\xE9g\xE2ts +100%)
+    pour la prochaine attaque. "
   partie: 0
-  index: 118
-  rarity: 1
-  unique: 0
-  rare: 0
-  price: 100
-  icone: {fileID: 2800000, guid: 133be4ce0a242fb428cb09e53c80147a, type: 3}
-  isBasicStatUp: 1
+  index: 130
+  rarity: 3
+  unique: 1
+  rare: 3
+  price: 0
+  icone: {fileID: 2800000, guid: a9fa02cdd2d760c43a0e69ba0fa49dab, type: 3}
+  isBasicStatUp: 0
   isSituationalStatUp: 0
   isSpecialStatUp: 0
   isAdditionalEffect: 0
   isTriggerEffect: 0
   isChargeBased: 0
   isTimeBased: 0
-  isBoolEffect: 0
+  isBoolEffect: 1
   isOther: 0
-  anubisStat: 12
+  anubisStat: 14
   bonusBasicStat: 5
   otherStat: 14
   otherBonusBasicStat: 0
-  situationalStat: 13
+  situationalStat: 14
   bonusSituationalStat: 0
   dependsOnSoulCount: 0
   specialStat: 11
@@ -44,7 +44,7 @@ MonoBehaviour:
   specialAdditionalValue: 0
   triggerMove: 9
   revokeTrigger: 
-  triggerStat: 13
+  triggerStat: 14
   additionalDamage: 0
   specialTriggerEffect: 11
   specialTriggerValue: 0
@@ -52,8 +52,8 @@ MonoBehaviour:
   chargeNumber: 10
   timeType: 2
   periodicTimeValue: 0
-  startsActive: 1
-  boolTrigger: 
-  boolValue: 0
-  revokeBool: 
+  startsActive: 0
+  boolTrigger: se soigner
+  boolValue: 2
+  revokeBool: attaquer
   otherValue: 0
