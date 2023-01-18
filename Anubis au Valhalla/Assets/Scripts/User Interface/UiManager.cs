@@ -77,7 +77,11 @@ public class UiManager : MonoBehaviour
 
         //spriteSpell1.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
         //spriteSpell2.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
-        spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+        if (!PotionManager.Instance.isPotionSlotFill)
+        {
+            spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+        }
+        
     }
 
     private void Start()
@@ -251,6 +255,7 @@ public class UiManager : MonoBehaviour
     {
         PotionManager.Instance.isPotionSlotFill = true;
         spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        Debug.Log("oui");
         spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 1);
     }
 
