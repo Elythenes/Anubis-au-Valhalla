@@ -95,12 +95,7 @@ public class CharacterController : MonoBehaviour
     TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
     CanvasInteractionCanvas = CanvasInteraction.GetComponent<Canvas>();
 
-    if (!isHub)
-    {
-      var guo = new GraphUpdateObject(collisionPathfinding.bounds);
-      guo.updatePhysics = true;
-      AstarPath.active.UpdateGraphs (guo);
-    }
+   
   }
 
   private void OnEnable()
@@ -130,6 +125,13 @@ public class CharacterController : MonoBehaviour
 
   private void Update()
   {
+    if (!isHub)
+    {
+      var guo = new GraphUpdateObject(collisionPathfinding.bounds);
+      guo.updatePhysics = true;
+      AstarPath.active.UpdateGraphs (guo);
+    }
+    
     if (Time.timeScale != 0)
     {
       Flip();
