@@ -151,9 +151,9 @@ public class DamageManager : MonoBehaviour
             stats.vieActuelle += Mathf.RoundToInt(healAmount + healAmount * GlyphManager.Instance.healBoost);
             GameObject textHealObj = Instantiate(textHealDamage, new Vector3(transform.position.x,transform.position.y + 1,-5), Quaternion.identity);
             textHealObj.GetComponentInChildren<TextMeshPro>().SetText((Mathf.RoundToInt(healAmount + healAmount * GlyphManager.Instance.healBoost)).ToString());
-            if (stats.vieActuelle >= 100)
+            if (stats.vieActuelle >= stats.vieMax)
             {
-                stats.vieActuelle = 100;
+                stats.vieActuelle = stats.vieMax;
             }
         }
     }

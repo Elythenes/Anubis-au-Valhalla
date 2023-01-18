@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.VFX;
 
 public class AttaquesNormales : MonoBehaviour
 {
@@ -51,7 +52,11 @@ public class AttaquesNormales : MonoBehaviour
     public bool buffer;
     public bool buffer2;
     public GameObject swordObj;
+    public List<VisualEffect> VFXobj;
+    public GameObject VFXparent;
     public GameObject thrust;
+    private float scaleYVFX1;
+    private float scaleYVFX2;
     
     private void Awake()
     {
@@ -396,9 +401,61 @@ public class AttaquesNormales : MonoBehaviour
 
         swordObj = Instantiate(hitBoxC[index], new Vector3(999,99,0),Quaternion.identity);
         swordObj.transform.position = CharacterController.instance.transform.position;
-        if (index == 0 || index == 1)
+        if (index == 0)
         {
             swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+            VFXobj[index].gameObject.SetActive(true);
+            VFXobj[index].Play();
+            VFXparent.transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
+            if (angle < 90 && angle > -90) // vers la droite
+            {
+              
+              scaleYVFX1 = VFXobj[0].transform.localScale.y;
+              if (scaleYVFX1 < 0)
+              {
+                  VFXobj[0].transform.localScale = new Vector3(VFXobj[0].transform.localScale.x , -scaleYVFX1, VFXobj[0].transform.localScale.z );
+                 
+              }
+              scaleYVFX1 = VFXobj[0].transform.localScale.y;      
+            }
+            else  if (angle > 90 && angle < 180 || angle < -90 && angle > -180) // vers la gauche
+            {
+                scaleYVFX1 = VFXobj[0].transform.localScale.y;
+                if (scaleYVFX1 > 0)
+                {
+                    VFXobj[0].transform.localScale = new Vector3(VFXobj[0].transform.localScale.x , -scaleYVFX1, VFXobj[0].transform.localScale.z );
+                 
+                }
+                scaleYVFX1 = VFXobj[0].transform.localScale.y;      
+            }
+        }
+        
+        if (index == 1)
+        {
+            swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
+            VFXobj[index].gameObject.SetActive(true);
+            VFXobj[index].Play();
+            VFXparent.transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
+            if (angle < 90 && angle > -90) // vers la droite
+            {
+                scaleYVFX2 = VFXobj[1].transform.localScale.y;
+                if (scaleYVFX2 < 0)
+                {
+                    VFXobj[1].transform.localScale = new Vector3(VFXobj[1].transform.localScale.x , -scaleYVFX2, VFXobj[1].transform.localScale.z );
+                 
+                }
+                scaleYVFX2 = VFXobj[1].transform.localScale.y;      
+            }
+            else  if (angle > 90 && angle < 180 || angle < -90 && angle > -180) // vers la gauche
+            {
+                scaleYVFX2 = VFXobj[1].transform.localScale.y;
+                if (scaleYVFX2 > 0)
+                {
+                    VFXobj[1].transform.localScale = new Vector3(VFXobj[1].transform.localScale.x , -scaleYVFX2, VFXobj[1].transform.localScale.z );
+                 
+                }
+                scaleYVFX2 = VFXobj[1].transform.localScale.y;      
+            }
         }
 
         if (index == 2)
@@ -482,21 +539,27 @@ public class AttaquesNormales : MonoBehaviour
         CharacterController.instance.isAttacking = true;
         CharacterController.instance.rb.AddForce(moveDirection2 * dashImpulse[3], ForceMode2D.Impulse);
         GameObject thrustObj = Instantiate(thrust, charaPos, Quaternion.identity);
+        VFXobj[2].gameObject.SetActive(true);
+        VFXobj[2].Play();
         if (angle2 < 45 && angle2 > -45) // gauche
         {
             thrustObj.transform.rotation = Quaternion.Euler(0,0,0);
+            VFXobj[2].transform.rotation = Quaternion.Euler(0,0,0);
         }
         else if(angle2 > 135 && angle2 < 180 || angle2 > -180 && angle2 < -135) // droite
         {
             thrustObj.transform.rotation = Quaternion.Euler(0,0,180);
+            VFXobj[2].transform.rotation = Quaternion.Euler(0,0,180);
         }
         else if (angle2 > 45 && angle2 < 135) // haut
         {
             thrustObj.transform.rotation = Quaternion.Euler(0,0,90);
+            VFXobj[2].transform.rotation = Quaternion.Euler(0,0,90);
         }
         else if (angle2 > -135 && angle2 < -45) // bas
         {
             thrustObj.transform.rotation = Quaternion.Euler(0,0,-90);
+            VFXobj[2].transform.rotation = Quaternion.Euler(0,0,-90);
         }
     }
 
