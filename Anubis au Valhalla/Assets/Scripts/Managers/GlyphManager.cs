@@ -32,6 +32,7 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dodgeCritValue;
 
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public GameObject currentRoom;
+    [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public bool doDetectEnemies;
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public bool stillEnemies;
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public int takeDamageInflictValue;
     [ShowIf("showBools")] [BoxGroup("Target all current Enemies")] public float takeDamageStaggerTime;
@@ -69,7 +70,7 @@ public class GlyphManager : MonoBehaviour
     void Update()
     {
         UpdateGlyph();
-        if (!isTuto)
+        if (!isTuto && doDetectEnemies)
         {
             DetectEnemies();
         }
@@ -90,7 +91,8 @@ public class GlyphManager : MonoBehaviour
         dodgeInflictValue = 0;
         dodgeStaggerTime = 0;
         dodgeCritValue = 0;
-        
+
+        doDetectEnemies = false;
         takeDamageInflictValue = 0;
         takeDamageStaggerTime = 0f;
 
@@ -268,10 +270,12 @@ public class GlyphManager : MonoBehaviour
             case 212:
             case 213:
             case 214 :
+                doDetectEnemies = true;
                 takeDamageInflictValue += Mathf.RoundToInt(hiero.specialTriggerValue);
                 break;
             
             case 215:
+                doDetectEnemies = true;
                 takeDamageStaggerTime = hiero.specialTriggerValue;
                 break;
 
@@ -309,10 +313,12 @@ public class GlyphManager : MonoBehaviour
             case 343:
             case 344:
             case 345:
+                doDetectEnemies = true;
                 dodgeInflictValue += Mathf.RoundToInt(hiero.specialTriggerValue);
                 break;
 
             case 346:
+                doDetectEnemies = true;
                 dodgeStaggerTime = hiero.specialTriggerValue;
                 break;
             
