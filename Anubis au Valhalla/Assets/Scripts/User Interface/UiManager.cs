@@ -155,7 +155,8 @@ public class UiManager : MonoBehaviour
         for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
         {
             listBoxInventaire[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
-            listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Button>().enabled = true;
+            listBoxInventaire[i].GetComponent<Button>().enabled = true;
+            Debug.Log(i);
         }
 
         if (GlyphInventory.Instance.glyphInventory.Count < listBoxInventaire.Count)
