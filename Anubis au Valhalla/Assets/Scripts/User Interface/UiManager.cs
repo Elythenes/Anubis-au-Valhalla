@@ -40,12 +40,6 @@ public class UiManager : MonoBehaviour
     [Foldout("PAUSE MENU")] public GameObject menuPause;
     [Foldout("PAUSE MENU")] public KeyCode buttonPause;
     [Foldout("PAUSE MENU")] public bool isPause;
-    [Foldout("PAUSE MENU")] public GameObject buttonResume;
-    [Foldout("PAUSE MENU")] public GameObject buttonRerun;
-    [Foldout("PAUSE MENU")] public GameObject buttonReturnToHub;
-    [Foldout("PAUSE MENU")] public GameObject buttonCheatMenu;
-    [Foldout("PAUSE MENU")] public GameObject buttonOptions;
-    [Foldout("PAUSE MENU")] public GameObject buttonQuit;
 
     [Foldout("INVENTORY")] public List<GameObject> listBoxInventaire;
     [Foldout("INVENTORY")] public List<GameObject> listBoxInventaireIcone;
@@ -67,10 +61,10 @@ public class UiManager : MonoBehaviour
     [Foldout("INVENTORY")] public GameObject boxPotionTitre;
     [Foldout("INVENTORY")] public GameObject boxPotionTexte;
     [Foldout("INVENTORY")] public GameObject boxPotionImage;
-    [Foldout("INVENTORY")] public GameObject interacteurPotion;
-    
+
     [Foldout("INVENTORY")] public GameObject globalBoxGlyph;
     [Foldout("INVENTORY")] public GameObject globalBoxPotion;
+    [Foldout("INVENTORY")] public Image globalBoxPotionImage;
     [Foldout("INVENTORY")] public GameObject globalBoxPowers;
     [Foldout("INVENTORY")] public TextMeshProUGUI globalBoxTextRarity;
     
@@ -158,7 +152,7 @@ public class UiManager : MonoBehaviour
         FillBoxInventoryForGlyphs();
         if (PotionManager.Instance.currentPotion is not null)
         {
-            interacteurPotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+            boxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
         }
         isPause = true;
     }
@@ -330,8 +324,8 @@ public class UiManager : MonoBehaviour
         //Debug.Log("entrée dans la fonction CollectPotion");
         PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside;
         PotionManager.Instance.isPotionSlotFill = true;
-        spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
-        spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 1);
+        spritePotion.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+        spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 1);
         menuCollectPotion.SetActive(false);
         TimeBack();
     }
@@ -339,9 +333,9 @@ public class UiManager : MonoBehaviour
     public void CollectPotionDebug()
     {
         PotionManager.Instance.isPotionSlotFill = true;
-        spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        spritePotion.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
         Debug.Log("oui");
-        spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 1);
+        spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 1);
     }
 
 
@@ -367,7 +361,7 @@ public class UiManager : MonoBehaviour
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
             newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
-            newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
+            newPotionSprite.GetComponent<Image>().sprite = PotionRepository.Instance.potionInside.sprite;
         }
         else
         {
@@ -377,43 +371,35 @@ public class UiManager : MonoBehaviour
             currentPotionName.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
             currentPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
             currentPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.citation;
-            currentPotionSprite.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+            currentPotionSprite.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
 
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
             newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
-            newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
+            newPotionSprite.GetComponent<Image>().sprite = PotionRepository.Instance.potionInside.sprite;
         }
         
     }
     
     public void FillDescriptionPotion() 
     {
+        Debug.Log("ouiouiouoirf");
         if (PotionManager.Instance.currentPotion is not null)
         {
             boxPotionTitre.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.name;
             boxPotionTexte.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
-            boxPotionImage.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+            boxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+            globalBoxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
         }
         else
         {
             boxPotionTitre.GetComponent<TextMeshProUGUI>().text = "";
             boxPotionTexte.GetComponent<TextMeshProUGUI>().text = "Je n'ai pas de potion actuellement";
-            boxPotionImage.GetComponent<RawImage>().color = new Color(255,255,255,0);
+            boxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
+            globalBoxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
         }
     }
-
-    void FillPotionInteracteur()
-    {
-        if (PotionManager.Instance.currentPotion is not null)
-        {
-            interacteurPotion.GetComponent<RawImage>().color = new Color(89, 89, 89);
-        }
-        else
-        {
-            
-        }
-    }
+    
        
     //Fonctions : Son ***********************************************************************************************************************************************************************************
     

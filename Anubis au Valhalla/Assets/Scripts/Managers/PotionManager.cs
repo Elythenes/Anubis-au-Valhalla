@@ -88,7 +88,10 @@ public class PotionManager : MonoBehaviour
       Debug.Log("Drink " + glou.nom);
       SaveStatBeforePotion();
       
-      UiManager.instance.spritePotion.GetComponent<RawImage>().color = new Color(255,255,255,0);
+      UiManager.instance.spritePotion.GetComponent<Image>().color = new Color(255,255,255,0);
+      UiManager.instance.boxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
+      //UiManager.instance.globalBoxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
+      //UiManager.instance.FillDescriptionPotion();
       UiManager.instance.panelPotion.SetActive(true); //à enlever quand on aura les vfx
       
       if (glou.type == PotionObject.PotionType.StatBasicPotion 
