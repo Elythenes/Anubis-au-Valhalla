@@ -54,6 +54,8 @@ public class Shop : MonoBehaviour
     private int currentType;
     public List<int> indexes;
     private int soldOut = 0;
+    
+    public List<TextMeshProUGUI> textsRarityChoix;
 
 
     public enum UpsTypes
@@ -293,6 +295,7 @@ public class Shop : MonoBehaviour
                     costText[i].text = "" + cost[currentType + i];
                     buttonText[i].text = "" + choice[currentType + i].nom;
                     description[i].text = "" + choice[currentType + i].description;
+                    SetRarityTextBox(choice[currentType + i], textsRarityChoix[i]);
                     if (cost[currentType + i] > Souls.instance.soulBank)
                     {
                         upsButton[i].interactable = false;
@@ -315,6 +318,7 @@ public class Shop : MonoBehaviour
                     costText[i].text = "" + cost[currentType + i];
                     buttonText[i].text = "" + choice[currentType + i].nom;
                     description[i].text = "" + choice[currentType + i].description;
+                    SetRarityTextBox(choice[currentType + i], textsRarityChoix[i]);
                     if (cost[currentType + i] > Souls.instance.soulBank)
                     {
                         upsButton[i].interactable = false;
@@ -337,6 +341,7 @@ public class Shop : MonoBehaviour
                     costText[i].text = "" + cost[currentType + i];
                     buttonText[i].text = "" + choice[currentType + i].nom;
                     description[i].text = "" + choice[currentType + i].description;
+                    SetRarityTextBox(choice[currentType + i], textsRarityChoix[i]);
                     if (cost[currentType + i] > Souls.instance.soulBank)
                     {
                         upsButton[i].interactable = false;
@@ -345,6 +350,30 @@ public class Shop : MonoBehaviour
                 break;
         }
     }
+
+    void SetRarityTextBox(GlyphObject hiero, TextMeshProUGUI textBox)
+    {
+        switch (hiero.rare)
+        {
+            case Rarity.Prêtre:
+                textBox.SetText("Prêtre");
+                textBox.color = UiManager.instance.colorPretre;
+                break;
+            case Rarity.Pharaon:
+                textBox.SetText("Pharaon");
+                textBox.color = UiManager.instance.colorPharaon;
+                break;
+            case Rarity.Divinité:
+                textBox.SetText("Divinité");
+                textBox.color = UiManager.instance.colorDivinite;
+                break;
+            default:
+                Debug.Log("NON2");
+                break;
+        }
+    }
+    
+    
 
     public void OnClickUpgrade(int buttonType)
     {
