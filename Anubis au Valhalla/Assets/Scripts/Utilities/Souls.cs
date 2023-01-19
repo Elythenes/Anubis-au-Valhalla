@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Souls : MonoBehaviour
 {
@@ -64,7 +65,8 @@ public class Souls : MonoBehaviour
     {
         if (!isSoundOn)
         {
-            audiosource.PlayOneShot(getSoul,0.3f);
+            audiosource.pitch = Random.Range(0.8f, 1.2f);
+            audiosource.PlayOneShot(getSoul,1.5f);
             isSoundOn = true;
         }
         soulsInScene.Remove(collectedSoul);

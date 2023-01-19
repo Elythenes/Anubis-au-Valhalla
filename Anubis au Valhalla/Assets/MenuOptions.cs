@@ -66,20 +66,20 @@ public class MenuOptions : MonoBehaviour
 
   public void SetMasterVolume()
   {
-    audioMixer.SetFloat("MasterVolume", sliderMaster.value);
-    textMaster.text = Mathf.RoundToInt(sliderMaster.value + 80).ToString();
+    audioMixer.SetFloat("MasterVolume", Mathf.Log10(sliderMaster.value) * 20);
+    textMaster.text = Mathf.RoundToInt(sliderMaster.value * 100).ToString();
   }
   
   public void SetMusicVolume()
   {
-    audioMixer.SetFloat("MusicVolume", sliderMusic.value);
-    textMusic.text = Mathf.RoundToInt(sliderMusic.value + 80).ToString();
+    audioMixer.SetFloat("MusicVolume", Mathf.Log10(sliderMusic.value) * 20);
+    textMusic.text = Mathf.RoundToInt(sliderMusic.value*100).ToString();
   }
   
   public void SetSFXVolume()
   {
-    audioMixer.SetFloat("SFXVolume", sliderSFX.value);
-    textSFX.text = Mathf.RoundToInt(sliderSFX.value + 80).ToString();
+    audioMixer.SetFloat("SFXVolume", Mathf.Log10(sliderSFX.value) * 20);
+    textSFX.text = Mathf.RoundToInt(sliderSFX.value * 100).ToString();
   }
   public void SetFullScreen(bool fullscreen)
   {

@@ -493,6 +493,9 @@ MonoBehaviour:
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 5482979424132028281}
   emptyLayers: {fileID: 6448416740321806631}
+  isSmashInvinsible: 0
+  isSmashInvinsibleTime: 0
+  isSmashInvinsibleTimer: 0
   FlameInfected: 0
   FlameInfectedTimer: 0
   FlameInfectedTimerMax: 2.5
@@ -787,6 +790,7 @@ GameObject:
   - component: {fileID: 8889322730559377196}
   - component: {fileID: 8435842971667459551}
   - component: {fileID: 1137946536324831628}
+  - component: {fileID: 5786949839330820331}
   m_Layer: 6
   m_Name: Wolf Spine
   m_TagString: Monstre
@@ -1230,7 +1234,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5482979424132028281}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b840a1b17d8ce94fa9b232e012ebcf2, type: 3}
   m_Name: 
@@ -1241,6 +1245,24 @@ MonoBehaviour:
   srProps: {fileID: 0}
   emptyLayer: {fileID: 0}
   isYBased: 1
+--- !u!114 &5786949839330820331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482979424132028281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9419e18d0b76fe54f8d5f4afb630c27d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  emptyLayerPlayer: {fileID: 0}
+  srPlayer: {fileID: 0}
+  srProps: {fileID: 0}
+  emptyLayer: {fileID: 0}
+  isYBased: 0
 --- !u!1 &6288014195328430374
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,7 +1334,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1561176513
-  m_SortingLayer: -5
+  m_SortingLayer: -6
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: b573fad800f4f0243b66a8d4434a1d3e, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}

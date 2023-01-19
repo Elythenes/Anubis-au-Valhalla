@@ -146,6 +146,7 @@ public class DamageManager : MonoBehaviour
     {
         if (healAmount > 0)
         {
+            audioSource.PlayOneShot(audioClipArray[2],10);
             GlyphManager.Instance.getHeal = true;
             GameObject particuleSoinOBJ = Instantiate(particulesHeal, transform.position - new Vector3(0,1,0), Quaternion.identity);
             particuleSoinOBJ.transform.parent = transform;
