@@ -1,23 +1,28 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class HitBoxFallValkyrie : MonoBehaviour
 {
     public IA_Valkyrie ia;
     public float expandSpeed;
+    public float speedUpRate;
+
+    private void Awake()
+    {
+        ia = IA_Valkyrie.instance;
+    }
+
+    private void Start()
+    {
+        
+        transform.DOScale(Vector3.one * 3, ia.FallTime/2).OnComplete(() => Destroy(gameObject));
+    }
 
     // Update is called once per frame
-    void Update()
-    {
-        transform.localScale += new Vector3(expandSpeed, expandSpeed, 0);
 
-        if (ia == null)
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {

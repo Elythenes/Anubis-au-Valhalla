@@ -247,6 +247,7 @@ public class IA_Monstre1 : MonoBehaviour
 
          if (isDead)
          {
+             anim.SetBool("isDead", true);
              ai.destination = Vector2.zero;
              this.enabled = false;
          }
@@ -257,7 +258,7 @@ public class IA_Monstre1 : MonoBehaviour
 
             foreach (Collider2D joueur in toucheJoueur)
             {
-                joueur.GetComponent<DamageManager>().TakeDamage(puissanceAttaque, gameObject);
+                DamageManager.instance.TakeDamage(puissanceAttaque, gameObject);
             }
         }
     }
