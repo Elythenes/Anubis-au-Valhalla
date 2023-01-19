@@ -279,17 +279,12 @@ public class IA_Valkyrie : MonoBehaviour
                 activeOmbre.transform.localScale = new Vector3(0.36f,0.36f,0.36f);
                 ombreObj.SetActive(false);
                 activeOmbre.transform.DOScale(Vector3.one * 0.2f, 0.5f);
-                SpriteObj.transform.DOScale(stretchAmount, 0.2f);
-                SpriteObj.transform.DOMove(SpriteObj.transform.position + Vector3.up * 100, jumpSpeed).OnComplete(()=>
-                    { 
-                        SpriteObj.SetActive(false);
-                        SpriteObj.transform.position = savedPos;
-                    });
+                SpriteObj.transform.DOScale(stretchAmount, 0.1f).OnComplete((() => SpriteObj.SetActive(false)));
                 anim.SetBool("isJumping",false);
                 
             });
         }
-    }
+    }   
 
     IEnumerator LagFall() // A la fin de l'attaque du saut
     {
@@ -315,6 +310,11 @@ public class IA_Valkyrie : MonoBehaviour
             isAttacking = false;
             anim.enabled = true;
             crashingDown = false;
+            hasFallen = false;
+            TriggerJumpTimeTimer = 0;
+            JumpTimeTimer = 0;
+            IndicationTimeTimer = 0;
+            ai.canMove = true;
         });
         //crashingDown = true;
 

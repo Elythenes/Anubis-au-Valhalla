@@ -66,8 +66,9 @@ public class JavelotValkyrie : MonoBehaviour
                 MoveTowardsRestingPos();
                 aimTimer += Time.deltaTime;
             }
-            else
+            else if(!launching)
             {
+                launching = true;
                 transform.DOMove(transform.position + Vector3.up * 100, ia.jumpSpeed);
             }
 
