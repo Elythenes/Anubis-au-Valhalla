@@ -8,6 +8,8 @@ using UnityEngine.Rendering;
 
 public class CinematiqueBoss : MonoBehaviour
 {
+    public static CinematiqueBoss instance;
+    public bool canMoveController;
     
     [Header("Volume")]
     public Volume volumeCinematique;
@@ -18,14 +20,22 @@ public class CinematiqueBoss : MonoBehaviour
     public float smoothCine;
     public GameObject camera;
     public GameObject valkyrie;
-
-    [Header("MenuDialogues")]
-   
     
-    [Header("Autre")] 
+    
+    [Header("Autre")]
+    public bool isLifeUp;
     public GameObject gameUI;
     public CanvasGroup UILifeBar;
-    
+
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     void Start()
     {
         camera = GameObject.Find("Main Camera");
@@ -34,6 +44,20 @@ public class CinematiqueBoss : MonoBehaviour
     public void Update()
     {
         volumeCinematique.weight = disolveValue;
+
+        if (!canMoveController)
+        {
+            CharacterController.instance.rb.velocity = Vector2.zero;
+        }
+      
+        
+        if (isLifeUp)
+        {
+            if (UILifeBar.alpha < 1)
+            {
+                UILifeBar.alpha += Time.deltaTime;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -42,36 +66,45 @@ public class CinematiqueBoss : MonoBehaviour
         {
             CharacterController.instance.isCinematic = true;
             CharacterController.instance.allowMovements = false;
-            CharacterController.instance.rb.velocity = Vector2.zero;
+            
             CharacterController.instance.canDash = false;
             gameUI.SetActive(false);
             GetComponent<BoxCollider2D>().enabled = false;
-            StartCoroutine(Cinematic());
+            StartCoroutine(CinematicStartDialoges());
         }
     }
 
-    IEnumerator Cinematic()
+    public void CotoutineStartCombat()
+    {
+        StartCoroutine(CinematicStartCombat());
+    }
+
+    public IEnumerator CinematicStartDialoges()
     {
         CameraController.cameraInstance.smoothMove = smoothCine;
         StartCoroutine(VolumeStart());
         StartCoroutine(CameraController.cameraInstance.TansitionCamera(valkyrie));
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         LokiDialoguesManager.instance.DialogueUP();
-       
+        LokiDialoguesManager.instance.NextDialogue();
         
-        //StartCoroutine(camera.GetComponent<CameraController>().TansitionCamera(CharacterController.instance.gameObject,timeToGo));
-        
-        
-        /*if (timeToGo > smoothMove) pour reset la cam sur player
-       {
-           stopMove = false;
-       }*/
     }
-    
-   /* public void ouioui()
+
+    IEnumerator CinematicStartCombat()
     {
-        CamraController.cameraInstance = 
-    }*/
+        valkyrie.GetComponent<MonsterLifeManager>().animator.SetBool("isAttacking", true);
+        yield return new WaitForSeconds(3f);
+        valkyrie.GetComponent<MonsterLifeManager>().animator.SetBool("isIdle", true);
+        valkyrie.GetComponent<MonsterLifeManager>().animator.SetBool("isAttacking", false);
+        StartCoroutine(camera.GetComponent<CameraController>().BackTansitionCamera(CharacterController.instance.gameObject));
+        yield return new WaitForSeconds(1.5f);
+        isLifeUp = true;
+        CharacterController.instance.isCinematic = false;
+        CharacterController.instance.allowMovements = true;
+        CharacterController.instance.canDash = true;
+        // Lancer l'IA de la valkyrie;
+    }
+ 
     IEnumerator VolumeStart()
     {
         camera.transform.DOShakePosition(3f, 0.1f);

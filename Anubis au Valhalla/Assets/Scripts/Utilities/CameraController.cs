@@ -62,7 +62,23 @@ public class CameraController : MonoBehaviour
             timeToGo += Time.deltaTime;
             yield return null;
         }
-        Debug.Log("ouio");
+        stopMove = false;
+        transform.position = new Vector3(oui.x,oui.y,-10);
+    }
+    
+    public IEnumerator BackTansitionCamera(GameObject targetPos)
+    {
+        cameraTarget = targetPos.transform;
+        stopMove = true;
+        float timeToGo = 0;
+        while (timeToGo < smoothMove)
+        {
+            GetComponent<Camera>().orthographicSize = Mathf.Lerp(8, 7.75f, timeToGo / smoothMove);
+            oui = new Vector2(Mathf.Lerp(transform.position.x,cameraTarget.transform.position.x,timeToGo/ smoothMove),Mathf.Lerp(transform.position.y,cameraTarget.transform.position.y,timeToGo/ smoothMove));
+            transform.position = new Vector3(oui.x,oui.y,-10);
+            timeToGo += Time.deltaTime;
+            yield return null;
+        }
         stopMove = false;
         transform.position = new Vector3(oui.x,oui.y,-10);
     }
