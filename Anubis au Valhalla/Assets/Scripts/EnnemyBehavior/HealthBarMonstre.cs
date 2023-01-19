@@ -25,11 +25,7 @@ public class HealthBarMonstre : MonoBehaviour
     {
         SetMaxHealth(ia.vieMax);
     }
-
-    private void Update()
-    {
-        transform.position = monstreassocie.transform.position - new Vector3(0,2,0);
-    }
+    
 
     public void SetMaxHealth(int health)
     {

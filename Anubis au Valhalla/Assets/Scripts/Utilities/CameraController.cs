@@ -7,10 +7,9 @@ public class CameraController : MonoBehaviour
 {
     public static CameraController cameraInstance;
     public Transform cameraTarget;
-
     public float smoothMove;
     public bool stopMove;
-
+    public Vector2 oui;
     public Vector2 minPos;
     public Vector2 maxPos;
     // Start is called before the first frame update
@@ -40,23 +39,31 @@ public class CameraController : MonoBehaviour
             targetPos.y = Mathf.Clamp(targetPos.y, minPos.y, maxPos.y);
             transform.position = targetPos;
         }
+
+        if (transform.position == cameraTarget.position)
+        {
+            StopAllCoroutines();
+        }
     }
 
+   
     public IEnumerator TansitionCamera(GameObject targetPos)
     {
+        //Vector2 oui = Vector2.zero;
+        cameraTarget = targetPos.transform;
         stopMove = true;
-        Time.timeScale = 1;
-        float timeElapsed = 0;
-        while (timeElapsed < smoothMove)
+        float timeToGo = 0;
+        while (timeToGo < smoothMove)
         {
-            transform.position = Vector3.Lerp(transform.position, targetPos.transform.position, smoothMove);
-            timeElapsed += 0.5f * Time.deltaTime;
+            
+            GetComponent<Camera>().orthographicSize = Mathf.Lerp(7.75f, 8, timeToGo / smoothMove);
+            oui = new Vector2(Mathf.Lerp(transform.position.x,cameraTarget.transform.position.x,timeToGo/ smoothMove),Mathf.Lerp(transform.position.y,cameraTarget.transform.position.y,timeToGo/ smoothMove));
+            transform.position = new Vector3(oui.x,oui.y,-10);
+            timeToGo += Time.deltaTime;
             yield return null;
         }
-
-        if (timeElapsed > smoothMove)
-        {
-            stopMove = false;
-        }
+        Debug.Log("ouio");
+        stopMove = false;
+        transform.position = new Vector3(oui.x,oui.y,-10);
     }
 }
