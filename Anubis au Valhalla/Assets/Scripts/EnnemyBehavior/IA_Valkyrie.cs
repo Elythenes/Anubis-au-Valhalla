@@ -65,10 +65,11 @@ public class IA_Valkyrie : MonoBehaviour
     [BoxGroup("Attaque - Jump")] public float fallDamageMultiplier = 1.5f;
     [BoxGroup("Attaque - Jump")] public float jumpSpeed;
     [BoxGroup("Attaque - Jump")] public float airTravelSpeed;
+    [BoxGroup("Attaque - Jump")] public float crashDownSpeed;
     [BoxGroup("Attaque - Jump")] public float pushForce;
     [BoxGroup("Attaque - Jump")] public bool hasShaked;
-    [BoxGroup("Attaque - Jump")] public bool isSeeking;
     [BoxGroup("Attaque - Jump")] public bool hasFallen;
+    [BoxGroup("Attaque - Jump")] public bool crashingDown;
     [BoxGroup("Attaque - Jump")] public float TriggerJumpTime;
     [BoxGroup("Attaque - Jump")] public float TriggerJumpTimeTimer;     // Le temps que met l'attaque à se tick
     [BoxGroup("Attaque - Jump")] public float JumpTime;
@@ -82,6 +83,8 @@ public class IA_Valkyrie : MonoBehaviour
     [BoxGroup("Attaque - Jump")] public GameObject hitboxFall;
     [BoxGroup("Attaque - Jump")] private Vector2 fallPos;
     [BoxGroup("Attaque - Jump")] public GameObject SpriteObj;
+    private Vector3 savedScale;
+    private Vector3 savedPos;
     [BoxGroup("Attaque - Jump")] public GameObject ombreObj;
     [BoxGroup("Attaque - Jump")] public GameObject activeOmbre;
     [BoxGroup("Attaque - Jump")] public Vector3 stretchAmount;
@@ -140,23 +143,41 @@ public class IA_Valkyrie : MonoBehaviour
         }
         if (JumpTimeTimer >= JumpTime) // Déplacement dans les airs
         {
+            Debug.Log("hein?");
             IndicationTimeTimer += Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position,
-                CharacterController.instance.transform.position, airTravelSpeed);
+            dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,CharacterController.instance.transform.position.y - transform.position.y);
+            dir.Normalize();
+            rb.velocity = dir * airTravelSpeed;
             distanceWithPlayer = Vector2.Distance(CharacterController.instance.transform.position,transform.position);
+            if (IndicationTimeTimer > IndicationTime || distanceWithPlayer <= 2)
+            {
+                if (!hasFallen)
+                {
+                    rb.velocity = Vector2.zero;
+                    anim.enabled = false;
+                    hasFallen = true;
+                    TriggerJumpTimeTimer = 0;
+                    JumpTimeTimer = 0;
+                    var hitboxFall = Instantiate(indicationFall);
+                    Destroy(hitboxFall, jumpSpeed);
+                    StartCoroutine(LagFall());
+                    /*transform.DOShakePosition(jumpSpeed,0).OnComplete(() =>
+                    {
+                        //SpriteObj.transform.position = new Vector3(0, transform.position.y, 0);
+                        SpriteObj.transform.DOMove(SpriteObj.transform.position + Vector3.down * 100, jumpSpeed);
+                        activeOmbre.transform.DOScale(Vector3.one * 0.36f, 0.5f);
+                        SpriteObj.transform.DOScale(savedScale, 0.2f);
+                    });*/
+                }
+            }
 
         }
-        if (!hasFallen && (IndicationTimeTimer > IndicationTime || distanceWithPlayer <= 2))
+
+        if (crashingDown)
         {
-            Debug.Log("hein?");
-            hasFallen = true;
-            var hitboxFall = Instantiate(indicationFall);
-            Destroy(hitboxFall, jumpSpeed);
-            transform.DOShakePosition(jumpSpeed).OnComplete(() => 
-            {
-                SpriteObj.transform.DOMove(SpriteObj.transform.position + Vector3.down * 100, jumpSpeed);
-            });
+            CrashDown();
         }
+
 
 
 
@@ -234,7 +255,6 @@ public class IA_Valkyrie : MonoBehaviour
     void TriggerSaut()
     {
         FallTimeTimer = 0;
-        hasFallen = false;
         isAttacking = true;
         ai.canMove = false;
             
@@ -252,27 +272,69 @@ public class IA_Valkyrie : MonoBehaviour
             }
             transform.DOShakePosition(1.1f,0.2f,50).OnComplete(() =>
             {
+                savedPos = SpriteObj.transform.localPosition;
+                Debug.Log(savedPos);
+                savedScale = SpriteObj.transform.localScale;
                 activeOmbre = Instantiate(ombreObj, transform);
                 activeOmbre.transform.localScale = new Vector3(0.36f,0.36f,0.36f);
                 ombreObj.SetActive(false);
                 activeOmbre.transform.DOScale(Vector3.one * 0.2f, 0.5f);
                 SpriteObj.transform.DOScale(stretchAmount, 0.2f);
-                SpriteObj.transform.DOMove(SpriteObj.transform.position + Vector3.up * 100, jumpSpeed);
+                SpriteObj.transform.DOMove(SpriteObj.transform.position + Vector3.up * 100, jumpSpeed).OnComplete(()=>
+                    { 
+                        SpriteObj.SetActive(false);
+                        SpriteObj.transform.position = savedPos;
+                    });
                 anim.SetBool("isJumping",false);
+                
             });
         }
     }
 
     IEnumerator LagFall() // A la fin de l'attaque du saut
     {
-        Debug.Log("oui");
+        /*Debug.Log("oui");
         GameObject hitboxObj = Instantiate(hitboxFall, transform.position, Quaternion.identity);
         hitboxObj.GetComponent<HitBoxFallValkyrie>().ia = this;
         yield return new WaitForSeconds(1);
         Destroy(hitboxObj);
         ai.canMove = true;
         IndicationTimeTimer = 0;
-        isAttacking = false;
+        isAttacking = false;*/
+        yield return new WaitForSeconds(1);
+        Debug.Log("LEEEEEEEEEEEEEROYYYYYYYYYYYYYY");
+        activeOmbre.transform.DOScale(Vector3.one * 0.36f, 0.5f);
+        SpriteObj.transform.DOScale(savedScale, 0.2f);
+        yield return new WaitForSeconds(0.5f);
+        SpriteObj.SetActive(true);
+        Destroy(activeOmbre);
+        var hitbox = Instantiate(hitboxFall, transform);
+        transform.DOShakePosition(FallTime, 0.2f, 50).OnComplete(() =>
+        { 
+            Destroy(hitbox);
+            isAttacking = false;
+            anim.enabled = true;
+            crashingDown = false;
+        });
+        //crashingDown = true;
+
+    }
+
+    void CrashDown()
+    {
+        if (SpriteObj.transform.position.y <= 0.1f)
+        {
+            return;
+        }
+        if (SpriteObj.transform.position.y >= 0.1f)
+        {
+            Debug.Log("gogogogo");
+            SpriteObj.transform.localPosition = Vector3.MoveTowards(SpriteObj.transform.position, savedPos, crashDownSpeed);
+        }
+        else
+        {
+
+        }
     }
     
     #endregion
