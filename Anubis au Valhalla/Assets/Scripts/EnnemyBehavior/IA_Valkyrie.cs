@@ -9,10 +9,12 @@ using Pathfinding;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
+// ReSharper disable All
 
 public class IA_Valkyrie : MonoBehaviour
 {
-   [Header("Général")]
+    [Header("Général")] 
+    public static IA_Valkyrie instance;
     public bool isElite;
     public GameObject emptyLayers;
     public MonsterLifeManager life;
@@ -88,6 +90,7 @@ public class IA_Valkyrie : MonoBehaviour
     [BoxGroup("Attaque - Jump")] public GameObject ombreObj;
     [BoxGroup("Attaque - Jump")] public GameObject activeOmbre;
     [BoxGroup("Attaque - Jump")] public Vector3 stretchAmount;
+    [BoxGroup("Attaque - Jump")] public List<Skyfall> skyfallIndic = new List<Skyfall>();
     private float distanceWithPlayer;
     
     
@@ -95,6 +98,11 @@ public class IA_Valkyrie : MonoBehaviour
     
     private void Awake()
     {
+        if (instance != null)
+        {
+            DestroyImmediate(instance);
+        }
+        instance = this;
         DOTween.SetTweensCapacity(500,50);
         puissanceAttaqueJavelot = GetComponentInParent<MonsterLifeManager>().data.damage;
         FallDamage = Mathf.RoundToInt(puissanceAttaqueJavelot * fallDamageMultiplier);
@@ -222,6 +230,7 @@ public class IA_Valkyrie : MonoBehaviour
                 ai.destination = pointToGo;
                 ai.SearchPath();
             }
+
         }
     }
     #endregion
@@ -269,6 +278,8 @@ public class IA_Valkyrie : MonoBehaviour
                 projJavelot.timeForAim += javelotInterval[(int)currentState] * i;
                 projJavelot.restingPos = restingPosList[i];
                 projJavelot.skyFall = true;
+                projJavelot.javelotNumber = i;
+                projJavelot.timeForIndic += 0.1f * i;
             }
             transform.DOShakePosition(1.1f,0.2f,50).OnComplete(() =>
             {
@@ -303,9 +314,11 @@ public class IA_Valkyrie : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         SpriteObj.SetActive(true);
         Destroy(activeOmbre);
-        var hitbox = Instantiate(hitboxFall, transform);
+        var hitbox = Instantiate(hitboxFall, transform.position, Quaternion.identity);
+        Debug.Log(hitbox);
         transform.DOShakePosition(FallTime, 0.2f, 50).OnComplete(() =>
         { 
+            Debug.Log("Fin de l'attaque");
             Destroy(hitbox);
             isAttacking = false;
             anim.enabled = true;
@@ -315,6 +328,7 @@ public class IA_Valkyrie : MonoBehaviour
             JumpTimeTimer = 0;
             IndicationTimeTimer = 0;
             ai.canMove = true;
+            hasShaked = false;
         });
         //crashingDown = true;
 
