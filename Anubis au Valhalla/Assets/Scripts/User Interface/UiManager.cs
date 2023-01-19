@@ -53,6 +53,16 @@ public class UiManager : MonoBehaviour
     [Foldout("INVENTORY")] public GameObject boxGlyphTitre;
     [Foldout("INVENTORY")] public GameObject boxGlyphTexte;
     [Foldout("INVENTORY")] public GameObject boxGlyphImage;
+    [Foldout("INVENTORY")] public Color colorPretre;
+    [Foldout("INVENTORY")] public Sprite cadrePretre;
+    [Foldout("INVENTORY")] public Color colorPharaon;
+    [Foldout("INVENTORY")] public Sprite cadrePharaon;
+    [Foldout("INVENTORY")] public Color colorDivinite;
+    [Foldout("INVENTORY")] public Sprite cadreDivinite;
+    [Foldout("INVENTORY")] public Color colorMinor;
+    [Foldout("INVENTORY")] public Sprite cadreMinor;
+    [Foldout("INVENTORY")] public Color colorUnique;
+    [Foldout("INVENTORY")] public Sprite cadreUnique;
     
     [Foldout("INVENTORY")] public GameObject boxPotionTitre;
     [Foldout("INVENTORY")] public GameObject boxPotionTexte;
@@ -162,33 +172,38 @@ public class UiManager : MonoBehaviour
         for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
         {
             //listBoxInventaire[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
-            
             //boxGlyphIcones[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
+            
             listBoxInventaire[i].GetComponent<Button>().enabled = true;
             switch (GlyphInventory.Instance.glyphInventory[i].rare)
             {
                 case Rarity.Prêtre:
                     if (GlyphInventory.Instance.glyphInventory[i].price == 0)
                     {
-                        listBoxInventaire[i].GetComponent<RawImage>().color = new Color(120,120,120,255);
+                        listBoxInventaire[i].GetComponent<Image>().sprite = cadreMinor;
+                        listBoxInventaire[i].GetComponent<Image>().color = colorMinor;
                         Debug.Log("is minor");
                     }
                     else
                     {
-                        listBoxInventaire[i].GetComponent<RawImage>().color = new Color(163,84,63,255);
+                        listBoxInventaire[i].GetComponent<Image>().sprite = cadrePretre;
+                        listBoxInventaire[i].GetComponent<Image>().color = colorPretre;
                         Debug.Log("is prêtre");
                     }
                     break;
                 case Rarity.Pharaon:
-                    listBoxInventaire[i].GetComponent<RawImage>().color = new Color(117,126,145,255);
+                    listBoxInventaire[i].GetComponent<Image>().sprite = cadrePharaon;
+                    listBoxInventaire[i].GetComponent<Image>().color = colorPharaon;
                     Debug.Log("is pharaon");
                     break;
                 case Rarity.Divinité:
-                    listBoxInventaire[i].GetComponent<RawImage>().color = new Color(255,189,75,255);
+                    listBoxInventaire[i].GetComponent<Image>().sprite = cadreDivinite;
+                    listBoxInventaire[i].GetComponent<Image>().color = colorDivinite;
                     Debug.Log("is divinité");
                     break;
                 case Rarity.Unique:
-                    listBoxInventaire[i].GetComponent<RawImage>().color = new Color(157,23,188,255);
+                    listBoxInventaire[i].GetComponent<Image>().sprite = cadreUnique;
+                    listBoxInventaire[i].GetComponent<Image>().color = colorUnique;
                     Debug.Log("is unique");
                     break;
                 default:
@@ -205,6 +220,7 @@ public class UiManager : MonoBehaviour
                 listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Button>().enabled = false;
             }
         }
+        
     }
 
     public void FillDescriptionInventory(int boxPos) //change le titre et la description dans les box à droite du livre
