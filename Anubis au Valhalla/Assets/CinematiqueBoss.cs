@@ -19,8 +19,12 @@ public class CinematiqueBoss : MonoBehaviour
     public GameObject camera;
     public GameObject valkyrie;
 
+    [Header("MenuDialogues")]
+   
+    
     [Header("Autre")] 
     public GameObject gameUI;
+    public CanvasGroup UILifeBar;
     
     void Start()
     {
@@ -51,7 +55,10 @@ public class CinematiqueBoss : MonoBehaviour
         CameraController.cameraInstance.smoothMove = smoothCine;
         StartCoroutine(VolumeStart());
         StartCoroutine(CameraController.cameraInstance.TansitionCamera(valkyrie));
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
+        LokiDialoguesManager.instance.DialogueUP();
+       
+        
         //StartCoroutine(camera.GetComponent<CameraController>().TansitionCamera(CharacterController.instance.gameObject,timeToGo));
         
         
@@ -77,4 +84,6 @@ public class CinematiqueBoss : MonoBehaviour
             yield return null;
         }
     }
+    
+    
 }
