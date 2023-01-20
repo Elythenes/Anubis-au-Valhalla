@@ -88,6 +88,7 @@ public class UiManager : MonoBehaviour
         if (!PotionManager.Instance.isPotionSlotFill)
         {
             spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 0);
+            boxPotionImage.GetComponent<Image>().color = new Color(255, 255, 255, 0);
         }
         
     }
