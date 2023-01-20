@@ -1984,6 +1984,14 @@ PrefabInstance:
       propertyPath: gameUI
       value: 
       objectReference: {fileID: 1566058830}
+    - target: {fileID: 1490121322, guid: 1a11b662923292947857a7681f6b45fe, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1490121322, guid: 1a11b662923292947857a7681f6b45fe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1601040253, guid: 1a11b662923292947857a7681f6b45fe, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2004,9 +2012,17 @@ PrefabInstance:
       propertyPath: BlackScreen
       value: 
       objectReference: {fileID: 915867029}
+    - target: {fileID: 4290615476421986435, guid: 1a11b662923292947857a7681f6b45fe, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4688573014874714920, guid: 1a11b662923292947857a7681f6b45fe, type: 3}
       propertyPath: m_Name
       value: NEWBossRoom
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688573014874714920, guid: 1a11b662923292947857a7681f6b45fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6839057037640290232, guid: 1a11b662923292947857a7681f6b45fe, type: 3}
       propertyPath: m_RootOrder
@@ -2050,6 +2066,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6839057037640290232, guid: 1a11b662923292947857a7681f6b45fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8345175515734740676, guid: 1a11b662923292947857a7681f6b45fe, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2301,11 +2321,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916597, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.08
+      value: -2.25
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916597, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.04
+      value: -3.29
       objectReference: {fileID: 0}
     - target: {fileID: 6322498022790916597, guid: d7c0826c26d1898488fb42b75852ed4c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2434,28 +2454,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: hieroTest.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: hieroTest.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: af97d3c9f8480e44caf4472edae52d90, type: 2}
     - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: hieroTest.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 05116b91679fbd84298cbaa1d9ec4b02, type: 2}
+      objectReference: {fileID: 11400000, guid: af97d3c9f8480e44caf4472edae52d90, type: 2}
     - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: hieroTest.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 05116b91679fbd84298cbaa1d9ec4b02, type: 2}
+      objectReference: {fileID: 11400000, guid: af97d3c9f8480e44caf4472edae52d90, type: 2}
     - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: hieroTest.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 05116b91679fbd84298cbaa1d9ec4b02, type: 2}
+      objectReference: {fileID: 11400000, guid: af97d3c9f8480e44caf4472edae52d90, type: 2}
     - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: hieroTest.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 05116b91679fbd84298cbaa1d9ec4b02, type: 2}
+      objectReference: {fileID: 11400000, guid: af97d3c9f8480e44caf4472edae52d90, type: 2}
     - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: hieroTest.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: 05116b91679fbd84298cbaa1d9ec4b02, type: 2}
+      objectReference: {fileID: 11400000, guid: af97d3c9f8480e44caf4472edae52d90, type: 2}
+    - target: {fileID: 3304179479648736454, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: hieroTest.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 43848340f1f1bd044b5b5faeaba8bb32, type: 2}
     - target: {fileID: 8073836599328315908, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: m_Name
       value: Manager

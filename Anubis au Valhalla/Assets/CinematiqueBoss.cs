@@ -20,9 +20,10 @@ public class CinematiqueBoss : MonoBehaviour
     public float smoothCine;
     public GameObject camera;
     public GameObject valkyrie;
-    
-    
+
+
     [Header("Autre")]
+    public GameObject cameraPoint;
     public bool isLifeUp;
     public GameObject gameUI;
     public CanvasGroup UILifeBar;
@@ -83,7 +84,7 @@ public class CinematiqueBoss : MonoBehaviour
     {
         CameraController.cameraInstance.smoothMove = smoothCine;
         StartCoroutine(VolumeStart());
-        StartCoroutine(CameraController.cameraInstance.TansitionCamera(valkyrie));
+        StartCoroutine(CameraController.cameraInstance.TansitionCamera(cameraPoint));
         yield return new WaitForSeconds(4f);
         LokiDialoguesManager.instance.DialogueUP();
         LokiDialoguesManager.instance.NextDialogue();
