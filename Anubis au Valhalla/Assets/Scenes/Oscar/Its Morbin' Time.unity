@@ -706,13 +706,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e54304e94d660b44bdd77435f995a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMoveController: 0
   volumeCinematique: {fileID: 1699623682}
   disolveValue: 0
   timeToLastStep: 1.5
   smoothCine: 0
   camera: {fileID: 761131143}
   valkyrie: {fileID: 250534533}
+  isLifeUp: 0
   gameUI: {fileID: 0}
+  UILifeBar: {fileID: 0}
 --- !u!212 &520685990
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2574,6 +2577,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6839057038041543360}
     m_Modifications:
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: StunTime
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: IndicMask
+      value: 
+      objectReference: {fileID: 9059446152863737838, guid: 6bf8373c201e9354498b79f998aadad0, type: 3}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: dashIndic
+      value: 
+      objectReference: {fileID: 9059446152863737838, guid: 0e2a3469827cd804ca10e780679da8f3, type: 3}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: chargeSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: windUpSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: chargeDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: windUpDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: TriggerDashTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: TriggerJumpTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: TimeBetweenDashes
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: dashAmount.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: dashAmount.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: dashAmount.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: dashAmount.Array.data[2]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
+      propertyPath: dashAmount.Array.data[3]
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 449256507920905530, guid: 04a18c2e3ccb5e5479a6f90f52e5fd79, type: 3}
       propertyPath: skyfallIndic.Array.data[0]
       value: 

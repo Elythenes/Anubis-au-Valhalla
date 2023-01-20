@@ -80,7 +80,7 @@ public class JavelotValkyrie : MonoBehaviour
                     falling = true;
                     ia.skyfallIndic[javelotNumber].gameObject.SetActive(true);
                     transform.position = ia.skyfallIndic[javelotNumber].transform.position + Vector3.up * 100;
-                    transform.DOMove(ia.skyfallIndic[javelotNumber].transform.position + Vector3.up, ia.jumpSpeed).OnComplete(() =>
+                    transform.DOMove(ia.skyfallIndic[javelotNumber].transform.position + Vector3.up, ia.jumpSpeed * 0.7f).OnComplete(() =>
                     {
                         ia.skyfallIndic[javelotNumber].gameObject.SetActive(false);
                         var hitbox = Instantiate(ia.hitboxFall, transform.position + Vector3.down, Quaternion.identity);
