@@ -148,8 +148,11 @@ public class UiManager : MonoBehaviour
 
     public void ActivatePause()
     {
+        SelectSmashButton();
+        DisablePageDroite(default);
         Pause();
         menuPause.SetActive((true));
+        
         FillBoxInventoryForGlyphs();
         if (PotionManager.Instance.currentPotion is not null)
         {
@@ -293,7 +296,9 @@ public class UiManager : MonoBehaviour
                 break;
             
             default:
-                Debug.Log("NON LA PAGE DROITE MARCHE PAS");
+                globalBoxGlyph.SetActive(false);
+                globalBoxPotion.SetActive(false);
+                globalBoxPowers.SetActive(false);
                 break;
         }
     }

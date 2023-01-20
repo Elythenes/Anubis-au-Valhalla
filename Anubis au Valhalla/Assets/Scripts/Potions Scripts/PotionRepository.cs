@@ -29,6 +29,7 @@ public class PotionRepository : MonoBehaviour
     public GameObject CanvasInteraction;
     public Vector3 offset;
     public TextMeshProUGUI TextInteraction;
+    public SpriteRenderer sr_Repo;
 
     private void Awake()
     {
@@ -45,6 +46,7 @@ public class PotionRepository : MonoBehaviour
         {
             int numberGot = Random.Range(0, potionsList.Count);
             potionInside = potionsList[numberGot];
+            sr_Repo.sprite = potionInside.sprite;
         }
 
         //GetComponent<SpriteRenderer>().sprite = potionInside.sprite;

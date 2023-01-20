@@ -82,9 +82,14 @@ public class Combo3 : MonoBehaviour
             
             if (!col.gameObject.GetComponentInParent<MonsterLifeManager>().elite)
             {
-              
+                col.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 col.gameObject.GetComponent<Rigidbody2D>().AddForce(
                     angleNormalized * AttaquesNormales.instance.forceKnockback[comboNumber], ForceMode2D.Impulse);
+            }
+            else
+            {
+                col.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber]/1.5f,ForceMode2D.Impulse);
             }
             col.gameObject.GetComponentInParent<MonsterLifeManager>().isSmashInvinsible = true;
         }

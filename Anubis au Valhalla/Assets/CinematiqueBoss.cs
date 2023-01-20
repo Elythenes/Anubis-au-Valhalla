@@ -93,6 +93,8 @@ public class CinematiqueBoss : MonoBehaviour
 
     IEnumerator CinematicStartCombat()
     {
+        SoundManager.instance.ChangeToBoss();
+        SoundManager.instance.PlayBoss();
         valkyrie.GetComponent<MonsterLifeManager>().animator.SetBool("isAttacking", true);
         yield return new WaitForSeconds(3f);
         valkyrie.GetComponent<MonsterLifeManager>().animator.SetBool("isIdle", true);
@@ -103,7 +105,8 @@ public class CinematiqueBoss : MonoBehaviour
         CharacterController.instance.isCinematic = false;
         CharacterController.instance.allowMovements = true;
         CharacterController.instance.canDash = true;
-        // Lancer l'IA de la valkyrie;
+
+        valkyrie.GetComponentInChildren<IA_Valkyrie>().enabled = true;
     }
  
     IEnumerator VolumeStart()

@@ -87,6 +87,11 @@ public class Combo1Hitbox : MonoBehaviour
                 col.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 col.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber],ForceMode2D.Impulse);
             }
+            else
+            {
+                col.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber]/1.5f,ForceMode2D.Impulse);
+            }
           
         }
     } 

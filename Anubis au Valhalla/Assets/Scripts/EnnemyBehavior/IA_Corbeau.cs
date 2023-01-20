@@ -112,13 +112,13 @@ public class IA_Corbeau : MonoBehaviour
             rb.AddForce(new Vector2(aipath.targetDirection.x * speedX,aipath.targetDirection.y * speedY) * Time.deltaTime);
         }
         
-        if (isFleeing && !life.isMomified && canMove)
+       /* if (isFleeing && !life.isMomified && canMove)
         {
             Vector2 fuite = player.transform.position - transform.position;
             anim.SetBool("isIdle",false);
             anim.SetBool("isRuning",true);
             rb.AddForce(new Vector2(fuite.x * speedX,fuite.y * speedY) * Time.deltaTime);
-        }
+        }*/
     }
 
     
