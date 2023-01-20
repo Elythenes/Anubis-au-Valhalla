@@ -23,6 +23,7 @@ public class IA_Valkyrie : MonoBehaviour
     public float radiusWondering;
     public Vector2 pointToGo;
     public State currentState;
+    public bool midlifeKnockBack;
     
 
 
@@ -78,7 +79,7 @@ public class IA_Valkyrie : MonoBehaviour
     private Vector3 savedScale;
     private Vector3 savedPos;
 
-    [Space(20)] 
+    [Space(30)] 
     [BoxGroup("Attaque - Dash")] [Tooltip("Nombre de dashs par attaque selon la vie de la Valkyrie")]public List<int> dashAmount = new List<int>();
     [BoxGroup("Attaque - Dash")] [Tooltip("Fréquence de l'attaque")]public float TriggerDashTime;
     [BoxGroup("Attaque - Dash")] [Tooltip("Temps de chargement d'un dash selon la vie de la Valkyrie")]public float[] windUpSpeed;
@@ -95,19 +96,26 @@ public class IA_Valkyrie : MonoBehaviour
     [BoxGroup("Attaque - Dash")] public bool charging;
     [BoxGroup("Attaque - Dash")] public int executedDashes;
     [BoxGroup("Attaque - Dash")] public float TriggerDashTimer;
+    [Space(30)] 
+    [BoxGroup("Attaque - Anneaux")] public int[] ringAmount;
+    [BoxGroup("Attaque - Anneaux")] public float[] ringFrequency;
+    [BoxGroup("Attaque - Anneaux")] public float triggerRingAttackTime;
+    [BoxGroup("Attaque - Anneaux")] [Tooltip("Dégâts de l'attaque")]public int ringDmg;
+    [BoxGroup("Attaque - Anneaux")] [Tooltip("valeur ajoutée au scale")]public float expansionAmount;
+    [BoxGroup("Attaque - Anneaux")] [Tooltip("Vitesse à laquelle est appliquée 'Expansion Amount'(en secondes)")]public float ExpansionRate;
+    [BoxGroup("Attaque - Anneaux")] [Tooltip("valeur soustraite au 'Expansion Rate'")]public float ExpansionSpeedUp;
+    [BoxGroup("Attaque - Anneaux")] [Tooltip("Vitesse à laquelle est appliquée 'Expansion Speed Up'(en secondes)")]public float ExpansionSpeedUpRate;
+
+    [Header("Refs et visus")] 
+    [BoxGroup("Attaque - Anneaux")] public AnneauxDeFeu anneauxFeu;
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    [Header("Débug")]
+    [BoxGroup("Attaque - Anneaux")] public float triggerRingAttackTimer;
+
+
+
+
+
     [Foldout("Refs")]public static IA_Valkyrie instance;
     [Foldout("Refs")]public GameObject emptyLayers;
     [Foldout("Refs")]public MonsterLifeManager life;
@@ -156,7 +164,15 @@ public class IA_Valkyrie : MonoBehaviour
     {
         if (life.vieActuelle > life.vieMax * 0.75f) currentState = State.FullHp;
         else if (life.vieActuelle > life.vieMax * 0.5f) currentState = State.TroisQuarts;
-        else if (life.vieActuelle > life.vieMax * 0.25f) currentState = State.Moitié;
+        else if (life.vieActuelle > life.vieMax * 0.25f)
+        {
+            currentState = State.Moitié;
+            if (!midlifeKnockBack)
+            {
+                StartCoroutine(AttaqueAnneaux());
+                midlifeKnockBack = true;
+            }
+        }
         else currentState = State.UnQuart;
     }
     public void Update()
@@ -172,6 +188,11 @@ public class IA_Valkyrie : MonoBehaviour
             StartUpJavelotTimeTimer += Time.deltaTime;
             TriggerJumpTimeTimer += Time.deltaTime;
             TriggerDashTimer += Time.deltaTime;
+            if ((int)currentState >= 2)
+            {
+                triggerRingAttackTimer += Time.deltaTime;
+                //CharacterController.instance.rb.AddForce(pushForce*ia.pushForce,ForceMode2D.Impulse);
+            }
         }
         
         if (TriggerJumpTimeTimer >= TriggerJumpTime) // Attaque saut
@@ -220,6 +241,12 @@ public class IA_Valkyrie : MonoBehaviour
                 TriggerDashTimer = 0;
                 executedDashes = 0;
             }));
+        }
+
+        if (triggerRingAttackTimer > triggerRingAttackTime && !isAttacking)
+        {
+            isAttacking = true;
+            StartCoroutine(AttaqueAnneaux());
         }
 
 
@@ -401,6 +428,31 @@ public class IA_Valkyrie : MonoBehaviour
     }
 
     #endregion
+
+    IEnumerator AttaqueAnneaux()
+    {
+        anim.SetBool("isAttacking",true);
+        yield return new WaitForSeconds(0.2f);
+        anim.SetBool("isAttacking",false);
+        foreach (var sr in spriteArray)
+        {
+            sr.color = Color.yellow;
+            sr.DOColor(Color.white, 0.7f);
+        }
+        yield return new WaitForSeconds(0.6f);
+        isAttacking = true;
+        ai.canMove = false;
+        for (int i = 0; i < ringAmount[(int)currentState]; i++)
+        {
+            var current = Instantiate(anneauxFeu,transform.position,Quaternion.identity);
+            current.sr.sortingOrder = i;
+            current.mask.frontSortingOrder = i;
+            yield return new WaitForSeconds(ringFrequency[(int)currentState]);
+        }
+
+        triggerRingAttackTimer = 0;
+        isAttacking = false;
+    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
