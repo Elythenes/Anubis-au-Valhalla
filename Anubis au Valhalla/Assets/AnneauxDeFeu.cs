@@ -9,14 +9,14 @@ public class AnneauxDeFeu : MonoBehaviour
     private IA_Valkyrie ia;
     private float currentExpansionAmount;
     private float currentRate;
-    private CircleCollider2D col;
+    private CircleCollider2D collider2D;
     public GameObject child;
     public SpriteRenderer sr;
     public SpriteMask mask;
 
     private void Awake()
     {
-        col = GetComponent<CircleCollider2D>();
+        collider2D = GetComponent<CircleCollider2D>();
         child.transform.DOScale(Vector3.one * 0.95f, 2);
     }
 
@@ -55,7 +55,7 @@ public class AnneauxDeFeu : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             DamageManager.instance.TakeDamage(ia.ringDmg, gameObject);
-            col.enabled = false;
+            collider2D.enabled = false;
         }
     }
 }
