@@ -44,6 +44,7 @@ public class CharacterController : MonoBehaviour
   [Header("Valeurs tracking pour les pouvoirs")] 
   public bool debutDash;
   public bool finDash;
+  private int bossIndex;
   
   public enum LookingAt { Nord,NordEst,Est,SudEst,Sud,SudOuest,Ouest,NordOuest }
 
@@ -131,6 +132,8 @@ public class CharacterController : MonoBehaviour
       guo.updatePhysics = true;
       AstarPath.active.UpdateGraphs (guo);
     }*/
+    
+   // trail.sortingOrder = 
     
     if (Time.timeScale != 0)
     {
@@ -553,9 +556,18 @@ public class CharacterController : MonoBehaviour
 
     if (hitDoor.currentDoorType == Door.DoorType.ToBoss && !SalleGenerator.Instance.zone2)
     {
-      SoundManager.instance.ChangeToBoss();
-      SoundManager.instance.PlayBoss();
-      SalleGenerator.Instance.morbinTime = true;
+      bossIndex++;
+      if (bossIndex == 1)
+      {
+        SoundManager.instance.ChangeToBoss();
+        SoundManager.instance.PlayBoss();
+        SalleGenerator.Instance.morbinTime = true;
+      }
+      else if(bossIndex == 2)
+      {
+        SoundManager.instance.audioSource.Stop();
+      }
+
     }
     if (hitDoor.currentDoorType == Door.DoorType.ToShop)
     {
