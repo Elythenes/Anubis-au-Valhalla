@@ -10,7 +10,7 @@ public class MaskMove : MonoBehaviour
     private void OnEnable()
     {
         var ia = IA_Valkyrie.instance;
-        transform.DOScale(Vector3.one, ia.windUpSpeed);
+        transform.DOScale(Vector3.one, ia.windUpSpeed[(int)ia.currentState]);
     }
 
     // Update is called once per frame
