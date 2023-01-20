@@ -42,6 +42,11 @@ public class TimerChallenge : MonoBehaviour
     void CalculTempsAddi()
     {
         int temps = sg.roomsDone * multiplicateurTemps;
+        if (sg.zone2)
+        {
+            temps = (sg.roomsDone + 8) * multiplicateurTemps;
+        }
+        //Debug.Log(temps);
         switch (temps)
         {
             case <10:
