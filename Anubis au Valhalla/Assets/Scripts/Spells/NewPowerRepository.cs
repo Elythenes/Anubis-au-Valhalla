@@ -29,6 +29,7 @@ public class NewPowerRepository : MonoBehaviour
 
     private void Awake()
     {
+        transform.localScale = new Vector2(0.5f, 0.5f);
         if (NewPowerManager.Instance.currentLevelPower1 == 10)
         {
             newPowerType = NewPowerType.Power2;
