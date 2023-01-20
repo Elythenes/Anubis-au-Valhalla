@@ -8,16 +8,23 @@ using UnityEngine;
 public class TimerChallenge : MonoBehaviour
 {
     public float internalTimer = 60f;
-    public float timerLimit;
+    public float timerLimit = 30f;
 
+    public SalleGenerator sg;
+    public int tempsAdditionnel;
+    public int multiplicateurTemps;
+    
     private int seconds;
+    
+    
 
     public TextMeshProUGUI timer;
     // Start is called before the first frame update
 
     void OnEnable()
     {
-        internalTimer = timerLimit;
+        CalculTempsAddi();
+        internalTimer = timerLimit + tempsAdditionnel;
     }
 
     // Update is called once per frame
@@ -31,4 +38,35 @@ public class TimerChallenge : MonoBehaviour
             timer.text = seconds.ToString();
         }
     }
+
+    void CalculTempsAddi()
+    {
+        int temps = sg.roomsDone * multiplicateurTemps;
+        switch (temps)
+        {
+            case <10:
+                temps = 0;
+                break;
+            
+            case >10:
+                if (temps < 20)
+                {
+                    temps = 10;
+                }
+                else
+                {
+                    if (temps < 30)
+                    {
+                        temps = 20;
+                    }
+                    else
+                    {
+                        temps = 30;
+                    }
+                }
+                break;
+        }
+        tempsAdditionnel = temps;
+    }
+    
 }
