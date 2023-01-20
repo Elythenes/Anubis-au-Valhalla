@@ -105,8 +105,8 @@ public class CinematiqueBoss : MonoBehaviour
         CharacterController.instance.isCinematic = false;
         CharacterController.instance.allowMovements = true;
         CharacterController.instance.canDash = true;
-        
-        // Lancer l'IA de la valkyrie;
+
+        valkyrie.GetComponentInChildren<IA_Valkyrie>().enabled = true;
     }
  
     IEnumerator VolumeStart()

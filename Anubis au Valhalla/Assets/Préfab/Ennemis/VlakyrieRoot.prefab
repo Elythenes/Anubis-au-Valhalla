@@ -533,6 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d357aecb98b6447af4c8c8c9fa218f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   slider: {fileID: 1290762260754414533}
   gradient:
     serializedVersion: 2
@@ -1049,28 +1050,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d35e3caa064e14abbc5bc9294c10e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isElite: 0
-  emptyLayers: {fileID: 6835188342299557291}
-  life: {fileID: 6243244991415517249}
-  spriteArray: []
   moveSpeed: 20
-  idleTimeMax: 0
-  idleTimeMin: 2
-  player: {fileID: 0}
-  seeker: {fileID: 7871609742773444815}
-  aipath: {fileID: 1386000663343197264}
-  canvasLifeBar: {fileID: 1290762258720828881}
-  anim: {fileID: 8718591577376892462}
-  playerFollow: {fileID: 1800177424297225575}
+  idleTime: 2
+  isAttacking: 0
   isFleeing: 0
   radiusWondering: 10
   pointToGo: {x: 0, y: 0}
-  currentState: 0
-  isAttacking: 0
+  currentState: 2
+  midlifeKnockBack: 0
   puissanceAttaqueJavelot: 20
   javelotSpeed: 30
-  StartUpJavelotTime: 3
-  StartUpJavelotTimeTimer: 0
+  StartUpJavelotTime: 3.5
   IndicJavelotTime: 1.25
   javelotsToSpawn: 06000000040000000600000006000000
   javelotInterval:
@@ -1087,23 +1077,19 @@ MonoBehaviour:
   - {fileID: 2766329666348493193}
   - {fileID: 5713955302922396275}
   - {fileID: 8341485146750019898}
+  StartUpJavelotTimeTimer: 0
   FallDamage: 35
-  fallDamageMultiplier: 1.5
   jumpSpeed: 1.5
-  airTravelSpeed: 5
-  crashDownSpeed: 0.01
+  airTravelSpeed:
+  - 5
+  - 7
+  - 9
+  - 11
   pushForce: 25
-  hasShaked: 0
-  hasFallen: 0
-  crashingDown: 0
-  TriggerJumpTime: 2
-  TriggerJumpTimeTimer: 0
+  TriggerJumpTime: 5
   JumpTime: 2
-  JumpTimeTimer: 0
   IndicationTime: 2
-  IndicationTimeTimer: 0
   FallTime: 1.5
-  FallTimeTimer: 0
   indicationFall: {fileID: 2229639920476728955, guid: 357fb3723b2763741919521c467ae3ee, type: 3}
   hitboxFall: {fileID: 861668139924243964, guid: 2abb61bc0238b654d80d231a61b1ea70, type: 3}
   SpriteObj: {fileID: 2627684247506676290}
@@ -1117,6 +1103,61 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  TriggerJumpTimeTimer: 0
+  JumpTimeTimer: 0
+  IndicationTimeTimer: 0
+  FallTimeTimer: 0
+  hasShaked: 0
+  hasFallen: 0
+  dashAmount: 02000000030000000300000004000000
+  TriggerDashTime: 4
+  windUpSpeed:
+  - 1.7
+  - 1.5
+  - 1.3
+  - 1
+  windUpDistance: 1
+  chargeSpeed: 0.5
+  chargeDistance: 10
+  TimeBetweenDashes:
+  - 0.3
+  - 0.3
+  - 0.2
+  - 0.1
+  StunTime:
+  - 0.5
+  - 0.4
+  - 0.3
+  - 0.3
+  dashIndic: {fileID: 9059446152863737838, guid: 0e2a3469827cd804ca10e780679da8f3, type: 3}
+  IndicMask: {fileID: 9059446152863737838, guid: 6bf8373c201e9354498b79f998aadad0, type: 3}
+  isDashing: 0
+  charging: 0
+  executedDashes: 0
+  TriggerDashTimer: 0
+  ringAmount: 01000000010000000200000003000000
+  ringFrequency:
+  - 0.75
+  - 0.75
+  - 0.75
+  - 0.6
+  triggerRingAttackTime: 2
+  ringDmg: 20
+  expansionAmount: 0.1
+  ExpansionRate: 0.06
+  ExpansionSpeedUp: 0.003
+  ExpansionSpeedUpRate: 0.1
+  anneauxFeu: {fileID: 5736103737041224594, guid: e75f325056b5d08489d29d17edbce1ba, type: 3}
+  triggerRingAttackTimer: 0
+  emptyLayers: {fileID: 6835188342299557291}
+  life: {fileID: 6243244991415517249}
+  spriteArray: []
+  player: {fileID: 0}
+  seeker: {fileID: 7871609742773444815}
+  aipath: {fileID: 1386000663343197264}
+  canvasLifeBar: {fileID: 1290762258720828881}
+  anim: {fileID: 8718591577376892462}
+  playerFollow: {fileID: 1800177424297225575}
 --- !u!114 &7871609742773444815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1357,6 +1398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   data: {fileID: 11400000, guid: 058d990f10900274c8b30744cc0ac3c3, type: 2}
   textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
   textCriticalDamage: {fileID: 0}
@@ -1515,6 +1557,10 @@ PrefabInstance:
     - target: {fileID: -7552582706839291426, guid: 2235781594b26884bb83cb3a725c3427, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3039312921534410294, guid: 2235781594b26884bb83cb3a725c3427, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 2235781594b26884bb83cb3a725c3427, type: 3}

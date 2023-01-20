@@ -142,7 +142,7 @@ public class IA_Valkyrie : MonoBehaviour
             DestroyImmediate(instance);
         }
         instance = this;
-        DOTween.SetTweensCapacity(500,50);
+        DOTween.SetTweensCapacity(3125,50);
         puissanceAttaqueJavelot = GetComponentInParent<MonsterLifeManager>().data.damage;
 
     }
