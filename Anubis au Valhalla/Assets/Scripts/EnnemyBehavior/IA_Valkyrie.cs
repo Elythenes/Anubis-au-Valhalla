@@ -6,6 +6,7 @@ using DG.Tweening;
 using GenPro;
 using NaughtyAttributes;
 using Pathfinding;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -23,6 +24,7 @@ public class IA_Valkyrie : MonoBehaviour
     public float idleTimeMax;
     public float idleTimeMin;
     private float currentIdleTime;
+    public bool isAttacking;
 
 
         [Header("Déplacements")]
@@ -48,52 +50,68 @@ public class IA_Valkyrie : MonoBehaviour
         UnQuart = 3
     }
 
+    [Space(20)]
 
-
-    [BoxGroup("Attaque - Javelot")] public bool isAttacking;
     [BoxGroup("Attaque - Javelot")] public int puissanceAttaqueJavelot;
     [BoxGroup("Attaque - Javelot")] public float javelotSpeed;
     [BoxGroup("Attaque - Javelot")] public float StartUpJavelotTime;
-    [BoxGroup("Attaque - Javelot")] public float StartUpJavelotTimeTimer;
     [BoxGroup("Attaque - Javelot")] public float IndicJavelotTime;
     [BoxGroup("Attaque - Javelot")] public List<int> javelotsToSpawn = new List<int>();
     [BoxGroup("Attaque - Javelot")] public List<float> javelotInterval = new List<float>();
+    [BoxGroup("Attaque - Javelot")] public float StartUpJavelotTimeTimer;
     [Header("Refs et visus")]
     [BoxGroup("Attaque - Javelot")] public JavelotValkyrie projectilJavelot;
     [BoxGroup("Attaque - Javelot")] [HideInInspector] public Vector2 dir;
     [BoxGroup("Attaque - Javelot")] public Transform[] restingPosList;
+    [Space(20)]
     
     [BoxGroup("Attaque - Jump")] [NaughtyAttributes.ReadOnly] public int FallDamage;
     [BoxGroup("Attaque - Jump")] public float fallDamageMultiplier = 1.5f;
     [BoxGroup("Attaque - Jump")] public float jumpSpeed;
     [BoxGroup("Attaque - Jump")] public float airTravelSpeed;
-    [BoxGroup("Attaque - Jump")] public float crashDownSpeed;
     [BoxGroup("Attaque - Jump")] public float pushForce;
     [BoxGroup("Attaque - Jump")] public bool hasShaked;
     [BoxGroup("Attaque - Jump")] public bool hasFallen;
-    [BoxGroup("Attaque - Jump")] public bool crashingDown;
-    [BoxGroup("Attaque - Jump")] public float TriggerJumpTime;
-    [BoxGroup("Attaque - Jump")] public float TriggerJumpTimeTimer;     // Le temps que met l'attaque à se tick
+    [BoxGroup("Attaque - Jump")] [Tooltip("Le temps que met l'attaque à se tick")] public float TriggerJumpTime;
     [BoxGroup("Attaque - Jump")] public float JumpTime;
-    [BoxGroup("Attaque - Jump")] public float JumpTimeTimer;            // Le temps que met la valkyrie à sauter et disparaitre
     [BoxGroup("Attaque - Jump")] public float IndicationTime;
-    [BoxGroup("Attaque - Jump")] public float IndicationTimeTimer;           // Le temps que met la valkyrie entre l'indication de l'attaque (zone rouge) et la retombée
     [BoxGroup("Attaque - Jump")] public float FallTime;
-    [BoxGroup("Attaque - Jump")] public float FallTimeTimer;           // Le temps que met la valkyrie entre la retombée et le retour à son etat normal.
+    [Foldout("Timers - Jump")] public float TriggerJumpTimeTimer;     
+    [Foldout("Timers - Jump")] public float JumpTimeTimer;            // Le temps que met la valkyrie à sauter et disparaitre
+    [Foldout("Timers - Jump")] public float IndicationTimeTimer;           // Le temps que met la valkyrie entre l'indication de l'attaque (zone rouge) et la retombée
+    [Foldout("Timers - Jump")] public float FallTimeTimer;           // Le temps que met la valkyrie entre la retombée et le retour à son etat normal.
     [Header("Refs et visus")]
     [BoxGroup("Attaque - Jump")] public GameObject indicationFall;
     [BoxGroup("Attaque - Jump")] public GameObject hitboxFall;
     [BoxGroup("Attaque - Jump")] private Vector2 fallPos;
     [BoxGroup("Attaque - Jump")] public GameObject SpriteObj;
-    private Vector3 savedScale;
-    private Vector3 savedPos;
     [BoxGroup("Attaque - Jump")] public GameObject ombreObj;
     [BoxGroup("Attaque - Jump")] public GameObject activeOmbre;
     [BoxGroup("Attaque - Jump")] public Vector3 stretchAmount;
     [BoxGroup("Attaque - Jump")] public List<Skyfall> skyfallIndic = new List<Skyfall>();
     private float distanceWithPlayer;
+    private Vector3 savedScale;
+    private Vector3 savedPos;
+
+    [Space(20)] 
+    [BoxGroup("Attaque - Dash")] public List<int> dashAmount = new List<int>();
+
+    [BoxGroup("Attaque - Dash")] public bool isDashing;
+    [BoxGroup("Attaque - Dash")] public bool charging;
+    [BoxGroup("Attaque - Dash")] public float TriggerDashTimer;
+    [BoxGroup("Attaque - Dash")] public float TriggerDashTime;
+    [BoxGroup("Attaque - Dash")] public float windUpSpeed;
+    [BoxGroup("Attaque - Dash")] public float windUpDistance;
+    [BoxGroup("Attaque - Dash")] public float chargeSpeed;
+    [BoxGroup("Attaque - Dash")] public float chargeDistance;
+    [BoxGroup("Attaque - Dash")] public float TimeBetweenDashes;
+    [BoxGroup("Attaque - Dash")] public float StunTime;
+    [BoxGroup("Attaque - Dash")] public int executedDashes;
+    [Header("Refs et visus")]
+    [BoxGroup("Attaque - Dash")] public GameObject dashIndic;
+    [BoxGroup("Attaque - Dash")] public GameObject IndicMask;
     
-    
+
     //Fonctions ******************************************************************************************************************************************************
     
     private void Awake()
@@ -119,7 +137,6 @@ public class IA_Valkyrie : MonoBehaviour
         ai = GetComponent<IAstarAI>();
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
-        Debug.Log(ai.maxSpeed);
         ai.maxSpeed = moveSpeed;
     }
 
@@ -142,6 +159,7 @@ public class IA_Valkyrie : MonoBehaviour
         {
             StartUpJavelotTimeTimer += Time.deltaTime;
             TriggerJumpTimeTimer += Time.deltaTime;
+            TriggerDashTimer += Time.deltaTime;
         }
         
         if (TriggerJumpTimeTimer >= TriggerJumpTime) // Attaque saut
@@ -151,7 +169,6 @@ public class IA_Valkyrie : MonoBehaviour
         }
         if (JumpTimeTimer >= JumpTime) // Déplacement dans les airs
         {
-            Debug.Log("hein?");
             IndicationTimeTimer += Time.deltaTime;
             dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,CharacterController.instance.transform.position.y - transform.position.y);
             dir.Normalize();
@@ -169,24 +186,27 @@ public class IA_Valkyrie : MonoBehaviour
                     var hitboxFall = Instantiate(indicationFall);
                     Destroy(hitboxFall, jumpSpeed);
                     StartCoroutine(LagFall());
-                    /*transform.DOShakePosition(jumpSpeed,0).OnComplete(() =>
-                    {
-                        //SpriteObj.transform.position = new Vector3(0, transform.position.y, 0);
-                        SpriteObj.transform.DOMove(SpriteObj.transform.position + Vector3.down * 100, jumpSpeed);
-                        activeOmbre.transform.DOScale(Vector3.one * 0.36f, 0.5f);
-                        SpriteObj.transform.DOScale(savedScale, 0.2f);
-                    });*/
                 }
             }
 
         }
 
-        if (crashingDown)
+        if (TriggerDashTimer > TriggerDashTime && !isDashing && executedDashes < dashAmount[(int)currentState])
         {
-            CrashDown();
+            aipath.canMove = false;
+            isDashing = true;
+            Dash();
         }
-
-
+        else if (isDashing && executedDashes >= dashAmount[(int)currentState])
+        {
+            aipath.canMove = true;
+            isAttacking = false;
+            isDashing = false;
+            charging = false;
+            TriggerDashTimer = 0;
+            executedDashes = 0;
+            
+        }
 
 
 
@@ -284,7 +304,6 @@ public class IA_Valkyrie : MonoBehaviour
             transform.DOShakePosition(1.1f,0.2f,50).OnComplete(() =>
             {
                 savedPos = SpriteObj.transform.localPosition;
-                Debug.Log(savedPos);
                 savedScale = SpriteObj.transform.localScale;
                 activeOmbre = Instantiate(ombreObj, transform);
                 activeOmbre.transform.localScale = new Vector3(0.36f,0.36f,0.36f);
@@ -299,8 +318,7 @@ public class IA_Valkyrie : MonoBehaviour
 
     IEnumerator LagFall() // A la fin de l'attaque du saut
     {
-        /*Debug.Log("oui");
-        GameObject hitboxObj = Instantiate(hitboxFall, transform.position, Quaternion.identity);
+        /*GameObject hitboxObj = Instantiate(hitboxFall, transform.position, Quaternion.identity);
         hitboxObj.GetComponent<HitBoxFallValkyrie>().ia = this;
         yield return new WaitForSeconds(1);
         Destroy(hitboxObj);
@@ -308,21 +326,17 @@ public class IA_Valkyrie : MonoBehaviour
         IndicationTimeTimer = 0;
         isAttacking = false;*/
         yield return new WaitForSeconds(1);
-        Debug.Log("LEEEEEEEEEEEEEROYYYYYYYYYYYYYY");
         activeOmbre.transform.DOScale(Vector3.one * 0.36f, 0.5f);
         SpriteObj.transform.DOScale(savedScale, 0.2f);
         yield return new WaitForSeconds(0.5f);
         SpriteObj.SetActive(true);
         Destroy(activeOmbre);
         var hitbox = Instantiate(hitboxFall, transform.position, Quaternion.identity);
-        Debug.Log(hitbox);
         transform.DOShakePosition(FallTime, 0.2f, 50).OnComplete(() =>
         { 
-            Debug.Log("Fin de l'attaque");
             Destroy(hitbox);
             isAttacking = false;
             anim.enabled = true;
-            crashingDown = false;
             hasFallen = false;
             TriggerJumpTimeTimer = 0;
             JumpTimeTimer = 0;
@@ -330,30 +344,56 @@ public class IA_Valkyrie : MonoBehaviour
             ai.canMove = true;
             hasShaked = false;
         });
-        //crashingDown = true;
 
     }
-
-    void CrashDown()
-    {
-        if (SpriteObj.transform.position.y <= 0.1f)
-        {
-            return;
-        }
-        if (SpriteObj.transform.position.y >= 0.1f)
-        {
-            Debug.Log("gogogogo");
-            SpriteObj.transform.localPosition = Vector3.MoveTowards(SpriteObj.transform.position, savedPos, crashDownSpeed);
-        }
-        else
-        {
-
-        }
-    }
-    
     #endregion
 
+    #region Dashs
+
+    void Dash()
+    {
+        isAttacking = true;
+        dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,CharacterController.instance.transform.position.y - transform.position.y);
 
 
+
+        dir.Normalize();
+        Debug.Log(dir);
+        var reversedir = -dir;
+        Debug.Log(reversedir);
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        var Indication = Instantiate(dashIndic, transform.position, Quaternion.Euler(0, 0, angle));
+        /*var currentMask = Instantiate(IndicMask, transform.position, quaternion.Euler(0, 0, angle));
+        currentMask.transform.DOMove(dir * chargeDistance, windUpSpeed);*/
+        transform.DOPunchPosition(reversedir* windUpDistance,windUpSpeed).OnComplete((() =>
+        {
+            charging = true;
+            //Destroy(currentMask);
+            Destroy(Indication);
+            transform.DOMove(dir * chargeDistance, chargeSpeed).OnComplete((() =>
+            {
+                executedDashes++;
+                if (executedDashes < dashAmount[(int)currentState])
+                {
+                    transform.DOMove(transform.position, TimeBetweenDashes).OnComplete((() =>
+                    {
+                        charging = false;
+                        isDashing = false;
+                    }));
+                }
+            }));
+        }));
+
+    }
+
+    #endregion
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player") && charging)
+        {
+            DamageManager.instance.TakeDamage(FallDamage, gameObject);
+        }
+    }
 }
 
