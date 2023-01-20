@@ -189,8 +189,12 @@ public class GlyphManager : MonoBehaviour
                     if (hiero.bonusBasicStat != 0)
                     {
                         var vector2 = AnubisCurrentStats.instance.rangeAttaque[i];
+                        var vector22 = AttaquesNormales.instance.VFXobj[i].transform.localScale;
+                        vector22.x *= hiero.bonusBasicStat;
+                        vector22.y *= hiero.bonusBasicStat;
                         vector2.x *= hiero.bonusBasicStat;
                         vector2.y *= hiero.bonusBasicStat;
+                        AttaquesNormales.instance.VFXobj[i].transform.localScale = vector22;
                         AnubisCurrentStats.instance.rangeAttaque[i] = vector2;
                     }
                     else
