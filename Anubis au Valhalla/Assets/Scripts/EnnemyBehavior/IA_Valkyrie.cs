@@ -15,33 +15,17 @@ using Random = UnityEngine.Random;
 public class IA_Valkyrie : MonoBehaviour
 {
     [Header("Général")] 
-    public static IA_Valkyrie instance;
-    public bool isElite;
-    public GameObject emptyLayers;
-    public MonsterLifeManager life;
-    public SpriteRenderer[] spriteArray;
-    public float moveSpeed;
-    public float idleTimeMax;
-    public float idleTimeMin;
-    private float currentIdleTime;
+    [Tooltip("vitesse de la Valkyrie quand elle n'attaque pas")]public float moveSpeed;
+    [Tooltip("Temps entre les déplacements")]public float idleTime;
+    [Header("Main débug")]
     public bool isAttacking;
-
-
-        [Header("Déplacements")]
-    public GameObject player;
-    public Seeker seeker;
-    public AIPath aipath;
-    private Path path;
-    public GameObject canvasLifeBar;
-    private Rigidbody2D rb;
-    private Collider2D collider;
-    public Animator anim;
-    IAstarAI ai;
-    public AIDestinationSetter playerFollow;
     public bool isFleeing;
     public float radiusWondering;
     public Vector2 pointToGo;
     public State currentState;
+    
+
+
     public enum State
     {
         FullHp = 0,
@@ -52,64 +36,93 @@ public class IA_Valkyrie : MonoBehaviour
 
     [Space(20)]
 
-    [BoxGroup("Attaque - Javelot")] public int puissanceAttaqueJavelot;
-    [BoxGroup("Attaque - Javelot")] public float javelotSpeed;
-    [BoxGroup("Attaque - Javelot")] public float StartUpJavelotTime;
-    [BoxGroup("Attaque - Javelot")] public float IndicJavelotTime;
-    [BoxGroup("Attaque - Javelot")] public List<int> javelotsToSpawn = new List<int>();
-    [BoxGroup("Attaque - Javelot")] public List<float> javelotInterval = new List<float>();
-    [BoxGroup("Attaque - Javelot")] public float StartUpJavelotTimeTimer;
+    [BoxGroup("Attaque - Javelot")] [Tooltip("Dégâts de l'attaque")]public int puissanceAttaqueJavelot;
+    [BoxGroup("Attaque - Javelot")] [Tooltip("Vitesse du javelot")]public float javelotSpeed;
+    [BoxGroup("Attaque - Javelot")] [Tooltip("Fréquence de l'attaque")]public float StartUpJavelotTime;
+    [BoxGroup("Attaque - Javelot")] [Tooltip("Temps de l'indicateur du javelot")]public float IndicJavelotTime;
+    [BoxGroup("Attaque - Javelot")] [Tooltip("Javelots à spawn selon la vie de la Valkyrie, utilisé aussi pour le saut")]public List<int> javelotsToSpawn = new List<int>();
+    [BoxGroup("Attaque - Javelot")] [Tooltip("l'intervale de lancer entre chaque javelot selon la vie de la valkyrie")]public List<float> javelotInterval = new List<float>();
     [Header("Refs et visus")]
     [BoxGroup("Attaque - Javelot")] public JavelotValkyrie projectilJavelot;
     [BoxGroup("Attaque - Javelot")] [HideInInspector] public Vector2 dir;
     [BoxGroup("Attaque - Javelot")] public Transform[] restingPosList;
+    [Header("Débug")]
+    [BoxGroup("Attaque - Javelot")] public float StartUpJavelotTimeTimer;
     [Space(20)]
     
-    [BoxGroup("Attaque - Jump")] [NaughtyAttributes.ReadOnly] public int FallDamage;
-    [BoxGroup("Attaque - Jump")] public float fallDamageMultiplier = 1.5f;
-    [BoxGroup("Attaque - Jump")] public float jumpSpeed;
-    [BoxGroup("Attaque - Jump")] public float airTravelSpeed;
-    [BoxGroup("Attaque - Jump")] public float pushForce;
-    [BoxGroup("Attaque - Jump")] public bool hasShaked;
-    [BoxGroup("Attaque - Jump")] public bool hasFallen;
-    [BoxGroup("Attaque - Jump")] [Tooltip("Le temps que met l'attaque à se tick")] public float TriggerJumpTime;
-    [BoxGroup("Attaque - Jump")] public float JumpTime;
-    [BoxGroup("Attaque - Jump")] public float IndicationTime;
-    [BoxGroup("Attaque - Jump")] public float FallTime;
-    [Foldout("Timers - Jump")] public float TriggerJumpTimeTimer;     
-    [Foldout("Timers - Jump")] public float JumpTimeTimer;            // Le temps que met la valkyrie à sauter et disparaitre
-    [Foldout("Timers - Jump")] public float IndicationTimeTimer;           // Le temps que met la valkyrie entre l'indication de l'attaque (zone rouge) et la retombée
-    [Foldout("Timers - Jump")] public float FallTimeTimer;           // Le temps que met la valkyrie entre la retombée et le retour à son etat normal.
+    [BoxGroup("Attaque - Jump")] [Tooltip("Dégâts de l'attaque")]public int FallDamage;
+    [BoxGroup("Attaque - Jump")] [Tooltip("Vitesse de retombée de la Valkyrie et des javelots")]public float jumpSpeed;
+    [BoxGroup("Attaque - Jump")] [Tooltip("vitesse de la valkyrie dans les airs selon sa vie")]public float[] airTravelSpeed;
+    [BoxGroup("Attaque - Jump")] [Tooltip("knockback de l'attaque")]public float pushForce;
+    [BoxGroup("Attaque - Jump")] [Tooltip("Fréquence d'attaque")] public float TriggerJumpTime;
+    [BoxGroup("Attaque - Jump")] [Tooltip("Latence avant le déplacement dans les airs")]public float JumpTime;
+    [BoxGroup("Attaque - Jump")] [Tooltip("Temps de déplacement avant la retombée")]public float IndicationTime;
+    [BoxGroup("Attaque - Jump")] [Tooltip("Durée des hitboxs")]public float FallTime;
     [Header("Refs et visus")]
     [BoxGroup("Attaque - Jump")] public GameObject indicationFall;
     [BoxGroup("Attaque - Jump")] public GameObject hitboxFall;
-    [BoxGroup("Attaque - Jump")] private Vector2 fallPos;
     [BoxGroup("Attaque - Jump")] public GameObject SpriteObj;
     [BoxGroup("Attaque - Jump")] public GameObject ombreObj;
     [BoxGroup("Attaque - Jump")] public GameObject activeOmbre;
     [BoxGroup("Attaque - Jump")] public Vector3 stretchAmount;
     [BoxGroup("Attaque - Jump")] public List<Skyfall> skyfallIndic = new List<Skyfall>();
+    [Header("Dégug")]
+    [BoxGroup("Attaque - Jump")] public float TriggerJumpTimeTimer;
+    [BoxGroup("Attaque - Jump")] public float JumpTimeTimer;
+    [BoxGroup("Attaque - Jump")] public float IndicationTimeTimer;
+    [BoxGroup("Attaque - Jump")] public float FallTimeTimer;
+    [BoxGroup("Attaque - Jump")] public bool hasShaked;
+    [BoxGroup("Attaque - Jump")] public bool hasFallen;
+    [BoxGroup("Attaque - Jump")] private Vector2 fallPos;
     private float distanceWithPlayer;
     private Vector3 savedScale;
     private Vector3 savedPos;
 
     [Space(20)] 
-    [BoxGroup("Attaque - Dash")] public List<int> dashAmount = new List<int>();
-
-    [BoxGroup("Attaque - Dash")] public bool isDashing;
-    [BoxGroup("Attaque - Dash")] public bool charging;
-    [BoxGroup("Attaque - Dash")] public float TriggerDashTimer;
-    [BoxGroup("Attaque - Dash")] public float TriggerDashTime;
-    [BoxGroup("Attaque - Dash")] public float windUpSpeed;
-    [BoxGroup("Attaque - Dash")] public float windUpDistance;
-    [BoxGroup("Attaque - Dash")] public float chargeSpeed;
-    [BoxGroup("Attaque - Dash")] public float chargeDistance;
-    [BoxGroup("Attaque - Dash")] public float TimeBetweenDashes;
-    [BoxGroup("Attaque - Dash")] public float StunTime;
-    [BoxGroup("Attaque - Dash")] public int executedDashes;
+    [BoxGroup("Attaque - Dash")] [Tooltip("Nombre de dashs par attaque selon la vie de la Valkyrie")]public List<int> dashAmount = new List<int>();
+    [BoxGroup("Attaque - Dash")] [Tooltip("Fréquence de l'attaque")]public float TriggerDashTime;
+    [BoxGroup("Attaque - Dash")] [Tooltip("Temps de chargement d'un dash selon la vie de la Valkyrie")]public float[] windUpSpeed;
+    [BoxGroup("Attaque - Dash")] [Tooltip("Intensité du shake pendant le chargement")]public float windUpDistance;
+    [BoxGroup("Attaque - Dash")] [Tooltip("Vitesse du dash (en secondes)")]public float chargeSpeed;
+    [BoxGroup("Attaque - Dash")] [Tooltip("Distance du dash")]public float chargeDistance;
+    [BoxGroup("Attaque - Dash")] [Tooltip("Latence entre deux dashs selon la la vie de la Valkyrie")]public float[] TimeBetweenDashes;
+    [BoxGroup("Attaque - Dash")] [Tooltip("Stun à la fin de l'attaque selon la vie de la Valkyrie")]public float[] StunTime;
     [Header("Refs et visus")]
     [BoxGroup("Attaque - Dash")] public GameObject dashIndic;
     [BoxGroup("Attaque - Dash")] public GameObject IndicMask;
+    [Header("Débug")]
+    [BoxGroup("Attaque - Dash")] public bool isDashing;
+    [BoxGroup("Attaque - Dash")] public bool charging;
+    [BoxGroup("Attaque - Dash")] public int executedDashes;
+    [BoxGroup("Attaque - Dash")] public float TriggerDashTimer;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    [Foldout("Refs")]public static IA_Valkyrie instance;
+    [Foldout("Refs")]public GameObject emptyLayers;
+    [Foldout("Refs")]public MonsterLifeManager life;
+    [Foldout("Refs")]public SpriteRenderer[] spriteArray;
+    [Foldout("Refs")]private float currentIdleTime;
+    [Foldout("Refs")]public GameObject player;
+    [Foldout("Refs")]public Seeker seeker;
+    [Foldout("Refs")]public AIPath aipath;
+    [Foldout("Refs")]private Path path;
+    [Foldout("Refs")]public GameObject canvasLifeBar;
+    [Foldout("Refs")]private Rigidbody2D rb;
+    [Foldout("Refs")]private Collider2D collider;
+    [Foldout("Refs")]public Animator anim;
+    [Foldout("Refs")]IAstarAI ai;
+    [Foldout("Refs")]public AIDestinationSetter playerFollow;
     
 
     //Fonctions ******************************************************************************************************************************************************
@@ -123,7 +136,6 @@ public class IA_Valkyrie : MonoBehaviour
         instance = this;
         DOTween.SetTweensCapacity(500,50);
         puissanceAttaqueJavelot = GetComponentInParent<MonsterLifeManager>().data.damage;
-        FallDamage = Mathf.RoundToInt(puissanceAttaqueJavelot * fallDamageMultiplier);
 
     }
     
@@ -172,7 +184,7 @@ public class IA_Valkyrie : MonoBehaviour
             IndicationTimeTimer += Time.deltaTime;
             dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,CharacterController.instance.transform.position.y - transform.position.y);
             dir.Normalize();
-            rb.velocity = dir * airTravelSpeed;
+            rb.velocity = dir * airTravelSpeed[(int)currentState];
             distanceWithPlayer = Vector2.Distance(CharacterController.instance.transform.position,transform.position);
             if (IndicationTimeTimer > IndicationTime || distanceWithPlayer <= 2)
             {
@@ -199,13 +211,15 @@ public class IA_Valkyrie : MonoBehaviour
         }
         else if (isDashing && executedDashes >= dashAmount[(int)currentState])
         {
-            aipath.canMove = true;
-            isAttacking = false;
-            isDashing = false;
-            charging = false;
-            TriggerDashTimer = 0;
-            executedDashes = 0;
-            
+            transform.DOMove(transform.position, StunTime[(int)currentState]).OnComplete((() =>
+            {
+                aipath.canMove = true;
+                isAttacking = false;
+                isDashing = false;
+                charging = false;
+                TriggerDashTimer = 0;
+                executedDashes = 0;
+            }));
         }
 
 
@@ -244,7 +258,7 @@ public class IA_Valkyrie : MonoBehaviour
             currentIdleTime -= Time.deltaTime;
             if (currentIdleTime < 0)
             {
-                currentIdleTime = idleTimeMin;
+                currentIdleTime = idleTime;
                 playerFollow.enabled = false;
                 PickRandomPoint();
                 ai.destination = pointToGo;
@@ -325,7 +339,7 @@ public class IA_Valkyrie : MonoBehaviour
         ai.canMove = true;
         IndicationTimeTimer = 0;
         isAttacking = false;*/
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(jumpSpeed * 0.7f);
         activeOmbre.transform.DOScale(Vector3.one * 0.36f, 0.5f);
         SpriteObj.transform.DOScale(savedScale, 0.2f);
         yield return new WaitForSeconds(0.5f);
@@ -365,7 +379,7 @@ public class IA_Valkyrie : MonoBehaviour
         var Indication = Instantiate(dashIndic, transform.position, Quaternion.Euler(0, 0, angle));
         /*var currentMask = Instantiate(IndicMask, transform.position, quaternion.Euler(0, 0, angle));
         currentMask.transform.DOMove(dir * chargeDistance, windUpSpeed);*/
-        transform.DOPunchPosition(reversedir* windUpDistance,windUpSpeed).OnComplete((() =>
+        transform.DOPunchPosition(reversedir* windUpDistance,windUpSpeed[(int)currentState]).OnComplete((() =>
         {
             charging = true;
             //Destroy(currentMask);
@@ -375,7 +389,7 @@ public class IA_Valkyrie : MonoBehaviour
                 executedDashes++;
                 if (executedDashes < dashAmount[(int)currentState])
                 {
-                    transform.DOMove(transform.position, TimeBetweenDashes).OnComplete((() =>
+                    transform.DOMove(transform.position, TimeBetweenDashes[(int)currentState]).OnComplete((() =>
                     {
                         charging = false;
                         isDashing = false;
