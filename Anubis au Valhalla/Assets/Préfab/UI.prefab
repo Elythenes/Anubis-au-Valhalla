@@ -15883,7 +15883,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   internalTimer: 60
-  timerLimit: 60
+  timerLimit: 30
+  sg: {fileID: 0}
+  tempsAdditionnel: 0
+  multiplicateurTemps: 2
   timer: {fileID: 19000200012418202}
 --- !u!1 &3737129267466199655
 GameObject:
@@ -29324,8 +29327,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281730946
-  m_fontColor: {r: 0.509434, g: 0.026432898, b: 0.21111618, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -29876,7 +29879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8408649043472295527
 RectTransform:
   m_ObjectHideFlags: 0
