@@ -32,6 +32,8 @@ public class MonsterLifeManager : MonoBehaviour
     public IA_Monstre1 IALoup;
     public IA_Guerrier IAGuerrier;
     public IA_Corbeau IACorbeau;
+    public IA_Valkyrie bossBehiavour;
+    private bool dieOnce;
     
     public bool isDisolve;
     public SpriteRenderer sprite2DRend;
@@ -264,9 +266,21 @@ public class MonsterLifeManager : MonoBehaviour
         
         }
         
-        if (vieActuelle <= 0)
+        if (vieActuelle <= 0 && !dieOnce)
         {
-            Die();
+            if (!isBoss)
+            {
+                Die();
+                dieOnce = true;
+            }
+            else
+            {
+               IA_Valkyrie.instance.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+               IA_Valkyrie.instance.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+                bossBehiavour.enabled = false;
+                CinematiqueBoss.instance.isDead = true;
+                dieOnce = true;
+            }
         }
     }
 
