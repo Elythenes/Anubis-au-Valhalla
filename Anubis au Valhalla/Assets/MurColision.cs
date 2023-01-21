@@ -41,7 +41,7 @@ public class MurColision : MonoBehaviour
                 g.playerCol.enabled = false; 
                 g.Dashing();
                 g.allowMovements = false;
-                Debug.Log("Givin' it a little push");
+                //Debug.Log("Givin' it a little push");
                 
             }
             else
