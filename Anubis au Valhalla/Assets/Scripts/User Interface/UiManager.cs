@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -36,6 +37,8 @@ public class UiManager : MonoBehaviour
     [Foldout("POTION MENU")] public GameObject newPotionCitation;
     [Foldout("POTION MENU")] public GameObject buttonSwitch;
     [Foldout("POTION MENU")] public GameObject buttonPrendre;
+    [Foldout("POTION MENU")] public GameObject potionChoiceArrow;
+    [Foldout("POTION MENU")] public float rotaZ;
 
     [Foldout("PAUSE MENU")] public GameObject menuPause;
     [Foldout("PAUSE MENU")] public KeyCode buttonPause;
@@ -403,6 +406,27 @@ public class UiManager : MonoBehaviour
             boxPotionTexte.GetComponent<TextMeshProUGUI>().text = "Je n'ai pas de potion actuellement";
             boxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
             globalBoxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
+        }
+    }
+
+    public void DebugOverButton()
+    {
+        Debug.Log("oui cocuouc");
+    }
+
+    public void InvertChoiceArrow(int cas)
+    {
+        switch (cas)
+        {
+            case 0:
+                Debug.Log("yué soui là");
+                potionChoiceArrow.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0,rotaZ);
+                break;
+            
+            case 1:
+                Debug.Log("paslà");
+                potionChoiceArrow.GetComponent<RectTransform>().rotation = quaternion.EulerXYZ(0,0,0);
+                break;
         }
     }
     

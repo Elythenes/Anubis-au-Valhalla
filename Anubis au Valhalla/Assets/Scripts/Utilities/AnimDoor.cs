@@ -19,10 +19,15 @@ public class AnimDoor : MonoBehaviour
         {
             anim.SetBool("Open",true);
         }
+        else
+        {
+            anim.SetBool("Open",false);
+        }
     }
 
     private void OnDisable()
     {
         anim.SetBool("Open",false);
+        //anim.
     }
 }
