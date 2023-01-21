@@ -43,7 +43,7 @@ public class Salle : MonoBehaviour
     public int spawnedElites = 0;
 
     private float waveTimer;
-    [HideInInspector] public TextMove text;
+    public TextMove text;
     [Serializable]
     public class Props
     {
@@ -294,7 +294,7 @@ public class Salle : MonoBehaviour
                 spawnBank -= costList[chosenValue];
                 costList[chosenValue] += SalleGenerator.Instance.inflation;
                 var chosenPoint = point[Random.Range(0, point.Count)];
-                var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
+                var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity);
                 var enemyScript = enemyObject.GetComponent<MonsterLifeManager>();
                 currentEnemies.Add(enemyScript);
                 discardedPoints.Add(chosenPoint);
@@ -319,7 +319,7 @@ public class Salle : MonoBehaviour
                     var chosenEnemy = SalleGenerator.Instance.spawnGroups.Last().enemiesToSpawn[chosenValue];
                     if (chosenEnemy.isElite) spawnedElites++;
                     var chosenPoint = point[Random.Range(0, point.Count)];
-                    var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
+                    var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity);
                     var enemyScript = enemyObject.GetComponent<MonsterLifeManager>();
                     currentEnemies.Add(enemyScript);
                     discardedPoints.Add(chosenPoint);
@@ -337,7 +337,7 @@ public class Salle : MonoBehaviour
                     var chosenEnemy = SalleGenerator.Instance.spawnGroups.Last().enemiesToSpawn[chosenValue];
                     var chosenPoint = point[Random.Range(0, point.Count)];
                     if (chosenEnemy.isElite) spawnedElites++;
-                    var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
+                    var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity);
                     var enemyScript = enemyObject.GetComponent<MonsterLifeManager>();
                     currentEnemies.Add(enemyScript);
                     discardedPoints.Add(chosenPoint);
@@ -358,7 +358,7 @@ public class Salle : MonoBehaviour
             if (chosenEnemy.isElite) spawnedElites++;
             spawnBank -= costList[chosenValue];
             var chosenPoint = point[Random.Range(0, point.Count)];
-            var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity,chosenPoint.transform);
+            var enemyObject =Instantiate(chosenEnemy.prefab, chosenPoint.transform.position,quaternion.identity);
             var enemyScript = enemyObject.GetComponent<MonsterLifeManager>();
             currentEnemies.Add(enemyScript);
             if (overdose)

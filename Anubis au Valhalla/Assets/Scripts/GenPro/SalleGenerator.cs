@@ -142,6 +142,11 @@ namespace GenPro
                         dungeonSize -= shopsVisited;
                         shopsVisited = 0;
                         spawnedShops = 0;
+                        for (int i = 0; i < sDoors.Count; i++)
+                        {
+                                sDoors[i].ResetDoorState();
+                        }
+
                         TransitionToNextRoom(door,switchDoor,type);
 
                 }
