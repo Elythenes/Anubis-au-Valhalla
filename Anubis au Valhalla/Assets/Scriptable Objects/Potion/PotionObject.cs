@@ -28,7 +28,7 @@ public class PotionObject : ScriptableObject
     [BoxGroup("DEBUFFS")] public int wArmor;
 
     [Header("GRAPH")]
-    public Texture sprite;
+    public Sprite sprite;
     //public VFX vfx;
 
     public enum PotionType

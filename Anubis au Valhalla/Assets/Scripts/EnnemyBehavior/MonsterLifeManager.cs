@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 
 public class MonsterLifeManager : MonoBehaviour
 {
+    public bool isBoss;
     public EnemyData data;
     public GameObject textDamage;
     public GameObject textCriticalDamage;
@@ -31,6 +32,8 @@ public class MonsterLifeManager : MonoBehaviour
     public IA_Monstre1 IALoup;
     public IA_Guerrier IAGuerrier;
     public IA_Corbeau IACorbeau;
+    public IA_Valkyrie bossBehiavour;
+    private bool dieOnce;
     
     public bool isDisolve;
     public SpriteRenderer sprite2DRend;
@@ -87,36 +90,41 @@ public class MonsterLifeManager : MonoBehaviour
         }
         vieActuelle = vieMax;
         demiSpeed = ai.maxSpeed / 2;
-        child.SetActive(false);
-        StartCoroutine(DelayedSpawn());
-
+        if (!isBoss)
+        {
+            child.SetActive(false);
+            StartCoroutine(DelayedSpawn());
+        }
     }
 
     private void FixedUpdate()
     {
-        if (isDisolve)
+        if (!isBoss)
         {
-            if (CharacterController.instance.transform.position.x > transform.position.x)
+            if (isDisolve)
             {
-                //Debug.Log("droite");
-                var localRotation = sprite2DRend.transform.localRotation;
-                localRotation = Quaternion.Euler(localRotation.x, 0, localRotation.z);
-                sprite2DRend.transform.localRotation = localRotation;
-            }
-            else if (CharacterController.instance.transform.position.x < transform.position.x)
-            {
-                //Debug.Log("gauche");
-                var localRotation = sprite2DRend.transform.localRotation;
-                localRotation = Quaternion.Euler(localRotation.x, -180, localRotation.z);
-                sprite2DRend.transform.localRotation = localRotation;
-            }
-            disolveValue += disolveValueAmount;
-            sprite2DRend.material.SetFloat("_Step", disolveValue);
-            if (disolveValue >= 1)
-            {
-                isDisolve = false;
-                //Destroy(sprite2DRend.gameObject);
-                sprite2DRend.enabled = false;
+                if (CharacterController.instance.transform.position.x > transform.position.x)
+                {
+                    //Debug.Log("droite");
+                    var localRotation = sprite2DRend.transform.localRotation;
+                    localRotation = Quaternion.Euler(localRotation.x, 0, localRotation.z);
+                    sprite2DRend.transform.localRotation = localRotation;
+                }
+                else if (CharacterController.instance.transform.position.x < transform.position.x)
+                {
+                    //Debug.Log("gauche");
+                    var localRotation = sprite2DRend.transform.localRotation;
+                    localRotation = Quaternion.Euler(localRotation.x, -180, localRotation.z);
+                    sprite2DRend.transform.localRotation = localRotation;
+                }
+                disolveValue += disolveValueAmount;
+                sprite2DRend.material.SetFloat("_Step", disolveValue);
+                if (disolveValue >= 1)
+                {
+                    isDisolve = false;
+                    //Destroy(sprite2DRend.gameObject);
+                    sprite2DRend.enabled = false;
+                }
             }
         }
     }
@@ -258,9 +266,21 @@ public class MonsterLifeManager : MonoBehaviour
         
         }
         
-        if (vieActuelle <= 0)
+        if (vieActuelle <= 0 && !dieOnce)
         {
-            Die();
+            if (!isBoss)
+            {
+                Die();
+                dieOnce = true;
+            }
+            else
+            {
+               IA_Valkyrie.instance.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+               IA_Valkyrie.instance.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+                bossBehiavour.enabled = false;
+                CinematiqueBoss.instance.isDead = true;
+                dieOnce = true;
+            }
         }
     }
 

@@ -41,14 +41,17 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Enter Room")] public int doRegenOnEnterValue;
     
     [ShowIf("showBools")] [BoxGroup("Bool")] public bool getHeal;
-    [ShowIf("showBools")] [BoxGroup("Other")] public float bonusCritNeithGlyph;
-    [ShowIf("showBools")] [BoxGroup("Other")] public bool didAttack;
-    [ShowIf("showBools")] [BoxGroup("Other")] public bool hadHeal;
+    [ShowIf("showBools")] [BoxGroup("Bool")] public float bonusCritNeithGlyph;
+    [ShowIf("showBools")] [BoxGroup("Bool")] public bool didAttack;
+    [ShowIf("showBools")] [BoxGroup("Bool")] public bool hadHealForCrit;
+    [ShowIf("showBools")] [BoxGroup("Bool")] public bool hadHealForForce;
+    [ShowIf("showBools")] [BoxGroup("Bool")] public int hadHealForForceValue; 
     
     [ShowIf("showBools")] [BoxGroup("Other")] public float healBoost;
     [ShowIf("showBools")] [BoxGroup("Other")] public float criticalBoost;
     [ShowIf("showBools")] [BoxGroup("Other")] public bool doCrit;
     [ShowIf("showBools")] [BoxGroup("Other")] public int doCritHealValue;
+    
 
     //Fonctions Système ************************************************************************************************
     
@@ -189,8 +192,12 @@ public class GlyphManager : MonoBehaviour
                     if (hiero.bonusBasicStat != 0)
                     {
                         var vector2 = AnubisCurrentStats.instance.rangeAttaque[i];
+                        var vector22 = AttaquesNormales.instance.VFXobj[i].transform.localScale;
+                        vector22.x *= hiero.bonusBasicStat;
+                        vector22.y *= hiero.bonusBasicStat;
                         vector2.x *= hiero.bonusBasicStat;
                         vector2.y *= hiero.bonusBasicStat;
+                        AttaquesNormales.instance.VFXobj[i].transform.localScale = vector22;
                         AnubisCurrentStats.instance.rangeAttaque[i] = vector2;
                     }
                     else
@@ -401,7 +408,7 @@ public class GlyphManager : MonoBehaviour
                     break;
                 
                 case 130:
-                    CritBoostWhenHeal();
+                    BoostWhenHeal(0);
                     break;
                 
                 case 135: 
@@ -442,6 +449,12 @@ public class GlyphManager : MonoBehaviour
                 case 252:
                 case 253:
                     OnEnterRoom(0);
+                    break;
+                
+                case 254:
+                case 255:
+                case 256:
+                    BoostWhenHeal(1);
                     break;
             }
         }
@@ -668,25 +681,50 @@ public class GlyphManager : MonoBehaviour
         }
     }
 
-    void CritBoostWhenHeal()
+    void BoostWhenHeal(int hiero) // ,254,256,256,
     {
         if (getHeal)
         {
             getHeal = false;
-            hadHeal = true;
+            switch (hiero)
+            {
+                case 0: 
+                    hadHealForCrit = true;
+                    break;
+                case 1:
+                    hadHealForForce = true;
+                    break;
+            }
+            
+            hadHealForForce = true;
             AnubisCurrentStats.instance.criticalRate *= Mathf.RoundToInt(bonusCritNeithGlyph);
         }
 
-        if (didAttack && hadHeal)
+        if (didAttack && hadHealForCrit)
         {
             didAttack = false;
-            hadHeal = false;
+            hadHealForCrit = false;
             AnubisCurrentStats.instance.criticalRate /= Mathf.RoundToInt(bonusCritNeithGlyph);
         }
-        
+
+        if (hadHealForForce)
+        {
+            hadHealForForce = false;
+            StartCoroutine(HealBoostForceCoroutine(2));
+        }
     }
-    
-    
+
+    private IEnumerator HealBoostForceCoroutine(float duration)
+    {
+        AnubisCurrentStats.instance.totalBaseBonusDamage += hadHealForForceValue;
+        float compteur = 0f;
+        while (compteur < duration)
+        {
+            compteur += 0.1f;
+            yield return new WaitForSecondsRealtime(0.1f);
+        }
+        AnubisCurrentStats.instance.totalBaseBonusDamage -= hadHealForForceValue;
+    }
     
     
     

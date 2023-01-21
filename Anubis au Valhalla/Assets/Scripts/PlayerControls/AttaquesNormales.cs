@@ -541,7 +541,9 @@ public class AttaquesNormales : MonoBehaviour
         GameObject thrustObj = Instantiate(thrust, charaPos, Quaternion.identity);
         VFXobj[2].gameObject.SetActive(true);
         VFXobj[2].Play();
-        if (angle2 < 45 && angle2 > -45) // gauche
+        thrustObj.transform.rotation = Quaternion.Euler(0,0,angle2);
+        VFXobj[2].transform.rotation = Quaternion.Euler(0,0,angle2);
+       /* if (angle2 < 45 && angle2 > -45) // gauche
         {
             thrustObj.transform.rotation = Quaternion.Euler(0,0,0);
             VFXobj[2].transform.rotation = Quaternion.Euler(0,0,0);
@@ -560,7 +562,7 @@ public class AttaquesNormales : MonoBehaviour
         {
             thrustObj.transform.rotation = Quaternion.Euler(0,0,-90);
             VFXobj[2].transform.rotation = Quaternion.Euler(0,0,-90);
-        }
+        }*/
     }
 
     /*IEnumerator ResetState()

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class HealthBarMonstre : MonoBehaviour
 {
+    public bool isBoss;
     public static HealthBarMonstre instance;
     public Slider slider;
     public Gradient gradient;
@@ -28,7 +29,10 @@ public class HealthBarMonstre : MonoBehaviour
 
     private void Update()
     {
-        transform.position = monstreassocie.transform.position - new Vector3(0,2,0);
+        if (!isBoss)
+        {
+            transform.position = monstreassocie.transform.position - new Vector3(0,2,0);
+        }
     }
 
     public void SetMaxHealth(int health)

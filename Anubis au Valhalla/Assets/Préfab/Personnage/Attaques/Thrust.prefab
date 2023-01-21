@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8631265409915528823}
   m_Layer: 14
   m_Name: Hitbox
-  m_TagString: Untagged
+  m_TagString: AttaqueNormale
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,7 +46,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.6060482, y: 0.0089383125}
+  m_Offset: {x: 1.5080028, y: 0.0089383125}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -57,7 +57,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.2017152, y: 2.7881546}
+  m_Size: {x: 3.0056238, y: 2.7881546}
   m_EdgeRadius: 0
 --- !u!114 &8631265409915528823
 MonoBehaviour:
@@ -78,6 +78,7 @@ MonoBehaviour:
   isStop: 0
   SlashVFX: {fileID: 0}
   Impact: {fileID: 6155665587027959044, guid: 17cb3fc408f65e344942ff86111c5469, type: 3}
+  parent: {fileID: 7720393875053980675}
 --- !u!1 &7720393874893867646
 GameObject:
   m_ObjectHideFlags: 0

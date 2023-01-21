@@ -40,28 +40,33 @@ public class UiManager : MonoBehaviour
     [Foldout("PAUSE MENU")] public GameObject menuPause;
     [Foldout("PAUSE MENU")] public KeyCode buttonPause;
     [Foldout("PAUSE MENU")] public bool isPause;
-    [Foldout("PAUSE MENU")] public GameObject buttonResume;
-    [Foldout("PAUSE MENU")] public GameObject buttonRerun;
-    [Foldout("PAUSE MENU")] public GameObject buttonReturnToHub;
-    [Foldout("PAUSE MENU")] public GameObject buttonCheatMenu;
-    [Foldout("PAUSE MENU")] public GameObject buttonOptions;
-    [Foldout("PAUSE MENU")] public GameObject buttonQuit;
 
     [Foldout("INVENTORY")] public List<GameObject> listBoxInventaire;
-    [Foldout("INVENTORY")] public List<Sprite> boxGlyphBordures;
-    [Foldout("INVENTORY")] public List<RawImage> boxGlyphIcones;
+    [Foldout("INVENTORY")] public List<GameObject> listBoxInventaireIcone;
     [Foldout("INVENTORY")] public GameObject boxGlyphTitre;
     [Foldout("INVENTORY")] public GameObject boxGlyphTexte;
     [Foldout("INVENTORY")] public GameObject boxGlyphImage;
-    
+    [Foldout("INVENTORY")] public Color colorPretre;
+    [Foldout("INVENTORY")] public Sprite cadrePretre;
+    [Foldout("INVENTORY")] public Color colorPharaon;
+    [Foldout("INVENTORY")] public Sprite cadrePharaon;
+    [Foldout("INVENTORY")] public Color colorDivinite;
+    [Foldout("INVENTORY")] public Sprite cadreDivinite;
+    [Foldout("INVENTORY")] public Color colorMinor;
+    [Foldout("INVENTORY")] public Sprite cadreMinor;
+    [Foldout("INVENTORY")] public Color colorUnique;
+    [Foldout("INVENTORY")] public Sprite cadreUnique;
+    [Foldout("INVENTORY")] public Color colorRien;
+
     [Foldout("INVENTORY")] public GameObject boxPotionTitre;
     [Foldout("INVENTORY")] public GameObject boxPotionTexte;
     [Foldout("INVENTORY")] public GameObject boxPotionImage;
-    [Foldout("INVENTORY")] public GameObject interacteurPotion;
-    
+
     [Foldout("INVENTORY")] public GameObject globalBoxGlyph;
     [Foldout("INVENTORY")] public GameObject globalBoxPotion;
+    [Foldout("INVENTORY")] public Image globalBoxPotionImage;
     [Foldout("INVENTORY")] public GameObject globalBoxPowers;
+    [Foldout("INVENTORY")] public TextMeshProUGUI globalBoxTextRarity;
     
     
     [Header("Audio")]
@@ -82,7 +87,8 @@ public class UiManager : MonoBehaviour
         //spriteSpell2.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
         if (!PotionManager.Instance.isPotionSlotFill)
         {
-            spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+            spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 0);
+            boxPotionImage.GetComponent<Image>().color = new Color(255, 255, 255, 0);
         }
         
     }
@@ -142,12 +148,15 @@ public class UiManager : MonoBehaviour
 
     public void ActivatePause()
     {
+        SelectSmashButton();
+        DisablePageDroite(default);
         Pause();
         menuPause.SetActive((true));
+        
         FillBoxInventoryForGlyphs();
         if (PotionManager.Instance.currentPotion is not null)
         {
-            interacteurPotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+            boxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
         }
         isPause = true;
     }
@@ -162,33 +171,39 @@ public class UiManager : MonoBehaviour
         for (int i = 0; i < GlyphInventory.Instance.glyphInventory.Count; i++)
         {
             //listBoxInventaire[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
-            
             //boxGlyphIcones[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
+            //Texture2D texture = GlyphInventory.Instance.glyphInventory[i].icone;
+            listBoxInventaireIcone[i].GetComponent<Image>().sprite = Sprite.Create(GlyphInventory.Instance.glyphInventory[i].icone, new Rect(0, 0, GlyphInventory.Instance.glyphInventory[i].icone.width, GlyphInventory.Instance.glyphInventory[i].icone.height), Vector2.zero);
             listBoxInventaire[i].GetComponent<Button>().enabled = true;
             switch (GlyphInventory.Instance.glyphInventory[i].rare)
             {
                 case Rarity.Prêtre:
                     if (GlyphInventory.Instance.glyphInventory[i].price == 0)
                     {
-                        listBoxInventaire[i].GetComponent<RawImage>().color = new Color(120,120,120,255);
+                        listBoxInventaire[i].GetComponent<Image>().sprite = cadreMinor;
+                        listBoxInventaire[i].GetComponent<Image>().color = colorMinor;
                         Debug.Log("is minor");
                     }
                     else
                     {
-                        listBoxInventaire[i].GetComponent<RawImage>().color = new Color(163,84,63,255);
+                        listBoxInventaire[i].GetComponent<Image>().sprite = cadrePretre;
+                        listBoxInventaire[i].GetComponent<Image>().color = colorPretre;
                         Debug.Log("is prêtre");
                     }
                     break;
                 case Rarity.Pharaon:
-                    listBoxInventaire[i].GetComponent<RawImage>().color = new Color(117,126,145,255);
+                    listBoxInventaire[i].GetComponent<Image>().sprite = cadrePharaon;
+                    listBoxInventaire[i].GetComponent<Image>().color = colorPharaon;
                     Debug.Log("is pharaon");
                     break;
                 case Rarity.Divinité:
-                    listBoxInventaire[i].GetComponent<RawImage>().color = new Color(255,189,75,255);
+                    listBoxInventaire[i].GetComponent<Image>().sprite = cadreDivinite;
+                    listBoxInventaire[i].GetComponent<Image>().color = colorDivinite;
                     Debug.Log("is divinité");
                     break;
                 case Rarity.Unique:
-                    listBoxInventaire[i].GetComponent<RawImage>().color = new Color(157,23,188,255);
+                    listBoxInventaire[i].GetComponent<Image>().sprite = cadreUnique;
+                    listBoxInventaire[i].GetComponent<Image>().color = colorUnique;
                     Debug.Log("is unique");
                     break;
                 default:
@@ -203,8 +218,12 @@ public class UiManager : MonoBehaviour
             for (int i = 0; i < difference; i++)
             {
                 listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Button>().enabled = false;
+                listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Image>().sprite = cadrePretre;
+                listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Image>().color = colorRien;
+                listBoxInventaireIcone[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Image>().color = new Color(0,0,0,0);
             }
         }
+        
     }
 
     public void FillDescriptionInventory(int boxPos) //change le titre et la description dans les box à droite du livre
@@ -213,6 +232,36 @@ public class UiManager : MonoBehaviour
         boxGlyphTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].nom;
         boxGlyphTexte.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].description;
         boxGlyphImage.GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[boxPos - 1].icone;
+        switch (GlyphInventory.Instance.glyphInventory[boxPos - 1].rare)
+        {
+            case Rarity.Prêtre:
+                if (GlyphInventory.Instance.glyphInventory[boxPos - 1].price == 0)
+                {
+                    globalBoxTextRarity.SetText("Mineure");
+                    globalBoxTextRarity.color = colorMinor;
+                }
+                else
+                {
+                    globalBoxTextRarity.SetText("Prêtre");
+                    globalBoxTextRarity.color = colorPretre;
+                }
+                break;
+            case Rarity.Pharaon:
+                globalBoxTextRarity.SetText("Pharaon");
+                globalBoxTextRarity.color = colorPharaon;
+                break;
+            case Rarity.Divinité:
+                globalBoxTextRarity.SetText("Divinité");
+                globalBoxTextRarity.color = colorDivinite;
+                break;
+            case Rarity.Unique:
+                globalBoxTextRarity.SetText("Unique");
+                globalBoxTextRarity.color = colorUnique;
+                break;
+            default:
+                Debug.Log("NON2");
+                break;
+        }
     }
 
     public void FillDescriptionPowers()
@@ -247,7 +296,9 @@ public class UiManager : MonoBehaviour
                 break;
             
             default:
-                Debug.Log("NON LA PAGE DROITE MARCHE PAS");
+                globalBoxGlyph.SetActive(false);
+                globalBoxPotion.SetActive(false);
+                globalBoxPowers.SetActive(false);
                 break;
         }
     }
@@ -279,8 +330,8 @@ public class UiManager : MonoBehaviour
         //Debug.Log("entrée dans la fonction CollectPotion");
         PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside;
         PotionManager.Instance.isPotionSlotFill = true;
-        spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
-        spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 1);
+        spritePotion.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+        spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 1);
         menuCollectPotion.SetActive(false);
         TimeBack();
     }
@@ -288,9 +339,9 @@ public class UiManager : MonoBehaviour
     public void CollectPotionDebug()
     {
         PotionManager.Instance.isPotionSlotFill = true;
-        spritePotion.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+        spritePotion.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
         Debug.Log("oui");
-        spritePotion.GetComponent<RawImage>().color = new Color(255, 255, 255, 1);
+        spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 1);
     }
 
 
@@ -316,7 +367,7 @@ public class UiManager : MonoBehaviour
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
             newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
-            newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
+            newPotionSprite.GetComponent<Image>().sprite = PotionRepository.Instance.potionInside.sprite;
         }
         else
         {
@@ -326,43 +377,35 @@ public class UiManager : MonoBehaviour
             currentPotionName.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
             currentPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
             currentPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.citation;
-            currentPotionSprite.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+            currentPotionSprite.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
 
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
             newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
-            newPotionSprite.GetComponent<RawImage>().texture = PotionRepository.Instance.potionInside.sprite;
+            newPotionSprite.GetComponent<Image>().sprite = PotionRepository.Instance.potionInside.sprite;
         }
         
     }
     
     public void FillDescriptionPotion() 
     {
+        Debug.Log("ouiouiouoirf");
         if (PotionManager.Instance.currentPotion is not null)
         {
             boxPotionTitre.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.name;
             boxPotionTexte.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
-            boxPotionImage.GetComponent<RawImage>().texture = PotionManager.Instance.currentPotion.sprite;
+            boxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+            globalBoxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
         }
         else
         {
             boxPotionTitre.GetComponent<TextMeshProUGUI>().text = "";
             boxPotionTexte.GetComponent<TextMeshProUGUI>().text = "Je n'ai pas de potion actuellement";
-            boxPotionImage.GetComponent<RawImage>().color = new Color(255,255,255,0);
+            boxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
+            globalBoxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
         }
     }
-
-    void FillPotionInteracteur()
-    {
-        if (PotionManager.Instance.currentPotion is not null)
-        {
-            interacteurPotion.GetComponent<RawImage>().color = new Color(89, 89, 89);
-        }
-        else
-        {
-            
-        }
-    }
+    
        
     //Fonctions : Son ***********************************************************************************************************************************************************************************
     

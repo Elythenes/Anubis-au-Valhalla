@@ -88,8 +88,8 @@ Transform:
   m_GameObject: {fileID: 1959525455894448424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2197244, y: 1.2197931, z: 1.2197244}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5337294842957865370}
   - {fileID: 6295325891560958099}
@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   data: {fileID: 11400000, guid: 943d79b16daaccc438230030c79e2db0, type: 2}
   textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
   textCriticalDamage: {fileID: 8409354514928129382, guid: 09d93995178f35e4daa26dabc73854e4, type: 3}
@@ -639,7 +640,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.16780877, y: -0.766281}
+  m_Offset: {x: -0.06701565, y: -0.1075055}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -650,7 +651,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.4581728, y: 3.0562084}
+  m_Size: {x: 2.7276082, y: 1.7386569}
   m_EdgeRadius: 0
 --- !u!210 &6724442549269168300
 SortingGroup:
@@ -670,7 +671,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2377570479194186109}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b840a1b17d8ce94fa9b232e012ebcf2, type: 3}
   m_Name: 
@@ -688,7 +689,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2377570479194186109}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9419e18d0b76fe54f8d5f4afb630c27d, type: 3}
   m_Name: 
@@ -1155,6 +1156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d357aecb98b6447af4c8c8c9fa218f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   slider: {fileID: 4873547502329376985}
   gradient:
     serializedVersion: 2
@@ -1343,7 +1345,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1561176513
-  m_SortingLayer: -6
+  m_SortingLayer: -5
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: b573fad800f4f0243b66a8d4434a1d3e, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}

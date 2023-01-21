@@ -369,8 +369,8 @@ Transform:
   m_GameObject: {fileID: 4879579067200335354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1944174, y: 1.1944174, z: 1.1944174}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6972738216061267747}
   - {fileID: 6226055761027756327}
@@ -390,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   data: {fileID: 11400000, guid: 8231ebc60a3f99e45b7fca9b2f408305, type: 2}
   textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
   textCriticalDamage: {fileID: 8409354514928129382, guid: 09d93995178f35e4daa26dabc73854e4, type: 3}
@@ -619,6 +620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d357aecb98b6447af4c8c8c9fa218f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   slider: {fileID: 3664296721295756475}
   gradient:
     serializedVersion: 2
@@ -846,7 +848,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 485b0b5f24e6727478abc1f723b9a4b1, type: 2}
+  - {fileID: 2100000, guid: 97848c509c2eb764fbd4fadbc78874df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -878,7 +880,7 @@ Animator:
   m_GameObject: {fileID: 5482979424132028281}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ccf9c9f16b2e14a4f84ac4a1bf79d3c8, type: 2}
+  m_Controller: {fileID: 9100000, guid: ea42f5102d065fe418d2a610ed9f57d3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -921,8 +923,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 13123cce7b704da438179c3db3b32a17, type: 2}
-  initialSkinName: 
+  skeletonDataAsset: {fileID: 11400000, guid: 2621d82d5949b5740bae79bd84a172d4, type: 2}
+  initialSkinName: Base
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
   initialFlipY: 0
@@ -1234,7 +1236,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5482979424132028281}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b840a1b17d8ce94fa9b232e012ebcf2, type: 3}
   m_Name: 
@@ -1252,7 +1254,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5482979424132028281}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9419e18d0b76fe54f8d5f4afb630c27d, type: 3}
   m_Name: 
@@ -1334,7 +1336,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1561176513
-  m_SortingLayer: -6
+  m_SortingLayer: -5
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: b573fad800f4f0243b66a8d4434a1d3e, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class ThrustHitbox : Combo1Hitbox
 {
+    public GameObject parent;
     public override void Start()
     {
         transform.parent = CharacterController.instance.transform;
+        Destroy(parent, AttaquesNormales.instance.dureeHitbox[3]);
         Destroy(gameObject, AttaquesNormales.instance.dureeHitbox[3]);
         transform.localScale *= AttaquesNormales.instance.rangeAttaque[3];
     }
@@ -42,7 +44,13 @@ public class ThrustHitbox : Combo1Hitbox
                 other.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg), stagger);
                 if (!other.gameObject.GetComponentInParent<MonsterLifeManager>().elite)
                 {
+                    other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     other.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized * AttaquesNormales.instance.forceKnockback[3], ForceMode2D.Impulse);
+                }
+                else
+                {
+                    other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    other.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber]/1.5f,ForceMode2D.Impulse);
                 }
             }
         }
