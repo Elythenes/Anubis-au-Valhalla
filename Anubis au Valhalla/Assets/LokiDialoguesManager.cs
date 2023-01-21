@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class LokiDialoguesManager : MonoBehaviour
 {
@@ -15,7 +16,11 @@ public class LokiDialoguesManager : MonoBehaviour
     public float upDownY;
     public float menuSpeed;
     public CanvasGroup bouttonAnswer;
+    public Button bouttonAnswerBoutton;
     public bool fadeBoutton;
+    public CanvasGroup bouttonAnswer2;
+    public Button bouttonAnswerBoutton2;
+    public bool fadeBoutton2;
     public TextMeshProUGUI LokiName;
     public GameObject FNext;
     public Image LokiImage;
@@ -24,6 +29,9 @@ public class LokiDialoguesManager : MonoBehaviour
     public TextMeshProUGUI textDialogues;
     public CanvasGroup BlackScreen;
     public static LokiDialoguesManager instance;
+    public CanvasGroup victoryScreen;
+    public bool fadeVictoryScreen;
+    public AudioSource audioSource;
 
     private void Awake()
     {
@@ -31,6 +39,8 @@ public class LokiDialoguesManager : MonoBehaviour
         {
             instance = this;
         }
+
+        BlackScreen = GameObject.Find("TransitionFonduDialogues").GetComponent<CanvasGroup>();
     }
 
     public void Update()
@@ -41,10 +51,28 @@ public class LokiDialoguesManager : MonoBehaviour
             Color imagecolor = new Color(colorValue, colorValue, colorValue);
             LokiImage.color = imagecolor;
         }
+        else if ( colorValue >= 255)
+        {
+            colorChange = false;
+        }
+        
+        if (fadeVictoryScreen && victoryScreen.alpha < 1)
+        {
+            victoryScreen.alpha += Time.deltaTime;
+        }
         
         if (fadeBoutton && bouttonAnswer.alpha < 1)
         {
             bouttonAnswer.alpha += Time.deltaTime;
+        }
+        else if (!fadeBoutton && bouttonAnswer.alpha > 0)
+        {
+            bouttonAnswer.alpha -= Time.deltaTime;
+        }
+        
+        if (fadeBoutton2 && bouttonAnswer2.alpha < 1)
+        {
+            bouttonAnswer2.alpha += Time.deltaTime;
         }
         
         if (isFade == 1)
@@ -73,6 +101,7 @@ public class LokiDialoguesManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F) && canNextDialogue)
         {
+            UiManager.instance.PlayButtonSound();
             index++;
             NextDialogue();
         }
@@ -108,7 +137,34 @@ public class LokiDialoguesManager : MonoBehaviour
                 StopDialogue();
                 StartCoroutine(Type("Mais dit moi Anubis, je me demendais, qu'est ce que ça fait de tuer un dieu de la mort ? N'as-tu pas hâte de le découvrir ?"));
                 canNextDialogue = false;
+                bouttonAnswerBoutton.interactable = true;
                 fadeBoutton = true;
+                FNext.SetActive(false);
+                break;
+            case 6 :
+                StopDialogue();
+                StartCoroutine(Type("C'est impossible !? Même avec le pouvoir de tes âmes elle n'as pas pu t'arreter ?"));
+                canNextDialogue = true;
+                bouttonAnswer.gameObject.SetActive(false);
+                bouttonAnswerBoutton.interactable = false;
+                FNext.SetActive(true);
+                break;
+            case 7 :
+                StopDialogue();
+                StartCoroutine(Type("Alors je comprend maintenant ce que signifie le destin. Le Ragnarok ne peut donc pas être arrêté..."));
+                bouttonAnswer2.blocksRaycasts = true;
+                break;
+            case 8 :
+                StopDialogue();
+                StartCoroutine(Type("Anubis, de tous les guerriers que j'ai pu cotoyer ici, tu est surmment le plus valereux."));
+                break;
+            case 9 :
+                StopDialogue();
+                StartCoroutine(Type("Tu seras un exemple pour nous. Ta puissance et ton honneur nous inspirerons tous dans notre combat final. Adieu Anubis."));
+                fadeBoutton2 = true;
+                bouttonAnswerBoutton2.interactable = true;
+                bouttonAnswer2.interactable = true;
+                bouttonAnswer2.blocksRaycasts = true;
                 FNext.SetActive(false);
                 break;
         }
@@ -118,6 +174,16 @@ public class LokiDialoguesManager : MonoBehaviour
     {
         DialogueDOWN();
         CinematiqueBoss.instance.CotoutineStartCombat();
+    }
+
+    public void Victory()
+    {
+        VictoryScreen.instance.UpdateScore();
+        victoryScreen.blocksRaycasts = true;
+        DialogueDOWN();
+        fadeVictoryScreen = true;
+        audioSource.Play();
+        victoryScreen.interactable = true;
     }
 
 
