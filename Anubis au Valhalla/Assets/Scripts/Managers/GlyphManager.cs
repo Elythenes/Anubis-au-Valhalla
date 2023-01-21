@@ -21,6 +21,7 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerForceValue;
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerDefenseValue;
     [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerCritValue;
+    [ShowIf("showBools")] [BoxGroup("Soul Power")] public int soulPowerMagicForceValue;
 
     [ShowIf("showBools")] [BoxGroup("Dodge")] public bool dashForce;
     [ShowIf("showBools")] [BoxGroup("Dodge")] public int dashForceValue;
@@ -230,6 +231,10 @@ public class GlyphManager : MonoBehaviour
             case GlyphObject.AnubisStat.DashCd:              //réduit la durée avant qu'Anubis ne puisse re-Dash
                 AnubisCurrentStats.instance.dashCooldown -= hiero.bonusBasicStat;
                 break;
+            
+            case GlyphObject.AnubisStat.MagicForce:
+                AnubisCurrentStats.instance.magicForce += hiero.bonusBasicStat;
+                break;
         }
     }
 
@@ -248,6 +253,18 @@ public class GlyphManager : MonoBehaviour
             case 222:
             case 223:
                 soulPowerDefenseValue += Mathf.RoundToInt(hiero.bonusSituationalStat);
+                break;
+            
+            case 315:
+            case 316:
+            case 317:
+                soulPowerMagicForceValue += Mathf.RoundToInt(hiero.bonusSituationalStat);
+                break;
+            
+            case 321:
+            case 322:
+            case 323:
+                soulPowerCritValue += Mathf.RoundToInt(hiero.bonusSituationalStat);
                 break;
         }
     }
@@ -285,6 +302,12 @@ public class GlyphManager : MonoBehaviour
                 doDetectEnemies = true;
                 takeDamageStaggerTime = hiero.specialTriggerValue;
                 break;
+            
+            case 254:
+            case 255:
+            case 256:
+                hadHealForForceValue += Mathf.RoundToInt(hiero.specialTriggerValue);
+                break;
 
             case 309:
             case 310:
@@ -292,13 +315,7 @@ public class GlyphManager : MonoBehaviour
                 dashForce = true;
                 dashForceValue += Mathf.RoundToInt(hiero.additionalDamage);
                     break;
-            
-            case 321:
-            case 322:
-            case 323:
-                soulPowerCritValue += Mathf.RoundToInt(hiero.additionalDamage);
-                break;
-            
+
             case 334:
             case 335:
             case 336:
@@ -469,6 +486,12 @@ public class GlyphManager : MonoBehaviour
                     DashForce();
                     break;
                 
+                case 315:
+                case 316:
+                case 317:
+                    SoulPowerMagicForce();
+                    break;
+                
                 case 321:
                 case 322:
                 case 323:
@@ -549,9 +572,13 @@ public class GlyphManager : MonoBehaviour
     {
         AnubisCurrentStats.instance.soulBonusDamageReductionForStat = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank) * soulPowerDefenseValue);
     }
-    void SoulPowerCrit()
+    void SoulPowerCrit() //312,322,323,
     {
-        AnubisCurrentStats.instance.soulBonusCriticalRate = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank) * soulPowerCritValue);
+        AnubisCurrentStats.instance.soulBonusCriticalRate = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank * soulPowerCritValue /2));
+    }
+    void SoulPowerMagicForce() //315,316,317
+    {
+        AnubisCurrentStats.instance.soulBonusMagicForce = Mathf.RoundToInt(Mathf.Log(Souls.instance.soulBank * soulPowerMagicForceValue /3));
     }
     
     void DashForce() //309,310,311,
@@ -681,7 +708,7 @@ public class GlyphManager : MonoBehaviour
         }
     }
 
-    void BoostWhenHeal(int hiero) // ,254,256,256,
+    void BoostWhenHeal(int hiero) //130,254,256,256,
     {
         if (getHeal)
         {
@@ -690,30 +717,26 @@ public class GlyphManager : MonoBehaviour
             {
                 case 0: 
                     hadHealForCrit = true;
+                    AnubisCurrentStats.instance.criticalRate *= Mathf.RoundToInt(bonusCritNeithGlyph);
                     break;
                 case 1:
                     hadHealForForce = true;
                     break;
             }
-            
-            hadHealForForce = true;
-            AnubisCurrentStats.instance.criticalRate *= Mathf.RoundToInt(bonusCritNeithGlyph);
         }
-
+        
         if (didAttack && hadHealForCrit)
         {
             didAttack = false;
             hadHealForCrit = false;
             AnubisCurrentStats.instance.criticalRate /= Mathf.RoundToInt(bonusCritNeithGlyph);
         }
-
         if (hadHealForForce)
         {
             hadHealForForce = false;
             StartCoroutine(HealBoostForceCoroutine(2));
         }
     }
-
     private IEnumerator HealBoostForceCoroutine(float duration)
     {
         AnubisCurrentStats.instance.totalBaseBonusDamage += hadHealForForceValue;

@@ -47,6 +47,8 @@ public class AnubisCurrentStats : MonoBehaviour
    public List<float> timeForCanDash = new List<float>();
    public List<float> dashTimers = new List<float>();
    public float magicForce = 30;
+   public float magicForceForStat;
+   public float soulBonusMagicForce;
    
    [Header("DEFENSE")] 
    public int vieActuelle;
@@ -168,6 +170,8 @@ public class AnubisCurrentStats : MonoBehaviour
          damageReductionForStat = 100;
       }
       criticalRateForStat = criticalRate + soulBonusCriticalRate;
+
+      magicForceForStat = magicForce + soulBonusMagicForce;
    }
    
    
