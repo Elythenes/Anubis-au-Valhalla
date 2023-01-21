@@ -92,6 +92,7 @@ public class Salle : MonoBehaviour
             overdose = true;
             infiniteBank = true;
             challengeChosen = 2;
+            SalleGenerator.Instance.challengeChooser = 2;
             C2_Survive();
         }
         else if(!roomDone)
@@ -126,12 +127,12 @@ public class Salle : MonoBehaviour
                 Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
                 foreach (var enemy in currentEnemies)
                 {
-                    enemy.soulValue = 1;
+                    enemy.soulValue = 0;
                     enemy.Die();
                 }
                 timer.enabled = false;
                 timer.timer.enabled = false;
-                SalleGenerator.Instance.UnlockDoors();
+                //SalleGenerator.Instance.UnlockDoors();
                 text.FadeOut(text.titleAlpha,text.titleEndPos,text.title);
                 SalleGenerator.Instance.morbinTime = false;
                 return;
@@ -315,7 +316,7 @@ public class Salle : MonoBehaviour
                 hasElited = true;
                 for (int i = 0; i < SalleGenerator.Instance.maxEnemiesPerBigWave; i++)
                 {
-                    var chosenValue = Random.Range(0, costList.Count);
+                    var chosenValue = Random.Range(0, SalleGenerator.Instance.spawnGroups.Last().enemiesToSpawn.Length);
                     var chosenEnemy = SalleGenerator.Instance.spawnGroups.Last().enemiesToSpawn[chosenValue];
                     if (chosenEnemy.isElite) spawnedElites++;
                     var chosenPoint = point[Random.Range(0, point.Count)];
@@ -333,7 +334,7 @@ public class Salle : MonoBehaviour
             {
                 for (int i = 0; i < SalleGenerator.Instance.maxEnemiesPerSmallWave; i++)
                 {
-                    var chosenValue = Random.Range(0, costList.Count);
+                    var chosenValue = Random.Range(0, SalleGenerator.Instance.spawnGroups.Last().enemiesToSpawn.Length);
                     var chosenEnemy = SalleGenerator.Instance.spawnGroups.Last().enemiesToSpawn[chosenValue];
                     var chosenPoint = point[Random.Range(0, point.Count)];
                     if (chosenEnemy.isElite) spawnedElites++;
@@ -506,6 +507,7 @@ public class Salle : MonoBehaviour
                 Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
                 break;
             case 2:
+                return;
                 break;
             case 3:
                 if (timer.internalTimer > 0)

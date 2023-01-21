@@ -113,29 +113,29 @@ public class LokiDialoguesManager : MonoBehaviour
         {
             case 0:
                 StopDialogue();
-                StartCoroutine(Type("Anubis, te voila enfin..."));
+                StartCoroutine(Type("Anubis, te voilà enfin..."));
                 break;
             case 1 :
                StopDialogue();
-               StartCoroutine( Type("Tu en as mis du temps, comment oses-tu faire attendre l'être le plus puissant des 7 mondes ?"));
+               StartCoroutine( Type("Tu en as mis du temps, comment oses-tu faire attendre l'être le plus puissant des 9 mondes ?"));
                 break;
             case 2 :
                StopDialogue();
-               StartCoroutine(  Type("Tu l'auras compris, je suis Loki, le plus grand des dieux nordiques. Que dis-je le plus grand des dieux !"));
+               StartCoroutine(  Type("Tu l'auras compris, je suis Loki, le plus grand des dieux nordiques. Que dis-je, le plus grand des dieux !"));
                LokiName.text = "Loki";
                colorChange = true;
                 break;
             case 3 :
                 StopDialogue();
-                StartCoroutine(Type("La puissance de tes âmes m'ont été d'une grande aide, et je crains que celle-ci ne soit sur le point de se retourner contre toi."));
+                StartCoroutine(Type("Tes âmes m'ont été d'une grande aide, et je crains que leur pouvoir ne soit sur le point de se retourner contre toi."));
                 break;
             case 4 :
                 StopDialogue();
-                StartCoroutine(Type("Je te présente Freyja, la légendaire Valkyrie. Elle est à mon service désormais. Et tu moureras de sa main."));
+                StartCoroutine(Type("Je te présente Freyja, la légendaire Valkyrie. Elle est à mon service désormais. Et tu mourras de sa main."));
                 break;
             case 5 :
                 StopDialogue();
-                StartCoroutine(Type("Mais dit moi Anubis, je me demendais, qu'est ce que ça fait de tuer un dieu de la mort ? N'as-tu pas hâte de le découvrir ?"));
+                StartCoroutine(Type("Mais dis-moi Anubis, je me demandais, qu'est ce que ça fait de tuer un dieu de la mort ? N'as-tu pas hâte de le découvrir ?"));
                 canNextDialogue = false;
                 bouttonAnswerBoutton.interactable = true;
                 fadeBoutton = true;
@@ -143,7 +143,7 @@ public class LokiDialoguesManager : MonoBehaviour
                 break;
             case 6 :
                 StopDialogue();
-                StartCoroutine(Type("C'est impossible !? Même avec le pouvoir de tes âmes elle n'as pas pu t'arreter ?"));
+                StartCoroutine(Type("C'est impossible !? Même avec le pouvoir de tes âmes elle n'a pas pu t'arrêter ?"));
                 canNextDialogue = true;
                 bouttonAnswer.gameObject.SetActive(false);
                 bouttonAnswerBoutton.interactable = false;
@@ -151,16 +151,16 @@ public class LokiDialoguesManager : MonoBehaviour
                 break;
             case 7 :
                 StopDialogue();
-                StartCoroutine(Type("Alors je comprend maintenant ce que signifie le destin. Le Ragnarok ne peut donc pas être arrêté..."));
+                StartCoroutine(Type("Alors je comprend maintenant ce que signifie le destin. Le Ragnarök est donc inéluctable..."));
                 bouttonAnswer2.blocksRaycasts = true;
                 break;
             case 8 :
                 StopDialogue();
-                StartCoroutine(Type("Anubis, de tous les guerriers que j'ai pu cotoyer ici, tu est surmment le plus valereux."));
+                StartCoroutine(Type("Anubis, de tous les guerriers que j'ai pu rencontrer ici, tu es sûrement le plus puissant."));
                 break;
             case 9 :
                 StopDialogue();
-                StartCoroutine(Type("Tu seras un exemple pour nous. Ta puissance et ton honneur nous inspirerons tous dans notre combat final. Adieu Anubis."));
+                StartCoroutine(Type("Nous nous reverrons, Anubis, une fois que j'aurai fait face à mon destin."));
                 fadeBoutton2 = true;
                 bouttonAnswerBoutton2.interactable = true;
                 bouttonAnswer2.interactable = true;

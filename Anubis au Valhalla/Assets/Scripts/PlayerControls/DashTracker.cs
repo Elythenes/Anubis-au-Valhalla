@@ -61,7 +61,7 @@ public class DashTracker : MonoBehaviour
     {
         if (col.gameObject.CompareTag("MurInfranchissable"))
         {
-            Debug.Log("mais what");
+            //Debug.Log("mais what");
             gameObject.SetActive(false);
             CharacterController.instance.playerCol.enabled = true;
             CharacterController.instance.canBuffer = false;

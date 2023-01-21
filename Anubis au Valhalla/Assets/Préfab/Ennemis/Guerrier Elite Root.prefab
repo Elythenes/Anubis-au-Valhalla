@@ -100,7 +100,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1296937079694720217}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5080001, z: 0}
+  m_LocalPosition: {x: 0, y: -3.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   data: {fileID: 11400000, guid: f3eaabb806c1fd645ad9281739e2b7d5, type: 2}
   textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
   textCriticalDamage: {fileID: 8409354514928129382, guid: 09d93995178f35e4daa26dabc73854e4, type: 3}
@@ -257,6 +258,7 @@ MonoBehaviour:
   IALoup: {fileID: 0}
   IAGuerrier: {fileID: 2976812609861208792}
   IACorbeau: {fileID: 0}
+  bossBehiavour: {fileID: 0}
   isDisolve: 0
   sprite2DRend: {fileID: 283264176216564011}
   disolveValue: 0
@@ -264,6 +266,9 @@ MonoBehaviour:
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 2377570479194186109}
   emptyLayers: {fileID: 1296937079694720217}
+  isSmashInvinsible: 0
+  isSmashInvinsibleTime: 0
+  isSmashInvinsibleTimer: 0
   FlameInfected: 0
   FlameInfectedTimer: 0
   FlameInfectedTimerMax: 2.5
@@ -1210,6 +1215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d357aecb98b6447af4c8c8c9fa218f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   slider: {fileID: 4873547502329376985}
   gradient:
     serializedVersion: 2
