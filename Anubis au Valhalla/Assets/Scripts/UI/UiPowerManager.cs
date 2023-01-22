@@ -70,6 +70,7 @@ public class UiPowerManager : MonoBehaviour
 
     public void SetDefaultText(int power) //pour set le texte de smash par défaut
     {
+        ChangeTextBoxDependsOnMove(0);
         switch (power)
         {
             case 1 :
@@ -110,11 +111,11 @@ public class UiPowerManager : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                if (niveauP1 >= powerLevelIndexForUi + i)
+                if (niveauP1 == powerLevelIndexForUi + i) //niveauP1 >= powerLevelIndexForUi + i
                 {
                     fondForLevel[i].SetActive(true);
                 }
-                else //(niveauP1 < powerLevelIndexForUi + i) 
+                if (niveauP1 < powerLevelIndexForUi + i) 
                 { 
                     fondForLevel[i].SetActive(false);
                 }
@@ -124,7 +125,7 @@ public class UiPowerManager : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                if (niveauP2 == powerLevelIndexForUi + i)
+                if (niveauP2 == powerLevelIndexForUi + i) 
                 {
                     fondForLevel[i].SetActive(true);
                 }
