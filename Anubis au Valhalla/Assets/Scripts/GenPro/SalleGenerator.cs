@@ -325,10 +325,9 @@ namespace GenPro
                                 {
                                         MovePlayerToDoor(fromDoor);
                                 }
-                                else if (zone2)
+                                else if (zone2 && roomsDone != 0)
                                 {
                                         MovePlayerToDoor(fromDoor);
-                                        UnlockDoors();
                                 }
                                 Souls.instance.ClearOfSouls();
                                 ClearRoom(); 
