@@ -84,7 +84,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.rangeAttaque = rangeAttaque;
       atk.isC = isC;
       atk.criticalRate = criticalRateForStat;
-      //criticalBonusDamage = GlyphManager.Instance.criticalBoost;
+      criticalBonusDamage = GlyphManager.Instance.criticalBoost;
       atk.dureeHitbox = dureeHitbox;
       atk.forceKnockback = forceKnockback;
       atk.stunDurationMax = stunDurationMax;
@@ -93,6 +93,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.dashTimers = dashTimers;
 
       // pour la vie
+      vieActuelle = vieMax;
       life.vieActuelle = vieActuelle;
       life.vieMax = vieMax;
       life.damageReduction = damageReductionForStat;
@@ -115,7 +116,7 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.specialDmg = thrustDamageForStat;
       atk.isC = isC;
       atk.criticalRate = criticalRateForStat;
-      //criticalBonusDamage = GlyphManager.Instance.criticalBoost;
+      criticalBonusDamage = GlyphManager.Instance.criticalBoost;
       atk.dureeHitbox = dureeHitbox;
       atk.forceKnockback = forceKnockback;
       atk.stunDurationMax = stunDurationMax;
