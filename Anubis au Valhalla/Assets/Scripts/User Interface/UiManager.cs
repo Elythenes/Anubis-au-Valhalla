@@ -101,6 +101,12 @@ public class UiManager : MonoBehaviour
         globalBoxGlyph.SetActive(false);
         globalBoxPotion.SetActive(false);
         globalBoxPowers.SetActive(false);
+
+        foreach (var boxCase in listBoxInventaireIcone)
+        {
+            boxCase.GetComponent<Image>().color = new Color(0,0,0,0);
+        }
+        
     }
 
     private void Update()
@@ -176,7 +182,9 @@ public class UiManager : MonoBehaviour
             //listBoxInventaire[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
             //boxGlyphIcones[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
             //Texture2D texture = GlyphInventory.Instance.glyphInventory[i].icone;
+            Debug.Log(i);
             listBoxInventaireIcone[i].GetComponent<Image>().sprite = Sprite.Create(GlyphInventory.Instance.glyphInventory[i].icone, new Rect(0, 0, GlyphInventory.Instance.glyphInventory[i].icone.width, GlyphInventory.Instance.glyphInventory[i].icone.height), Vector2.zero);
+            listBoxInventaireIcone[i].GetComponent<Image>().color = new Color(255,255,255,255);
             listBoxInventaire[i].GetComponent<Button>().enabled = true;
             switch (GlyphInventory.Instance.glyphInventory[i].rare)
             {
@@ -223,7 +231,7 @@ public class UiManager : MonoBehaviour
                 listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Button>().enabled = false;
                 listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Image>().sprite = cadrePretre;
                 listBoxInventaire[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Image>().color = colorRien;
-                listBoxInventaireIcone[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Image>().color = new Color(0,0,0,0);
+                //listBoxInventaireIcone[i + GlyphInventory.Instance.glyphInventory.Count].GetComponent<Image>().color = new Color(0,0,0,0);
             }
         }
         
