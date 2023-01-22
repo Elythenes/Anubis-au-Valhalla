@@ -5,6 +5,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Vector3 = System.Numerics.Vector3;
 
 public class Souls : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Souls : MonoBehaviour
     public int soulBank = 0;
     public TextMeshProUGUI soulText;
     public TextMeshProUGUI soulTextShop;
-    private RectTransform baseTextTransform;
+    public RectTransform baseTextTransform;
     public float shakeIntensity;
     public List<GameObject> soulsInScene;
     public AudioSource audiosource;
@@ -39,6 +40,7 @@ public class Souls : MonoBehaviour
         
         UpdateSoulsCounter();
     }
+    
 
     private void Update()
     {
@@ -69,6 +71,9 @@ public class Souls : MonoBehaviour
             audiosource.PlayOneShot(getSoul,1.5f);
             isSoundOn = true;
         }
+        baseTextTransform.localScale = UnityEngine.Vector3.one * 1.5f;
+        baseTextTransform.DOKill();
+        baseTextTransform.DOScale(UnityEngine.Vector3.one, 0.5f);
         soulsInScene.Remove(collectedSoul);
         Destroy(collectedSoul);
         soulBank += value;
