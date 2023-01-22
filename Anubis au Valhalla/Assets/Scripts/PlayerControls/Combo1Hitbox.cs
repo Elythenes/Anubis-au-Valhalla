@@ -48,6 +48,7 @@ public class Combo1Hitbox : MonoBehaviour
         }
         Destroy(gameObject, AttaquesNormales.instance.dureeHitbox[comboNumber]);
        transform.localScale *= AttaquesNormales.instance.rangeAttaque[comboNumber];
+       SlashVFX.transform.localScale *=AttaquesNormales.instance.rangeAttaque[comboNumber];
     }
 
     public virtual void OnTriggerEnter2D(Collider2D col)

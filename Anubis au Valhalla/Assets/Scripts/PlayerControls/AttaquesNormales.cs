@@ -406,6 +406,7 @@ public class AttaquesNormales : MonoBehaviour
             swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
             VFXobj[index].gameObject.SetActive(true);
             VFXobj[index].Play();
+            VFXobj[index].transform.localScale = rangeAttaque[0]*3;
             VFXparent.transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
             if (angle < 90 && angle > -90) // vers la droite
             {
@@ -435,6 +436,7 @@ public class AttaquesNormales : MonoBehaviour
             swordObj.transform.localRotation = Quaternion.AngleAxis(angle,Vector3.forward);
             VFXobj[index].gameObject.SetActive(true);
             VFXobj[index].Play();
+            VFXobj[index].transform.localScale = rangeAttaque[1]*3;
             VFXparent.transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
             if (angle < 90 && angle > -90) // vers la droite
             {

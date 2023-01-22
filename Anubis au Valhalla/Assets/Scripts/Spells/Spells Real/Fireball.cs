@@ -21,7 +21,7 @@ public class Fireball : MonoBehaviour
         hitbox = GetComponent<CircleCollider2D>();
         srExplo = hitboxExplosion.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody2D>();
-        bulletSpeed = manager.p1ThrustBallVelocities[manager.currentLevelPower1];
+        bulletSpeed = manager.p1ThrustBallVelocities[manager.currentLevelPower1 -1];
         Destroy(gameObject,3f);
     }
     
@@ -80,17 +80,17 @@ public class Fireball : MonoBehaviour
             isExploding = true;
             if (!manager.p1ThrustBallExecute)
             {
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1] + (int)AnubisCurrentStats.instance.magicForce, 0.5f);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1 -1] + (int)AnubisCurrentStats.instance.magicForce, 0.5f);
             }
             else
             {
                 if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= col.GetComponentInParent<MonsterLifeManager>().vieMax * 20 / 100)
                 {
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1]*100, 0.5f);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1 -1]*100, 0.5f);
                 }
                 else
                 {
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1] + (int)AnubisCurrentStats.instance.magicForce, 0.5f);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1ThrustBallDamages[manager.currentLevelPower1 -1] + (int)AnubisCurrentStats.instance.magicForce, 0.5f);
                 }
             }
            
