@@ -76,6 +76,7 @@ public class CharacterController : MonoBehaviour
   public RectTransform doorUITransform;
   public GameObject dashTracker;
   [HideInInspector] public BoxCollider2D playerCol;
+  public ParticleSystem particulesMarche;
   //public TilemapRenderer ground;
 
 
@@ -170,6 +171,8 @@ public class CharacterController : MonoBehaviour
     {
       if (movement.magnitude != 0)
       {
+        var particulesMarcheEmission = particulesMarche.emission;
+        particulesMarcheEmission.rateOverTime = 50;
         anim.SetBool("isIdle", false);
         anim.SetBool("isWalking", true);
         timeBetweenSteps += Time.deltaTime;
@@ -182,6 +185,8 @@ public class CharacterController : MonoBehaviour
       }
       else if (movement == Vector2.zero)
       {
+        var particulesMarcheEmission = particulesMarche.emission;
+        particulesMarcheEmission.rateOverTime = 0;
         anim.SetBool("isIdle", true);
         anim.SetBool("isWalking", false);
       }
@@ -220,6 +225,8 @@ public class CharacterController : MonoBehaviour
    
     if (kb.spaceKey.wasPressedThisFrame && isDashing == false && canDash && allowMovements && !AttaquesNormales.instance.attaqueSpe2 && Time.timeScale != 0)
     {
+      var particulesMarcheEmission = particulesMarche.emission;
+      particulesMarcheEmission.rateOverTime = 500;
       timerDash = 0;
       dashTracker.SetActive(true);
       stopDash = false;
