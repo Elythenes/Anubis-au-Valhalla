@@ -164,7 +164,7 @@ Transform:
   m_GameObject: {fileID: 1959525455894448424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2197244, y: 1.2197931, z: 1.2197244}
+  m_LocalScale: {x: 0.80920416, y: 0.8092497, z: 0.80920416}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5337294842957865370}
@@ -443,6 +443,10 @@ MonoBehaviour:
   isChasing: 1
   chasingTrigger: 0
   isWondering: 0
+  indicEclaire: {fileID: 0}
+  leftEclairPos: {x: 0, y: 0}
+  rightEclairPos: {x: 0, y: 0}
+  timeForIndic: 0
   doOnce: 1
   swing: {fileID: 6343942413881442319, guid: ecad9cf076c952944a7713325d0d5750, type: 3}
   pointAttaque: {fileID: 3748801516527011793}
@@ -692,7 +696,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.16780877, y: -0.5177942}
@@ -880,7 +884,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -1.71}
+  m_AnchoredPosition: {x: 0.112, y: -2.761}
   m_SizeDelta: {x: 2.2212, y: 0.6273}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4873547501407545025
