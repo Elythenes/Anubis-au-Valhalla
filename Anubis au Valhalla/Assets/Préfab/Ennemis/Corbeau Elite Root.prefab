@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb0510bb75a34b4fa447dc414b220a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   data: {fileID: 11400000, guid: edd6ee4c73c1270488510db160508561, type: 2}
   textDamage: {fileID: 8409354514928129382, guid: a2c99c6270a2e9944bedcefb44ba49c4, type: 3}
   textCriticalDamage: {fileID: 8409354514928129382, guid: 09d93995178f35e4daa26dabc73854e4, type: 3}
@@ -143,6 +144,7 @@ MonoBehaviour:
   IALoup: {fileID: 0}
   IAGuerrier: {fileID: 0}
   IACorbeau: {fileID: 1176065865194384233}
+  bossBehiavour: {fileID: 0}
   isDisolve: 0
   sprite2DRend: {fileID: 3230444654834549964}
   disolveValue: 0
@@ -150,6 +152,9 @@ MonoBehaviour:
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 893181608378371495}
   emptyLayers: {fileID: 893181608957725828}
+  isSmashInvinsible: 0
+  isSmashInvinsibleTime: 0
+  isSmashInvinsibleTimer: 0
   FlameInfected: 0
   FlameInfectedTimer: 0
   FlameInfectedTimerMax: 2.5
@@ -1066,7 +1071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.74509805, g: 0.7254902, b: 0.64705884, a: 1}
+  m_Color: {r: 0.9254902, g: 0.8039216, b: 0.5686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1456,6 +1461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d357aecb98b6447af4c8c8c9fa218f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBoss: 0
   slider: {fileID: 302867579537839140}
   gradient:
     serializedVersion: 2
