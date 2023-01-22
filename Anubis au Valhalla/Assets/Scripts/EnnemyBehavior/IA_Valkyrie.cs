@@ -77,6 +77,7 @@ public class IA_Valkyrie : MonoBehaviour
     private Vector3 savedPos;
 
     [Space(30)] 
+    [BoxGroup("Attaque - Dash")] [Tooltip("Dégâts de l'attaque")]public int dashDamage;
     [BoxGroup("Attaque - Dash")] [Tooltip("Nombre de dashs par attaque selon la vie de la Valkyrie")]public List<int> dashAmount = new List<int>();
     [BoxGroup("Attaque - Dash")] [Tooltip("Fréquence de l'attaque")]public float TriggerDashTime;
     [BoxGroup("Attaque - Dash")] [Tooltip("Temps de chargement d'un dash selon la vie de la Valkyrie")]public float[] windUpSpeed;
@@ -341,6 +342,7 @@ public class IA_Valkyrie : MonoBehaviour
             }
             transform.DOShakePosition(1.1f,0.2f,50).OnComplete(() =>
             {
+                collider.enabled = false;
                 savedPos = SpriteObj.transform.localPosition;
                 savedScale = SpriteObj.transform.localScale;
                 activeOmbre = Instantiate(ombreObj, transform);
@@ -381,6 +383,7 @@ public class IA_Valkyrie : MonoBehaviour
             IndicationTimeTimer = 0;
             ai.canMove = true;
             hasShaked = false;
+            collider.enabled = true;
         });
 
     }
@@ -455,7 +458,7 @@ public class IA_Valkyrie : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player") && charging)
         {
-            DamageManager.instance.TakeDamage(FallDamage, gameObject);
+            DamageManager.instance.TakeDamage(dashDamage, gameObject);
         }
     }
 }
