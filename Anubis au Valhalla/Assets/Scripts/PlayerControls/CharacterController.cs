@@ -3,10 +3,13 @@ using System.Collections;
 using DG.Tweening;
 using GenPro;
 using Pathfinding;
+using Spine;
+using Spine.Unity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
+
 
 public class CharacterController : MonoBehaviour
 {
@@ -78,6 +81,7 @@ public class CharacterController : MonoBehaviour
   [HideInInspector] public BoxCollider2D playerCol;
   public ParticleSystem particulesMarche;
   public ParticleSystem particulesDash;
+  public SkeletonMecanim skeleton;
   //public TilemapRenderer ground;
 
 
@@ -140,6 +144,23 @@ public class CharacterController : MonoBehaviour
     if (Time.timeScale != 0)
     {
       Flip();
+    }
+
+    if (facing == LookingAt.Nord || facing == LookingAt.NordOuest || facing == LookingAt.NordEst)
+    {
+      skeleton.Skeleton.SetSkin("Back");
+      skeleton.Skeleton.SetSlotsToSetupPose();
+      skeleton.Skeleton.SetToSetupPose();
+      skeleton.Skeleton.SetBonesToSetupPose();
+      skeleton.Update();
+    }
+    else if (facing == LookingAt.Sud|| facing == LookingAt.SudEst || facing == LookingAt.SudOuest || facing == LookingAt.Est || facing == LookingAt.Ouest)
+    {
+      skeleton.Skeleton.SetSkin("Front");
+      skeleton.Skeleton.SetSlotsToSetupPose();
+      skeleton.Skeleton.SetToSetupPose();
+      skeleton.Skeleton.SetBonesToSetupPose();
+      skeleton.Update();
     }
    
     Keyboard kb = InputSystem.GetDevice<Keyboard>();

@@ -330,7 +330,30 @@ public class AttaquesNormales : MonoBehaviour
         
         if (angle > 45 && angle < 135) // attaque vers le haut
         {
-            // SetBool les animation vers le haut
+            if (index == 0)
+            {
+                anim.SetBool("isAttacking1",true);
+                anim.SetBool("isAttacking2",false);
+                anim.SetBool("isAttacking3",false);
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking",false);
+            }
+            else if(index == 1)
+            {
+                anim.SetBool("isAttacking1",false);
+                anim.SetBool("isAttacking2",true);
+                anim.SetBool("isAttacking3",false);
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking",false);
+            }
+            else if(index == 2)
+            {
+                anim.SetBool("isAttacking1",false);
+                anim.SetBool("isAttacking2",false);
+                anim.SetBool("isAttacking3",true);
+                anim.SetBool("isIdle",false);
+                anim.SetBool("isWalking",false);
+            }
         }
         else if (angle < 45 && angle > -45 /*droite*/|| angle > 135 && angle < 180 /*gauche-haut*/|| angle > -180 && angle < -135/*gauche-bas*/) // attaque à gauche ou à droite
         {
