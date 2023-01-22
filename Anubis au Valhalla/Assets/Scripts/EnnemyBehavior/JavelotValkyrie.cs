@@ -34,7 +34,7 @@ public class JavelotValkyrie : MonoBehaviour
 
     private void Start()
     {
-        
+        ia = IA_Valkyrie.instance;
     }
 
     void FixedUpdate()
@@ -131,9 +131,9 @@ public class JavelotValkyrie : MonoBehaviour
         rb.velocity = new Vector2(dir.x * ia.javelotSpeed, dir.y * ia.javelotSpeed);
         Destroy(gameObject,travelTime);
     }
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (col.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             DamageManager.instance.TakeDamage(ia.puissanceAttaqueJavelot, gameObject);
             Destroy(gameObject);

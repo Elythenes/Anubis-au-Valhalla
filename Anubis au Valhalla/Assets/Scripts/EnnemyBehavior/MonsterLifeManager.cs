@@ -1,11 +1,10 @@
-using System;
+
 using System.Collections;
 using DG.Tweening;
 using GenPro;
 using NaughtyAttributes;
 using Pathfinding;
 using TMPro;
-using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
