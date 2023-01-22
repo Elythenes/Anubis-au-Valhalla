@@ -28,13 +28,12 @@ public class ElectricDash : MonoBehaviour
                 col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p1DashContactDamages[manager.currentLevelPower1 - 1] + (int)AnubisCurrentStats.instance.magicForce, manager.p1DashContactStaggers[manager.currentLevelPower1 - 1]*1.5f);
             }
            
-        }
-
-        if (manager.p1DashContactPowerExtend)
-        {
-            if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= 0)
+            if (manager.p1DashContactPowerExtend)
             {
-                cooldown.countdownDurationPower1 += 2;
+                if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= 0)
+                {
+                    cooldown.countdownDurationPower1 += 2;
+                }
             }
         }
     }

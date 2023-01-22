@@ -212,7 +212,7 @@ public class IA_Valkyrie : MonoBehaviour
             dir.Normalize();
             rb.velocity = dir * airTravelSpeed[(int)currentState];
             distanceWithPlayer = Vector2.Distance(CharacterController.instance.transform.position,transform.position);
-            if (IndicationTimeTimer > IndicationTime || distanceWithPlayer <= 2)
+            if (IndicationTimeTimer > IndicationTime || distanceWithPlayer <= 0.5f)
             {
                 if (!hasFallen)
                 {
@@ -221,7 +221,7 @@ public class IA_Valkyrie : MonoBehaviour
                     hasFallen = true;
                     TriggerJumpTimeTimer = 0;
                     JumpTimeTimer = 0;
-                    var hitboxFall = Instantiate(indicationFall);
+                    var hitboxFall = Instantiate(indicationFall,transform.position,Quaternion.identity,transform);
                     Destroy(hitboxFall, jumpSpeed);
                     StartCoroutine(LagFall());
                 }
@@ -238,6 +238,7 @@ public class IA_Valkyrie : MonoBehaviour
         else if (isDashing && executedDashes >= dashAmount[(int)currentState])
         {
             isDashing = false;
+            charging = false;
             transform.DOMove(Vector3.zero, StunTime[(int)currentState]).OnComplete((() =>
             {
                 transform.DOMove(transform.position, StunTime[(int)currentState]).OnComplete((() =>
@@ -362,7 +363,7 @@ public class IA_Valkyrie : MonoBehaviour
                 collider.enabled = false;
                 savedPos = SpriteObj.transform.localPosition;
                 savedScale = SpriteObj.transform.localScale;
-                activeOmbre = Instantiate(ombreObj, transform);
+                activeOmbre = Instantiate(ombreObj, transform.position, Quaternion.identity, transform);
                 activeOmbre.transform.localScale = new Vector3(0.36f,0.36f,0.36f);
                 ombreObj.SetActive(false);
                 activeOmbre.transform.DOScale(Vector3.one * 0.2f, 0.5f);

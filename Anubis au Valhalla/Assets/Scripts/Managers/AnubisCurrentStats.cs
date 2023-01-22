@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AnubisCurrentStats : MonoBehaviour
 {
+   public bool isHub;
    public static AnubisCurrentStats instance;
    public AttaquesNormales atk;
    public DamageManager life;
@@ -93,12 +94,16 @@ public class AnubisCurrentStats : MonoBehaviour
       atk.dashTimers = dashTimers;
 
       // pour la vie
-      vieActuelle = vieMax;
-      life.vieActuelle = vieActuelle;
-      life.vieMax = vieMax;
-      life.damageReduction = damageReductionForStat;
-      life.tempsInvinsibleAfterHit = tempsInvinsbleAfterHit;
-      life.stunAfterHit = stunAfterHit;
+      if (!isHub)
+      {
+         vieActuelle = vieMax;
+         life.vieActuelle = vieActuelle;
+         life.vieMax = vieMax;
+         life.damageReduction = damageReductionForStat;
+         life.tempsInvinsibleAfterHit = tempsInvinsbleAfterHit;
+         life.stunAfterHit = stunAfterHit;
+      }
+     
 
       // pour les mouvements
       move.speedX = speedX;

@@ -189,7 +189,7 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isTutoCombat)
             {
                StopDialogue();
-               StartCoroutine(Type("Souvient toi de mes leçons. Tu peux frapper les ennemis avec ton arme en utilisant le clic gauche. Avec le clic droit, tu peux les repousser d'un coup d'estoc. Reste en mouvement en appuyant sur Espace pour effectuer un dash."));
+               StartCoroutine(Type("Souviens-toi de mes leçons. Tu peux frapper les ennemis avec ton arme en utilisant le clic gauche. Avec le clic droit, tu peux les repousser d'un coup d'estoc. Reste en mouvement en appuyant sur Espace pour effectuer un dash."));
             }
             if (activeSituation == Situation.isTutoPouvoirs)
             {
@@ -227,7 +227,7 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isTutoShop)
             {
                StopDialogue();
-               StartCoroutine(Type("Dans les autels, tu peux améliorer les différentes parties de ton arme. Parmi les 9 choix, tu ne pourras en acheter que 3. Les glyphes sont divisées en 3 raretés qui reflètent leur puissance: Prêtre, Pharaon et Divinité."));
+               StartCoroutine(Type("Dans les autels, tu peux améliorer les différentes parties de ton arme en achetant des glyphes. Parmi les 9 proposés, tu ne pourras en acheter que 3. Les glyphes sont divisées en 3 raretés qui reflètent leur puissance: Prêtre, Pharaon et Divinité."));
             }
             if (activeSituation == Situation.isTutoLD)
             {
