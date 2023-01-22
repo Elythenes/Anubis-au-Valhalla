@@ -15,7 +15,7 @@ public class ThrustHitbox : Combo1Hitbox
     
     public override void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Monstre"))
+        if (other.CompareTag("Monstre") && other.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
         {
             if (CharacterController.instance.isHiting == false && other.gameObject.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
             {
