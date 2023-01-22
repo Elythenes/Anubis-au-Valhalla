@@ -53,7 +53,7 @@ public class CharacterController : MonoBehaviour
   public float dashSpeed;
   public float timerDash;
   public float dashDuration;
-  private float timerdashCooldown;
+  public float timerdashCooldown;
   public float diagonalSpeedMultiplier;
   public bool canBuffer = false;
   public bool canBoost = false;

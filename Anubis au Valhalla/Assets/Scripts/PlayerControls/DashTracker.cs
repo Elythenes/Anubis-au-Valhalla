@@ -40,11 +40,11 @@ public class DashTracker : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0,0,135);
                 break;
             case CharacterController.LookingAt.SudEst:
-                transform.position = player.transform.position + new Vector3(0,-3,0) + new Vector3(0.5f,-0.5f,0) * distance * diagonalMultiplier;
+                transform.position = player.transform.position + new Vector3(0.5f,-3,0) + new Vector3(0.7f,-0.5f,0) * distance * diagonalMultiplier;
                 transform.rotation = Quaternion.Euler(0,0,315);
                 break;
             case CharacterController.LookingAt.SudOuest:
-                transform.position = player.transform.position + new Vector3(0,-3,0) + new Vector3(-0.5f,-0.5f,0) * distance * diagonalMultiplier;
+                transform.position = player.transform.position + new Vector3(-0.5f,-3,0) + new Vector3(-0.7f,-0.5f,0) * distance * diagonalMultiplier;
                 transform.rotation = Quaternion.Euler(0,0,235);
                 break;
         }

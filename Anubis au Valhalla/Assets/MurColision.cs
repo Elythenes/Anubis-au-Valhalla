@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class MurColision : MonoBehaviour
 {
+    public BoxCollider2D coll;
     private void Update()
     {
         var g = CharacterController.instance;
-        if (g.canBoost && !g.isDashing)
+        if (g.canBoost)
         {
-            if (!g.rb.IsTouchingLayers(128))
+            if (!coll.IsTouchingLayers(128))
             {
                 g.canBoost = false;
                 g.canBuffer = false;
@@ -17,14 +18,15 @@ public class MurColision : MonoBehaviour
                 g.QuitDash();
             }
         }
-        if (g.canBuffer && g.timerDash > g.dashDuration * 0.3f)
+        if (g.canBuffer && g.timerDash > g.dashDuration * 0.5f)
         {
-            if (!g.rb.IsTouchingLayers(128))
+            if (!coll.IsTouchingLayers(128))
             {
                 g.canBoost = false;
                 g.canBuffer = false;
                 //g.rb.velocity *= 0.5f;
                 g.QuitDash();
+                //g.timerdashCooldown = g.dashCooldown;
             }
         }
     }

@@ -53,7 +53,7 @@ public class Combo3 : MonoBehaviour
     }
     public virtual void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Monstre"))
+        if (col.CompareTag("Monstre") && col.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
         {
          
             float angle = Mathf.Atan2(transform.position.y - col.transform.position.y,transform.position.x - col.transform.position.x ) * Mathf.Rad2Deg;
