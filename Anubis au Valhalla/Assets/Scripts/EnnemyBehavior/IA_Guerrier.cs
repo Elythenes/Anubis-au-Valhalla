@@ -42,6 +42,10 @@ public class IA_Guerrier : MonoBehaviour
     public bool isWondering;
 
     [Header("Attaque")] 
+    public ParticleSystem indicEclaire;
+    public Vector2 leftEclairPos;
+    public Vector2 rightEclairPos;
+    public float timeForIndic;
     public bool doOnce;
     public GameObject swing;
     public Transform pointAttaque;
@@ -142,12 +146,16 @@ public class IA_Guerrier : MonoBehaviour
         {
             if (transform.position.x < player.transform.position.x) // Permet d'orienter le monstre vers la direction dans laquelle il se déplace
             {
+                //indicEclaire.transform.position = rightEclairPos;
+                //indicEclaire.transform.localScale = new Vector3(1, 1, 0);
                 var localRotation = transform.localRotation;
                 localRotation = Quaternion.Euler(localRotation.x, 0, localRotation.z);
                 transform.localRotation = localRotation;
             }
             else if (transform.position.x > player.transform.position.x)
             {
+                //indicEclaire.transform.position = leftEclairPos;
+                //indicEclaire.transform.localScale = new Vector3(-1, 1, 0);
                 var localRotation = transform.localRotation;
                 localRotation = Quaternion.Euler(localRotation.x, -180, localRotation.z);
                 transform.localRotation = localRotation;
@@ -178,6 +186,7 @@ public class IA_Guerrier : MonoBehaviour
                 {
                     isAttacking = true;
                     isChasing = false;
+                    StartCoroutine(VFXEclair());
                 }
         }
 
@@ -251,6 +260,11 @@ public class IA_Guerrier : MonoBehaviour
         }
     }
 
+    IEnumerator VFXEclair()
+    {
+        yield return new WaitForSeconds(timeForIndic);
+        indicEclaire.Play();
+    }
     IEnumerator FindWonderPosition()
     {
         if (doOnce && isWondering)

@@ -10,6 +10,7 @@ public class Skyfall : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
+        ia = IA_Valkyrie.instance;
         transform.position = GetPoint();
         while (col.GetContacts(new List<ContactPoint2D>()) > 0)
         {

@@ -127,6 +127,7 @@ public class CinematiqueBoss : MonoBehaviour
 
     IEnumerator CinematicDead()
     {
+        DamageManager.instance.invinsible = true;
         cameraPoint.transform.position = valkyrieIA.gameObject.transform.position - new Vector3(0, 1, 0);
         CharacterController.instance.isCinematic = true;
         CharacterController.instance.allowMovements = false;
