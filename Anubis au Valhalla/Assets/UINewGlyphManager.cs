@@ -63,19 +63,19 @@ public class UINewGlyphManager : MonoBehaviour
       
         if (CollectThings.instance.collectablePower.GetComponent<NewPowerRepository>().newPowerType == NewPowerType.Power1)
         {
-            GameObject VFXames = Instantiate(VFXAme, CharacterController.instance.transform.position, quaternion.identity);
-            VFXames.transform.parent = CharacterController.instance.transform;
+            GameObject VFXames = Instantiate(VFXAme, DamageManager.instance.transform.position- new Vector3(0,1,0), Quaternion.identity);
+            VFXames.transform.parent = DamageManager.instance.transform;
             textAmelio.text = "Pouvoir d'âmes amélioré \n Consultez l'inventaire";
             popUp.GetComponentInChildren<Image>().sprite = iconePower1;
         }
         else if(CollectThings.instance.collectablePower.GetComponent<NewPowerRepository>().newPowerType == NewPowerType.Power2)
         {
-            GameObject VFXsableOBJ = Instantiate(VFXSable, CharacterController.instance.transform.position, quaternion.identity);
-            VFXsableOBJ.transform.parent = CharacterController.instance.transform;
+            GameObject VFXsableOBJ = Instantiate(VFXSable, DamageManager.instance.transform.position- new Vector3(0,1,0), Quaternion.identity);
+            VFXsableOBJ.transform.parent = DamageManager.instance.transform;
             textAmelio.text = "Pouvoir de sable amélioré \n Consultez l'inventaire";
             popUp.GetComponentInChildren<Image>().sprite = iconePower2;
         }
-        GameObject textNewGlyph = Instantiate(popUp, transform.position + new Vector3(0,1,0),quaternion.identity);
+        GameObject textNewGlyph = Instantiate(popUp, transform.position + new Vector3(0,1,0),Quaternion.identity);
         Destroy(textNewGlyph,1f);
     }
 
