@@ -26,7 +26,7 @@ public class MurColision : MonoBehaviour
                 g.canBuffer = false;
                 //g.rb.velocity *= 0.5f;
                 g.QuitDash();
-                g.timerdashCooldown = g.dashCooldown;
+                //g.timerdashCooldown = g.dashCooldown;
             }
         }
     }

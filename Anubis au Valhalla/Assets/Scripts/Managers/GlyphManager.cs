@@ -52,7 +52,6 @@ public class GlyphManager : MonoBehaviour
     [ShowIf("showBools")] [BoxGroup("Other")] public float criticalBoost;
     [ShowIf("showBools")] [BoxGroup("Other")] public bool doCrit;
     [ShowIf("showBools")] [BoxGroup("Other")] public int doCritHealValue;
-    
 
     //Fonctions Système ************************************************************************************************
     

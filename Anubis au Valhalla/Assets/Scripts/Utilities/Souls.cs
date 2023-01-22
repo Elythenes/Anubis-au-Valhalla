@@ -71,7 +71,7 @@ public class Souls : MonoBehaviour
             audiosource.PlayOneShot(getSoul,1.5f);
             isSoundOn = true;
         }
-        baseTextTransform.localScale = UnityEngine.Vector3.one * 1.5f;
+        baseTextTransform.localScale = UnityEngine.Vector3.one * 1.5f + baseTextTransform.localScale / (soulBank + 5);
         baseTextTransform.DOKill();
         baseTextTransform.DOScale(UnityEngine.Vector3.one, 0.5f);
         soulsInScene.Remove(collectedSoul);

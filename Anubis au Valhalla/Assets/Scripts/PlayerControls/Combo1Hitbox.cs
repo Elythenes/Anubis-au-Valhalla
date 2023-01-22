@@ -53,7 +53,7 @@ public class Combo1Hitbox : MonoBehaviour
     public virtual void OnTriggerEnter2D(Collider2D col)
     {
         
-        if (col.CompareTag("Monstre"))
+        if (col.CompareTag("Monstre") && col.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
         {
             
             if (/*CharacterController.instance.isHiting == false &&*/ col.gameObject.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
