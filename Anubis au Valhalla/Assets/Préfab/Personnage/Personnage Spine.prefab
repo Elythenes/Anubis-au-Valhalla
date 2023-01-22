@@ -848,7 +848,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3173214407000024652}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.98, y: -1.36, z: 0}
+  m_LocalPosition: {x: 0.21, y: -0.55, z: 0}
   m_LocalScale: {x: 1.015014, y: 1.015014, z: 1.015014}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1365,7 +1365,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 74c045d238481ef4ebf595e0efa87c89, type: 2}
+  - {fileID: 2100000, guid: 78242ec45f0017d459e0ee8accdac6e9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1397,7 +1397,7 @@ Animator:
   m_GameObject: {fileID: 6322498022790916544}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fcd174b9621de7d4ab62314ee069fe34, type: 2}
+  m_Controller: {fileID: 9100000, guid: 40cdcc00c451a9141ad8e44f91d8fa37, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1419,8 +1419,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: acec00ffd55d95244bbc75206e98c345, type: 2}
-  initialSkinName: 
+  skeletonDataAsset: {fileID: 11400000, guid: 13c24cc3b9ba74445bf71ca846b530f1, type: 2}
+  initialSkinName: Front
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
   initialFlipY: 0
@@ -1466,7 +1466,7 @@ MonoBehaviour:
   speedX: 150
   speedY: 100
   isAttacking: 0
-  facing: 0
+  facing: 2
   isInteracting: 0
   canInteract: 0
   canInteractTuto: 0
@@ -1518,6 +1518,7 @@ MonoBehaviour:
   playerCol: {fileID: 0}
   particulesMarche: {fileID: 7104517715434420622}
   particulesDash: {fileID: 8772927717119926472}
+  skeleton: {fileID: 6322498022790916601}
 --- !u!82 &367431123413964990
 AudioSource:
   m_ObjectHideFlags: 0
