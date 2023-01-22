@@ -77,6 +77,7 @@ public class CharacterController : MonoBehaviour
   public GameObject dashTracker;
   [HideInInspector] public BoxCollider2D playerCol;
   public ParticleSystem particulesMarche;
+  public ParticleSystem particulesDash;
   //public TilemapRenderer ground;
 
 
@@ -227,6 +228,8 @@ public class CharacterController : MonoBehaviour
     {
       var particulesMarcheEmission = particulesMarche.emission;
       particulesMarcheEmission.rateOverTime = 500;
+      var particulesDashEmission = particulesDash.emission;
+      particulesDashEmission.rateOverTime = 750;
       timerDash = 0;
       dashTracker.SetActive(true);
       stopDash = false;
@@ -247,7 +250,8 @@ public class CharacterController : MonoBehaviour
 
     if (timerDash > dashDuration) // A la fin du dash...
     {
-      
+      var particulesDashEmission = particulesDash.emission;
+      particulesDashEmission.rateOverTime = 0;
       isDashing = false;
       if (!canBoost && !canBuffer)
       {
