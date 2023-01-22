@@ -38,7 +38,9 @@ public class PotionManager : MonoBehaviour
    public AudioSource audioSource;
    public AudioClip[] audioClipArray;
 
-
+   [Header("Visuel")] 
+   public GameObject defenceVFX;
+   public GameObject attaqueVFX;
    private void Awake()
    {
       if (Instance == null)
@@ -97,11 +99,23 @@ public class PotionManager : MonoBehaviour
       if (glou.type == PotionObject.PotionType.StatBasicPotion 
           || glou.type == PotionObject.PotionType.StatSpecificPotion)
       {
-         AnubisCurrentStats.instance.totalBaseBonusDamage += AnubisCurrentStats.instance.totalBaseDamage * glou.damage/100;
+         if (glou.damage > 0)
+         {
+            GameObject atkVFX = Instantiate(attaqueVFX, DamageManager.instance.transform.position - new Vector3(0,1,0), Quaternion.identity);
+            atkVFX.transform.parent = DamageManager.instance.transform;
+            AnubisCurrentStats.instance.totalBaseBonusDamage += AnubisCurrentStats.instance.totalBaseDamage * glou.damage/100;
+         }
+         
 
          DamageManager.instance.Heal(glou.heal);
+
+         if (glou.armor > 0)
+         {
+            GameObject defVFX = Instantiate(defenceVFX, DamageManager.instance.transform.position - new Vector3(0,1,0), Quaternion.identity);
+            defVFX.transform.parent = DamageManager.instance.transform;
+            AnubisCurrentStats.instance.damageReduction *= glou.armor;
+         }
          
-         AnubisCurrentStats.instance.damageReduction *= glou.armor;
          if (glou.wArmor != 0)
          {
             AnubisCurrentStats.instance.damageReduction /= glou.wArmor;
