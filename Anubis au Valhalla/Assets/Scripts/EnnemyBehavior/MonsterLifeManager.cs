@@ -264,7 +264,7 @@ public class MonsterLifeManager : MonoBehaviour
                 healthBar.SetHealth(vieActuelle);
                 isInvincible = true;
             }
-            Debug.Log("perd : "+damage+". Reste : "+vieActuelle);
+            //Debug.Log("perd : "+damage+". Reste : "+vieActuelle);
         }
         
         if (vieActuelle <= 0 && !dieOnce)

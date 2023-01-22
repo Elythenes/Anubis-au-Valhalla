@@ -10,7 +10,7 @@ public class WaveEau : MonoBehaviour
     private void Start()
     {
         manager = GameObject.Find("NewPowerManager").GetComponent<NewPowerManager>();
-        Destroy(gameObject,manager.p1ComboConeDurations[manager.currentLevelPower1]);
+        Destroy(gameObject,manager.p1ComboConeDurations[manager.currentLevelPower1 - 1]);
         transform.localScale = Vector3.zero;
         if (manager.p1ComboConeHalfSphere)
         {
@@ -23,7 +23,7 @@ public class WaveEau : MonoBehaviour
 
     private void Update()
     {
-        if (transform.localScale.x < manager.p1ComboConeReaches[manager.currentLevelPower1])
+        if (transform.localScale.x < manager.p1ComboConeReaches[manager.currentLevelPower1 - 1])
         {
             transform.localScale += new Vector3(0.01f, 0.01f, 0);
         }
@@ -37,11 +37,11 @@ public class WaveEau : MonoBehaviour
         {
             if (!manager.p1ComboConeStagger)
             {
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(manager.p1ComboConeDamages[manager.currentLevelPower1] + AnubisCurrentStats.instance.magicForce),0.5f);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(manager.p1ComboConeDamages[manager.currentLevelPower1 - 1] + AnubisCurrentStats.instance.magicForce),0.5f);
             }
             else
             {
-                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(manager.p1ComboConeDamages[manager.currentLevelPower1]+ AnubisCurrentStats.instance.magicForce),9f);
+                col.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(manager.p1ComboConeDamages[manager.currentLevelPower1 - 1]+ AnubisCurrentStats.instance.magicForce),9f);
             }
           
         }
