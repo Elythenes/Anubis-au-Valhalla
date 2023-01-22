@@ -14,7 +14,7 @@ public class FlameArea : MonoBehaviour
     private void Start()
     {
         manager = GameObject.Find("NewPowerManager").GetComponent<NewPowerManager>();
-        Destroy(gameObject,manager.p2DashTrailDurations[manager.currentLevelPower2]);
+        Destroy(gameObject,manager.p2DashTrailDurations[manager.currentLevelPower2 - 1]);
         transform.localScale = new Vector2(manager.p2DashTrailSize,manager.p2DashTrailSize);
     }
 
@@ -41,11 +41,11 @@ public class FlameArea : MonoBehaviour
 
                 if (!manager.p2DashTrailMiniStagger)
                 {
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2] + (int)AnubisCurrentStats.instance.magicForce/10,0f);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2 - 1] + (int)AnubisCurrentStats.instance.magicForce/10,0f);
                 }
                 else
                 {
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2] + (int)AnubisCurrentStats.instance.magicForce/10,0.15f);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2 -1] + (int)AnubisCurrentStats.instance.magicForce/10,0.15f);
                 }
                
                 tempsReloadHitFlameAreaTimer = 0;
