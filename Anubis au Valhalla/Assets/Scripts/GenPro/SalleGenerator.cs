@@ -70,6 +70,7 @@ namespace GenPro
                 public GameObject parasiteToSpawn;
                 public bool zone2;
                 public bool morbinTime;
+                public bool isHub;
                 
 
                 public enum DoorOrientation
@@ -119,7 +120,10 @@ namespace GenPro
                                 OpenDoors((DoorOrientation)i,true);
                         }
                         roomsDone++;
-                        currentRoom.roomDone = true;
+                        if (!isHub)
+                        {
+                                currentRoom.roomDone = true;
+                        }
                 }
 
                 /// <summary>

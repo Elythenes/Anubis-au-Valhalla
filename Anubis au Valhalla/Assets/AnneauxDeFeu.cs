@@ -28,6 +28,7 @@ public class AnneauxDeFeu : MonoBehaviour
         currentRate = ia.ExpansionRate;
         StartCoroutine(Expand());
         Destroy(gameObject,3.5f);
+        StartCoroutine(Increase());
     }
 
     // Update is called once per frame
@@ -57,5 +58,12 @@ public class AnneauxDeFeu : MonoBehaviour
             DamageManager.instance.TakeDamage(ia.ringDmg, gameObject);
             collider2D.enabled = false;
         }
+    }
+
+    IEnumerator Increase()
+    {
+        yield return new WaitForSeconds(ia.ExpansionSpeedUpRate);
+        currentExpansionAmount += 0.001f;
+        StartCoroutine(Increase());
     }
 }

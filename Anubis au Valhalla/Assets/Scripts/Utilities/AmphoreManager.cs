@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,7 @@ public class AmphoreManager : MonoBehaviour
     public SpriteRenderer sr;
     public BoxCollider2D box;
     public GameObject ombre;
+    public GameObject miniMap;
     public float timeToKill;
     [Header("Audio")]
     public AudioSource audioSource;
@@ -22,6 +24,7 @@ public class AmphoreManager : MonoBehaviour
             Souls.instance.CreateSouls(transform.position, Random.Range(0,4));
             Instantiate(partculesAmphores, transform.position,Quaternion.identity);
             Destroy(ombre);
+            Destroy(miniMap);
             StartCoroutine(WaitKill());
             sr.enabled = false;
             box.enabled = false;

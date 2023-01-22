@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2234051143283907992}
   - component: {fileID: 1479204539746872807}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 995811853933577166}
   - component: {fileID: 2265890905634347929}
   - component: {fileID: -913611150392300469}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AJavelotValkyrie
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -153,6 +153,8 @@ MonoBehaviour:
   indicationJavelot: {fileID: 7396578503708388540}
   indicHolder: {fileID: 2754086667300403284}
   skyFall: 0
+  falling: 0
+  javelotNumber: 0
 --- !u!61 &2265890905634347929
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -166,7 +168,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.591673, y: 0.02}
+  m_Offset: {x: -1.7087216, y: 0.06204462}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -177,7 +179,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 21.153107, y: 4.670305}
+  m_Size: {x: 19.387207, y: 1.64305}
   m_EdgeRadius: 0
 --- !u!50 &-913611150392300469
 Rigidbody2D:
@@ -262,6 +264,10 @@ PrefabInstance:
     - target: {fileID: 9059446152863737838, guid: d50c72a2c8d99624aa5799879a0fb137, type: 3}
       propertyPath: m_Name
       value: IndicationJavelot
+      objectReference: {fileID: 0}
+    - target: {fileID: 9059446152863737838, guid: d50c72a2c8d99624aa5799879a0fb137, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9059446152863737838, guid: d50c72a2c8d99624aa5799879a0fb137, type: 3}
       propertyPath: m_IsActive
