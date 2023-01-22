@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using GenPro;
+using NaughtyAttributes;
 using Pathfinding;
 using TMPro;
 using UnityEditor.Searcher;
@@ -12,7 +13,7 @@ using Random = UnityEngine.Random;
 public class MonsterLifeManager : MonoBehaviour
 {
     public bool isBoss;
-    public EnemyData data;
+    [Expandable] public EnemyData data;
     public GameObject textDamage;
     public GameObject textCriticalDamage;
     public Animator animator;
@@ -263,7 +264,7 @@ public class MonsterLifeManager : MonoBehaviour
                 healthBar.SetHealth(vieActuelle);
                 isInvincible = true;
             }
-        
+            Debug.Log("perd : "+damage+". Reste : "+vieActuelle);
         }
         
         if (vieActuelle <= 0 && !dieOnce)
