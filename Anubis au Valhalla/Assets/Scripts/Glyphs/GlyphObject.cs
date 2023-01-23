@@ -20,7 +20,7 @@ public class GlyphObject : ScriptableObject
     public float price;
     
     [Header("GRAPH")] 
-    public Texture2D icone;
+    public Sprite icone;
 
     [BoxGroup("SHOW VALUES")] public bool isBasicStatUp;
     [BoxGroup("SHOW VALUES")] public bool isSituationalStatUp;

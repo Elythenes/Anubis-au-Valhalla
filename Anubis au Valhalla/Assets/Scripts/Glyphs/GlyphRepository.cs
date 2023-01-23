@@ -47,7 +47,7 @@ public class GlyphRepository : MonoBehaviour
             int numberGot = Random.Range(0, glyphsList.Count);
             glyphInside = glyphsList[numberGot];
             //var pngImage = Sprite.Create(glyphInside.icone,new Rect(0,0,glyphInside.icone.width,glyphInside.icone.height), new Vector2(glyphInside.icone.width / 2, glyphInside.icone.height / 2));
-            var pngImage = Sprite.Create(glyphInside.icone,new Rect(0,0,glyphInside.icone.width,glyphInside.icone.height), new Vector2(0.5f, 0.5f));
+            var pngImage = glyphInside.icone;
             sprite.sprite = pngImage;
         }
         
