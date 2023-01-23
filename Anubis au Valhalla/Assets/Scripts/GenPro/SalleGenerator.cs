@@ -333,6 +333,11 @@ namespace GenPro
                                 {
                                         MovePlayerToDoor(fromDoor);
                                 }
+                                else if (zone2 && roomsDone == 0)
+                                {
+                                        Debug.Log("called");
+                                        MovePlayerToDoor(fromDoor);
+                                }
                                 Souls.instance.ClearOfSouls();
                                 ClearRoom(); 
                                 if(currentRoom != startRoom)currentRoom.GetSpawnPoints(Random.Range(0, 3));
