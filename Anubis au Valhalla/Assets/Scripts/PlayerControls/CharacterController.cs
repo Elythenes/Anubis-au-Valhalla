@@ -431,6 +431,8 @@ public class CharacterController : MonoBehaviour
         if (AttaquesNormales.instance.blockFlip)
         {
           transform.localRotation = Quaternion.Euler(0, 0,0);
+          NewPowerManager.Instance.VFXAme.transform.localRotation = Quaternion.Euler(0, 0,0);
+          NewPowerManager.Instance.VFXSable.transform.localRotation = Quaternion.Euler(0, 0,0);
           //doorUITransform.rotation = new Quaternion(0, 0, 0, 0);
         }
        
@@ -448,6 +450,8 @@ public class CharacterController : MonoBehaviour
         if (AttaquesNormales.instance.blockFlip)
         {
           transform.localRotation = Quaternion.Euler(0, 180,0);
+          NewPowerManager.Instance.VFXAme.transform.localRotation = Quaternion.Euler(0, -180,0);
+          NewPowerManager.Instance.VFXSable.transform.localRotation = Quaternion.Euler(0, -180,0);
           //doorUITransform.rotation = new Quaternion(0,180,0, 0);
         }
       }
