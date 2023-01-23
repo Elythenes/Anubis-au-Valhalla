@@ -312,7 +312,7 @@ public class MonsterLifeManager : MonoBehaviour
         }
         else if (IAGuerrier is not null)
         {
-            animator.SetBool("isIdle",true);
+            animator.SetBool("IsDead",true);
             IAGuerrier.audioSource.pitch = 1;
             IAGuerrier.audioSource.PlayOneShot(IAGuerrier.audioClipArray[3]);
             IAGuerrier.isDead = true;
