@@ -125,7 +125,8 @@ public class Salle : MonoBehaviour
         {
             if (timer.internalTimer < 0)
             {
-                Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
+                SalleGenerator.Instance.currentChest = Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity);
+                SalleGenerator.Instance.UnlockDoors();
                 foreach (var enemy in currentEnemies)
                 {
                     enemy.soulValue = 0;
@@ -496,16 +497,16 @@ public class Salle : MonoBehaviour
         }
 
         if (currentEnemies.Count != 0) return;
-        if (infiniteBank && timer.internalTimer > 0) return;
+        if (infiniteBank) return;
         SalleGenerator.Instance.UnlockDoors();
         text.FadeOut(text.titleAlpha,text.titleEndPos,text.title);
         switch (SalleGenerator.Instance.challengeChooser)
         {
             case  0:
-                Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
+                SalleGenerator.Instance.currentChest = Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity);
                 break;
             case 1:
-                Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
+                SalleGenerator.Instance.currentChest = Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity);
                 break;
             case 2:
                 return;
@@ -513,20 +514,20 @@ public class Salle : MonoBehaviour
             case 3:
                 if (timer.internalTimer > 0)
                 {
-                    Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
+                    SalleGenerator.Instance.currentChest = Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity);
                 }
                 else
                 {
-                    Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
+                    SalleGenerator.Instance.currentChest = Instantiate(coffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity);
                 }
                 timer.enabled = false;
                 timer.timer.enabled = false;
                 break;
             case 4:
-                Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
+                SalleGenerator.Instance.currentChest = Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity);
                 break;
             case 5:
-                Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity, transform);
+                SalleGenerator.Instance.currentChest = Instantiate(SalleGenerator.Instance.challengeCoffre,player.transform.position - new Vector3(0,1,0),Quaternion.identity);
                 break;
         }
 

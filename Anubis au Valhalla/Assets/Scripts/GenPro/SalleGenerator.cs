@@ -71,6 +71,7 @@ namespace GenPro
                 public bool zone2;
                 public bool morbinTime;
                 public bool isHub;
+                public GameObject currentChest;
                 
 
                 public enum DoorOrientation
