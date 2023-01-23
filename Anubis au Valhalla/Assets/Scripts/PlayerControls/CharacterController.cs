@@ -548,6 +548,7 @@ public class CharacterController : MonoBehaviour
   }
   private void InteractWithDoor(Collider2D col)
   {
+    Destroy(SalleGenerator.Instance.currentChest);
     if (SoundManager.instance.isShop)
     {
       if (SalleGenerator.Instance.zone2)
