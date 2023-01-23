@@ -167,11 +167,11 @@ public class AnubisCurrentStats : MonoBehaviour
       }
       thrustDamageForStat = thrustBaseDamage + thrustBaseBonusDamage + Mathf.RoundToInt(totalBaseBonusDamage) + soulBonusDamageForStat;
 
-      if (damageReductionForStat < 100)
+      if (damageReduction + soulBonusDamageReductionForStat < 100)
       {
          damageReductionForStat = damageReduction + soulBonusDamageReductionForStat;
       }
-      else
+      else 
       {
          damageReductionForStat = 100;
       }

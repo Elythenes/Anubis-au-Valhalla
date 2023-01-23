@@ -25,12 +25,10 @@ public class TextMove : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
         {
-            DestroyImmediate(gameObject);
-            return;
+            instance = this;
         }
-        instance = this;
 
     }
 
