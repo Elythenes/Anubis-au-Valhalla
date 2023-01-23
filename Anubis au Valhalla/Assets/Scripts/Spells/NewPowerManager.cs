@@ -343,7 +343,7 @@ public class NewPowerManager : MonoBehaviour
                     StartCoroutine(CooldownPower(1, cooldownPower1 * currentDurationPower1 / durationPower1));
                     currentDurationPower1 = 0f;
                 }
-
+                
                 canUsePower2 = false;
                 isPower2Active = true;
                 //Debug.Log("P2 Actif");
@@ -501,6 +501,7 @@ public class NewPowerManager : MonoBehaviour
         switch (power)
         {
             case 1:
+                earlyDisablePower1 = false;
                 if (currentDurationPower1 != 0)
                 {
                     CooldownPowerBar.Instance.durationBeforeCooldownPower1 = durationPower1 - currentDurationPower1;
@@ -521,11 +522,11 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("p1 rechargé après " + currentCooldownPower1 + " sec.");
                 currentCooldownPower1 = 0f;
                 canUsePower1 = true;
-                earlyDisablePower1 = false;
                 CooldownPowerBar.Instance.p1OnCd = false;
                 break;
             
             case 2:
+                earlyDisablePower2 = false;
                 if (currentDurationPower2 != 0)
                 {
                     CooldownPowerBar.Instance.durationBeforeCooldownPower2 = durationPower2 - currentDurationPower2;
@@ -546,7 +547,6 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("p2 rechargé après " + currentCooldownPower2 + " sec.");
                 currentCooldownPower2 = 0f;
                 canUsePower2 = true;
-                earlyDisablePower2 = false;
                 CooldownPowerBar.Instance.p2OnCd = false;
                 break;
         }

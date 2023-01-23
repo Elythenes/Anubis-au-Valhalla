@@ -8,6 +8,8 @@ public class VictoryScreen : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public static VictoryScreen instance;
 
+    public AudioSource audiosource;
+
     private void Awake()
     {
         if (instance == null)
@@ -44,6 +46,11 @@ public class VictoryScreen : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void SonBoutton()
+    {
+        audiosource.Play();
     }
 }
 

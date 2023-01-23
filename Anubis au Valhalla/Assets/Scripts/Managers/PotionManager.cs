@@ -51,6 +51,7 @@ public class PotionManager : MonoBehaviour
       if (addStartingPotion)
       {
          currentPotion = startingPotion;
+         isPotionSlotFill = true;
          UiManager.instance.CollectPotionDebug();
       }
    }

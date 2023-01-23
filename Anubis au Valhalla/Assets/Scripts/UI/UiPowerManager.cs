@@ -107,11 +107,12 @@ public class UiPowerManager : MonoBehaviour
     
     void HighlightIfLevel(int niveauP1, int niveauP2) //surligne en fond les cases quand le niveau est acquis
     { //oskour mon crâne a explosé, mais ça va mieux :D
+        Debug.Log(niveauP1 + " et " + niveauP2);
         if (isPower1)
         {
             for (int i = 0; i < 3; i++)
             {
-                if (niveauP1 == powerLevelIndexForUi + i) //niveauP1 >= powerLevelIndexForUi + i
+                if (niveauP1 >= powerLevelIndexForUi + i) //niveauP1 >= powerLevelIndexForUi + i
                 {
                     fondForLevel[i].SetActive(true);
                 }
@@ -125,7 +126,7 @@ public class UiPowerManager : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                if (niveauP2 == powerLevelIndexForUi + i) 
+                if (niveauP2 >= powerLevelIndexForUi + i) 
                 {
                     fondForLevel[i].SetActive(true);
                 }
