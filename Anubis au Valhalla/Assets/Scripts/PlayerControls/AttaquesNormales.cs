@@ -158,6 +158,7 @@ public class AttaquesNormales : MonoBehaviour
             stunDuration[2] += Time.deltaTime;
             if (stunDuration[2] >= stunDurationMax[3])
             {
+                anim.SetBool("isAttackingSpeUp",false);
                 anim.SetBool("isAttackingSpe",false);
                 anim.SetBool("isAttackingSpeDown",false);
                 anim.SetBool("isWalking",false);
@@ -504,9 +505,15 @@ public class AttaquesNormales : MonoBehaviour
         {
             if (CharacterController.instance.movement == Vector2.zero)
             {
-                Debug.Log("attaqueSpéNorth");
                 CharacterController.instance.facing = CharacterController.LookingAt.Nord;
             }
+            anim.SetBool("isAttackingSpeUp",true);
+            anim.SetBool("isAttackingSpe",false);
+            anim.SetBool("isAttacking1",false);
+            anim.SetBool("isAttacking2",false);
+            anim.SetBool("isAttacking3",false);
+            anim.SetBool("isIdle",false);
+            anim.SetBool("isWalking",false);
         }
         else if (angle2 < 45 && angle2 > -45 || angle2 > 135 && angle2 < 180 || angle2 > -180 && angle2 < -135) // attaque à gauche ou à droite
         {
@@ -525,6 +532,7 @@ public class AttaquesNormales : MonoBehaviour
                 }    
             }
             
+            anim.SetBool("isAttackingSpeUp",false);
             anim.SetBool("isAttackingSpe",true);
             anim.SetBool("isAttacking1",false);
             anim.SetBool("isAttacking2",false);
@@ -538,6 +546,7 @@ public class AttaquesNormales : MonoBehaviour
             {
                 CharacterController.instance.facing = CharacterController.LookingAt.Sud;
             }      
+            anim.SetBool("isAttackingSpeUp",false);
             anim.SetBool("isAttackingSpeDown",true);
             anim.SetBool("isAttacking1Down",false);
             anim.SetBool("isAttacking2Down",false);
