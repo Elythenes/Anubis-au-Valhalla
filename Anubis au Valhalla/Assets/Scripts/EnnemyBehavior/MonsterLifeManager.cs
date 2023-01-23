@@ -221,11 +221,6 @@ public class MonsterLifeManager : MonoBehaviour
 
     public virtual void TakeDamage(int damage, float staggerDuration)
     {
-        if (IAGuerrier is not null)
-        {
-            IAGuerrier.StopShake();
-
-        }
         if (!isInvincible)
         {
             criticalPick = Random.Range(0,100);

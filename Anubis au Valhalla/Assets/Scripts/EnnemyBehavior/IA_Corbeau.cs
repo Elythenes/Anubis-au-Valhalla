@@ -1,6 +1,7 @@
 using System.Collections;
 using GenPro;
 using Pathfinding;
+using Pathfinding.Util;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -247,7 +248,6 @@ public class IA_Corbeau : MonoBehaviour
                 anim.SetBool("isWalking",true);
             }
         }
-
         if (Vector3.Distance(player.transform.position, transform.position) <= radiusFleeing * 3 && !life.isMomified && !isFleeing && canMove) // Quand le monstre arrive proche du joueur, il commence à attaquer
         {
             isRotating = true;
