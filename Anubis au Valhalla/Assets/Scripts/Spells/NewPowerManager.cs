@@ -357,6 +357,7 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("Early Stop p1");
                 StopCoroutine(tempsP1);
                 isPower1Active = false;
+                isAmeActive = false;
                 StartCoroutine(CooldownPower(1, cooldownPower1 * currentDurationPower1 / durationPower1));
                 currentDurationPower1 = 0f;
             }
@@ -397,6 +398,7 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("Early Stop p2");
                 StopCoroutine(tempsP2);
                 isPower2Active = false;
+                isSableActive = false;
                 StartCoroutine(CooldownPower(2, cooldownPower2 * currentDurationPower2 / durationPower2));
                 currentDurationPower2 = 0f;
             }
