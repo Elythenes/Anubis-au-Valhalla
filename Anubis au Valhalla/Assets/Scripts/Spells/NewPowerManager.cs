@@ -505,10 +505,14 @@ public class NewPowerManager : MonoBehaviour
             }
             if (an.attaqueSpeSpell)
             {
+
                 Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     Vector2 charaPos = CharacterController.instance.transform.position;
+                    Vector3 moveDirection = (mousePos - charaPos);
+                    moveDirection.z = 0;
+                    moveDirection.Normalize();
                     float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-                    Instantiate(p2ThrustBandageHitbox,cc.transform.position,Quaternion.AngleAxis(angle,Vector3.forward));
+                    Instantiate(p2ThrustBandageHitbox,cc.transform.position + moveDirection,Quaternion.AngleAxis(angle,Vector3.forward));
             }
             if (cc.isDashing) //si dash
             {
