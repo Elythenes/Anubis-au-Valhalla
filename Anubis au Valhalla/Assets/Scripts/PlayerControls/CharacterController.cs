@@ -146,7 +146,7 @@ public class CharacterController : MonoBehaviour
       Flip();
     }
 
-    if (facing == LookingAt.Nord || facing == LookingAt.NordOuest || facing == LookingAt.NordEst)
+    if (AttaquesNormales.instance.blockFlip && facing == LookingAt.Nord || facing == LookingAt.NordOuest || facing == LookingAt.NordEst)
     {
       skeleton.Skeleton.SetSkin("Back");
       skeleton.Skeleton.SetSlotsToSetupPose();
@@ -154,7 +154,7 @@ public class CharacterController : MonoBehaviour
       skeleton.Skeleton.SetBonesToSetupPose();
       skeleton.Update();
     }
-    else if (facing == LookingAt.Sud|| facing == LookingAt.SudEst || facing == LookingAt.SudOuest || facing == LookingAt.Est || facing == LookingAt.Ouest)
+    else if (AttaquesNormales.instance.blockFlip && facing == LookingAt.Sud|| facing == LookingAt.SudEst || facing == LookingAt.SudOuest || facing == LookingAt.Est || facing == LookingAt.Ouest)
     {
       skeleton.Skeleton.SetSkin("Front");
       skeleton.Skeleton.SetSlotsToSetupPose();

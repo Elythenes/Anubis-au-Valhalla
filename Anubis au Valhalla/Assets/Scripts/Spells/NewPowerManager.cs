@@ -357,6 +357,7 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("Early Stop p1");
                 StopCoroutine(tempsP1);
                 isPower1Active = false;
+                isAmeActive = false;
                 StartCoroutine(CooldownPower(1, cooldownPower1 * currentDurationPower1 / durationPower1));
                 currentDurationPower1 = 0f;
             }
@@ -397,6 +398,7 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("Early Stop p2");
                 StopCoroutine(tempsP2);
                 isPower2Active = false;
+                isSableActive = false;
                 StartCoroutine(CooldownPower(2, cooldownPower2 * currentDurationPower2 / durationPower2));
                 currentDurationPower2 = 0f;
             }
@@ -409,14 +411,14 @@ public class NewPowerManager : MonoBehaviour
     {
         if (isPower1Active)
         {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 charaPos = CharacterController.instance.transform.position;
+            float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
             if (an.attaque3) //Attaque smash
             {
-                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 charaPos = CharacterController.instance.transform.position;
                 Vector3 moveDirection = (mousePos - charaPos);
                 moveDirection.z = 0;
                 moveDirection.Normalize();
-                float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
                 float angleInversé = Mathf.Atan2(charaPos.y - mousePos.y ,charaPos.x - mousePos.x ) * Mathf.Rad2Deg;
                 Instantiate(p1ComboConeHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
                 
@@ -428,9 +430,7 @@ public class NewPowerManager : MonoBehaviour
 
             if (an.attaqueSpeSpell) // Attaque puissante
             {
-                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 charaPos = CharacterController.instance.transform.position;
-                float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+
                 if (!p1ThrustBallTriple)
                 {
                     Instantiate(p1ThrusrBallHitbox,cc.transform.position,Quaternion.AngleAxis(angle,Vector3.forward));     
@@ -458,10 +458,39 @@ public class NewPowerManager : MonoBehaviour
 
             if (cc.debutDash) // Attaque Dash
             {
+                var direction = new Quaternion();
+                switch (CharacterController.instance.facing)
+                {
+                    case CharacterController.LookingAt.Est:
+                        direction = Quaternion.Euler(0,0,270);
+                        break;
+                    case CharacterController.LookingAt.NordEst:
+                        direction = Quaternion.Euler(0,0,315);
+                        break;
+                    case CharacterController.LookingAt.NordOuest:
+                        direction = Quaternion.Euler(0,0,45);
+                        break;
+                    case CharacterController.LookingAt.Ouest:
+                        direction = Quaternion.Euler(0,0,90);              
+                        break;
+                    case CharacterController.LookingAt.SudEst:
+                        direction = Quaternion.Euler(0,0,225);  
+                        break;
+                    case CharacterController.LookingAt.SudOuest:
+                        direction = Quaternion.Euler(0,0,135); 
+                        break;
+                    case CharacterController.LookingAt.Nord:
+                        direction = Quaternion.Euler(0,0,0);     
+                        break;
+                    case CharacterController.LookingAt.Sud:
+                        Debug.Log("Mais fréro kestufous la");
+                        direction = Quaternion.Euler(0, 0, 180);
+                        break;
+                }
+                Debug.Log(direction);
                 GameObject paralysieHitbox =
-                    Instantiate(p1DashContactHitbox, cc.transform.position, Quaternion.identity);
-                paralysieHitbox.transform.parent = cc.transform;
-                Destroy(paralysieHitbox, cc.dashDuration - cc.timerDash);
+                    Instantiate(p1DashContactHitbox, cc.transform.position, direction, cc.transform);
+                Destroy(paralysieHitbox, cc.dashCooldown);
             }
         }
 
@@ -478,10 +507,14 @@ public class NewPowerManager : MonoBehaviour
             }
             if (an.attaqueSpeSpell)
             {
+
                 Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     Vector2 charaPos = CharacterController.instance.transform.position;
+                    Vector3 moveDirection = (mousePos - charaPos);
+                    moveDirection.z = 0;
+                    moveDirection.Normalize();
                     float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-                    Instantiate(p2ThrustBandageHitbox,cc.transform.position,Quaternion.AngleAxis(angle,Vector3.forward));
+                    Instantiate(p2ThrustBandageHitbox,cc.transform.position + moveDirection,Quaternion.AngleAxis(angle,Vector3.forward));
             }
             if (cc.isDashing) //si dash
             {
