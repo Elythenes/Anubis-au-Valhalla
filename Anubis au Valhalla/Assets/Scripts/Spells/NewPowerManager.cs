@@ -409,11 +409,14 @@ public class NewPowerManager : MonoBehaviour
     {
         if (isPower1Active)
         {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 charaPos = CharacterController.instance.transform.position;
+            float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
             if (an.attaque3) //Attaque smash
             {
-                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 charaPos = CharacterController.instance.transform.position;
-                float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+                Vector3 moveDirection = (mousePos - charaPos);
+                moveDirection.z = 0;
+                moveDirection.Normalize();
                 float angleInversé = Mathf.Atan2(charaPos.y - mousePos.y ,charaPos.x - mousePos.x ) * Mathf.Rad2Deg;
                 Instantiate(p1ComboConeHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
                 
@@ -425,9 +428,7 @@ public class NewPowerManager : MonoBehaviour
 
             if (an.attaqueSpeSpell) // Attaque puissante
             {
-                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 charaPos = CharacterController.instance.transform.position;
-                float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
+
                 if (!p1ThrustBallTriple)
                 {
                     Instantiate(p1ThrusrBallHitbox,cc.transform.position,Quaternion.AngleAxis(angle,Vector3.forward));     
@@ -456,9 +457,38 @@ public class NewPowerManager : MonoBehaviour
             if (cc.debutDash) // Attaque Dash
             {
                 GameObject paralysieHitbox =
-                    Instantiate(p1DashContactHitbox, cc.transform.position, Quaternion.identity);
-                paralysieHitbox.transform.parent = cc.transform;
-                Destroy(paralysieHitbox, cc.dashDuration - cc.timerDash);
+                    Instantiate(p1DashContactHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward), cc.transform);
+                var realVFXMain = paralysieHitbox.GetComponent<ElectricDash>().realVFX.main;
+                switch (cc.facing)
+                { 
+                    case CharacterController.LookingAt.Nord:
+                        realVFXMain.startRotation = 0;
+                        break;
+                    case CharacterController.LookingAt.Est:
+                        realVFXMain.startRotation = 270;
+                        break;
+                    case CharacterController.LookingAt.Ouest:
+                        realVFXMain.startRotation = 90;
+                        break;
+                    case CharacterController.LookingAt.Sud:
+                        realVFXMain.startRotation = 180;
+                        break;
+                    case CharacterController.LookingAt.NordEst:
+                        realVFXMain.startRotation = 315;
+                        break;
+                    case CharacterController.LookingAt.NordOuest:
+                        realVFXMain.startRotation = 45;
+                        break;
+                    case CharacterController.LookingAt.SudEst:
+                        realVFXMain.startRotation = 225;
+                        break;
+                    case CharacterController.LookingAt.SudOuest:
+                        realVFXMain.startRotation = 135;
+                        break;
+                }
+                //var realVFXMain = paralysieHitbox.GetComponent<ElectricDash>().realVFX.main;
+                //realVFXMain.startRotation = ;
+                Destroy(paralysieHitbox, cc.dashCooldown);
             }
         }
 
