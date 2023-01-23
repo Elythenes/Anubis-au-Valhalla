@@ -13,7 +13,7 @@ public class ElectricDash : MonoBehaviour
     public ParticleSystem realVFX;
 
     private void Start()
-    {
+    {/*
         var realVFXMain = realVFX.main.startRotation;
         switch (CharacterController.instance.facing)
         { 
@@ -41,34 +41,8 @@ public class ElectricDash : MonoBehaviour
             case CharacterController.LookingAt.SudOuest:
                 realVFXMain.constant = 135;
                 break;
-        }
-       /* switch (CharacterController.instance.facing)
-        {
-            case CharacterController.LookingAt.Nord:
-                VFX.transform.rotation = new Quaternion(0,0,90,0);
-                break;
-            case CharacterController.LookingAt.NordEst:
-                VFX.transform.rotation = new Quaternion(0,0,45,0);
-                break;
-            case CharacterController.LookingAt.NordOuest:
-                VFX.transform.rotation = new Quaternion(0,0,135,0);
-                break;
-            case CharacterController.LookingAt.Sud:
-                VFX.transform.rotation = new Quaternion(0,0,-90,0);              
-                break;
-            case CharacterController.LookingAt.SudEst:
-                VFX.transform.rotation = new Quaternion(0,0,-45,0);  
-                break;
-            case CharacterController.LookingAt.SudOuest:
-                VFX.transform.rotation = new Quaternion(0,0,-135,0); 
-                break;
-            case CharacterController.LookingAt.Est:
-                VFX.transform.rotation = new Quaternion(0,0,0,0);     
-                break;
-            case CharacterController.LookingAt.Ouest:
-                VFX.transform.rotation = new Quaternion(0, 0, 180, 0);
-                break;
         }*/
+
         
         realVFX.Play();
         cooldown = GameObject.Find("Spells - Consommable").GetComponent<CooldownPowerBar>();

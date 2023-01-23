@@ -456,38 +456,38 @@ public class NewPowerManager : MonoBehaviour
 
             if (cc.debutDash) // Attaque Dash
             {
-                GameObject paralysieHitbox =
-                    Instantiate(p1DashContactHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward), cc.transform);
-                var realVFXMain = paralysieHitbox.GetComponent<ElectricDash>().realVFX.main;
-                switch (cc.facing)
-                { 
-                    case CharacterController.LookingAt.Nord:
-                        realVFXMain.startRotation = 0;
-                        break;
+                var direction = new Quaternion();
+                switch (CharacterController.instance.facing)
+                {
                     case CharacterController.LookingAt.Est:
-                        realVFXMain.startRotation = 270;
-                        break;
-                    case CharacterController.LookingAt.Ouest:
-                        realVFXMain.startRotation = 90;
-                        break;
-                    case CharacterController.LookingAt.Sud:
-                        realVFXMain.startRotation = 180;
+                        direction = Quaternion.Euler(0,0,270);
                         break;
                     case CharacterController.LookingAt.NordEst:
-                        realVFXMain.startRotation = 315;
+                        direction = Quaternion.Euler(0,0,315);
                         break;
                     case CharacterController.LookingAt.NordOuest:
-                        realVFXMain.startRotation = 45;
+                        direction = Quaternion.Euler(0,0,45);
+                        break;
+                    case CharacterController.LookingAt.Ouest:
+                        direction = Quaternion.Euler(0,0,90);              
                         break;
                     case CharacterController.LookingAt.SudEst:
-                        realVFXMain.startRotation = 225;
+                        direction = Quaternion.Euler(0,0,225);  
                         break;
                     case CharacterController.LookingAt.SudOuest:
-                        realVFXMain.startRotation = 135;
+                        direction = Quaternion.Euler(0,0,135); 
+                        break;
+                    case CharacterController.LookingAt.Nord:
+                        direction = Quaternion.Euler(0,0,0);     
+                        break;
+                    case CharacterController.LookingAt.Sud:
+                        Debug.Log("Mais fréro kestufous la");
+                        direction = Quaternion.Euler(0, 0, 180);
                         break;
                 }
-                //var realVFXMain = paralysieHitbox.GetComponent<ElectricDash>().realVFX.main;
-                //realVFXMain.startRotation = ;
+                Debug.Log(direction);
+                GameObject paralysieHitbox =
+                    Instantiate(p1DashContactHitbox, cc.transform.position, direction, cc.transform);
                 Destroy(paralysieHitbox, cc.dashCooldown);
             }
         }
