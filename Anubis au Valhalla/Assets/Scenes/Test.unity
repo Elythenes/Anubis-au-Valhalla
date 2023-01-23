@@ -278,6 +278,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreManager a supprimer pour la build
       objectReference: {fileID: 0}
+    - target: {fileID: 9005202603502846319, guid: 5bd58c246f110954181435b76a1f0c5b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bd58c246f110954181435b76a1f0c5b, type: 3}
 --- !u!114 &226194265 stripped
@@ -620,6 +624,10 @@ PrefabInstance:
     - target: {fileID: 618304835506499231, guid: f8eff69c51c8db14a9e85c52237faf0d, type: 3}
       propertyPath: m_Name
       value: SoundManager a supprimer pour la build
+      objectReference: {fileID: 0}
+    - target: {fileID: 618304835506499231, guid: f8eff69c51c8db14a9e85c52237faf0d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8eff69c51c8db14a9e85c52237faf0d, type: 3}
@@ -6720,6 +6728,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 491855216}
     - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
+      propertyPath: vieActuelle
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073836600493889084, guid: 58d5809aaedb0544a819dc2fa6d1782a, type: 3}
       propertyPath: totalBaseDamage
       value: 20
       objectReference: {fileID: 0}
@@ -6736,10 +6748,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 262741656, guid: 27dd07aaa84760f48958a7681d3f2264, type: 3}
+      propertyPath: m_text
+      value: "Invincibilit\xE9"
+      objectReference: {fileID: 0}
     - target: {fileID: 723509695, guid: 27dd07aaa84760f48958a7681d3f2264, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 491855240}
+    - target: {fileID: 723509695, guid: 27dd07aaa84760f48958a7681d3f2264, type: 3}
+      propertyPath: disolveValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 723509695, guid: 27dd07aaa84760f48958a7681d3f2264, type: 3}
+      propertyPath: timeToLastStepDisolve
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1200602762, guid: 27dd07aaa84760f48958a7681d3f2264, type: 3}
+      propertyPath: m_text
+      value: "Invincibilit\xE9"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884859804, guid: 27dd07aaa84760f48958a7681d3f2264, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 992418662077743757, guid: 27dd07aaa84760f48958a7681d3f2264, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
