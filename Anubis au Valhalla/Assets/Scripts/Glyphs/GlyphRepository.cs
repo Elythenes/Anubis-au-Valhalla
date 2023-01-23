@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using DG.Tweening;
 using NaughtyAttributes;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GlyphRepository : MonoBehaviour
 {
     public static GlyphRepository Instance;
     public SpriteRenderer sprite;
+    public SpriteRenderer dalleGlyph;
 
     [Expandable] public List<GlyphObject> glyphsList;
     [Expandable] public GlyphObject glyphInside;
+
+    
     
     [Header("TESTING")] 
     public bool doGlyphTest;
@@ -47,8 +51,7 @@ public class GlyphRepository : MonoBehaviour
             int numberGot = Random.Range(0, glyphsList.Count);
             glyphInside = glyphsList[numberGot];
             //var pngImage = Sprite.Create(glyphInside.icone,new Rect(0,0,glyphInside.icone.width,glyphInside.icone.height), new Vector2(glyphInside.icone.width / 2, glyphInside.icone.height / 2));
-            var pngImage = glyphInside.icone;
-            sprite.sprite = pngImage;
+            sprite.sprite = glyphInside.icone;
         }
         
         //GetComponent<SpriteRenderer>().sprite = new Rect(0, 0, glyphInside.icone.width, glyphInside.icone.height);
