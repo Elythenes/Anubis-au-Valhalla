@@ -1535,7 +1535,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3ce126f70734284bb45741d9710029f, type: 2}
+  - {fileID: 2100000, guid: e60060e8df2652449bfdf85f84d86377, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1567,7 +1567,7 @@ Animator:
   m_GameObject: {fileID: 6322498022790916544}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4de9db6cb3d3a6f439088c7b1414f6df, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4774f5474934a3341aeb2cbaf26b764c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1589,7 +1589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 4a7681e300c6eeb4a8f0b98cfd0514f2, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: c45bd5e8a2a18a94a842f4f98e4e9ef8, type: 2}
   initialSkinName: Front
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
@@ -2072,7 +2072,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -2557,7 +2557,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 20
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -6889,7 +6889,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5798977315050970305, guid: fbe0aeaadbb8870428605efb2957b2ba, type: 3}
       propertyPath: m_SortingOrder
-      value: 999
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9192421617133212408, guid: fbe0aeaadbb8870428605efb2957b2ba, type: 3}
       propertyPath: m_RootOrder
