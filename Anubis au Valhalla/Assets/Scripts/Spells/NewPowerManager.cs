@@ -357,6 +357,7 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("Early Stop p1");
                 StopCoroutine(tempsP1);
                 isPower1Active = false;
+                isAmeActive = false;
                 StartCoroutine(CooldownPower(1, cooldownPower1 * currentDurationPower1 / durationPower1));
                 currentDurationPower1 = 0f;
             }
@@ -397,6 +398,7 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("Early Stop p2");
                 StopCoroutine(tempsP2);
                 isPower2Active = false;
+                isSableActive = false;
                 StartCoroutine(CooldownPower(2, cooldownPower2 * currentDurationPower2 / durationPower2));
                 currentDurationPower2 = 0f;
             }
@@ -456,38 +458,38 @@ public class NewPowerManager : MonoBehaviour
 
             if (cc.debutDash) // Attaque Dash
             {
-                GameObject paralysieHitbox =
-                    Instantiate(p1DashContactHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward), cc.transform);
-                var realVFXMain = paralysieHitbox.GetComponent<ElectricDash>().realVFX.main;
-                switch (cc.facing)
-                { 
-                    case CharacterController.LookingAt.Nord:
-                        realVFXMain.startRotation = 0;
-                        break;
+                var direction = new Quaternion();
+                switch (CharacterController.instance.facing)
+                {
                     case CharacterController.LookingAt.Est:
-                        realVFXMain.startRotation = 270;
-                        break;
-                    case CharacterController.LookingAt.Ouest:
-                        realVFXMain.startRotation = 90;
-                        break;
-                    case CharacterController.LookingAt.Sud:
-                        realVFXMain.startRotation = 180;
+                        direction = Quaternion.Euler(0,0,270);
                         break;
                     case CharacterController.LookingAt.NordEst:
-                        realVFXMain.startRotation = 315;
+                        direction = Quaternion.Euler(0,0,315);
                         break;
                     case CharacterController.LookingAt.NordOuest:
-                        realVFXMain.startRotation = 45;
+                        direction = Quaternion.Euler(0,0,45);
+                        break;
+                    case CharacterController.LookingAt.Ouest:
+                        direction = Quaternion.Euler(0,0,90);              
                         break;
                     case CharacterController.LookingAt.SudEst:
-                        realVFXMain.startRotation = 225;
+                        direction = Quaternion.Euler(0,0,225);  
                         break;
                     case CharacterController.LookingAt.SudOuest:
-                        realVFXMain.startRotation = 135;
+                        direction = Quaternion.Euler(0,0,135); 
+                        break;
+                    case CharacterController.LookingAt.Nord:
+                        direction = Quaternion.Euler(0,0,0);     
+                        break;
+                    case CharacterController.LookingAt.Sud:
+                        Debug.Log("Mais fréro kestufous la");
+                        direction = Quaternion.Euler(0, 0, 180);
                         break;
                 }
-                //var realVFXMain = paralysieHitbox.GetComponent<ElectricDash>().realVFX.main;
-                //realVFXMain.startRotation = ;
+                Debug.Log(direction);
+                GameObject paralysieHitbox =
+                    Instantiate(p1DashContactHitbox, cc.transform.position, direction, cc.transform);
                 Destroy(paralysieHitbox, cc.dashCooldown);
             }
         }
@@ -505,10 +507,14 @@ public class NewPowerManager : MonoBehaviour
             }
             if (an.attaqueSpeSpell)
             {
+
                 Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     Vector2 charaPos = CharacterController.instance.transform.position;
+                    Vector3 moveDirection = (mousePos - charaPos);
+                    moveDirection.z = 0;
+                    moveDirection.Normalize();
                     float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
-                    Instantiate(p2ThrustBandageHitbox,cc.transform.position,Quaternion.AngleAxis(angle,Vector3.forward));
+                    Instantiate(p2ThrustBandageHitbox,cc.transform.position + moveDirection,Quaternion.AngleAxis(angle,Vector3.forward));
             }
             if (cc.isDashing) //si dash
             {
