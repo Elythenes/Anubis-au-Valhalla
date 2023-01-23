@@ -179,7 +179,7 @@ namespace GenPro
                         { 
                                 sDoors[i].currentDoorType = Door.DoorType.Normal;
                         }
-                        if (roomsDone == 0 )
+                        if (roomsDone == 0)
                         {
                                 if (zone2)
                                 {
