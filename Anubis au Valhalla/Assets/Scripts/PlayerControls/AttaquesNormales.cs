@@ -276,6 +276,26 @@ public class AttaquesNormales : MonoBehaviour
                 CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
                 CharacterController.instance.skeleton.Update();
         }
+        
+        if (angle > 22.5f && angle < 67.5f) // Nord Est
+        {
+            CharacterController.instance.facing = CharacterController.LookingAt.NordEst;
+            CharacterController.instance.skeleton.Skeleton.SetSkin("Back");
+            CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
+            CharacterController.instance.skeleton.Update();
+        }
+        
+        if (angle > 112.5f && angle < 157.5f) // Nord Ouest
+        {
+            CharacterController.instance.facing = CharacterController.LookingAt.NordOuest;
+            CharacterController.instance.skeleton.Skeleton.SetSkin("Back");
+            CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
+            CharacterController.instance.skeleton.Update();
+        }
 
         if (angle > -22.5f && angle < 22.5f) // Est
         {
@@ -308,27 +328,7 @@ public class AttaquesNormales : MonoBehaviour
                 CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
                 CharacterController.instance.skeleton.Update();
         }
-        
-        if (angle > 22.5f && angle < 67.5f) // Nord Est
-        {
-            CharacterController.instance.facing = CharacterController.LookingAt.NordEst;
-                CharacterController.instance.skeleton.Skeleton.SetSkin("Back");
-                CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
-                CharacterController.instance.skeleton.Update();
-        }
-        
-        if (angle > 112.5f && angle < 157.5f) // Nord Ouest
-        {
-            CharacterController.instance.facing = CharacterController.LookingAt.NordOuest;
-                CharacterController.instance.skeleton.Skeleton.SetSkin("Back");
-                CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
-                CharacterController.instance.skeleton.Update();
-        }
-        
+
         if (angle > -67.5f && angle < -22.5f) // Sud Est
         {
             CharacterController.instance.facing = CharacterController.LookingAt.SudEst;
@@ -350,7 +350,7 @@ public class AttaquesNormales : MonoBehaviour
         }
 
         
-        if (angle > 45 && angle < 135) // attaque vers le haut
+        if (angle > 22.5 && angle < 157.5) // attaque vers le haut
         {
             if (index == 0)
             {
@@ -377,7 +377,7 @@ public class AttaquesNormales : MonoBehaviour
                 anim.SetBool("isWalking",false);
             }
         }
-        else if (angle < 45 && angle > -45 /*droite*/|| angle > 135 && angle < 180 /*gauche-haut*/|| angle > -180 && angle < -135/*gauche-bas*/) // attaque à gauche ou à droite
+        else if (angle > -22.5f && angle < 22.5f /*droite*/|| angle > 157.5f && angle < 180 || angle > -180f && angle < -157.5f) // attaque à gauche ou à droite
         {
             if (index == 0)
             {
@@ -405,7 +405,7 @@ public class AttaquesNormales : MonoBehaviour
             }
             
         }
-        else if (angle > -135 && angle < -45) // attaque vers le bas
+        else if (angle < -22.5f && angle > -157.5f) // attaque vers le bas
         {
             if (index == 0)
             {
@@ -524,18 +524,17 @@ public class AttaquesNormales : MonoBehaviour
         moveDirection2.z = 0;
         moveDirection2.Normalize();
         
-        if (angle2 > 45 && angle2 < 135) // attaque vers le haut
+        if (angle2 > 22.5 && angle2 < 157.5) // attaque vers le haut
         {
-            if (CharacterController.instance.movement == Vector2.zero)
-            {
+            
                 CharacterController.instance.facing = CharacterController.LookingAt.Nord;
                 CharacterController.instance.skeleton.Skeleton.SetSkin("Back");
                 CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
                 CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
                 CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
                 CharacterController.instance.skeleton.Update();
-            }
-            anim.SetBool("isAttackingSpeUp",true);
+                
+                anim.SetBool("isAttackingSpeUp",true);
             anim.SetBool("isAttackingSpe",false);
             anim.SetBool("isAttacking1",false);
             anim.SetBool("isAttacking2",false);
@@ -543,31 +542,29 @@ public class AttaquesNormales : MonoBehaviour
             anim.SetBool("isIdle",false);
             anim.SetBool("isWalking",false);
         }
-        else if (angle2 < 45 && angle2 > -45 || angle2 > 135 && angle2 < 180 || angle2 > -180 && angle2 < -135) // attaque à gauche ou à droite
+        else if (angle2 > -22.5f && angle2 < 22.5f /*droite*/|| angle2 > 157.5f && angle2 < 180 || angle2 > -180f && angle2 < -157.5f) // attaque à gauche ou à droite
         {
-            if (angle2 < 45 && angle2 > -45) // gauche = dash vers la gauche
+            if (angle2 > -22.5f && angle2 < 22.5f ) // gauche = dash vers la droite
             {
-                if (CharacterController.instance.movement == Vector2.zero)               
-                {
+             
                     CharacterController.instance.facing = CharacterController.LookingAt.Est;
                     CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
                     CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
                     CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
                     CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
                     CharacterController.instance.skeleton.Update();
-                }
+                
             }
-            else if (angle2 > 135 && angle2 < 180  || angle2 > -180 && angle2 < -135) // droite = dash vers la droite
+            else if (angle2 > 135 && angle2 < 180  || angle2 > -180 && angle2 < -135) // droite = dash vers la GAUCHE
             {
-                if (CharacterController.instance.movement == Vector2.zero)         
-                {
+                
                     CharacterController.instance.facing = CharacterController.LookingAt.Ouest;
                     CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
                     CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
                     CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
                     CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
                     CharacterController.instance.skeleton.Update();
-                }    
+                  
             }
             
             anim.SetBool("isAttackingSpeUp",false);
@@ -578,17 +575,16 @@ public class AttaquesNormales : MonoBehaviour
             anim.SetBool("isIdle",false);
             anim.SetBool("isWalking",false);
         }
-        else if (angle2 > -135 && angle2 < -45) // attaque vers le bas
+        else if (angle2 < -22.5f && angle2 > -157.5f) // attaque vers le bas
         {
-            if (CharacterController.instance.movement == Vector2.zero)       
-            {
+            
                 CharacterController.instance.facing = CharacterController.LookingAt.Sud;
                 CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
                 CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
                 CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
                 CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
                 CharacterController.instance.skeleton.Update();
-            }      
+                 
             anim.SetBool("isAttackingSpeUp",false);
             anim.SetBool("isAttackingSpeDown",true);
             anim.SetBool("isAttacking1Down",false);
