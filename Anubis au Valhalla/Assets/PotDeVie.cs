@@ -35,7 +35,14 @@ public class PotDeVie : MonoBehaviour
         TextInteraction = GameObject.Find("TexteAction").GetComponent<TextMeshProUGUI>();
         for (int i = 0; i < costValues.Length; i++)
         {
-            costValues[i] *= Mathf.RoundToInt(SalleGenerator.Instance.roomsDone * priceMultiplicator);
+            if (!SalleGenerator.Instance.zone2)
+            {
+                costValues[i] *= Mathf.RoundToInt(SalleGenerator.Instance.roomsDone * priceMultiplicator);
+            }
+            else
+            {
+                costValues[i] *= Mathf.RoundToInt((8 + SalleGenerator.Instance.roomsDone) * priceMultiplicator);
+            }
         }
     }
 

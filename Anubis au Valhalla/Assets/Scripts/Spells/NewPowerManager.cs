@@ -50,6 +50,14 @@ public class NewPowerManager : MonoBehaviour
     public float currentCooldownPower2;
     private IEnumerator tempsP2;
 
+
+    [Header("VFX")]
+    public SpriteRenderer VFXAme;
+    public float ameValue;
+    public bool isAmeActive;
+    public SpriteRenderer VFXSable;
+    public float sableValue;
+    public bool isSableActive;
     
     [Header("DEBUG / Test")] 
     public int startingLevelPower1 = 1;
@@ -168,6 +176,28 @@ public class NewPowerManager : MonoBehaviour
     
     void Update()
     {
+        if (isAmeActive && ameValue < 1)
+        {
+            ameValue += 0.003f;
+            VFXAme.material.SetFloat("_ALPHA",ameValue);
+        }
+        else if (!isAmeActive && ameValue > 0)
+        {
+            ameValue -= 0.003f;
+            VFXAme.material.SetFloat("_ALPHA",ameValue);
+        }
+        
+        if (isSableActive && sableValue < 1)
+        {
+            sableValue += 0.003f;
+            VFXSable.material.SetFloat("_ALPHA",sableValue);
+        }
+        else if (!isSableActive && sableValue > 0)
+        {
+            sableValue -= 0.003f;
+            VFXSable.material.SetFloat("_ALPHA",sableValue);
+        }
+        
         if (testCustomLevel && Input.GetKeyDown(testCustomKey))
         {
             foreach (var gb in testPowersCollected)
@@ -302,12 +332,14 @@ public class NewPowerManager : MonoBehaviour
                     //Debug.Log("Early Stop p2 via switch p1");
                     StopCoroutine(tempsP2);
                     isPower2Active = false;
+                    isSableActive = false;
                     StartCoroutine(CooldownPower(2, cooldownPower2 * currentDurationPower2 / durationPower2));
                     currentDurationPower2 = 0f;
                 }
                 
                 canUsePower1 = false;
                 isPower1Active = true;
+                isAmeActive = true;
                 //Debug.Log("P1 Actif");
                 
                 StartCoroutine(CoroutineTime(1,.3f)); //set earlyDisablePower à false à la fin des .3 secondes
@@ -340,12 +372,14 @@ public class NewPowerManager : MonoBehaviour
                     //Debug.Log("Early Stop p1 via switch p2");
                     StopCoroutine(tempsP1);
                     isPower1Active = false;
+                    isAmeActive = false;
                     StartCoroutine(CooldownPower(1, cooldownPower1 * currentDurationPower1 / durationPower1));
                     currentDurationPower1 = 0f;
                 }
-
+                
                 canUsePower2 = false;
                 isPower2Active = true;
+                isSableActive = true;
                 //Debug.Log("P2 Actif");
                 
                 StartCoroutine(CoroutineTime(2,.3f)); //set earlyDisablePower à false à la fin des .3 secondes
@@ -473,6 +507,7 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("full conso p1");
                 currentDurationPower1 = 0f;
                 isPower1Active = false;
+                isAmeActive = false;
                 StartCoroutine(CooldownPower(1, cooldownPower1));
                 break;
             
@@ -485,6 +520,7 @@ public class NewPowerManager : MonoBehaviour
                 }
                 //Debug.Log("full conso p2");
                 currentDurationPower2 = 0f;
+                isSableActive = false;
                 isPower2Active = false;
                 StartCoroutine(CooldownPower(2, cooldownPower2));
                 break;
@@ -501,6 +537,7 @@ public class NewPowerManager : MonoBehaviour
         switch (power)
         {
             case 1:
+                earlyDisablePower1 = false;
                 if (currentDurationPower1 != 0)
                 {
                     CooldownPowerBar.Instance.durationBeforeCooldownPower1 = durationPower1 - currentDurationPower1;
@@ -521,11 +558,11 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("p1 rechargé après " + currentCooldownPower1 + " sec.");
                 currentCooldownPower1 = 0f;
                 canUsePower1 = true;
-                earlyDisablePower1 = false;
                 CooldownPowerBar.Instance.p1OnCd = false;
                 break;
             
             case 2:
+                earlyDisablePower2 = false;
                 if (currentDurationPower2 != 0)
                 {
                     CooldownPowerBar.Instance.durationBeforeCooldownPower2 = durationPower2 - currentDurationPower2;
@@ -546,7 +583,6 @@ public class NewPowerManager : MonoBehaviour
                 //Debug.Log("p2 rechargé après " + currentCooldownPower2 + " sec.");
                 currentCooldownPower2 = 0f;
                 canUsePower2 = true;
-                earlyDisablePower2 = false;
                 CooldownPowerBar.Instance.p2OnCd = false;
                 break;
         }

@@ -62,6 +62,7 @@ public class Salle : MonoBehaviour
         renderer.enabled = false;
         timer = SalleGenerator.Instance.timer.GetComponent<TimerChallenge>();
         spawnBank = SalleGenerator.Instance.globalBank;
+        text = TextMove.instance;
         if (SalleGenerator.Instance.testBankSystem)
         {
             SalleGenerator.Instance.globalBank += SalleGenerator.Instance.extraMoneyPerRoom[SalleGenerator.Instance.roomsDone];
@@ -80,7 +81,7 @@ public class Salle : MonoBehaviour
     {
         if (SalleGenerator.Instance.challengeChooser == 2) infiniteBank = true;
         challengeChosen = SalleGenerator.Instance.challengeChooser;
-        text = TextMove.instance;
+
         if (SalleGenerator.Instance.roomsDone == 0)
         {
             SalleGenerator.Instance.UnlockDoors();

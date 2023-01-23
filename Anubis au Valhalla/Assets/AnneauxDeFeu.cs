@@ -27,7 +27,7 @@ public class AnneauxDeFeu : MonoBehaviour
         currentExpansionAmount = ia.expansionAmount;
         currentRate = ia.ExpansionRate;
         StartCoroutine(Expand());
-        Destroy(gameObject,3.5f);
+        Destroy(gameObject,5f);
         StartCoroutine(Increase());
     }
 

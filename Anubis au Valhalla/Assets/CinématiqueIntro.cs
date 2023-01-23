@@ -16,6 +16,8 @@ public class CinématiqueIntro : MonoBehaviour
     public float vitesseText;
     public float cinematiqueDuration;
     public bool EndCinematique;
+    public float disolveValue;
+    public Image backgroundRenderer;
 
     private void Start()
     {
@@ -25,6 +27,9 @@ public class CinématiqueIntro : MonoBehaviour
 
     void FixedUpdate()
     {
+        disolveValue += 0.006f;
+        backgroundRenderer.material.SetFloat("_Step", disolveValue);
+        
         if (Input.GetKey(KeyCode.Space))
         {
             sliderPasser.value += passerGained;
@@ -63,7 +68,7 @@ public class CinématiqueIntro : MonoBehaviour
 
     IEnumerator Scene()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         SoundManager.instance.ChangeToHub();
         SoundManager.instance.PlayHub();
         SceneManager.LoadScene("Hub");
