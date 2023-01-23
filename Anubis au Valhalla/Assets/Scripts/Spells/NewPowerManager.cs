@@ -413,6 +413,9 @@ public class NewPowerManager : MonoBehaviour
             {
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 charaPos = CharacterController.instance.transform.position;
+                Vector3 moveDirection = (mousePos - charaPos);
+                moveDirection.z = 0;
+                moveDirection.Normalize();
                 float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
                 float angleInversé = Mathf.Atan2(charaPos.y - mousePos.y ,charaPos.x - mousePos.x ) * Mathf.Rad2Deg;
                 Instantiate(p1ComboConeHitbox, cc.transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
