@@ -11,8 +11,10 @@ using UnityEngine.Rendering.Universal;
 public class DamageManager : MonoBehaviour
 {
     public AnubisCurrentStats stats;
-    
-    [Header("Objects")]
+
+    [Header("Objects")] 
+    public Renderer effetInvincible;
+    public float invincibleValue;
     public GameObject textDamage;
     public GameObject textHealDamage;
     public GameObject deathMenu;
@@ -88,6 +90,23 @@ public class DamageManager : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        if (vieActuelle > 0)
+        {
+            if (invinsible)
+            {
+                invincibleValue = Mathf.PingPong(Time.fixedTime*3, 1f);
+                effetInvincible.material.SetFloat("_ALPHA",invincibleValue);
+            }
+            else
+            {
+                invincibleValue = 0;
+                effetInvincible.material.SetFloat("_ALPHA",invincibleValue);
+            }  
+        }
+    }
+    
     public void TakeDamage(int damage, GameObject enemy)
     {
         if (!invinsible)

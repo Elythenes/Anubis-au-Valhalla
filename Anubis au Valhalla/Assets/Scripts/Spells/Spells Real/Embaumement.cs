@@ -8,6 +8,7 @@ public class Embaumement : MonoBehaviour
     public NewPowerManager manager;
     private Rigidbody2D rb;
     public int touchedEnemys;
+    public TrailRenderer trail;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class Embaumement : MonoBehaviour
        
         rb = gameObject.GetComponent<Rigidbody2D>();
         transform.localScale += new Vector3(1,1,0) * manager.p2ThrustBandageSizes[manager.currentLevelPower2 -1];
+        trail.startWidth = manager.p2ThrustBandageSizes[manager.currentLevelPower2 - 1] / 10;
     }
 
     private void OnBecameInvisible()

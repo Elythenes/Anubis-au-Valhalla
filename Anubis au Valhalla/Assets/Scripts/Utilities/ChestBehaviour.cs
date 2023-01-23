@@ -21,6 +21,7 @@ public class ChestBehaviour : MonoBehaviour
     [Header("Interaction")]
     public bool CanOpen;
     public GameObject CanvasInteraction;
+    public GameObject miniMap;
     public Canvas canvasGné;
     public Vector3 offset;
     public TextMeshProUGUI TextInteraction;
@@ -77,6 +78,7 @@ public class ChestBehaviour : MonoBehaviour
             StartCoroutine(OpenChest());
             if (CanvasInteraction is not null)
             {
+                Destroy(miniMap);
                 audioSource.pitch = 1;
                 audioSource.PlayOneShot(audioClipOpen);
                 canvasGné.enabled = false;
