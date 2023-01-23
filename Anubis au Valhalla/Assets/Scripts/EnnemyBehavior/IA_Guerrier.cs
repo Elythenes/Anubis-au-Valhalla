@@ -186,7 +186,6 @@ public class IA_Guerrier : MonoBehaviour
                 {
                     isAttacking = true;
                     isChasing = false;
-                    StartCoroutine(VFXEclair());
                 }
         }
 
@@ -259,12 +258,7 @@ public class IA_Guerrier : MonoBehaviour
             isChasing = true;
         }
     }
-
-    IEnumerator VFXEclair()
-    {
-        yield return new WaitForSeconds(timeForIndic);
-        indicEclaire.Play();
-    }
+    
     IEnumerator FindWonderPosition()
     {
         if (doOnce && isWondering)
@@ -299,8 +293,5 @@ public class IA_Guerrier : MonoBehaviour
             return point;
     }
 
-    public void StopShake()
-    {
-        shake.Kill();
-    }
+  
 }

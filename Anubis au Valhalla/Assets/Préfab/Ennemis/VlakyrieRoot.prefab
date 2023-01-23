@@ -640,8 +640,8 @@ SpriteRenderer:
   m_SortingLayerID: -1561176513
   m_SortingLayer: -5
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: b573fad800f4f0243b66a8d4434a1d3e, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -164949939, guid: 1768a9e715a88784b887f94bd2ee9f57, type: 3}
+  m_Color: {r: 0.7264151, g: 0.5630322, b: 0.065103225, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1058,9 +1058,10 @@ MonoBehaviour:
   pointToGo: {x: 0, y: 0}
   currentState: 2
   midlifeKnockBack: 0
+  trajectoireRef: {fileID: 0}
   puissanceAttaqueJavelot: 20
-  javelotSpeed: 30
   StartUpJavelotTime: 3.5
+  javelotSpeed: 30
   IndicJavelotTime: 1.25
   javelotsToSpawn: 06000000040000000600000006000000
   javelotInterval:
@@ -1079,6 +1080,7 @@ MonoBehaviour:
   - {fileID: 8341485146750019898}
   StartUpJavelotTimeTimer: 0
   FallDamage: 35
+  TriggerJumpTime: 5
   jumpSpeed: 1.5
   airTravelSpeed:
   - 5
@@ -1086,7 +1088,6 @@ MonoBehaviour:
   - 9
   - 11
   pushForce: 25
-  TriggerJumpTime: 5
   JumpTime: 2
   IndicationTime: 2
   FallTime: 1.5
@@ -1109,8 +1110,9 @@ MonoBehaviour:
   FallTimeTimer: 0
   hasShaked: 0
   hasFallen: 0
-  dashAmount: 02000000030000000300000004000000
+  dashDamage: 0
   TriggerDashTime: 4
+  dashAmount: 02000000030000000300000004000000
   windUpSpeed:
   - 1.7
   - 1.5
@@ -1135,14 +1137,14 @@ MonoBehaviour:
   charging: 0
   executedDashes: 0
   TriggerDashTimer: 0
+  ringDmg: 20
+  triggerRingAttackTime: 2
   ringAmount: 01000000010000000200000003000000
   ringFrequency:
   - 0.75
   - 0.75
   - 0.75
   - 0.6
-  triggerRingAttackTime: 2
-  ringDmg: 20
   expansionAmount: 0.1
   ExpansionRate: 0.06
   ExpansionSpeedUp: 0.003

@@ -176,17 +176,18 @@ namespace GenPro
                 private Salle GenerateDungeon2()
                 {
                         for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
-                        {
+                        { 
                                 sDoors[i].currentDoorType = Door.DoorType.Normal;
                         }
-                        if (roomsDone == 0 )
+                        if (roomsDone == 0)
                         {
                                 if (zone2)
                                 {
+                                        sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
                                         for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                         {
                                                 if (i == (int) fromDoor) continue;
-                                                bool state = Random.value > 0.4f;
+                                                bool state = Random.value > 0.8f;
                                                 EnableDoors((DoorOrientation) i,state);
                                                 bool special = Random.value > 0.3f;
                                                 if (special)
@@ -195,6 +196,8 @@ namespace GenPro
                                                 }
                                                 sDoors[i].ChooseRoomToSpawn(Random.Range(0, roomPrefab.Count));
                                         }
+                                        EnableDoors(toDoor,true);
+                                        return Instantiate(startRoom);
                                 }
                                 else
                                 {

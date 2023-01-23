@@ -182,8 +182,7 @@ public class UiManager : MonoBehaviour
             //listBoxInventaire[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
             //boxGlyphIcones[i].GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[i].icone;
             //Texture2D texture = GlyphInventory.Instance.glyphInventory[i].icone;
-            Debug.Log(i);
-            listBoxInventaireIcone[i].GetComponent<Image>().sprite = Sprite.Create(GlyphInventory.Instance.glyphInventory[i].icone, new Rect(0, 0, GlyphInventory.Instance.glyphInventory[i].icone.width, GlyphInventory.Instance.glyphInventory[i].icone.height), Vector2.zero);
+            listBoxInventaireIcone[i].GetComponent<Image>().sprite = GlyphInventory.Instance.glyphInventory[i].icone;
             listBoxInventaireIcone[i].GetComponent<Image>().color = new Color(255,255,255,255);
             listBoxInventaire[i].GetComponent<Button>().enabled = true;
             switch (GlyphInventory.Instance.glyphInventory[i].rare)
@@ -242,7 +241,7 @@ public class UiManager : MonoBehaviour
         Debug.Log(boxPos);
         boxGlyphTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].nom;
         boxGlyphTexte.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].description;
-        boxGlyphImage.GetComponent<RawImage>().texture = GlyphInventory.Instance.glyphInventory[boxPos - 1].icone;
+        boxGlyphImage.GetComponent<Image>().sprite = GlyphInventory.Instance.glyphInventory[boxPos - 1].icone;
         switch (GlyphInventory.Instance.glyphInventory[boxPos - 1].rare)
         {
             case Rarity.Prêtre:
