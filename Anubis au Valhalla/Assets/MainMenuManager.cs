@@ -12,7 +12,9 @@ public class MainMenuManager : MonoBehaviour
    public GameObject PressButtonText;
    public GameObject GroupButtons;
    public CanvasGroup GroupButtonsCanvas;
-   
+
+
+   public AudioSource AudioSource;
    
    public bool isStarted;
 
@@ -23,6 +25,7 @@ public class MainMenuManager : MonoBehaviour
       {
          if (Input.anyKeyDown)
          {
+            AudioSource.Play();
             isStarted = true;
             PressButtonText.SetActive(false);
             GroupButtons.SetActive(true);
