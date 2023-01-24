@@ -40,18 +40,18 @@ public class Embaumement : MonoBehaviour
             touchedEnemys += 1;
             MonsterLifeManager monstre = col.GetComponentInParent<MonsterLifeManager>();
             monstre.TakeDamage(manager.p2ThrustBandageDamages[manager.currentLevelPower2 -1] + (int)AnubisCurrentStats.instance.magicForce, 0);
-            monstre.isMomified = true;
-            if (!manager.p2ThrustBandageStunUp)
+            if (!col.GetComponentInParent<MonsterLifeManager>().isBoss)
             {
-                monstre.MomifiedTime = 1.5f;
+                monstre.isMomified = true;
+                if (!manager.p2ThrustBandageStunUp)
+                {
+                    monstre.MomifiedTime = 1.5f;
+                }
+                else
+                {
+                    monstre.MomifiedTime = 2.5f;
+                }
             }
-            else
-            {
-                monstre.MomifiedTime = 2.5f;
-            }
-            
-           
-          
         }
     }
 }

@@ -42,6 +42,11 @@ public class VictoryScreen : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Hub");
     }
+
+    public void GainWinPoints()
+    {
+        ScoreManager.instance.AddScore(2000);
+    }
     
     public void Quit()
     {
