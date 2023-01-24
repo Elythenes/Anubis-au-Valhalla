@@ -75,6 +75,7 @@ public class Salle : MonoBehaviour
         AdjustCameraConstraints();
         GetAvailableTiles();
         AstarPath.active.Scan(AstarPath.active.data.graphs);
+        waveTimer = SalleGenerator.Instance.timeBetweenWaves;
     }
 
     private void Start()
@@ -143,6 +144,7 @@ public class Salle : MonoBehaviour
             waveTimer -= Time.deltaTime;
             if (waveTimer < 0)
             {
+                Debug.Log("fais pas ca");
                 waveTimer = SalleGenerator.Instance.timeBetweenWaves;
                 var spawnPoints = Random.Range(0, 3);
                 if (spawnPoints == 0)
@@ -311,7 +313,7 @@ public class Salle : MonoBehaviour
             }
             return;
         }
-        if(infiniteBank)
+        if(infiniteBank && currentEnemies.Count <= SalleGenerator.Instance.maxEnemies)
         {
             if(timer.internalTimer > 0 && (currentEnemies.Count == 0|| !hasElited))
             {
