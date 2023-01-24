@@ -26,16 +26,16 @@ public class MenuHighScore : MonoBehaviour
         }
         template.gameObject.SetActive(false);
         
-       // PlayerPrefs.DeleteKey("highscoreTable");  // A n'activer que pour resset les scores
+        //PlayerPrefs.DeleteKey("highscoreTable");  // A n'activer que pour resset les scores
        
       // HighScoreEntrieList = new List<HighScoreEntry>(){new HighScoreEntry{score = 100}};
        
-      /* HighScores highScores = new HighScores { HighScoreEntrieList = HighScoreEntrieList }; // Pour mettre des scores random (a initialiser dans une liste)
+       HighScores highScores = new HighScores { HighScoreEntrieList = HighScoreEntrieList }; // Pour mettre des scores random (a initialiser dans une liste)
       string json = JsonUtility.ToJson(highScores);
       PlayerPrefs.SetString("highscoreTable",json);
       PlayerPrefs.Save();
       Debug.Log(PlayerPrefs.GetString("highscoreTable"));
-      Debug.Log(json);*/
+      Debug.Log(json);
       
       DontDestroyOnLoad(canvasParent);
         
@@ -43,19 +43,18 @@ public class MenuHighScore : MonoBehaviour
         
        string jsonString = PlayerPrefs.GetString("highscoreTable");
        HighScores highscores = JsonUtility.FromJson<HighScores>(jsonString);
-       if (highscores.HighScoreEntrieList is not null)
-       {
+     
          HighScoreEntrieList = highscores.HighScoreEntrieList;
-       }
+     
 
-       if (highscores.HighScoreEntrieList is not null && highscores.HighScoreEntrieList.Count == 0)
+    /*   if (highscores.HighScoreEntrieList is not null && highscores.HighScoreEntrieList.Count == 0)
        {
            noScoreText.SetActive(true);
        }
        else if (highscores.HighScoreEntrieList is not null && highscores.HighScoreEntrieList.Count > 0)
        {
            noScoreText.SetActive(false);
-       }
+       }*/
 
      
 
