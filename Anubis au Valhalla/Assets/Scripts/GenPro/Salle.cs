@@ -90,7 +90,6 @@ public class Salle : MonoBehaviour
 
         if (SalleGenerator.Instance.morbinTime)
         {
-            Debug.Log("Gros challenge spécial");
             overdose = true;
             infiniteBank = true;
             challengeChosen = 2;
@@ -144,7 +143,6 @@ public class Salle : MonoBehaviour
             waveTimer -= Time.deltaTime;
             if (waveTimer < 0)
             {
-                Debug.Log("fais pas ca");
                 waveTimer = SalleGenerator.Instance.timeBetweenWaves;
                 var spawnPoints = Random.Range(0, 3);
                 if (spawnPoints == 0)
@@ -174,7 +172,6 @@ public class Salle : MonoBehaviour
 
     private void C2_Survive()
     {
-        Debug.Log("mais fais le challenge connard");
         text.Appear(text.titleAlpha,text.titleStartPos,text.title);
         text.Appear(text.descAlpha,text.descStartPos,text.description);
         timer.timer.enabled = true;
@@ -535,7 +532,6 @@ public class Salle : MonoBehaviour
 
         if (SalleGenerator.Instance.roomsDone == SalleGenerator.Instance.dungeonSize)
         {
-            Debug.Log("will spawn boss");
             timer.enabled = false;
             timer.timer.enabled = false;
             text.FadeOut(text.descAlpha, text.descEndPos, text.description);

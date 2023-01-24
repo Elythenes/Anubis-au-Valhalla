@@ -92,7 +92,6 @@ public class PuppetHealth : MonsterLifeManager
 
     public void Deactivate()
     {
-        Debug.Log("oui");
         dmgTrigger.enabled = false;
         canAttack = false;
         transform.DOMoveY(fb.deactivationRecoil, 1f);

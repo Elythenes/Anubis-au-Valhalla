@@ -577,7 +577,6 @@ public class CharacterController : MonoBehaviour
     SalleGenerator.Instance.SwapDoorType(SalleGenerator.Instance.sDoors[(int)SalleGenerator.Instance.fromDoor]);
     if (SalleGenerator.Instance.roomsDone > SalleGenerator.Instance.dungeonSize || hitDoor.currentDoorType == Door.DoorType.Transition)
     {
-      Debug.Log("auuuuugh");
       SalleGenerator.Instance.NewZone(hitDoor.doorOrientation, true, hitDoor);
       hitDoor.willChooseSpecial = false;
       for (int i = 0; i < (int)SalleGenerator.DoorOrientation.West + 1; i++)
@@ -665,7 +664,6 @@ public class CharacterController : MonoBehaviour
     if (timer >= 0)
     {
       timer -= Time.deltaTime;
-      Debug.Log(timer);
       return;
     }
     playerCol.enabled = true;
