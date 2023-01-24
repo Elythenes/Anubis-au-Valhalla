@@ -91,7 +91,7 @@ public class Door : MonoBehaviour
                     bossDoor2.SetActive(true);
                     break;
                 }
-                bossDoor1.SetActive(true);
+                transitionDoor.SetActive(true);
                 break;
             case DoorType.Broken:
                 if (SalleGenerator.Instance.zone2)
