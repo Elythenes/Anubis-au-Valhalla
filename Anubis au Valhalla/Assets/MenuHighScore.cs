@@ -107,6 +107,7 @@ public class MenuHighScore : MonoBehaviour
 
     public void UpdateTable()
     {
+     KillTable();
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         HighScores highscores = JsonUtility.FromJson<HighScores>(jsonString);
         if (highscores.HighScoreEntrieList is not null)
@@ -191,6 +192,13 @@ public class MenuHighScore : MonoBehaviour
             transformList.Add(templateObj);
     }
 
+    public void KillTable()
+    {
+        for (int i = 0; i < highscoreEntryTransformList.Count; i++)
+        {
+            Destroy(highscoreEntryTransformList[i].gameObject);
+        }
+    }
     public void QuitTable()
     {
         CharacterController.instance.allowMovements = true;
