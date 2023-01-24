@@ -68,7 +68,7 @@ public class DeathMenu : MonoBehaviour
     IEnumerator BackHubTimer()
     {
         yield return new WaitForSecondsRealtime(timeToLastStep);
-        ScoreManager.instance.AddHighScoreEntry(ScoreManager.instance.currentScore);
+        //ScoreManager.instance.AddHighScoreEntry(ScoreManager.instance.currentScore);
         SoundManager.instance.ChangeToHub();
         SoundManager.instance.PlayHub();
         ScoreManager.instance.currentScore = 0;

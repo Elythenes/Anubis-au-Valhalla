@@ -26,17 +26,14 @@ public class MenuHighScore : MonoBehaviour
        
       // HighScoreEntrieList = new List<HighScoreEntry>(){new HighScoreEntry{score = 100}};
        
-      /* HighScores highScores = new HighScores { HighScoreEntrieList = HighScoreEntrieList }; // Pour mettre des scores random (a initialiser dans une liste)
+       HighScores highScores = new HighScores { HighScoreEntrieList = HighScoreEntrieList }; // Pour mettre des scores random (a initialiser dans une liste)
       string json = JsonUtility.ToJson(highScores);
       PlayerPrefs.SetString("highscoreTable",json);
       PlayerPrefs.Save();
       Debug.Log(PlayerPrefs.GetString("highscoreTable"));
-      AddHighScoreEntry(999);
-      Debug.Log(json);*/
+      Debug.Log(json);
       
-   
-      
-        DontDestroyOnLoad(gameObject);
+      DontDestroyOnLoad(gameObject);
         
         
         
@@ -44,7 +41,7 @@ public class MenuHighScore : MonoBehaviour
        HighScores highscores = JsonUtility.FromJson<HighScores>(jsonString);
        if (highscores.HighScoreEntrieList is not null)
        {
-           HighScoreEntrieList = highscores.HighScoreEntrieList;
+         HighScoreEntrieList = highscores.HighScoreEntrieList;
        }
 
        if (highscores.HighScoreEntrieList is null)
@@ -53,6 +50,7 @@ public class MenuHighScore : MonoBehaviour
        }
        else
        {
+          
            noScoreText.SetActive(false);
        }
 
