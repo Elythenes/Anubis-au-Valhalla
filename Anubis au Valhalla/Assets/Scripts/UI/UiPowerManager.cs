@@ -338,6 +338,7 @@ public class UiPowerManager : MonoBehaviour
     public void DebugButton()
     {
         Debug.Log("ploc");
+        Debug.Log("oui");
     }
     
     

@@ -430,7 +430,7 @@ public class UiManager : MonoBehaviour
         Debug.Log("ouiouiouoirf");
         if (PotionManager.Instance.currentPotion is not null)
         {
-            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.name;
+            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
             boxPotionTexte.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
             
             globalBoxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
@@ -438,8 +438,8 @@ public class UiManager : MonoBehaviour
         }
         else
         {
-            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = "";
-            boxPotionTexte.GetComponent<TextMeshProUGUI>().text = "Je n'ai pas de potion actuellement";
+            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = "Flacon vide";
+            boxPotionTexte.GetComponent<TextMeshProUGUI>().text = "Je ne possède pas de potion actuellement.";
             boxPotionImage.GetComponent<Image>().sprite = boxPotionVide;
             globalBoxPotionImage.GetComponent<Image>().sprite = boxPotionVide;
         }
