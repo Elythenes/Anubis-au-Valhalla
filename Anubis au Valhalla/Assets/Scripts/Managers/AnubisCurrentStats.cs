@@ -169,9 +169,16 @@ public class AnubisCurrentStats : MonoBehaviour
 
       if (damageReduction + soulBonusDamageReductionForStat < 100)
       {
-         damageReductionForStat = damageReduction + soulBonusDamageReductionForStat;
+         if (soulBonusDamageReductionForStat > 0)
+         {
+            damageReductionForStat = damageReduction + soulBonusDamageReductionForStat;
+         }
+         else
+         {
+            damageReductionForStat = damageReduction;
+         }
       }
-      else 
+      if (damageReductionForStat > 100)
       {
          damageReductionForStat = 100;
       }
