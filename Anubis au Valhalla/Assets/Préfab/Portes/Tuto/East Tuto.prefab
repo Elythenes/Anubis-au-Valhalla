@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5315710199931721985}
   - component: {fileID: 9060761762294451040}
   - component: {fileID: 3654595799421168452}
+  - component: {fileID: 1924552709}
   m_Layer: 10
   m_Name: East Tuto
   m_TagString: DoorTuto
@@ -183,9 +184,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad31c686d012804408d95cc8ef8c70c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoomIndex: 1
+  currentRoomIndex: 0
   isNext: 1
   isBack: 0
+--- !u!95 &1924552709
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2580341452631517689}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d79d8c559ab47f7489a5da222c6123eb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4140507142594739492
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,8 +290,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6225153704108641757}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07, y: 2.09, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 2.168318}
+  m_LocalPosition: {x: 0.21, y: 0.97, z: 0}
+  m_LocalScale: {x: 1.5612425, y: 1.5091927, z: 2.7032423}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4346509926296021845}
@@ -296,7 +317,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -317,7 +338,7 @@ SpriteRenderer:
   m_SortingLayerID: -1561176513
   m_SortingLayer: -5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5052852903838642696, guid: 4ab0574c344bc6a438665261b79df0ed, type: 3}
+  m_Sprite: {fileID: 95820684, guid: 32798ee660bd04549a9bc2bcbed8a184, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

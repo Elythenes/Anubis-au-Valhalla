@@ -49,6 +49,7 @@ public class UiManager : MonoBehaviour
     [Foldout("INVENTORY")] public GameObject boxGlyphTitre;
     [Foldout("INVENTORY")] public GameObject boxGlyphTexte;
     [Foldout("INVENTORY")] public GameObject boxGlyphImage;
+    [Foldout("INVENTORY")] public Image boxGlyphCadre;
     [Foldout("INVENTORY")] public Color colorPretre;
     [Foldout("INVENTORY")] public Sprite cadrePretre;
     [Foldout("INVENTORY")] public Color colorPharaon;
@@ -64,6 +65,7 @@ public class UiManager : MonoBehaviour
     [Foldout("INVENTORY")] public GameObject boxPotionTitre;
     [Foldout("INVENTORY")] public GameObject boxPotionTexte;
     [Foldout("INVENTORY")] public GameObject boxPotionImage;
+    [Foldout("INVENTORY")] public Sprite boxPotionVide;
 
     [Foldout("INVENTORY")] public GameObject globalBoxGlyph;
     [Foldout("INVENTORY")] public GameObject globalBoxPotion;
@@ -74,6 +76,7 @@ public class UiManager : MonoBehaviour
     
     [Header("Audio")]
     public AudioSource audioSource;
+    public AudioClip clipDialoguesUp;
 
 
 
@@ -91,7 +94,8 @@ public class UiManager : MonoBehaviour
         if (!PotionManager.Instance.isPotionSlotFill)
         {
             spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 0);
-            boxPotionImage.GetComponent<Image>().color = new Color(255, 255, 255, 0);
+            boxPotionImage.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+            boxPotionImage.GetComponent<Image>().sprite = boxPotionVide;
         }
         
     }
@@ -250,24 +254,34 @@ public class UiManager : MonoBehaviour
                 {
                     globalBoxTextRarity.SetText("Mineure");
                     globalBoxTextRarity.color = colorMinor;
+                    boxGlyphCadre.sprite = cadreMinor;
+                    boxGlyphCadre.color = colorMinor;
                 }
                 else
                 {
                     globalBoxTextRarity.SetText("Prêtre");
                     globalBoxTextRarity.color = colorPretre;
+                    boxGlyphCadre.sprite = cadrePretre;
+                    boxGlyphCadre.color = colorPretre;
                 }
                 break;
             case Rarity.Pharaon:
                 globalBoxTextRarity.SetText("Pharaon");
                 globalBoxTextRarity.color = colorPharaon;
+                boxGlyphCadre.sprite = cadrePharaon;
+                boxGlyphCadre.color = colorPharaon;
                 break;
             case Rarity.Divinité:
                 globalBoxTextRarity.SetText("Divinité");
                 globalBoxTextRarity.color = colorDivinite;
+                boxGlyphCadre.sprite = cadreDivinite;
+                boxGlyphCadre.color = colorDivinite;
                 break;
             case Rarity.Unique:
                 globalBoxTextRarity.SetText("Unique");
                 globalBoxTextRarity.color = colorUnique;
+                boxGlyphCadre.sprite = cadreUnique;
+                boxGlyphCadre.color = colorUnique;
                 break;
             default:
                 Debug.Log("NON2");
@@ -392,15 +406,17 @@ public class UiManager : MonoBehaviour
             buttonSwitch.SetActive(true);
 
             currentPotionName.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
+            currentPotionName.SetActive(true);
             currentPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
             currentPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.citation;
             currentPotionSprite.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+            currentPotionSprite.SetActive(true);
 
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
             newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
             newPotionSprite.GetComponent<Image>().sprite = PotionRepository.Instance.potionInside.sprite;
-            //Debug.Log("potpot");
+            Debug.Log("potpot");
         }
         
     }
@@ -420,8 +436,8 @@ public class UiManager : MonoBehaviour
         {
             boxPotionTitre.GetComponent<TextMeshProUGUI>().text = "";
             boxPotionTexte.GetComponent<TextMeshProUGUI>().text = "Je n'ai pas de potion actuellement";
-            boxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
-            globalBoxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
+            boxPotionImage.GetComponent<Image>().sprite = boxPotionVide;
+            globalBoxPotionImage.GetComponent<Image>().sprite = boxPotionVide;
         }
     }
 
@@ -452,6 +468,11 @@ public class UiManager : MonoBehaviour
     public void PlayButtonSound()
     {
         audioSource.Play();
+    }
+    
+    public void PlayDialogueUp()
+    {
+        audioSource.PlayOneShot(clipDialoguesUp,0.3f);
     }
 
     //Fonctions : MenuPause et Option ***********************************************************************************************************************************************************************************
