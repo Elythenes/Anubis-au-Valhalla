@@ -37,7 +37,7 @@ public class GlyphInventory : MonoBehaviour
     
     public void AddNewGlyph(GlyphObject hiero)
     {
-        Debug.Log("call AddNewGlyph");
+        //Debug.Log("call AddNewGlyph");
 
         switch (hiero.partie)
         {
@@ -60,7 +60,7 @@ public class GlyphInventory : MonoBehaviour
                 break;
             
             default:
-                Debug.LogError("Frérot, t'as pas mis de partie associée à la glyphe : " + hiero.name + ".");
+                //Debug.LogError("Frérot, t'as pas mis de partie associée à la glyphe : " + hiero.name + ".");
                 break;
         }
     }

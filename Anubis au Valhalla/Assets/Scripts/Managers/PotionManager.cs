@@ -63,13 +63,13 @@ public class PotionManager : MonoBehaviour
          
          if (currentPotion == null)
          {
-            Debug.Log("il n'y a pas de potions");
+            //Debug.Log("il n'y a pas de potions");
          }
          else
          {
             if (currentPotion.type == PotionObject.PotionType.SpecialItem)
             {
-               Debug.Log("Je ne peux pas boire une chose qui n'est pas une potion");
+               //Debug.Log("Je ne peux pas boire une chose qui n'est pas une potion");
             }
             else
             {
@@ -88,7 +88,7 @@ public class PotionManager : MonoBehaviour
    {
       audioSource.pitch = 1;
       audioSource.PlayOneShot(audioClipArray[0]);
-      Debug.Log("Drink " + glou.nom);
+      //Debug.Log("Drink " + glou.nom);
       SaveStatBeforePotion();
       
       UiManager.instance.spritePotion.GetComponent<Image>().color = new Color(255,255,255,0);
@@ -156,7 +156,7 @@ public class PotionManager : MonoBehaviour
          case 1:
             if (Input.GetKeyDown(KeyCode.L)) //pour les autres cases remplacer le Input par la condition que vous voulez
             {
-               Debug.Log("lol");
+               //Debug.Log("lol");
                revokePotionEarly = true;
             }
             break;
@@ -164,7 +164,7 @@ public class PotionManager : MonoBehaviour
          case 6: //Potion fragile de force
             if (tookDamage)  //Anubis prend des dégâts
             {
-               Debug.Log("perte pot fragile");
+               //Debug.Log("perte pot fragile");
                revokePotionEarly = true;
                tookDamage = false;
             }

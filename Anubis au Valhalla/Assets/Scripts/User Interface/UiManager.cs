@@ -201,32 +201,32 @@ public class UiManager : MonoBehaviour
                     {
                         listBoxInventaire[i].GetComponent<Image>().sprite = cadreMinor;
                         listBoxInventaire[i].GetComponent<Image>().color = colorMinor;
-                        Debug.Log("is minor");
+                        //Debug.Log("is minor");
                     }
                     else
                     {
                         listBoxInventaire[i].GetComponent<Image>().sprite = cadrePretre;
                         listBoxInventaire[i].GetComponent<Image>().color = colorPretre;
-                        Debug.Log("is prêtre");
+                        //Debug.Log("is prêtre");
                     }
                     break;
                 case Rarity.Pharaon:
                     listBoxInventaire[i].GetComponent<Image>().sprite = cadrePharaon;
                     listBoxInventaire[i].GetComponent<Image>().color = colorPharaon;
-                    Debug.Log("is pharaon");
+                    //Debug.Log("is pharaon");
                     break;
                 case Rarity.Divinité:
                     listBoxInventaire[i].GetComponent<Image>().sprite = cadreDivinite;
                     listBoxInventaire[i].GetComponent<Image>().color = colorDivinite;
-                    Debug.Log("is divinité");
+                    //Debug.Log("is divinité");
                     break;
                 case Rarity.Unique:
                     listBoxInventaire[i].GetComponent<Image>().sprite = cadreUnique;
                     listBoxInventaire[i].GetComponent<Image>().color = colorUnique;
-                    Debug.Log("is unique");
+                    //Debug.Log("is unique");
                     break;
                 default:
-                    Debug.Log("NON");
+                    //Debug.Log("NON");
                     break;
             }
         }
@@ -247,7 +247,7 @@ public class UiManager : MonoBehaviour
 
     public void FillDescriptionInventory(int boxPos) //change le titre et la description dans les box à droite du livre
     {
-        Debug.Log(boxPos);
+        //Debug.Log(boxPos);
         boxGlyphTitre.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].nom;
         boxGlyphTexte.GetComponent<TextMeshProUGUI>().text = GlyphInventory.Instance.glyphInventory[boxPos - 1].description;
         boxGlyphImage.GetComponent<Image>().sprite = GlyphInventory.Instance.glyphInventory[boxPos - 1].icone;
@@ -288,7 +288,7 @@ public class UiManager : MonoBehaviour
                 boxGlyphCadre.color = colorUnique;
                 break;
             default:
-                Debug.Log("NON2");
+                //Debug.Log("NON2");
                 break;
         }
     }
@@ -300,28 +300,28 @@ public class UiManager : MonoBehaviour
 
     public void DisablePageDroite(string page)
     {
-        Debug.Log("oui");
+        //Debug.Log("oui");
         switch (page)
         {
             case "glyph":
                 globalBoxGlyph.SetActive(true);
                 globalBoxPotion.SetActive(false);
                 globalBoxPowers.SetActive(false);
-                Debug.Log("box glyph");
+                //Debug.Log("box glyph");
                 break;
             
             case "potion":
                 globalBoxGlyph.SetActive(false);
                 globalBoxPotion.SetActive(true);
                 globalBoxPowers.SetActive(false);
-                Debug.Log("box potion");
+                //Debug.Log("box potion");
                 break;
             
             case "powers":
                 globalBoxGlyph.SetActive(false);
                 globalBoxPotion.SetActive(false);
                 globalBoxPowers.SetActive(true);
-                Debug.Log("box powers");
+                //Debug.Log("box powers");
                 break;
             
             default:
@@ -420,14 +420,14 @@ public class UiManager : MonoBehaviour
             newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
             newPotionSprite.GetComponent<Image>().sprite = PotionRepository.Instance.potionInside.sprite;
-            Debug.Log("potpot");
+            //Debug.Log("potpot");
         }
         
     }
     
     public void FillDescriptionPotion() 
     {
-        Debug.Log("ouiouiouoirf");
+        //Debug.Log("ouiouiouoirf");
         if (PotionManager.Instance.currentPotion is not null)
         {
             boxPotionTitre.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
@@ -455,12 +455,12 @@ public class UiManager : MonoBehaviour
         switch (cas)
         {
             case 0:
-                Debug.Log("yué soui là");
+                //Debug.Log("yué soui là");
                 potionChoiceArrow.GetComponent<RectTransform>().rotation = Quaternion.Euler(0,0,rotaZ);
                 break;
             
             case 1:
-                Debug.Log("paslà");
+                //Debug.Log("paslà");
                 potionChoiceArrow.GetComponent<RectTransform>().rotation = quaternion.EulerXYZ(0,0,0);
                 break;
         }
