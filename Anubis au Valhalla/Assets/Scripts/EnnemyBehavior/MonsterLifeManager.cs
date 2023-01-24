@@ -7,6 +7,7 @@ using Pathfinding;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 
 public class MonsterLifeManager : MonoBehaviour
@@ -41,6 +42,7 @@ public class MonsterLifeManager : MonoBehaviour
     public float disolveValueAmount;
     public GameObject spawnCircle;
     public GameObject child;
+    public Renderer childRenderer;
     public GameObject emptyLayers;
 
     [Header("Alterations d'état")] 
@@ -186,15 +188,51 @@ public class MonsterLifeManager : MonoBehaviour
             }
             
             MomifiedTimeTimer += Time.deltaTime;
-            ai.canMove = false;
             sprite2DRend.enabled = true;
             sprite2DRend.material = momieShader;
+            childRenderer.enabled = false;
+            if (IAGuerrier is not null)
+            {
+                IAGuerrier.enabled = false;
+                IAGuerrier.rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+            if (IALoup is not null)
+            {
+                IALoup.enabled = false;
+                IALoup.rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+            if (IACorbeau is not null)
+            {
+                IACorbeau.enabled = false;
+                IACorbeau.rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
             if (MomifiedTimeTimer >= MomifiedTime)
             {
                 activeBandelettes = true;
                 isMomified = false;
                 sprite2DRend.enabled = false;
-                ai.canMove = true;
+                childRenderer.enabled = true;
+                if (IAGuerrier is not null)
+                {
+                    IAGuerrier.enabled = true;
+                    IAGuerrier.rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                    IAGuerrier.rb.AddForce((transform.position - CharacterController.instance.transform.position)*10);
+                    IAGuerrier.rb.velocity = Vector2.zero;
+                }
+                if (IALoup is not null)
+                {
+                    IALoup.enabled = true;
+                    IALoup.rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                    IALoup.rb.AddForce((transform.position - CharacterController.instance.transform.position)*10);
+                    IALoup.rb.velocity = Vector2.zero;
+                }
+                if (IACorbeau is not null)
+                {
+                    IACorbeau.enabled = true;
+                    IACorbeau.rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                    IACorbeau.rb.AddForce((transform.position - CharacterController.instance.transform.position)*10);
+                    IACorbeau.rb.velocity = Vector2.zero;
+                }
                 MomifiedTimeTimer = 0;
             }
         }

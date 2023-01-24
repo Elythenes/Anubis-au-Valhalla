@@ -12,7 +12,7 @@ public class IA_Corbeau : MonoBehaviour
     public Animator anim;
     public GameObject emptyLayers;
     public bool isElite;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     public LayerMask layerPlayer;
     public MonsterLifeManager life;
     public bool isDead;
