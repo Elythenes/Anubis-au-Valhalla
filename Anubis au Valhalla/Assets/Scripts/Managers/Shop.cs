@@ -383,7 +383,7 @@ public class Shop : MonoBehaviour
                 bouton.GetComponent<Image>().color = UiManager.instance.colorDivinite;
                 break;
             default:
-                Debug.Log("NON2");
+                
                 break;
         }
     }

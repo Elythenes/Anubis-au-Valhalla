@@ -5,7 +5,6 @@ using GenPro;
 using NaughtyAttributes;
 using Unity.Mathematics;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 public class GlyphManager : MonoBehaviour
 {
@@ -200,10 +199,6 @@ public class GlyphManager : MonoBehaviour
                         AttaquesNormales.instance.VFXobj[i].transform.localScale = vector22;
                         AnubisCurrentStats.instance.rangeAttaque[i] = vector2;
                     }
-                    else
-                    {
-                        Debug.LogError("Bonus Basic Stat pas bonne, car = 0");
-                    }
                 }
                 break;
             
@@ -220,10 +215,6 @@ public class GlyphManager : MonoBehaviour
                 {
                     AnubisCurrentStats.instance.speedX *= hiero.bonusBasicStat;
                     AnubisCurrentStats.instance.speedY *= hiero.bonusBasicStat;
-                }
-                else
-                {
-                    Debug.LogError("Bonus Basic Stat pas bonne, car = 0");
                 }
                 break;
             
@@ -649,7 +640,6 @@ public class GlyphManager : MonoBehaviour
         {
             foreach (var enemy in SalleGenerator.Instance.currentRoom.currentEnemies)
             {
-                Debug.Log("tiens dans ta gueule");
                 enemy.TakeDamage(damage,stagger);
             }
         }

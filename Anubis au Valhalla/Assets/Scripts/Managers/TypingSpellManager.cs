@@ -30,9 +30,7 @@ public class TypingSpellManager : MonoBehaviour
     {
         if (Input.GetKeyDown(select))
         {
-            Debug.Log(iField.text);
             interactable = true;
-            Debug.Log("Enter pressé");
         }
     }
 
@@ -41,7 +39,6 @@ public class TypingSpellManager : MonoBehaviour
         switch (spellSelection)
         {
             case 1:
-                Debug.Log("Spell 1 choisi");
                 break;
         }
     }

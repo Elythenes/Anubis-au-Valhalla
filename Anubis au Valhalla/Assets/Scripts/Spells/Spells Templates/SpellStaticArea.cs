@@ -14,7 +14,7 @@ public class SpellStaticArea : MonoBehaviour
     public void TimeLimitedSpell(GameObject gb, int timer) 
     {
         var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity);
-        Debug.Log("Spell1 used");
+        
         StartCoroutine(TimeLimitedGb(gbInstance, timerSpell1));
     }
     
@@ -23,6 +23,5 @@ public class SpellStaticArea : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         Destroy(gbInstance);
-        Debug.Log("destroyed");
     }
 }

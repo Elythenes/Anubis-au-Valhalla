@@ -23,6 +23,5 @@ public class SpellThrowingProjectile : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         Destroy(gbInstance);
-        Debug.Log("destroyed");
     }
 }

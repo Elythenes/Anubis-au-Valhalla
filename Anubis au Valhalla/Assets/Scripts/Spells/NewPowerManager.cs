@@ -217,7 +217,7 @@ public class NewPowerManager : MonoBehaviour
         switch(powerRepo.GetComponent<NewPowerRepository>().newPowerType)
         {
             case NewPowerType.None:
-                Debug.Log("pas de level up si PowerType = None");
+                //Debug.Log("pas de level up si PowerType = None");
                 break;
             
             case NewPowerType.Power1:
@@ -483,11 +483,11 @@ public class NewPowerManager : MonoBehaviour
                         direction = Quaternion.Euler(0,0,0);     
                         break;
                     case CharacterController.LookingAt.Sud:
-                        Debug.Log("Mais fréro kestufous la");
+                        //Debug.Log("Mais fréro kestufous la");
                         direction = Quaternion.Euler(0, 0, 180);
                         break;
                 }
-                Debug.Log(direction);
+                //Debug.Log(direction);
                 GameObject paralysieHitbox =
                     Instantiate(p1DashContactHitbox, cc.transform.position, direction, cc.transform);
                 Destroy(paralysieHitbox, cc.dashCooldown);
@@ -562,7 +562,6 @@ public class NewPowerManager : MonoBehaviour
                 break;
             
             default:
-                Debug.Log("non mec");
                 break;
         }
         
