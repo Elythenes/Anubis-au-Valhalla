@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using GenPro;
 using NaughtyAttributes;
 using Pathfinding;
 using UnityEngine;
@@ -127,12 +128,12 @@ public class IA_Valkyrie : MonoBehaviour
     [Foldout("Refs")]public Animator anim;
     [Foldout("Refs")]IAstarAI ai;
     [Foldout("Refs")]public AIDestinationSetter playerFollow;
-    
+    [Foldout("Refs")] public GhostDash ghost;
     
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip[] clipArray;
-    //audioSource.PlayOneShot([x]);
+    //audioSource.PlayOneShot(clipArray[x]);
 
     //Fonctions ******************************************************************************************************************************************************
     
@@ -159,27 +160,34 @@ public class IA_Valkyrie : MonoBehaviour
         playerFollow.enabled = true;
         playerFollow.target = player.transform;
         ai.maxSpeed = moveSpeed;
+        ghost.ghostDelay = chargeSpeed;
     }
 
     void UpdateCurrentState()
     {
+        
         if (life.vieActuelle > life.vieMax * 0.75f) currentState = State.FullHp;
         else if (life.vieActuelle > life.vieMax * 0.5f) currentState = State.TroisQuarts;
         else if (life.vieActuelle > life.vieMax * 0.25f)
         {
             currentState = State.Moitié;
-            if (!midlifeKnockBack)
+            /*if (!midlifeKnockBack)
             {
                 StartCoroutine(AttaqueAnneaux());
                 midlifeKnockBack = true;
-            }
+            }*/
         }
         else currentState = State.UnQuart;
 
         if (life.vieActuelle <=0)
         {
+            audioSource.PlayOneShot(clipArray[7]);
             StopAllCoroutines();
             transform.DOKill();
+        }
+        else
+        {
+            audioSource.PlayOneShot(clipArray[6]);
         }
     }
     public void Update()
@@ -204,6 +212,8 @@ public class IA_Valkyrie : MonoBehaviour
         
         if (TriggerJumpTimeTimer >= TriggerJumpTime) // Attaque saut
         {
+            
+            ai.isStopped = true;
             TriggerSaut();
             JumpTimeTimer += Time.deltaTime;
         }
@@ -218,6 +228,9 @@ public class IA_Valkyrie : MonoBehaviour
             {
                 if (!hasFallen)
                 {
+                    PickRandomPoint(SalleGenerator.Instance.currentRoom.maxPos.x,SalleGenerator.Instance.currentRoom.maxPos.y);
+                    ai.destination = pointToGo;
+                    ai.SearchPath();
                     rb.velocity = Vector2.zero;
                     anim.enabled = false;
                     hasFallen = true;
@@ -233,6 +246,8 @@ public class IA_Valkyrie : MonoBehaviour
 
         if (TriggerDashTimer > TriggerDashTime && !isDashing && executedDashes < dashAmount[(int)currentState])
         {
+            
+            ai.isStopped = true;
             aipath.canMove = false;
             isDashing = true;
             Dash();
@@ -245,6 +260,8 @@ public class IA_Valkyrie : MonoBehaviour
             {
                 transform.DOMove(transform.position, StunTime[(int)currentState]).OnComplete((() =>
                 {
+                    
+                    ai.isStopped = false;
                     aipath.canMove = true;
                     isAttacking = false;
                     charging = false;
@@ -258,6 +275,7 @@ public class IA_Valkyrie : MonoBehaviour
 
         if (triggerRingAttackTimer > triggerRingAttackTime && !isAttacking)
         {
+            ai.isStopped = true;
             isAttacking = true;
             StartCoroutine(AttaqueAnneaux());
         }
@@ -276,20 +294,22 @@ public class IA_Valkyrie : MonoBehaviour
     }
 
     #region Mouvement
-    void PickRandomPoint() 
+    void PickRandomPoint(float height, float width) 
     {
-        var point = Random.insideUnitCircle * radiusWondering;
-        point.x += ai.position.x;
-        point.y += ai.position.y;
+        var point = new Vector2(Random.Range(-width, width), Random.Range(-height, height));
         
         if (Vector3.Distance(player.transform.position, point) !<= radiusWondering)
         {
-            PickRandomPoint();
+            PickRandomPoint(height,width);
         }
         else
         {
             pointToGo = point;
         }
+    }
+    public static Vector2 GenerateRandomPosInArea(float height, float width) 
+    {
+        return new Vector2(Random.Range(-width, width), Random.Range(-height, height));
     }
     void deplacement()
     {
@@ -300,7 +320,7 @@ public class IA_Valkyrie : MonoBehaviour
             {
                 currentIdleTime = idleTime;
                 playerFollow.enabled = false;
-                PickRandomPoint();
+                PickRandomPoint(SalleGenerator.Instance.currentRoom.maxPos.x,SalleGenerator.Instance.currentRoom.maxPos.y);
                 ai.destination = pointToGo;
                 ai.SearchPath();
             }
@@ -328,6 +348,7 @@ public class IA_Valkyrie : MonoBehaviour
 
             }
             isAttacking = false;
+            ai.isStopped = false;
             StartUpJavelotTime = Random.Range(1, 6);
             StartUpJavelotTime += Random.value;
             anim.SetBool("isAttacking",false);
@@ -345,6 +366,10 @@ public class IA_Valkyrie : MonoBehaviour
             
         if (!hasShaked)
         {
+            
+            PickRandomPoint(SalleGenerator.Instance.currentRoom.maxPos.x,SalleGenerator.Instance.currentRoom.maxPos.y);
+            ai.destination = pointToGo;
+            ai.SearchPath();
             hasShaked = true;
             TriggerDashTimer -= 0.1f;
             triggerRingAttackTimer -= 0.1f;
@@ -360,6 +385,7 @@ public class IA_Valkyrie : MonoBehaviour
                 projJavelot.javelotNumber = i;
                 projJavelot.timeForIndic += 0.1f * i;
             }
+            audioSource.PlayOneShot(clipArray[2]);
             transform.DOShakePosition(1.1f,0.2f,50).OnComplete(() =>
             {
                 collider.enabled = false;
@@ -406,6 +432,10 @@ public class IA_Valkyrie : MonoBehaviour
             collider.enabled = true;
             TriggerJumpTime = Random.Range(3, 7);
             TriggerJumpTime += Random.value;
+            PickRandomPoint(SalleGenerator.Instance.currentRoom.maxPos.x,SalleGenerator.Instance.currentRoom.maxPos.y);
+            ai.destination = pointToGo;
+            ai.SearchPath();
+            ai.isStopped = false;
         });
 
     }
@@ -415,6 +445,7 @@ public class IA_Valkyrie : MonoBehaviour
 
     void Dash()
     {
+        audioSource.PlayOneShot(clipArray[3]);
         isAttacking = true;
         dir = new Vector2(CharacterController.instance.transform.position.x - transform.position.x,CharacterController.instance.transform.position.y - transform.position.y);
         dir.Normalize();
@@ -425,9 +456,11 @@ public class IA_Valkyrie : MonoBehaviour
         var savedPos = Indication.endPointRef.transform.position;
         transform.DOPunchPosition(reversedir* windUpDistance,windUpSpeed[(int)currentState]).OnComplete((() =>
         {
+            ghost.enabled = true;
             charging = true;
             Destroy(Indication.gameObject);
             Destroy(endOfDash);
+            audioSource.PlayOneShot(clipArray[4]);
             transform.DOMove(savedPos, chargeSpeed).OnComplete((() =>
             {
                 executedDashes++;
@@ -437,6 +470,9 @@ public class IA_Valkyrie : MonoBehaviour
                     {
                         charging = false;
                         isDashing = false;
+                        PickRandomPoint(SalleGenerator.Instance.currentRoom.maxPos.x,SalleGenerator.Instance.currentRoom.maxPos.y);
+                        ai.destination = pointToGo;
+                        ai.SearchPath();
                     }));
                 }
             }));
@@ -448,6 +484,12 @@ public class IA_Valkyrie : MonoBehaviour
 
     IEnumerator AttaqueAnneaux()
     {
+        PickRandomPoint(SalleGenerator.Instance.currentRoom.maxPos.x,SalleGenerator.Instance.currentRoom.maxPos.y);
+        ai.destination = pointToGo;
+        ai.SearchPath();
+        ai.isStopped = true;
+        isAttacking = true;
+        ai.canMove = false;
         anim.SetBool("isAttacking",true);
         yield return new WaitForSeconds(0.2f);
         anim.SetBool("isAttacking",false);
@@ -457,18 +499,21 @@ public class IA_Valkyrie : MonoBehaviour
             sr.DOColor(Color.white, 0.7f);
         }
         yield return new WaitForSeconds(0.6f);
-        isAttacking = true;
-        ai.canMove = false;
+        audioSource.PlayOneShot(clipArray[5]);
         for (int i = 0; i < ringAmount[(int)currentState]; i++)
         {
             var current = Instantiate(anneauxFeu,transform.position,Quaternion.identity);
             current.sr.sortingOrder += i;
             current.mask.frontSortingOrder += i;
+            isAttacking = true;
+            ai.canMove = false;
             yield return new WaitForSeconds(ringFrequency[(int)currentState]);
         }
 
         triggerRingAttackTimer = 0;
         isAttacking = false;
+        ai.canMove = true;
+        ai.isStopped = false;
     }
 
     private void OnTriggerEnter2D(Collider2D col)

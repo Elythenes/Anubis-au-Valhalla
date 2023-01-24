@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreManager : MenuHighScore
+public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
     public int currentScore;
@@ -26,9 +26,5 @@ public class ScoreManager : MenuHighScore
     {
         currentScore += scoreAdded;
     }
-
-    public override void AddHighScoreEntry(int score)
-    {
-        base.AddHighScoreEntry(score);
-    }
+    
 }

@@ -9,7 +9,6 @@ public class GhostDash : MonoBehaviour
     public float ghostDelay;
     public float ghostDelaySeconds;
     public GameObject ghost;
-    public Sprite ghostSprite;
     public bool activerEffet;
     public List<GameObject> tousLesSprites;
     public Vector3 lastPlayerPos;
@@ -28,12 +27,12 @@ public class GhostDash : MonoBehaviour
     void Update()
     {
         ghostDelaySeconds -= Time.deltaTime;
-        if (Vector3.Distance(CharacterController.instance.transform.position,lastPlayerPos) >= frequency) // Créer un effet fantôme derrière le player pendant le dash
+        if (Vector3.Distance(transform.position,lastPlayerPos) >= frequency) // Créer un effet fantôme derrière le player pendant le dash
         {
             GameObject currentGhost = Instantiate(ghost, transform.position,transform.rotation);
             tousLesSprites.Add(currentGhost);
             StartCoroutine(Destroyghost(currentGhost));
-            lastPlayerPos = CharacterController.instance.transform.position;
+            lastPlayerPos = transform.position;
         }
 
         if (ghostDelaySeconds < 0)
