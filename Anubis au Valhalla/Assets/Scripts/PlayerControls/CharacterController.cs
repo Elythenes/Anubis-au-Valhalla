@@ -319,6 +319,8 @@ public class CharacterController : MonoBehaviour
       if (Input.GetKeyDown(KeyCode.F) && currentDoor is not null)
       {
         InteractWithDoorTuto(currentDoor);
+        var particulesMarcheEmission = particulesMarche.emission;
+        particulesMarcheEmission.rateOverTime = 0;
       }
     }
     
