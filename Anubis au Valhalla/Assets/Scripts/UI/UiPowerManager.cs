@@ -321,6 +321,7 @@ public class UiPowerManager : MonoBehaviour
                 isPower2 = false;
                 boxPowerTitre.SetText("Malédiction spirituelle");
                 boxPowerDescription.SetText("Utilise le pouvoir des âmes pour maudire les ennemis.");
+                UiManager.instance.globalBoxPowersImage.GetComponent<Image>().sprite = UiManager.instance.globalBoxPowersImages[0];
                 break;
             
             case 2:
@@ -328,7 +329,7 @@ public class UiPowerManager : MonoBehaviour
                 isPower2 = true;
                 boxPowerTitre.SetText("Plaie de l'Égypte");
                 boxPowerDescription.SetText("Anéantis les adversaires avec la force du désert et de l'embaumement.");
-
+                UiManager.instance.globalBoxPowersImage.GetComponent<Image>().sprite = UiManager.instance.globalBoxPowersImages[1];
                 break;
         }
     }

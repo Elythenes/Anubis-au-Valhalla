@@ -71,6 +71,8 @@ public class UiManager : MonoBehaviour
     [Foldout("INVENTORY")] public GameObject globalBoxPotion;
     [Foldout("INVENTORY")] public Image globalBoxPotionImage;
     [Foldout("INVENTORY")] public GameObject globalBoxPowers;
+    [Foldout("INVENTORY")] public GameObject globalBoxPowersImage;
+    [Foldout("INVENTORY")] public List<Sprite> globalBoxPowersImages;
     [Foldout("INVENTORY")] public TextMeshProUGUI globalBoxTextRarity;
     
     
