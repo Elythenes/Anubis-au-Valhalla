@@ -207,7 +207,7 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isTutoLD)
             {
                StopDialogue();
-               StartCoroutine(Type("Les salles normales sont indiquées par les portes portant une rune Y (comme la porte de gauche). Elles contiennent des dangers et des récompenses standard."));
+               StartCoroutine(Type("Les salles normales sont indiquées par les portes portant une rune Y, comme la porte de gauche. Elles contiennent des dangers et des récompenses standard."));
             }
             break;
          case OptionChoisie.B:
@@ -236,7 +236,7 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isTutoLD)
             {
                StopDialogue();
-               StartCoroutine(Type("Les salles Challenges sont indiquées par les portes marquées d'une rune H (comme la porte du centre). Elles contiennent de grands dangers mais promettent des récompenses importantes à la clé. Soit sûr d'être prêt avant d'entrer d'y entrer."));
+               StartCoroutine(Type("Les salles Challenges sont indiquées par les portes marquées d'une rune H, comme la porte du centre. Elles contiennent de grands dangers mais promettent des récompenses importantes à la clé. Soit sûr d'être prêt avant d'entrer d'y entrer."));
             }
             break;
          case OptionChoisie.C:
@@ -266,7 +266,7 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isTutoLD)
             {
                StopDialogue();
-               StartCoroutine(Type("Tu pourras trouver les salles éthérées en passant par les portails violets (comme la porte de droite). Dans ces salles, tu pourras communiquer avec moi. Ramène-moi les âmes que tu récupères pour que je les transforme en améliorations pour ton arme."));
+               StartCoroutine(Type("Tu pourras trouver les salles éthérées en passant par les portails violets, comme la porte de droite. Dans ces salles, tu pourras communiquer avec moi. Ramène-moi les âmes que tu récupères pour acheter des améliorations pour ton arme."));
             }
             break;
          case OptionChoisie.D:
