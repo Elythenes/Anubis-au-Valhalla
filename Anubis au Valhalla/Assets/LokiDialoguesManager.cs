@@ -131,7 +131,7 @@ public class LokiDialoguesManager : MonoBehaviour
                 break;
             case 4 :
                 StopDialogue();
-                StartCoroutine(Type("Je te présente Freyja, la légendaire Valkyrie. Elle est à mon service désormais. Et tu mourras de sa main."));
+                StartCoroutine(Type("Je te présente Hildr, la légendaire Valkyrie. Elle est à mon service désormais. Et tu mourras de sa main."));
                 break;
             case 5 :
                 StopDialogue();

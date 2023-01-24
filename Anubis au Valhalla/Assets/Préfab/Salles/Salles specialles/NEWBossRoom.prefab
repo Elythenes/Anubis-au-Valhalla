@@ -470,7 +470,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45416358}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -487,7 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 2012065276}
-  audiosource: {fileID: 0}
+  audiosource: {fileID: 8425434038075345419}
 --- !u!82 &8425434038075345419
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4639,9 +4639,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: PlayButtonSound
+      - m_Target: {fileID: 45416361}
+        m_TargetAssemblyTypeName: VictoryScreen, Assembly-CSharp
+        m_MethodName: SonBoutton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5354,7 +5354,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 330.2, y: -60.6}
+  m_AnchoredPosition: {x: 315, y: -51}
   m_SizeDelta: {x: 92.182, y: 46.8805}
   m_Pivot: {x: 0.5, y: 0.5000001}
 --- !u!222 &618371463
@@ -7094,7 +7094,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -7545,7 +7545,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926921946}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.23479986, y: 4.595, z: 0}
+  m_LocalPosition: {x: 0.23479986, y: 7.06, z: 0}
   m_LocalScale: {x: 35.71146, y: 0.6813035, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7594,7 +7594,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.4292453, b: 0.4292453, a: 1}
+  m_Color: {r: 1, g: 0.4292453, b: 0.4292453, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -8103,7 +8103,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 256.5, y: 46.016}
+  m_AnchoredPosition: {x: 256.5, y: 23.9}
   m_SizeDelta: {x: 96.0612, y: 33.1063}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &993309738
@@ -10232,7 +10232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -72}
+  m_AnchoredPosition: {x: -1.1, y: 33}
   m_SizeDelta: {x: 508.9487, y: 44.7529}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1214172997
@@ -10263,7 +10263,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Freyja, La premi\xE8re des Valkyries"
+  m_text: Hildr
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fd0b9fe21ee8a344eafdb146ae955ab7, type: 2}
   m_sharedMaterial: {fileID: -4339273781351775497, guid: fd0b9fe21ee8a344eafdb146ae955ab7, type: 2}
@@ -10532,8 +10532,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 97}
-  m_SizeDelta: {x: 631.1892, y: 50.53961}
+  m_AnchoredPosition: {x: -0.0000038147, y: 42}
+  m_SizeDelta: {x: 513.8485, y: 45.5919}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1257338743
 MonoBehaviour:
@@ -12084,18 +12084,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490121321}
-  m_LocalRotation: {x: -0, y: -0, z: 0.0033867531, w: 0.9999943}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1257338741}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.388}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.0072021484, y: -0.39990234}
-  m_SizeDelta: {x: -0.25708, y: -8.4376}
+  m_AnchoredPosition: {x: -1.4743958, y: -0.39990234}
+  m_SizeDelta: {x: 2.7061, y: -8.4376}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1490121324
 CanvasRenderer:
@@ -13996,6 +13996,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 45416361}
+        m_TargetAssemblyTypeName: VictoryScreen, Assembly-CSharp
+        m_MethodName: GainWinPoints
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1781740768}
         m_TargetAssemblyTypeName: LokiDialoguesManager, Assembly-CSharp
         m_MethodName: Victory
@@ -14636,7 +14648,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000012398, y: 34.7}
+  m_AnchoredPosition: {x: 0.000012398, y: 47}
   m_SizeDelta: {x: 860.1802, y: 99.66022}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1816105474
@@ -14667,7 +14679,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ebba23659eb6dc141b22a950417c98bd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 897f12f3b0e93304a96bc4ad9404dad0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15944,8 +15956,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1.5336914}
-  m_SizeDelta: {x: 0, y: -8.6675}
+  m_AnchoredPosition: {x: 0.067871094, y: -1.1095009}
+  m_SizeDelta: {x: -0.13568, y: -13.9538}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1953202791
 CanvasRenderer:
@@ -21720,8 +21732,8 @@ MonoBehaviour:
   AstarRef: {fileID: 4257189192148704219, guid: dbfc59af419f1e54a976416c5e178cad, type: 3}
   player: {fileID: 0}
   coffre: {fileID: 3411506346598688678, guid: 32563d5b2c02e5e4cae8ddf7810a5164, type: 3}
-  minPos: {x: -4.5, y: -9}
-  maxPos: {x: 4.5, y: 15}
+  minPos: {x: -18, y: -3}
+  maxPos: {x: 18, y: 26}
   spawnBank: 10
   propsAmount: 5
   currentEnemies: []
