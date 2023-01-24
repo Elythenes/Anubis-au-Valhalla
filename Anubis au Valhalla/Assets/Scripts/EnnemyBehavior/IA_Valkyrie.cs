@@ -23,6 +23,7 @@ public class IA_Valkyrie : MonoBehaviour
     public State currentState;
     public bool midlifeKnockBack;
     public GameObject trajectoireRef;
+    public GameObject aura;
     
 
 
@@ -390,6 +391,7 @@ public class IA_Valkyrie : MonoBehaviour
             audioSource.PlayOneShot(clipArray[2]);
             transform.DOShakePosition(1.1f,0.2f,50).OnComplete(() =>
             {
+                aura.SetActive(false);
                 collider.enabled = false;
                 savedPos = SpriteObj.transform.localPosition;
                 savedScale = SpriteObj.transform.localScale;
@@ -419,6 +421,7 @@ public class IA_Valkyrie : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         landingSprite.enabled = true;
         Destroy(activeOmbre);
+        aura.SetActive(true);
         var hitbox = Instantiate(hitboxFall, transform.position, Quaternion.identity);
         landingSprite.transform.DOShakePosition(FallTime, 0.2f, 50).OnComplete(() =>
         { 
@@ -496,16 +499,17 @@ public class IA_Valkyrie : MonoBehaviour
         ai.isStopped = true;
         isAttacking = true;
         ai.canMove = false;
-        anim.SetBool("isAttacking",true);
-        yield return new WaitForSeconds(0.2f);
-        anim.SetBool("isAttacking",false);
+        audioSource.PlayOneShot(clipArray[5]);
         foreach (var sr in spriteArray)
         {
             sr.color = Color.yellow;
-            sr.DOColor(Color.white, 0.7f);
+            sr.DOColor(Color.white, 1.5f);
         }
-        yield return new WaitForSeconds(0.6f);
-        audioSource.PlayOneShot(clipArray[5]);
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("isAttacking",true);
+        yield return new WaitForSeconds(0.2f);
+        anim.SetBool("isAttacking",false);
+        yield return new WaitForSeconds(0.8f);
         for (int i = 0; i < ringAmount[(int)currentState]; i++)
         {
             var current = Instantiate(anneauxFeu,transform.position,Quaternion.identity);
