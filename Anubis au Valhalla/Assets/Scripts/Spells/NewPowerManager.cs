@@ -309,7 +309,7 @@ public class NewPowerManager : MonoBehaviour
                 //UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nNouveaux effets spéciaux, consulter l'inventaire.";
                 p2ComboWaveDouble = true;
                 p2ThrustBandageStunUp = true;
-                p2DashTrailInfection = true;
+                //p2DashTrailInfection = true;
                 break;
             /*case 9:
                 UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nAugmente les dégats du pouvoir.";
