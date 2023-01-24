@@ -97,7 +97,7 @@ public class Door : MonoBehaviour
                 if (SalleGenerator.Instance.zone2)
                 {
                     broken2.SetActive(true);
-                    //normalDoor2.SetActive(false);
+                    normalDoor2.SetActive(false);
                     break;
                 }
                 broken.SetActive(true);

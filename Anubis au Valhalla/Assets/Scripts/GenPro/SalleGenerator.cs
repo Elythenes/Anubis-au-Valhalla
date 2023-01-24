@@ -187,7 +187,7 @@ namespace GenPro
                                         sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
                                         for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                         {
-                                                if (i == (int) fromDoor) continue;
+                                                if (i == (int)fromDoor) {OpenDoors(fromDoor, false);continue;}
                                                 bool state = Random.value > 0.8f;
                                                 EnableDoors((DoorOrientation) i,state);
                                                 bool special = Random.value > 0.3f;
