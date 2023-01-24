@@ -21,7 +21,7 @@ public class IA_Monstre1 : MonoBehaviour
     public bool stopMove;
     public float stopDrag;
     public float moveDrag;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     public GameObject player;
     public AIPath aipath;
     public AIDestinationSetter playerFollow;

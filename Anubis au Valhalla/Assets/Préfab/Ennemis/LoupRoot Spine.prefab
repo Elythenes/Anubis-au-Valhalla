@@ -56,8 +56,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437658715127272755}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.003, y: -0.008, z: 0}
-  m_LocalScale: {x: 0.3970029, y: 0.39700294, z: 0.3970029}
+  m_LocalPosition: {x: 0.207, y: -0.1385, z: 0}
+  m_LocalScale: {x: 0.3970029, y: 0.39088908, z: 0.3970029}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8929337161420169337}
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: 21300000, guid: d1d9e81d4af01204cbf9937ca3151e4f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2c58d8132f19d92418da33ccec5d7de5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -494,19 +494,25 @@ MonoBehaviour:
   disolveValueAmount: 0.00501
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 5482979424132028281}
+  childRenderer: {fileID: 9010193272512883140}
+  layerManager: {fileID: 0}
+  sortingGroup: {fileID: 0}
   emptyLayers: {fileID: 6448416740321806631}
   isSmashInvinsible: 0
   isSmashInvinsibleTime: 0
   isSmashInvinsibleTimer: 0
   FlameInfected: 0
   FlameInfectedTimer: 0
-  FlameInfectedTimerMax: 2.5
+  FlameInfectedTimerMax: 2
   spawnTimer: 0
-  spawnTimerMax: 0.2
+  spawnTimerMax: 1
   flameManager: {fileID: 0}
   InvincibleTime: 0.19
   InvincibleTimeTimer: 0
   isInvincible: 0
+  InvincibleTimeDoT: 0.3
+  InvincibleTimeTimerDoT: 0
+  isInvincibleDoT: 0
   MomifiedTime: 3
   MomifiedTimeTimer: 0
   isMomified: 0
@@ -925,7 +931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 2621d82d5949b5740bae79bd84a172d4, type: 2}
-  initialSkinName: Base
+  initialSkinName: Base with Runes
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
   initialFlipY: 0
@@ -1071,6 +1077,7 @@ MonoBehaviour:
   stopMove: 0
   stopDrag: 1.5
   moveDrag: 0.5
+  rb: {fileID: 0}
   player: {fileID: 0}
   aipath: {fileID: 4853048369012106615}
   playerFollow: {fileID: 3870873888449813251}
@@ -1318,7 +1325,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

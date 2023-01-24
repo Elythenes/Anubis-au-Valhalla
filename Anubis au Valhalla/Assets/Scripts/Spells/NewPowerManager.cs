@@ -288,7 +288,7 @@ public class NewPowerManager : MonoBehaviour
                // UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nNouveaux effets spéciaux, consulter l'inventaire.";
                 p2ComboWaveSoul = true;
                 p2ThrustBandageMaxHit = 2;
-                p2DashTrailSize *= 2;
+                p2DashTrailSize *= 1.3f;
                 break;
            /* case 4:
                 UiThotManager.Instance.generalAmorce = "Pouvoir des Ames Amélioré \n \nAugmente la portée du pouvoir.";
@@ -516,12 +516,12 @@ public class NewPowerManager : MonoBehaviour
                     float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
                     Instantiate(p2ThrustBandageHitbox,cc.transform.position + moveDirection,Quaternion.AngleAxis(angle,Vector3.forward));
             }
-            if (cc.isDashing) //si dash
+            if (!cc.canDash || cc.isDashing) //si dash
             {
                 timerSpawn += Time.deltaTime;
                 if (timerSpawn >= timerSpawnMax)
                 {
-                    GameObject fireZone = Instantiate(p2DashTrailHitbox, cc.transform.position, Quaternion.identity);
+                    GameObject fireZone = Instantiate(p2DashTrailHitbox, cc.transform.position + Vector3.down, Quaternion.identity);
                     timerSpawn = 0;
                 }
             }

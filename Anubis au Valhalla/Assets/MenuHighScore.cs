@@ -125,7 +125,7 @@ public class MenuHighScore : MonoBehaviour
         gameObject.SetActive(false);
     }
     
-    public void AddHighScoreEntry(int score)
+    public virtual void AddHighScoreEntry(int score)
     {
         HighScoreEntry highscoreEntry = new HighScoreEntry {score = score};
         string jsonString = PlayerPrefs.GetString("highscoreTable");

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6150910747648279738
+--- !u!114 &-5568871386639504882
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,11 +20,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: bandelette
-  m_Shader: {fileID: -6465566751694194690, guid: 34efefc7590770d4b88fc6fda743aa08, type: 3}
+  m_Name: Aura Pouvoir2
+  m_Shader: {fileID: -6465566751694194690, guid: 2f2bc7c81d02e8f43ae5b67a3a786844, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -33,28 +33,24 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_9E9B0AFC:
-        m_Texture: {fileID: 2800000, guid: 0c2689432bcc43a49aa861c8c52fa563, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_D9689B9D:
-        m_Texture: {fileID: 2800000, guid: edd92293adc1d5741ab378896cd41a34, type: 3}
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MainTex_1:
+    - _MaskTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 48468b6106b0d9c4e9946d816254f4fd, type: 3}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_bc26c1334fbe4acbb14df82de37fc07b_Texture_1:
-        m_Texture: {fileID: -8328923581568760697, guid: 2235781594b26884bb83cb3a725c3427, type: 3}
+    - _SampleTexture2D_d140db64af0b465994fdc7a5520748e6_Texture_1:
+        m_Texture: {fileID: 2800000, guid: eabba395643bb4e388d633c8d9a4f1e8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -71,8 +67,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ALPHA: 1
+    - _Distort: 1.13
+    - _EnableExternalAlpha: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - Vector2_61099289: {r: -0.64, g: -1.3, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 0.00031925717, g: 0, b: 0.0014801923, a: 0}
+    - _Color2: {r: 0.048400316, g: 0, b: 0.5566038, a: 0}
+    - _Deplacement: {r: 0, g: -0.16, b: 0, a: 0}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

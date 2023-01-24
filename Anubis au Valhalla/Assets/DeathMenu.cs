@@ -9,6 +9,7 @@ public class DeathMenu : MonoBehaviour
     public bool isDisolve;
     public float disolveValue = 1;
     public float timeToLastStep;
+    public float timeToLastStepDisolve;
 
     private void Awake()
     {
@@ -20,7 +21,7 @@ public class DeathMenu : MonoBehaviour
     {
         if (isDisolve)
         {
-            //StartCoroutine(AnimationDisolve());
+            StartCoroutine(AnimationDisolve());
             disolveValue -= 0.003f;
             player.material.SetFloat("_Step", disolveValue);
         }
@@ -67,7 +68,7 @@ public class DeathMenu : MonoBehaviour
     IEnumerator BackHubTimer()
     {
         yield return new WaitForSecondsRealtime(timeToLastStep);
-        MenuHighScore.instance.AddHighScoreEntry(ScoreManager.instance.currentScore);
+        ScoreManager.instance.AddHighScoreEntry(ScoreManager.instance.currentScore);
         SoundManager.instance.ChangeToHub();
         SoundManager.instance.PlayHub();
         ScoreManager.instance.currentScore = 0;

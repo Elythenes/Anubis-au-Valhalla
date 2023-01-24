@@ -83,13 +83,13 @@ public class Combo1Hitbox : MonoBehaviour
             col.gameObject.GetComponent<AIPath>().canMove = false;
             col.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.damage[comboNumber]), stagger);
 
-            if (!col.gameObject.GetComponentInParent<MonsterLifeManager>().elite)
+            if (!col.gameObject.GetComponentInParent<MonsterLifeManager>().elite && !col.gameObject.GetComponentInParent<MonsterLifeManager>().isMomified)
             {
                 Debug.Log("Knockback");
                 col.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 col.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber],ForceMode2D.Impulse);
             }
-            else
+            else  if (!col.gameObject.GetComponentInParent<MonsterLifeManager>().isMomified)
             {
                 Debug.Log("Knockback");
                 col.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;

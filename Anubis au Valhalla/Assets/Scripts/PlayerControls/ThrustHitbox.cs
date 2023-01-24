@@ -38,7 +38,7 @@ public class ThrustHitbox : Combo1Hitbox
             }
 
 
-            if (other.gameObject.GetComponentInParent<MonsterLifeManager>().isInvincible == false)
+            if (other.gameObject.GetComponentInParent<MonsterLifeManager>().isInvincible == false && !other.gameObject.GetComponentInParent<MonsterLifeManager>().isMomified)
             {
                 other.gameObject.GetComponent<AIPath>().canMove = false;
                 other.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg), stagger);

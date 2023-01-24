@@ -88,7 +88,7 @@ Transform:
   m_GameObject: {fileID: 1959525455894448424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0308, y: 1.0308, z: 1.0308}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5337294842957865370}
@@ -189,19 +189,25 @@ MonoBehaviour:
   disolveValueAmount: 0.00501
   spawnCircle: {fileID: 3500406022878701055, guid: 89cf46dc9eb164244bb55b0936ecf4fc, type: 3}
   child: {fileID: 2377570479194186109}
+  childRenderer: {fileID: 2609078706308784295}
+  layerManager: {fileID: 1018361698505286465}
+  sortingGroup: {fileID: 6724442549269168300}
   emptyLayers: {fileID: 1296937079694720217}
   isSmashInvinsible: 0
   isSmashInvinsibleTime: 0.5
   isSmashInvinsibleTimer: 0
   FlameInfected: 0
   FlameInfectedTimer: 0
-  FlameInfectedTimerMax: 2.5
+  FlameInfectedTimerMax: 2
   spawnTimer: 0
-  spawnTimerMax: 0.2
+  spawnTimerMax: 1
   flameManager: {fileID: 0}
   InvincibleTime: 0.19
   InvincibleTimeTimer: 0
   isInvincible: 0
+  InvincibleTimeDoT: 0.3
+  InvincibleTimeTimerDoT: 0
+  isInvincibleDoT: 0
   MomifiedTime: 3
   MomifiedTimeTimer: 0
   isMomified: 0
@@ -1267,7 +1273,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 99
   m_Sprite: {fileID: 21300000, guid: 2cde36ce372bc5049954800356527fc7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1331,7 +1337,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

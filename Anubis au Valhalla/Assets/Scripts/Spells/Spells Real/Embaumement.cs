@@ -8,6 +8,7 @@ public class Embaumement : MonoBehaviour
     public NewPowerManager manager;
     private Rigidbody2D rb;
     public int touchedEnemys;
+    public TrailRenderer trail;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class Embaumement : MonoBehaviour
        
         rb = gameObject.GetComponent<Rigidbody2D>();
         transform.localScale += new Vector3(1,1,0) * manager.p2ThrustBandageSizes[manager.currentLevelPower2 -1];
+        trail.startWidth = manager.p2ThrustBandageSizes[manager.currentLevelPower2 - 1] / 10;
     }
 
     private void OnBecameInvisible()
@@ -37,19 +39,19 @@ public class Embaumement : MonoBehaviour
         {
             touchedEnemys += 1;
             MonsterLifeManager monstre = col.GetComponentInParent<MonsterLifeManager>();
-            monstre.TakeDamage(manager.p2ThrustBandageDamages[manager.currentLevelPower2 -1] + (int)AnubisCurrentStats.instance.magicForce, 3);
-            monstre.isMomified = true;
-            if (!manager.p2ThrustBandageStunUp)
+            monstre.TakeDamage(manager.p2ThrustBandageDamages[manager.currentLevelPower2 -1] + (int)AnubisCurrentStats.instance.magicForce, 0);
+            if (!col.GetComponentInParent<MonsterLifeManager>().isBoss)
             {
-                monstre.MomifiedTime = 3f;
+                monstre.isMomified = true;
+                if (!manager.p2ThrustBandageStunUp)
+                {
+                    monstre.MomifiedTime = 1.5f;
+                }
+                else
+                {
+                    monstre.MomifiedTime = 2.5f;
+                }
             }
-            else
-            {
-                monstre.MomifiedTime = 5f;
-            }
-            
-           
-          
         }
     }
 }

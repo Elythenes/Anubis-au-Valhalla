@@ -173,7 +173,7 @@ public class CharacterController : MonoBehaviour
       anim.SetBool("isIdle",true);
       anim.SetBool("isWalking",false);
     }
-    
+
     if (allowMovements &&  Time.timeScale != 0)
     {
       rb.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -319,6 +319,8 @@ public class CharacterController : MonoBehaviour
       if (Input.GetKeyDown(KeyCode.F) && currentDoor is not null)
       {
         InteractWithDoorTuto(currentDoor);
+        var particulesMarcheEmission = particulesMarche.emission;
+        particulesMarcheEmission.rateOverTime = 0;
       }
     }
     
