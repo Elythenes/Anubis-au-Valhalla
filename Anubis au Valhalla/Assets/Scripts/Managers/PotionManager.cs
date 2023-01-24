@@ -95,7 +95,7 @@ public class PotionManager : MonoBehaviour
       UiManager.instance.boxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
       //UiManager.instance.globalBoxPotionImage.GetComponent<Image>().color = new Color(255,255,255,0);
       //UiManager.instance.FillDescriptionPotion();
-      UiManager.instance.panelPotion.SetActive(true); //à enlever quand on aura les vfx
+      //UiManager.instance.panelPotion.SetActive(true); //à enlever quand on aura les vfx
       
       if (glou.type == PotionObject.PotionType.StatBasicPotion 
           || glou.type == PotionObject.PotionType.StatSpecificPotion)
