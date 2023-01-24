@@ -14,7 +14,14 @@ public class FlameArea : MonoBehaviour
     private void Start()
     {
         manager = GameObject.Find("NewPowerManager").GetComponent<NewPowerManager>();
-        Destroy(gameObject,manager.p2DashTrailDurations[manager.currentLevelPower2 - 1]);
+        if (isMiniFlame)
+        {
+            Destroy(gameObject,manager.p2DashTrailDurations[manager.currentLevelPower2 - 1]/2);
+        }
+        else
+        {
+            Destroy(gameObject,manager.p2DashTrailDurations[manager.currentLevelPower2 - 1]);
+        }
         transform.localScale = new Vector2(manager.p2DashTrailSize,manager.p2DashTrailSize);
     }
 
@@ -36,16 +43,19 @@ public class FlameArea : MonoBehaviour
                 {
                     col.GetComponentInParent<MonsterLifeManager>().flameManager = manager;
                     col.GetComponentInParent<MonsterLifeManager>().FlameInfected = true;
-
                 }
 
                 if (!manager.p2DashTrailMiniStagger)
                 {
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2 - 1] + (int)AnubisCurrentStats.instance.magicForce/10,0f);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDotDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2 - 1] + (int)AnubisCurrentStats.instance.magicForce/10,0f);
                 }
-                else
+                else if(!isMiniFlame)
                 {
-                    col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2 -1] + (int)AnubisCurrentStats.instance.magicForce/10,0.15f);
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDotDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2 -1] + (int)AnubisCurrentStats.instance.magicForce/10,0.1f);
+                }
+                else if(isMiniFlame)
+                {
+                    col.GetComponentInParent<MonsterLifeManager>().TakeDotDamage(manager.p2DashTrailDamagesPerTick[manager.currentLevelPower2 - 1] + (int)AnubisCurrentStats.instance.magicForce/10,0f);
                 }
                
                 tempsReloadHitFlameAreaTimer = 0;
@@ -66,7 +76,6 @@ public class FlameArea : MonoBehaviour
     {
         if (col.gameObject.tag == "Monstre")
         {
-            
             tempsReloadHitFlameAreaTimer = 0;
         }
     }

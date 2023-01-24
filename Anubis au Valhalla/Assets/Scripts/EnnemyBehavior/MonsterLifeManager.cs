@@ -43,6 +43,8 @@ public class MonsterLifeManager : MonoBehaviour
     public GameObject spawnCircle;
     public GameObject child;
     public Renderer childRenderer;
+    public MultipleSpritesLayer layerManager;
+    public SortingGroup sortingGroup;
     public GameObject emptyLayers;
 
     [Header("Alterations d'état")] 
@@ -59,6 +61,9 @@ public class MonsterLifeManager : MonoBehaviour
     public float InvincibleTime;
     public float InvincibleTimeTimer;
     public bool isInvincible;
+    public float InvincibleTimeDoT;
+    public float InvincibleTimeTimerDoT;
+    public bool isInvincibleDoT;
     
     public float MomifiedTime = 3;
     public float MomifiedTimeTimer;
@@ -144,6 +149,17 @@ public class MonsterLifeManager : MonoBehaviour
                 InvincibleTimeTimer = 0;
             }
         }
+        
+        if (isInvincibleDoT)
+        {
+            InvincibleTimeTimerDoT += Time.deltaTime;
+
+            if (InvincibleTimeTimerDoT >= InvincibleTimeDoT)
+            {
+                isInvincibleDoT = false;
+                InvincibleTimeTimerDoT = 0;
+            }
+        }
 
         if (isSmashInvinsible)
         {
@@ -190,7 +206,9 @@ public class MonsterLifeManager : MonoBehaviour
             MomifiedTimeTimer += Time.deltaTime;
             sprite2DRend.enabled = true;
             sprite2DRend.material = momieShader;
+            sortingGroup.sortingOrder = 11;
             childRenderer.enabled = false;
+            layerManager.enabled = false;
             if (IAGuerrier is not null)
             {
                 IAGuerrier.enabled = false;
@@ -212,6 +230,7 @@ public class MonsterLifeManager : MonoBehaviour
                 isMomified = false;
                 sprite2DRend.enabled = false;
                 childRenderer.enabled = true;
+                layerManager.enabled = true;
                 if (IAGuerrier is not null)
                 {
                     IAGuerrier.enabled = true;
@@ -299,6 +318,37 @@ public class MonsterLifeManager : MonoBehaviour
             //Debug.Log("perd : "+damage+". Reste : "+vieActuelle);
         }
         
+        if (vieActuelle <= 0 && !dieOnce)
+        {
+            if (!isBoss)
+            {
+                Die();
+                dieOnce = true;
+            }
+            else
+            {
+               IA_Valkyrie.instance.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+               IA_Valkyrie.instance.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+                bossBehiavour.enabled = false;
+                CinematiqueBoss.instance.isDead = true;
+                dieOnce = true;
+            }
+        }
+    }
+    
+    public virtual void TakeDotDamage(int damage, float staggerDuration)
+    {
+        if (!isInvincibleDoT)
+        {
+            textDamage.GetComponentInChildren<TextMeshPro>().SetText(damage.ToString());
+            Instantiate(textDamage, new Vector3(child.transform.position.x,child.transform.position.y + 1,-5), Quaternion.identity);
+            StartCoroutine(HitScanReset());
+            gotHit = true;
+            transform.DOShakePosition(staggerDuration, 0.5f, 50);
+            vieActuelle -= damage; 
+            healthBar.SetHealth(vieActuelle);
+            isInvincibleDoT = true;
+        }
         if (vieActuelle <= 0 && !dieOnce)
         {
             if (!isBoss)
