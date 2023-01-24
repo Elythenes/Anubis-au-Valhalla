@@ -74,6 +74,7 @@ public class UiManager : MonoBehaviour
     
     [Header("Audio")]
     public AudioSource audioSource;
+    public AudioClip clipDialoguesUp;
 
 
 
@@ -106,6 +107,7 @@ public class UiManager : MonoBehaviour
         {
             boxCase.GetComponent<Image>().color = new Color(0,0,0,0);
         }
+        
         
     }
 
@@ -341,8 +343,12 @@ public class UiManager : MonoBehaviour
         PotionManager.Instance.currentPotion = PotionRepository.Instance.potionInside;
         PotionManager.Instance.isPotionSlotFill = true;
         spritePotion.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
-        spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 1);
+        spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 255);
         menuCollectPotion.SetActive(false);
+        
+        boxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+        boxPotionImage.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+        
         TimeBack();
     }
 
@@ -350,8 +356,10 @@ public class UiManager : MonoBehaviour
     {
         PotionManager.Instance.isPotionSlotFill = true;
         spritePotion.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
-        Debug.Log("oui");
-        spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 1);
+        spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+        
+        boxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+        boxPotionImage.GetComponent<Image>().color = new Color(255, 255, 255, 255);
     }
 
 
@@ -385,14 +393,17 @@ public class UiManager : MonoBehaviour
             buttonSwitch.SetActive(true);
 
             currentPotionName.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
+            currentPotionName.SetActive(true);
             currentPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
             currentPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.citation;
             currentPotionSprite.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+            currentPotionSprite.SetActive(true);
 
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
             newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
             newPotionSprite.GetComponent<Image>().sprite = PotionRepository.Instance.potionInside.sprite;
+            Debug.Log("potpot");
         }
         
     }
@@ -404,8 +415,9 @@ public class UiManager : MonoBehaviour
         {
             boxPotionTitre.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.name;
             boxPotionTexte.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
-            boxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+            
             globalBoxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+            globalBoxPotionImage.GetComponent<Image>().color = new Color(255, 255, 255, 255);
         }
         else
         {
@@ -443,6 +455,11 @@ public class UiManager : MonoBehaviour
     public void PlayButtonSound()
     {
         audioSource.Play();
+    }
+    
+    public void PlayDialogueUp()
+    {
+        audioSource.PlayOneShot(clipDialoguesUp,0.3f);
     }
 
     //Fonctions : MenuPause et Option ***********************************************************************************************************************************************************************************
