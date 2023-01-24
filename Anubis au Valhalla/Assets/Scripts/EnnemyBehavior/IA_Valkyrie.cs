@@ -110,10 +110,7 @@ public class IA_Valkyrie : MonoBehaviour
     
     [Header("Débug")]
     [BoxGroup("Attaque - Anneaux")] public float triggerRingAttackTimer;
-
-
-
-
+    
 
     [Foldout("Refs")]public static IA_Valkyrie instance;
     [Foldout("Refs")]public GameObject emptyLayers;
@@ -131,6 +128,11 @@ public class IA_Valkyrie : MonoBehaviour
     [Foldout("Refs")]IAstarAI ai;
     [Foldout("Refs")]public AIDestinationSetter playerFollow;
     
+    
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip[] clipArray;
+    //audioSource.PlayOneShot([x]);
 
     //Fonctions ******************************************************************************************************************************************************
     

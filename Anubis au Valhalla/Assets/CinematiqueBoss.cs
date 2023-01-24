@@ -32,6 +32,8 @@ public class CinematiqueBoss : MonoBehaviour
     public CanvasGroup UILifeBar;
     public bool isDead;
     public GameObject bloodParticles;
+    
+  
    
 
 
@@ -78,6 +80,7 @@ public class CinematiqueBoss : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
+            valkyrieIA.audioSource.PlayOneShot(valkyrieIA.clipArray[1],0.3f);
             SoundManager.instance.audioSource.Stop();
             CharacterController.instance.isCinematic = true;
             CharacterController.instance.allowMovements = false;
@@ -111,8 +114,10 @@ public class CinematiqueBoss : MonoBehaviour
     {
         SoundManager.instance.ChangeToBoss();
         SoundManager.instance.PlayBoss();
-        valkyrieRoot.GetComponent<MonsterLifeManager>().animator.SetBool("isAttacking", true);
-        yield return new WaitForSeconds(3f);
+        valkyrieRoot.GetComponent<MonsterLifeManager>().animator.SetBool("isAttacking", true);  
+        yield return new WaitForSeconds(1.5f);
+        valkyrieIA.audioSource.PlayOneShot(valkyrieIA.clipArray[0]);
+        yield return new WaitForSeconds(1.5f);
         valkyrieRoot.GetComponent<MonsterLifeManager>().animator.SetBool("isIdle", true);
         valkyrieRoot.GetComponent<MonsterLifeManager>().animator.SetBool("isAttacking", false);
         StartCoroutine(camera.GetComponent<CameraController>().BackTansitionCamera(CharacterController.instance.gameObject));

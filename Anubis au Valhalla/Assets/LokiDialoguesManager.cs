@@ -207,6 +207,7 @@ public class LokiDialoguesManager : MonoBehaviour
     
     public void DialogueUP()
     {
+        UiManager.instance.PlayDialogueUp();
         isFade = 1;
         canNextDialogue = true;
         transform.DOLocalMove(new Vector3(0,0,transform.position.z),menuSpeed);
