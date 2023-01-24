@@ -129,6 +129,7 @@ public class IA_Valkyrie : MonoBehaviour
     [Foldout("Refs")]IAstarAI ai;
     [Foldout("Refs")]public AIDestinationSetter playerFollow;
     [Foldout("Refs")] public GhostDash ghost;
+    [Foldout("Refs")] public SpriteRenderer landingSprite;
     
     [Header("Audio")]
     public AudioSource audioSource;
@@ -415,11 +416,13 @@ public class IA_Valkyrie : MonoBehaviour
         activeOmbre.transform.DOScale(Vector3.one * 0.36f, 0.5f);
         SpriteObj.transform.DOScale(savedScale, 0.2f);
         yield return new WaitForSeconds(0.5f);
-        SpriteObj.SetActive(true);
+        landingSprite.enabled = true;
         Destroy(activeOmbre);
         var hitbox = Instantiate(hitboxFall, transform.position, Quaternion.identity);
-        transform.DOShakePosition(FallTime, 0.2f, 50).OnComplete(() =>
+        landingSprite.transform.DOShakePosition(FallTime, 0.2f, 50).OnComplete(() =>
         { 
+            landingSprite.enabled = false;
+            SpriteObj.SetActive(true);
             Destroy(hitbox);
             isAttacking = false;
             anim.enabled = true;
