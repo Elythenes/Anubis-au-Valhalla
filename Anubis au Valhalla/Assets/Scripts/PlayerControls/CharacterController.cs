@@ -82,6 +82,8 @@ public class CharacterController : MonoBehaviour
   public ParticleSystem particulesMarche;
   public ParticleSystem particulesDash;
   public SkeletonMecanim skeleton;
+
+  public SpriteMask mask;
   //public TilemapRenderer ground;
 
 
@@ -587,7 +589,7 @@ public class CharacterController : MonoBehaviour
     if (hitDoor.willChooseSpecial)
     {
       SalleGenerator.Instance.challengeChooser = Random.Range(1, 6);
-      SalleGenerator.Instance.challengeChooser = 2;
+      //SalleGenerator.Instance.challengeChooser = 2;
     }
     else
     {
