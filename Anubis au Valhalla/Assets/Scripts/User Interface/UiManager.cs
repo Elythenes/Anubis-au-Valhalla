@@ -438,8 +438,8 @@ public class UiManager : MonoBehaviour
         }
         else
         {
-            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = "";
-            boxPotionTexte.GetComponent<TextMeshProUGUI>().text = "Je n'ai pas de potion actuellement";
+            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = "Flacon vide";
+            boxPotionTexte.GetComponent<TextMeshProUGUI>().text = "Je ne possède pas de potion actuellement.";
             boxPotionImage.GetComponent<Image>().sprite = boxPotionVide;
             globalBoxPotionImage.GetComponent<Image>().sprite = boxPotionVide;
         }
