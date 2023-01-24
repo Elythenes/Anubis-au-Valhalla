@@ -50,16 +50,13 @@ public class MenuHighScore : MonoBehaviour
 
        if (highscores.HighScoreEntrieList is not null && highscores.HighScoreEntrieList.Count == 0)
        {
-           Debug.Log("pas de scores");
            noScoreText.SetActive(true);
        }
        else if (highscores.HighScoreEntrieList is not null && highscores.HighScoreEntrieList.Count > 0)
        {
-          Debug.Log("des scores");
            noScoreText.SetActive(false);
        }
 
-       Debug.Log(jsonString);
      
 
        for (int i = 0; i < HighScoreEntrieList.Count; i++)
@@ -117,16 +114,13 @@ public class MenuHighScore : MonoBehaviour
 
         if (highscores.HighScoreEntrieList is not null && highscores.HighScoreEntrieList.Count == 0)
         {
-            Debug.Log("pas de scores");
             noScoreText.SetActive(true);
         }
         else if (highscores.HighScoreEntrieList is not null && highscores.HighScoreEntrieList.Count > 0)
         {
-            Debug.Log("des scores");
             noScoreText.SetActive(false);
         }
 
-        Debug.Log(jsonString);
      
 
         for (int i = 0; i < HighScoreEntrieList.Count; i++)
