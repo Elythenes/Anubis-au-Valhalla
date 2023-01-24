@@ -430,7 +430,7 @@ public class UiManager : MonoBehaviour
         Debug.Log("ouiouiouoirf");
         if (PotionManager.Instance.currentPotion is not null)
         {
-            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.name;
+            boxPotionTitre.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
             boxPotionTexte.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
             
             globalBoxPotionImage.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
