@@ -164,6 +164,8 @@ public class Shop : MonoBehaviour
         CharacterController.instance.controls.Disable();
         CharacterController.instance.canDash = false;
         AttaquesNormales.instance.canAttack = false;
+        CharacterController.instance.movement = Vector2.zero;
+        CharacterController.instance.rb.velocity = Vector2.zero;
         shopUI.DOFade(1, 1);
         shopUI.blocksRaycasts = true;
         shopUIController.fade = false;

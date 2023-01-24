@@ -173,7 +173,7 @@ public class CharacterController : MonoBehaviour
       anim.SetBool("isIdle",true);
       anim.SetBool("isWalking",false);
     }
-    
+
     if (allowMovements &&  Time.timeScale != 0)
     {
       rb.constraints = RigidbodyConstraints2D.FreezeRotation;

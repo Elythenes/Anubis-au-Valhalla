@@ -90,6 +90,8 @@ public class TothBehiavour : MonoBehaviour
             ChangeText();
             DialogueUP();
             CharacterController.instance.allowMovements = false;
+            CharacterController.instance.movement = Vector2.zero;
+            CharacterController.instance.rb.velocity = Vector2.zero;
          }
 
          if (firstTime)
