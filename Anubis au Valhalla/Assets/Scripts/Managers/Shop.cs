@@ -5,6 +5,7 @@ using DG.Tweening;
 using GenPro;
 using NaughtyAttributes;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -25,6 +26,9 @@ public class Shop : MonoBehaviour
     public List<TextMeshProUGUI> description;
     public List<TextMeshProUGUI> costText;
     public List<int> cost = new List<int>();
+    public List<GameObject> iconeGlyphes;
+    public List<GameObject> cadreGlyphes;
+    public List<Sprite> cadreRarity;
     public TextMeshProUGUI popupShop;
 
     [Foldout("Consumables")] public List<Button> consumablesButton;
@@ -297,7 +301,8 @@ public class Shop : MonoBehaviour
                     costText[i].text = "" + cost[currentType + i];
                     buttonText[i].text = "" + choice[currentType + i].nom;
                     description[i].text = "" + choice[currentType + i].description;
-                    SetRarityTextBox(choice[currentType + i], textsRarityChoix[i]);
+                    SetRarity(choice[currentType + i], textsRarityChoix[i], cadreGlyphes[i]);
+                    iconeGlyphes[i].GetComponent<Image>().sprite = choice[currentType + i].icone;
                     if (cost[currentType + i] > Souls.instance.soulBank)
                     {
                         upsButton[i].interactable = false;
@@ -320,7 +325,8 @@ public class Shop : MonoBehaviour
                     costText[i].text = "" + cost[currentType + i];
                     buttonText[i].text = "" + choice[currentType + i].nom;
                     description[i].text = "" + choice[currentType + i].description;
-                    SetRarityTextBox(choice[currentType + i], textsRarityChoix[i]);
+                    SetRarity(choice[currentType + i], textsRarityChoix[i], cadreGlyphes[i]);
+                    iconeGlyphes[i].GetComponent<Image>().sprite = choice[currentType + i].icone;
                     if (cost[currentType + i] > Souls.instance.soulBank)
                     {
                         upsButton[i].interactable = false;
@@ -343,7 +349,8 @@ public class Shop : MonoBehaviour
                     costText[i].text = "" + cost[currentType + i];
                     buttonText[i].text = "" + choice[currentType + i].nom;
                     description[i].text = "" + choice[currentType + i].description;
-                    SetRarityTextBox(choice[currentType + i], textsRarityChoix[i]);
+                    SetRarity(choice[currentType + i], textsRarityChoix[i], cadreGlyphes[i]);
+                    iconeGlyphes[i].GetComponent<Image>().sprite = choice[currentType + i].icone;
                     if (cost[currentType + i] > Souls.instance.soulBank)
                     {
                         upsButton[i].interactable = false;
@@ -353,28 +360,33 @@ public class Shop : MonoBehaviour
         }
     }
 
-    void SetRarityTextBox(GlyphObject hiero, TextMeshProUGUI textBox)
+    void SetRarity(GlyphObject hiero, TextMeshProUGUI textBox, GameObject bouton)
     {
         switch (hiero.rare)
         {
             case Rarity.Prêtre:
                 textBox.SetText("Prêtre");
                 textBox.color = UiManager.instance.colorPretre;
+                bouton.GetComponent<Image>().sprite = cadreRarity[0];
+                bouton.GetComponent<Image>().color = UiManager.instance.colorPretre;
                 break;
             case Rarity.Pharaon:
                 textBox.SetText("Pharaon");
                 textBox.color = UiManager.instance.colorPharaon;
+                bouton.GetComponent<Image>().sprite = cadreRarity[1];
+                bouton.GetComponent<Image>().color = UiManager.instance.colorPharaon;
                 break;
             case Rarity.Divinité:
                 textBox.SetText("Divinité");
                 textBox.color = UiManager.instance.colorDivinite;
+                bouton.GetComponent<Image>().sprite = cadreRarity[2];
+                bouton.GetComponent<Image>().color = UiManager.instance.colorDivinite;
                 break;
             default:
                 Debug.Log("NON2");
                 break;
         }
     }
-    
     
 
     public void OnClickUpgrade(int buttonType)

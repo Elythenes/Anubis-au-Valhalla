@@ -35,6 +35,7 @@ public class VictoryScreen : MonoBehaviour
     public void BackHub()
     {
         MenuHighScore.instance.AddHighScoreEntry(ScoreManager.instance.currentScore);
+        MenuHighScore.instance.UpdateTable();
         SoundManager.instance.ChangeToHub();
         SoundManager.instance.PlayHub();
         SoundManager.instance.audioSource.Stop();
