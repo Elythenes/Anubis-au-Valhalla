@@ -392,15 +392,17 @@ public class UiManager : MonoBehaviour
             buttonSwitch.SetActive(true);
 
             currentPotionName.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.nom;
+            currentPotionName.SetActive(true);
             currentPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.description;
             currentPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionManager.Instance.currentPotion.citation;
             currentPotionSprite.GetComponent<Image>().sprite = PotionManager.Instance.currentPotion.sprite;
+            currentPotionSprite.SetActive(true);
 
             newPotionName.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.nom;
             newPotionDescription.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.description;
             newPotionCitation.GetComponent<TextMeshProUGUI>().text = PotionRepository.Instance.potionInside.citation;
             newPotionSprite.GetComponent<Image>().sprite = PotionRepository.Instance.potionInside.sprite;
-            //Debug.Log("potpot");
+            Debug.Log("potpot");
         }
         
     }
