@@ -27,10 +27,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2766080931585375390}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.250267, y: -9.26647, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1.5464}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5067490764821381284}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.677343, b: 0.2688679, a: 0.42745098}
+  m_Color: {r: 1, g: 0.677343, b: 0.2688679, a: 0.4392157}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -101,7 +102,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.0001
+  m_Radius: 1
 --- !u!114 &8611265251276748385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,3 +117,71 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exploSR: {fileID: 979668013263010877}
   exploCollider: {fileID: 8500718336999298599}
+  vFXChild: {fileID: 5067490764821381283}
+--- !u!1001 &4089991941300306309
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 113979252704646240}
+    m_Modifications:
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120292822835659046, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+      propertyPath: m_Name
+      value: Cercle sable
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+--- !u!1 &5067490764821381283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9120292822835659046, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+  m_PrefabInstance: {fileID: 4089991941300306309}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5067490764821381284 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9120292822835659041, guid: 5c58069c94e594e4784ffd9d7db4d2fc, type: 3}
+  m_PrefabInstance: {fileID: 4089991941300306309}
+  m_PrefabAsset: {fileID: 0}

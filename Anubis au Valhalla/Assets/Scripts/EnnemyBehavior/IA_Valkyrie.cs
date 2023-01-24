@@ -130,6 +130,7 @@ public class IA_Valkyrie : MonoBehaviour
     [Foldout("Refs")]public AIDestinationSetter playerFollow;
     [Foldout("Refs")] public GhostDash ghost;
     [Foldout("Refs")] public SpriteRenderer landingSprite;
+    [Foldout("Refs")] public GameObject dashCol;
     
     [Header("Audio")]
     public AudioSource audioSource;
@@ -466,11 +467,13 @@ public class IA_Valkyrie : MonoBehaviour
             audioSource.PlayOneShot(clipArray[4]);
             transform.DOMove(savedPos, chargeSpeed).OnComplete((() =>
             {
+                dashCol.SetActive(true);
                 executedDashes++;
                 if (executedDashes < dashAmount[(int)currentState])
                 {
                     transform.DOMove(transform.position, TimeBetweenDashes[(int)currentState]).OnComplete((() =>
                     {
+                        dashCol.SetActive(false);
                         charging = false;
                         isDashing = false;
                         PickRandomPoint(SalleGenerator.Instance.currentRoom.maxPos.x,SalleGenerator.Instance.currentRoom.maxPos.y);
@@ -519,12 +522,6 @@ public class IA_Valkyrie : MonoBehaviour
         ai.isStopped = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.CompareTag("Player") && charging)
-        {
-            DamageManager.instance.TakeDamage(dashDamage, gameObject);
-        }
-    }
+
 }
 
