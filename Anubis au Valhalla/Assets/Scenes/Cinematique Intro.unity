@@ -123,6 +123,82 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &129261293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 129261294}
+  - component: {fileID: 129261296}
+  - component: {fileID: 129261295}
+  m_Layer: 5
+  m_Name: SplashScreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &129261294
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129261293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1973013046}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.000015259, y: -0.00061798}
+  m_SizeDelta: {x: 800, y: 450.41}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &129261295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129261293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b3267b28890ce4c44ae0f54890c0799a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &129261296
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129261293}
+  m_CullTransparentMesh: 1
 --- !u!1 &352214919
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,8 +378,8 @@ MonoBehaviour:
   sliderPasser: {fileID: 1597526145}
   alphaGained: 0.01
   passerGained: 1.5
-  vitesseText: 0.8
-  cinematiqueDuration: 43
+  vitesseText: 0.6
+  cinematiqueDuration: 52
   EndCinematique: 0
   disolveValue: 0
   backgroundRenderer: {fileID: 1309205364}
@@ -334,7 +410,7 @@ MonoBehaviour:
     contr\xE9es, formant une puissante arm\xE9e de morts sous son influence.\r\n\r\nAu
     panth\xE9on \xE9gyptien, ce pillage provoque une irr\xE9gularit\xE9 dans l'\xE9quilibre
     du monde. Outr\xE9, Anubis demande \xE0 punir le dieu \xE9tranger. Soutenu par
-    ses pairs et guid\xE9 par le dieu de la connaissance Thot,  il se rend au Valhalla,
+    ses pairs et guid\xE9 par le dieu de la connaissance Thot, il se rend au Valhalla,
     afin de rendre justice lui-m\xEAme. \r\n\r\nSur son chemin se dressera une arm\xE9e
     de morts et cr\xE9atures dangereuses, mais peuvent-ils arr\xEAter un dieu enrag\xE9
     ?\r"
@@ -573,12 +649,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1973013046}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.7647, y: 16}
-  m_SizeDelta: {x: 803.5293, y: 568.1204}
+  m_AnchoredPosition: {x: 0.941, y: -0.9041}
+  m_SizeDelta: {x: 802.7015, y: 452.217}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1309205364
 MonoBehaviour:
@@ -810,7 +886,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1140547498486727298, guid: 461725a7a4f64b04593888d615aa86cf, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1140547498486727298, guid: 461725a7a4f64b04593888d615aa86cf, type: 3}
       propertyPath: m_LocalScale.x
@@ -1223,6 +1299,7 @@ RectTransform:
   m_LocalScale: {x: 1.23, y: 1.23, z: 1.23}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 129261294}
   - {fileID: 1309205363}
   - {fileID: 826044273}
   m_Father: {fileID: 0}
