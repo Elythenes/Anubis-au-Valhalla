@@ -587,7 +587,7 @@ public class CharacterController : MonoBehaviour
     if (hitDoor.willChooseSpecial)
     {
       SalleGenerator.Instance.challengeChooser = Random.Range(1, 6);
-      //SalleGenerator.Instance.challengeChooser = 3;
+      SalleGenerator.Instance.challengeChooser = 2;
     }
     else
     {

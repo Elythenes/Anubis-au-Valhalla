@@ -71,6 +71,8 @@ public class UiManager : MonoBehaviour
     [Foldout("INVENTORY")] public GameObject globalBoxPotion;
     [Foldout("INVENTORY")] public Image globalBoxPotionImage;
     [Foldout("INVENTORY")] public GameObject globalBoxPowers;
+    [Foldout("INVENTORY")] public GameObject globalBoxPowersImage;
+    [Foldout("INVENTORY")] public List<Sprite> globalBoxPowersImages;
     [Foldout("INVENTORY")] public TextMeshProUGUI globalBoxTextRarity;
     
     
@@ -91,17 +93,18 @@ public class UiManager : MonoBehaviour
 
         //spriteSpell1.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
         //spriteSpell2.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+
+        
+    }
+
+    private void Start()
+    {
         if (!PotionManager.Instance.isPotionSlotFill)
         {
             spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 0);
             boxPotionImage.GetComponent<Image>().color = new Color(255, 255, 255, 255);
             boxPotionImage.GetComponent<Image>().sprite = boxPotionVide;
         }
-        
-    }
-
-    private void Start()
-    {
         globalBoxGlyph.SetActive(false);
         globalBoxPotion.SetActive(false);
         globalBoxPowers.SetActive(false);
