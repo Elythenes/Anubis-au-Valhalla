@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using TMPro;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
