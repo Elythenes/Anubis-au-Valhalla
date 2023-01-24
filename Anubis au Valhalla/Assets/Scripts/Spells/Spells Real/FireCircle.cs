@@ -39,14 +39,6 @@ public class FireCircle : MonoBehaviour
         Souls.instance.CreateSouls(col.transform.position,Random.Range(2,5));
       }
       col.GetComponentInParent<MonsterLifeManager>().TakeDamage(manager.p2ComboWaveDamages[manager.currentLevelPower2 -1] + (int)AnubisCurrentStats.instance.magicForce, 0.5f);
-      if (col.GetComponentInParent<MonsterLifeManager>().vieActuelle <= 0)
-      {
-        if (manager.p2ComboWaveDeathExplosion)
-        {
-          Instantiate(sableExplosion, col.transform.position, Quaternion.identity);
-        }
-      }
-     
     }
   }
 }
