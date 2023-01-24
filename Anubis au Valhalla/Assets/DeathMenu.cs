@@ -21,7 +21,7 @@ public class DeathMenu : MonoBehaviour
     {
         if (isDisolve)
         {
-            StartCoroutine(AnimationDisolve());
+            //StartCoroutine(AnimationDisolve());
             disolveValue -= 0.003f;
             player.material.SetFloat("_Step", disolveValue);
         }
@@ -31,10 +31,14 @@ public class DeathMenu : MonoBehaviour
     {
         isDisolve = true;
         StartCoroutine(Restart());
+        MenuHighScore.instance.AddHighScoreEntry(ScoreManager.instance.currentScore);
+        MenuHighScore.instance.UpdateTable();
     }
 
     public void BackHub()
     {
+        MenuHighScore.instance.AddHighScoreEntry(ScoreManager.instance.currentScore);
+        MenuHighScore.instance.UpdateTable();
         isDisolve = true;
         StartCoroutine(BackHubTimer());
     }

@@ -214,7 +214,8 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isHub)
             {
                DialogueDOWN();
-               tableauDesScores.SetActive(true);
+               MenuHighScore.instance.isFade = true;
+               UiManager.instance.isSousMenu = true;
                CharacterController.instance.allowMovements = false;
             }
             if (activeSituation == Situation.isTutoCombat)

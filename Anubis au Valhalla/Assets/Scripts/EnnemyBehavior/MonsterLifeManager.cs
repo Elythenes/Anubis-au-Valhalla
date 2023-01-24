@@ -206,9 +206,7 @@ public class MonsterLifeManager : MonoBehaviour
             MomifiedTimeTimer += Time.deltaTime;
             sprite2DRend.enabled = true;
             sprite2DRend.material = momieShader;
-            sortingGroup.sortingOrder = 11;
             childRenderer.enabled = false;
-            layerManager.enabled = false;
             if (IAGuerrier is not null)
             {
                 IAGuerrier.enabled = false;
@@ -230,7 +228,6 @@ public class MonsterLifeManager : MonoBehaviour
                 isMomified = false;
                 sprite2DRend.enabled = false;
                 childRenderer.enabled = true;
-                layerManager.enabled = true;
                 if (IAGuerrier is not null)
                 {
                     IAGuerrier.enabled = true;

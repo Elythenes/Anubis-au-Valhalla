@@ -42,12 +42,12 @@ public class ThrustHitbox : Combo1Hitbox
             {
                 other.gameObject.GetComponent<AIPath>().canMove = false;
                 other.gameObject.GetComponentInParent<MonsterLifeManager>().TakeDamage(Mathf.RoundToInt(AttaquesNormales.instance.specialDmg), stagger);
-                if (!other.gameObject.GetComponentInParent<MonsterLifeManager>().elite)
+                if (!other.gameObject.GetComponentInParent<MonsterLifeManager>().elite && !other.gameObject.GetComponentInParent<MonsterLifeManager>().isBoss)
                 {
                     other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     other.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized * AttaquesNormales.instance.forceKnockback[3], ForceMode2D.Impulse);
                 }
-                else
+                else if  (other.gameObject.GetComponentInParent<MonsterLifeManager>().elite && !other.gameObject.GetComponentInParent<MonsterLifeManager>().isBoss)
                 {
                     other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     other.gameObject.GetComponent<Rigidbody2D>().AddForce(angleNormalized*AttaquesNormales.instance.forceKnockback[comboNumber]/1.5f,ForceMode2D.Impulse);
