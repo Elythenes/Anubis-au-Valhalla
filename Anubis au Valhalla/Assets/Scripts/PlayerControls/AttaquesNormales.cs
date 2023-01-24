@@ -268,13 +268,13 @@ public class AttaquesNormales : MonoBehaviour
 
         if (angle > 67.5f && angle < 112.5f) // Nord
         {
-            Debug.Log("Nord");
-                CharacterController.instance.facing = CharacterController.LookingAt.Nord;
-                CharacterController.instance.skeleton.Skeleton.SetSkin("Back");
-                CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
-                CharacterController.instance.skeleton.Update();
+            //Debug.Log("Nord");
+            CharacterController.instance.facing = CharacterController.LookingAt.Nord; 
+            CharacterController.instance.skeleton.Skeleton.SetSkin("Back");
+            CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
+            CharacterController.instance.skeleton.Update();
         }
         
         if (angle > 22.5f && angle < 67.5f) // Nord Est
@@ -300,53 +300,53 @@ public class AttaquesNormales : MonoBehaviour
         if (angle > -22.5f && angle < 22.5f) // Est
         {
             CharacterController.instance.facing = CharacterController.LookingAt.Est;
-                CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
-                CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
-                CharacterController.instance.skeleton.Update();
+            CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
+            CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
+            CharacterController.instance.skeleton.Update();
         }
 
 
         if (angle > 157.5f && angle < 180 || angle > -180f && angle < -157.5f) // Ouest
         {
             CharacterController.instance.facing = CharacterController.LookingAt.Ouest;
-                CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
-                CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
-                CharacterController.instance.skeleton.Update();
+            CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
+            CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
+            CharacterController.instance.skeleton.Update();
         }
 
         if (angle > -112.5f && angle < -67.5f) // Sud
         {
-            Debug.Log("Sud");
-                CharacterController.instance.facing = CharacterController.LookingAt.Sud;
-                CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
-                CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
-                CharacterController.instance.skeleton.Update();
+            //Debug.Log("Sud");
+            CharacterController.instance.facing = CharacterController.LookingAt.Sud;
+            CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
+            CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
+            CharacterController.instance.skeleton.Update();
         }
 
         if (angle > -67.5f && angle < -22.5f) // Sud Est
         {
             CharacterController.instance.facing = CharacterController.LookingAt.SudEst;
-                CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
-                CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
-                CharacterController.instance.skeleton.Update();
+            CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
+            CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
+            CharacterController.instance.skeleton.Update();
         }
         
         if (angle > -157.5f && angle < -112.5f) // Sud Ouest
         {
             CharacterController.instance.facing = CharacterController.LookingAt.SudOuest;
-                CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
-                CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
-                CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
-                CharacterController.instance.skeleton.Update();
+            CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
+            CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetToSetupPose();
+            CharacterController.instance.skeleton.Skeleton.SetBonesToSetupPose();
+            CharacterController.instance.skeleton.Update();
         }
 
         
