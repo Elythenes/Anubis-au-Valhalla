@@ -10,6 +10,7 @@ public class FlameArea : MonoBehaviour
     public float tempsReloadHitFlameAreaTimer;
     public bool stopAttack;
     public bool isMiniFlame;
+    public GameObject childVFX;
 
     private void Start()
     {
@@ -22,7 +23,8 @@ public class FlameArea : MonoBehaviour
         {
             Destroy(gameObject,manager.p2DashTrailDurations[manager.currentLevelPower2 - 1]);
         }
-        transform.localScale = new Vector2(manager.p2DashTrailSize,manager.p2DashTrailSize);
+        transform.localScale = Vector3.one *manager.p2DashTrailSize/1.5f;
+        childVFX.transform.localScale = Vector3.one *manager.p2DashTrailSize;
     }
 
     private void OnTriggerStay2D(Collider2D col)

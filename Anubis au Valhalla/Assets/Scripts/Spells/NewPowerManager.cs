@@ -521,7 +521,7 @@ public class NewPowerManager : MonoBehaviour
                 timerSpawn += Time.deltaTime;
                 if (timerSpawn >= timerSpawnMax)
                 {
-                    GameObject fireZone = Instantiate(p2DashTrailHitbox, cc.transform.position, Quaternion.identity);
+                    GameObject fireZone = Instantiate(p2DashTrailHitbox, cc.transform.position + Vector3.down, Quaternion.identity);
                     timerSpawn = 0;
                 }
             }
