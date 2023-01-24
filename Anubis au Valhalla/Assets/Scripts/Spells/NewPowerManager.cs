@@ -232,7 +232,7 @@ public class NewPowerManager : MonoBehaviour
         
     }
 
-    void PowerLevelUnlock()
+    public void PowerLevelUnlock()
     {
         switch (currentLevelPower1)
         {

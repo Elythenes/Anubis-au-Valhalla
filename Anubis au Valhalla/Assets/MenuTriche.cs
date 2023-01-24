@@ -39,24 +39,21 @@ public class MenuTriche : MonoBehaviour
 
     public void PouvoirLvlMax()
     {
-        StartCoroutine(PowerUpgrade());
-    }
-
-
-    IEnumerator PowerUpgrade()
-    {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
             if (NewPowerManager.Instance.currentLevelPower1 < 10)
             {
-                NewPowerManager.Instance.currentLevelPower1 += 1;
-                yield return new WaitForSeconds(0.01f);
+                NewPowerManager.Instance.currentLevelPower1++;
+                NewPowerManager.Instance.PowerLevelUnlock();
             }
-            
-            if (NewPowerManager.Instance.currentLevelPower2 < 10)
+            else if (NewPowerManager.Instance.currentLevelPower2 < 10)
             {
-                NewPowerManager.Instance.currentLevelPower2 += 1;
-                yield return new WaitForSeconds(0.01f);
+                NewPowerManager.Instance.currentLevelPower2++;
+                NewPowerManager.Instance.PowerLevelUnlock();
+            }
+            else
+            {
+                return;
             }
         }
     }

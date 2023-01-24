@@ -94,17 +94,18 @@ public class UiManager : MonoBehaviour
 
         //spriteSpell1.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
         //spriteSpell2.GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+
+        
+    }
+
+    private void Start()
+    {
         if (!PotionManager.Instance.isPotionSlotFill)
         {
             spritePotion.GetComponent<Image>().color = new Color(255, 255, 255, 0);
             boxPotionImage.GetComponent<Image>().color = new Color(255, 255, 255, 255);
             boxPotionImage.GetComponent<Image>().sprite = boxPotionVide;
         }
-        
-    }
-
-    private void Start()
-    {
         globalBoxGlyph.SetActive(false);
         globalBoxPotion.SetActive(false);
         globalBoxPowers.SetActive(false);
