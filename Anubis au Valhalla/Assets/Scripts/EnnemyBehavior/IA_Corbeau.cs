@@ -218,14 +218,15 @@ public class IA_Corbeau : MonoBehaviour
                 AttackTimeTimer = 0;
                 canMove = true;
                 indic = true;
+                disolveValue = 22;
             }
             
            
             if (holder is not null)
             {
-                if (disolveValue < 30)
+                if (disolveValue > 9)
                 {
-                    disolveValue += 0.05f;
+                    disolveValue -= 0.05f;
                     holder.GetComponent<SpriteRenderer>().material.SetFloat("_Force_rayon",disolveValue);
                 }
             }
@@ -233,7 +234,7 @@ public class IA_Corbeau : MonoBehaviour
             
             if (AttackTimeTimer >= AttackTime && !life.isMomified)
             {
-                disolveValue = 9;
+                disolveValue = 22;
                 audioSource.pitch = 1;
                 audioSource.PlayOneShot(audioClipArray[1]);
                 anim.SetBool("isAttacking",true);
