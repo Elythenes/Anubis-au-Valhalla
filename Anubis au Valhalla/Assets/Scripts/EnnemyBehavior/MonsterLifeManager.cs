@@ -410,12 +410,32 @@ public class MonsterLifeManager : MonoBehaviour
         child.SetActive(false);
         if (SalleGenerator.Instance.currentRoom.parasites && !isParasite)
         {
-            var parasite = Instantiate(SalleGenerator.Instance.parasiteToSpawn, ai.transform.position, Quaternion.identity);
-            var parasiteScript = parasite.GetComponent<MonsterLifeManager>();
-            SalleGenerator.Instance.currentRoom.currentEnemies.Add(parasiteScript);
-            parasite.GetComponent<MonsterLifeManager>().isParasite = true;
-            parasite.GetComponent<MonsterLifeManager>().soulValue = 1; //Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
-            parasite.transform.localScale /= 2;
+            if (!SalleGenerator.Instance.zone2)
+            {
+                for (int i = 0; i < Mathf.RoundToInt(SalleGenerator.Instance.roomsDone/5)+1; i++)
+                {
+                    var randomPos = new Vector3(Random.Range(-1, 1.5f), Random.Range(-1, 1.5f));
+                    var parasite = Instantiate(SalleGenerator.Instance.parasiteToSpawn, ai.transform.position + randomPos, Quaternion.identity);
+                    var parasiteScript = parasite.GetComponent<MonsterLifeManager>();
+                    SalleGenerator.Instance.currentRoom.currentEnemies.Add(parasiteScript);
+                    parasite.GetComponent<MonsterLifeManager>().isParasite = true;
+                    parasite.GetComponent<MonsterLifeManager>().soulValue = 1; //Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
+                    parasite.transform.localScale /= 2;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Mathf.RoundToInt(SalleGenerator.Instance.roomsDone/4) + 2; i++)
+                {
+                    var randomPos = new Vector3(Random.Range(-1, 1.5f), Random.Range(-1, 1.5f));
+                    var parasite = Instantiate(SalleGenerator.Instance.parasiteToSpawn, ai.transform.position + randomPos, Quaternion.identity);
+                    var parasiteScript = parasite.GetComponent<MonsterLifeManager>();
+                    SalleGenerator.Instance.currentRoom.currentEnemies.Add(parasiteScript);
+                    parasite.GetComponent<MonsterLifeManager>().isParasite = true;
+                    parasite.GetComponent<MonsterLifeManager>().soulValue = 1; //Mathf.RoundToInt(parasite.GetComponent<MonsterLifeManager>().soulValue * 0.5f);
+                    parasite.transform.localScale /= 2;
+                }
+            }
         }
 
         ScoreManager.instance.currentScore += data.score;
