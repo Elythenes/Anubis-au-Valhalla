@@ -9,7 +9,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
 
 public class UiManager : MonoBehaviour
 {
@@ -445,10 +444,7 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    public void DebugOverButton()
-    {
-        Debug.Log("oui cocuouc");
-    }
+
 
     public void InvertChoiceArrow(int cas)
     {

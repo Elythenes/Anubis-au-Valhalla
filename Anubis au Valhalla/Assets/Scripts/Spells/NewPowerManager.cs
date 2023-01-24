@@ -562,7 +562,6 @@ public class NewPowerManager : MonoBehaviour
                 break;
             
             default:
-                Debug.Log("non mec");
                 break;
         }
         
