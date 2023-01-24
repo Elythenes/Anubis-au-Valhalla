@@ -516,7 +516,7 @@ public class NewPowerManager : MonoBehaviour
                     float angle = Mathf.Atan2(mousePos.y - charaPos.y, mousePos.x - charaPos.x) * Mathf.Rad2Deg;
                     Instantiate(p2ThrustBandageHitbox,cc.transform.position + moveDirection,Quaternion.AngleAxis(angle,Vector3.forward));
             }
-            if (cc.isDashing) //si dash
+            if (!cc.canDash || cc.isDashing) //si dash
             {
                 timerSpawn += Time.deltaTime;
                 if (timerSpawn >= timerSpawnMax)
