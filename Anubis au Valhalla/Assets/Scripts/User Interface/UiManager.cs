@@ -74,6 +74,7 @@ public class UiManager : MonoBehaviour
     
     [Header("Audio")]
     public AudioSource audioSource;
+    public AudioClip clipDialoguesUp;
 
 
 
@@ -443,6 +444,11 @@ public class UiManager : MonoBehaviour
     public void PlayButtonSound()
     {
         audioSource.Play();
+    }
+    
+    public void PlayDialogueUp()
+    {
+        audioSource.PlayOneShot(clipDialoguesUp,0.3f);
     }
 
     //Fonctions : MenuPause et Option ***********************************************************************************************************************************************************************************

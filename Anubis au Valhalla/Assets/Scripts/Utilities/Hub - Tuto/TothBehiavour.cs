@@ -84,6 +84,7 @@ public class TothBehiavour : MonoBehaviour
       {
          if(isTalkable)
          {
+            UiManager.instance.PlayDialogueUp();
             UiManager.instance.isSousMenu = true;
             isFade = 1;
             isTalkable = false;
@@ -241,6 +242,8 @@ public class TothBehiavour : MonoBehaviour
             if (activeSituation == Situation.isHub)
             {
                SceneManager.LoadScene("Cinematique Intro");
+               SoundManager.instance.ChangeToIntro();
+               SoundManager.instance.PlayIntro();
             }
             if (activeSituation == Situation.isTutoCombat)
             {
