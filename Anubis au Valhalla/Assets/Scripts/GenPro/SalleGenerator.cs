@@ -45,6 +45,7 @@ namespace GenPro
                 public SalleContent_Ennemies eliteChallenge;
                 public int maxEnemiesPerSmallWave;
                 public int maxEnemiesPerBigWave;
+                public int maxEnemies;
                 public float timeBetweenWaves;
                 public List<int> maxElitesPerRoom = new List<int>();
 
