@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FadeOut : MonoBehaviour
 {
-    public SpriteRenderer sprite;
+    public SpriteRenderer[] sprite;
 
     public Color endColor;
 
@@ -18,6 +18,9 @@ public class FadeOut : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        sprite.color = Color.Lerp(sprite.color,endColor,timeToFade);
+        foreach (var oui in sprite)
+        {
+            oui.color = Color.Lerp(oui.color,endColor,timeToFade);
+        }
     }
 }
