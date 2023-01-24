@@ -11,13 +11,15 @@ public class AnneauxDeFeu : MonoBehaviour
     private float currentRate;
     private CircleCollider2D collider2D;
     public GameObject child;
+    public GameObject vFXChild;
     public SpriteRenderer sr;
     public SpriteMask mask;
 
     private void Awake()
     {
         collider2D = GetComponent<CircleCollider2D>();
-        child.transform.DOScale(Vector3.one * 0.95f, 2);
+        child.transform.DOScale(child.transform.localScale * 40, 20f);
+        vFXChild.transform.DOScale(Vector3.one * 40, 20f);
     }
 
     // Start is called before the first frame update
@@ -26,9 +28,10 @@ public class AnneauxDeFeu : MonoBehaviour
         ia = IA_Valkyrie.instance;
         currentExpansionAmount = ia.expansionAmount;
         currentRate = ia.ExpansionRate;
-        StartCoroutine(Expand());
-        Destroy(gameObject,5f);
-        StartCoroutine(Increase());
+        Destroy(gameObject,20f);
+        /*StartCoroutine(Expand());
+
+        StartCoroutine(Increase());*/
     }
 
     // Update is called once per frame
@@ -50,14 +53,6 @@ public class AnneauxDeFeu : MonoBehaviour
         yield return new WaitForSeconds(ia.ExpansionSpeedUpRate);
         currentRate -= ia.ExpansionSpeedUp;
 
-    }
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.CompareTag("Player"))
-        {
-            DamageManager.instance.TakeDamage(ia.ringDmg, gameObject);
-            collider2D.enabled = false;
-        }
     }
 
     IEnumerator Increase()
