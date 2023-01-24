@@ -84,7 +84,6 @@ public class SpellManager : MonoBehaviour
             SpellCooldownCalcul(ConvertSpellIndex(containerA), 1);
             if (Input.GetKeyDown(spell1))
             {
-                Debug.Log("spell 1 input");
                 UseSpellSlot1(ConvertSpellIndex(containerA),1);
             }
         }
@@ -94,7 +93,6 @@ public class SpellManager : MonoBehaviour
             SpellCooldownCalcul(ConvertSpellIndex(containerB), 2);
             if (Input.GetKeyDown(spell2))
             {
-                Debug.Log("spell 2 inpuuut");
                 UseSpellSlot1(ConvertSpellIndex(containerB),2);
             }
         }
@@ -129,7 +127,6 @@ public class SpellManager : MonoBehaviour
     SpellNumber ConvertSpellIndex(SpellObject spellObject)
     {
         var x = spellObject.spellIndex;
-        Debug.Log("utilisation du spell index "+ x);
         return (SpellNumber)x;
     }
 
@@ -309,7 +306,6 @@ public class SpellManager : MonoBehaviour
                     break;
             */
                 case SpellNumber.FuryOfSand:
-                    Debug.Log("FURY OF SAAAAAAND");
                     FollowingSpell(prefabB, spellSlot);
                     break;
                 
@@ -1088,7 +1084,6 @@ public class SpellManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         Destroy(gbInstance);
-        Debug.Log("destroyed");
     }
     
     
@@ -1108,7 +1103,7 @@ public class SpellManager : MonoBehaviour
             }
             spellSAo.canCast = false;
             var gbInstance = Instantiate(gb, new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity);
-            Debug.Log("Spell1 used");
+            
             StartCoroutine(TimeLimitedGb(gbInstance, spellSAo.duration));
         }
     }
@@ -1274,16 +1269,13 @@ public class SpellManager : MonoBehaviour
         {
             spellFAo = prefabB.GetComponent<HitboxSandstorm>().sOSandstorm;
         }
-        else
-        {
-            Debug.Log("erreur dans la fonction FollowingSpell");
-        }
+
 
         if (spellFAo.canCast)
         {
             spellFAo.canCast = false;
             var gbInstance = Instantiate(gb,new Vector3(targetUser.transform.position.x, targetUser.transform.position.y/*-(targetUser.transform.localScale.y/2)*/, 0), Quaternion.identity, targetUser.transform);
-            Debug.Log("Spell2 used");
+
             StartCoroutine(TimeLimitedGb(gbInstance, spellFAo.duration));
         }
         
@@ -1356,13 +1348,11 @@ public class SpellManager : MonoBehaviour
             {
                 var gbInstance = Instantiate(gb, (Vector2)targetUser.transform.position + vectorDirectionNormalized * spellSEo.maxDistanceSpawn, Quaternion.AngleAxis(angle, Vector3.forward));
                 StartCoroutine(TimeLimitedGb(gbInstance, spellSEo.duration));
-                Debug.Log("not in range");
             }
             else
             {
                 var gbInstance = Instantiate(gb, mousePos, Quaternion.AngleAxis(angle, Vector3.forward));
                 StartCoroutine(TimeLimitedGb(gbInstance, spellSEo.duration));
-                Debug.Log("in range");
             }
          
         }

@@ -333,13 +333,4 @@ public class UiPowerManager : MonoBehaviour
                 break;
         }
     }
-    
-    
-    public void DebugButton()
-    {
-        Debug.Log("ploc");
-        Debug.Log("oui");
-    }
-    
-    
 }

@@ -268,7 +268,6 @@ public class AttaquesNormales : MonoBehaviour
 
         if (angle > 67.5f && angle < 112.5f) // Nord
         {
-            Debug.Log("Nord");
                 CharacterController.instance.facing = CharacterController.LookingAt.Nord;
                 CharacterController.instance.skeleton.Skeleton.SetSkin("Back");
                 CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();
@@ -320,7 +319,6 @@ public class AttaquesNormales : MonoBehaviour
 
         if (angle > -112.5f && angle < -67.5f) // Sud
         {
-            Debug.Log("Sud");
                 CharacterController.instance.facing = CharacterController.LookingAt.Sud;
                 CharacterController.instance.skeleton.Skeleton.SetSkin("Front");
                 CharacterController.instance.skeleton.Skeleton.SetSlotsToSetupPose();

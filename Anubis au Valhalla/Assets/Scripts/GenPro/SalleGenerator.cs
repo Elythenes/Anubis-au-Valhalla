@@ -187,7 +187,7 @@ namespace GenPro
                                         sDoors[(int)fromDoor].currentDoorType = Door.DoorType.Broken;
                                         for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                         {
-                                                if (i == (int) fromDoor) continue;
+                                                if (i == (int)fromDoor) {OpenDoors(fromDoor, false);continue;}
                                                 bool state = Random.value > 0.8f;
                                                 EnableDoors((DoorOrientation) i,state);
                                                 bool special = Random.value > 0.3f;
@@ -212,7 +212,6 @@ namespace GenPro
 
                         if (roomsDone == 2 && spawnedShops < 1)
                         {
-                                Debug.Log("spawn un shop");
                                 spawnedShops++;
                                 Door removedDoor = sDoors[(int)fromDoor];
                                 sDoors.RemoveAt((int)fromDoor);
@@ -238,7 +237,6 @@ namespace GenPro
                         
                         if (roomsDone == dungeonSize - 2)
                         {
-                                Debug.Log("spawn garanti du shop");
                                 for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                 {
                                         if (i == (int) fromDoor) continue;
@@ -254,13 +252,11 @@ namespace GenPro
                         }
                         if (roomsDone == dungeonSize - 1)
                         {
-                                Debug.Log("spawn porte boss");
                                 for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                 {
                                         
                                         sDoors[i].currentDoorType = Door.DoorType.Normal;
                                         EnableDoors((DoorOrientation)i,false);
-                                        Debug.Log(sDoors[i].isActiveAndEnabled);
                                         if (i == (int)DoorOrientation.North)
                                         {
                                                 EnableDoors(DoorOrientation.North, true);
@@ -273,7 +269,6 @@ namespace GenPro
                         }
                         if (roomsDone == dungeonSize)
                         {
-                                Debug.Log("spawn salle boss");
                                 for (int i = 0; i < (int)DoorOrientation.West + 1; i++)
                                 {
                                         EnableDoors((DoorOrientation) i ,false);
@@ -340,7 +335,6 @@ namespace GenPro
                                 }
                                 else if (zone2 && roomsDone == 0)
                                 {
-                                        Debug.Log("called");
                                         MovePlayerToDoor(fromDoor);
                                 }
                                 Souls.instance.ClearOfSouls();
